@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
 
         NetworkFabricIPPrefixResource IOperationSource<NetworkFabricIPPrefixResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<NetworkFabricIPPrefixData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerManagedNetworkFabricContext.Default);
+            var data = ModelReaderWriter.Read<NetworkFabricIPPrefixData>(response.Content);
             return new NetworkFabricIPPrefixResource(_client, data);
         }
 
         async ValueTask<NetworkFabricIPPrefixResource> IOperationSource<NetworkFabricIPPrefixResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<NetworkFabricIPPrefixData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerManagedNetworkFabricContext.Default);
+            var data = ModelReaderWriter.Read<NetworkFabricIPPrefixData>(response.Content);
             return await Task.FromResult(new NetworkFabricIPPrefixResource(_client, data)).ConfigureAwait(false);
         }
     }

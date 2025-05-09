@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.LabServices.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerLabServicesContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(AvailableLabServicesSkuRestrictions)} does not support writing '{options.Format}' format.");
             }

@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerLambdaTestHyperExecuteContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(LambdaTestHyperExecuteOfferDetails)} does not support writing '{options.Format}' format.");
             }

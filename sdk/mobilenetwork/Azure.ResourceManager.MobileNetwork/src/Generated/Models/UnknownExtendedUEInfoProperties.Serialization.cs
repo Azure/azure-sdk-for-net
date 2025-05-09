@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMobileNetworkContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 case "bicep":
                     return SerializeBicep(options);
                 default:

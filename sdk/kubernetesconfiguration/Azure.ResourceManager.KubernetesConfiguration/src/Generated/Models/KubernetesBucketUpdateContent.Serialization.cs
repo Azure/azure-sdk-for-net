@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerKubernetesConfigurationContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(KubernetesBucketUpdateContent)} does not support writing '{options.Format}' format.");
             }

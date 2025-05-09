@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Migration.Assessment
 
         MigrationAssessedSqlRecommendedEntityData IJsonModel<MigrationAssessedSqlRecommendedEntityData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MigrationAssessedSqlRecommendedEntityData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<MigrationAssessedSqlRecommendedEntityData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<MigrationAssessedSqlRecommendedEntityData>(Data, options, AzureResourceManagerMigrationAssessmentContext.Default);
+        BinaryData IPersistableModel<MigrationAssessedSqlRecommendedEntityData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        MigrationAssessedSqlRecommendedEntityData IPersistableModel<MigrationAssessedSqlRecommendedEntityData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MigrationAssessedSqlRecommendedEntityData>(data, options, AzureResourceManagerMigrationAssessmentContext.Default);
+        MigrationAssessedSqlRecommendedEntityData IPersistableModel<MigrationAssessedSqlRecommendedEntityData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MigrationAssessedSqlRecommendedEntityData>(data, options);
 
         string IPersistableModel<MigrationAssessedSqlRecommendedEntityData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MigrationAssessedSqlRecommendedEntityData>)Data).GetFormatFromOptions(options);
     }

@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Kusto
 
         SandboxCustomImageResource IOperationSource<SandboxCustomImageResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<SandboxCustomImageData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerKustoContext.Default);
+            var data = ModelReaderWriter.Read<SandboxCustomImageData>(response.Content);
             return new SandboxCustomImageResource(_client, data);
         }
 
         async ValueTask<SandboxCustomImageResource> IOperationSource<SandboxCustomImageResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<SandboxCustomImageData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerKustoContext.Default);
+            var data = ModelReaderWriter.Read<SandboxCustomImageData>(response.Content);
             return await Task.FromResult(new SandboxCustomImageResource(_client, data)).ConfigureAwait(false);
         }
     }

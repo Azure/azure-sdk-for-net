@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Migration.Assessment
 
         MigrationAssessmentVMwareCollectorData IJsonModel<MigrationAssessmentVMwareCollectorData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MigrationAssessmentVMwareCollectorData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<MigrationAssessmentVMwareCollectorData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<MigrationAssessmentVMwareCollectorData>(Data, options, AzureResourceManagerMigrationAssessmentContext.Default);
+        BinaryData IPersistableModel<MigrationAssessmentVMwareCollectorData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        MigrationAssessmentVMwareCollectorData IPersistableModel<MigrationAssessmentVMwareCollectorData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MigrationAssessmentVMwareCollectorData>(data, options, AzureResourceManagerMigrationAssessmentContext.Default);
+        MigrationAssessmentVMwareCollectorData IPersistableModel<MigrationAssessmentVMwareCollectorData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MigrationAssessmentVMwareCollectorData>(data, options);
 
         string IPersistableModel<MigrationAssessmentVMwareCollectorData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MigrationAssessmentVMwareCollectorData>)Data).GetFormatFromOptions(options);
     }

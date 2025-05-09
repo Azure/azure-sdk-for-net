@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Kusto
 
         KustoClusterData IJsonModel<KustoClusterData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<KustoClusterData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<KustoClusterData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<KustoClusterData>(Data, options, AzureResourceManagerKustoContext.Default);
+        BinaryData IPersistableModel<KustoClusterData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        KustoClusterData IPersistableModel<KustoClusterData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<KustoClusterData>(data, options, AzureResourceManagerKustoContext.Default);
+        KustoClusterData IPersistableModel<KustoClusterData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<KustoClusterData>(data, options);
 
         string IPersistableModel<KustoClusterData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<KustoClusterData>)Data).GetFormatFromOptions(options);
     }

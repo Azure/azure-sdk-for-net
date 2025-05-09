@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.ManagedServices
 
         ManagedServicesRegistrationResource IOperationSource<ManagedServicesRegistrationResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ManagedServicesRegistrationData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerManagedServicesContext.Default);
+            var data = ModelReaderWriter.Read<ManagedServicesRegistrationData>(response.Content);
             return new ManagedServicesRegistrationResource(_client, data);
         }
 
         async ValueTask<ManagedServicesRegistrationResource> IOperationSource<ManagedServicesRegistrationResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ManagedServicesRegistrationData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerManagedServicesContext.Default);
+            var data = ModelReaderWriter.Read<ManagedServicesRegistrationData>(response.Content);
             return await Task.FromResult(new ManagedServicesRegistrationResource(_client, data)).ConfigureAwait(false);
         }
     }

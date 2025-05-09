@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.ManagedNetwork
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerManagedNetworkContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(ManagedNetworkGroupData)} does not support writing '{options.Format}' format.");
             }

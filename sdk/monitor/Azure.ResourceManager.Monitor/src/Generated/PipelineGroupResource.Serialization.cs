@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Monitor
 
         PipelineGroupData IJsonModel<PipelineGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PipelineGroupData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<PipelineGroupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<PipelineGroupData>(Data, options, AzureResourceManagerMonitorContext.Default);
+        BinaryData IPersistableModel<PipelineGroupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        PipelineGroupData IPersistableModel<PipelineGroupData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PipelineGroupData>(data, options, AzureResourceManagerMonitorContext.Default);
+        PipelineGroupData IPersistableModel<PipelineGroupData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PipelineGroupData>(data, options);
 
         string IPersistableModel<PipelineGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PipelineGroupData>)Data).GetFormatFromOptions(options);
     }

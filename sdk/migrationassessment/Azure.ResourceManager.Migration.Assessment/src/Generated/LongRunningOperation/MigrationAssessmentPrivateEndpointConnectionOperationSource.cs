@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Migration.Assessment
 
         MigrationAssessmentPrivateEndpointConnectionResource IOperationSource<MigrationAssessmentPrivateEndpointConnectionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<MigrationAssessmentPrivateEndpointConnectionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerMigrationAssessmentContext.Default);
+            var data = ModelReaderWriter.Read<MigrationAssessmentPrivateEndpointConnectionData>(response.Content);
             return new MigrationAssessmentPrivateEndpointConnectionResource(_client, data);
         }
 
         async ValueTask<MigrationAssessmentPrivateEndpointConnectionResource> IOperationSource<MigrationAssessmentPrivateEndpointConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<MigrationAssessmentPrivateEndpointConnectionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerMigrationAssessmentContext.Default);
+            var data = ModelReaderWriter.Read<MigrationAssessmentPrivateEndpointConnectionData>(response.Content);
             return await Task.FromResult(new MigrationAssessmentPrivateEndpointConnectionResource(_client, data)).ConfigureAwait(false);
         }
     }

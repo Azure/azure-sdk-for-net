@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.ManagedServices.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerManagedServicesContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(MarketplaceRegistrationDefinitionList)} does not support writing '{options.Format}' format.");
             }

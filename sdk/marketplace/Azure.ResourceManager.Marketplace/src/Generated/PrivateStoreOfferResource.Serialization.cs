@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Marketplace
 
         PrivateStoreOfferData IJsonModel<PrivateStoreOfferData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PrivateStoreOfferData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<PrivateStoreOfferData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<PrivateStoreOfferData>(Data, options, AzureResourceManagerMarketplaceContext.Default);
+        BinaryData IPersistableModel<PrivateStoreOfferData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        PrivateStoreOfferData IPersistableModel<PrivateStoreOfferData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PrivateStoreOfferData>(data, options, AzureResourceManagerMarketplaceContext.Default);
+        PrivateStoreOfferData IPersistableModel<PrivateStoreOfferData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PrivateStoreOfferData>(data, options);
 
         string IPersistableModel<PrivateStoreOfferData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PrivateStoreOfferData>)Data).GetFormatFromOptions(options);
     }

@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.MongoCluster
 
         MongoClusterFirewallRuleResource IOperationSource<MongoClusterFirewallRuleResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<MongoClusterFirewallRuleData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerMongoClusterContext.Default);
+            var data = ModelReaderWriter.Read<MongoClusterFirewallRuleData>(response.Content);
             return new MongoClusterFirewallRuleResource(_client, data);
         }
 
         async ValueTask<MongoClusterFirewallRuleResource> IOperationSource<MongoClusterFirewallRuleResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<MongoClusterFirewallRuleData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerMongoClusterContext.Default);
+            var data = ModelReaderWriter.Read<MongoClusterFirewallRuleData>(response.Content);
             return await Task.FromResult(new MongoClusterFirewallRuleResource(_client, data)).ConfigureAwait(false);
         }
     }

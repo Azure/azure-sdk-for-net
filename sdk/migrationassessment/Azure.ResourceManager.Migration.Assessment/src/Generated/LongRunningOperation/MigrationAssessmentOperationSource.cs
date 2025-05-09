@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Migration.Assessment
 
         MigrationAssessmentResource IOperationSource<MigrationAssessmentResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<MigrationAssessmentData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerMigrationAssessmentContext.Default);
+            var data = ModelReaderWriter.Read<MigrationAssessmentData>(response.Content);
             return new MigrationAssessmentResource(_client, data);
         }
 
         async ValueTask<MigrationAssessmentResource> IOperationSource<MigrationAssessmentResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<MigrationAssessmentData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerMigrationAssessmentContext.Default);
+            var data = ModelReaderWriter.Read<MigrationAssessmentData>(response.Content);
             return await Task.FromResult(new MigrationAssessmentResource(_client, data)).ConfigureAwait(false);
         }
     }

@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Maintenance
 
         MaintenanceConfigurationData IJsonModel<MaintenanceConfigurationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MaintenanceConfigurationData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<MaintenanceConfigurationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<MaintenanceConfigurationData>(Data, options, AzureResourceManagerMaintenanceContext.Default);
+        BinaryData IPersistableModel<MaintenanceConfigurationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        MaintenanceConfigurationData IPersistableModel<MaintenanceConfigurationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MaintenanceConfigurationData>(data, options, AzureResourceManagerMaintenanceContext.Default);
+        MaintenanceConfigurationData IPersistableModel<MaintenanceConfigurationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MaintenanceConfigurationData>(data, options);
 
         string IPersistableModel<MaintenanceConfigurationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MaintenanceConfigurationData>)Data).GetFormatFromOptions(options);
     }

@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerManagedServiceIdentitiesContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 case "bicep":
                     return SerializeBicep(options);
                 default:

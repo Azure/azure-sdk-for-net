@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.MachineLearningCompute
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMachineLearningComputeContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(OperationalizationClusterData)} does not support writing '{options.Format}' format.");
             }

@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Monitor
 
         LogProfileData IJsonModel<LogProfileData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<LogProfileData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<LogProfileData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<LogProfileData>(Data, options, AzureResourceManagerMonitorContext.Default);
+        BinaryData IPersistableModel<LogProfileData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        LogProfileData IPersistableModel<LogProfileData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<LogProfileData>(data, options, AzureResourceManagerMonitorContext.Default);
+        LogProfileData IPersistableModel<LogProfileData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<LogProfileData>(data, options);
 
         string IPersistableModel<LogProfileData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<LogProfileData>)Data).GetFormatFromOptions(options);
     }

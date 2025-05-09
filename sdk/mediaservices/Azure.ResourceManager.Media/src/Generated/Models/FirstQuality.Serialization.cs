@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Media.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMediaContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(FirstQuality)} does not support writing '{options.Format}' format.");
             }

@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Monitor
 
         MetricAlertData IJsonModel<MetricAlertData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MetricAlertData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<MetricAlertData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<MetricAlertData>(Data, options, AzureResourceManagerMonitorContext.Default);
+        BinaryData IPersistableModel<MetricAlertData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        MetricAlertData IPersistableModel<MetricAlertData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MetricAlertData>(data, options, AzureResourceManagerMonitorContext.Default);
+        MetricAlertData IPersistableModel<MetricAlertData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MetricAlertData>(data, options);
 
         string IPersistableModel<MetricAlertData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MetricAlertData>)Data).GetFormatFromOptions(options);
     }

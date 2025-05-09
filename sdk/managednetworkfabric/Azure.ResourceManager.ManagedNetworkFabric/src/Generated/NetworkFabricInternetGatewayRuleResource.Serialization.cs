@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
 
         NetworkFabricInternetGatewayRuleData IJsonModel<NetworkFabricInternetGatewayRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetworkFabricInternetGatewayRuleData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<NetworkFabricInternetGatewayRuleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<NetworkFabricInternetGatewayRuleData>(Data, options, AzureResourceManagerManagedNetworkFabricContext.Default);
+        BinaryData IPersistableModel<NetworkFabricInternetGatewayRuleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        NetworkFabricInternetGatewayRuleData IPersistableModel<NetworkFabricInternetGatewayRuleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetworkFabricInternetGatewayRuleData>(data, options, AzureResourceManagerManagedNetworkFabricContext.Default);
+        NetworkFabricInternetGatewayRuleData IPersistableModel<NetworkFabricInternetGatewayRuleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetworkFabricInternetGatewayRuleData>(data, options);
 
         string IPersistableModel<NetworkFabricInternetGatewayRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetworkFabricInternetGatewayRuleData>)Data).GetFormatFromOptions(options);
     }

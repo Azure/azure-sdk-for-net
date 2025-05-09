@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.MobileNetwork
 
         PacketCoreDataPlaneResource IOperationSource<PacketCoreDataPlaneResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<PacketCoreDataPlaneData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerMobileNetworkContext.Default);
+            var data = ModelReaderWriter.Read<PacketCoreDataPlaneData>(response.Content);
             return new PacketCoreDataPlaneResource(_client, data);
         }
 
         async ValueTask<PacketCoreDataPlaneResource> IOperationSource<PacketCoreDataPlaneResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<PacketCoreDataPlaneData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerMobileNetworkContext.Default);
+            var data = ModelReaderWriter.Read<PacketCoreDataPlaneData>(response.Content);
             return await Task.FromResult(new PacketCoreDataPlaneResource(_client, data)).ConfigureAwait(false);
         }
     }

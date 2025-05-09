@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.LabServices
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerLabServicesContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(LabPlanData)} does not support writing '{options.Format}' format.");
             }

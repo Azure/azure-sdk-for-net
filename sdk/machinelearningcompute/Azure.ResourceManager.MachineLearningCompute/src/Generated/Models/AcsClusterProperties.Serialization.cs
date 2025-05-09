@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMachineLearningComputeContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(AcsClusterProperties)} does not support writing '{options.Format}' format.");
             }

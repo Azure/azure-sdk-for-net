@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Migration.Assessment
 
         MigrationAssessmentHyperVCollectorData IJsonModel<MigrationAssessmentHyperVCollectorData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MigrationAssessmentHyperVCollectorData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<MigrationAssessmentHyperVCollectorData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<MigrationAssessmentHyperVCollectorData>(Data, options, AzureResourceManagerMigrationAssessmentContext.Default);
+        BinaryData IPersistableModel<MigrationAssessmentHyperVCollectorData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        MigrationAssessmentHyperVCollectorData IPersistableModel<MigrationAssessmentHyperVCollectorData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MigrationAssessmentHyperVCollectorData>(data, options, AzureResourceManagerMigrationAssessmentContext.Default);
+        MigrationAssessmentHyperVCollectorData IPersistableModel<MigrationAssessmentHyperVCollectorData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MigrationAssessmentHyperVCollectorData>(data, options);
 
         string IPersistableModel<MigrationAssessmentHyperVCollectorData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MigrationAssessmentHyperVCollectorData>)Data).GetFormatFromOptions(options);
     }

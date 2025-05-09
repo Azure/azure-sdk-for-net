@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Maintenance.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMaintenanceContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(VmTagSettings)} does not support writing '{options.Format}' format.");
             }

@@ -797,7 +797,7 @@ namespace Azure.ResourceManager.Migration.Assessment
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMigrationAssessmentContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(MigrationAvsAssessmentData)} does not support writing '{options.Format}' format.");
             }

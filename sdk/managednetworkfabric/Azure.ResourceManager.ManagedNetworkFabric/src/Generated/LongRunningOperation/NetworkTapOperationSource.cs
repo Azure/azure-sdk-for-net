@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
 
         NetworkTapResource IOperationSource<NetworkTapResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<NetworkTapData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerManagedNetworkFabricContext.Default);
+            var data = ModelReaderWriter.Read<NetworkTapData>(response.Content);
             return new NetworkTapResource(_client, data);
         }
 
         async ValueTask<NetworkTapResource> IOperationSource<NetworkTapResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<NetworkTapData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerManagedNetworkFabricContext.Default);
+            var data = ModelReaderWriter.Read<NetworkTapData>(response.Content);
             return await Task.FromResult(new NetworkTapResource(_client, data)).ConfigureAwait(false);
         }
     }

@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.MySql
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMySqlContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(MySqlConfigurationData)} does not support writing '{options.Format}' format.");
             }
