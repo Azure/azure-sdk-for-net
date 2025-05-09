@@ -426,7 +426,16 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 Times.Once());
             mock.Verify(b => b.CreateAsync(
                 length,
-                It.IsAny<ShareFileCreateOptions>(),
+            It.Is<ShareFileCreateOptions>(option =>
+                    option.HttpHeaders.CacheControl == DefaultCacheControl &&
+                    option.HttpHeaders.ContentDisposition == DefaultContentDisposition &&
+                    option.HttpHeaders.ContentEncoding == DefaultContentEncoding &&
+                    option.HttpHeaders.ContentType == DefaultContentType &&
+                    option.Metadata == DefaultFileMetadata &&
+                    option.SmbProperties.FileCreatedOn == DefaultFileCreatedOn &&
+                    option.SmbProperties.FileLastWrittenOn == DefaultLastWrittenOn &&
+                    option.SmbProperties.FileChangedOn == DefaultFileChangedOn &&
+                    option.SmbProperties.FilePermissionKey == default),
                 It.IsAny<ShareFileRequestConditions>(),
                 It.IsAny<CancellationToken>()),
                 Times.Once());
@@ -479,7 +488,16 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 Times.Once());
             mock.Verify(b => b.CreateAsync(
                 length,
-                It.IsAny<ShareFileCreateOptions>(),
+                It.Is<ShareFileCreateOptions>(option =>
+                    option.HttpHeaders.CacheControl == DefaultCacheControl &&
+                    option.HttpHeaders.ContentDisposition == DefaultContentDisposition &&
+                    option.HttpHeaders.ContentEncoding == DefaultContentEncoding &&
+                    option.HttpHeaders.ContentType == DefaultContentType &&
+                    option.Metadata == DefaultFileMetadata &&
+                    option.SmbProperties.FileCreatedOn == DefaultFileCreatedOn &&
+                    option.SmbProperties.FileLastWrittenOn == DefaultLastWrittenOn &&
+                    option.SmbProperties.FileChangedOn == DefaultFileChangedOn &&
+                    option.SmbProperties.FilePermissionKey == default),
                 It.IsAny<ShareFileRequestConditions>(),
                 It.IsAny<CancellationToken>()),
                 Times.Once());
@@ -540,7 +558,16 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 Times.Once());
             mock.Verify(b => b.CreateAsync(
                 length,
-                It.IsAny<ShareFileCreateOptions>(),
+                It.Is<ShareFileCreateOptions>(option =>
+                    option.HttpHeaders.CacheControl == default &&
+                    option.HttpHeaders.ContentDisposition == default &&
+                    option.HttpHeaders.ContentEncoding == default &&
+                    option.HttpHeaders.ContentType == default &&
+                    option.Metadata == default &&
+                    option.SmbProperties.FileCreatedOn == default &&
+                    option.SmbProperties.FileLastWrittenOn == default &&
+                    option.SmbProperties.FileChangedOn == default &&
+                    option.SmbProperties.FilePermissionKey == default),
                 It.IsAny<ShareFileRequestConditions>(),
                 It.IsAny<CancellationToken>()),
                 Times.Once());
@@ -587,7 +614,16 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 Times.Once());
             mock.Verify(b => b.CreateAsync(
                 length,
-                It.IsAny<ShareFileCreateOptions>(),
+                It.Is<ShareFileCreateOptions>(option =>
+                    option.HttpHeaders.CacheControl == DefaultCacheControl &&
+                    option.HttpHeaders.ContentDisposition == DefaultContentDisposition &&
+                    option.HttpHeaders.ContentEncoding == DefaultContentEncoding &&
+                    option.HttpHeaders.ContentType == DefaultContentType &&
+                    option.Metadata == DefaultFileMetadata &&
+                    option.SmbProperties.FileCreatedOn == DefaultFileCreatedOn &&
+                    option.SmbProperties.FileLastWrittenOn == DefaultLastWrittenOn &&
+                    option.SmbProperties.FileChangedOn == DefaultFileChangedOn &&
+                    option.SmbProperties.FilePermissionKey == default),
                 It.IsAny<ShareFileRequestConditions>(),
                 It.IsAny<CancellationToken>()),
                 Times.Once());
@@ -783,7 +819,16 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             // Verify
             mockTuple.Item2.Verify(b => b.CreateAsync(
                 length,
-                It.IsAny<ShareFileCreateOptions>(),
+                It.Is<ShareFileCreateOptions>(option =>
+                    option.HttpHeaders.CacheControl == DefaultCacheControl &&
+                    option.HttpHeaders.ContentDisposition == DefaultContentDisposition &&
+                    option.HttpHeaders.ContentEncoding == DefaultContentEncoding &&
+                    option.HttpHeaders.ContentType == DefaultContentType &&
+                    option.Metadata == DefaultFileMetadata &&
+                    option.SmbProperties.FileCreatedOn == DefaultFileCreatedOn &&
+                    option.SmbProperties.FileLastWrittenOn == DefaultLastWrittenOn &&
+                    option.SmbProperties.FileChangedOn == DefaultFileChangedOn &&
+                    option.SmbProperties.FilePermissionKey == default),
                 It.IsAny<ShareFileRequestConditions>(),
                 It.IsAny<CancellationToken>()),
                 Times.Once());
@@ -837,7 +882,16 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             // Verify
             mockTuple.Item2.Verify(b => b.CreateAsync(
                 length,
-                It.IsAny<ShareFileCreateOptions>(),
+                It.Is<ShareFileCreateOptions>(option =>
+                    option.HttpHeaders.CacheControl == DefaultCacheControl &&
+                    option.HttpHeaders.ContentDisposition == DefaultContentDisposition &&
+                    option.HttpHeaders.ContentEncoding == DefaultContentEncoding &&
+                    option.HttpHeaders.ContentType == DefaultContentType &&
+                    option.Metadata == DefaultFileMetadata &&
+                    option.SmbProperties.FileCreatedOn == DefaultFileCreatedOn &&
+                    option.SmbProperties.FileLastWrittenOn == DefaultLastWrittenOn &&
+                    option.SmbProperties.FileChangedOn == DefaultFileChangedOn &&
+                    option.SmbProperties.FilePermissionKey == default),
                 It.IsAny<ShareFileRequestConditions>(),
                 It.IsAny<CancellationToken>()),
                 Times.Once());
@@ -903,7 +957,16 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             // Verify
             mockTuple.Item2.Verify(b => b.CreateAsync(
                 length,
-                It.IsAny<ShareFileCreateOptions>(),
+                It.Is<ShareFileCreateOptions>(option =>
+                    option.HttpHeaders.CacheControl == default &&
+                    option.HttpHeaders.ContentDisposition == default &&
+                    option.HttpHeaders.ContentEncoding == default &&
+                    option.HttpHeaders.ContentType == default &&
+                    option.Metadata == default &&
+                    option.SmbProperties.FileCreatedOn == default &&
+                    option.SmbProperties.FileLastWrittenOn == default &&
+                    option.SmbProperties.FileChangedOn == default &&
+                    option.SmbProperties.FilePermissionKey == default),
                 It.IsAny<ShareFileRequestConditions>(),
                 It.IsAny<CancellationToken>()),
                 Times.Once());
@@ -954,7 +1017,16 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             // Verify
             mockTuple.Item2.Verify(b => b.CreateAsync(
                 length,
-                It.IsAny<ShareFileCreateOptions>(),
+                It.Is<ShareFileCreateOptions>(option =>
+                    option.HttpHeaders.CacheControl == DefaultCacheControl &&
+                    option.HttpHeaders.ContentDisposition == DefaultContentDisposition &&
+                    option.HttpHeaders.ContentEncoding == DefaultContentEncoding &&
+                    option.HttpHeaders.ContentType == DefaultContentType &&
+                    option.Metadata == DefaultFileMetadata &&
+                    option.SmbProperties.FileCreatedOn == DefaultFileCreatedOn &&
+                    option.SmbProperties.FileLastWrittenOn == DefaultLastWrittenOn &&
+                    option.SmbProperties.FileChangedOn == DefaultFileChangedOn &&
+                    option.SmbProperties.FilePermissionKey == default),
                 It.IsAny<ShareFileRequestConditions>(),
                 It.IsAny<CancellationToken>()),
                 Times.Once());
@@ -1164,7 +1236,16 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             // Assert
             mockTuple.Item2.Verify(b => b.CreateAsync(
                 length,
-                It.IsAny<ShareFileCreateOptions>(),
+                It.Is<ShareFileCreateOptions>(option =>
+                    option.HttpHeaders.CacheControl == DefaultCacheControl &&
+                    option.HttpHeaders.ContentDisposition == DefaultContentDisposition &&
+                    option.HttpHeaders.ContentEncoding == DefaultContentEncoding &&
+                    option.HttpHeaders.ContentType == DefaultContentType &&
+                    option.Metadata == DefaultFileMetadata &&
+                    option.SmbProperties.FileCreatedOn == DefaultFileCreatedOn &&
+                    option.SmbProperties.FileLastWrittenOn == DefaultLastWrittenOn &&
+                    option.SmbProperties.FileChangedOn == DefaultFileChangedOn &&
+                    option.SmbProperties.FilePermissionKey == default),
                 It.IsAny<ShareFileRequestConditions>(),
                 It.IsAny<CancellationToken>()),
                 Times.Once());
@@ -1218,7 +1299,16 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             // Verify
             mockTuple.Item2.Verify(b => b.CreateAsync(
                 length,
-                It.IsAny<ShareFileCreateOptions>(),
+                It.Is<ShareFileCreateOptions>(option =>
+                    option.HttpHeaders.CacheControl == DefaultCacheControl &&
+                    option.HttpHeaders.ContentDisposition == DefaultContentDisposition &&
+                    option.HttpHeaders.ContentEncoding == DefaultContentEncoding &&
+                    option.HttpHeaders.ContentType == DefaultContentType &&
+                    option.Metadata == DefaultFileMetadata &&
+                    option.SmbProperties.FileCreatedOn == DefaultFileCreatedOn &&
+                    option.SmbProperties.FileLastWrittenOn == DefaultLastWrittenOn &&
+                    option.SmbProperties.FileChangedOn == DefaultFileChangedOn &&
+                    option.SmbProperties.FilePermissionKey == default),
                 It.IsAny<ShareFileRequestConditions>(),
                 It.IsAny<CancellationToken>()),
                 Times.Once());
@@ -1284,7 +1374,16 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             // Verify
             mockTuple.Item2.Verify(b => b.CreateAsync(
                 length,
-                It.IsAny<ShareFileCreateOptions>(),
+                It.Is<ShareFileCreateOptions>(option =>
+                    option.HttpHeaders.CacheControl == default &&
+                    option.HttpHeaders.ContentDisposition == default &&
+                    option.HttpHeaders.ContentEncoding == default &&
+                    option.HttpHeaders.ContentType == default &&
+                    option.Metadata == default &&
+                    option.SmbProperties.FileCreatedOn == default &&
+                    option.SmbProperties.FileLastWrittenOn == default &&
+                    option.SmbProperties.FileChangedOn == default &&
+                    option.SmbProperties.FilePermissionKey == default),
                 It.IsAny<ShareFileRequestConditions>(),
                 It.IsAny<CancellationToken>()),
                 Times.Once());
@@ -1336,7 +1435,16 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             // Verify
             mockTuple.Item2.Verify(b => b.CreateAsync(
                 length,
-                It.IsAny<ShareFileCreateOptions>(),
+                It.Is<ShareFileCreateOptions>(option =>
+                    option.HttpHeaders.CacheControl == DefaultCacheControl &&
+                    option.HttpHeaders.ContentDisposition == DefaultContentDisposition &&
+                    option.HttpHeaders.ContentEncoding == DefaultContentEncoding &&
+                    option.HttpHeaders.ContentType == DefaultContentType &&
+                    option.Metadata == DefaultFileMetadata &&
+                    option.SmbProperties.FileCreatedOn == DefaultFileCreatedOn &&
+                    option.SmbProperties.FileLastWrittenOn == DefaultLastWrittenOn &&
+                    option.SmbProperties.FileChangedOn == DefaultFileChangedOn &&
+                    option.SmbProperties.FilePermissionKey == default),
                 It.IsAny<ShareFileRequestConditions>(),
                 It.IsAny<CancellationToken>()),
                 Times.Once());
@@ -1879,7 +1987,16 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
 
             mockDestination.Verify(b => b.CreateAsync(
                 length,
-                It.IsAny<ShareFileCreateOptions>(),
+                It.Is<ShareFileCreateOptions>(option =>
+                    option.HttpHeaders.CacheControl == DefaultCacheControl &&
+                    option.HttpHeaders.ContentDisposition == DefaultContentDisposition &&
+                    option.HttpHeaders.ContentEncoding == DefaultContentEncoding &&
+                    option.HttpHeaders.ContentType == DefaultContentType &&
+                    option.Metadata == DefaultFileMetadata &&
+                    option.SmbProperties.FileCreatedOn == DefaultFileCreatedOn &&
+                    option.SmbProperties.FileLastWrittenOn == DefaultLastWrittenOn &&
+                    option.SmbProperties.FileChangedOn == DefaultFileChangedOn &&
+                    option.SmbProperties.FilePermissionKey == default),
                 It.IsAny<ShareFileRequestConditions>(),
                 It.IsAny<CancellationToken>()),
                 Times.Once());
@@ -1952,7 +2069,16 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
 
             mockDestination.Verify(b => b.CreateAsync(
                 length,
-                It.IsAny<ShareFileCreateOptions>(),
+                It.Is<ShareFileCreateOptions>(option =>
+                    option.HttpHeaders.CacheControl == DefaultCacheControl &&
+                    option.HttpHeaders.ContentDisposition == DefaultContentDisposition &&
+                    option.HttpHeaders.ContentEncoding == DefaultContentEncoding &&
+                    option.HttpHeaders.ContentType == DefaultContentType &&
+                    option.Metadata == DefaultFileMetadata &&
+                    option.SmbProperties.FileCreatedOn == DefaultFileCreatedOn &&
+                    option.SmbProperties.FileLastWrittenOn == DefaultLastWrittenOn &&
+                    option.SmbProperties.FileChangedOn == DefaultFileChangedOn &&
+                    option.SmbProperties.FilePermissionKey == default),
                 It.IsAny<ShareFileRequestConditions>(),
                 It.IsAny<CancellationToken>()),
                 Times.Once());

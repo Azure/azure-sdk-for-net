@@ -11,17 +11,19 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
-using BasicTypeSpec;
 
-namespace BasicTypeSpec.Models
+namespace BasicTypeSpec
 {
     /// <summary></summary>
     public partial class RenamedModel : IJsonModel<RenamedModel>
     {
+        /// <summary> Initializes a new instance of <see cref="RenamedModel"/> for deserialization. </summary>
         internal RenamedModel()
         {
         }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<RenamedModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -57,6 +59,8 @@ namespace BasicTypeSpec.Models
             }
         }
 
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         RenamedModel IJsonModel<RenamedModel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
@@ -72,6 +76,8 @@ namespace BasicTypeSpec.Models
             return DeserializeRenamedModel(document.RootElement, options);
         }
 
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         internal static RenamedModel DeserializeRenamedModel(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
@@ -95,6 +101,7 @@ namespace BasicTypeSpec.Models
             return new RenamedModel(name, additionalBinaryDataProperties);
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<RenamedModel>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -104,12 +111,14 @@ namespace BasicTypeSpec.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, BasicTypeSpecContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(RenamedModel)} does not support writing '{options.Format}' format.");
             }
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         RenamedModel IPersistableModel<RenamedModel>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
@@ -129,6 +138,7 @@ namespace BasicTypeSpec.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<RenamedModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="renamedModel"> The <see cref="RenamedModel"/> to serialize into <see cref="RequestContent"/>. </param>

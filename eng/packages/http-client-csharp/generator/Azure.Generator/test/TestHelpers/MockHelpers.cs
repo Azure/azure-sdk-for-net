@@ -33,7 +33,8 @@ namespace Azure.Generator.Tests.TestHelpers
             Func<IReadOnlyList<InputClient>>? clients = null,
             ClientResponseApi? clientResponseApi = null,
             ClientPipelineApi? clientPipelineApi = null,
-            HttpMessageApi? httpMessageApi = null)
+            HttpMessageApi? httpMessageApi = null,
+            string? configurationJson = null)
         {
             IReadOnlyList<string> inputNsApiVersions = apiVersions?.Invoke() ?? [];
             IReadOnlyList<InputEnumType> inputNsEnums = inputEnums?.Invoke() ?? [];
@@ -63,7 +64,7 @@ namespace Azure.Generator.Tests.TestHelpers
             var azureInstance = typeof(AzureClientGenerator).GetField("_instance", BindingFlags.Static | BindingFlags.NonPublic);
             // invoke the load method with the config file path
             var loadMethod = typeof(Configuration).GetMethod("Load", BindingFlags.Static | BindingFlags.NonPublic);
-            object?[] parameters = [_configFilePath, null];
+            object?[] parameters = [_configFilePath, configurationJson];
             var config = loadMethod?.Invoke(null, parameters);
             var mockGeneratorContext = new Mock<GeneratorContext>(config!);
             var mockPluginInstance = new Mock<AzureClientGenerator>(mockGeneratorContext.Object) { CallBase = true };

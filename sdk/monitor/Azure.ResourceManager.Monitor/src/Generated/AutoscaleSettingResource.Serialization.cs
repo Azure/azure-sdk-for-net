@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Monitor
 
         AutoscaleSettingData IJsonModel<AutoscaleSettingData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AutoscaleSettingData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<AutoscaleSettingData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<AutoscaleSettingData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AutoscaleSettingData>(Data, options, AzureResourceManagerMonitorContext.Default);
 
-        AutoscaleSettingData IPersistableModel<AutoscaleSettingData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AutoscaleSettingData>(data, options);
+        AutoscaleSettingData IPersistableModel<AutoscaleSettingData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AutoscaleSettingData>(data, options, AzureResourceManagerMonitorContext.Default);
 
         string IPersistableModel<AutoscaleSettingData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AutoscaleSettingData>)Data).GetFormatFromOptions(options);
     }

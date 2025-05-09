@@ -1,6 +1,6 @@
 # Release History
 
-## 1.4.0-beta.3 (Unreleased)
+## 1.5.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,47 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.4.0 (2025-05-02)
+
+### Features Added
+
+- Added additional supported scenarios to System.ClientModel.SourceGeneration.
+
+### Other Changes
+
+- Upgraded versions of dependencies on System.Diagnostics.DiagnosticSource, System.Text.Json, and Microsoft.Extensions.Logging.Abstractions.
+- Renamed `ActivityExtensions.MarkFailed` to `ActivityExtensions.MarkClientActivityFailed`.
+- Made `int maxSize` parameter to `ClientCache` constructor required and removed default value.
+- Changed `IEquatable<object> clientId` parameter to `object clientId` in `ClientCache.GetClient`
+- Renamed `ConnectionCollection` to `ClientConnectionCollection`
+- Renamed `ConnectionProvider` to `ClientConnectionProvider`
+- Renamed `ToCollection` to `ConvertCollectionBuilder` in `ModelReadWriteTypeBuilder`
+- Renamed `AddKeyValuePair` to `AddItemWithKey` in `ModelReadWriteTypeBuilder`
+
+## 1.4.0-beta.6 (2025-04-28)
+
+### Features Added
+
+- Added additional supported scenarios to System.ClientModel.SourceGeneration.
+
+## 1.4.0-beta.5 (2025-04-23)
+
+### Features Added
+
+- Added additional supported scenarios to System.ClientModel.SourceGeneration.
+
+## 1.4.0-beta.4 (2025-04-21)
+
+### Features Added
+
+- Added additional supported scenarios to System.ClientModel.SourceGeneration.
+
+## 1.4.0-beta.3 (2025-04-16)
+
+### Bugs Fixed
+
+- System.ClientModel.SourceGeneration adds the Default property even when no type builders exist.
 
 ## 1.4.0-beta.2 (2025-04-14)
 

@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 
         SiteRecoveryVCenterData IJsonModel<SiteRecoveryVCenterData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SiteRecoveryVCenterData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SiteRecoveryVCenterData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<SiteRecoveryVCenterData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SiteRecoveryVCenterData>(Data, options, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
 
-        SiteRecoveryVCenterData IPersistableModel<SiteRecoveryVCenterData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SiteRecoveryVCenterData>(data, options);
+        SiteRecoveryVCenterData IPersistableModel<SiteRecoveryVCenterData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SiteRecoveryVCenterData>(data, options, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
 
         string IPersistableModel<SiteRecoveryVCenterData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SiteRecoveryVCenterData>)Data).GetFormatFromOptions(options);
     }

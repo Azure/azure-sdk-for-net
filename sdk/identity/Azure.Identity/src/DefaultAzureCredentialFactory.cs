@@ -90,12 +90,12 @@ namespace Azure.Identity
             {
                 chain.Add(CreateInteractiveBrowserCredential());
             }
-
+#if PREVIEW_FEATURE_FLAG
             if (!Options.ExcludeBrokerCredential && TryCreateDevelopmentBrokerOptions(out InteractiveBrowserCredentialOptions brokerOptions))
             {
                 chain.Add(CreateBrokerAuthenticationCredential(brokerOptions));
             }
-
+#endif
             if (chain.Count == 0)
             {
                 throw new ArgumentException("At least one credential type must be included in the authentication flow.", "options");
@@ -262,30 +262,19 @@ namespace Azure.Identity
         /// This is used to enable broker authentication for development purposes.
         /// </summary>
         /// <param name="options"></param>
-        /// <returns></returns>
-        [UnconditionalSuppressMessage("Trimming", "IL2026",
-    Justification = "Assembly.Load is used for optional functionality. If the assembly is trimmed, the catch block handles it gracefully.")]
-        [UnconditionalSuppressMessage("Trimming", "IL2072",
-    Justification = "Loading Azure.Identity.Broker assembly is optional, method handles missing assembly gracefully")]
         internal static bool TryCreateDevelopmentBrokerOptions(out InteractiveBrowserCredentialOptions options)
         {
             options = null;
             try
             {
-                // Check if the Azure.Identity.Broker assembly is loaded
-                Assembly brokerAssembly;
-                brokerAssembly = Assembly.Load("Azure.Identity.Broker");
+                // Use Type.GetType and ConstructorInfo because they can be analyzed by the ILLinker and are
+                // AOT friendly.
 
-                if (brokerAssembly != null)
-                {
-                    // Get the DevelopmentBrokerOptions type
-                    var optionsType = brokerAssembly.GetType("Azure.Identity.Broker.DevelopmentBrokerOptions");
-                    if (optionsType != null)
-                    {
-                        // Create an instance using the parameterless constructor
-                        options = (InteractiveBrowserCredentialOptions)Activator.CreateInstance(optionsType);
-                    }
-                }
+                // Try to get the options type
+                Type optionsType = Type.GetType("Azure.Identity.Broker.DevelopmentBrokerOptions, Azure.Identity.Broker", throwOnError: false);
+                ConstructorInfo optionsCtor = optionsType?.GetConstructor(Type.EmptyTypes);
+                object optionsInstance = optionsCtor?.Invoke(null);
+                options = optionsInstance as InteractiveBrowserCredentialOptions;
 
                 return options != null;
             }

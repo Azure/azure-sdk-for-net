@@ -18,12 +18,6 @@
 - VirtualMachine is updated to support persistent storage for OS disk.
 - VirtualMachine's property VmDeviceModel gets a new option 'T3'. When 'T3' is selected, SecureBoot and vTPM are automatically enabled. This is to support Windows users.
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
-
 ## 1.1.0 (2025-01-31)
 
 ### Features Added

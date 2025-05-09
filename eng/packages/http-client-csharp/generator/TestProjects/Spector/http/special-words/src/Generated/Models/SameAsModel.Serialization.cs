@@ -11,10 +11,12 @@ using System.Text.Json;
 using Azure;
 using Azure.Core;
 
-namespace SpecialWords._Models
+namespace SpecialWords._ModelProperties
 {
     public partial class SameAsModel : IJsonModel<SameAsModel>
     {
+        internal SameAsModel() => throw null;
+
         void IJsonModel<SameAsModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;

@@ -123,6 +123,11 @@ public static class ModelReaderWriter
         {
             return WritePersistable(iModel, options);
         }
+        else if (model is IPersistableModel<object> objModel)
+        {
+            //used for the class proxy case since the proxy does not need to implement reading and writing for itself
+            return WritePersistable(objModel, options);
+        }
         else
         {
             var enumerable = model as IEnumerable ?? context.GetTypeBuilder(model!.GetType()).ToEnumerable(model);

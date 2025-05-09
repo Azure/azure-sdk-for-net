@@ -11,7 +11,6 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using _Type.Model.Inheritance.NotDiscriminated.Models;
 
 namespace _Type.Model.Inheritance.NotDiscriminated
 {
@@ -21,7 +20,7 @@ namespace _Type.Model.Inheritance.NotDiscriminated
 
         public NotDiscriminatedClient(Uri endpoint, NotDiscriminatedClientOptions options) => throw null;
 
-        public HttpPipeline Pipeline => throw null;
+        public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response PostValid(RequestContent content, RequestContext context = null) => throw null;
 

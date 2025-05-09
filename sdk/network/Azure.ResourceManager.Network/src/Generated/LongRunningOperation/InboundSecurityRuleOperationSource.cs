@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Network
 
         InboundSecurityRuleResource IOperationSource<InboundSecurityRuleResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<InboundSecurityRuleData>(response.Content);
+            var data = ModelReaderWriter.Read<InboundSecurityRuleData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkContext.Default);
             return new InboundSecurityRuleResource(_client, data);
         }
 
         async ValueTask<InboundSecurityRuleResource> IOperationSource<InboundSecurityRuleResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<InboundSecurityRuleData>(response.Content);
+            var data = ModelReaderWriter.Read<InboundSecurityRuleData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkContext.Default);
             return await Task.FromResult(new InboundSecurityRuleResource(_client, data)).ConfigureAwait(false);
         }
     }

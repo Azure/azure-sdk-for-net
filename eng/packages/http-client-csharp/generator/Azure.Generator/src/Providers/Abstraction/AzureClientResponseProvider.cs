@@ -32,11 +32,11 @@ namespace Azure.Generator.Providers
         public override CSharpType ClientCollectionAsyncResponseOfTType => new CSharpType(typeof(AsyncPageable<>));
 
         public override TypeProvider CreateClientCollectionResultDefinition(ClientProvider client,
-            InputOperation operation,
+            InputPagingServiceMethod serviceMethod,
             CSharpType? type,
             bool isAsync)
         {
-            return new CollectionResultDefinition(client, operation, type, isAsync);
+            return new CollectionResultDefinition(client, serviceMethod, type, isAsync);
         }
 
         public override CSharpType ClientResponseExceptionType => typeof(RequestFailedException);

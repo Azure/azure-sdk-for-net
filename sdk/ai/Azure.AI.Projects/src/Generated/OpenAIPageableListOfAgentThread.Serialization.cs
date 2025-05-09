@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Azure.AI.Projects
 {
-    public partial class OpenAIPageableListOfAgentThread : IUtf8JsonSerializable, IJsonModel<OpenAIPageableListOfAgentThread>
+    internal partial class OpenAIPageableListOfAgentThread : IUtf8JsonSerializable, IJsonModel<OpenAIPageableListOfAgentThread>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OpenAIPageableListOfAgentThread>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
@@ -147,7 +147,7 @@ namespace Azure.AI.Projects
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureAIProjectsContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(OpenAIPageableListOfAgentThread)} does not support writing '{options.Format}' format.");
             }

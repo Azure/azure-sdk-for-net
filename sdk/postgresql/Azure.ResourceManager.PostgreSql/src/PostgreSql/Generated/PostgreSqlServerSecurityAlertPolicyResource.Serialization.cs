@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.PostgreSql
 
         PostgreSqlServerSecurityAlertPolicyData IJsonModel<PostgreSqlServerSecurityAlertPolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PostgreSqlServerSecurityAlertPolicyData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<PostgreSqlServerSecurityAlertPolicyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<PostgreSqlServerSecurityAlertPolicyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<PostgreSqlServerSecurityAlertPolicyData>(Data, options, AzureResourceManagerPostgreSqlContext.Default);
 
-        PostgreSqlServerSecurityAlertPolicyData IPersistableModel<PostgreSqlServerSecurityAlertPolicyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PostgreSqlServerSecurityAlertPolicyData>(data, options);
+        PostgreSqlServerSecurityAlertPolicyData IPersistableModel<PostgreSqlServerSecurityAlertPolicyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PostgreSqlServerSecurityAlertPolicyData>(data, options, AzureResourceManagerPostgreSqlContext.Default);
 
         string IPersistableModel<PostgreSqlServerSecurityAlertPolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PostgreSqlServerSecurityAlertPolicyData>)Data).GetFormatFromOptions(options);
     }
