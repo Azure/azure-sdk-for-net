@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.AI.Agents.Persistent
 {
-    /// <summary> The RunStep_object. </summary>
+    /// <summary> The RunStepObject. </summary>
     internal readonly partial struct RunStepObject : IEquatable<RunStepObject>
     {
         private readonly string _value;

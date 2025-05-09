@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.AI.Agents.Persistent
 {
-    /// <summary> The RunStepDeltaChunk_object. </summary>
+    /// <summary> The RunStepDeltaChunkObject. </summary>
     public readonly partial struct RunStepDeltaChunkObject : IEquatable<RunStepDeltaChunkObject>
     {
         private readonly string _value;

@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.AI.Agents.Persistent
 {
-    /// <summary> The InternalVectorStoreDeletionStatus_object. </summary>
+    /// <summary> The InternalVectorStoreDeletionStatusObject. </summary>
     internal readonly partial struct InternalVectorStoreDeletionStatusObject : IEquatable<InternalVectorStoreDeletionStatusObject>
     {
         private readonly string _value;
