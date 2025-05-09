@@ -7,12 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Azure.ResourceManager.Dell.Storage.Models
 {
-    /// <summary> The response of a FileSystemResource list operation. </summary>
-    internal partial class FileSystemResourceListResult
+    /// <summary> The updatable properties of the FileSystemResource. </summary>
+    public partial class DellFileSystemPatchProperties
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,35 +45,29 @@ namespace Azure.ResourceManager.Dell.Storage.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="FileSystemResourceListResult"/>. </summary>
-        /// <param name="value"> The FileSystemResource items on this page. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal FileSystemResourceListResult(IEnumerable<DellFileSystemData> value)
+        /// <summary> Initializes a new instance of <see cref="DellFileSystemPatchProperties"/>. </summary>
+        public DellFileSystemPatchProperties()
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="FileSystemResourceListResult"/>. </summary>
-        /// <param name="value"> The FileSystemResource items on this page. </param>
-        /// <param name="nextLink"> The link to the next page of items. </param>
+        /// <summary> Initializes a new instance of <see cref="DellFileSystemPatchProperties"/>. </summary>
+        /// <param name="delegatedSubnetId"> Delegated subnet id for Vnet injection. </param>
+        /// <param name="capacity"> Capacity for Dell Filesystem. </param>
+        /// <param name="encryption"> Encryption Details of the resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FileSystemResourceListResult(IReadOnlyList<DellFileSystemData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DellFileSystemPatchProperties(string delegatedSubnetId, DellFileSystemCapacity capacity, DellFileSystemEncryptionPatchPropertiess encryption, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Value = value;
-            NextLink = nextLink;
+            DelegatedSubnetId = delegatedSubnetId;
+            Capacity = capacity;
+            Encryption = encryption;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="FileSystemResourceListResult"/> for deserialization. </summary>
-        internal FileSystemResourceListResult()
-        {
-        }
-
-        /// <summary> The FileSystemResource items on this page. </summary>
-        public IReadOnlyList<DellFileSystemData> Value { get; }
-        /// <summary> The link to the next page of items. </summary>
-        public Uri NextLink { get; }
+        /// <summary> Delegated subnet id for Vnet injection. </summary>
+        public string DelegatedSubnetId { get; set; }
+        /// <summary> Capacity for Dell Filesystem. </summary>
+        public DellFileSystemCapacity Capacity { get; set; }
+        /// <summary> Encryption Details of the resource. </summary>
+        public DellFileSystemEncryptionPatchPropertiess Encryption { get; set; }
     }
 }

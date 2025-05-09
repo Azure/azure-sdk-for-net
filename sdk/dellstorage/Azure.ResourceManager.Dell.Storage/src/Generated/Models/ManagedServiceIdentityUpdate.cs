@@ -7,12 +7,12 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Dell.Storage.Models
 {
-    /// <summary> The response of a FileSystemResource list operation. </summary>
-    internal partial class FileSystemResourceListResult
+    /// <summary> Managed service identity (system assigned and/or user assigned identities). </summary>
+    public partial class ManagedServiceIdentityUpdate
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,35 +46,26 @@ namespace Azure.ResourceManager.Dell.Storage.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="FileSystemResourceListResult"/>. </summary>
-        /// <param name="value"> The FileSystemResource items on this page. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal FileSystemResourceListResult(IEnumerable<DellFileSystemData> value)
+        /// <summary> Initializes a new instance of <see cref="ManagedServiceIdentityUpdate"/>. </summary>
+        public ManagedServiceIdentityUpdate()
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            Value = value.ToList();
+            UserAssignedIdentities = new ChangeTrackingDictionary<string, UserAssignedIdentity>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="FileSystemResourceListResult"/>. </summary>
-        /// <param name="value"> The FileSystemResource items on this page. </param>
-        /// <param name="nextLink"> The link to the next page of items. </param>
+        /// <summary> Initializes a new instance of <see cref="ManagedServiceIdentityUpdate"/>. </summary>
+        /// <param name="type"> The type of managed identity assigned to this resource. </param>
+        /// <param name="userAssignedIdentities"> The identities assigned to this resource by the user. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FileSystemResourceListResult(IReadOnlyList<DellFileSystemData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ManagedServiceIdentityUpdate(ManagedServiceIdentityType? type, IDictionary<string, UserAssignedIdentity> userAssignedIdentities, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Value = value;
-            NextLink = nextLink;
+            Type = type;
+            UserAssignedIdentities = userAssignedIdentities;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="FileSystemResourceListResult"/> for deserialization. </summary>
-        internal FileSystemResourceListResult()
-        {
-        }
-
-        /// <summary> The FileSystemResource items on this page. </summary>
-        public IReadOnlyList<DellFileSystemData> Value { get; }
-        /// <summary> The link to the next page of items. </summary>
-        public Uri NextLink { get; }
+        /// <summary> The type of managed identity assigned to this resource. </summary>
+        public ManagedServiceIdentityType? Type { get; set; }
+        /// <summary> The identities assigned to this resource by the user. </summary>
+        public IDictionary<string, UserAssignedIdentity> UserAssignedIdentities { get; }
     }
 }

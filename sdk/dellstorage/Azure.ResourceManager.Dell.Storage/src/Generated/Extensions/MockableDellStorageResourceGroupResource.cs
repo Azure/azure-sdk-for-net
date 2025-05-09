@@ -33,11 +33,11 @@ namespace Azure.ResourceManager.Dell.Storage.Mocking
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of LiftrBaseStorageFileSystemResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of LiftrBaseStorageFileSystemResources and their operations over a LiftrBaseStorageFileSystemResource. </returns>
-        public virtual LiftrBaseStorageFileSystemResourceCollection GetLiftrBaseStorageFileSystemResources()
+        /// <summary> Gets a collection of DellFileSystemResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of DellFileSystemResources and their operations over a DellFileSystemResource. </returns>
+        public virtual DellFileSystemCollection GetDellFileSystems()
         {
-            return GetCachedClient(client => new LiftrBaseStorageFileSystemResourceCollection(client, Id));
+            return GetCachedClient(client => new DellFileSystemCollection(client, Id));
         }
 
         /// <summary>
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Dell.Storage.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FileSystems_Get</description>
+        /// <description>FileSystemResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Dell.Storage.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="LiftrBaseStorageFileSystemResource"/></description>
+        /// <description><see cref="DellFileSystemResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -66,9 +66,9 @@ namespace Azure.ResourceManager.Dell.Storage.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="filesystemName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="filesystemName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<LiftrBaseStorageFileSystemResource>> GetLiftrBaseStorageFileSystemResourceAsync(string filesystemName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DellFileSystemResource>> GetDellFileSystemAsync(string filesystemName, CancellationToken cancellationToken = default)
         {
-            return await GetLiftrBaseStorageFileSystemResources().GetAsync(filesystemName, cancellationToken).ConfigureAwait(false);
+            return await GetDellFileSystems().GetAsync(filesystemName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Dell.Storage.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FileSystems_Get</description>
+        /// <description>FileSystemResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Dell.Storage.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="LiftrBaseStorageFileSystemResource"/></description>
+        /// <description><see cref="DellFileSystemResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -97,9 +97,9 @@ namespace Azure.ResourceManager.Dell.Storage.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="filesystemName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="filesystemName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<LiftrBaseStorageFileSystemResource> GetLiftrBaseStorageFileSystemResource(string filesystemName, CancellationToken cancellationToken = default)
+        public virtual Response<DellFileSystemResource> GetDellFileSystem(string filesystemName, CancellationToken cancellationToken = default)
         {
-            return GetLiftrBaseStorageFileSystemResources().Get(filesystemName, cancellationToken);
+            return GetDellFileSystems().Get(filesystemName, cancellationToken);
         }
     }
 }

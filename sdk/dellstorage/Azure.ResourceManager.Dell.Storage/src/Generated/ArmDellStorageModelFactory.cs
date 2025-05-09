@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -15,7 +16,7 @@ namespace Azure.ResourceManager.Dell.Storage.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmDellStorageModelFactory
     {
-        /// <summary> Initializes a new instance of <see cref="Storage.LiftrBaseStorageFileSystemResourceData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Storage.DellFileSystemData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -24,12 +25,12 @@ namespace Azure.ResourceManager.Dell.Storage.Models
         /// <param name="location"> The location. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
-        /// <returns> A new <see cref="Storage.LiftrBaseStorageFileSystemResourceData"/> instance for mocking. </returns>
-        public static LiftrBaseStorageFileSystemResourceData LiftrBaseStorageFileSystemResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, LiftrBaseStorageFileSystemResourceProperties properties = null, ManagedServiceIdentity identity = null)
+        /// <returns> A new <see cref="Storage.DellFileSystemData"/> instance for mocking. </returns>
+        public static DellFileSystemData DellFileSystemData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, DellFileSystemProperties properties = null, ManagedServiceIdentity identity = null)
         {
             tags ??= new Dictionary<string, string>();
 
-            return new LiftrBaseStorageFileSystemResourceData(
+            return new DellFileSystemData(
                 id,
                 name,
                 resourceType,
@@ -41,7 +42,7 @@ namespace Azure.ResourceManager.Dell.Storage.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.LiftrBaseStorageFileSystemResourceProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DellFileSystemProperties"/>. </summary>
         /// <param name="capacity"> Capacity for Dell Filesystem, Will be received as part of Job Status. </param>
         /// <param name="marketplace"> Marketplace details. </param>
         /// <param name="provisioningState"> Provisioning State of the resource. </param>
@@ -53,16 +54,16 @@ namespace Azure.ResourceManager.Dell.Storage.Models
         /// <param name="oneFsUri"> OneFS url. </param>
         /// <param name="dellReferenceNumber"> DellReferenceNumber of the resource. </param>
         /// <param name="encryption"> EncryptionProperties of the resource. </param>
-        /// <returns> A new <see cref="Models.LiftrBaseStorageFileSystemResourceProperties"/> instance for mocking. </returns>
-        public static LiftrBaseStorageFileSystemResourceProperties LiftrBaseStorageFileSystemResourceProperties(LiftrBaseStorageCapacity capacity = null, LiftrBaseMarketplaceDetails marketplace = null, ProvisioningState? provisioningState = null, string delegatedSubnetId = null, string delegatedSubnetCidr = null, string userEmail = null, string fileSystemId = null, string smartConnectFqdn = null, string oneFsUri = null, string dellReferenceNumber = null, LiftrBaseEncryptionProperties encryption = null)
+        /// <returns> A new <see cref="Models.DellFileSystemProperties"/> instance for mocking. </returns>
+        public static DellFileSystemProperties DellFileSystemProperties(DellFileSystemCapacity capacity = null, DellFileSystemMarketplaceDetails marketplace = null, DellFileSystemProvisioningState? provisioningState = null, string delegatedSubnetId = null, string delegatedSubnetCidr = null, string userEmail = null, string fileSystemId = null, string smartConnectFqdn = null, string oneFsUri = null, string dellReferenceNumber = null, DellFileSystemEncryptionPropertiess encryption = null)
         {
-            return new LiftrBaseStorageFileSystemResourceProperties(
+            return new DellFileSystemProperties(
                 capacity,
                 marketplace,
                 provisioningState,
                 delegatedSubnetId,
                 delegatedSubnetCidr,
-                userEmail != null ? new LiftrBaseUserDetails(userEmail, serializedAdditionalRawData: null) : null,
+                userEmail != null ? new DellFileSystemUserDetails(userEmail, serializedAdditionalRawData: null) : null,
                 fileSystemId,
                 smartConnectFqdn,
                 oneFsUri,
@@ -71,7 +72,7 @@ namespace Azure.ResourceManager.Dell.Storage.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.LiftrBaseMarketplaceDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DellFileSystemMarketplaceDetails"/>. </summary>
         /// <param name="marketplaceSubscriptionId"> Marketplace Subscription Id. </param>
         /// <param name="planId"> Plan Id. </param>
         /// <param name="offerId"> Offer Id. </param>
@@ -81,10 +82,10 @@ namespace Azure.ResourceManager.Dell.Storage.Models
         /// <param name="marketplaceSubscriptionStatus"> Marketplace subscription status. </param>
         /// <param name="endDate"> End Date of the subscription. </param>
         /// <param name="termUnit"> Term Unit. </param>
-        /// <returns> A new <see cref="Models.LiftrBaseMarketplaceDetails"/> instance for mocking. </returns>
-        public static LiftrBaseMarketplaceDetails LiftrBaseMarketplaceDetails(string marketplaceSubscriptionId = null, string planId = null, string offerId = null, string publisherId = null, string privateOfferId = null, string planName = null, MarketplaceSubscriptionStatus? marketplaceSubscriptionStatus = null, string endDate = null, string termUnit = null)
+        /// <returns> A new <see cref="Models.DellFileSystemMarketplaceDetails"/> instance for mocking. </returns>
+        public static DellFileSystemMarketplaceDetails DellFileSystemMarketplaceDetails(string marketplaceSubscriptionId = null, string planId = null, string offerId = null, string publisherId = null, string privateOfferId = null, string planName = null, DellFileSystemMarketplaceSubscriptionStatus? marketplaceSubscriptionStatus = null, string endDate = null, string termUnit = null)
         {
-            return new LiftrBaseMarketplaceDetails(
+            return new DellFileSystemMarketplaceDetails(
                 marketplaceSubscriptionId,
                 planId,
                 offerId,

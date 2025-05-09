@@ -7,12 +7,12 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Dell.Storage.Models
 {
-    /// <summary> The response of a FileSystemResource list operation. </summary>
-    internal partial class FileSystemResourceListResult
+    /// <summary> EncryptionIdentityProperties of Dell FileSystem resource. </summary>
+    public partial class DellFileSystemEncryptionIdentityProperties
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,35 +46,25 @@ namespace Azure.ResourceManager.Dell.Storage.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="FileSystemResourceListResult"/>. </summary>
-        /// <param name="value"> The FileSystemResource items on this page. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal FileSystemResourceListResult(IEnumerable<DellFileSystemData> value)
+        /// <summary> Initializes a new instance of <see cref="DellFileSystemEncryptionIdentityProperties"/>. </summary>
+        public DellFileSystemEncryptionIdentityProperties()
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="FileSystemResourceListResult"/>. </summary>
-        /// <param name="value"> The FileSystemResource items on this page. </param>
-        /// <param name="nextLink"> The link to the next page of items. </param>
+        /// <summary> Initializes a new instance of <see cref="DellFileSystemEncryptionIdentityProperties"/>. </summary>
+        /// <param name="identityType"> Identity type - SystemAssigned/UserAssigned - Only UserAssigned is supported now. </param>
+        /// <param name="identityResourceId"> User-assigned identity resource id - Only when user opts for UserAssigned identity and hence optional. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FileSystemResourceListResult(IReadOnlyList<DellFileSystemData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DellFileSystemEncryptionIdentityProperties(DellFileSystemEncryptionIdentityType? identityType, ResourceIdentifier identityResourceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Value = value;
-            NextLink = nextLink;
+            IdentityType = identityType;
+            IdentityResourceId = identityResourceId;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="FileSystemResourceListResult"/> for deserialization. </summary>
-        internal FileSystemResourceListResult()
-        {
-        }
-
-        /// <summary> The FileSystemResource items on this page. </summary>
-        public IReadOnlyList<DellFileSystemData> Value { get; }
-        /// <summary> The link to the next page of items. </summary>
-        public Uri NextLink { get; }
+        /// <summary> Identity type - SystemAssigned/UserAssigned - Only UserAssigned is supported now. </summary>
+        public DellFileSystemEncryptionIdentityType? IdentityType { get; set; }
+        /// <summary> User-assigned identity resource id - Only when user opts for UserAssigned identity and hence optional. </summary>
+        public ResourceIdentifier IdentityResourceId { get; set; }
     }
 }

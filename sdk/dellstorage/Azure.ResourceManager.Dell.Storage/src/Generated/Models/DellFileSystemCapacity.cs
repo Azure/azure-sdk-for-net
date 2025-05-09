@@ -7,12 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Azure.ResourceManager.Dell.Storage.Models
 {
-    /// <summary> The response of a FileSystemResource list operation. </summary>
-    internal partial class FileSystemResourceListResult
+    /// <summary> Capacity for a Resource. </summary>
+    public partial class DellFileSystemCapacity
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,35 +45,33 @@ namespace Azure.ResourceManager.Dell.Storage.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="FileSystemResourceListResult"/>. </summary>
-        /// <param name="value"> The FileSystemResource items on this page. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal FileSystemResourceListResult(IEnumerable<DellFileSystemData> value)
+        /// <summary> Initializes a new instance of <see cref="DellFileSystemCapacity"/>. </summary>
+        public DellFileSystemCapacity()
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="FileSystemResourceListResult"/>. </summary>
-        /// <param name="value"> The FileSystemResource items on this page. </param>
-        /// <param name="nextLink"> The link to the next page of items. </param>
+        /// <summary> Initializes a new instance of <see cref="DellFileSystemCapacity"/>. </summary>
+        /// <param name="min"> Minimum Capacity. </param>
+        /// <param name="max"> Maximum Capacity. </param>
+        /// <param name="incremental"> Units to be increased. </param>
+        /// <param name="current"> Current Capacity of the resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FileSystemResourceListResult(IReadOnlyList<DellFileSystemData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DellFileSystemCapacity(string min, string max, string incremental, string current, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Value = value;
-            NextLink = nextLink;
+            Min = min;
+            Max = max;
+            Incremental = incremental;
+            Current = current;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="FileSystemResourceListResult"/> for deserialization. </summary>
-        internal FileSystemResourceListResult()
-        {
-        }
-
-        /// <summary> The FileSystemResource items on this page. </summary>
-        public IReadOnlyList<DellFileSystemData> Value { get; }
-        /// <summary> The link to the next page of items. </summary>
-        public Uri NextLink { get; }
+        /// <summary> Minimum Capacity. </summary>
+        public string Min { get; set; }
+        /// <summary> Maximum Capacity. </summary>
+        public string Max { get; set; }
+        /// <summary> Units to be increased. </summary>
+        public string Incremental { get; set; }
+        /// <summary> Current Capacity of the resource. </summary>
+        public string Current { get; set; }
     }
 }

@@ -15,8 +15,8 @@ namespace Azure.ResourceManager.Dell.Storage.Mocking
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
     public partial class MockableDellStorageSubscriptionResource : ArmResource
     {
-        private ClientDiagnostics _liftrBaseStorageFileSystemResourceFileSystemsClientDiagnostics;
-        private FileSystemsRestOperations _liftrBaseStorageFileSystemResourceFileSystemsRestClient;
+        private ClientDiagnostics _dellFileSystemFileSystemsClientDiagnostics;
+        private FileSystemsRestOperations _dellFileSystemFileSystemsRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="MockableDellStorageSubscriptionResource"/> class for mocking. </summary>
         protected MockableDellStorageSubscriptionResource()
@@ -30,8 +30,8 @@ namespace Azure.ResourceManager.Dell.Storage.Mocking
         {
         }
 
-        private ClientDiagnostics LiftrBaseStorageFileSystemResourceFileSystemsClientDiagnostics => _liftrBaseStorageFileSystemResourceFileSystemsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Dell.Storage", LiftrBaseStorageFileSystemResource.ResourceType.Namespace, Diagnostics);
-        private FileSystemsRestOperations LiftrBaseStorageFileSystemResourceFileSystemsRestClient => _liftrBaseStorageFileSystemResourceFileSystemsRestClient ??= new FileSystemsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(LiftrBaseStorageFileSystemResource.ResourceType));
+        private ClientDiagnostics DellFileSystemFileSystemsClientDiagnostics => _dellFileSystemFileSystemsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Dell.Storage", DellFileSystemResource.ResourceType.Namespace, Diagnostics);
+        private FileSystemsRestOperations DellFileSystemFileSystemsRestClient => _dellFileSystemFileSystemsRestClient ??= new FileSystemsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(DellFileSystemResource.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Dell.Storage.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FileSystems_ListBySubscription</description>
+        /// <description>FileSystemResource_ListBySubscription</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -56,17 +56,17 @@ namespace Azure.ResourceManager.Dell.Storage.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="LiftrBaseStorageFileSystemResource"/></description>
+        /// <description><see cref="DellFileSystemResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="LiftrBaseStorageFileSystemResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<LiftrBaseStorageFileSystemResource> GetLiftrBaseStorageFileSystemResourcesAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="DellFileSystemResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DellFileSystemResource> GetDellFileSystemsAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => LiftrBaseStorageFileSystemResourceFileSystemsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => LiftrBaseStorageFileSystemResourceFileSystemsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new LiftrBaseStorageFileSystemResource(Client, LiftrBaseStorageFileSystemResourceData.DeserializeLiftrBaseStorageFileSystemResourceData(e)), LiftrBaseStorageFileSystemResourceFileSystemsClientDiagnostics, Pipeline, "MockableDellStorageSubscriptionResource.GetLiftrBaseStorageFileSystemResources", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => DellFileSystemFileSystemsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DellFileSystemFileSystemsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DellFileSystemResource(Client, DellFileSystemData.DeserializeDellFileSystemData(e)), DellFileSystemFileSystemsClientDiagnostics, Pipeline, "MockableDellStorageSubscriptionResource.GetDellFileSystems", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Dell.Storage.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FileSystems_ListBySubscription</description>
+        /// <description>FileSystemResource_ListBySubscription</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -86,17 +86,17 @@ namespace Azure.ResourceManager.Dell.Storage.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="LiftrBaseStorageFileSystemResource"/></description>
+        /// <description><see cref="DellFileSystemResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="LiftrBaseStorageFileSystemResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<LiftrBaseStorageFileSystemResource> GetLiftrBaseStorageFileSystemResources(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DellFileSystemResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DellFileSystemResource> GetDellFileSystems(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => LiftrBaseStorageFileSystemResourceFileSystemsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => LiftrBaseStorageFileSystemResourceFileSystemsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new LiftrBaseStorageFileSystemResource(Client, LiftrBaseStorageFileSystemResourceData.DeserializeLiftrBaseStorageFileSystemResourceData(e)), LiftrBaseStorageFileSystemResourceFileSystemsClientDiagnostics, Pipeline, "MockableDellStorageSubscriptionResource.GetLiftrBaseStorageFileSystemResources", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => DellFileSystemFileSystemsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DellFileSystemFileSystemsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DellFileSystemResource(Client, DellFileSystemData.DeserializeDellFileSystemData(e)), DellFileSystemFileSystemsClientDiagnostics, Pipeline, "MockableDellStorageSubscriptionResource.GetDellFileSystems", "value", "nextLink", cancellationToken);
         }
     }
 }

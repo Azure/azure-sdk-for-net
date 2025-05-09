@@ -27,13 +27,13 @@ namespace Azure.ResourceManager.Dell.Storage.Models
         private const string UserAssignedValue = "UserAssigned";
         private const string SystemAssignedUserAssignedValue = "SystemAssigned,UserAssigned";
 
-        /// <summary> None. </summary>
+        /// <summary> No managed identity. </summary>
         public static ManagedServiceIdentityType None { get; } = new ManagedServiceIdentityType(NoneValue);
-        /// <summary> SystemAssigned. </summary>
+        /// <summary> System assigned managed identity. </summary>
         public static ManagedServiceIdentityType SystemAssigned { get; } = new ManagedServiceIdentityType(SystemAssignedValue);
-        /// <summary> UserAssigned. </summary>
+        /// <summary> User assigned managed identity. </summary>
         public static ManagedServiceIdentityType UserAssigned { get; } = new ManagedServiceIdentityType(UserAssignedValue);
-        /// <summary> SystemAssigned,UserAssigned. </summary>
+        /// <summary> System and user assigned managed identity. </summary>
         public static ManagedServiceIdentityType SystemAssignedUserAssigned { get; } = new ManagedServiceIdentityType(SystemAssignedUserAssignedValue);
         /// <summary> Determines if two <see cref="ManagedServiceIdentityType"/> values are the same. </summary>
         public static bool operator ==(ManagedServiceIdentityType left, ManagedServiceIdentityType right) => left.Equals(right);

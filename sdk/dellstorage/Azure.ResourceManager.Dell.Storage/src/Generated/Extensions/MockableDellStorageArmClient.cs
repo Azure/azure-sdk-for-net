@@ -35,15 +35,15 @@ namespace Azure.ResourceManager.Dell.Storage.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="LiftrBaseStorageFileSystemResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="LiftrBaseStorageFileSystemResource.CreateResourceIdentifier" /> to create a <see cref="LiftrBaseStorageFileSystemResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="DellFileSystemResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DellFileSystemResource.CreateResourceIdentifier" /> to create a <see cref="DellFileSystemResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="LiftrBaseStorageFileSystemResource"/> object. </returns>
-        public virtual LiftrBaseStorageFileSystemResource GetLiftrBaseStorageFileSystemResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DellFileSystemResource"/> object. </returns>
+        public virtual DellFileSystemResource GetDellFileSystemResource(ResourceIdentifier id)
         {
-            LiftrBaseStorageFileSystemResource.ValidateResourceId(id);
-            return new LiftrBaseStorageFileSystemResource(Client, id);
+            DellFileSystemResource.ValidateResourceId(id);
+            return new DellFileSystemResource(Client, id);
         }
     }
 }

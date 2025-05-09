@@ -33,39 +33,39 @@ namespace Azure.ResourceManager.Dell.Storage
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="LiftrBaseStorageFileSystemResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="LiftrBaseStorageFileSystemResource.CreateResourceIdentifier" /> to create a <see cref="LiftrBaseStorageFileSystemResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DellFileSystemResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DellFileSystemResource.CreateResourceIdentifier" /> to create a <see cref="DellFileSystemResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableDellStorageArmClient.GetLiftrBaseStorageFileSystemResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDellStorageArmClient.GetDellFileSystemResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="LiftrBaseStorageFileSystemResource"/> object. </returns>
-        public static LiftrBaseStorageFileSystemResource GetLiftrBaseStorageFileSystemResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DellFileSystemResource"/> object. </returns>
+        public static DellFileSystemResource GetDellFileSystemResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableDellStorageArmClient(client).GetLiftrBaseStorageFileSystemResource(id);
+            return GetMockableDellStorageArmClient(client).GetDellFileSystemResource(id);
         }
 
         /// <summary>
-        /// Gets a collection of LiftrBaseStorageFileSystemResources in the ResourceGroupResource.
+        /// Gets a collection of DellFileSystemResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableDellStorageResourceGroupResource.GetLiftrBaseStorageFileSystemResources()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDellStorageResourceGroupResource.GetDellFileSystems()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of LiftrBaseStorageFileSystemResources and their operations over a LiftrBaseStorageFileSystemResource. </returns>
-        public static LiftrBaseStorageFileSystemResourceCollection GetLiftrBaseStorageFileSystemResources(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of DellFileSystemResources and their operations over a DellFileSystemResource. </returns>
+        public static DellFileSystemCollection GetDellFileSystems(this ResourceGroupResource resourceGroupResource)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableDellStorageResourceGroupResource(resourceGroupResource).GetLiftrBaseStorageFileSystemResources();
+            return GetMockableDellStorageResourceGroupResource(resourceGroupResource).GetDellFileSystems();
         }
 
         /// <summary>
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Dell.Storage
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FileSystems_Get</description>
+        /// <description>FileSystemResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -85,12 +85,12 @@ namespace Azure.ResourceManager.Dell.Storage
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="LiftrBaseStorageFileSystemResource"/></description>
+        /// <description><see cref="DellFileSystemResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableDellStorageResourceGroupResource.GetLiftrBaseStorageFileSystemResourceAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDellStorageResourceGroupResource.GetDellFileSystemAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -99,11 +99,11 @@ namespace Azure.ResourceManager.Dell.Storage
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="filesystemName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="filesystemName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<LiftrBaseStorageFileSystemResource>> GetLiftrBaseStorageFileSystemResourceAsync(this ResourceGroupResource resourceGroupResource, string filesystemName, CancellationToken cancellationToken = default)
+        public static async Task<Response<DellFileSystemResource>> GetDellFileSystemAsync(this ResourceGroupResource resourceGroupResource, string filesystemName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockableDellStorageResourceGroupResource(resourceGroupResource).GetLiftrBaseStorageFileSystemResourceAsync(filesystemName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableDellStorageResourceGroupResource(resourceGroupResource).GetDellFileSystemAsync(filesystemName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Dell.Storage
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FileSystems_Get</description>
+        /// <description>FileSystemResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -123,12 +123,12 @@ namespace Azure.ResourceManager.Dell.Storage
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="LiftrBaseStorageFileSystemResource"/></description>
+        /// <description><see cref="DellFileSystemResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableDellStorageResourceGroupResource.GetLiftrBaseStorageFileSystemResource(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDellStorageResourceGroupResource.GetDellFileSystem(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -137,11 +137,11 @@ namespace Azure.ResourceManager.Dell.Storage
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="filesystemName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="filesystemName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public static Response<LiftrBaseStorageFileSystemResource> GetLiftrBaseStorageFileSystemResource(this ResourceGroupResource resourceGroupResource, string filesystemName, CancellationToken cancellationToken = default)
+        public static Response<DellFileSystemResource> GetDellFileSystem(this ResourceGroupResource resourceGroupResource, string filesystemName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableDellStorageResourceGroupResource(resourceGroupResource).GetLiftrBaseStorageFileSystemResource(filesystemName, cancellationToken);
+            return GetMockableDellStorageResourceGroupResource(resourceGroupResource).GetDellFileSystem(filesystemName, cancellationToken);
         }
 
         /// <summary>
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Dell.Storage
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FileSystems_ListBySubscription</description>
+        /// <description>FileSystemResource_ListBySubscription</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -161,23 +161,23 @@ namespace Azure.ResourceManager.Dell.Storage
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="LiftrBaseStorageFileSystemResource"/></description>
+        /// <description><see cref="DellFileSystemResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableDellStorageSubscriptionResource.GetLiftrBaseStorageFileSystemResources(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDellStorageSubscriptionResource.GetDellFileSystems(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="LiftrBaseStorageFileSystemResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<LiftrBaseStorageFileSystemResource> GetLiftrBaseStorageFileSystemResourcesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="DellFileSystemResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<DellFileSystemResource> GetDellFileSystemsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableDellStorageSubscriptionResource(subscriptionResource).GetLiftrBaseStorageFileSystemResourcesAsync(cancellationToken);
+            return GetMockableDellStorageSubscriptionResource(subscriptionResource).GetDellFileSystemsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.Dell.Storage
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FileSystems_ListBySubscription</description>
+        /// <description>FileSystemResource_ListBySubscription</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -197,23 +197,23 @@ namespace Azure.ResourceManager.Dell.Storage
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="LiftrBaseStorageFileSystemResource"/></description>
+        /// <description><see cref="DellFileSystemResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableDellStorageSubscriptionResource.GetLiftrBaseStorageFileSystemResources(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDellStorageSubscriptionResource.GetDellFileSystems(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="LiftrBaseStorageFileSystemResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<LiftrBaseStorageFileSystemResource> GetLiftrBaseStorageFileSystemResources(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DellFileSystemResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<DellFileSystemResource> GetDellFileSystems(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableDellStorageSubscriptionResource(subscriptionResource).GetLiftrBaseStorageFileSystemResources(cancellationToken);
+            return GetMockableDellStorageSubscriptionResource(subscriptionResource).GetDellFileSystems(cancellationToken);
         }
     }
 }
