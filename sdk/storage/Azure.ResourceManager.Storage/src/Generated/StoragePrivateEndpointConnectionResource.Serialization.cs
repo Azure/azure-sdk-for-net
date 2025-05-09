@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Storage
 
         StoragePrivateEndpointConnectionData IJsonModel<StoragePrivateEndpointConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<StoragePrivateEndpointConnectionData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<StoragePrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<StoragePrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<StoragePrivateEndpointConnectionData>(Data, options, AzureResourceManagerStorageContext.Default);
 
-        StoragePrivateEndpointConnectionData IPersistableModel<StoragePrivateEndpointConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<StoragePrivateEndpointConnectionData>(data, options);
+        StoragePrivateEndpointConnectionData IPersistableModel<StoragePrivateEndpointConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<StoragePrivateEndpointConnectionData>(data, options, AzureResourceManagerStorageContext.Default);
 
         string IPersistableModel<StoragePrivateEndpointConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<StoragePrivateEndpointConnectionData>)Data).GetFormatFromOptions(options);
     }

@@ -15,6 +15,8 @@ namespace _Type.Model.Inheritance.NestedDiscriminator
 {
     public partial class SawShark : IJsonModel<SawShark>
     {
+        internal SawShark() => throw null;
+
         void IJsonModel<SawShark>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;

@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Sql
 
         ManagedLedgerDigestUploadResource IOperationSource<ManagedLedgerDigestUploadResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ManagedLedgerDigestUploadData>(response.Content);
+            var data = ModelReaderWriter.Read<ManagedLedgerDigestUploadData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSqlContext.Default);
             return new ManagedLedgerDigestUploadResource(_client, data);
         }
 
         async ValueTask<ManagedLedgerDigestUploadResource> IOperationSource<ManagedLedgerDigestUploadResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ManagedLedgerDigestUploadData>(response.Content);
+            var data = ModelReaderWriter.Read<ManagedLedgerDigestUploadData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSqlContext.Default);
             return await Task.FromResult(new ManagedLedgerDigestUploadResource(_client, data)).ConfigureAwait(false);
         }
     }

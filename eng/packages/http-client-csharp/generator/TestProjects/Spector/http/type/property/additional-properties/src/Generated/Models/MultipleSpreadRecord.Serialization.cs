@@ -15,6 +15,8 @@ namespace _Type.Property.AdditionalProperties
 {
     public partial class MultipleSpreadRecord : IJsonModel<MultipleSpreadRecord>
     {
+        internal MultipleSpreadRecord() => throw null;
+
         void IJsonModel<MultipleSpreadRecord>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;

@@ -193,7 +193,7 @@ namespace Azure.AI.Translation.Document
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureAITranslationDocumentContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(DocumentTranslationFileFormat)} does not support writing '{options.Format}' format.");
             }

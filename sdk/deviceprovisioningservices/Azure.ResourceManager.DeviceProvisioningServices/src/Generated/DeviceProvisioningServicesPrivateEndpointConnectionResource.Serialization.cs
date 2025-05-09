@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
 
         DeviceProvisioningServicesPrivateEndpointConnectionData IJsonModel<DeviceProvisioningServicesPrivateEndpointConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DeviceProvisioningServicesPrivateEndpointConnectionData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<DeviceProvisioningServicesPrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<DeviceProvisioningServicesPrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DeviceProvisioningServicesPrivateEndpointConnectionData>(Data, options, AzureResourceManagerDeviceProvisioningServicesContext.Default);
 
-        DeviceProvisioningServicesPrivateEndpointConnectionData IPersistableModel<DeviceProvisioningServicesPrivateEndpointConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DeviceProvisioningServicesPrivateEndpointConnectionData>(data, options);
+        DeviceProvisioningServicesPrivateEndpointConnectionData IPersistableModel<DeviceProvisioningServicesPrivateEndpointConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DeviceProvisioningServicesPrivateEndpointConnectionData>(data, options, AzureResourceManagerDeviceProvisioningServicesContext.Default);
 
         string IPersistableModel<DeviceProvisioningServicesPrivateEndpointConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DeviceProvisioningServicesPrivateEndpointConnectionData>)Data).GetFormatFromOptions(options);
     }
