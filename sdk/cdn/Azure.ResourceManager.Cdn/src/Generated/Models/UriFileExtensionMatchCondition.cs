@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Defines the parameters for UrlFileExtension match conditions. </summary>
-    public partial class UriFileExtensionMatchCondition : DeliveryRuleConditionParameters
+    public partial class UriFileExtensionMatchCondition : DeliveryRuleConditionProperties
     {
         /// <summary> Initializes a new instance of <see cref="UriFileExtensionMatchCondition"/>. </summary>
         /// <param name="uriFileExtensionOperator"> Describes operator to be matched. </param>

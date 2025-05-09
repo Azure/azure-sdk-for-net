@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Defines the parameters for the cache-key query string action. </summary>
-    public partial class CacheKeyQueryStringActionProperties : DeliveryRuleActionParameters
+    public partial class CacheKeyQueryStringActionProperties : DeliveryRuleActionProperties
     {
         /// <summary> Initializes a new instance of <see cref="CacheKeyQueryStringActionProperties"/>. </summary>
         /// <param name="queryStringBehavior"> Caching behavior for the requests. </param>

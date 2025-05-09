@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Defines the parameters for RemoteAddress match conditions. </summary>
-    public partial class RemoteAddressMatchCondition : DeliveryRuleConditionParameters
+    public partial class RemoteAddressMatchCondition : DeliveryRuleConditionProperties
     {
         /// <summary> Initializes a new instance of <see cref="RemoteAddressMatchCondition"/>. </summary>
         /// <param name="remoteAddressOperator"> Describes operator to be matched. </param>

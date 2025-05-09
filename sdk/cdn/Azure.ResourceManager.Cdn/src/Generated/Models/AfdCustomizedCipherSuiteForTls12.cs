@@ -22,25 +22,12 @@ namespace Azure.ResourceManager.Cdn.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string EcdheRSAAES128GCMSHA256Value = "ECDHE_RSA_AES128_GCM_SHA256";
-        private const string EcdheRSAAES256GCMSHA384Value = "ECDHE_RSA_AES256_GCM_SHA384";
-        private const string DHERSAAES256GCMSHA384Value = "DHE_RSA_AES256_GCM_SHA384";
-        private const string DHERSAAES128GCMSHA256Value = "DHE_RSA_AES128_GCM_SHA256";
-        private const string EcdheRSAAES128Sha256Value = "ECDHE_RSA_AES128_SHA256";
-        private const string EcdheRSAAES256SHA384Value = "ECDHE_RSA_AES256_SHA384";
-
-        /// <summary> ECDHE_RSA_AES128_GCM_SHA256. </summary>
-        public static AfdCustomizedCipherSuiteForTls12 EcdheRSAAES128GCMSHA256 { get; } = new AfdCustomizedCipherSuiteForTls12(EcdheRSAAES128GCMSHA256Value);
-        /// <summary> ECDHE_RSA_AES256_GCM_SHA384. </summary>
-        public static AfdCustomizedCipherSuiteForTls12 EcdheRSAAES256GCMSHA384 { get; } = new AfdCustomizedCipherSuiteForTls12(EcdheRSAAES256GCMSHA384Value);
-        /// <summary> DHE_RSA_AES256_GCM_SHA384. </summary>
-        public static AfdCustomizedCipherSuiteForTls12 DHERSAAES256GCMSHA384 { get; } = new AfdCustomizedCipherSuiteForTls12(DHERSAAES256GCMSHA384Value);
-        /// <summary> DHE_RSA_AES128_GCM_SHA256. </summary>
-        public static AfdCustomizedCipherSuiteForTls12 DHERSAAES128GCMSHA256 { get; } = new AfdCustomizedCipherSuiteForTls12(DHERSAAES128GCMSHA256Value);
-        /// <summary> ECDHE_RSA_AES128_SHA256. </summary>
-        public static AfdCustomizedCipherSuiteForTls12 EcdheRSAAES128Sha256 { get; } = new AfdCustomizedCipherSuiteForTls12(EcdheRSAAES128Sha256Value);
-        /// <summary> ECDHE_RSA_AES256_SHA384. </summary>
-        public static AfdCustomizedCipherSuiteForTls12 EcdheRSAAES256SHA384 { get; } = new AfdCustomizedCipherSuiteForTls12(EcdheRSAAES256SHA384Value);
+        private const string Ecdhe_Rsa_Aes128_Gcm_Sha256Value = "ECDHE_RSA_AES128_GCM_SHA256";
+        private const string Ecdhe_Rsa_Aes256_Gcm_Sha384Value = "ECDHE_RSA_AES256_GCM_SHA384";
+        private const string Dhe_Rsa_Aes256_Gcm_Sha384Value = "DHE_RSA_AES256_GCM_SHA384";
+        private const string Dhe_Rsa_Aes128_Gcm_Sha256Value = "DHE_RSA_AES128_GCM_SHA256";
+        private const string Ecdhe_Rsa_Aes128_Sha256Value = "ECDHE_RSA_AES128_SHA256";
+        private const string Ecdhe_Rsa_Aes256_Sha384Value = "ECDHE_RSA_AES256_SHA384";
         /// <summary> Determines if two <see cref="AfdCustomizedCipherSuiteForTls12"/> values are the same. </summary>
         public static bool operator ==(AfdCustomizedCipherSuiteForTls12 left, AfdCustomizedCipherSuiteForTls12 right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AfdCustomizedCipherSuiteForTls12"/> values are not the same. </summary>

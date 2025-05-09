@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Defines the parameters for the url redirect action. </summary>
-    public partial class UriRedirectActionProperties : DeliveryRuleActionParameters
+    public partial class UriRedirectActionProperties : DeliveryRuleActionProperties
     {
         /// <summary> Initializes a new instance of <see cref="UriRedirectActionProperties"/>. </summary>
         /// <param name="redirectType"> The redirect type the rule will use when redirecting traffic. </param>

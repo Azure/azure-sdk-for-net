@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Defines the parameters for SocketAddress match conditions. </summary>
-    public partial class SocketAddressMatchCondition : DeliveryRuleConditionParameters
+    public partial class SocketAddressMatchCondition : DeliveryRuleConditionProperties
     {
         /// <summary> Initializes a new instance of <see cref="SocketAddressMatchCondition"/>. </summary>
         /// <param name="socketAddressOperator"> Describes operator to be matched. </param>

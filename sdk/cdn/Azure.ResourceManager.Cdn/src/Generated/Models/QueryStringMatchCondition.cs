@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Defines the parameters for QueryString match conditions. </summary>
-    public partial class QueryStringMatchCondition : DeliveryRuleConditionParameters
+    public partial class QueryStringMatchCondition : DeliveryRuleConditionProperties
     {
         /// <summary> Initializes a new instance of <see cref="QueryStringMatchCondition"/>. </summary>
         /// <param name="queryStringOperator"> Describes operator to be matched. </param>

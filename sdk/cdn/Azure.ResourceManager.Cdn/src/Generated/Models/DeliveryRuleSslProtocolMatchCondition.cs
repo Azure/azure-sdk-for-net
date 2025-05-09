@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Defines the parameters for SslProtocol match conditions. </summary>
-    public partial class DeliveryRuleSslProtocolMatchCondition : DeliveryRuleConditionParameters
+    public partial class DeliveryRuleSslProtocolMatchCondition : DeliveryRuleConditionProperties
     {
         /// <summary> Initializes a new instance of <see cref="DeliveryRuleSslProtocolMatchCondition"/>. </summary>
         /// <param name="sslProtocolOperator"> Describes operator to be matched. </param>

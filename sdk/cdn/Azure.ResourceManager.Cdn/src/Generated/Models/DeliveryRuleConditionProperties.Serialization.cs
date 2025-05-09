@@ -13,11 +13,11 @@ using Azure.Core;
 namespace Azure.ResourceManager.Cdn.Models
 {
     [PersistableModelProxy(typeof(UnknownDeliveryRuleConditionParameters))]
-    public partial class DeliveryRuleConditionParameters : IUtf8JsonSerializable, IJsonModel<DeliveryRuleConditionParameters>
+    public partial class DeliveryRuleConditionProperties : IUtf8JsonSerializable, IJsonModel<DeliveryRuleConditionProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DeliveryRuleConditionParameters>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DeliveryRuleConditionProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<DeliveryRuleConditionParameters>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<DeliveryRuleConditionProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DeliveryRuleConditionParameters>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DeliveryRuleConditionProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DeliveryRuleConditionParameters)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(DeliveryRuleConditionProperties)} does not support writing '{format}' format.");
             }
 
             writer.WritePropertyName("typeName"u8);
@@ -53,19 +53,19 @@ namespace Azure.ResourceManager.Cdn.Models
             }
         }
 
-        DeliveryRuleConditionParameters IJsonModel<DeliveryRuleConditionParameters>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        DeliveryRuleConditionProperties IJsonModel<DeliveryRuleConditionProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DeliveryRuleConditionParameters>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DeliveryRuleConditionProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DeliveryRuleConditionParameters)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(DeliveryRuleConditionProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDeliveryRuleConditionParameters(document.RootElement, options);
+            return DeserializeDeliveryRuleConditionProperties(document.RootElement, options);
         }
 
-        internal static DeliveryRuleConditionParameters DeserializeDeliveryRuleConditionParameters(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static DeliveryRuleConditionProperties DeserializeDeliveryRuleConditionProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -101,35 +101,35 @@ namespace Azure.ResourceManager.Cdn.Models
             return UnknownDeliveryRuleConditionParameters.DeserializeUnknownDeliveryRuleConditionParameters(element, options);
         }
 
-        BinaryData IPersistableModel<DeliveryRuleConditionParameters>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<DeliveryRuleConditionProperties>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DeliveryRuleConditionParameters>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DeliveryRuleConditionProperties>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DeliveryRuleConditionParameters)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DeliveryRuleConditionProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
-        DeliveryRuleConditionParameters IPersistableModel<DeliveryRuleConditionParameters>.Create(BinaryData data, ModelReaderWriterOptions options)
+        DeliveryRuleConditionProperties IPersistableModel<DeliveryRuleConditionProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DeliveryRuleConditionParameters>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DeliveryRuleConditionProperties>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeDeliveryRuleConditionParameters(document.RootElement, options);
+                        return DeserializeDeliveryRuleConditionProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DeliveryRuleConditionParameters)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DeliveryRuleConditionProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<DeliveryRuleConditionParameters>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<DeliveryRuleConditionProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Defines the parameters for RequestBody match conditions. </summary>
-    public partial class RequestBodyMatchCondition : DeliveryRuleConditionParameters
+    public partial class RequestBodyMatchCondition : DeliveryRuleConditionProperties
     {
         /// <summary> Initializes a new instance of <see cref="RequestBodyMatchCondition"/>. </summary>
         /// <param name="requestBodyOperator"> Describes operator to be matched. </param>

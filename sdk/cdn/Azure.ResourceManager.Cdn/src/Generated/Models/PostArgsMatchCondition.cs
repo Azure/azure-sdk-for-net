@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Defines the parameters for PostArgs match conditions. </summary>
-    public partial class PostArgsMatchCondition : DeliveryRuleConditionParameters
+    public partial class PostArgsMatchCondition : DeliveryRuleConditionProperties
     {
         /// <summary> Initializes a new instance of <see cref="PostArgsMatchCondition"/>. </summary>
         /// <param name="postArgsOperator"> Describes operator to be matched. </param>

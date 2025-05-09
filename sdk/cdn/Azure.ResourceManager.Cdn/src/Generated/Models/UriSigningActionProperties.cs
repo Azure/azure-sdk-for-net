@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Defines the parameters for the Url Signing action. </summary>
-    public partial class UriSigningActionProperties : DeliveryRuleActionParameters
+    public partial class UriSigningActionProperties : DeliveryRuleActionProperties
     {
         /// <summary> Initializes a new instance of <see cref="UriSigningActionProperties"/>. </summary>
         public UriSigningActionProperties()

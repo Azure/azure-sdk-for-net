@@ -23,18 +23,12 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         private const string CustomizedValue = "Customized";
-        private const string TLS102019Value = "TLS10_2019";
-        private const string TLS122022Value = "TLS12_2022";
-        private const string TLS122023Value = "TLS12_2023";
+        private const string Tls1_0_2019Value = "TLS10_2019";
+        private const string Tls1_2_2022Value = "TLS12_2022";
+        private const string Tls1_2_2023Value = "TLS12_2023";
 
         /// <summary> Customized. </summary>
         public static AfdCipherSuiteSetType Customized { get; } = new AfdCipherSuiteSetType(CustomizedValue);
-        /// <summary> TLS10_2019. </summary>
-        public static AfdCipherSuiteSetType TLS102019 { get; } = new AfdCipherSuiteSetType(TLS102019Value);
-        /// <summary> TLS12_2022. </summary>
-        public static AfdCipherSuiteSetType TLS122022 { get; } = new AfdCipherSuiteSetType(TLS122022Value);
-        /// <summary> TLS12_2023. </summary>
-        public static AfdCipherSuiteSetType TLS122023 { get; } = new AfdCipherSuiteSetType(TLS122023Value);
         /// <summary> Determines if two <see cref="AfdCipherSuiteSetType"/> values are the same. </summary>
         public static bool operator ==(AfdCipherSuiteSetType left, AfdCipherSuiteSetType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AfdCipherSuiteSetType"/> values are not the same. </summary>

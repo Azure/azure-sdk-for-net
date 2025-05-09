@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Defines the parameters for UrlPath match conditions. </summary>
-    public partial class UriPathMatchCondition : DeliveryRuleConditionParameters
+    public partial class UriPathMatchCondition : DeliveryRuleConditionProperties
     {
         /// <summary> Initializes a new instance of <see cref="UriPathMatchCondition"/>. </summary>
         /// <param name="uriPathOperator"> Describes operator to be matched. </param>

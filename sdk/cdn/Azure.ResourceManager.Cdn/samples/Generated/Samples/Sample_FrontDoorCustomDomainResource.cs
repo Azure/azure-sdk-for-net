@@ -104,8 +104,8 @@ namespace Azure.ResourceManager.Cdn.Samples
                     MinimumTlsVersion = FrontDoorMinimumTlsVersion.Tls1_2,
                     CustomizedCipherSuiteSet = new FrontDoorCustomDomainHttpsCustomizedCipherSuiteSet
                     {
-                        CipherSuiteSetForTls12 = { AfdCustomizedCipherSuiteForTls12.EcdheRSAAES128GCMSHA256 },
-                        CipherSuiteSetForTls13 = { AfdCustomizedCipherSuiteForTls13.TLSAES128GCMSHA256, AfdCustomizedCipherSuiteForTls13.TLSAES256GCMSHA384 },
+                        CipherSuiteSetForTls12 = { AfdCustomizedCipherSuiteForTls12.Ecdhe_Rsa_Aes128_Gcm_Sha256 },
+                        CipherSuiteSetForTls13 = { AfdCustomizedCipherSuiteForTls13.TLS_Aes128_Gcm_Sha256, AfdCustomizedCipherSuiteForTls13.TLS_Aes256_Gcm_Sha384 },
                     },
                 },
                 DnsZoneId = new ResourceIdentifier(""),

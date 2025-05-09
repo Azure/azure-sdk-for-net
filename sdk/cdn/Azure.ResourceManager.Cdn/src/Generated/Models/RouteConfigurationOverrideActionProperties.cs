@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Defines the parameters for the route configuration override action. </summary>
-    public partial class RouteConfigurationOverrideActionProperties : DeliveryRuleActionParameters
+    public partial class RouteConfigurationOverrideActionProperties : DeliveryRuleActionProperties
     {
         /// <summary> Initializes a new instance of <see cref="RouteConfigurationOverrideActionProperties"/>. </summary>
         public RouteConfigurationOverrideActionProperties()

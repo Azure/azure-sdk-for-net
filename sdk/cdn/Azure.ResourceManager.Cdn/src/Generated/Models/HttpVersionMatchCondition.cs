@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Defines the parameters for HttpVersion match conditions. </summary>
-    public partial class HttpVersionMatchCondition : DeliveryRuleConditionParameters
+    public partial class HttpVersionMatchCondition : DeliveryRuleConditionProperties
     {
         /// <summary> Initializes a new instance of <see cref="HttpVersionMatchCondition"/>. </summary>
         /// <param name="httpVersionOperator"> Describes operator to be matched. </param>

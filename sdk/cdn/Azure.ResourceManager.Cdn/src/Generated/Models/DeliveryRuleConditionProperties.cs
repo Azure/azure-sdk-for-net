@@ -11,11 +11,11 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary>
-    /// Defines the parameters for delivery rule actions
-    /// Please note <see cref="DeliveryRuleActionParameters"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="CacheExpirationActionProperties"/>, <see cref="CacheKeyQueryStringActionProperties"/>, <see cref="HeaderActionProperties"/>, <see cref="OriginGroupOverrideActionProperties"/>, <see cref="RouteConfigurationOverrideActionProperties"/>, <see cref="UriRedirectActionProperties"/>, <see cref="UriRewriteActionProperties"/> and <see cref="UriSigningActionProperties"/>.
+    /// Defines the parameters for delivery rule match conditions
+    /// Please note <see cref="DeliveryRuleConditionProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+    /// The available derived classes include <see cref="ClientPortMatchCondition"/>, <see cref="CookiesMatchCondition"/>, <see cref="HostNameMatchCondition"/>, <see cref="HttpVersionMatchCondition"/>, <see cref="IsDeviceMatchCondition"/>, <see cref="PostArgsMatchCondition"/>, <see cref="QueryStringMatchCondition"/>, <see cref="RemoteAddressMatchCondition"/>, <see cref="RequestBodyMatchCondition"/>, <see cref="RequestHeaderMatchCondition"/>, <see cref="RequestMethodMatchCondition"/>, <see cref="RequestSchemeMatchCondition"/>, <see cref="RequestUriMatchCondition"/>, <see cref="ServerPortMatchCondition"/>, <see cref="SocketAddressMatchCondition"/>, <see cref="DeliveryRuleSslProtocolMatchCondition"/>, <see cref="UriFileExtensionMatchCondition"/>, <see cref="UriFileNameMatchCondition"/> and <see cref="UriPathMatchCondition"/>.
     /// </summary>
-    public abstract partial class DeliveryRuleActionParameters
+    public abstract partial class DeliveryRuleConditionProperties
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -49,21 +49,21 @@ namespace Azure.ResourceManager.Cdn.Models
         /// </summary>
         private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="DeliveryRuleActionParameters"/>. </summary>
-        protected DeliveryRuleActionParameters()
+        /// <summary> Initializes a new instance of <see cref="DeliveryRuleConditionProperties"/>. </summary>
+        protected DeliveryRuleConditionProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="DeliveryRuleActionParameters"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeliveryRuleConditionProperties"/>. </summary>
         /// <param name="typeName"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DeliveryRuleActionParameters(DeliveryRuleActionParametersType typeName, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DeliveryRuleConditionProperties(DeliveryRuleConditionParametersType typeName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             TypeName = typeName;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets the type name. </summary>
-        internal DeliveryRuleActionParametersType TypeName { get; set; }
+        internal DeliveryRuleConditionParametersType TypeName { get; set; }
     }
 }

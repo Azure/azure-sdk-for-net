@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Defines the parameters for ClientPort match conditions. </summary>
-    public partial class ClientPortMatchCondition : DeliveryRuleConditionParameters
+    public partial class ClientPortMatchCondition : DeliveryRuleConditionProperties
     {
         /// <summary> Initializes a new instance of <see cref="ClientPortMatchCondition"/>. </summary>
         /// <param name="clientPortOperator"> Describes operator to be matched. </param>

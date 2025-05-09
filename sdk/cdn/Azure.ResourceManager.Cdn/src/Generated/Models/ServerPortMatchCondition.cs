@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Defines the parameters for ServerPort match conditions. </summary>
-    public partial class ServerPortMatchCondition : DeliveryRuleConditionParameters
+    public partial class ServerPortMatchCondition : DeliveryRuleConditionProperties
     {
         /// <summary> Initializes a new instance of <see cref="ServerPortMatchCondition"/>. </summary>
         /// <param name="serverPortOperator"> Describes operator to be matched. </param>

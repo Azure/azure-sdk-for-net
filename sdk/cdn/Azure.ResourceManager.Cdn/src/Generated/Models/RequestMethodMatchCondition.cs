@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Defines the parameters for RequestMethod match conditions. </summary>
-    public partial class RequestMethodMatchCondition : DeliveryRuleConditionParameters
+    public partial class RequestMethodMatchCondition : DeliveryRuleConditionProperties
     {
         /// <summary> Initializes a new instance of <see cref="RequestMethodMatchCondition"/>. </summary>
         /// <param name="requestMethodOperator"> Describes operator to be matched. </param>

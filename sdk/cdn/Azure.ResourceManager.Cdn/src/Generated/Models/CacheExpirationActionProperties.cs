@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Defines the parameters for the cache expiration action. </summary>
-    public partial class CacheExpirationActionProperties : DeliveryRuleActionParameters
+    public partial class CacheExpirationActionProperties : DeliveryRuleActionProperties
     {
         /// <summary> Initializes a new instance of <see cref="CacheExpirationActionProperties"/>. </summary>
         /// <param name="cacheBehavior"> Caching behavior for the requests. </param>

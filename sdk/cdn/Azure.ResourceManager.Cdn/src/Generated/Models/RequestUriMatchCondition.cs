@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Defines the parameters for RequestUri match conditions. </summary>
-    public partial class RequestUriMatchCondition : DeliveryRuleConditionParameters
+    public partial class RequestUriMatchCondition : DeliveryRuleConditionProperties
     {
         /// <summary> Initializes a new instance of <see cref="RequestUriMatchCondition"/>. </summary>
         /// <param name="requestUriOperator"> Describes operator to be matched. </param>

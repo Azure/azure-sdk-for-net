@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Defines the parameters for IsDevice match conditions. </summary>
-    public partial class IsDeviceMatchCondition : DeliveryRuleConditionParameters
+    public partial class IsDeviceMatchCondition : DeliveryRuleConditionProperties
     {
         /// <summary> Initializes a new instance of <see cref="IsDeviceMatchCondition"/>. </summary>
         /// <param name="isDeviceOperator"> Describes operator to be matched. </param>

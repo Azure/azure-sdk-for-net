@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Defines the parameters for Cookies match conditions. </summary>
-    public partial class CookiesMatchCondition : DeliveryRuleConditionParameters
+    public partial class CookiesMatchCondition : DeliveryRuleConditionProperties
     {
         /// <summary> Initializes a new instance of <see cref="CookiesMatchCondition"/>. </summary>
         /// <param name="cookiesOperator"> Describes operator to be matched. </param>

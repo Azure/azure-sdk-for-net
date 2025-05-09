@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Defines the parameters for the url rewrite action. </summary>
-    public partial class UriRewriteActionProperties : DeliveryRuleActionParameters
+    public partial class UriRewriteActionProperties : DeliveryRuleActionProperties
     {
         /// <summary> Initializes a new instance of <see cref="UriRewriteActionProperties"/>. </summary>
         /// <param name="sourcePattern"> define a request URI pattern that identifies the type of requests that may be rewritten. If value is blank, all strings are matched. </param>

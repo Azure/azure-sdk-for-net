@@ -13,7 +13,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Defines the parameters for the origin group override action. </summary>
-    public partial class OriginGroupOverrideActionProperties : DeliveryRuleActionParameters
+    public partial class OriginGroupOverrideActionProperties : DeliveryRuleActionProperties
     {
         /// <summary> Initializes a new instance of <see cref="OriginGroupOverrideActionProperties"/>. </summary>
         /// <param name="originGroup"> defines the OriginGroup that would override the DefaultOriginGroup. </param>
