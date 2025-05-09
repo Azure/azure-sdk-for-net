@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Sql
 
         SqlServerJobTargetGroupData IJsonModel<SqlServerJobTargetGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SqlServerJobTargetGroupData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SqlServerJobTargetGroupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<SqlServerJobTargetGroupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SqlServerJobTargetGroupData>(Data, options, AzureResourceManagerSqlContext.Default);
 
-        SqlServerJobTargetGroupData IPersistableModel<SqlServerJobTargetGroupData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SqlServerJobTargetGroupData>(data, options);
+        SqlServerJobTargetGroupData IPersistableModel<SqlServerJobTargetGroupData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SqlServerJobTargetGroupData>(data, options, AzureResourceManagerSqlContext.Default);
 
         string IPersistableModel<SqlServerJobTargetGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SqlServerJobTargetGroupData>)Data).GetFormatFromOptions(options);
     }

@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.NeonPostgres
 
         NeonBranchData IJsonModel<NeonBranchData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NeonBranchData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<NeonBranchData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<NeonBranchData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<NeonBranchData>(Data, options, AzureResourceManagerNeonPostgresContext.Default);
 
-        NeonBranchData IPersistableModel<NeonBranchData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NeonBranchData>(data, options);
+        NeonBranchData IPersistableModel<NeonBranchData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NeonBranchData>(data, options, AzureResourceManagerNeonPostgresContext.Default);
 
         string IPersistableModel<NeonBranchData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NeonBranchData>)Data).GetFormatFromOptions(options);
     }

@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHybridConnectivityContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(SolutionTypeResourceListResult)} does not support writing '{options.Format}' format.");
             }

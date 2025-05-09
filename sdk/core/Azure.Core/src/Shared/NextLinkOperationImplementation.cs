@@ -99,7 +99,7 @@ namespace Azure.Core
 
             // TODO: Once we remove NextLinkOperationImplementation from internal shared and make it internal to Azure.Core only in https://github.com/Azure/azure-sdk-for-net/issues/43260
             // We can access the internal members from RehydrationToken directly
-            var data = ModelReaderWriter.Write(rehydrationToken!, ModelReaderWriterOptions.Json);
+            var data = ModelReaderWriter.Write(rehydrationToken!, ModelReaderWriterOptions.Json, AzureCoreContext.Default);
             using var document = JsonDocument.Parse(data);
             var lroDetails = document.RootElement;
 
@@ -228,7 +228,7 @@ namespace Azure.Core
             {"version":"{{RehydrationTokenVersion}}","id":{{ConstructStringValue(operationId)}},"requestMethod":"{{requestMethod}}","initialUri":"{{startRequestUri.AbsoluteUri}}","nextRequestUri":"{{nextRequestUri}}","headerSource":"{{headerSource}}","finalStateVia":"{{finalStateVia}}","lastKnownLocation":{{ConstructStringValue(lastKnownLocation)}}}
             """;
             var data = new BinaryData(json);
-            return ModelReaderWriter.Read<RehydrationToken>(data);
+            return ModelReaderWriter.Read<RehydrationToken>(data, ModelReaderWriterOptions.Json, AzureCoreContext.Default);
         }
 
         private static string? ConstructStringValue(string? value) => value is null ? "null" : $"\"{value}\"";

@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Elastic
 
         ElasticTagRuleData IJsonModel<ElasticTagRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ElasticTagRuleData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ElasticTagRuleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<ElasticTagRuleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ElasticTagRuleData>(Data, options, AzureResourceManagerElasticContext.Default);
 
-        ElasticTagRuleData IPersistableModel<ElasticTagRuleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ElasticTagRuleData>(data, options);
+        ElasticTagRuleData IPersistableModel<ElasticTagRuleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ElasticTagRuleData>(data, options, AzureResourceManagerElasticContext.Default);
 
         string IPersistableModel<ElasticTagRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ElasticTagRuleData>)Data).GetFormatFromOptions(options);
     }

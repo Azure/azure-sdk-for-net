@@ -1,5 +1,11 @@
 namespace Azure.ResourceManager.NetworkCloud
 {
+    public partial class AzureResourceManagerNetworkCloudContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureResourceManagerNetworkCloudContext() { }
+        public static Azure.ResourceManager.NetworkCloud.AzureResourceManagerNetworkCloudContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class NetworkCloudAgentPoolCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.NetworkCloud.NetworkCloudAgentPoolResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.NetworkCloudAgentPoolResource>, System.Collections.IEnumerable
     {
         protected NetworkCloudAgentPoolCollection() { }
