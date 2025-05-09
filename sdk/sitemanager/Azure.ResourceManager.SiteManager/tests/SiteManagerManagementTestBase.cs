@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.SiteManager.Tests
             };
             siteAddress = new SiteAddressProperties()
             {
-                StreetAddress1 = " Apt 4B",
+                StreetAddress1 = "Apt 4B",
                 StreetAddress2 = "123 Main St",
                 City = "Seattle",
                 StateOrProvince = "WA",
