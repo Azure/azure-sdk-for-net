@@ -1,6 +1,7 @@
 # Microsoft Azure PureStorageBlock management client library for .NET
 
-**[Describe the service briefly first.]**
+**Easily provision, manage, and tightly integrate independent software vendor (ISV) software and services on Azure with Azure Native integrations.Microsoft and Pure Storage Cloud developed this service and manage it together.
+This offering provides enterprise-class cloud block storage with built-in cloud capabilities powered by a common Purity operating environment.**
 
 This library follows the [new Azure SDK guidelines](https://azure.github.io/azure-sdk/general_introduction.html), and provides many core capabilities:
 
@@ -10,7 +11,7 @@ This library follows the [new Azure SDK guidelines](https://azure.github.io/azur
     - Better error-handling.
     - Support uniform telemetry across all languages.
 
-## Getting started 
+## Getting started
 
 ### Install the package
 
