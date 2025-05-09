@@ -57,7 +57,7 @@ jobs:
                 $originalTags = $packageProps.'dist-tags' | ConvertTo-Json -Compress
               }
 
-              if (!"$(Tag)") {
+              if (!'$(Tag)') {
                 $tag = ($packageVersion -match "-(alpha|beta|rc|pre)") ? "beta" : "latest"
                 echo "##vso[task.setvariable variable=Tag;]$tag"
                 Write-Host "Tag set to $tag for version $packageVersion"
