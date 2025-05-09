@@ -1,6 +1,6 @@
-# Microsoft Azure Dell management client library for .NET
+# Microsoft Azure Dell Storage management client library for .NET
 
-**[Describe the service briefly first.]**
+Dell OneFS Azure Native Service is a partnership between the Azure Native ISV team (Liftr Team) and the Dell Team to bring together a native-like Azure experience for the end customers. It provides secure efficient and reliable storage as a native managed service developed and managed by Microsoft Liftr Team and Dell.
 
 This library follows the [new Azure SDK guidelines](https://azure.github.io/azure-sdk/general_introduction.html), and provides many core capabilities:
 
@@ -14,7 +14,7 @@ This library follows the [new Azure SDK guidelines](https://azure.github.io/azur
 
 ### Install the package
 
-Install the Microsoft Azure Dell management library for .NET with [NuGet](https://www.nuget.org/):
+Install the Microsoft Azure Dell Storage management library for .NET with [NuGet](https://www.nuget.org/):
 
 ```dotnetcli
 dotnet add package Azure.ResourceManager.Dell.Storage --prerelease
