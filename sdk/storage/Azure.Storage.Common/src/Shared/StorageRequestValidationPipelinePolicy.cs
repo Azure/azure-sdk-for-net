@@ -33,6 +33,35 @@ namespace Azure.Storage
             {
                 throw Errors.ClientRequestIdMismatch(message.Response, echo.First(), original);
             }
+
+            if (message.Request.Headers.Contains(Constants.StructuredMessage.StructuredMessageHeader) &&
+                message.Request.Headers.Contains(Constants.StructuredMessage.StructuredContentLength))
+            {
+                AssertStructuredMessageAcknowledgedPUT(message);
+            }
+            else if (message.Request.Headers.Contains(Constants.StructuredMessage.StructuredMessageHeader))
+            {
+                AssertStructuredMessageAcknowledgedGET(message);
+            }
+        }
+
+        private static void AssertStructuredMessageAcknowledgedPUT(HttpMessage message)
+        {
+            if (!message.Response.IsError &&
+                !message.Response.Headers.Contains(Constants.StructuredMessage.StructuredMessageHeader))
+            {
+                throw Errors.StructuredMessageNotAcknowledgedPUT(message.Response);
+            }
+        }
+
+        private static void AssertStructuredMessageAcknowledgedGET(HttpMessage message)
+        {
+            if (!message.Response.IsError &&
+                !(message.Response.Headers.Contains(Constants.StructuredMessage.StructuredMessageHeader) &&
+                  message.Response.Headers.Contains(Constants.StructuredMessage.StructuredContentLength)))
+            {
+                throw Errors.StructuredMessageNotAcknowledgedGET(message.Response);
+            }
         }
     }
 }

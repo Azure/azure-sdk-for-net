@@ -254,41 +254,9 @@ namespace Azure.Storage
             response = await _downloadInternalFunc(range, _validationOptions, async, cancellationToken).ConfigureAwait(false);
 
             using Stream networkStream = response.Value.Content;
-
-            // The number of bytes we just downloaded.
-            long downloadSize = GetResponseRange(response.GetRawResponse()).Length.Value;
-
-            // The number of bytes we copied in the last loop.
-            int copiedBytes;
-
-            // Bytes we have copied so far.
-            int totalCopiedBytes = 0;
-
-            // Bytes remaining to copy.  It is save to truncate the long because we asked for a max of int _buffer size bytes.
-            int remainingBytes = (int)downloadSize;
-
-            do
-            {
-                if (async)
-                {
-                    copiedBytes = await networkStream.ReadAsync(
-                        buffer: _buffer,
-                        offset: totalCopiedBytes,
-                        count: remainingBytes,
-                        cancellationToken: cancellationToken).ConfigureAwait(false);
-                }
-                else
-                {
-                    copiedBytes = networkStream.Read(
-                        buffer: _buffer,
-                        offset: totalCopiedBytes,
-                        count: remainingBytes);
-                }
-
-                totalCopiedBytes += copiedBytes;
-                remainingBytes -= copiedBytes;
-            }
-            while (copiedBytes != 0);
+            // use stream copy to ensure consumption of any trailing metadata (e.g. structured message)
+            // allow buffer limits to catch the error of data size mismatch
+            int totalCopiedBytes = (int) await networkStream.CopyToInternal(new MemoryStream(_buffer), async, cancellationToken).ConfigureAwait((false));
 
             _bufferPosition = 0;
             _bufferLength = totalCopiedBytes;
@@ -296,7 +264,7 @@ namespace Azure.Storage
 
             // if we deferred transactional hash validation on download, validate now
             // currently we always defer but that may change
-            if (_validationOptions != default && _validationOptions.ChecksumAlgorithm != StorageChecksumAlgorithm.None && !_validationOptions.AutoValidateChecksum)
+            if (_validationOptions != default && _validationOptions.ChecksumAlgorithm == StorageChecksumAlgorithm.MD5 && !_validationOptions.AutoValidateChecksum) // TODO better condition
             {
                 ContentHasher.AssertResponseHashMatch(_buffer, _bufferPosition, _bufferLength, _validationOptions.ChecksumAlgorithm, response.GetRawResponse());
             }
