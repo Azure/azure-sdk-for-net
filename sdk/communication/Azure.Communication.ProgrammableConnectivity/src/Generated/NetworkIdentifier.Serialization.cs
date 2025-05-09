@@ -107,7 +107,7 @@ namespace Azure.Communication.ProgrammableConnectivity
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureCommunicationProgrammableConnectivityContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(NetworkIdentifier)} does not support writing '{options.Format}' format.");
             }

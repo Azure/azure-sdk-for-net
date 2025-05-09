@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.CognitiveServices
 
         DefenderForAISettingData IJsonModel<DefenderForAISettingData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DefenderForAISettingData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<DefenderForAISettingData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DefenderForAISettingData>(Data, options, AzureResourceManagerCognitiveServicesContext.Default);
+        BinaryData IPersistableModel<DefenderForAISettingData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        DefenderForAISettingData IPersistableModel<DefenderForAISettingData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DefenderForAISettingData>(data, options, AzureResourceManagerCognitiveServicesContext.Default);
+        DefenderForAISettingData IPersistableModel<DefenderForAISettingData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DefenderForAISettingData>(data, options);
 
         string IPersistableModel<DefenderForAISettingData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DefenderForAISettingData>)Data).GetFormatFromOptions(options);
     }

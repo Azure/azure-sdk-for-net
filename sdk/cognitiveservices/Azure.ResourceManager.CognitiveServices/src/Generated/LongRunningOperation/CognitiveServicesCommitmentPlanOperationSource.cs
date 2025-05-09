@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.CognitiveServices
 
         CognitiveServicesCommitmentPlanResource IOperationSource<CognitiveServicesCommitmentPlanResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<CommitmentPlanData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerCognitiveServicesContext.Default);
+            var data = ModelReaderWriter.Read<CommitmentPlanData>(response.Content);
             return new CognitiveServicesCommitmentPlanResource(_client, data);
         }
 
         async ValueTask<CognitiveServicesCommitmentPlanResource> IOperationSource<CognitiveServicesCommitmentPlanResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<CommitmentPlanData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerCognitiveServicesContext.Default);
+            var data = ModelReaderWriter.Read<CommitmentPlanData>(response.Content);
             return await Task.FromResult(new CognitiveServicesCommitmentPlanResource(_client, data)).ConfigureAwait(false);
         }
     }

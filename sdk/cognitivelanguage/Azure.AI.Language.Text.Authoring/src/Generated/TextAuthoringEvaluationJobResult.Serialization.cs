@@ -123,7 +123,7 @@ namespace Azure.AI.Language.Text.Authoring
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAILanguageTextAuthoringContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(TextAuthoringEvaluationJobResult)} does not support writing '{options.Format}' format.");
             }

@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.CognitiveServices
 
         CommitmentPlanAccountAssociationData IJsonModel<CommitmentPlanAccountAssociationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<CommitmentPlanAccountAssociationData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<CommitmentPlanAccountAssociationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<CommitmentPlanAccountAssociationData>(Data, options, AzureResourceManagerCognitiveServicesContext.Default);
+        BinaryData IPersistableModel<CommitmentPlanAccountAssociationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        CommitmentPlanAccountAssociationData IPersistableModel<CommitmentPlanAccountAssociationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CommitmentPlanAccountAssociationData>(data, options, AzureResourceManagerCognitiveServicesContext.Default);
+        CommitmentPlanAccountAssociationData IPersistableModel<CommitmentPlanAccountAssociationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CommitmentPlanAccountAssociationData>(data, options);
 
         string IPersistableModel<CommitmentPlanAccountAssociationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<CommitmentPlanAccountAssociationData>)Data).GetFormatFromOptions(options);
     }

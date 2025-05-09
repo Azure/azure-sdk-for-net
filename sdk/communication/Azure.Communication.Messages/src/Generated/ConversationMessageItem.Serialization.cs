@@ -159,7 +159,7 @@ namespace Azure.Communication.Messages
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureCommunicationMessagesContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(ConversationMessageItem)} does not support writing '{options.Format}' format.");
             }
