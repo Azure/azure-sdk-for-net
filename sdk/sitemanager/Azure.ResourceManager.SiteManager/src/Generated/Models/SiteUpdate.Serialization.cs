@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.SiteManager.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSiteManagerContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(SiteUpdate)} does not support writing '{options.Format}' format.");
             }
