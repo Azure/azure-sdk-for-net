@@ -1,15 +1,13 @@
 # Release History
 
-## 1.4.0-beta.2 (Unreleased)
+## 1.5.0-beta.1 (2025-05-12)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
-
+- Added support for Teams multipersona users in add participant, transfer, and redirect scenarios in OPS calls
+- Added ability to send custom calling context when answering calls
+- Added TeamsAppSource for use when creating outbound OPS calls
+- Recording with the call connection ID is now supported. OPS calls can be recorded using the call connection ID.
 ## 1.4.0-beta.1 (2024-11-22)
 
 ### Features Added
