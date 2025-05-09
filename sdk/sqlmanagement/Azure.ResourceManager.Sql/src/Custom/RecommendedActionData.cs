@@ -48,11 +48,18 @@ namespace Azure.ResourceManager.Sql
         [EditorBrowsable(EditorBrowsableState.Never)]
         public IReadOnlyDictionary<string, BinaryData> Details
         {
+            get => ActionDetails;
+        }
+
+        /// <summary> Gets additional details specific to this recommended action. </summary>
+        [WirePath("properties.details")]
+        public IReadOnlyDictionary<string, string> AdditionalDetails
+        {
             get
             {
-                return AdditionalDetails.ToDictionary(
+                return ActionDetails.ToDictionary(
                     kvp => kvp.Key,
-                    kvp => BinaryData.FromString(kvp.Value)
+                    kvp => kvp.Value.ToString() ?? string.Empty
                 );
             }
         }
