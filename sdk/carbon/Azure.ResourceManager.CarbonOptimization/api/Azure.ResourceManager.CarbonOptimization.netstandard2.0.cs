@@ -1,5 +1,11 @@
 namespace Azure.ResourceManager.CarbonOptimization
 {
+    public partial class AzureResourceManagerCarbonOptimizationContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureResourceManagerCarbonOptimizationContext() { }
+        public static Azure.ResourceManager.CarbonOptimization.AzureResourceManagerCarbonOptimizationContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public static partial class CarbonOptimizationExtensions
     {
         public static Azure.Response<Azure.ResourceManager.CarbonOptimization.Models.CarbonEmissionAvailableDateRange> QueryCarbonEmissionAvailableDateRange(this Azure.ResourceManager.Resources.TenantResource tenantResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }

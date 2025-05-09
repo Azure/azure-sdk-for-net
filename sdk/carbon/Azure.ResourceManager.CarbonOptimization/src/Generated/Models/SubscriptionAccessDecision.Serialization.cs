@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCarbonOptimizationContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(SubscriptionAccessDecision)} does not support writing '{options.Format}' format.");
             }
