@@ -18,7 +18,7 @@ namespace Azure.AI.Agents.Persistent
 {
     // Data plane generated client.
     /// <summary> The PersistentAgentsAdministration service client. </summary>
-    public partial class PersistentAgentsAdministration
+    public partial class PersistentAgentsAdministrationClient
     {
         private static readonly string[] AuthorizationScopes = new string[] { "https://ai.azure.com/.default" };
         private readonly TokenCredential _tokenCredential;
@@ -29,25 +29,25 @@ namespace Azure.AI.Agents.Persistent
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline => _pipeline;
 
-        /// <summary> Initializes a new instance of PersistentAgentsAdministration for mocking. </summary>
-        protected PersistentAgentsAdministration()
+        /// <summary> Initializes a new instance of PersistentAgentsAdministrationClient for mocking. </summary>
+        protected PersistentAgentsAdministrationClient()
         {
         }
 
-        /// <summary> Initializes a new instance of PersistentAgentsAdministration. </summary>
+        /// <summary> Initializes a new instance of PersistentAgentsAdministrationClient. </summary>
         /// <param name="endpoint"> Project endpoint in the form of: https://&lt;aiservices-id&gt;.services.ai.azure.com/api/projects/&lt;project-name&gt;. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public PersistentAgentsAdministration(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new PersistentAgentsAdministrationClientOptions())
+        public PersistentAgentsAdministrationClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new PersistentAgentsAdministrationClientOptions())
         {
         }
 
-        /// <summary> Initializes a new instance of PersistentAgentsAdministration. </summary>
+        /// <summary> Initializes a new instance of PersistentAgentsAdministrationClient. </summary>
         /// <param name="endpoint"> Project endpoint in the form of: https://&lt;aiservices-id&gt;.services.ai.azure.com/api/projects/&lt;project-name&gt;. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public PersistentAgentsAdministration(Uri endpoint, TokenCredential credential, PersistentAgentsAdministrationClientOptions options)
+        public PersistentAgentsAdministrationClient(Uri endpoint, TokenCredential credential, PersistentAgentsAdministrationClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(credential, nameof(credential));
@@ -174,7 +174,7 @@ namespace Azure.AI.Agents.Persistent
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("PersistentAgentsAdministration.CreateAgent");
+            using var scope = ClientDiagnostics.CreateScope("PersistentAgentsAdministrationClient.CreateAgent");
             scope.Start();
             try
             {
@@ -212,7 +212,7 @@ namespace Azure.AI.Agents.Persistent
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("PersistentAgentsAdministration.CreateAgent");
+            using var scope = ClientDiagnostics.CreateScope("PersistentAgentsAdministrationClient.CreateAgent");
             scope.Start();
             try
             {
@@ -252,84 +252,6 @@ namespace Azure.AI.Agents.Persistent
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetAgent(assistantId, context);
             return Response.FromValue(PersistentAgent.FromResponse(response), response);
-        }
-
-        /// <summary>
-        /// [Protocol Method] Retrieves an existing agent.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetAgentAsync(string,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="assistantId"> Identifier of the agent. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="assistantId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="assistantId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetAgentAsync(string assistantId, RequestContext context)
-        {
-            Argument.AssertNotNullOrEmpty(assistantId, nameof(assistantId));
-
-            using var scope = ClientDiagnostics.CreateScope("PersistentAgentsAdministration.GetAgent");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetAgentRequest(assistantId, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Retrieves an existing agent.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetAgent(string,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="assistantId"> Identifier of the agent. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="assistantId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="assistantId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual Response GetAgent(string assistantId, RequestContext context)
-        {
-            Argument.AssertNotNullOrEmpty(assistantId, nameof(assistantId));
-
-            using var scope = ClientDiagnostics.CreateScope("PersistentAgentsAdministration.GetAgent");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetAgentRequest(assistantId, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
         }
 
         /// <summary> Modifies an existing agent. </summary>
@@ -453,7 +375,7 @@ namespace Azure.AI.Agents.Persistent
             Argument.AssertNotNullOrEmpty(assistantId, nameof(assistantId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("PersistentAgentsAdministration.UpdateAgent");
+            using var scope = ClientDiagnostics.CreateScope("PersistentAgentsAdministrationClient.UpdateAgent");
             scope.Start();
             try
             {
@@ -494,7 +416,7 @@ namespace Azure.AI.Agents.Persistent
             Argument.AssertNotNullOrEmpty(assistantId, nameof(assistantId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("PersistentAgentsAdministration.UpdateAgent");
+            using var scope = ClientDiagnostics.CreateScope("PersistentAgentsAdministrationClient.UpdateAgent");
             scope.Start();
             try
             {
@@ -561,7 +483,7 @@ namespace Azure.AI.Agents.Persistent
         {
             Argument.AssertNotNullOrEmpty(assistantId, nameof(assistantId));
 
-            using var scope = ClientDiagnostics.CreateScope("PersistentAgentsAdministration.InternalDeleteAgent");
+            using var scope = ClientDiagnostics.CreateScope("PersistentAgentsAdministrationClient.InternalDeleteAgent");
             scope.Start();
             try
             {
@@ -600,7 +522,7 @@ namespace Azure.AI.Agents.Persistent
         {
             Argument.AssertNotNullOrEmpty(assistantId, nameof(assistantId));
 
-            using var scope = ClientDiagnostics.CreateScope("PersistentAgentsAdministration.InternalDeleteAgent");
+            using var scope = ClientDiagnostics.CreateScope("PersistentAgentsAdministrationClient.InternalDeleteAgent");
             scope.Start();
             try
             {
@@ -770,7 +692,7 @@ namespace Azure.AI.Agents.Persistent
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("PersistentAgentsAdministration.CreateThreadAndRun");
+            using var scope = ClientDiagnostics.CreateScope("PersistentAgentsAdministrationClient.CreateThreadAndRun");
             scope.Start();
             try
             {
@@ -808,7 +730,7 @@ namespace Azure.AI.Agents.Persistent
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("PersistentAgentsAdministration.CreateThreadAndRun");
+            using var scope = ClientDiagnostics.CreateScope("PersistentAgentsAdministrationClient.CreateThreadAndRun");
             scope.Start();
             try
             {

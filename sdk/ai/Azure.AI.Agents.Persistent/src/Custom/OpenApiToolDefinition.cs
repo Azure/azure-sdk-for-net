@@ -14,6 +14,7 @@ namespace Azure.AI.Agents.Persistent
                     spec: spec,
                     auth: auth,
                     defaultParams: defaultParams ?? [],
+                    functions: new ChangeTrackingList<InternalFunctionDefinition>(),
                     serializedAdditionalRawData: null
                     )
             ){}
