@@ -119,6 +119,8 @@ namespace Azure.Core
                 _operation = operation;
             }
 
+            public RehydrationToken GetRehydrationToken() => _operation.GetRehydrationToken();
+
             public async ValueTask<OperationState<VoidValue>> UpdateStateAsync(bool async, CancellationToken cancellationToken)
             {
                 var state = await _operation.UpdateStateAsync(async, cancellationToken).ConfigureAwait(false);
@@ -172,6 +174,11 @@ namespace Azure.Core
         /// </list>
         /// </returns>
         ValueTask<OperationState> UpdateStateAsync(bool async, CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Get a token that can be used to rehydrate the operation.
+        /// </summary>
+        RehydrationToken GetRehydrationToken();
     }
 
     /// <summary>

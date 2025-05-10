@@ -77,6 +77,10 @@ namespace Azure.Security.ConfidentialLedger
             return OperationState.Pending(statusResponse);
         }
 
+        // This method is never invoked since we don't override Operation<T>.GetRehydrationToken.
+        RehydrationToken IOperation.GetRehydrationToken() =>
+            throw new NotSupportedException($"{nameof(GetRehydrationToken)} is not supported.");
+
         /// <summary>
         /// The transactionId of the posted ledger entry.
         /// </summary>
