@@ -36,7 +36,7 @@ namespace MgmtTypeSpec
         {
             _fooClientDiagnostics = new ClientDiagnostics("MgmtTypeSpec", FooResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(FooResource.ResourceType, out string fooApiVersion);
-            _fooRestClient = new Foos(Pipeline, Endpoint, fooApiVersion);
+            _fooRestClient = new Foos(_fooClientDiagnostics, Pipeline, Endpoint, fooApiVersion);
             ValidateResourceId(id);
         }
 
