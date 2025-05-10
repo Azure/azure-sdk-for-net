@@ -448,10 +448,6 @@ namespace Azure.AI.Agents.Persistent
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.IncompleteRunDetails>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.IncompleteRunDetails>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ITool
-    {
-        public ITool() { }
-    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ListSortOrder : System.IEquatable<Azure.AI.Agents.Persistent.ListSortOrder>
     {
@@ -2548,7 +2544,6 @@ namespace Azure.AI.Agents.Persistent
         public Azure.AI.Agents.Persistent.AzureAISearchResource AzureAISearch { get { throw null; } set { } }
         public Azure.AI.Agents.Persistent.CodeInterpreterToolResource CodeInterpreter { get { throw null; } set { } }
         public Azure.AI.Agents.Persistent.FileSearchToolResource FileSearch { get { throw null; } set { } }
-        public Azure.AI.Agents.Persistent.FileSearchToolDefinition FileSearchDefinition { get { throw null; } set { } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Agents.Persistent.ToolResources System.ClientModel.Primitives.IJsonModel<Azure.AI.Agents.Persistent.ToolResources>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.Agents.Persistent.ToolResources>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
