@@ -448,6 +448,10 @@ namespace Azure.AI.Agents.Persistent
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.IncompleteRunDetails>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.IncompleteRunDetails>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class ITool
+    {
+        public ITool() { }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ListSortOrder : System.IEquatable<Azure.AI.Agents.Persistent.ListSortOrder>
     {
@@ -1098,13 +1102,13 @@ namespace Azure.AI.Agents.Persistent
         public static bool operator !=(Azure.AI.Agents.Persistent.PersistentAgentFilePurpose left, Azure.AI.Agents.Persistent.PersistentAgentFilePurpose right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class PersistentAgentsAdministration
+    public partial class PersistentAgentsAdministrationClient
     {
-        protected PersistentAgentsAdministration() { }
-        public PersistentAgentsAdministration(string endpoint, Azure.Core.TokenCredential credential) { }
-        public PersistentAgentsAdministration(string endpoint, Azure.Core.TokenCredential credential, Azure.AI.Agents.Persistent.PersistentAgentsAdministrationClientOptions options) { }
-        public PersistentAgentsAdministration(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
-        public PersistentAgentsAdministration(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.AI.Agents.Persistent.PersistentAgentsAdministrationClientOptions options) { }
+        protected PersistentAgentsAdministrationClient() { }
+        public PersistentAgentsAdministrationClient(string endpoint, Azure.Core.TokenCredential credential) { }
+        public PersistentAgentsAdministrationClient(string endpoint, Azure.Core.TokenCredential credential, Azure.AI.Agents.Persistent.PersistentAgentsAdministrationClientOptions options) { }
+        public PersistentAgentsAdministrationClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
+        public PersistentAgentsAdministrationClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.AI.Agents.Persistent.PersistentAgentsAdministrationClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
         public virtual Azure.Response CreateAgent(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response<Azure.AI.Agents.Persistent.PersistentAgent> CreateAgent(string model, string name = null, string description = null, string instructions = null, System.Collections.Generic.IEnumerable<Azure.AI.Agents.Persistent.ToolDefinition> tools = null, Azure.AI.Agents.Persistent.ToolResources toolResources = null, float? temperature = default(float?), float? topP = default(float?), System.BinaryData responseFormat = null, System.Collections.Generic.IReadOnlyDictionary<string, string> metadata = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1112,9 +1116,9 @@ namespace Azure.AI.Agents.Persistent
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Agents.Persistent.PersistentAgent>> CreateAgentAsync(string model, string name = null, string description = null, string instructions = null, System.Collections.Generic.IEnumerable<Azure.AI.Agents.Persistent.ToolDefinition> tools = null, Azure.AI.Agents.Persistent.ToolResources toolResources = null, float? temperature = default(float?), float? topP = default(float?), System.BinaryData responseFormat = null, System.Collections.Generic.IReadOnlyDictionary<string, string> metadata = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<bool> DeleteAgent(string agentId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> DeleteAgentAsync(string agentId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response GetAgent(string assistantId, Azure.RequestContext context) { throw null; }
+        public virtual Azure.Response GetAgent(string agentId, Azure.RequestContext context) { throw null; }
         public virtual Azure.Response<Azure.AI.Agents.Persistent.PersistentAgent> GetAgent(string assistantId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> GetAgentAsync(string assistantId, Azure.RequestContext context) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetAgentAsync(string agentId, Azure.RequestContext context) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Agents.Persistent.PersistentAgent>> GetAgentAsync(string assistantId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.AI.Agents.Persistent.PersistentAgent> GetAgents(int? limit = default(int?), Azure.AI.Agents.Persistent.ListSortOrder? order = default(Azure.AI.Agents.Persistent.ListSortOrder?), string after = null, string before = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.AI.Agents.Persistent.PersistentAgent> GetAgentsAsync(int? limit = default(int?), Azure.AI.Agents.Persistent.ListSortOrder? order = default(Azure.AI.Agents.Persistent.ListSortOrder?), string after = null, string before = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1137,7 +1141,7 @@ namespace Azure.AI.Agents.Persistent
         protected PersistentAgentsClient() { }
         public PersistentAgentsClient(string endpoint, Azure.Core.TokenCredential credential) { }
         public PersistentAgentsClient(string endpoint, Azure.Core.TokenCredential credential, Azure.AI.Agents.Persistent.PersistentAgentsAdministrationClientOptions options) { }
-        public Azure.AI.Agents.Persistent.PersistentAgentsAdministration Administration { get { throw null; } }
+        public Azure.AI.Agents.Persistent.PersistentAgentsAdministrationClient Administration { get { throw null; } }
         public Azure.AI.Agents.Persistent.PersistentAgentsFiles Files { get { throw null; } }
         public Azure.AI.Agents.Persistent.ThreadMessages Messages { get { throw null; } }
         public Azure.AI.Agents.Persistent.ThreadRuns Runs { get { throw null; } }
@@ -1312,17 +1316,6 @@ namespace Azure.AI.Agents.Persistent
         public static bool operator !=(Azure.AI.Agents.Persistent.PersistentAgentsNamedToolChoiceType left, Azure.AI.Agents.Persistent.PersistentAgentsNamedToolChoiceType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class PersistentAgentsResponseFormat : System.ClientModel.Primitives.IJsonModel<Azure.AI.Agents.Persistent.PersistentAgentsResponseFormat>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.PersistentAgentsResponseFormat>
-    {
-        public PersistentAgentsResponseFormat() { }
-        public Azure.AI.Agents.Persistent.ResponseFormat? Type { get { throw null; } set { } }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Agents.Persistent.PersistentAgentsResponseFormat System.ClientModel.Primitives.IJsonModel<Azure.AI.Agents.Persistent.PersistentAgentsResponseFormat>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Agents.Persistent.PersistentAgentsResponseFormat>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Agents.Persistent.PersistentAgentsResponseFormat System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.PersistentAgentsResponseFormat>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.PersistentAgentsResponseFormat>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.PersistentAgentsResponseFormat>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct PersistentAgentsResponseFormatMode : System.IEquatable<Azure.AI.Agents.Persistent.PersistentAgentsResponseFormatMode>
     {
@@ -1365,11 +1358,14 @@ namespace Azure.AI.Agents.Persistent
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public PersistentAgentStreamEvent(string value) { throw null; }
+        public static Azure.AI.Agents.Persistent.PersistentAgentStreamEvent Cancelled { get { throw null; } }
         public static Azure.AI.Agents.Persistent.PersistentAgentStreamEvent Completed { get { throw null; } }
         public static Azure.AI.Agents.Persistent.PersistentAgentStreamEvent Created { get { throw null; } }
         public static Azure.AI.Agents.Persistent.PersistentAgentStreamEvent Delta { get { throw null; } }
         public static Azure.AI.Agents.Persistent.PersistentAgentStreamEvent Done { get { throw null; } }
         public static Azure.AI.Agents.Persistent.PersistentAgentStreamEvent Error { get { throw null; } }
+        public static Azure.AI.Agents.Persistent.PersistentAgentStreamEvent Expired { get { throw null; } }
+        public static Azure.AI.Agents.Persistent.PersistentAgentStreamEvent Failed { get { throw null; } }
         public static Azure.AI.Agents.Persistent.PersistentAgentStreamEvent InProgress { get { throw null; } }
         public static Azure.AI.Agents.Persistent.PersistentAgentStreamEvent ThreadCreated { get { throw null; } }
         public static Azure.AI.Agents.Persistent.PersistentAgentStreamEvent ThreadMessageCompleted { get { throw null; } }
@@ -1387,9 +1383,6 @@ namespace Azure.AI.Agents.Persistent
         public static Azure.AI.Agents.Persistent.PersistentAgentStreamEvent ThreadRunInProgress { get { throw null; } }
         public static Azure.AI.Agents.Persistent.PersistentAgentStreamEvent ThreadRunQueued { get { throw null; } }
         public static Azure.AI.Agents.Persistent.PersistentAgentStreamEvent ThreadRunRequiresAction { get { throw null; } }
-        public static Azure.AI.Agents.Persistent.PersistentAgentStreamEvent ThreadRunStepCancelled { get { throw null; } }
-        public static Azure.AI.Agents.Persistent.PersistentAgentStreamEvent ThreadRunStepExpired { get { throw null; } }
-        public static Azure.AI.Agents.Persistent.PersistentAgentStreamEvent ThreadRunStepFailed { get { throw null; } }
         public bool Equals(Azure.AI.Agents.Persistent.PersistentAgentStreamEvent other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
@@ -1528,24 +1521,6 @@ namespace Azure.AI.Agents.Persistent
         Azure.AI.Agents.Persistent.RequiredToolCall System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.RequiredToolCall>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.RequiredToolCall>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.RequiredToolCall>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ResponseFormat : System.IEquatable<Azure.AI.Agents.Persistent.ResponseFormat>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ResponseFormat(string value) { throw null; }
-        public static Azure.AI.Agents.Persistent.ResponseFormat JsonObject { get { throw null; } }
-        public static Azure.AI.Agents.Persistent.ResponseFormat Text { get { throw null; } }
-        public bool Equals(Azure.AI.Agents.Persistent.ResponseFormat other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.AI.Agents.Persistent.ResponseFormat left, Azure.AI.Agents.Persistent.ResponseFormat right) { throw null; }
-        public static implicit operator Azure.AI.Agents.Persistent.ResponseFormat (string value) { throw null; }
-        public static bool operator !=(Azure.AI.Agents.Persistent.ResponseFormat left, Azure.AI.Agents.Persistent.ResponseFormat right) { throw null; }
-        public override string ToString() { throw null; }
     }
     public partial class ResponseFormatJsonSchema : System.ClientModel.Primitives.IJsonModel<Azure.AI.Agents.Persistent.ResponseFormatJsonSchema>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.ResponseFormatJsonSchema>
     {
@@ -2164,13 +2139,13 @@ namespace Azure.AI.Agents.Persistent
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public RunStepStreamEvent(string value) { throw null; }
+        public static Azure.AI.Agents.Persistent.RunStepStreamEvent Cancelled { get { throw null; } }
         public static Azure.AI.Agents.Persistent.RunStepStreamEvent Completed { get { throw null; } }
         public static Azure.AI.Agents.Persistent.RunStepStreamEvent Created { get { throw null; } }
         public static Azure.AI.Agents.Persistent.RunStepStreamEvent Delta { get { throw null; } }
+        public static Azure.AI.Agents.Persistent.RunStepStreamEvent Expired { get { throw null; } }
+        public static Azure.AI.Agents.Persistent.RunStepStreamEvent Failed { get { throw null; } }
         public static Azure.AI.Agents.Persistent.RunStepStreamEvent InProgress { get { throw null; } }
-        public static Azure.AI.Agents.Persistent.RunStepStreamEvent ThreadRunStepCancelled { get { throw null; } }
-        public static Azure.AI.Agents.Persistent.RunStepStreamEvent ThreadRunStepExpired { get { throw null; } }
-        public static Azure.AI.Agents.Persistent.RunStepStreamEvent ThreadRunStepFailed { get { throw null; } }
         public bool Equals(Azure.AI.Agents.Persistent.RunStepStreamEvent other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
@@ -2573,6 +2548,7 @@ namespace Azure.AI.Agents.Persistent
         public Azure.AI.Agents.Persistent.AzureAISearchResource AzureAISearch { get { throw null; } set { } }
         public Azure.AI.Agents.Persistent.CodeInterpreterToolResource CodeInterpreter { get { throw null; } set { } }
         public Azure.AI.Agents.Persistent.FileSearchToolResource FileSearch { get { throw null; } set { } }
+        public Azure.AI.Agents.Persistent.FileSearchToolDefinition FileSearchDefinition { get { throw null; } set { } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Agents.Persistent.ToolResources System.ClientModel.Primitives.IJsonModel<Azure.AI.Agents.Persistent.ToolResources>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.Agents.Persistent.ToolResources>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -3056,7 +3032,7 @@ namespace Microsoft.Extensions.Azure
 {
     public static partial class AIAgentsPersistentClientBuilderExtensions
     {
-        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.AI.Agents.Persistent.PersistentAgentsAdministration, Azure.AI.Agents.Persistent.PersistentAgentsAdministrationClientOptions> AddPersistentAgentsAdministration<TBuilder>(this TBuilder builder, System.Uri endpoint) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithCredential { throw null; }
-        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.AI.Agents.Persistent.PersistentAgentsAdministration, Azure.AI.Agents.Persistent.PersistentAgentsAdministrationClientOptions> AddPersistentAgentsAdministration<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithConfiguration<TConfiguration> { throw null; }
+        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.AI.Agents.Persistent.PersistentAgentsAdministrationClient, Azure.AI.Agents.Persistent.PersistentAgentsAdministrationClientOptions> AddPersistentAgentsAdministrationClient<TBuilder>(this TBuilder builder, System.Uri endpoint) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithCredential { throw null; }
+        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.AI.Agents.Persistent.PersistentAgentsAdministrationClient, Azure.AI.Agents.Persistent.PersistentAgentsAdministrationClientOptions> AddPersistentAgentsAdministrationClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithConfiguration<TConfiguration> { throw null; }
     }
 }

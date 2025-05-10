@@ -64,6 +64,7 @@ namespace Azure.AI.Agents.Persistent
             Spec = spec;
             Auth = auth;
             DefaultParams = new ChangeTrackingList<string>();
+            Functions = new ChangeTrackingList<InternalFunctionDefinition>();
         }
 
         /// <summary> Initializes a new instance of <see cref="OpenApiFunctionDefinition"/>. </summary>
@@ -76,14 +77,16 @@ namespace Azure.AI.Agents.Persistent
         /// The available derived classes include <see cref="OpenApiAnonymousAuthDetails"/>, <see cref="OpenApiConnectionAuthDetails"/> and <see cref="OpenApiManagedAuthDetails"/>.
         /// </param>
         /// <param name="defaultParams"> List of OpenAPI spec parameters that will use user-provided defaults. </param>
+        /// <param name="functions"> List of function definitions used by OpenApi tool. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal OpenApiFunctionDefinition(string name, string description, BinaryData spec, OpenApiAuthDetails auth, IList<string> defaultParams, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal OpenApiFunctionDefinition(string name, string description, BinaryData spec, OpenApiAuthDetails auth, IList<string> defaultParams, IList<InternalFunctionDefinition> functions, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Description = description;
             Spec = spec;
             Auth = auth;
             DefaultParams = defaultParams;
+            Functions = functions;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 

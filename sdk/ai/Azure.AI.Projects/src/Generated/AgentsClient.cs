@@ -5263,7 +5263,7 @@ namespace Azure.AI.Projects
             uri.AppendQuery("api-version", _apiVersion, true);
             if (runId != null)
             {
-                uri.AppendQuery("run_id", runId, true);
+                uri.AppendQuery("runId", runId, true);
             }
             if (limit != null)
             {
