@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Linq;
 using System.Text.Json;
 
 namespace Azure.Communication.CallAutomation
@@ -23,7 +24,8 @@ namespace Azure.Communication.CallAutomation
             From = CommunicationIdentifierSerializer.Deserialize(internalEvent.From);
             ServerCallId = internalEvent.ServerCallId;
             CallerDisplayName = internalEvent.CallerDisplayName;
-            CustomContext = new CustomCallingContext(internalEvent.CustomContext.VoipHeaders, internalEvent.CustomContext.SipHeaders);
+            CustomContext = new CustomCallingContext(internalEvent.CustomContext?.VoipHeaders, internalEvent.CustomContext?.SipHeaders, CustomCallContextHelpers.CreateTeamsPhoneCallDetails(internalEvent.CustomContext?.TeamsPhoneCallDetails));
+
             IncomingCallContext = internalEvent.IncomingCallContext;
 
             if (internalEvent.OnBehalfOfCallee != null)
