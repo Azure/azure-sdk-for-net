@@ -1,14 +1,10 @@
 # Release History
 
-## 1.7.0-beta.1 (Unreleased)
+## 1.6.1 (2025-05-09)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Added AOT annotations to support AOT compilation.
 
 ## 1.6.0 (2025-03-11)
 

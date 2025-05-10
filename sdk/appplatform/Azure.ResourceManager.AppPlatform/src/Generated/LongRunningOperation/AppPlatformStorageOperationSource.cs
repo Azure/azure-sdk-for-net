@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.AppPlatform
 
         AppPlatformStorageResource IOperationSource<AppPlatformStorageResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<AppPlatformStorageData>(response.Content);
+            var data = ModelReaderWriter.Read<AppPlatformStorageData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerAppPlatformContext.Default);
             return new AppPlatformStorageResource(_client, data);
         }
 
         async ValueTask<AppPlatformStorageResource> IOperationSource<AppPlatformStorageResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<AppPlatformStorageData>(response.Content);
+            var data = ModelReaderWriter.Read<AppPlatformStorageData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerAppPlatformContext.Default);
             return await Task.FromResult(new AppPlatformStorageResource(_client, data)).ConfigureAwait(false);
         }
     }

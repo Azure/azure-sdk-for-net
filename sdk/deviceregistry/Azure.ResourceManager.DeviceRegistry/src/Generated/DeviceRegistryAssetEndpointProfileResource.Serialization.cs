@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.DeviceRegistry
 
         DeviceRegistryAssetEndpointProfileData IJsonModel<DeviceRegistryAssetEndpointProfileData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DeviceRegistryAssetEndpointProfileData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<DeviceRegistryAssetEndpointProfileData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<DeviceRegistryAssetEndpointProfileData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DeviceRegistryAssetEndpointProfileData>(Data, options, AzureResourceManagerDeviceRegistryContext.Default);
 
-        DeviceRegistryAssetEndpointProfileData IPersistableModel<DeviceRegistryAssetEndpointProfileData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DeviceRegistryAssetEndpointProfileData>(data, options);
+        DeviceRegistryAssetEndpointProfileData IPersistableModel<DeviceRegistryAssetEndpointProfileData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DeviceRegistryAssetEndpointProfileData>(data, options, AzureResourceManagerDeviceRegistryContext.Default);
 
         string IPersistableModel<DeviceRegistryAssetEndpointProfileData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DeviceRegistryAssetEndpointProfileData>)Data).GetFormatFromOptions(options);
     }

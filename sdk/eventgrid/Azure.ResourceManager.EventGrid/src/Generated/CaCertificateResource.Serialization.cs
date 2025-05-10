@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.EventGrid
 
         CaCertificateData IJsonModel<CaCertificateData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<CaCertificateData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<CaCertificateData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<CaCertificateData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<CaCertificateData>(Data, options, AzureResourceManagerEventGridContext.Default);
 
-        CaCertificateData IPersistableModel<CaCertificateData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CaCertificateData>(data, options);
+        CaCertificateData IPersistableModel<CaCertificateData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CaCertificateData>(data, options, AzureResourceManagerEventGridContext.Default);
 
         string IPersistableModel<CaCertificateData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<CaCertificateData>)Data).GetFormatFromOptions(options);
     }

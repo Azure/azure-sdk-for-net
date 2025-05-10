@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Fabric.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerFabricContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(FabricNameAvailabilityContent)} does not support writing '{options.Format}' format.");
             }

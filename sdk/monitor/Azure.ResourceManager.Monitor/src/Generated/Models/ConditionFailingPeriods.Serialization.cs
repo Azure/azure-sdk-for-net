@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Monitor.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMonitorContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ConditionFailingPeriods)} does not support writing '{options.Format}' format.");
             }

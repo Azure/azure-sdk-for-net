@@ -49,11 +49,11 @@ namespace BasicTypeSpec
         /// <param name="value"> The value. </param>
         public static implicit operator FloatExtensibleEnumWithIntValue(float value) => new FloatExtensibleEnumWithIntValue(value);
 
-        /// <param name="obj"> The object to compare. </param>
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is FloatExtensibleEnumWithIntValue other && Equals(other);
 
-        /// <param name="other"> The instance to compare. </param>
+        /// <inheritdoc/>
         public bool Equals(FloatExtensibleEnumWithIntValue other) => Equals(_value, other._value);
 
         /// <inheritdoc/>

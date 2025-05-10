@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Network
 
         RouteResource IOperationSource<RouteResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<RouteData>(response.Content);
+            var data = ModelReaderWriter.Read<RouteData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkContext.Default);
             return new RouteResource(_client, data);
         }
 
         async ValueTask<RouteResource> IOperationSource<RouteResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<RouteData>(response.Content);
+            var data = ModelReaderWriter.Read<RouteData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkContext.Default);
             return await Task.FromResult(new RouteResource(_client, data)).ConfigureAwait(false);
         }
     }

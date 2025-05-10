@@ -82,16 +82,6 @@ namespace Azure.Generator.Primitives
             [typeof(ResponseError)] = DeserializeResponseError,
         };
 
-        public static bool IsModelTypeWithoutSerialization(CSharpType type)
-        {
-            if (type.Equals(typeof(ResponseError)))
-            {
-                return true;
-            }
-
-            return false;
-        }
-
         public static bool TryGetKnownType(string id, [MaybeNullWhen(false)] out CSharpType type) => _idToTypes.TryGetValue(id, out type);
 
         public static bool TryGetJsonSerializationExpression(Type type, [MaybeNullWhen(false)] out SerializationExpression expression) => _typeToSerializationExpression.TryGetValue(type, out expression);

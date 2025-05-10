@@ -12,12 +12,6 @@
     <NoWarn>AZC0007</NoWarn>
   </PropertyGroup>
 
-<!-- TODO: TEMP until SCM is released https://github.com/Azure/azure-sdk-for-net/issues/49774 -->
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\core\System.ClientModel\src\System.ClientModel.csproj" />
-  </ItemGroup>
-<!-- ==============================================================-->
-
   <ItemGroup>
     <PackageReference Include="Azure.Data.AppConfiguration" />
     <PackageReference Include="Azure.Core" />
@@ -31,6 +25,7 @@
     <PackageReference Include="Azure.AI.Inference" />
     <PackageReference Include="Azure.Search.Documents" />
     <PackageReference Include="System.Memory.Data" />
+    <PackageReference Include="System.ClientModel" />
   </ItemGroup>
 
 </Project>

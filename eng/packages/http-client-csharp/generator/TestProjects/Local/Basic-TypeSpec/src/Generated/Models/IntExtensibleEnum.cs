@@ -49,11 +49,11 @@ namespace BasicTypeSpec
         /// <param name="value"> The value. </param>
         public static implicit operator IntExtensibleEnum(int value) => new IntExtensibleEnum(value);
 
-        /// <param name="obj"> The object to compare. </param>
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is IntExtensibleEnum other && Equals(other);
 
-        /// <param name="other"> The instance to compare. </param>
+        /// <inheritdoc/>
         public bool Equals(IntExtensibleEnum other) => Equals(_value, other._value);
 
         /// <inheritdoc/>

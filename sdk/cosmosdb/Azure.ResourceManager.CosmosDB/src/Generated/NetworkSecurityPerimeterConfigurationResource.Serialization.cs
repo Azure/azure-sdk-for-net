@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.CosmosDB
 
         NetworkSecurityPerimeterConfigurationData IJsonModel<NetworkSecurityPerimeterConfigurationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetworkSecurityPerimeterConfigurationData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<NetworkSecurityPerimeterConfigurationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<NetworkSecurityPerimeterConfigurationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<NetworkSecurityPerimeterConfigurationData>(Data, options, AzureResourceManagerCosmosDBContext.Default);
 
-        NetworkSecurityPerimeterConfigurationData IPersistableModel<NetworkSecurityPerimeterConfigurationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetworkSecurityPerimeterConfigurationData>(data, options);
+        NetworkSecurityPerimeterConfigurationData IPersistableModel<NetworkSecurityPerimeterConfigurationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetworkSecurityPerimeterConfigurationData>(data, options, AzureResourceManagerCosmosDBContext.Default);
 
         string IPersistableModel<NetworkSecurityPerimeterConfigurationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetworkSecurityPerimeterConfigurationData>)Data).GetFormatFromOptions(options);
     }

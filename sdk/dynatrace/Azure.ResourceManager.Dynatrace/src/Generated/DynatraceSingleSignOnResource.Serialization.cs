@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Dynatrace
 
         DynatraceSingleSignOnData IJsonModel<DynatraceSingleSignOnData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DynatraceSingleSignOnData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<DynatraceSingleSignOnData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<DynatraceSingleSignOnData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DynatraceSingleSignOnData>(Data, options, AzureResourceManagerDynatraceContext.Default);
 
-        DynatraceSingleSignOnData IPersistableModel<DynatraceSingleSignOnData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DynatraceSingleSignOnData>(data, options);
+        DynatraceSingleSignOnData IPersistableModel<DynatraceSingleSignOnData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DynatraceSingleSignOnData>(data, options, AzureResourceManagerDynatraceContext.Default);
 
         string IPersistableModel<DynatraceSingleSignOnData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DynatraceSingleSignOnData>)Data).GetFormatFromOptions(options);
     }

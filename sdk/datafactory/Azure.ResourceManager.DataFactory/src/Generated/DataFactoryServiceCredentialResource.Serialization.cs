@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.DataFactory
 
         DataFactoryServiceCredentialData IJsonModel<DataFactoryServiceCredentialData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DataFactoryServiceCredentialData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<DataFactoryServiceCredentialData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<DataFactoryServiceCredentialData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DataFactoryServiceCredentialData>(Data, options, AzureResourceManagerDataFactoryContext.Default);
 
-        DataFactoryServiceCredentialData IPersistableModel<DataFactoryServiceCredentialData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DataFactoryServiceCredentialData>(data, options);
+        DataFactoryServiceCredentialData IPersistableModel<DataFactoryServiceCredentialData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DataFactoryServiceCredentialData>(data, options, AzureResourceManagerDataFactoryContext.Default);
 
         string IPersistableModel<DataFactoryServiceCredentialData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DataFactoryServiceCredentialData>)Data).GetFormatFromOptions(options);
     }
