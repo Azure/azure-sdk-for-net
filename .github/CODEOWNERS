@@ -753,6 +753,12 @@
 # ServiceLabel: %Notification Hub
 # ServiceOwners:                                                   @tjsomasundaram
 
+# PRLabel: %Online Experimentation
+/sdk/onlineexperimentation/                                        @Azure/azure-sdk-write-onlineexperimentation
+
+# ServiceLabel: %Online Experimentation
+# ServiceOwners:                                                   @Azure/azure-sdk-write-onlineexperimentation
+
 # PRLabel: %OpenAI
 /sdk/openai/                                                       @jpalvarezl @trrwilson @joseharriaga @m-nash @ralph-msft
 
