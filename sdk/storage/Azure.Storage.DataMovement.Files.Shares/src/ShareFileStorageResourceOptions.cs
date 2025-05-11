@@ -47,7 +47,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
         internal bool _isFileMetadataSet = false;
 
         /// <summary>
-        /// Optional. Specifies whether we should skip validating the protocol of the resource before starting the transfer.
+        /// Optional. Specifies whether protocol validation for the resource should be skipped before starting the transfer.
         /// By default this value is set to false.
         /// Applies to copy, upload, and download transfers.
         /// Note: Protocol validation requires share-level read access.

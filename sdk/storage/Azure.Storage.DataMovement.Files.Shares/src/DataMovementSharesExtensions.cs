@@ -707,7 +707,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
                 }
                 catch (RequestFailedException ex) when (ex.Status == 403)
                 {
-                    throw Errors.NoShareLevelPermissions(endpoint);
+                    throw Errors.ProtocolValidationAuthorizationFailure(ex, endpoint);
                 }
             }
             else

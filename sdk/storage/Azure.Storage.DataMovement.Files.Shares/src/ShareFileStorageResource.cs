@@ -394,9 +394,9 @@ namespace Azure.Storage.DataMovement.Files.Shares
         public static ArgumentException ProtocolSetMismatch(string endpoint, ShareProtocols setProtocol, ShareProtocols actualProtocol)
             => new ArgumentException($"The Protocol set on the {endpoint} '{setProtocol}' does not match the actual Protocol of the share '{actualProtocol}'.");
 
-        public static UnauthorizedAccessException NoShareLevelPermissions(string endpoint)
-            => new UnauthorizedAccessException($"Share-level permissions on the {endpoint} is required to validate the Protocol. " +
-                "Please enable SkipProtocolValidation if you wish to skip the validation.");
+        public static UnauthorizedAccessException ProtocolValidationAuthorizationFailure(RequestFailedException ex, string endpoint)
+            => new UnauthorizedAccessException($"Authorization failure on the {endpoint} when validating the Protocol. " +
+                $"To skip this validation, please enable SkipProtocolValidation. Error details: {ex}");
 
         public static NotSupportedException ShareTransferNotSupported()
             => new NotSupportedException("This Share transfer is not supported. " +
