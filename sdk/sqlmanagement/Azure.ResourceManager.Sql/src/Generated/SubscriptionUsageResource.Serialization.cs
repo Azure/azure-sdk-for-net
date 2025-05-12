@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Sql
 
         SubscriptionUsageData IJsonModel<SubscriptionUsageData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SubscriptionUsageData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SubscriptionUsageData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<SubscriptionUsageData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SubscriptionUsageData>(Data, options, AzureResourceManagerSqlContext.Default);
 
-        SubscriptionUsageData IPersistableModel<SubscriptionUsageData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SubscriptionUsageData>(data, options);
+        SubscriptionUsageData IPersistableModel<SubscriptionUsageData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SubscriptionUsageData>(data, options, AzureResourceManagerSqlContext.Default);
 
         string IPersistableModel<SubscriptionUsageData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SubscriptionUsageData>)Data).GetFormatFromOptions(options);
     }

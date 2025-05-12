@@ -15,6 +15,8 @@ namespace _Type.Model.Usage
 {
     public partial class InputOutputRecord : IJsonModel<InputOutputRecord>
     {
+        internal InputOutputRecord() => throw null;
+
         void IJsonModel<InputOutputRecord>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;

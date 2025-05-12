@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Network
 
         VirtualNetworkPeeringData IJsonModel<VirtualNetworkPeeringData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<VirtualNetworkPeeringData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<VirtualNetworkPeeringData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<VirtualNetworkPeeringData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<VirtualNetworkPeeringData>(Data, options, AzureResourceManagerNetworkContext.Default);
 
-        VirtualNetworkPeeringData IPersistableModel<VirtualNetworkPeeringData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<VirtualNetworkPeeringData>(data, options);
+        VirtualNetworkPeeringData IPersistableModel<VirtualNetworkPeeringData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<VirtualNetworkPeeringData>(data, options, AzureResourceManagerNetworkContext.Default);
 
         string IPersistableModel<VirtualNetworkPeeringData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<VirtualNetworkPeeringData>)Data).GetFormatFromOptions(options);
     }

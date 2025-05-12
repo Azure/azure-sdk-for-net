@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.ClientModel.Primitives;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.IO;
@@ -51,6 +52,7 @@ namespace System.ClientModel.SourceGeneration.Tests.Unit
                 MetadataReference.CreateFromFile(Path.Combine(typeof(object).Assembly.Location, "..", "System.Runtime.dll")),
                 MetadataReference.CreateFromFile(typeof(JsonSerializer).Assembly.Location),
                 MetadataReference.CreateFromFile(typeof(BinaryData).Assembly.Location),
+                MetadataReference.CreateFromFile(typeof(ConcurrentDictionary<,>).Assembly.Location),
 #if NETFRAMEWORK
                 MetadataReference.CreateFromFile(Path.Combine(typeof(object).Assembly.Location, "..", "netstandard.dll")),
                 MetadataReference.CreateFromFile(typeof(ReadOnlyMemory<>).Assembly.Location),

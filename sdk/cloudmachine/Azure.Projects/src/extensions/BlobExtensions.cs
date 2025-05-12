@@ -22,15 +22,15 @@ public static class BlobExtensions
     /// <param name="provider"></param>
     /// <param name="containerName"></param>
     /// <returns></returns>
-    public static  BlobContainerClient GetBlobContainerClient(this ConnectionProvider provider, string containerName = "default")
+    public static  BlobContainerClient GetBlobContainerClient(this ClientConnectionProvider provider, string containerName = "default")
     {
-        string id = $"{typeof(BlobContainerClient).FullName}@{containerName}";
-        BlobContainerClient client = provider.Subclients.GetClient(() =>
-            CreateClient(provider, containerName), id);
+        BlobContainerClientKey blobContainerClientKey = new(containerName);
+        BlobContainerClient client = provider.Subclients.GetClient(blobContainerClientKey, () =>
+            CreateClient(provider, containerName));
         return client;
     }
 
-    private static BlobContainerClient CreateClient(ConnectionProvider project, string containerName)
+    private static BlobContainerClient CreateClient(ClientConnectionProvider project, string containerName)
     {
         string id = $"{typeof(BlobContainerClient).FullName}@{containerName}";
         ClientConnection connection = project.GetConnection(id);
@@ -40,4 +40,6 @@ public static class BlobExtensions
         }
         throw new InvalidOperationException($"Invalid connection locator for container: {containerName}");
     }
+
+    private record BlobContainerClientKey(string ContainerName);
 }

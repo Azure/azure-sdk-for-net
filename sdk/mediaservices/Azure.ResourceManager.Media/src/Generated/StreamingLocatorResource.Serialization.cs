@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Media
 
         StreamingLocatorData IJsonModel<StreamingLocatorData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<StreamingLocatorData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<StreamingLocatorData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<StreamingLocatorData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<StreamingLocatorData>(Data, options, AzureResourceManagerMediaContext.Default);
 
-        StreamingLocatorData IPersistableModel<StreamingLocatorData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<StreamingLocatorData>(data, options);
+        StreamingLocatorData IPersistableModel<StreamingLocatorData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<StreamingLocatorData>(data, options, AzureResourceManagerMediaContext.Default);
 
         string IPersistableModel<StreamingLocatorData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<StreamingLocatorData>)Data).GetFormatFromOptions(options);
     }

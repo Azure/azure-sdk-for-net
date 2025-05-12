@@ -61,7 +61,7 @@ namespace Azure.Generator.Management.Providers
         protected override FieldProvider[] BuildFields() => [_clientDiagonosticsField, _restClientField];
 
         protected override ConstructorProvider[] BuildConstructors()
-            => [ConstructorProviderHelper.BuildMockingConstructor(this), BuildInitializationConstructor()];
+            => [ConstructorProviderHelper.BuildMockingConstructor(this), BuildResourceIdentifierConstructor()];
 
         protected override ValueExpression ExpectedResourceTypeForValidation => Static(typeof(ResourceGroupResource)).Property("ResourceType");
 

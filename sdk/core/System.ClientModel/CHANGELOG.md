@@ -1,6 +1,6 @@
 # Release History
 
-## 1.4.0-beta.7 (Unreleased)
+## 1.5.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,29 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.4.1 (2025-05-09)
+
+### Bugs Fixed
+
+- Fixed an issue when a model builder was both IEnumerable and IPersistable.
+
+## 1.4.0 (2025-05-02)
+
+### Features Added
+
+- Added additional supported scenarios to System.ClientModel.SourceGeneration.
+
+### Other Changes
+
+- Upgraded versions of dependencies on System.Diagnostics.DiagnosticSource, System.Text.Json, and Microsoft.Extensions.Logging.Abstractions.
+- Renamed `ActivityExtensions.MarkFailed` to `ActivityExtensions.MarkClientActivityFailed`.
+- Made `int maxSize` parameter to `ClientCache` constructor required and removed default value.
+- Changed `IEquatable<object> clientId` parameter to `object clientId` in `ClientCache.GetClient`
+- Renamed `ConnectionCollection` to `ClientConnectionCollection`
+- Renamed `ConnectionProvider` to `ClientConnectionProvider`
+- Renamed `ToCollection` to `ConvertCollectionBuilder` in `ModelReadWriteTypeBuilder`
+- Renamed `AddKeyValuePair` to `AddItemWithKey` in `ModelReadWriteTypeBuilder`
 
 ## 1.4.0-beta.6 (2025-04-28)
 

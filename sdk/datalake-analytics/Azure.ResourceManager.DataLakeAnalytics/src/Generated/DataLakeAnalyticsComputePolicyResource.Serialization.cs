@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.DataLakeAnalytics
 
         DataLakeAnalyticsComputePolicyData IJsonModel<DataLakeAnalyticsComputePolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DataLakeAnalyticsComputePolicyData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<DataLakeAnalyticsComputePolicyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<DataLakeAnalyticsComputePolicyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DataLakeAnalyticsComputePolicyData>(Data, options, AzureResourceManagerDataLakeAnalyticsContext.Default);
 
-        DataLakeAnalyticsComputePolicyData IPersistableModel<DataLakeAnalyticsComputePolicyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DataLakeAnalyticsComputePolicyData>(data, options);
+        DataLakeAnalyticsComputePolicyData IPersistableModel<DataLakeAnalyticsComputePolicyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DataLakeAnalyticsComputePolicyData>(data, options, AzureResourceManagerDataLakeAnalyticsContext.Default);
 
         string IPersistableModel<DataLakeAnalyticsComputePolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DataLakeAnalyticsComputePolicyData>)Data).GetFormatFromOptions(options);
     }

@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(RecoveryServicesPrivateEndpointConnection)} does not support writing '{options.Format}' format.");
             }
