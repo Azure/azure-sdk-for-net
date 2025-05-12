@@ -10,7 +10,7 @@ const TenantScopePrefix = "/tenants";
 const Providers = "/providers";
 
 export function calculateResourceTypeFromPath(path: string): string {
-  const providerIndex = path.indexOf(Providers);
+  const providerIndex = path.lastIndexOf(Providers);
   if (providerIndex === -1) {
     if (path.startsWith(ResourceGroupScopePrefix)) {
       return "Microsoft.Resources/resourceGroups";
@@ -37,7 +37,5 @@ export interface ResourceMetadata {
   resourceModel: InputModelType;
   resourceClient: InputClient;
   isSingleton: boolean;
-}
-
-export interface OperationMetadata {
+  parentResource?: "Tenant" | "Subscription" | "ResourceGroup"; // TODO -- add parent resource support in the same RP case
 }
