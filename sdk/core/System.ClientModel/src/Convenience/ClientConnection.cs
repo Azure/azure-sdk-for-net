@@ -9,34 +9,13 @@ namespace System.ClientModel.Primitives;
 public readonly struct ClientConnection
 {
     /// <summary>
-    /// Initializes a new instance of the <see cref="ClientConnection"/> struct with an API key credential.
-    /// </summary>
-    /// <param name="id">The identifier for the connection.</param>
-    /// <param name="locator">The endpoint or resource identifier.</param>
-    /// <param name="apiKey">The API key credential.</param>
-    public ClientConnection(string id, string locator, string apiKey)
-    {
-        if (string.IsNullOrWhiteSpace(id))
-            throw new ArgumentException("Id cannot be null or empty.", nameof(id));
-        if (string.IsNullOrWhiteSpace(locator))
-            throw new ArgumentException("Locator cannot be null or empty.", nameof(locator));
-        if (string.IsNullOrWhiteSpace(apiKey))
-            throw new ArgumentException("API Key cannot be null or empty.", nameof(apiKey));
-
-        Id = id;
-        Locator = locator;
-        Authentication = ClientAuthenticationMethod.ApiKey;
-        ApiKeyCredential = apiKey;
-        Credential = null;
-    }
-
-    /// <summary>
     /// Initializes a new instance of the <see cref="ClientConnection"/> struct with a token credential.
     /// </summary>
     /// <param name="id">The identifier for the connection.</param>
     /// <param name="locator">The endpoint or resource identifier.</param>
-    /// <param name="credential">The token credential.</param>
-    public ClientConnection(string id, string locator, object credential)
+    /// <param name="credential">The client credential.</param>
+    /// <param name="credentialKind">The kind of connection used by the client.</param>
+    public ClientConnection(string id, string locator, object credential, CredentialKind credentialKind)
     {
         if (string.IsNullOrWhiteSpace(id))
             throw new ArgumentException("Id cannot be null or empty.", nameof(id));
@@ -47,9 +26,8 @@ public readonly struct ClientConnection
 
         Id = id;
         Locator = locator;
-        Authentication = ClientAuthenticationMethod.Credential;
         Credential = credential;
-        ApiKeyCredential = null;
+        CredentialKind = credentialKind;
     }
 
     /// <summary>
@@ -66,27 +44,22 @@ public readonly struct ClientConnection
 
         Id = id;
         Locator = locator;
-        Authentication = ClientAuthenticationMethod.NoAuth;
+        CredentialKind = CredentialKind.None;
     }
 
     /// <summary>
     /// Initializes a new instance of the <see cref="ClientConnection"/> struct with the specified subclient ID.
     /// It is only for the JSON serializer.
     /// </summary>
-    /// <param name="id"></param>
-    /// <param name="locator">The subclient ID.</param>
-    /// <param name="auth"></param>
-    internal ClientConnection(string id, string locator, ClientAuthenticationMethod auth)
+    /// <param name="id">The identifier for the connection.</param>
+    /// <param name="locator">The endpoint or resource identifier.</param>
+    /// <param name="credentialKind">The kind of connection used by the client</param>
+    internal ClientConnection(string id, string locator, CredentialKind credentialKind)
     {
         Id = id;
         Locator = locator;
-        Authentication = auth;
+        CredentialKind = credentialKind;
     }
-
-    /// <summary>
-    /// Gets the kind of connection used by the client.
-    /// </summary>
-    public ClientAuthenticationMethod Authentication { get; }
 
     /// <summary>
     /// Gets the connection identifier.
@@ -99,15 +72,14 @@ public readonly struct ClientConnection
     public string Locator { get; }
 
     /// <summary>
-    /// Gets the API key credential, if applicable.
-    /// </summary>
-    public string? ApiKeyCredential { get; }
-
-    /// <summary>
-    /// Gets the token credential, if applicable.
-    /// Since TokenCredential is not available in this package, using object type as a placeholder.
+    /// Gets the credential.
     /// </summary>
     public object? Credential { get; }
+
+    /// <summary>
+    /// Gets the kind of connection used by the client.
+    /// </summary>
+    public CredentialKind CredentialKind { get; }
 
     /// <summary>
     /// Tries to convert the connection locator to a URI.

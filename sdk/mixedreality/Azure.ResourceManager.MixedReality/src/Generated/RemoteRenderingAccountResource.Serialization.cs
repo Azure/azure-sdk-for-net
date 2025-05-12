@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.MixedReality
 
         RemoteRenderingAccountData IJsonModel<RemoteRenderingAccountData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<RemoteRenderingAccountData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<RemoteRenderingAccountData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<RemoteRenderingAccountData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<RemoteRenderingAccountData>(Data, options, AzureResourceManagerMixedRealityContext.Default);
 
-        RemoteRenderingAccountData IPersistableModel<RemoteRenderingAccountData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<RemoteRenderingAccountData>(data, options);
+        RemoteRenderingAccountData IPersistableModel<RemoteRenderingAccountData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<RemoteRenderingAccountData>(data, options, AzureResourceManagerMixedRealityContext.Default);
 
         string IPersistableModel<RemoteRenderingAccountData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<RemoteRenderingAccountData>)Data).GetFormatFromOptions(options);
     }

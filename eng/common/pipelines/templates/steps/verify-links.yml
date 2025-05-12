@@ -30,4 +30,5 @@ steps:
         -branchReplacementName ${{ parameters.BranchReplacementName }}
         -devOpsLogging: $true
         -checkLinkGuidance: ${{ parameters.CheckLinkGuidance }}
+        -localGithubClonedRoot "$(Pipeline.Workspace)"
         -inputCacheFile "https://azuresdkartifacts.blob.core.windows.net/verify-links-cache/verify-links-cache.txt"

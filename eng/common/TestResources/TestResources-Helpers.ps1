@@ -149,6 +149,33 @@ function BuildBicepFile([System.IO.FileSystemInfo] $file) {
     return $templateFilePath
 }
 
+function LintBicepFile([string] $path) {
+    if (!(Get-Command bicep -ErrorAction Ignore)) {
+      Write-Error "A bicep file was found at '$path' but the Azure Bicep CLI is not installed. See https://aka.ms/bicep-install"
+      throw
+    }
+
+    # Work around lack of config file override: https://github.com/Azure/bicep/issues/5013
+    $output = bicep lint "$path" 2>&1
+    if ($LASTEXITCODE) {
+        Write-Error "Failed linting bicep file '$path'"
+        throw
+    }
+
+    $clean = $true
+    foreach ($line in $output) {
+        $line = $line.ToString()
+
+        # See https://learn.microsoft.com/azure/azure-resource-manager/bicep/bicep-config-linter for lints.
+        if ($line.Contains('outputs-should-not-contain-secrets')) {
+            $clean = $false
+        }
+        Write-Warning $line
+    }
+
+    $clean
+}
+
 function BuildDeploymentOutputs([string]$serviceName, [object]$azContext, [object]$deployment, [hashtable]$environmentVariables) {
     $serviceDirectoryPrefix = BuildServiceDirectoryPrefix $serviceName
     # Add default values
@@ -203,19 +230,40 @@ function SetDeploymentOutputs(
     $deploymentOutputs = BuildDeploymentOutputs $serviceName $azContext $deployment $deploymentEnvironmentVariables
 
     if ($OutFile) {
-        if (!$IsWindows) {
-            Write-Host 'File option is supported only on Windows'
+        if ($IsWindows -and $Language -eq 'dotnet') {
+            $outputFile = "$($templateFile.originalFilePath).env"
+
+            $environmentText = $deploymentOutputs | ConvertTo-Json;
+            $bytes = [System.Text.Encoding]::UTF8.GetBytes($environmentText)
+            $protectedBytes = [Security.Cryptography.ProtectedData]::Protect($bytes, $null, [Security.Cryptography.DataProtectionScope]::CurrentUser)
+
+            Set-Content $outputFile -Value $protectedBytes -AsByteStream -Force
+
+            Write-Host "Test environment settings`n$environmentText`nstored into encrypted $outputFile"
         }
+        elseif ($templateFile.originalFilePath -and $templateFile.originalFilePath.EndsWith(".bicep")) {
+            $bicepTemplateFile = $templateFile.originalFilePath
 
-        $outputFile = "$($templateFile.originalFilePath).env"
+            # Make sure the file would not write secrets to .env file.
+            if (!(LintBicepFile $bicepTemplateFile)) {
+                Write-Error "$bicepTemplateFile may write secrets. No file written."
+            }
+            $outputFile = $bicepTemplateFile | Split-Path | Join-Path -ChildPath '.env'
 
-        $environmentText = $deploymentOutputs | ConvertTo-Json;
-        $bytes = [System.Text.Encoding]::UTF8.GetBytes($environmentText)
-        $protectedBytes = [Security.Cryptography.ProtectedData]::Protect($bytes, $null, [Security.Cryptography.DataProtectionScope]::CurrentUser)
+            # Make sure the file would be ignored.
+            git check-ignore -- "$outputFile" > $null
+            if ($?) {
+                $environmentText = foreach ($kv in $deploymentOutputs.GetEnumerator()) {
+                    "$($kv.Key)=`"$($kv.Value)`""
+                }
 
-        Set-Content $outputFile -Value $protectedBytes -AsByteStream -Force
-
-        Write-Host "Test environment settings`n $environmentText`nstored into encrypted $outputFile"
+                Set-Content $outputFile -Value $environmentText -Force
+                Write-Host "Test environment settings`n$environmentText`nstored in $outputFile"
+            }
+            else {
+                Write-Error "$outputFile is not ignored by .gitignore. No file written."
+            }
+        }
     }
     else {
         if (!$CI) {

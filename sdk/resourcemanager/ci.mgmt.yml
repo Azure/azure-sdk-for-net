@@ -213,6 +213,7 @@ trigger:
     - sdk/weightsandbiases/Azure.ResourceManager.WeightsAndBiases
     - sdk/workloadmonitor/Azure.ResourceManager.WorkloadMonitor
     - sdk/workloads/Azure.ResourceManager.Workloads
+    - sdk/workloadssapvirtualinstance/Azure.ResourceManager.WorkloadsSapVirtualInstance
 
 pr:
   branches:
@@ -428,6 +429,7 @@ pr:
     - sdk/weightsandbiases/Azure.ResourceManager.WeightsAndBiases
     - sdk/workloadmonitor/Azure.ResourceManager.WorkloadMonitor
     - sdk/workloads/Azure.ResourceManager.Workloads
+    - sdk/workloadssapvirtualinstance/Azure.ResourceManager.WorkloadsSapVirtualInstance
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml

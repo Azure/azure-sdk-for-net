@@ -34,10 +34,10 @@ namespace Azure.ResourceManager.Chaos.Models
                 throw new FormatException($"The model {nameof(ChaosExperimentAction)} does not support writing '{format}' format.");
             }
 
-            writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(ActionType);
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
+            writer.WritePropertyName("type"u8);
+            writer.WriteStringValue(Type.ToString());
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Chaos.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerChaosContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ChaosExperimentAction)} does not support writing '{options.Format}' format.");
             }

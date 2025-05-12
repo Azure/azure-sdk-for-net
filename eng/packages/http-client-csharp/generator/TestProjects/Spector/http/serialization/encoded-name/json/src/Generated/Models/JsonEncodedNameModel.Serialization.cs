@@ -15,6 +15,8 @@ namespace Serialization.EncodedName.Json._Property
 {
     public partial class JsonEncodedNameModel : IJsonModel<JsonEncodedNameModel>
     {
+        internal JsonEncodedNameModel() => throw null;
+
         void IJsonModel<JsonEncodedNameModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;

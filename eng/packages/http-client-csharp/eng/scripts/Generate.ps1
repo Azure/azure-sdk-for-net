@@ -53,7 +53,6 @@ function IsSpecDir {
 $failingSpecs = @(
     Join-Path 'http' 'payload' 'pageable'
     Join-Path 'http' 'payload' 'xml'
-    Join-Path 'http' 'payload' 'multipart'
     Join-Path 'http' 'server' 'path' 'multiple'
     Join-Path 'http' 'server' 'versions' 'versioned'
     Join-Path 'http' 'versioning' 'added'
@@ -68,14 +67,12 @@ $failingSpecs = @(
     Join-Path 'http' 'client' 'structure' 'renamed-operation'
     Join-Path 'http' 'client' 'structure' 'multi-client'
     Join-Path 'http' 'client' 'structure' 'two-operation-group'
-    Join-Path 'http' 'encode' 'datetime'
-    Join-Path 'http' 'encode' 'duration'
-    Join-Path 'http' 'parameters' 'collection-format'
     Join-Path 'http' 'response' 'status-code-range' # Response namespace conflicts with Azure.Response
-    Join-Path 'http' 'routes'
     # Azure scenarios not yet buildable
     Join-Path 'http' 'client' 'namespace'
     Join-Path 'http' 'azure' 'client-generator-core' 'access'
+    Join-Path 'http' 'azure' 'client-generator-core' 'client-initialization'
+    Join-Path 'http' 'azure' 'client-generator-core' 'deserialize-empty-string-as-null'
     Join-Path 'http' 'azure' 'client-generator-core' 'api-version' 'header'
     Join-Path 'http' 'azure' 'client-generator-core' 'api-version' 'path'
     Join-Path 'http' 'azure' 'client-generator-core' 'api-version' 'query'

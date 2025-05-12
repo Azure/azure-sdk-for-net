@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.ApiManagement
 
         DocumentationContractData IJsonModel<DocumentationContractData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DocumentationContractData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<DocumentationContractData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<DocumentationContractData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DocumentationContractData>(Data, options, AzureResourceManagerApiManagementContext.Default);
 
-        DocumentationContractData IPersistableModel<DocumentationContractData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DocumentationContractData>(data, options);
+        DocumentationContractData IPersistableModel<DocumentationContractData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DocumentationContractData>(data, options, AzureResourceManagerApiManagementContext.Default);
 
         string IPersistableModel<DocumentationContractData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DocumentationContractData>)Data).GetFormatFromOptions(options);
     }
