@@ -45,7 +45,6 @@ namespace Azure.ResourceManager.DnsResolver.Samples
             DnsSecurityRuleData data = new DnsSecurityRuleData(new AzureLocation("westus2"), 100, new DnsSecurityRuleAction
             {
                 ActionType = DnsSecurityRuleActionType.Block,
-                BlockResponseCode = BlockResponseCode.Servfail,
             }, new WritableSubResource[]
             {
 new WritableSubResource

@@ -5,7 +5,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 ``` yaml
 azure-arm: true
 # TODO REPLACE WITH PUBLIC LINK ONCE MERGED
-require: https://github.com/jamesvoongms/jamesvoong-azure-rest-api-specs/blob/7c4c86c168665d76c618d4ce98be83e914537f3d/specification/dnsresolver/resource-manager/readme.md
+require: https://github.com/jamesvoongms/jamesvoong-azure-rest-api-specs/blob/16c277599f69e854b89e4ca7658eded7507e98f3/specification/dnsresolver/resource-manager/readme.md
 tag: package-2025-01
 library-name: dnsresolver
 namespace: Azure.ResourceManager.DnsResolver
