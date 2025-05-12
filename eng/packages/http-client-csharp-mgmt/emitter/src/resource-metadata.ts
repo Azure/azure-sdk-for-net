@@ -38,3 +38,6 @@ export interface ResourceMetadata {
   resourceClient: InputClient;
   isSingleton: boolean;
 }
+
+export interface OperationMetadata {
+}
