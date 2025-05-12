@@ -11,8 +11,8 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/purestorageblock/ci.mgmt.yml
-    - sdk/purestorageblock/Azure.ResourceManager.PureStorageBlock/
+    - sdk/purestorageblock/ci.mgmt.yml
+    - sdk/purestorageblock/Azure.ResourceManager.PureStorageBlock
 
 
 extends:
