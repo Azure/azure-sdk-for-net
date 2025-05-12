@@ -1,16 +1,14 @@
 # Release History
 
-## 1.1.0-beta.1 (Unreleased)
+## 1.1.0 (2025-05-09)
 
 ### Features Added
 
 - Exposed `JsonModelWriteCore` for model serialization procedure.
 
-### Breaking Changes
-
 ### Bugs Fixed
 
-### Other Changes
+- Add tracing information to CloudEvents when tracing is enabled.
 
 ## 1.0.0 (2024-06-11)
 
