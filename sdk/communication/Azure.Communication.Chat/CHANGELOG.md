@@ -1,14 +1,9 @@
 # Release History
 
-## 1.4.0-beta.1 (Unreleased)
+## 1.4.0-beta.1 (2025-05-12)
 
 ### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Dependency update to `Azure.Communication.Common` version 1.4.0-beta.1.
 
 ## 1.3.1 (2024-09-19)
 
