@@ -1,6 +1,6 @@
 # Microsoft Azure ManagedNetworkFabric management client library for .NET
 
-**[Describe the service briefly first.]**
+Managed Network Fabric RP exposes APIs to enable bootstrapping and configuration of devices of Network Fabric in Telco premises. This enables programming the network devices for enabling management infrastructure and tenant workloads. 
 
 This library follows the [new Azure SDK guidelines](https://azure.github.io/azure-sdk/general_introduction.html), and provides many core capabilities:
 
