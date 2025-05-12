@@ -2,11 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
-using Azure.Communication.PhoneNumbers.Models;
 using Azure.Communication.Tests;
 using Azure.Core.TestFramework;
 using Azure.Core.TestFramework.Models;
