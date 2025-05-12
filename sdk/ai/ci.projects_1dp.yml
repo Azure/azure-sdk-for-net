@@ -9,7 +9,7 @@ trigger:
   paths:
     include:
     - sdk/ai/ci.projects_1dp.yml
-    - sdk/ai/Azure.AI.Projects.OneDP
+    - sdk/ai/Azure.AI.Projects
 
 pr:
   branches:
@@ -21,7 +21,7 @@ pr:
   paths:
     include:
     - sdk/ai/ci.projects_1dp.yml
-    - sdk/ai/Azure.AI.Projects.OneDP
+    - sdk/ai/Azure.AI.Projects
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
@@ -29,5 +29,5 @@ extends:
     ServiceDirectory: ai
     ArtifactName: packages
     Artifacts:
-    - name: Azure.AI.Projects.OneDP
-      safeName: AzureAIProjectsOneDP
+    - name: Azure.AI.Projects
+      safeName: AzureAIProjects
