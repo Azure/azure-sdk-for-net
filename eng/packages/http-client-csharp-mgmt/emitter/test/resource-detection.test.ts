@@ -1,19 +1,25 @@
 import { beforeEach, describe, it } from "vitest";
-import { createCSharpSdkContext, createEmitterContext, createEmitterTestHost, typeSpecCompile } from "./test-util.js";
+import {
+  createCSharpSdkContext,
+  createEmitterContext,
+  createEmitterTestHost,
+  typeSpecCompile
+} from "./test-util.js";
 import { TestHost } from "@typespec/compiler/testing";
 import { createModel } from "@typespec/http-client-csharp";
-import { updateClients } from "../src/resource-detection.js";
-import { ok } from "assert";
+import { getAllClients, updateClients } from "../src/resource-detection.js";
+import { ok, strictEqual } from "assert";
+import { resourceMetadata } from "../src/sdk-context-options.js";
 
 describe("Resource Detection", () => {
   let runner: TestHost;
-    beforeEach(async () => {
-        runner = await createEmitterTestHost();
-    });
+  beforeEach(async () => {
+    runner = await createEmitterTestHost();
+  });
 
-    it("resource group resource", async () => {
-        const program = await typeSpecCompile(
-            `
+  it("resource group resource", async () => {
+    const program = await typeSpecCompile(
+      `
 /** An Employee resource */
 model Employee is TrackedResource<EmployeeProperties> {
     ...ResourceNameParameter<Employee>;
@@ -76,12 +82,31 @@ interface Employees {
     delete is ArmResourceDeleteWithoutOkAsync<Employee>;
     listByResourceGroup is ArmResourceListByParent<Employee>;
     listBySubscription is ArmListBySubscription<Employee>;
-}`, runner);
-        const context = createEmitterContext(program);
-        const sdkContext = await createCSharpSdkContext(context);
-        const root = createModel(sdkContext);
-        updateClients(root);
-        const client = root.clients.find((c) => c.name === "Employees");
-        ok(client);
-    });
+}`,
+      runner
+    );
+    const context = createEmitterContext(program);
+    const sdkContext = await createCSharpSdkContext(context);
+    const root = createModel(sdkContext);
+    updateClients(root);
+    const client = getAllClients(root).find((c) => c.name === "Employees");
+    ok(client);
+    const model = root.models.find((m) => m.name === "Employee");
+    ok(model);
+
+    const resourceMetadataDecorator = client.decorators?.find(
+      (d) => d.name === resourceMetadata
+    );
+    ok(resourceMetadataDecorator);
+    strictEqual(
+      resourceMetadataDecorator.arguments?.resourceType,
+      "Microsoft.ContosoProviderHub/employees"
+    );
+    strictEqual(
+      resourceMetadataDecorator.arguments?.resourceModel,
+      model.crossLanguageDefinitionId
+    );
+    strictEqual(resourceMetadataDecorator.arguments?.isSingleton, false);
+    strictEqual(resourceMetadataDecorator.arguments?.resourceScope, "ResourceGroup");
+  });
 });

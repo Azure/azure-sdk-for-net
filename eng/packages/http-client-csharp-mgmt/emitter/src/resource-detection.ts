@@ -15,8 +15,11 @@ import {
   armResourceCreateOrUpdate,
   armResourceOperations,
   armResourceRead,
+  resourceGroupResource,
   resourceMetadata,
-  singleton
+  singleton,
+  subscriptionResource,
+  tenantResource
 } from "./sdk-context-options.js";
 
 export function updateClients(codeModel: CodeModel) {
@@ -43,7 +46,7 @@ export function updateClients(codeModel: CodeModel) {
   }
 }
 
-function getAllClients(codeModel: CodeModel): InputClient[] {
+export function getAllClients(codeModel: CodeModel): InputClient[] {
   const clients: InputClient[] = [];
   for (const client of codeModel.clients) {
     traverseClient(client);
@@ -112,14 +115,28 @@ function gatherResourceMetadata(
     }
 
     if (resourceModel && resourceType) {
-      const metadata = {
+      // find the scope on its model
+      const metadata: ResourceMetadata = {
         resourceModel: resourceModel,
         resourceClient: client,
         resourceType: resourceType,
-        isSingleton: isSingleton
+        isSingleton: isSingleton,
+        resourceScope: getResourceScope(resourceModel)
       };
       metadataMap.set(client, metadata);
     }
+  }
+
+  function getResourceScope(model: InputModelType): "Tenant" | "Subscription" | "ResourceGroup" {
+    const decorators = model.decorators;
+    if (decorators?.some((d) => d.name == tenantResource)) {
+      return "Tenant";
+    } else if (decorators?.some((d) => d.name == subscriptionResource)) {
+      return "Subscription";
+    } else if (decorators?.some((d) => d.name == resourceGroupResource)) {
+      return "ResourceGroup";
+    }
+    return "ResourceGroup"; // all the templates work as if there is a resource group decorator when there is no such decorator
   }
 }
 
@@ -129,7 +146,8 @@ function addResourceMetadata(client: InputClient, metadata: ResourceMetadata) {
     arguments: {
       resourceModel: metadata.resourceModel.crossLanguageDefinitionId,
       isSingleton: metadata.isSingleton,
-      resourceType: metadata.resourceType
+      resourceType: metadata.resourceType,
+      resourceScope: metadata.resourceScope
     }
   };
 

@@ -37,5 +37,5 @@ export interface ResourceMetadata {
   resourceModel: InputModelType;
   resourceClient: InputClient;
   isSingleton: boolean;
-  parentResource?: "Tenant" | "Subscription" | "ResourceGroup"; // TODO -- add parent resource support in the same RP case
+  resourceScope: "Tenant" | "Subscription" | "ResourceGroup"; // TODO -- add parent resource support in the same RP case
 }
