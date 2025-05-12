@@ -46,6 +46,22 @@ namespace Azure.Communication.CallAutomation.Tests.MediaStreaming
             ValidateAudioData(streamingAudio);
         }
 
+        [Test]
+        public void ParseDtmfData_Test()
+        {
+            string dtmfJson = "{"
+                + "\"kind\": \"DtmfData\","
+                + "\"dtmfData\": {"
+                + "\"data\": \"5\","
+                + "\"timestamp\": \"2022-08-23T11:48:05Z\","
+                + "\"participantRawID\": \"participantId\""
+                + "}"
+                + "}";
+
+            DtmfData streamingDtmf = (DtmfData)StreamingData.Parse(dtmfJson);
+            ValidateDtmfData(streamingDtmf);
+        }
+
         private static void ValidateAudioMetadata(AudioMetadata streamingAudioMetadata)
         {
             Assert.IsNotNull(streamingAudioMetadata);
@@ -64,6 +80,15 @@ namespace Azure.Communication.CallAutomation.Tests.MediaStreaming
             Assert.IsTrue(streamingAudio.Participant is CommunicationIdentifier);
             Assert.AreEqual("participantId", streamingAudio.Participant.RawId);
             Assert.IsFalse(streamingAudio.IsSilent);
+        }
+
+        private static void ValidateDtmfData(DtmfData streamingDtmf)
+        {
+            Assert.IsNotNull(streamingDtmf);
+            Assert.AreEqual("5", streamingDtmf.Data);
+            Assert.AreEqual(2022, streamingDtmf.Timestamp.Year);
+            Assert.IsTrue(streamingDtmf.Participant is CommunicationIdentifier);
+            Assert.AreEqual("participantId", streamingDtmf.Participant.RawId);
         }
         private static void ValidateAudioDataNoParticipant(AudioData streamingAudio)
         {
