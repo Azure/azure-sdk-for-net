@@ -956,7 +956,7 @@ namespace Azure.Data.Tables.Tests
 
             Assert.IsNotNull(retrievedEntity, "The entity should not be null");
             Assert.IsTrue(TimeSpan.Compare(
-                retrievedEntity!.TimespanProperty.Value, retrievedEntity!.TimespanProperty.Value) == 0,
+                retrievedEntity!.TimespanProperty.Value, interval) == 0,
                 "The property value should be equal to the original value");
         }
 
