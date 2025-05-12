@@ -988,8 +988,8 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             {
                 var ex = Assert.ThrowsAsync<UnauthorizedAccessException>(async () =>
                     await transferManager.StartTransferAsync(sourceResource, destinationResource, options));
-                StringAssert.Contains("Authorization failure on the source when validating the Protocol. " +
-                    "To skip this validation, please enable SkipProtocolValidation. Error details:", ex.Message);
+                Assert.AreEqual("Authorization failure on the source when validating the Protocol. " +
+                    "To skip this validation, please enable SkipProtocolValidation.", ex.Message);
             }
         }
 

@@ -396,7 +396,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
 
         public static UnauthorizedAccessException ProtocolValidationAuthorizationFailure(RequestFailedException ex, string endpoint)
             => new UnauthorizedAccessException($"Authorization failure on the {endpoint} when validating the Protocol. " +
-                $"To skip this validation, please enable SkipProtocolValidation. Error details: {ex}");
+                $"To skip this validation, please enable SkipProtocolValidation.", ex);
 
         public static NotSupportedException ShareTransferNotSupported()
             => new NotSupportedException("This Share transfer is not supported. " +
