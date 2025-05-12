@@ -2,13 +2,11 @@
 
 ## 1.2.0-beta.1 (Unreleased)
 
+
 ### Features Added
 
-### Breaking Changes
+- Upgraded api-version tag from 'package-2023-06-15' to 'package-2024-06-15-preview'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/2655e1cb46e7cba81e7b0fa0cdd2fbeaa75fd715/specification/managednetworkfabric/resource-manager/readme.md.
 
-### Bugs Fixed
-
-### Other Changes
 
 ## 1.1.2 (2025-03-11)
 
@@ -60,7 +58,7 @@ This release is the first stable release of the Managed Network Fabric library.
 - Corrected all acronyms that not follow [.Net Naming Guidelines](https://learn.microsoft.com/dotnet/standard/design-guidelines/naming-guidelines).
 - Corrected enumeration name by following [Naming Enumerations Rule](https://learn.microsoft.com/dotnet/standard/design-guidelines/names-of-classes-structs-and-interfaces#naming-enumerations).
 
-## 1.0.0-beta.1 (2023-06-28)
+## 1.0.0-beta.1 (2023-05-26)
 
 ### General New Features
 
