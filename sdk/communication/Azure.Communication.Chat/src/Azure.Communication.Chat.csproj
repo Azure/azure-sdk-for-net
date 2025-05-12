@@ -29,7 +29,7 @@
     <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" LinkBase="Shared" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Azure.Communication.Common" />
+    <PackageReference Include="Azure.Communication.Common" Version="1.4.0-beta.1" />
   </ItemGroup>
 
 </Project>
