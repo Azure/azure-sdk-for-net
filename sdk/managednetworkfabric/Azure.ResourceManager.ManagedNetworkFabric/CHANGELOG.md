@@ -2,33 +2,27 @@
 
 ## 1.2.0-beta.1 (Unreleased)
 
-
 ### Features Added
-
 - Upgraded api-version tag from 'package-2023-06-15' to 'package-2024-06-15-preview'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/2655e1cb46e7cba81e7b0fa0cdd2fbeaa75fd715/specification/managednetworkfabric/resource-manager/readme.md.
 
 
 ## 1.1.2 (2025-03-11)
 
 ### Features Added
-
 - Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
 - Exposed `JsonModelWriteCore` for model serialization procedure.
 
 ## 1.1.1 (2023-11-29)
 
 ### Features Added
-
 - Enable mocking for extension methods, refer this [document](https://aka.ms/azsdk/net/mocking) for more details.
 
 ### Other Changes
-
 - Upgraded dependent `Azure.ResourceManager` to 1.9.0.
 
 ## 1.1.0 (2023-09-28)
 
 ### Features Added
-
 - New optional parameter default action added in Access Control List and Route Policy resources.
 - IP V4 address parameter type changed from IPAddress to String in internet gateway resource.
 
@@ -37,7 +31,6 @@
 This release is the first stable release of the Managed Network Fabric library.
 
 ### Features Added
-
 - Upgraded API version to 2023-06-15, which supports the following new resources:
     - InternetGateyways
     - InternetGatewayRules

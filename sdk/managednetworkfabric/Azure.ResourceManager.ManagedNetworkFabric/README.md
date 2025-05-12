@@ -17,7 +17,7 @@ This library follows the [new Azure SDK guidelines](https://azure.github.io/azur
 Install the Microsoft Azure ManagedNetworkFabric management library for .NET with [NuGet](https://www.nuget.org/):
 
 ```dotnetcli
-dotnet add package Azure.ResourceManager.ManagedNetworkFabric --prerelease
+dotnet add package Azure.ResourceManager.ManagedNetworkFabric
 ```
 
 ### Prerequisites
