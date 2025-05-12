@@ -15,6 +15,8 @@ namespace _Type.Model.Inheritance.SingleDiscriminator
 {
     public partial class Sparrow : IJsonModel<Sparrow>
     {
+        internal Sparrow() => throw null;
+
         void IJsonModel<Sparrow>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;

@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
 
         VMwareResourcePoolData IJsonModel<VMwareResourcePoolData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<VMwareResourcePoolData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<VMwareResourcePoolData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<VMwareResourcePoolData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<VMwareResourcePoolData>(Data, options, AzureResourceManagerConnectedVMwarevSphereContext.Default);
 
-        VMwareResourcePoolData IPersistableModel<VMwareResourcePoolData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<VMwareResourcePoolData>(data, options);
+        VMwareResourcePoolData IPersistableModel<VMwareResourcePoolData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<VMwareResourcePoolData>(data, options, AzureResourceManagerConnectedVMwarevSphereContext.Default);
 
         string IPersistableModel<VMwareResourcePoolData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<VMwareResourcePoolData>)Data).GetFormatFromOptions(options);
     }

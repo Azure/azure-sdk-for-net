@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.MachineLearning
 
         MachineLearningMarketplaceSubscriptionData IJsonModel<MachineLearningMarketplaceSubscriptionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MachineLearningMarketplaceSubscriptionData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<MachineLearningMarketplaceSubscriptionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<MachineLearningMarketplaceSubscriptionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<MachineLearningMarketplaceSubscriptionData>(Data, options, AzureResourceManagerMachineLearningContext.Default);
 
-        MachineLearningMarketplaceSubscriptionData IPersistableModel<MachineLearningMarketplaceSubscriptionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MachineLearningMarketplaceSubscriptionData>(data, options);
+        MachineLearningMarketplaceSubscriptionData IPersistableModel<MachineLearningMarketplaceSubscriptionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MachineLearningMarketplaceSubscriptionData>(data, options, AzureResourceManagerMachineLearningContext.Default);
 
         string IPersistableModel<MachineLearningMarketplaceSubscriptionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MachineLearningMarketplaceSubscriptionData>)Data).GetFormatFromOptions(options);
     }

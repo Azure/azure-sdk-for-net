@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.BotService
 
         BotServicePrivateEndpointConnectionData IJsonModel<BotServicePrivateEndpointConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<BotServicePrivateEndpointConnectionData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<BotServicePrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<BotServicePrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<BotServicePrivateEndpointConnectionData>(Data, options, AzureResourceManagerBotServiceContext.Default);
 
-        BotServicePrivateEndpointConnectionData IPersistableModel<BotServicePrivateEndpointConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<BotServicePrivateEndpointConnectionData>(data, options);
+        BotServicePrivateEndpointConnectionData IPersistableModel<BotServicePrivateEndpointConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<BotServicePrivateEndpointConnectionData>(data, options, AzureResourceManagerBotServiceContext.Default);
 
         string IPersistableModel<BotServicePrivateEndpointConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<BotServicePrivateEndpointConnectionData>)Data).GetFormatFromOptions(options);
     }

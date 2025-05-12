@@ -15,6 +15,8 @@ namespace _Type.Model.Inheritance.EnumDiscriminator
 {
     public partial class Golden : IJsonModel<Golden>
     {
+        internal Golden() => throw null;
+
         void IJsonModel<Golden>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;

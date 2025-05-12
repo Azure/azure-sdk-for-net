@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Redis
 
         RedisFirewallRuleData IJsonModel<RedisFirewallRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<RedisFirewallRuleData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<RedisFirewallRuleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<RedisFirewallRuleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<RedisFirewallRuleData>(Data, options, AzureResourceManagerRedisContext.Default);
 
-        RedisFirewallRuleData IPersistableModel<RedisFirewallRuleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<RedisFirewallRuleData>(data, options);
+        RedisFirewallRuleData IPersistableModel<RedisFirewallRuleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<RedisFirewallRuleData>(data, options, AzureResourceManagerRedisContext.Default);
 
         string IPersistableModel<RedisFirewallRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<RedisFirewallRuleData>)Data).GetFormatFromOptions(options);
     }

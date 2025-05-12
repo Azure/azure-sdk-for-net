@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.SecurityInsights
 
         SecurityInsightsRecommendationData IJsonModel<SecurityInsightsRecommendationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SecurityInsightsRecommendationData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SecurityInsightsRecommendationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<SecurityInsightsRecommendationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SecurityInsightsRecommendationData>(Data, options, AzureResourceManagerSecurityInsightsContext.Default);
 
-        SecurityInsightsRecommendationData IPersistableModel<SecurityInsightsRecommendationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SecurityInsightsRecommendationData>(data, options);
+        SecurityInsightsRecommendationData IPersistableModel<SecurityInsightsRecommendationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SecurityInsightsRecommendationData>(data, options, AzureResourceManagerSecurityInsightsContext.Default);
 
         string IPersistableModel<SecurityInsightsRecommendationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SecurityInsightsRecommendationData>)Data).GetFormatFromOptions(options);
     }

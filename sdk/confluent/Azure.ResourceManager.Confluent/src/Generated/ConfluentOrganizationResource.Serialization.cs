@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Confluent
 
         ConfluentOrganizationData IJsonModel<ConfluentOrganizationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ConfluentOrganizationData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ConfluentOrganizationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<ConfluentOrganizationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ConfluentOrganizationData>(Data, options, AzureResourceManagerConfluentContext.Default);
 
-        ConfluentOrganizationData IPersistableModel<ConfluentOrganizationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ConfluentOrganizationData>(data, options);
+        ConfluentOrganizationData IPersistableModel<ConfluentOrganizationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ConfluentOrganizationData>(data, options, AzureResourceManagerConfluentContext.Default);
 
         string IPersistableModel<ConfluentOrganizationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ConfluentOrganizationData>)Data).GetFormatFromOptions(options);
     }

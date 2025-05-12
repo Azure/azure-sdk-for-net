@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
 
         NetworkMonitorData IJsonModel<NetworkMonitorData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetworkMonitorData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<NetworkMonitorData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<NetworkMonitorData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<NetworkMonitorData>(Data, options, AzureResourceManagerManagedNetworkFabricContext.Default);
 
-        NetworkMonitorData IPersistableModel<NetworkMonitorData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetworkMonitorData>(data, options);
+        NetworkMonitorData IPersistableModel<NetworkMonitorData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetworkMonitorData>(data, options, AzureResourceManagerManagedNetworkFabricContext.Default);
 
         string IPersistableModel<NetworkMonitorData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetworkMonitorData>)Data).GetFormatFromOptions(options);
     }
