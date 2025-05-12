@@ -36,11 +36,10 @@ namespace Azure.Communication.PhoneNumbers.SipRouting
         /// <param name="numberPattern">
         /// Regex number pattern for routing calls. .NET regex format is supported.
         /// The regex should match only digits with an optional &apos;+&apos; prefix without spaces.
-        /// I.e. &quot;^\+[1-9][0-9]{3,23}$&quot;.
+        /// I.e. &quot;^\+[1-9][0-9]{3,23}$&quot;.</param>
         /// <param name="description">Description of the routing setting for the users.</param>
         /// <param name="trunks">List of trunks on the route.</param>
         /// <param name="callerIdOverride">This value will override caller ID of outgoing call specified at runtime.</param>
-        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="numberPattern"/> is null. </exception>
         public SipTrunkRoute(string name, string numberPattern, string description = default, IEnumerable<string> trunks = default, string callerIdOverride = default)
         {

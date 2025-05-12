@@ -10,7 +10,7 @@ using System.Text.Json;
 
 namespace Azure.Communication.PhoneNumbers.SipRouting
 {
-    public partial class RoutesForNumber
+    internal partial class RoutesForNumber
     {
         internal static RoutesForNumber DeserializeRoutesForNumber(JsonElement element)
         {

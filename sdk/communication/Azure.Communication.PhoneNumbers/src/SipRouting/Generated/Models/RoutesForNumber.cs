@@ -10,7 +10,7 @@ using System.Collections.Generic;
 namespace Azure.Communication.PhoneNumbers.SipRouting
 {
     /// <summary> Represents number routing validation details. </summary>
-    public partial class RoutesForNumber
+    internal partial class RoutesForNumber
     {
         /// <summary> Initializes a new instance of <see cref="RoutesForNumber"/>. </summary>
         internal RoutesForNumber()

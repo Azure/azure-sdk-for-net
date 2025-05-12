@@ -435,11 +435,6 @@ namespace Azure.Communication.PhoneNumbers.SipRouting
         public static bool operator !=(Azure.Communication.PhoneNumbers.SipRouting.PrivacyHeader left, Azure.Communication.PhoneNumbers.SipRouting.PrivacyHeader right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class RoutesForNumber
-    {
-        internal RoutesForNumber() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.Communication.PhoneNumbers.SipRouting.SipTrunkRoute> MatchingRoutes { get { throw null; } }
-    }
     public partial class SipDomain
     {
         public SipDomain(string fqdn, bool enabled) { }
@@ -463,8 +458,8 @@ namespace Azure.Communication.PhoneNumbers.SipRouting
         public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.Communication.PhoneNumbers.SipRouting.SipDomain>>> GetDomainsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.Communication.PhoneNumbers.SipRouting.SipTrunkRoute>> GetRoutes(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.Communication.PhoneNumbers.SipRouting.SipTrunkRoute>>> GetRoutesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<System.Collections.Generic.IEnumerable<Azure.Communication.PhoneNumbers.SipRouting.SipTrunkRoute>> GetRoutesForNumber(string targetPhoneNumber, System.Collections.Generic.IReadOnlyList<Azure.Communication.PhoneNumbers.SipRouting.SipTrunkRoute> routes, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IEnumerable<Azure.Communication.PhoneNumbers.SipRouting.SipTrunkRoute>>> GetRoutesForNumberAsync(string targetPhoneNumber, System.Collections.Generic.IReadOnlyList<Azure.Communication.PhoneNumbers.SipRouting.SipTrunkRoute> routes, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.Communication.PhoneNumbers.SipRouting.SipTrunkRoute>> GetRoutesForNumber(string targetPhoneNumber, System.Collections.Generic.IEnumerable<Azure.Communication.PhoneNumbers.SipRouting.SipTrunkRoute> routes, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.Communication.PhoneNumbers.SipRouting.SipTrunkRoute>>> GetRoutesForNumberAsync(string targetPhoneNumber, System.Collections.Generic.IEnumerable<Azure.Communication.PhoneNumbers.SipRouting.SipTrunkRoute> routes, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Communication.PhoneNumbers.SipRouting.SipTrunk> GetTrunk(string fqdn, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Communication.PhoneNumbers.SipRouting.SipTrunk>> GetTrunkAsync(string fqdn, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.Communication.PhoneNumbers.SipRouting.SipTrunk>> GetTrunks(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }

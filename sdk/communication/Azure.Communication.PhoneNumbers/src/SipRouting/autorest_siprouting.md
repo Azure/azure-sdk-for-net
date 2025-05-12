@@ -61,14 +61,14 @@ directive:
     $["x-namespace"] = "Azure.Communication.PhoneNumbers.SipRouting"
 ```
 
-### Directive renaming "inactiveStatusReason" enum to "unhealthyStatusReason"
+### Directive renaming "inactiveStatusReason" enum to "healthStatusReason"
 
 ```yaml
 directive:
   from: swagger-document
   where: "$.definitions.OverallHealth"
   transform: >
-    $.properties.reason["x-ms-enum"].name = "unhealthyStatusReason";
+    $.properties.reason["x-ms-enum"].name = "healthStatusReason";
 ```
 
 ### Directive deleting "CommunicationErrorResponse"

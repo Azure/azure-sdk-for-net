@@ -14,7 +14,7 @@ namespace Azure.Communication.PhoneNumbers.SipRouting.Tests
     {
         private const string URIDomainNameReplacerRegEx = @"https://([^/?]+)";
         private const string DummyTestDomain = "testdomain.com";
-        private const string DummyRandom = "123456789";
+        private const string DummyRandomPrefix = "123456789";
         private string testDomain;
         private string randomDomain;
         protected TestData? TestData;
@@ -22,14 +22,14 @@ namespace Azure.Communication.PhoneNumbers.SipRouting.Tests
         public SipRoutingClientLiveTestBase(bool isAsync) : base(isAsync)
         {
             testDomain = TestEnvironment.Mode != RecordedTestMode.Playback ? TestEnvironment.GetTestDomain() ?? DummyTestDomain : DummyTestDomain;
-            var testRandom = TestEnvironment.Mode != RecordedTestMode.Playback ? Guid.NewGuid().ToString() ?? DummyRandom : DummyRandom;
-            randomDomain = testRandom + "." + testDomain;
+            var randomPrefix = TestEnvironment.Mode != RecordedTestMode.Playback ? Guid.NewGuid().ToString() ?? DummyRandomPrefix : DummyRandomPrefix;
+            randomDomain = randomPrefix + "." + testDomain;
 
             JsonPathSanitizers.Add("$..credential");
             SanitizedHeaders.Add("x-ms-content-sha256");
             UriRegexSanitizers.Add(new UriRegexSanitizer(URIDomainNameReplacerRegEx) { Value = "https://sanitized.communication.azure.com" });
             BodyRegexSanitizers.Add(new BodyRegexSanitizer(testDomain) { Value = DummyTestDomain });
-            BodyRegexSanitizers.Add(new BodyRegexSanitizer(testRandom) { Value = DummyRandom });
+            BodyRegexSanitizers.Add(new BodyRegexSanitizer(randomPrefix) { Value = DummyRandomPrefix });
         }
 
         [SetUp]

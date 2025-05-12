@@ -755,7 +755,7 @@ namespace Azure.Communication.PhoneNumbers.SipRouting
         /// <param name="targetPhoneNumber"> Phone number to test routing patterns against. </param>
         /// <param name="routes">New list of <see cref="SipTrunkRoute"/>.</param>
         /// <param name="cancellationToken">Optional cancellation token.</param>
-        public virtual Response<IEnumerable<SipTrunkRoute>> GetRoutesForNumber(string targetPhoneNumber, IReadOnlyList<SipTrunkRoute> routes, CancellationToken cancellationToken = default)
+        public virtual Response<IReadOnlyList<SipTrunkRoute>> GetRoutesForNumber(string targetPhoneNumber, IEnumerable<SipTrunkRoute> routes, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SipRoutingClient)}.{nameof(GetRoutesForNumber)}");
             scope.Start();
@@ -763,9 +763,9 @@ namespace Azure.Communication.PhoneNumbers.SipRouting
             {
                 IReadOnlyDictionary<string, SipDomain> domains = new Dictionary<string, SipDomain>();
                 IReadOnlyDictionary<string, SipTrunk> trunks = new Dictionary<string, SipTrunk>();
-                var config = new SipConfiguration(domains, trunks, routes);
+                var config = new SipConfiguration(domains, trunks, routes.ToList());
                 var response = _restClient.TestRoutesWithNumber(targetPhoneNumber, config, cancellationToken);
-                return Response.FromValue(response.Value.MatchingRoutes.AsEnumerable<SipTrunkRoute>(), response.GetRawResponse());
+                return Response.FromValue(response.Value.MatchingRoutes, response.GetRawResponse());
             }
             catch (Exception ex)
             {
@@ -780,7 +780,7 @@ namespace Azure.Communication.PhoneNumbers.SipRouting
         /// <param name="targetPhoneNumber"> Phone number to test routing patterns against. </param>
         /// <param name="routes">New list of <see cref="SipTrunkRoute"/>.</param>
         /// <param name="cancellationToken">Optional cancellation token.</param>
-        public virtual async Task<Response<IEnumerable<SipTrunkRoute>>> GetRoutesForNumberAsync(string targetPhoneNumber, IReadOnlyList<SipTrunkRoute> routes, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<IReadOnlyList<SipTrunkRoute>>> GetRoutesForNumberAsync(string targetPhoneNumber, IEnumerable<SipTrunkRoute> routes, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SipRoutingClient)}.{nameof(GetRoutesForNumber)}");
             scope.Start();
@@ -788,9 +788,9 @@ namespace Azure.Communication.PhoneNumbers.SipRouting
             {
                 IReadOnlyDictionary<string, SipDomain> domains = new Dictionary<string, SipDomain>();
                 IReadOnlyDictionary<string, SipTrunk> trunks = new Dictionary<string, SipTrunk>();
-                var config = new SipConfiguration(domains, trunks, routes);
+                var config = new SipConfiguration(domains, trunks, routes.ToList());
                 var response = await _restClient.TestRoutesWithNumberAsync(targetPhoneNumber, config, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(response.Value.MatchingRoutes.AsEnumerable<SipTrunkRoute>(), response.GetRawResponse());
+                return Response.FromValue(response.Value.MatchingRoutes, response.GetRawResponse());
             }
             catch (Exception ex)
             {
