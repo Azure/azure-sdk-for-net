@@ -55,7 +55,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\..\http-client-csharp\generator\Azure.Generator\test\common\Azure.Generator.Tests.Common.csproj" />
-    <ProjectReference Include="..\..\src\Azure.Generator.Mgmt.csproj" />
+    <ProjectReference Include="..\..\src\Azure.Generator.Management.csproj" />
   </ItemGroup>
 
   <ItemGroup>
