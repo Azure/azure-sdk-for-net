@@ -1423,11 +1423,11 @@ namespace Azure.AI.Agents.Persistent.Tests
         {
             var connectionString = TestEnvironment.PROJECT_CONNECTION_STRING;
             // If we are in the Playback, do not ask for authentication.
-            PersistentAgentsAdministration admClient = null;
+            PersistentAgentsAdministrationClient admClient = null;
             PersistentAgentsAdministrationClientOptions opts = InstrumentClientOptions(new PersistentAgentsAdministrationClientOptions());
             if (Mode == RecordedTestMode.Playback)
             {
-                admClient = InstrumentClient(new PersistentAgentsAdministration(connectionString, new MockCredential(), opts));
+                admClient = InstrumentClient(new PersistentAgentsAdministrationClient(connectionString, new MockCredential(), opts));
                 return new PersistentAgentsClient(admClient);
             }
             // For local testing if you are using non default account
@@ -1437,11 +1437,11 @@ namespace Azure.AI.Agents.Persistent.Tests
             var cli = System.Environment.GetEnvironmentVariable("USE_CLI_CREDENTIAL");
             if (!string.IsNullOrEmpty(cli) && string.Compare(cli, "true", StringComparison.OrdinalIgnoreCase) == 0)
             {
-                admClient = InstrumentClient(new PersistentAgentsAdministration(connectionString, new AzureCliCredential(), opts));
+                admClient = InstrumentClient(new PersistentAgentsAdministrationClient(connectionString, new AzureCliCredential(), opts));
             }
             else
             {
-                admClient = InstrumentClient(new PersistentAgentsAdministration(connectionString, new DefaultAzureCredential(), opts));
+                admClient = InstrumentClient(new PersistentAgentsAdministrationClient(connectionString, new DefaultAzureCredential(), opts));
             }
             Assert.IsNotNull(admClient);
             return new PersistentAgentsClient(admClient);
