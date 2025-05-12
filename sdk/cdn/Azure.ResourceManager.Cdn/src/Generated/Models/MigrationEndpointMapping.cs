@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> CDN Endpoint Mapping. </summary>
+    /// <summary>
+    /// CDN Endpoint Mapping.
+    /// Serialized Name: MigrationEndpointMapping
+    /// </summary>
     public partial class MigrationEndpointMapping
     {
         /// <summary>
@@ -51,8 +54,14 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="MigrationEndpointMapping"/>. </summary>
-        /// <param name="migratedFrom"> Name of the classic CDN profile endpoint. </param>
-        /// <param name="migratedTo"> Name of the newly created migrated Azure Frontdoor Standard/Premium profile endpoint. This name will replace the name of the classic CDN endpoint resource. </param>
+        /// <param name="migratedFrom">
+        /// Name of the classic CDN profile endpoint.
+        /// Serialized Name: MigrationEndpointMapping.migratedFrom
+        /// </param>
+        /// <param name="migratedTo">
+        /// Name of the newly created migrated Azure Frontdoor Standard/Premium profile endpoint. This name will replace the name of the classic CDN endpoint resource.
+        /// Serialized Name: MigrationEndpointMapping.migratedTo
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal MigrationEndpointMapping(string migratedFrom, string migratedTo, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -61,9 +70,15 @@ namespace Azure.ResourceManager.Cdn.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Name of the classic CDN profile endpoint. </summary>
+        /// <summary>
+        /// Name of the classic CDN profile endpoint.
+        /// Serialized Name: MigrationEndpointMapping.migratedFrom
+        /// </summary>
         public string MigratedFrom { get; set; }
-        /// <summary> Name of the newly created migrated Azure Frontdoor Standard/Premium profile endpoint. This name will replace the name of the classic CDN endpoint resource. </summary>
+        /// <summary>
+        /// Name of the newly created migrated Azure Frontdoor Standard/Premium profile endpoint. This name will replace the name of the classic CDN endpoint resource.
+        /// Serialized Name: MigrationEndpointMapping.migratedTo
+        /// </summary>
         public string MigratedTo { get; set; }
     }
 }

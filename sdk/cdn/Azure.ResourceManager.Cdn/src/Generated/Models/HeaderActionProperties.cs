@@ -10,12 +10,21 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Defines the parameters for the request header action. </summary>
-    public partial class HeaderActionProperties : DeliveryRuleActionParameters
+    /// <summary>
+    /// Defines the parameters for the request header action.
+    /// Serialized Name: HeaderActionParameters
+    /// </summary>
+    public partial class HeaderActionProperties : DeliveryRuleActionProperties
     {
         /// <summary> Initializes a new instance of <see cref="HeaderActionProperties"/>. </summary>
-        /// <param name="headerAction"> Action to perform. </param>
-        /// <param name="headerName"> Name of the header to modify. </param>
+        /// <param name="headerAction">
+        /// Action to perform
+        /// Serialized Name: HeaderActionParameters.headerAction
+        /// </param>
+        /// <param name="headerName">
+        /// Name of the header to modify
+        /// Serialized Name: HeaderActionParameters.headerName
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="headerName"/> is null. </exception>
         public HeaderActionProperties(HeaderAction headerAction, string headerName)
         {
@@ -23,16 +32,25 @@ namespace Azure.ResourceManager.Cdn.Models
 
             HeaderAction = headerAction;
             HeaderName = headerName;
-            TypeName = DeliveryRuleActionProperty.DeliveryRuleHeaderActionParameters;
+            TypeName = DeliveryRuleActionParametersType.DeliveryRuleHeaderActionParameters;
         }
 
         /// <summary> Initializes a new instance of <see cref="HeaderActionProperties"/>. </summary>
-        /// <param name="typeName"></param>
+        /// <param name="typeName"> Serialized Name: DeliveryRuleActionParameters.typeName. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="headerAction"> Action to perform. </param>
-        /// <param name="headerName"> Name of the header to modify. </param>
-        /// <param name="value"> Value for the specified action. </param>
-        internal HeaderActionProperties(DeliveryRuleActionProperty typeName, IDictionary<string, BinaryData> serializedAdditionalRawData, HeaderAction headerAction, string headerName, string value) : base(typeName, serializedAdditionalRawData)
+        /// <param name="headerAction">
+        /// Action to perform
+        /// Serialized Name: HeaderActionParameters.headerAction
+        /// </param>
+        /// <param name="headerName">
+        /// Name of the header to modify
+        /// Serialized Name: HeaderActionParameters.headerName
+        /// </param>
+        /// <param name="value">
+        /// Value for the specified action
+        /// Serialized Name: HeaderActionParameters.value
+        /// </param>
+        internal HeaderActionProperties(DeliveryRuleActionParametersType typeName, IDictionary<string, BinaryData> serializedAdditionalRawData, HeaderAction headerAction, string headerName, string value) : base(typeName, serializedAdditionalRawData)
         {
             HeaderAction = headerAction;
             HeaderName = headerName;
@@ -45,11 +63,20 @@ namespace Azure.ResourceManager.Cdn.Models
         {
         }
 
-        /// <summary> Action to perform. </summary>
+        /// <summary>
+        /// Action to perform
+        /// Serialized Name: HeaderActionParameters.headerAction
+        /// </summary>
         public HeaderAction HeaderAction { get; set; }
-        /// <summary> Name of the header to modify. </summary>
+        /// <summary>
+        /// Name of the header to modify
+        /// Serialized Name: HeaderActionParameters.headerName
+        /// </summary>
         public string HeaderName { get; set; }
-        /// <summary> Value for the specified action. </summary>
+        /// <summary>
+        /// Value for the specified action
+        /// Serialized Name: HeaderActionParameters.value
+        /// </summary>
         public string Value { get; set; }
     }
 }

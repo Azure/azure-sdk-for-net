@@ -10,23 +10,35 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Defines the parameters for the cache-key query string action. </summary>
-    public partial class CacheKeyQueryStringActionProperties : DeliveryRuleActionParameters
+    /// <summary>
+    /// Defines the parameters for the cache-key query string action.
+    /// Serialized Name: CacheKeyQueryStringActionParameters
+    /// </summary>
+    public partial class CacheKeyQueryStringActionProperties : DeliveryRuleActionProperties
     {
         /// <summary> Initializes a new instance of <see cref="CacheKeyQueryStringActionProperties"/>. </summary>
-        /// <param name="queryStringBehavior"> Caching behavior for the requests. </param>
+        /// <param name="queryStringBehavior">
+        /// Caching behavior for the requests
+        /// Serialized Name: CacheKeyQueryStringActionParameters.queryStringBehavior
+        /// </param>
         public CacheKeyQueryStringActionProperties(QueryStringBehavior queryStringBehavior)
         {
             QueryStringBehavior = queryStringBehavior;
-            TypeName = DeliveryRuleActionProperty.DeliveryRuleCacheKeyQueryStringBehaviorActionParameters;
+            TypeName = DeliveryRuleActionParametersType.DeliveryRuleCacheKeyQueryStringBehaviorActionParameters;
         }
 
         /// <summary> Initializes a new instance of <see cref="CacheKeyQueryStringActionProperties"/>. </summary>
-        /// <param name="typeName"></param>
+        /// <param name="typeName"> Serialized Name: DeliveryRuleActionParameters.typeName. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="queryStringBehavior"> Caching behavior for the requests. </param>
-        /// <param name="queryParameters"> query parameters to include or exclude (comma separated). </param>
-        internal CacheKeyQueryStringActionProperties(DeliveryRuleActionProperty typeName, IDictionary<string, BinaryData> serializedAdditionalRawData, QueryStringBehavior queryStringBehavior, string queryParameters) : base(typeName, serializedAdditionalRawData)
+        /// <param name="queryStringBehavior">
+        /// Caching behavior for the requests
+        /// Serialized Name: CacheKeyQueryStringActionParameters.queryStringBehavior
+        /// </param>
+        /// <param name="queryParameters">
+        /// query parameters to include or exclude (comma separated).
+        /// Serialized Name: CacheKeyQueryStringActionParameters.queryParameters
+        /// </param>
+        internal CacheKeyQueryStringActionProperties(DeliveryRuleActionParametersType typeName, IDictionary<string, BinaryData> serializedAdditionalRawData, QueryStringBehavior queryStringBehavior, string queryParameters) : base(typeName, serializedAdditionalRawData)
         {
             QueryStringBehavior = queryStringBehavior;
             QueryParameters = queryParameters;
@@ -38,9 +50,15 @@ namespace Azure.ResourceManager.Cdn.Models
         {
         }
 
-        /// <summary> Caching behavior for the requests. </summary>
+        /// <summary>
+        /// Caching behavior for the requests
+        /// Serialized Name: CacheKeyQueryStringActionParameters.queryStringBehavior
+        /// </summary>
         public QueryStringBehavior QueryStringBehavior { get; set; }
-        /// <summary> query parameters to include or exclude (comma separated). </summary>
+        /// <summary>
+        /// query parameters to include or exclude (comma separated).
+        /// Serialized Name: CacheKeyQueryStringActionParameters.queryParameters
+        /// </summary>
         public string QueryParameters { get; set; }
     }
 }

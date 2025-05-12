@@ -10,28 +10,49 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Defines the parameters for PostArgs match conditions. </summary>
-    public partial class PostArgsMatchCondition : DeliveryRuleConditionParameters
+    /// <summary>
+    /// Defines the parameters for PostArgs match conditions
+    /// Serialized Name: PostArgsMatchConditionParameters
+    /// </summary>
+    public partial class PostArgsMatchCondition : DeliveryRuleConditionProperties
     {
         /// <summary> Initializes a new instance of <see cref="PostArgsMatchCondition"/>. </summary>
-        /// <param name="postArgsOperator"> Describes operator to be matched. </param>
+        /// <param name="postArgsOperator">
+        /// Describes operator to be matched
+        /// Serialized Name: PostArgsMatchConditionParameters.operator
+        /// </param>
         public PostArgsMatchCondition(PostArgsOperator postArgsOperator)
         {
             PostArgsOperator = postArgsOperator;
             MatchValues = new ChangeTrackingList<string>();
             Transforms = new ChangeTrackingList<PreTransformCategory>();
-            TypeName = DeliveryRuleConditionProperty.DeliveryRulePostArgsConditionParameters;
+            TypeName = DeliveryRuleConditionParametersType.DeliveryRulePostArgsConditionParameters;
         }
 
         /// <summary> Initializes a new instance of <see cref="PostArgsMatchCondition"/>. </summary>
-        /// <param name="typeName"></param>
+        /// <param name="typeName"> Serialized Name: DeliveryRuleConditionParameters.typeName. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="selector"> Name of PostArg to be matched. </param>
-        /// <param name="postArgsOperator"> Describes operator to be matched. </param>
-        /// <param name="negateCondition"> Describes if this is negate condition or not. </param>
-        /// <param name="matchValues"> The match value for the condition of the delivery rule. </param>
-        /// <param name="transforms"> List of transforms. </param>
-        internal PostArgsMatchCondition(DeliveryRuleConditionProperty typeName, IDictionary<string, BinaryData> serializedAdditionalRawData, string selector, PostArgsOperator postArgsOperator, bool? negateCondition, IList<string> matchValues, IList<PreTransformCategory> transforms) : base(typeName, serializedAdditionalRawData)
+        /// <param name="selector">
+        /// Name of PostArg to be matched
+        /// Serialized Name: PostArgsMatchConditionParameters.selector
+        /// </param>
+        /// <param name="postArgsOperator">
+        /// Describes operator to be matched
+        /// Serialized Name: PostArgsMatchConditionParameters.operator
+        /// </param>
+        /// <param name="negateCondition">
+        /// Describes if this is negate condition or not
+        /// Serialized Name: PostArgsMatchConditionParameters.negateCondition
+        /// </param>
+        /// <param name="matchValues">
+        /// The match value for the condition of the delivery rule
+        /// Serialized Name: PostArgsMatchConditionParameters.matchValues
+        /// </param>
+        /// <param name="transforms">
+        /// List of transforms
+        /// Serialized Name: PostArgsMatchConditionParameters.transforms
+        /// </param>
+        internal PostArgsMatchCondition(DeliveryRuleConditionParametersType typeName, IDictionary<string, BinaryData> serializedAdditionalRawData, string selector, PostArgsOperator postArgsOperator, bool? negateCondition, IList<string> matchValues, IList<PreTransformCategory> transforms) : base(typeName, serializedAdditionalRawData)
         {
             Selector = selector;
             PostArgsOperator = postArgsOperator;
@@ -46,15 +67,30 @@ namespace Azure.ResourceManager.Cdn.Models
         {
         }
 
-        /// <summary> Name of PostArg to be matched. </summary>
+        /// <summary>
+        /// Name of PostArg to be matched
+        /// Serialized Name: PostArgsMatchConditionParameters.selector
+        /// </summary>
         public string Selector { get; set; }
-        /// <summary> Describes operator to be matched. </summary>
+        /// <summary>
+        /// Describes operator to be matched
+        /// Serialized Name: PostArgsMatchConditionParameters.operator
+        /// </summary>
         public PostArgsOperator PostArgsOperator { get; set; }
-        /// <summary> Describes if this is negate condition or not. </summary>
+        /// <summary>
+        /// Describes if this is negate condition or not
+        /// Serialized Name: PostArgsMatchConditionParameters.negateCondition
+        /// </summary>
         public bool? NegateCondition { get; set; }
-        /// <summary> The match value for the condition of the delivery rule. </summary>
+        /// <summary>
+        /// The match value for the condition of the delivery rule
+        /// Serialized Name: PostArgsMatchConditionParameters.matchValues
+        /// </summary>
         public IList<string> MatchValues { get; }
-        /// <summary> List of transforms. </summary>
+        /// <summary>
+        /// List of transforms
+        /// Serialized Name: PostArgsMatchConditionParameters.transforms
+        /// </summary>
         public IList<PreTransformCategory> Transforms { get; }
     }
 }

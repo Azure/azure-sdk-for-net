@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Cdn.Models
     internal partial class UnknownCertificateSourceParameters : CertificateSourceParameters
     {
         /// <summary> Initializes a new instance of <see cref="UnknownCertificateSourceParameters"/>. </summary>
-        /// <param name="typeName"></param>
+        /// <param name="typeName"> Serialized Name: CertificateSourceParameters.typeName. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal UnknownCertificateSourceParameters(CertificateSourceParametersType typeName, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(typeName, serializedAdditionalRawData)
         {

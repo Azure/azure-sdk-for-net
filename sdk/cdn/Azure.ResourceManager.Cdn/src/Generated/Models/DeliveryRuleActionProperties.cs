@@ -12,10 +12,11 @@ namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary>
     /// Defines the parameters for delivery rule actions
-    /// Please note <see cref="DeliveryRuleActionParameters"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+    /// Serialized Name: DeliveryRuleActionParameters
+    /// Please note <see cref="DeliveryRuleActionProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="CacheExpirationActionProperties"/>, <see cref="CacheKeyQueryStringActionProperties"/>, <see cref="HeaderActionProperties"/>, <see cref="OriginGroupOverrideActionProperties"/>, <see cref="RouteConfigurationOverrideActionProperties"/>, <see cref="UriRedirectActionProperties"/>, <see cref="UriRewriteActionProperties"/> and <see cref="UriSigningActionProperties"/>.
     /// </summary>
-    public abstract partial class DeliveryRuleActionParameters
+    public abstract partial class DeliveryRuleActionProperties
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -49,21 +50,21 @@ namespace Azure.ResourceManager.Cdn.Models
         /// </summary>
         private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="DeliveryRuleActionParameters"/>. </summary>
-        protected DeliveryRuleActionParameters()
+        /// <summary> Initializes a new instance of <see cref="DeliveryRuleActionProperties"/>. </summary>
+        protected DeliveryRuleActionProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="DeliveryRuleActionParameters"/>. </summary>
-        /// <param name="typeName"></param>
+        /// <summary> Initializes a new instance of <see cref="DeliveryRuleActionProperties"/>. </summary>
+        /// <param name="typeName"> Serialized Name: DeliveryRuleActionParameters.typeName. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DeliveryRuleActionParameters(DeliveryRuleActionProperty typeName, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DeliveryRuleActionProperties(DeliveryRuleActionParametersType typeName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             TypeName = typeName;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets or sets the type name. </summary>
-        internal DeliveryRuleActionProperty TypeName { get; set; }
+        /// <summary> Serialized Name: DeliveryRuleActionParameters.typeName. </summary>
+        internal DeliveryRuleActionParametersType TypeName { get; set; }
     }
 }

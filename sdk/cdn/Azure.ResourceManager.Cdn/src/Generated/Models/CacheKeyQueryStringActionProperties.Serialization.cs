@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Cdn.Models
             }
             QueryStringBehavior queryStringBehavior = default;
             string queryParameters = default;
-            DeliveryRuleActionProperty typeName = default;
+            DeliveryRuleActionParametersType typeName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 if (property.NameEquals("typeName"u8))
                 {
-                    typeName = new DeliveryRuleActionProperty(property.Value.GetString());
+                    typeName = new DeliveryRuleActionParametersType(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

@@ -12,6 +12,7 @@ namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary>
     /// Defines the parameters for certificate source
+    /// Serialized Name: CertificateSourceParameters
     /// Please note <see cref="CertificateSourceParameters"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="CdnCertificateSource"/> and <see cref="KeyVaultCertificateSource"/>.
     /// </summary>
@@ -55,7 +56,7 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="CertificateSourceParameters"/>. </summary>
-        /// <param name="typeName"></param>
+        /// <param name="typeName"> Serialized Name: CertificateSourceParameters.typeName. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal CertificateSourceParameters(CertificateSourceParametersType typeName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -63,7 +64,7 @@ namespace Azure.ResourceManager.Cdn.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets or sets the type name. </summary>
+        /// <summary> Serialized Name: CertificateSourceParameters.typeName. </summary>
         internal CertificateSourceParametersType TypeName { get; set; }
     }
 }

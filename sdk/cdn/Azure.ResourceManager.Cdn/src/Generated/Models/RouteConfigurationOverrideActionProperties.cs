@@ -10,30 +10,45 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Defines the parameters for the route configuration override action. </summary>
-    public partial class RouteConfigurationOverrideActionProperties : DeliveryRuleActionParameters
+    /// <summary>
+    /// Defines the parameters for the route configuration override action.
+    /// Serialized Name: RouteConfigurationOverrideActionParameters
+    /// </summary>
+    public partial class RouteConfigurationOverrideActionProperties : DeliveryRuleActionProperties
     {
         /// <summary> Initializes a new instance of <see cref="RouteConfigurationOverrideActionProperties"/>. </summary>
         public RouteConfigurationOverrideActionProperties()
         {
-            TypeName = DeliveryRuleActionProperty.DeliveryRuleRouteConfigurationOverrideActionParameters;
+            TypeName = DeliveryRuleActionParametersType.DeliveryRuleRouteConfigurationOverrideActionParameters;
         }
 
         /// <summary> Initializes a new instance of <see cref="RouteConfigurationOverrideActionProperties"/>. </summary>
-        /// <param name="typeName"></param>
+        /// <param name="typeName"> Serialized Name: DeliveryRuleActionParameters.typeName. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="originGroupOverride"> A reference to the origin group override configuration. Leave empty to use the default origin group on route. </param>
-        /// <param name="cacheConfiguration"> The caching configuration associated with this rule. To disable caching, do not provide a cacheConfiguration object. </param>
-        internal RouteConfigurationOverrideActionProperties(DeliveryRuleActionProperty typeName, IDictionary<string, BinaryData> serializedAdditionalRawData, OriginGroupOverride originGroupOverride, CacheConfiguration cacheConfiguration) : base(typeName, serializedAdditionalRawData)
+        /// <param name="originGroupOverride">
+        /// A reference to the origin group override configuration. Leave empty to use the default origin group on route.
+        /// Serialized Name: RouteConfigurationOverrideActionParameters.originGroupOverride
+        /// </param>
+        /// <param name="cacheConfiguration">
+        /// The caching configuration associated with this rule. To disable caching, do not provide a cacheConfiguration object.
+        /// Serialized Name: RouteConfigurationOverrideActionParameters.cacheConfiguration
+        /// </param>
+        internal RouteConfigurationOverrideActionProperties(DeliveryRuleActionParametersType typeName, IDictionary<string, BinaryData> serializedAdditionalRawData, OriginGroupOverride originGroupOverride, CacheConfiguration cacheConfiguration) : base(typeName, serializedAdditionalRawData)
         {
             OriginGroupOverride = originGroupOverride;
             CacheConfiguration = cacheConfiguration;
             TypeName = typeName;
         }
 
-        /// <summary> A reference to the origin group override configuration. Leave empty to use the default origin group on route. </summary>
+        /// <summary>
+        /// A reference to the origin group override configuration. Leave empty to use the default origin group on route.
+        /// Serialized Name: RouteConfigurationOverrideActionParameters.originGroupOverride
+        /// </summary>
         public OriginGroupOverride OriginGroupOverride { get; set; }
-        /// <summary> The caching configuration associated with this rule. To disable caching, do not provide a cacheConfiguration object. </summary>
+        /// <summary>
+        /// The caching configuration associated with this rule. To disable caching, do not provide a cacheConfiguration object.
+        /// Serialized Name: RouteConfigurationOverrideActionParameters.cacheConfiguration
+        /// </summary>
         public CacheConfiguration CacheConfiguration { get; set; }
     }
 }

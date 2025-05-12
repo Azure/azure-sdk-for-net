@@ -10,27 +10,45 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Defines the parameters for ServerPort match conditions. </summary>
-    public partial class ServerPortMatchCondition : DeliveryRuleConditionParameters
+    /// <summary>
+    /// Defines the parameters for ServerPort match conditions
+    /// Serialized Name: ServerPortMatchConditionParameters
+    /// </summary>
+    public partial class ServerPortMatchCondition : DeliveryRuleConditionProperties
     {
         /// <summary> Initializes a new instance of <see cref="ServerPortMatchCondition"/>. </summary>
-        /// <param name="serverPortOperator"> Describes operator to be matched. </param>
+        /// <param name="serverPortOperator">
+        /// Describes operator to be matched
+        /// Serialized Name: ServerPortMatchConditionParameters.operator
+        /// </param>
         public ServerPortMatchCondition(ServerPortOperator serverPortOperator)
         {
             ServerPortOperator = serverPortOperator;
             MatchValues = new ChangeTrackingList<string>();
             Transforms = new ChangeTrackingList<PreTransformCategory>();
-            TypeName = DeliveryRuleConditionProperty.DeliveryRuleServerPortConditionParameters;
+            TypeName = DeliveryRuleConditionParametersType.DeliveryRuleServerPortConditionParameters;
         }
 
         /// <summary> Initializes a new instance of <see cref="ServerPortMatchCondition"/>. </summary>
-        /// <param name="typeName"></param>
+        /// <param name="typeName"> Serialized Name: DeliveryRuleConditionParameters.typeName. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="serverPortOperator"> Describes operator to be matched. </param>
-        /// <param name="negateCondition"> Describes if this is negate condition or not. </param>
-        /// <param name="matchValues"> The match value for the condition of the delivery rule. </param>
-        /// <param name="transforms"> List of transforms. </param>
-        internal ServerPortMatchCondition(DeliveryRuleConditionProperty typeName, IDictionary<string, BinaryData> serializedAdditionalRawData, ServerPortOperator serverPortOperator, bool? negateCondition, IList<string> matchValues, IList<PreTransformCategory> transforms) : base(typeName, serializedAdditionalRawData)
+        /// <param name="serverPortOperator">
+        /// Describes operator to be matched
+        /// Serialized Name: ServerPortMatchConditionParameters.operator
+        /// </param>
+        /// <param name="negateCondition">
+        /// Describes if this is negate condition or not
+        /// Serialized Name: ServerPortMatchConditionParameters.negateCondition
+        /// </param>
+        /// <param name="matchValues">
+        /// The match value for the condition of the delivery rule
+        /// Serialized Name: ServerPortMatchConditionParameters.matchValues
+        /// </param>
+        /// <param name="transforms">
+        /// List of transforms
+        /// Serialized Name: ServerPortMatchConditionParameters.transforms
+        /// </param>
+        internal ServerPortMatchCondition(DeliveryRuleConditionParametersType typeName, IDictionary<string, BinaryData> serializedAdditionalRawData, ServerPortOperator serverPortOperator, bool? negateCondition, IList<string> matchValues, IList<PreTransformCategory> transforms) : base(typeName, serializedAdditionalRawData)
         {
             ServerPortOperator = serverPortOperator;
             NegateCondition = negateCondition;
@@ -44,13 +62,25 @@ namespace Azure.ResourceManager.Cdn.Models
         {
         }
 
-        /// <summary> Describes operator to be matched. </summary>
+        /// <summary>
+        /// Describes operator to be matched
+        /// Serialized Name: ServerPortMatchConditionParameters.operator
+        /// </summary>
         public ServerPortOperator ServerPortOperator { get; set; }
-        /// <summary> Describes if this is negate condition or not. </summary>
+        /// <summary>
+        /// Describes if this is negate condition or not
+        /// Serialized Name: ServerPortMatchConditionParameters.negateCondition
+        /// </summary>
         public bool? NegateCondition { get; set; }
-        /// <summary> The match value for the condition of the delivery rule. </summary>
+        /// <summary>
+        /// The match value for the condition of the delivery rule
+        /// Serialized Name: ServerPortMatchConditionParameters.matchValues
+        /// </summary>
         public IList<string> MatchValues { get; }
-        /// <summary> List of transforms. </summary>
+        /// <summary>
+        /// List of transforms
+        /// Serialized Name: ServerPortMatchConditionParameters.transforms
+        /// </summary>
         public IList<PreTransformCategory> Transforms { get; }
     }
 }

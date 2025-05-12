@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> The AfdCustomizedCipherSuiteForTls12. </summary>
+    /// <summary>
+    /// The AfdCustomizedCipherSuiteForTls12.
+    /// Serialized Name: AfdCustomizedCipherSuiteForTls12
+    /// </summary>
     public readonly partial struct AfdCustomizedCipherSuiteForTls12 : IEquatable<AfdCustomizedCipherSuiteForTls12>
     {
         private readonly string _value;

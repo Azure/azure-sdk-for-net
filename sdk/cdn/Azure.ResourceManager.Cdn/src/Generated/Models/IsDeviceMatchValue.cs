@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> The IsDeviceMatchValue. </summary>
+    /// <summary>
+    /// The IsDeviceMatchValue.
+    /// Serialized Name: IsDeviceMatchValue
+    /// </summary>
     public readonly partial struct IsDeviceMatchValue : IEquatable<IsDeviceMatchValue>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.Cdn.Models
         private const string MobileValue = "Mobile";
         private const string DesktopValue = "Desktop";
 
-        /// <summary> Mobile. </summary>
+        /// <summary>
+        /// Mobile
+        /// Serialized Name: IsDeviceMatchValue.Mobile
+        /// </summary>
         public static IsDeviceMatchValue Mobile { get; } = new IsDeviceMatchValue(MobileValue);
-        /// <summary> Desktop. </summary>
+        /// <summary>
+        /// Desktop
+        /// Serialized Name: IsDeviceMatchValue.Desktop
+        /// </summary>
         public static IsDeviceMatchValue Desktop { get; } = new IsDeviceMatchValue(DesktopValue);
         /// <summary> Determines if two <see cref="IsDeviceMatchValue"/> values are the same. </summary>
         public static bool operator ==(IsDeviceMatchValue left, IsDeviceMatchValue right) => left.Equals(right);

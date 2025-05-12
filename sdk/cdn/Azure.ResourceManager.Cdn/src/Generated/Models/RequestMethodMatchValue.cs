@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> The RequestMethodMatchValue. </summary>
+    /// <summary>
+    /// The RequestMethodMatchValue.
+    /// Serialized Name: RequestMethodMatchValue
+    /// </summary>
     public readonly partial struct RequestMethodMatchValue : IEquatable<RequestMethodMatchValue>
     {
         private readonly string _value;
@@ -30,19 +33,40 @@ namespace Azure.ResourceManager.Cdn.Models
         private const string OptionsValue = "OPTIONS";
         private const string TraceValue = "TRACE";
 
-        /// <summary> GET. </summary>
+        /// <summary>
+        /// GET
+        /// Serialized Name: RequestMethodMatchValue.GET
+        /// </summary>
         public static RequestMethodMatchValue Get { get; } = new RequestMethodMatchValue(GetValue);
-        /// <summary> HEAD. </summary>
+        /// <summary>
+        /// HEAD
+        /// Serialized Name: RequestMethodMatchValue.HEAD
+        /// </summary>
         public static RequestMethodMatchValue Head { get; } = new RequestMethodMatchValue(HeadValue);
-        /// <summary> POST. </summary>
+        /// <summary>
+        /// POST
+        /// Serialized Name: RequestMethodMatchValue.POST
+        /// </summary>
         public static RequestMethodMatchValue Post { get; } = new RequestMethodMatchValue(PostValue);
-        /// <summary> PUT. </summary>
+        /// <summary>
+        /// PUT
+        /// Serialized Name: RequestMethodMatchValue.PUT
+        /// </summary>
         public static RequestMethodMatchValue Put { get; } = new RequestMethodMatchValue(PutValue);
-        /// <summary> DELETE. </summary>
+        /// <summary>
+        /// DELETE
+        /// Serialized Name: RequestMethodMatchValue.DELETE
+        /// </summary>
         public static RequestMethodMatchValue Delete { get; } = new RequestMethodMatchValue(DeleteValue);
-        /// <summary> OPTIONS. </summary>
+        /// <summary>
+        /// OPTIONS
+        /// Serialized Name: RequestMethodMatchValue.OPTIONS
+        /// </summary>
         public static RequestMethodMatchValue Options { get; } = new RequestMethodMatchValue(OptionsValue);
-        /// <summary> TRACE. </summary>
+        /// <summary>
+        /// TRACE
+        /// Serialized Name: RequestMethodMatchValue.TRACE
+        /// </summary>
         public static RequestMethodMatchValue Trace { get; } = new RequestMethodMatchValue(TraceValue);
         /// <summary> Determines if two <see cref="RequestMethodMatchValue"/> values are the same. </summary>
         public static bool operator ==(RequestMethodMatchValue left, RequestMethodMatchValue right) => left.Equals(right);

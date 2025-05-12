@@ -23,8 +23,8 @@ modelerfour:
 use-model-reader-writer: true
 deserialize-null-collection-as-null-value: true
 
-# mgmt-debug:
-#   show-serialized-names: true
+mgmt-debug:
+  show-serialized-names: true
 
 operation-id-mappings:
   CdnEndpoint:
@@ -351,8 +351,8 @@ rename-mapping:
   AFDDomainUpdateParameters.properties.preValidatedCustomDomainResourceId: PreValidatedCustomDomainResource
   UsageUnit: FrontDoorUsageUnit
   Status: ValidationStatus
-  DeliveryRuleActionParametersType: DeliveryRuleActionProperties
-  DeliveryRuleConditionParametersType: DeliveryRuleConditionProperties
+  DeliveryRuleActionParameters: DeliveryRuleActionProperties
+  DeliveryRuleConditionParameters: DeliveryRuleConditionProperties
 
 directive:
   - from: swagger-document

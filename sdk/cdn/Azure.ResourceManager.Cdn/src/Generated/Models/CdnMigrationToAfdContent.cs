@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Request body for Migrate operation. </summary>
+    /// <summary>
+    /// Request body for Migrate operation.
+    /// Serialized Name: CdnMigrationToAfdParameters
+    /// </summary>
     public partial class CdnMigrationToAfdContent
     {
         /// <summary>
@@ -46,7 +49,10 @@ namespace Azure.ResourceManager.Cdn.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="CdnMigrationToAfdContent"/>. </summary>
-        /// <param name="sku"> Sku for the migration. </param>
+        /// <param name="sku">
+        /// Sku for the migration
+        /// Serialized Name: CdnMigrationToAfdParameters.sku
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sku"/> is null. </exception>
         public CdnMigrationToAfdContent(CdnSku sku)
         {
@@ -57,8 +63,14 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="CdnMigrationToAfdContent"/>. </summary>
-        /// <param name="sku"> Sku for the migration. </param>
-        /// <param name="migrationEndpointMappings"> A name map between classic CDN endpoints and AFD Premium/Standard endpoints. </param>
+        /// <param name="sku">
+        /// Sku for the migration
+        /// Serialized Name: CdnMigrationToAfdParameters.sku
+        /// </param>
+        /// <param name="migrationEndpointMappings">
+        /// A name map between classic CDN endpoints and AFD Premium/Standard endpoints.
+        /// Serialized Name: CdnMigrationToAfdParameters.migrationEndpointMappings
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal CdnMigrationToAfdContent(CdnSku sku, IList<MigrationEndpointMapping> migrationEndpointMappings, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -72,15 +84,24 @@ namespace Azure.ResourceManager.Cdn.Models
         {
         }
 
-        /// <summary> Sku for the migration. </summary>
+        /// <summary>
+        /// Sku for the migration
+        /// Serialized Name: CdnMigrationToAfdParameters.sku
+        /// </summary>
         internal CdnSku Sku { get; }
-        /// <summary> Name of the pricing tier. </summary>
+        /// <summary>
+        /// Name of the pricing tier.
+        /// Serialized Name: Sku.name
+        /// </summary>
         public CdnSkuName? SkuName
         {
             get => Sku?.Name;
         }
 
-        /// <summary> A name map between classic CDN endpoints and AFD Premium/Standard endpoints. </summary>
+        /// <summary>
+        /// A name map between classic CDN endpoints and AFD Premium/Standard endpoints.
+        /// Serialized Name: CdnMigrationToAfdParameters.migrationEndpointMappings
+        /// </summary>
         public IList<MigrationEndpointMapping> MigrationEndpointMappings { get; }
     }
 }

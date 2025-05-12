@@ -12,25 +12,34 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Defines the parameters for the origin group override action. </summary>
-    public partial class OriginGroupOverrideActionProperties : DeliveryRuleActionParameters
+    /// <summary>
+    /// Defines the parameters for the origin group override action.
+    /// Serialized Name: OriginGroupOverrideActionParameters
+    /// </summary>
+    public partial class OriginGroupOverrideActionProperties : DeliveryRuleActionProperties
     {
         /// <summary> Initializes a new instance of <see cref="OriginGroupOverrideActionProperties"/>. </summary>
-        /// <param name="originGroup"> defines the OriginGroup that would override the DefaultOriginGroup. </param>
+        /// <param name="originGroup">
+        /// defines the OriginGroup that would override the DefaultOriginGroup.
+        /// Serialized Name: OriginGroupOverrideActionParameters.originGroup
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="originGroup"/> is null. </exception>
         public OriginGroupOverrideActionProperties(WritableSubResource originGroup)
         {
             Argument.AssertNotNull(originGroup, nameof(originGroup));
 
             OriginGroup = originGroup;
-            TypeName = DeliveryRuleActionProperty.DeliveryRuleOriginGroupOverrideActionParameters;
+            TypeName = DeliveryRuleActionParametersType.DeliveryRuleOriginGroupOverrideActionParameters;
         }
 
         /// <summary> Initializes a new instance of <see cref="OriginGroupOverrideActionProperties"/>. </summary>
-        /// <param name="typeName"></param>
+        /// <param name="typeName"> Serialized Name: DeliveryRuleActionParameters.typeName. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="originGroup"> defines the OriginGroup that would override the DefaultOriginGroup. </param>
-        internal OriginGroupOverrideActionProperties(DeliveryRuleActionProperty typeName, IDictionary<string, BinaryData> serializedAdditionalRawData, WritableSubResource originGroup) : base(typeName, serializedAdditionalRawData)
+        /// <param name="originGroup">
+        /// defines the OriginGroup that would override the DefaultOriginGroup.
+        /// Serialized Name: OriginGroupOverrideActionParameters.originGroup
+        /// </param>
+        internal OriginGroupOverrideActionProperties(DeliveryRuleActionParametersType typeName, IDictionary<string, BinaryData> serializedAdditionalRawData, WritableSubResource originGroup) : base(typeName, serializedAdditionalRawData)
         {
             OriginGroup = originGroup;
             TypeName = typeName;
@@ -41,7 +50,10 @@ namespace Azure.ResourceManager.Cdn.Models
         {
         }
 
-        /// <summary> defines the OriginGroup that would override the DefaultOriginGroup. </summary>
+        /// <summary>
+        /// defines the OriginGroup that would override the DefaultOriginGroup.
+        /// Serialized Name: OriginGroupOverrideActionParameters.originGroup
+        /// </summary>
         internal WritableSubResource OriginGroup { get; set; }
         /// <summary> Gets or sets Id. </summary>
         public ResourceIdentifier OriginGroupId

@@ -10,31 +10,46 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Defines the parameters for the Url Signing action. </summary>
-    public partial class UriSigningActionProperties : DeliveryRuleActionParameters
+    /// <summary>
+    /// Defines the parameters for the Url Signing action.
+    /// Serialized Name: UrlSigningActionParameters
+    /// </summary>
+    public partial class UriSigningActionProperties : DeliveryRuleActionProperties
     {
         /// <summary> Initializes a new instance of <see cref="UriSigningActionProperties"/>. </summary>
         public UriSigningActionProperties()
         {
             ParameterNameOverride = new ChangeTrackingList<UriSigningParamIdentifier>();
-            TypeName = DeliveryRuleActionProperty.DeliveryRuleUriSigningActionParameters;
+            TypeName = DeliveryRuleActionParametersType.DeliveryRuleUriSigningActionParameters;
         }
 
         /// <summary> Initializes a new instance of <see cref="UriSigningActionProperties"/>. </summary>
-        /// <param name="typeName"></param>
+        /// <param name="typeName"> Serialized Name: DeliveryRuleActionParameters.typeName. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="algorithm"> Algorithm to use for URL signing. </param>
-        /// <param name="parameterNameOverride"> Defines which query string parameters in the url to be considered for expires, key id etc. </param>
-        internal UriSigningActionProperties(DeliveryRuleActionProperty typeName, IDictionary<string, BinaryData> serializedAdditionalRawData, UriSigningAlgorithm? algorithm, IList<UriSigningParamIdentifier> parameterNameOverride) : base(typeName, serializedAdditionalRawData)
+        /// <param name="algorithm">
+        /// Algorithm to use for URL signing
+        /// Serialized Name: UrlSigningActionParameters.algorithm
+        /// </param>
+        /// <param name="parameterNameOverride">
+        /// Defines which query string parameters in the url to be considered for expires, key id etc.
+        /// Serialized Name: UrlSigningActionParameters.parameterNameOverride
+        /// </param>
+        internal UriSigningActionProperties(DeliveryRuleActionParametersType typeName, IDictionary<string, BinaryData> serializedAdditionalRawData, UriSigningAlgorithm? algorithm, IList<UriSigningParamIdentifier> parameterNameOverride) : base(typeName, serializedAdditionalRawData)
         {
             Algorithm = algorithm;
             ParameterNameOverride = parameterNameOverride;
             TypeName = typeName;
         }
 
-        /// <summary> Algorithm to use for URL signing. </summary>
+        /// <summary>
+        /// Algorithm to use for URL signing
+        /// Serialized Name: UrlSigningActionParameters.algorithm
+        /// </summary>
         public UriSigningAlgorithm? Algorithm { get; set; }
-        /// <summary> Defines which query string parameters in the url to be considered for expires, key id etc. </summary>
+        /// <summary>
+        /// Defines which query string parameters in the url to be considered for expires, key id etc.
+        /// Serialized Name: UrlSigningActionParameters.parameterNameOverride
+        /// </summary>
         public IList<UriSigningParamIdentifier> ParameterNameOverride { get; }
     }
 }
