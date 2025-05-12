@@ -93,7 +93,7 @@ $ProgressPreference = "SilentlyContinue"; # Disable invoke-webrequest progress d
 
 function ProcessLink([System.Uri]$linkUri) {
   # To help improve performance and rate limiting issues with github links we try to resolve them based on a local clone if one exists.
-  if ($localGithubClonedRoot -or $localBuildRepoName -and $linkUri -match '^https://github.com/(?<org>Azure)/(?<repo>[^/]+)/(?:blob|tree)/(main|.*_[^/]+|.*/v[^/]+)/(?<path>.*)$') {
+  if (($localGithubClonedRoot -or $localBuildRepoName) -and $linkUri -match '^https://github.com/(?<org>Azure)/(?<repo>[^/]+)/(?:blob|tree)/(main|.*_[^/]+|.*/v[^/]+)/(?<path>.*)$') {
 
     if ($localBuildRepoName -eq ($matches['org'] + "/" + $matches['repo'])) {
       # If the link is to the current repo, use the local build path
