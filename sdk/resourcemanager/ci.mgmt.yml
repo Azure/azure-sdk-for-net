@@ -54,6 +54,7 @@ trigger:
     - sdk/containerorchestratorruntime/Azure.ResourceManager.ContainerOrchestratorRuntime
     - sdk/containerregistry/Azure.ResourceManager.ContainerRegistry
     - sdk/containerservice/Azure.ResourceManager.ContainerService
+    - sdk/contoso/Azure.ResourceManager.Contoso
     - sdk/cosmosdb/Azure.ResourceManager.CosmosDB
     - sdk/cosmosdbforpostgresql/Azure.ResourceManager.CosmosDBForPostgreSql
     - sdk/costmanagement/Azure.ResourceManager.CostManagement
@@ -270,6 +271,7 @@ pr:
     - sdk/containerorchestratorruntime/Azure.ResourceManager.ContainerOrchestratorRuntime
     - sdk/containerregistry/Azure.ResourceManager.ContainerRegistry
     - sdk/containerservice/Azure.ResourceManager.ContainerService
+    - sdk/contoso/Azure.ResourceManager.Contoso
     - sdk/cosmosdb/Azure.ResourceManager.CosmosDB
     - sdk/cosmosdbforpostgresql/Azure.ResourceManager.CosmosDBForPostgreSql
     - sdk/costmanagement/Azure.ResourceManager.CostManagement
