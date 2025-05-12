@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-		<PackageId>Azure.Generator.Mgmt</PackageId>
+		<PackageId>Azure.Generator.Management</PackageId>
 		<Version>1.0.0-beta.1</Version>
 		<CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
   </PropertyGroup>
@@ -93,5 +93,5 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
 	</ItemGroup>
-	
+
 </Project>
