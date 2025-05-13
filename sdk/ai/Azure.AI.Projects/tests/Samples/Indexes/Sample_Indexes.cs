@@ -63,6 +63,12 @@ namespace Azure.AI.Projects.Tests
                 Console.WriteLine(version);
             }
 
+            Console.WriteLine($"Listing all Indices:");
+            foreach (var version in indexesClient.GetIndices())
+            {
+                Console.WriteLine(version);
+            }
+
             Console.WriteLine("Delete the Index version created above:");
             indexesClient.Delete(name: indexName, version: indexVersion);
             #endregion

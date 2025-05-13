@@ -58,5 +58,45 @@ namespace Azure.AI.Projects
 
             return await GetConnectionAsync(connectionName).ConfigureAwait(false);
         }
+
+        /// <summary>
+        /// Get the default connection.
+        /// </summary>
+        /// <returns>A <see cref="Connection"/> object.</returns>
+        /// <exception cref="RequestFailedException">Thrown when the request fails.</exception>
+        public Connection GetDefault(bool includeCredentials = false)
+        {
+            foreach (var connection in GetConnections())
+            {
+                // Use the instance method instead of incorrectly calling it as static
+                if (includeCredentials)
+                {
+                    return GetWithCredentials(connection.Name);
+                }
+
+                return GetConnection(connection.Name);
+            }
+            throw new RequestFailedException("No connections found.");
+        }
+
+        /// <summary>
+        /// Get the default connection.
+        /// </summary>
+        /// <returns>A <see cref="Connection"/> object.</returns>
+        /// <exception cref="RequestFailedException">Thrown when the request fails.</exception>
+        public async Task<Connection> GetDefaultAsync(bool includeCredentials = false)
+        {
+            await foreach (var connection in GetConnectionsAsync().ConfigureAwait(false))
+            {
+                // Use the instance method instead of incorrectly calling it as static
+                if (includeCredentials)
+                {
+                    return await GetWithCredentialsAsync(connection.Name).ConfigureAwait(false);
+                }
+
+                return await GetConnectionAsync(connection.Name).ConfigureAwait(false);
+            }
+            throw new RequestFailedException("No connections found.");
+        }
     }
 }

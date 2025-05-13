@@ -33,7 +33,7 @@ var index = indexesClient.CreateVersion(
 Console.WriteLine(index);
 
 Console.WriteLine($"Get an existing Index named `{indexName}`, version `{indexVersion}`:");
-var retrievedIndex = indexesClient.GetVersion(name: indexName, version: indexVersion);
+var retrievedIndex = indexesClient.GetIndex(name: indexName, version: indexVersion);
 Console.WriteLine(retrievedIndex);
 
 Console.WriteLine($"Listing all versions of the Index named `{indexName}`:");
@@ -42,12 +42,12 @@ foreach (var version in indexesClient.GetVersions(name: indexName))
     Console.WriteLine(version);
 }
 
-Console.WriteLine("List latest versions of all Indexes:");
-foreach (var latestIndex in indexesClient.GetLatests())
+Console.WriteLine($"Listing all Indices:");
+foreach (var version in indexesClient.GetIndices())
 {
-    Console.WriteLine(latestIndex);
+    Console.WriteLine(version);
 }
 
-Console.WriteLine("Delete the Index versions created above:");
-indexesClient.DeleteVersion(name: indexName, version: indexVersion);
+Console.WriteLine("Delete the Index version created above:");
+indexesClient.Delete(name: indexName, version: indexVersion);
 ```
