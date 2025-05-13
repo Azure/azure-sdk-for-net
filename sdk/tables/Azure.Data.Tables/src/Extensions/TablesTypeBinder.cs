@@ -161,7 +161,7 @@ namespace Azure.Data.Tables
             }
             else if (typeof(T).IsEnum)
             {
-                if (!Enum.IsDefined(memberInfo.Type, propertyValue))
+                if (!Enum.IsDefined(memberInfo.Type, propertyValue as string))
                     return false;
 
                 value = (T)Enum.Parse(memberInfo.Type, propertyValue as string);
@@ -171,7 +171,7 @@ namespace Azure.Data.Tables
                      typeof(T).GetGenericArguments() is { Length: 1 } arguments &&
                      arguments[0].IsEnum)
             {
-                if (!Enum.IsDefined(arguments[0], propertyValue))
+                if (!Enum.IsDefined(arguments[0], propertyValue as string))
                     return false;
 
                 value = (T)Enum.Parse(arguments[0], propertyValue as string);
