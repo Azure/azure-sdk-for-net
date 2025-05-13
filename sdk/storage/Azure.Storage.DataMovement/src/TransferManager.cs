@@ -33,7 +33,6 @@ namespace Azure.Storage.DataMovement
 
         /// <summary>
         /// Designated checkpointer for the respective transfer manager.
-        ///
         /// If unspecified will default to LocalTransferCheckpointer at {currentpath}/.azstoragedml
         /// </summary>
         private readonly ITransferCheckpointer _checkpointer;
@@ -47,6 +46,11 @@ namespace Azure.Storage.DataMovement
         private CancellationToken _cancellationToken => _cancellationTokenSource.Token;
 
         private readonly Func<string> _generateTransferId;
+
+        /// <summary>
+        /// Gets the <see cref="ThroughputMonitor"/> instance used to monitor the throughput of data transfers.
+        /// </summary>
+        internal ThroughputMonitor ThroughputMonitor { get; private set; }
 
         /// <summary>
         /// Protected constructor for mocking.
@@ -70,9 +74,9 @@ namespace Azure.Storage.DataMovement
             new(ArrayPool<byte>.Shared,
                 options?.ErrorMode ?? TransferErrorMode.StopOnAnyFailure,
                 new ClientDiagnostics(options?.ClientOptions ?? ClientOptions.Default)),
-                CheckpointerExtensions.BuildCheckpointer(options?.CheckpointStoreOptions),
-                options?.ProvidersForResuming != null ? new List<StorageResourceProvider>(options.ProvidersForResuming) : new(),
-                default)
+            CheckpointerExtensions.BuildCheckpointer(options?.CheckpointStoreOptions),
+            options?.ProvidersForResuming != null ? new List<StorageResourceProvider>(options.ProvidersForResuming) : new(),
+            default)
         {}
 
         /// <summary>
@@ -96,6 +100,7 @@ namespace Azure.Storage.DataMovement
             _checkpointer = checkpointer;
             _generateTransferId = generateTransferId ?? (() => Guid.NewGuid().ToString());
 
+            ThroughputMonitor = new();
             ConfigureProcessorCallbacks();
         }
 
@@ -424,6 +429,7 @@ namespace Azure.Storage.DataMovement
             CancellationToken cancellationToken)
         {
             cancellationToken = LinkCancellation(cancellationToken);
+
             (TransferOperation transfer, TransferJobInternal transferJobInternal) = await _jobBuilder.BuildJobAsync(
                 sourceResource,
                 destinationResource,
@@ -431,6 +437,7 @@ namespace Azure.Storage.DataMovement
                 _checkpointer,
                 transferId,
                 resumeJob,
+                ThroughputMonitor,
                 cancellationToken)
                 .ConfigureAwait(false);
 

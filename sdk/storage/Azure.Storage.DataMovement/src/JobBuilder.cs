@@ -48,9 +48,10 @@ internal class JobBuilder
         ITransferCheckpointer checkpointer,
         string transferId,
         bool resumeJob,
+        ThroughputMonitor throughputMonitor,
         CancellationToken cancellationToken)
     {
-        ValidateTransferOptions(transferOptions);
+        JobBuilder.ValidateTransferOptions(transferOptions);
 
         TransferOperation transferOperation = new(id: transferId);
         TransferJobInternal transferJobInternal;
@@ -73,6 +74,7 @@ internal class JobBuilder
                 checkpointer,
                 transferOperation,
                 resumeJob,
+                throughputMonitor,
                 cancellationToken).ConfigureAwait(false);
         }
         // Invalid transfer
@@ -91,6 +93,7 @@ internal class JobBuilder
         ITransferCheckpointer checkpointer,
         TransferOperation transferOperation,
         bool resumeJob,
+        ThroughputMonitor throughputMonitor,
         CancellationToken cancellationToken)
     {
         TransferJobInternal.CreateJobPartAsync createPart;
@@ -124,7 +127,8 @@ internal class JobBuilder
             checkpointer: checkpointer,
             errorHandling: _errorHandling,
             arrayPool: _arrayPool,
-            clientDiagnostics: ClientDiagnostics);
+            clientDiagnostics: ClientDiagnostics,
+            throughputMonitor: throughputMonitor);
 
         if (resumeJob)
         {
