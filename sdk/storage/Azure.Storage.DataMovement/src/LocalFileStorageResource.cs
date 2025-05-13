@@ -210,7 +210,9 @@ namespace Azure.Storage.DataMovement
             FileInfo fileInfo = new FileInfo(_uri.LocalPath);
             if (fileInfo.Exists)
             {
-                return Task.FromResult(fileInfo.ToStorageResourceProperties());
+                StorageResourceItemProperties properties = fileInfo.ToStorageResourceProperties();
+                properties.Uri = Uri;
+                return Task.FromResult(properties);
             }
             throw new FileNotFoundException();
         }

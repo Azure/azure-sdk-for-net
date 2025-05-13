@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.TrustedSigning
 
         TrustedSigningCertificateProfileResource IOperationSource<TrustedSigningCertificateProfileResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<TrustedSigningCertificateProfileData>(response.Content);
+            var data = ModelReaderWriter.Read<TrustedSigningCertificateProfileData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerTrustedSigningContext.Default);
             return new TrustedSigningCertificateProfileResource(_client, data);
         }
 
         async ValueTask<TrustedSigningCertificateProfileResource> IOperationSource<TrustedSigningCertificateProfileResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<TrustedSigningCertificateProfileData>(response.Content);
+            var data = ModelReaderWriter.Read<TrustedSigningCertificateProfileData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerTrustedSigningContext.Default);
             return await Task.FromResult(new TrustedSigningCertificateProfileResource(_client, data)).ConfigureAwait(false);
         }
     }

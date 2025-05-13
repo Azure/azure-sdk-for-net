@@ -5,8 +5,6 @@ VisualStudioVersion = 17.9.34701.34
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.MobileNetwork", "src\Azure.ResourceManager.MobileNetwork.csproj", "{71E6EF82-715A-49DE-9617-290F6101BFD8}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.MobileNetwork.Samples", "samples\Azure.ResourceManager.MobileNetwork.Samples.csproj", "{14373C8C-8E9F-4599-B53A-DA018ABAFD67}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.MobileNetwork.Tests", "tests\Azure.ResourceManager.MobileNetwork.Tests.csproj", "{C2373C8C-8E9F-4599-B53A-DA018ABAFD67}"
 EndProject
 Global
@@ -31,18 +29,6 @@ Global
 		{71E6EF82-715A-49DE-9617-290F6101BFD8}.Release|x64.Build.0 = Release|Any CPU
 		{71E6EF82-715A-49DE-9617-290F6101BFD8}.Release|x86.ActiveCfg = Release|Any CPU
 		{71E6EF82-715A-49DE-9617-290F6101BFD8}.Release|x86.Build.0 = Release|Any CPU
-		{14373C8C-8E9F-4599-B53A-DA018ABAFD67}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{14373C8C-8E9F-4599-B53A-DA018ABAFD67}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{14373C8C-8E9F-4599-B53A-DA018ABAFD67}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{14373C8C-8E9F-4599-B53A-DA018ABAFD67}.Debug|x64.Build.0 = Debug|Any CPU
-		{14373C8C-8E9F-4599-B53A-DA018ABAFD67}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{14373C8C-8E9F-4599-B53A-DA018ABAFD67}.Debug|x86.Build.0 = Debug|Any CPU
-		{14373C8C-8E9F-4599-B53A-DA018ABAFD67}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{14373C8C-8E9F-4599-B53A-DA018ABAFD67}.Release|Any CPU.Build.0 = Release|Any CPU
-		{14373C8C-8E9F-4599-B53A-DA018ABAFD67}.Release|x64.ActiveCfg = Release|Any CPU
-		{14373C8C-8E9F-4599-B53A-DA018ABAFD67}.Release|x64.Build.0 = Release|Any CPU
-		{14373C8C-8E9F-4599-B53A-DA018ABAFD67}.Release|x86.ActiveCfg = Release|Any CPU
-		{14373C8C-8E9F-4599-B53A-DA018ABAFD67}.Release|x86.Build.0 = Release|Any CPU
 		{C2373C8C-8E9F-4599-B53A-DA018ABAFD67}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C2373C8C-8E9F-4599-B53A-DA018ABAFD67}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C2373C8C-8E9F-4599-B53A-DA018ABAFD67}.Debug|x64.ActiveCfg = Debug|Any CPU

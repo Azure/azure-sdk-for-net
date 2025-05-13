@@ -80,11 +80,13 @@ namespace Azure.AI.Projects
                 switch (discriminator.GetString())
                 {
                     case "azure_ai_search": return RunStepAzureAISearchToolCall.DeserializeRunStepAzureAISearchToolCall(element, options);
+                    case "bing_custom_search": return RunStepCustomSearchToolCall.DeserializeRunStepCustomSearchToolCall(element, options);
                     case "bing_grounding": return RunStepBingGroundingToolCall.DeserializeRunStepBingGroundingToolCall(element, options);
                     case "code_interpreter": return RunStepCodeInterpreterToolCall.DeserializeRunStepCodeInterpreterToolCall(element, options);
-                    case "fabric_aiskill": return RunStepMicrosoftFabricToolCall.DeserializeRunStepMicrosoftFabricToolCall(element, options);
+                    case "fabric_dataagent": return RunStepMicrosoftFabricToolCall.DeserializeRunStepMicrosoftFabricToolCall(element, options);
                     case "file_search": return RunStepFileSearchToolCall.DeserializeRunStepFileSearchToolCall(element, options);
                     case "function": return RunStepFunctionToolCall.DeserializeRunStepFunctionToolCall(element, options);
+                    case "openapi": return RunStepOpenAPIToolCall.DeserializeRunStepOpenAPIToolCall(element, options);
                     case "sharepoint_grounding": return RunStepSharepointToolCall.DeserializeRunStepSharepointToolCall(element, options);
                 }
             }
@@ -98,7 +100,7 @@ namespace Azure.AI.Projects
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureAIProjectsContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(RunStepToolCall)} does not support writing '{options.Format}' format.");
             }

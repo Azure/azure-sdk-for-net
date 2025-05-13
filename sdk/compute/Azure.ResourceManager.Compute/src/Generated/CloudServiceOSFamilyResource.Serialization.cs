@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Compute
 
         CloudServiceOSFamilyData IJsonModel<CloudServiceOSFamilyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<CloudServiceOSFamilyData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<CloudServiceOSFamilyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<CloudServiceOSFamilyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<CloudServiceOSFamilyData>(Data, options, AzureResourceManagerComputeContext.Default);
 
-        CloudServiceOSFamilyData IPersistableModel<CloudServiceOSFamilyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CloudServiceOSFamilyData>(data, options);
+        CloudServiceOSFamilyData IPersistableModel<CloudServiceOSFamilyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CloudServiceOSFamilyData>(data, options, AzureResourceManagerComputeContext.Default);
 
         string IPersistableModel<CloudServiceOSFamilyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<CloudServiceOSFamilyData>)Data).GetFormatFromOptions(options);
     }

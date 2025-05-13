@@ -5,7 +5,7 @@ using Azure.Projects.Core;
 using Azure.Provisioning.Expressions;
 using Azure.Provisioning.KeyVault;
 
-namespace Azure.Projects.KeyVault;
+namespace Azure.Projects;
 
 public class KeyVaultFeature : AzureProjectFeature
 {

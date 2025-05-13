@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.SecurityCenter
 
         JitNetworkAccessPolicyData IJsonModel<JitNetworkAccessPolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<JitNetworkAccessPolicyData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<JitNetworkAccessPolicyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<JitNetworkAccessPolicyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<JitNetworkAccessPolicyData>(Data, options, AzureResourceManagerSecurityCenterContext.Default);
 
-        JitNetworkAccessPolicyData IPersistableModel<JitNetworkAccessPolicyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<JitNetworkAccessPolicyData>(data, options);
+        JitNetworkAccessPolicyData IPersistableModel<JitNetworkAccessPolicyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<JitNetworkAccessPolicyData>(data, options, AzureResourceManagerSecurityCenterContext.Default);
 
         string IPersistableModel<JitNetworkAccessPolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<JitNetworkAccessPolicyData>)Data).GetFormatFromOptions(options);
     }

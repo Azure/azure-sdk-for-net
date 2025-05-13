@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Network
 
         AdminRuleGroupData IJsonModel<AdminRuleGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AdminRuleGroupData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<AdminRuleGroupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<AdminRuleGroupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AdminRuleGroupData>(Data, options, AzureResourceManagerNetworkContext.Default);
 
-        AdminRuleGroupData IPersistableModel<AdminRuleGroupData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AdminRuleGroupData>(data, options);
+        AdminRuleGroupData IPersistableModel<AdminRuleGroupData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AdminRuleGroupData>(data, options, AzureResourceManagerNetworkContext.Default);
 
         string IPersistableModel<AdminRuleGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AdminRuleGroupData>)Data).GetFormatFromOptions(options);
     }

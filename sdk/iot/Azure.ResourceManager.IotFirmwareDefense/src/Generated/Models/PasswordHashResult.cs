@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.IotFirmwareDefense.Models
 {
-    /// <summary> Password hash resource. </summary>
+    /// <summary>
+    /// The object representing a firmware analysis password hash result resource
+    /// Serialized Name: PasswordHashResource
+    /// </summary>
     public partial class PasswordHashResult : ResourceData
     {
         /// <summary>
@@ -57,15 +60,40 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="passwordHashId"> ID for password hash. </param>
-        /// <param name="filePath"> File path of the password hash. </param>
-        /// <param name="salt"> Salt of the password hash. </param>
-        /// <param name="hash"> Hash of the password. </param>
-        /// <param name="context"> Context of password hash. </param>
-        /// <param name="username"> User name of password hash. </param>
-        /// <param name="algorithm"> Algorithm of the password hash. </param>
+        /// <param name="passwordHashId">
+        /// ID for password hash
+        /// Serialized Name: PasswordHashResource.properties.passwordHashId
+        /// </param>
+        /// <param name="filePath">
+        /// File path of the password hash
+        /// Serialized Name: PasswordHashResource.properties.filePath
+        /// </param>
+        /// <param name="salt">
+        /// Salt of the password hash
+        /// Serialized Name: PasswordHashResource.properties.salt
+        /// </param>
+        /// <param name="hash">
+        /// Hash of the password
+        /// Serialized Name: PasswordHashResource.properties.hash
+        /// </param>
+        /// <param name="context">
+        /// Context of password hash
+        /// Serialized Name: PasswordHashResource.properties.context
+        /// </param>
+        /// <param name="username">
+        /// User name of password hash
+        /// Serialized Name: PasswordHashResource.properties.username
+        /// </param>
+        /// <param name="algorithm">
+        /// Algorithm of the password hash
+        /// Serialized Name: PasswordHashResource.properties.algorithm
+        /// </param>
+        /// <param name="provisioningState">
+        /// The status of the last operation.
+        /// Serialized Name: PasswordHashResource.properties.provisioningState
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PasswordHashResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string passwordHashId, string filePath, string salt, string hash, string context, string username, string algorithm, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal PasswordHashResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string passwordHashId, string filePath, string salt, string hash, string context, string username, string algorithm, FirmwareProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             PasswordHashId = passwordHashId;
             FilePath = filePath;
@@ -74,22 +102,49 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             Context = context;
             Username = username;
             Algorithm = algorithm;
+            ProvisioningState = provisioningState;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> ID for password hash. </summary>
+        /// <summary>
+        /// ID for password hash
+        /// Serialized Name: PasswordHashResource.properties.passwordHashId
+        /// </summary>
         public string PasswordHashId { get; set; }
-        /// <summary> File path of the password hash. </summary>
+        /// <summary>
+        /// File path of the password hash
+        /// Serialized Name: PasswordHashResource.properties.filePath
+        /// </summary>
         public string FilePath { get; set; }
-        /// <summary> Salt of the password hash. </summary>
+        /// <summary>
+        /// Salt of the password hash
+        /// Serialized Name: PasswordHashResource.properties.salt
+        /// </summary>
         public string Salt { get; set; }
-        /// <summary> Hash of the password. </summary>
+        /// <summary>
+        /// Hash of the password
+        /// Serialized Name: PasswordHashResource.properties.hash
+        /// </summary>
         public string Hash { get; set; }
-        /// <summary> Context of password hash. </summary>
+        /// <summary>
+        /// Context of password hash
+        /// Serialized Name: PasswordHashResource.properties.context
+        /// </summary>
         public string Context { get; set; }
-        /// <summary> User name of password hash. </summary>
+        /// <summary>
+        /// User name of password hash
+        /// Serialized Name: PasswordHashResource.properties.username
+        /// </summary>
         public string Username { get; set; }
-        /// <summary> Algorithm of the password hash. </summary>
+        /// <summary>
+        /// Algorithm of the password hash
+        /// Serialized Name: PasswordHashResource.properties.algorithm
+        /// </summary>
         public string Algorithm { get; set; }
+        /// <summary>
+        /// The status of the last operation.
+        /// Serialized Name: PasswordHashResource.properties.provisioningState
+        /// </summary>
+        public FirmwareProvisioningState? ProvisioningState { get; }
     }
 }

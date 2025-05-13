@@ -1,5 +1,11 @@
 namespace Azure.Storage.Blobs
 {
+    public partial class AzureStorageBlobsContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureStorageBlobsContext() { }
+        public static Azure.Storage.Blobs.AzureStorageBlobsContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class BlobClient : Azure.Storage.Blobs.Specialized.BlobBaseClient
     {
         protected BlobClient() { }
@@ -51,7 +57,7 @@ namespace Azure.Storage.Blobs
     }
     public partial class BlobClientOptions : Azure.Core.ClientOptions
     {
-        public BlobClientOptions(Azure.Storage.Blobs.BlobClientOptions.ServiceVersion version = Azure.Storage.Blobs.BlobClientOptions.ServiceVersion.V2025_05_05) { }
+        public BlobClientOptions(Azure.Storage.Blobs.BlobClientOptions.ServiceVersion version = Azure.Storage.Blobs.BlobClientOptions.ServiceVersion.V2025_07_05) { }
         public Azure.Storage.Blobs.Models.BlobAudience? Audience { get { throw null; } set { } }
         public Azure.Storage.Blobs.Models.CustomerProvidedKey? CustomerProvidedKey { get { throw null; } set { } }
         public bool EnableTenantDiscovery { get { throw null; } set { } }
@@ -1399,6 +1405,7 @@ namespace Azure.Storage.Blobs.Models
         public Azure.Storage.Blobs.Models.BlobImmutabilityPolicy ImmutabilityPolicy { get { throw null; } set { } }
         public bool? LegalHold { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Metadata { get { throw null; } set { } }
+        public Azure.Storage.Blobs.Models.PremiumPageBlobAccessTier? PremiumPageBlobAccessTier { get { throw null; } set { } }
         public long? SequenceNumber { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } set { } }
     }
@@ -1471,6 +1478,33 @@ namespace Azure.Storage.Blobs.Models
     {
         Legacy = 0,
         Posix = 1,
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct PremiumPageBlobAccessTier : System.IEquatable<Azure.Storage.Blobs.Models.PremiumPageBlobAccessTier>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public PremiumPageBlobAccessTier(string value) { throw null; }
+        public static Azure.Storage.Blobs.Models.PremiumPageBlobAccessTier P10 { get { throw null; } }
+        public static Azure.Storage.Blobs.Models.PremiumPageBlobAccessTier P15 { get { throw null; } }
+        public static Azure.Storage.Blobs.Models.PremiumPageBlobAccessTier P20 { get { throw null; } }
+        public static Azure.Storage.Blobs.Models.PremiumPageBlobAccessTier P30 { get { throw null; } }
+        public static Azure.Storage.Blobs.Models.PremiumPageBlobAccessTier P4 { get { throw null; } }
+        public static Azure.Storage.Blobs.Models.PremiumPageBlobAccessTier P40 { get { throw null; } }
+        public static Azure.Storage.Blobs.Models.PremiumPageBlobAccessTier P50 { get { throw null; } }
+        public static Azure.Storage.Blobs.Models.PremiumPageBlobAccessTier P6 { get { throw null; } }
+        public static Azure.Storage.Blobs.Models.PremiumPageBlobAccessTier P60 { get { throw null; } }
+        public static Azure.Storage.Blobs.Models.PremiumPageBlobAccessTier P70 { get { throw null; } }
+        public static Azure.Storage.Blobs.Models.PremiumPageBlobAccessTier P80 { get { throw null; } }
+        public bool Equals(Azure.Storage.Blobs.Models.PremiumPageBlobAccessTier other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Storage.Blobs.Models.PremiumPageBlobAccessTier left, Azure.Storage.Blobs.Models.PremiumPageBlobAccessTier right) { throw null; }
+        public static implicit operator Azure.Storage.Blobs.Models.PremiumPageBlobAccessTier (string value) { throw null; }
+        public static bool operator !=(Azure.Storage.Blobs.Models.PremiumPageBlobAccessTier left, Azure.Storage.Blobs.Models.PremiumPageBlobAccessTier right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public enum PublicAccessType
     {
@@ -1874,7 +1908,7 @@ namespace Azure.Storage.Blobs.Specialized
     }
     public partial class SpecializedBlobClientOptions : Azure.Storage.Blobs.BlobClientOptions
     {
-        public SpecializedBlobClientOptions(Azure.Storage.Blobs.BlobClientOptions.ServiceVersion version = Azure.Storage.Blobs.BlobClientOptions.ServiceVersion.V2025_05_05) : base (default(Azure.Storage.Blobs.BlobClientOptions.ServiceVersion)) { }
+        public SpecializedBlobClientOptions(Azure.Storage.Blobs.BlobClientOptions.ServiceVersion version = Azure.Storage.Blobs.BlobClientOptions.ServiceVersion.V2025_07_05) : base (default(Azure.Storage.Blobs.BlobClientOptions.ServiceVersion)) { }
         public Azure.Storage.ClientSideEncryptionOptions ClientSideEncryption { get { throw null; } set { } }
     }
     public static partial class SpecializedBlobExtensions
@@ -2024,7 +2058,6 @@ namespace Microsoft.Extensions.Azure
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Storage.Blobs.BlobServiceClient, Azure.Storage.Blobs.BlobClientOptions> AddBlobServiceClient<TBuilder>(this TBuilder builder, System.Uri serviceUri, Azure.AzureSasCredential sasCredential) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilder { throw null; }
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Storage.Blobs.BlobServiceClient, Azure.Storage.Blobs.BlobClientOptions> AddBlobServiceClient<TBuilder>(this TBuilder builder, System.Uri serviceUri, Azure.Core.TokenCredential tokenCredential) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithCredential { throw null; }
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Storage.Blobs.BlobServiceClient, Azure.Storage.Blobs.BlobClientOptions> AddBlobServiceClient<TBuilder>(this TBuilder builder, System.Uri serviceUri, Azure.Storage.StorageSharedKeyCredential sharedKeyCredential) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilder { throw null; }
-        [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCodeAttribute("Binding strongly typed objects to configuration values is not supported with trimming. Use the Configuration Binder Source Generator (EnableConfigurationBindingGenerator=true) instead.")]
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Storage.Blobs.BlobServiceClient, Azure.Storage.Blobs.BlobClientOptions> AddBlobServiceClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithConfiguration<TConfiguration> { throw null; }
     }
 }

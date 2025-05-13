@@ -2,7 +2,7 @@
   <PropertyGroup>
     <Description>This is the Microsoft Azure AI Inference Service client library</Description>
     <AssemblyTitle>Microsoft Azure.AI.Inference client library</AssemblyTitle>
-    <Version>1.0.0-beta.4</Version>
+    <Version>1.0.0-beta.5</Version>
     <PackageTags>Azure Inference</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <NoWarn>$(NoWarn);CS1591;AZC0030;AZC0031</NoWarn>
@@ -17,8 +17,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
-    <PackageReference Include="System.ClientModel" VersionOverride="1.4.0-beta.1" />
-    <PackageReference Include="System.Text.Json" />
+    <PackageReference Include="System.ClientModel" />
   </ItemGroup>
 
 </Project>

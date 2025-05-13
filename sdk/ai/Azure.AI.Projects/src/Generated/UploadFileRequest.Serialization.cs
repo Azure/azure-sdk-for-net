@@ -36,14 +36,7 @@ namespace Azure.AI.Projects
             }
 
             writer.WritePropertyName("file"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(global::System.BinaryData.FromStream(Data));
-#else
-            using (JsonDocument document = JsonDocument.Parse(BinaryData.FromStream(Data), ModelSerializationExtensions.JsonDocumentOptions))
-            {
-                JsonSerializer.Serialize(writer, document.RootElement);
-            }
-#endif
+            writer.WriteObjectValue(Data, options);
             writer.WritePropertyName("purpose"u8);
             writer.WriteStringValue(Purpose.ToString());
             if (Optional.IsDefined(Filename))
@@ -88,7 +81,7 @@ namespace Azure.AI.Projects
             {
                 return null;
             }
-            Stream file = default;
+            File file = default;
             AgentFilePurpose purpose = default;
             string filename = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -97,7 +90,7 @@ namespace Azure.AI.Projects
             {
                 if (property.NameEquals("file"u8))
                 {
-                    file = BinaryData.FromString(property.Value.GetRawText()).ToStream();
+                    file = File.DeserializeFile(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("purpose"u8))
@@ -141,7 +134,7 @@ namespace Azure.AI.Projects
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureAIProjectsContext.Default);
                 case "MFD":
                     return SerializeMultipart(options);
                 default:

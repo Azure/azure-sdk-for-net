@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.MongoCluster
 
         MongoClusterData IJsonModel<MongoClusterData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MongoClusterData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<MongoClusterData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<MongoClusterData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<MongoClusterData>(Data, options, AzureResourceManagerMongoClusterContext.Default);
 
-        MongoClusterData IPersistableModel<MongoClusterData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MongoClusterData>(data, options);
+        MongoClusterData IPersistableModel<MongoClusterData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MongoClusterData>(data, options, AzureResourceManagerMongoClusterContext.Default);
 
         string IPersistableModel<MongoClusterData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MongoClusterData>)Data).GetFormatFromOptions(options);
     }

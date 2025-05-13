@@ -35,8 +35,8 @@ namespace Azure.AI.Projects
             }
 
             base.JsonModelWriteCore(writer, options);
-            writer.WritePropertyName("fabric_aiskill"u8);
-            writer.WriteObjectValue(FabricAiskill, options);
+            writer.WritePropertyName("fabric_dataagent"u8);
+            writer.WriteObjectValue(FabricDataagent, options);
         }
 
         MicrosoftFabricToolDefinition IJsonModel<MicrosoftFabricToolDefinition>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -59,15 +59,15 @@ namespace Azure.AI.Projects
             {
                 return null;
             }
-            ToolConnectionList fabricAiskill = default;
+            ToolConnectionList fabricDataagent = default;
             string type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("fabric_aiskill"u8))
+                if (property.NameEquals("fabric_dataagent"u8))
                 {
-                    fabricAiskill = ToolConnectionList.DeserializeToolConnectionList(property.Value, options);
+                    fabricDataagent = ToolConnectionList.DeserializeToolConnectionList(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("type"u8))
@@ -81,7 +81,7 @@ namespace Azure.AI.Projects
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new MicrosoftFabricToolDefinition(type, serializedAdditionalRawData, fabricAiskill);
+            return new MicrosoftFabricToolDefinition(type, serializedAdditionalRawData, fabricDataagent);
         }
 
         BinaryData IPersistableModel<MicrosoftFabricToolDefinition>.Write(ModelReaderWriterOptions options)
@@ -91,7 +91,7 @@ namespace Azure.AI.Projects
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureAIProjectsContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(MicrosoftFabricToolDefinition)} does not support writing '{options.Format}' format.");
             }

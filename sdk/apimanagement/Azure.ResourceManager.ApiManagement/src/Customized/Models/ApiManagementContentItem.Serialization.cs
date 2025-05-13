@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerApiManagementContext.Default);
                 default:
                     throw new InvalidOperationException($"The model {nameof(ApiManagementContentItem)} does not support '{options.Format}' format.");
             }
