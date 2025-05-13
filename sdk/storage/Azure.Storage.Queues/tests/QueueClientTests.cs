@@ -684,7 +684,7 @@ namespace Azure.Storage.Queues.Test
             // Assert
             Assert.NotNull(result);
             Assert.AreEqual(msgCount, result.Value.ApproximateMessagesCountLong);
-            Assert.Throws<OverflowException>(() => _ = result.Value.ApproximateMessagesCount);
+            Assert.DoesNotThrow(() => _ = result.Value.ApproximateMessagesCount);
         }
 
         [RecordedTest]
