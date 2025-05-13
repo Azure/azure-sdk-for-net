@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.PureStorageBlock.Models
 {
-    public partial class AvsStatus : IUtf8JsonSerializable, IJsonModel<AvsStatus>
+    public partial class PureStorageAvs : IUtf8JsonSerializable, IJsonModel<PureStorageAvs>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AvsStatus>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PureStorageAvs>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<AvsStatus>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<PureStorageAvs>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,16 +28,14 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AvsStatus>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PureStorageAvs>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AvsStatus)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(PureStorageAvs)} does not support writing '{format}' format.");
             }
 
             writer.WritePropertyName("avsEnabled"u8);
-            writer.WriteBooleanValue(AvsEnabled);
-            writer.WritePropertyName("currentConnectionStatus"u8);
-            writer.WriteStringValue(CurrentConnectionStatus);
+            writer.WriteBooleanValue(IsAvsEnabled);
             if (Optional.IsDefined(ClusterResourceId))
             {
                 writer.WritePropertyName("sddcResourceId"u8);
@@ -60,19 +58,19 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
             }
         }
 
-        AvsStatus IJsonModel<AvsStatus>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        PureStorageAvs IJsonModel<PureStorageAvs>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AvsStatus>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PureStorageAvs>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AvsStatus)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(PureStorageAvs)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAvsStatus(document.RootElement, options);
+            return DeserializePureStorageAvs(document.RootElement, options);
         }
 
-        internal static AvsStatus DeserializeAvsStatus(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static PureStorageAvs DeserializePureStorageAvs(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -81,8 +79,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
                 return null;
             }
             bool avsEnabled = default;
-            string currentConnectionStatus = default;
-            string sddcResourceId = default;
+            ResourceIdentifier sddcResourceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -92,14 +89,13 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
                     avsEnabled = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("currentConnectionStatus"u8))
-                {
-                    currentConnectionStatus = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("sddcResourceId"u8))
                 {
-                    sddcResourceId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    sddcResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -108,38 +104,38 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new AvsStatus(avsEnabled, currentConnectionStatus, sddcResourceId, serializedAdditionalRawData);
+            return new PureStorageAvs(avsEnabled, sddcResourceId, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<AvsStatus>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<PureStorageAvs>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AvsStatus>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PureStorageAvs>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerPureStorageBlockContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(AvsStatus)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PureStorageAvs)} does not support writing '{options.Format}' format.");
             }
         }
 
-        AvsStatus IPersistableModel<AvsStatus>.Create(BinaryData data, ModelReaderWriterOptions options)
+        PureStorageAvs IPersistableModel<PureStorageAvs>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AvsStatus>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PureStorageAvs>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeAvsStatus(document.RootElement, options);
+                        return DeserializePureStorageAvs(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AvsStatus)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PureStorageAvs)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<AvsStatus>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<PureStorageAvs>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

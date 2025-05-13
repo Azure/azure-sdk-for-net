@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.PureStorageBlock.Models
 {
     /// <summary> AVS VM details. </summary>
-    public partial class AvsVmDetails
+    public partial class PureStorageAvsVmDetails
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,13 +45,13 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="AvsVmDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="PureStorageAvsVmDetails"/>. </summary>
         /// <param name="vmId"> ID of the AVS VM using this set of volumes. </param>
         /// <param name="vmName"> Name of the VMware VM using this set of volumes. </param>
         /// <param name="vmType"> Type of the VMware VM using this set of volumes. </param>
         /// <param name="avsVmInternalId"> Pure Storage's internal ID for this AVS VM. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vmId"/>, <paramref name="vmName"/> or <paramref name="avsVmInternalId"/> is null. </exception>
-        internal AvsVmDetails(string vmId, string vmName, VmType vmType, string avsVmInternalId)
+        internal PureStorageAvsVmDetails(string vmId, string vmName, VmType vmType, string avsVmInternalId)
         {
             Argument.AssertNotNull(vmId, nameof(vmId));
             Argument.AssertNotNull(vmName, nameof(vmName));
@@ -63,13 +63,13 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
             AvsVmInternalId = avsVmInternalId;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AvsVmDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="PureStorageAvsVmDetails"/>. </summary>
         /// <param name="vmId"> ID of the AVS VM using this set of volumes. </param>
         /// <param name="vmName"> Name of the VMware VM using this set of volumes. </param>
         /// <param name="vmType"> Type of the VMware VM using this set of volumes. </param>
         /// <param name="avsVmInternalId"> Pure Storage's internal ID for this AVS VM. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AvsVmDetails(string vmId, string vmName, VmType vmType, string avsVmInternalId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PureStorageAvsVmDetails(string vmId, string vmName, VmType vmType, string avsVmInternalId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             VmId = vmId;
             VmName = vmName;
@@ -78,8 +78,8 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AvsVmDetails"/> for deserialization. </summary>
-        internal AvsVmDetails()
+        /// <summary> Initializes a new instance of <see cref="PureStorageAvsVmDetails"/> for deserialization. </summary>
+        internal PureStorageAvsVmDetails()
         {
         }
 

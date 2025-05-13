@@ -658,7 +658,7 @@ namespace Azure.ResourceManager.PureStorageBlock
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<AvsStatus>> GetAvsStatusAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PureStorageAvsStatus>> GetAvsStatusAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _pureStoragePoolStoragePoolsClientDiagnostics.CreateScope("PureStoragePoolResource.GetAvsStatus");
             scope.Start();
@@ -696,7 +696,7 @@ namespace Azure.ResourceManager.PureStorageBlock
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<AvsStatus> GetAvsStatus(CancellationToken cancellationToken = default)
+        public virtual Response<PureStorageAvsStatus> GetAvsStatus(CancellationToken cancellationToken = default)
         {
             using var scope = _pureStoragePoolStoragePoolsClientDiagnostics.CreateScope("PureStoragePoolResource.GetAvsStatus");
             scope.Start();

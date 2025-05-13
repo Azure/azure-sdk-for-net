@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
         /// <param name="space"> Contains properties related to used Flash space. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PureStorageAvsVmProperties(string storagePoolInternalId, string storagePoolResourceId, string displayName, string createdTimestamp, SoftDeletion softDeletion, VolumeContainerType? volumeContainerType, AvsVmDetails avs, Space space, ResourceProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PureStorageAvsVmProperties(string storagePoolInternalId, string storagePoolResourceId, string displayName, string createdTimestamp, SoftDeletion softDeletion, VolumeContainerType? volumeContainerType, PureStorageAvsVmDetails avs, Space space, ResourceProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             StoragePoolInternalId = storagePoolInternalId;
             StoragePoolResourceId = storagePoolResourceId;
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
         /// <summary> Specify which control plane handles the lifecycle of the volume container. </summary>
         public VolumeContainerType? VolumeContainerType { get; }
         /// <summary> AVS VM details. </summary>
-        public AvsVmDetails Avs { get; }
+        public PureStorageAvsVmDetails Avs { get; }
         /// <summary> Contains properties related to used Flash space. </summary>
         public Space Space { get; }
         /// <summary> Provisioning state of the resource. </summary>

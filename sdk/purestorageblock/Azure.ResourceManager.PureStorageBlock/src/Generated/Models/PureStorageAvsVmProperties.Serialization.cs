@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
             string createdTimestamp = default;
             SoftDeletion softDeletion = default;
             VolumeContainerType? volumeContainerType = default;
-            AvsVmDetails avs = default;
+            PureStorageAvsVmDetails avs = default;
             Space space = default;
             ResourceProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
                     {
                         continue;
                     }
-                    avs = AvsVmDetails.DeserializeAvsVmDetails(property.Value, options);
+                    avs = PureStorageAvsVmDetails.DeserializePureStorageAvsVmDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("space"u8))

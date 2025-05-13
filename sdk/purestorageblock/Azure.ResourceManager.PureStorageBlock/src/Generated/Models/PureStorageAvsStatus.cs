@@ -7,11 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.PureStorageBlock.Models
 {
     /// <summary> Status of storage pool / AVS connection. </summary>
-    public partial class AvsStatus
+    public partial class PureStorageAvsStatus
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,41 +46,41 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="AvsStatus"/>. </summary>
-        /// <param name="avsEnabled"> If true, an AVS connection has been successfully completed. </param>
+        /// <summary> Initializes a new instance of <see cref="PureStorageAvsStatus"/>. </summary>
+        /// <param name="isAvsEnabled"> If true, an AVS connection has been successfully completed. </param>
         /// <param name="currentConnectionStatus"> Human-readable current AVS connection status. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="currentConnectionStatus"/> is null. </exception>
-        internal AvsStatus(bool avsEnabled, string currentConnectionStatus)
+        internal PureStorageAvsStatus(bool isAvsEnabled, string currentConnectionStatus)
         {
             Argument.AssertNotNull(currentConnectionStatus, nameof(currentConnectionStatus));
 
-            AvsEnabled = avsEnabled;
+            IsAvsEnabled = isAvsEnabled;
             CurrentConnectionStatus = currentConnectionStatus;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AvsStatus"/>. </summary>
-        /// <param name="avsEnabled"> If true, an AVS connection has been successfully completed. </param>
+        /// <summary> Initializes a new instance of <see cref="PureStorageAvsStatus"/>. </summary>
+        /// <param name="isAvsEnabled"> If true, an AVS connection has been successfully completed. </param>
         /// <param name="currentConnectionStatus"> Human-readable current AVS connection status. </param>
         /// <param name="clusterResourceId"> Azure resource ID of the AVS SDDC the pool is connected to. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AvsStatus(bool avsEnabled, string currentConnectionStatus, string clusterResourceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PureStorageAvsStatus(bool isAvsEnabled, string currentConnectionStatus, ResourceIdentifier clusterResourceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            AvsEnabled = avsEnabled;
+            IsAvsEnabled = isAvsEnabled;
             CurrentConnectionStatus = currentConnectionStatus;
             ClusterResourceId = clusterResourceId;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AvsStatus"/> for deserialization. </summary>
-        internal AvsStatus()
+        /// <summary> Initializes a new instance of <see cref="PureStorageAvsStatus"/> for deserialization. </summary>
+        internal PureStorageAvsStatus()
         {
         }
 
         /// <summary> If true, an AVS connection has been successfully completed. </summary>
-        public bool AvsEnabled { get; }
+        public bool IsAvsEnabled { get; }
         /// <summary> Human-readable current AVS connection status. </summary>
         public string CurrentConnectionStatus { get; }
         /// <summary> Azure resource ID of the AVS SDDC the pool is connected to. </summary>
-        public string ClusterResourceId { get; }
+        public ResourceIdentifier ClusterResourceId { get; }
     }
 }

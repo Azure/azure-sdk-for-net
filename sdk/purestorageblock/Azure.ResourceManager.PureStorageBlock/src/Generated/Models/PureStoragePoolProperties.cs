@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="reservationResourceId"> Azure resource ID of the Pure Storage Cloud service (reservation resource) this storage pool belongs to. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PureStoragePoolProperties(string storagePoolInternalId, string availabilityZone, VnetInjection vnetInjection, long? dataRetentionPeriod, long provisionedBandwidthMbPerSec, long? provisionedIops, AzureVmwareService avs, ProvisioningState? provisioningState, string reservationResourceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PureStoragePoolProperties(string storagePoolInternalId, string availabilityZone, VnetInjection vnetInjection, long? dataRetentionPeriod, long provisionedBandwidthMbPerSec, long? provisionedIops, PureStorageAvs avs, ProvisioningState? provisioningState, string reservationResourceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             StoragePoolInternalId = storagePoolInternalId;
             AvailabilityZone = availabilityZone;
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
         /// <summary> Total I/O operations per second (IOPS) provisioned for the pool. </summary>
         public long? ProvisionedIops { get; }
         /// <summary> AVS connection state summary. </summary>
-        public AzureVmwareService Avs { get; }
+        public PureStorageAvs Avs { get; }
         /// <summary> Provisioning state of the resource. </summary>
         public ProvisioningState? ProvisioningState { get; }
         /// <summary> Azure resource ID of the Pure Storage Cloud service (reservation resource) this storage pool belongs to. </summary>

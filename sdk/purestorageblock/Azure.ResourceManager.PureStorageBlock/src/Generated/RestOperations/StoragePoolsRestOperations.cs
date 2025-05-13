@@ -795,7 +795,7 @@ namespace Azure.ResourceManager.PureStorageBlock
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="storagePoolName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="storagePoolName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<AvsStatus>> GetAvsStatusAsync(string subscriptionId, string resourceGroupName, string storagePoolName, CancellationToken cancellationToken = default)
+        public async Task<Response<PureStorageAvsStatus>> GetAvsStatusAsync(string subscriptionId, string resourceGroupName, string storagePoolName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -807,9 +807,9 @@ namespace Azure.ResourceManager.PureStorageBlock
             {
                 case 200:
                     {
-                        AvsStatus value = default;
+                        PureStorageAvsStatus value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = AvsStatus.DeserializeAvsStatus(document.RootElement);
+                        value = PureStorageAvsStatus.DeserializePureStorageAvsStatus(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -824,7 +824,7 @@ namespace Azure.ResourceManager.PureStorageBlock
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="storagePoolName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="storagePoolName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<AvsStatus> GetAvsStatus(string subscriptionId, string resourceGroupName, string storagePoolName, CancellationToken cancellationToken = default)
+        public Response<PureStorageAvsStatus> GetAvsStatus(string subscriptionId, string resourceGroupName, string storagePoolName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -836,9 +836,9 @@ namespace Azure.ResourceManager.PureStorageBlock
             {
                 case 200:
                     {
-                        AvsStatus value = default;
+                        PureStorageAvsStatus value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = AvsStatus.DeserializeAvsStatus(document.RootElement);
+                        value = PureStorageAvsStatus.DeserializePureStorageAvsStatus(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

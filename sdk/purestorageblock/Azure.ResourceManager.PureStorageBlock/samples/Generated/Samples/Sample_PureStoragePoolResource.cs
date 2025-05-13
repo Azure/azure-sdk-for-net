@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Samples
             PureStoragePoolResource pureStoragePool = client.GetPureStoragePoolResource(pureStoragePoolResourceId);
 
             // invoke the operation
-            AvsStatus result = await pureStoragePool.GetAvsStatusAsync();
+            PureStorageAvsStatus result = await pureStoragePool.GetAvsStatusAsync();
 
             Console.WriteLine($"Succeeded: {result}");
         }

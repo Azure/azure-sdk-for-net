@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
             long? dataRetentionPeriod = default;
             long provisionedBandwidthMbPerSec = default;
             long? provisionedIops = default;
-            AzureVmwareService avs = default;
+            PureStorageAvs avs = default;
             ProvisioningState? provisioningState = default;
             string reservationResourceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
                     {
                         continue;
                     }
-                    avs = AzureVmwareService.DeserializeAzureVmwareService(property.Value, options);
+                    avs = PureStorageAvs.DeserializePureStorageAvs(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("provisioningState"u8))

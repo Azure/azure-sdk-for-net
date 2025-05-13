@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="reservationResourceId"> Azure resource ID of the Pure Storage Cloud service (reservation resource) this storage pool belongs to. </param>
         /// <returns> A new <see cref="Models.PureStoragePoolProperties"/> instance for mocking. </returns>
-        public static PureStoragePoolProperties PureStoragePoolProperties(string storagePoolInternalId = null, string availabilityZone = null, VnetInjection vnetInjection = null, long? dataRetentionPeriod = null, long provisionedBandwidthMbPerSec = default, long? provisionedIops = null, AzureVmwareService avs = null, ProvisioningState? provisioningState = null, string reservationResourceId = null)
+        public static PureStoragePoolProperties PureStoragePoolProperties(string storagePoolInternalId = null, string availabilityZone = null, VnetInjection vnetInjection = null, long? dataRetentionPeriod = null, long provisionedBandwidthMbPerSec = default, long? provisionedIops = null, PureStorageAvs avs = null, ProvisioningState? provisioningState = null, string reservationResourceId = null)
         {
             return new PureStoragePoolProperties(
                 storagePoolInternalId,
@@ -235,13 +235,13 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.AzureVmwareService"/>. </summary>
-        /// <param name="avsEnabled"> If true, an AVS SDDC is successfully connected to the storage pool. </param>
+        /// <summary> Initializes a new instance of <see cref="Models.PureStorageAvs"/>. </summary>
+        /// <param name="isAvsEnabled"> If true, an AVS SDDC is successfully connected to the storage pool. </param>
         /// <param name="clusterResourceId"> Azure resource ID of the AVS SDDC the storage pool is connected to. </param>
-        /// <returns> A new <see cref="Models.AzureVmwareService"/> instance for mocking. </returns>
-        public static AzureVmwareService AzureVmwareService(bool avsEnabled = default, string clusterResourceId = null)
+        /// <returns> A new <see cref="Models.PureStorageAvs"/> instance for mocking. </returns>
+        public static PureStorageAvs PureStorageAvs(bool isAvsEnabled = default, ResourceIdentifier clusterResourceId = null)
         {
-            return new AzureVmwareService(avsEnabled, clusterResourceId, serializedAdditionalRawData: null);
+            return new PureStorageAvs(isAvsEnabled, clusterResourceId, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.StoragePoolHealthInfo"/>. </summary>
@@ -334,14 +334,14 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
             return new ServiceInitializationHandle(clusterResourceId, serviceAccountUsername, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.AvsStatus"/>. </summary>
-        /// <param name="avsEnabled"> If true, an AVS connection has been successfully completed. </param>
+        /// <summary> Initializes a new instance of <see cref="Models.PureStorageAvsStatus"/>. </summary>
+        /// <param name="isAvsEnabled"> If true, an AVS connection has been successfully completed. </param>
         /// <param name="currentConnectionStatus"> Human-readable current AVS connection status. </param>
         /// <param name="clusterResourceId"> Azure resource ID of the AVS SDDC the pool is connected to. </param>
-        /// <returns> A new <see cref="Models.AvsStatus"/> instance for mocking. </returns>
-        public static AvsStatus AvsStatus(bool avsEnabled = default, string currentConnectionStatus = null, string clusterResourceId = null)
+        /// <returns> A new <see cref="Models.PureStorageAvsStatus"/> instance for mocking. </returns>
+        public static PureStorageAvsStatus PureStorageAvsStatus(bool isAvsEnabled = default, string currentConnectionStatus = null, ResourceIdentifier clusterResourceId = null)
         {
-            return new AvsStatus(avsEnabled, currentConnectionStatus, clusterResourceId, serializedAdditionalRawData: null);
+            return new PureStorageAvsStatus(isAvsEnabled, currentConnectionStatus, clusterResourceId, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="PureStorageBlock.PureStorageAvsStorageContainerData"/>. </summary>
@@ -488,7 +488,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
         /// <param name="space"> Contains properties related to used Flash space. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <returns> A new <see cref="Models.PureStorageAvsVmProperties"/> instance for mocking. </returns>
-        public static PureStorageAvsVmProperties PureStorageAvsVmProperties(string storagePoolInternalId = null, string storagePoolResourceId = null, string displayName = null, string createdTimestamp = null, SoftDeletion softDeletion = null, VolumeContainerType? volumeContainerType = null, AvsVmDetails avs = null, Space space = null, ResourceProvisioningState? provisioningState = null)
+        public static PureStorageAvsVmProperties PureStorageAvsVmProperties(string storagePoolInternalId = null, string storagePoolResourceId = null, string displayName = null, string createdTimestamp = null, SoftDeletion softDeletion = null, VolumeContainerType? volumeContainerType = null, PureStorageAvsVmDetails avs = null, Space space = null, ResourceProvisioningState? provisioningState = null)
         {
             return new PureStorageAvsVmProperties(
                 storagePoolInternalId,
@@ -503,15 +503,15 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.AvsVmDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.PureStorageAvsVmDetails"/>. </summary>
         /// <param name="vmId"> ID of the AVS VM using this set of volumes. </param>
         /// <param name="vmName"> Name of the VMware VM using this set of volumes. </param>
         /// <param name="vmType"> Type of the VMware VM using this set of volumes. </param>
         /// <param name="avsVmInternalId"> Pure Storage's internal ID for this AVS VM. </param>
-        /// <returns> A new <see cref="Models.AvsVmDetails"/> instance for mocking. </returns>
-        public static AvsVmDetails AvsVmDetails(string vmId = null, string vmName = null, VmType vmType = default, string avsVmInternalId = null)
+        /// <returns> A new <see cref="Models.PureStorageAvsVmDetails"/> instance for mocking. </returns>
+        public static PureStorageAvsVmDetails PureStorageAvsVmDetails(string vmId = null, string vmName = null, VmType vmType = default, string avsVmInternalId = null)
         {
-            return new AvsVmDetails(vmId, vmName, vmType, avsVmInternalId, serializedAdditionalRawData: null);
+            return new PureStorageAvsVmDetails(vmId, vmName, vmType, avsVmInternalId, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="PureStorageBlock.PureStorageAvsVmVolumeData"/>. </summary>

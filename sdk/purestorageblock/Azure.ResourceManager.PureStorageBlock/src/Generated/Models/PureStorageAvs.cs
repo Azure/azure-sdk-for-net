@@ -7,11 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.PureStorageBlock.Models
 {
     /// <summary> Connected AVS status. </summary>
-    public partial class AzureVmwareService
+    public partial class PureStorageAvs
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,32 +46,32 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="AzureVmwareService"/>. </summary>
-        /// <param name="avsEnabled"> If true, an AVS SDDC is successfully connected to the storage pool. </param>
-        internal AzureVmwareService(bool avsEnabled)
+        /// <summary> Initializes a new instance of <see cref="PureStorageAvs"/>. </summary>
+        /// <param name="isAvsEnabled"> If true, an AVS SDDC is successfully connected to the storage pool. </param>
+        internal PureStorageAvs(bool isAvsEnabled)
         {
-            AvsEnabled = avsEnabled;
+            IsAvsEnabled = isAvsEnabled;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AzureVmwareService"/>. </summary>
-        /// <param name="avsEnabled"> If true, an AVS SDDC is successfully connected to the storage pool. </param>
+        /// <summary> Initializes a new instance of <see cref="PureStorageAvs"/>. </summary>
+        /// <param name="isAvsEnabled"> If true, an AVS SDDC is successfully connected to the storage pool. </param>
         /// <param name="clusterResourceId"> Azure resource ID of the AVS SDDC the storage pool is connected to. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AzureVmwareService(bool avsEnabled, string clusterResourceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PureStorageAvs(bool isAvsEnabled, ResourceIdentifier clusterResourceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            AvsEnabled = avsEnabled;
+            IsAvsEnabled = isAvsEnabled;
             ClusterResourceId = clusterResourceId;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AzureVmwareService"/> for deserialization. </summary>
-        internal AzureVmwareService()
+        /// <summary> Initializes a new instance of <see cref="PureStorageAvs"/> for deserialization. </summary>
+        internal PureStorageAvs()
         {
         }
 
         /// <summary> If true, an AVS SDDC is successfully connected to the storage pool. </summary>
-        public bool AvsEnabled { get; }
+        public bool IsAvsEnabled { get; }
         /// <summary> Azure resource ID of the AVS SDDC the storage pool is connected to. </summary>
-        public string ClusterResourceId { get; }
+        public ResourceIdentifier ClusterResourceId { get; }
     }
 }
