@@ -130,8 +130,8 @@ namespace Azure.Identity
                 {
                     chain.Add(CreateBrokerAuthenticationCredential(brokerOptions));
                 }
-            }
 #endif
+            }
             if (chain.Count == 0)
             {
                 throw new ArgumentException("At least one credential type must be included in the authentication flow.", "options");
