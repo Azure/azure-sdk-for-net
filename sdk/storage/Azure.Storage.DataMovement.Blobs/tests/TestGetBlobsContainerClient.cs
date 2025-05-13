@@ -52,7 +52,6 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 // Blob
                 else
                 {
-                    Console.WriteLine($"Returning blob: {result.Item1}");
                     BlobItem blobItem = BlobsModelFactory.BlobItem(
                         name: result.Item1,
                         properties: BlobsModelFactory.BlobItemProperties(
