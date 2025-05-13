@@ -20,24 +20,24 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// A unique identifier for the media subscription.
         /// </summary>
-        public string MediaSubscriptionId { get; set; }
+        public string MediaSubscriptionId { get; }
 
         /// <summary>
         /// The format used to encode the audio. Currently, only "pcm" (Pulse Code Modulation) is supported.
         /// </summary>
-        public string Encoding { get; set; }
+        public string Encoding { get; }
         /// <summary>
         /// The number of samples per second in the audio. Supported values are 16kHz or 24kHz.
         /// </summary>
-        public int SampleRate { get; set; }
+        public int SampleRate { get; }
         /// <summary>
         /// Specifies the number of audio channels in the audio configuration.
         /// Currently, only "mono" (single channel) is supported.
         /// </summary>
-        public AudioChannel Channels { get; set; }
+        public AudioChannel Channels { get; }
         /// <summary>
-        /// The size of the audio data being sent, based on the sample rate and duration.
+        /// The size of the audio data (base64 byte) being sent, based on the sample rate and duration.
         /// </summary>
-        public int Length { get; set; }
+        public int Length { get; }
     }
 }

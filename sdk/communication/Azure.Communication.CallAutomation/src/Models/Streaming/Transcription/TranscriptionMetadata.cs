@@ -14,24 +14,24 @@ namespace Azure.Communication.CallAutomation
         /// Transcription Subscription Id.
         /// </summary>
         [JsonPropertyName("subscriptionId")]
-        public string TranscriptionSubscriptionId { get; set; }
+        public string TranscriptionSubscriptionId { get; internal set; }
 
         /// <summary>
         /// The target locale in which the translated text needs to be
         /// </summary>
         [JsonPropertyName("locale")]
-        public string Locale { get; set; }
+        public string Locale { get; internal set; }
 
         /// <summary>
         /// call connection Id.
         /// </summary>
         [JsonPropertyName("callConnectionId")]
-        public string CallConnectionId { get; set; }
+        public string CallConnectionId { get; internal set; }
 
         /// <summary>
         /// correlation Id.
         /// </summary>
         [JsonPropertyName("correlationId")]
-        public string CorrelationId { get; set; }
+        public string CorrelationId { get; internal set; }
     }
 }
