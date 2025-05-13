@@ -1,4 +1,4 @@
-# Sample for Azure.AI.Projects with `Connections`
+# Sample usiing `Connections` in Azure.AI.Projects
 
 In this example, we will demonstrate listing and retrieving connections using the `Connections` client in `Azure.AI.Projects`. This includes listing all connections, filtering by connection type, and retrieving specific connection details.
 
