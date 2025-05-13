@@ -13,6 +13,8 @@ namespace Azure.Identity
     {
         private static readonly TokenCredential[] s_defaultCredentialChain = new DefaultAzureCredentialFactory(new DefaultAzureCredentialOptions()).CreateCredentialChain();
         private bool _useDefaultCredentialChain;
+        private bool _useDevCredentials;
+        private bool _useProdCredentials;
 
         public DefaultAzureCredentialFactory(DefaultAzureCredentialOptions options)
             : this(options, CredentialPipeline.GetInstance(options))
@@ -24,6 +26,15 @@ namespace Azure.Identity
 
             _useDefaultCredentialChain = options == null;
 
+            string credentialSelection = EnvironmentVariables.CredentialSelection?.Trim();
+            _useDevCredentials = Constants.DevCredentials.Equals(credentialSelection, StringComparison.OrdinalIgnoreCase);
+            _useProdCredentials = Constants.ProdCredentials.Equals(credentialSelection, StringComparison.OrdinalIgnoreCase);
+
+            if (credentialSelection != null && !_useDevCredentials && !_useProdCredentials)
+            {
+                throw new InvalidOperationException($"Invalid value for environment variable AZURE_CREDENTIAL_SELECTION: {credentialSelection}. Valid values are 'dev' or 'prod'.");
+            }
+
             Options = options?.Clone<DefaultAzureCredentialOptions>() ?? new DefaultAzureCredentialOptions();
         }
 
@@ -34,66 +45,91 @@ namespace Azure.Identity
         {
             if (_useDefaultCredentialChain)
             {
+                if (_useDevCredentials)
+                {
+                    return
+                    [
+                        CreateVisualStudioCredential(),
+                        CreateAzureCliCredential(),
+                        CreateAzurePowerShellCredential(),
+                        CreateAzureDeveloperCliCredential()
+                    ];
+                }
+                else if (_useProdCredentials)
+                {
+                    return
+                    [
+                        CreateEnvironmentCredential(),
+                        CreateWorkloadIdentityCredential(),
+                        CreateManagedIdentityCredential()
+                    ];
+                }
                 return s_defaultCredentialChain;
             }
 
             List<TokenCredential> chain = new(10);
 
-            if (!Options.ExcludeEnvironmentCredential)
+            if (!_useDevCredentials)
             {
-                chain.Add(CreateEnvironmentCredential());
+                if (!Options.ExcludeEnvironmentCredential)
+                {
+                    chain.Add(CreateEnvironmentCredential());
+                }
+
+                if (!Options.ExcludeWorkloadIdentityCredential)
+                {
+                    chain.Add(CreateWorkloadIdentityCredential());
+                }
+
+                if (!Options.ExcludeManagedIdentityCredential)
+                {
+                    chain.Add(CreateManagedIdentityCredential());
+                }
+
+                if (!Options.ExcludeSharedTokenCacheCredential)
+                {
+                    chain.Add(CreateSharedTokenCacheCredential());
+                }
             }
 
-            if (!Options.ExcludeWorkloadIdentityCredential)
+            if (!_useProdCredentials)
             {
-                chain.Add(CreateWorkloadIdentityCredential());
-            }
-
-            if (!Options.ExcludeManagedIdentityCredential)
-            {
-                chain.Add(CreateManagedIdentityCredential());
-            }
-
-            if (!Options.ExcludeSharedTokenCacheCredential)
-            {
-                chain.Add(CreateSharedTokenCacheCredential());
-            }
-
-            if (!Options.ExcludeVisualStudioCredential)
-            {
-                chain.Add(CreateVisualStudioCredential());
-            }
+                if (!Options.ExcludeVisualStudioCredential)
+                {
+                    chain.Add(CreateVisualStudioCredential());
+                }
 
 #pragma warning disable CS0618 // Type or member is obsolete
-            if (!Options.ExcludeVisualStudioCodeCredential)
-            {
-                chain.Add(CreateVisualStudioCodeCredential());
-            }
+                if (!Options.ExcludeVisualStudioCodeCredential)
+                {
+                    chain.Add(CreateVisualStudioCodeCredential());
+                }
 #pragma warning restore CS0618 // Type or member is obsolete
 
-            if (!Options.ExcludeAzureCliCredential)
-            {
-                chain.Add(CreateAzureCliCredential());
-            }
+                if (!Options.ExcludeAzureCliCredential)
+                {
+                    chain.Add(CreateAzureCliCredential());
+                }
 
-            if (!Options.ExcludeAzurePowerShellCredential)
-            {
-                chain.Add(CreateAzurePowerShellCredential());
-            }
+                if (!Options.ExcludeAzurePowerShellCredential)
+                {
+                    chain.Add(CreateAzurePowerShellCredential());
+                }
 
-            if (!Options.ExcludeAzureDeveloperCliCredential)
-            {
-                chain.Add(CreateAzureDeveloperCliCredential());
-            }
+                if (!Options.ExcludeAzureDeveloperCliCredential)
+                {
+                    chain.Add(CreateAzureDeveloperCliCredential());
+                }
 
-            if (!Options.ExcludeInteractiveBrowserCredential)
-            {
-                chain.Add(CreateInteractiveBrowserCredential());
-            }
+                if (!Options.ExcludeInteractiveBrowserCredential)
+                {
+                    chain.Add(CreateInteractiveBrowserCredential());
+                }
 #if PREVIEW_FEATURE_FLAG
-            if (!Options.ExcludeBrokerCredential && TryCreateDevelopmentBrokerOptions(out InteractiveBrowserCredentialOptions brokerOptions))
-            {
-                chain.Add(CreateBrokerAuthenticationCredential(brokerOptions));
+                if (!Options.ExcludeBrokerCredential && TryCreateDevelopmentBrokerOptions(out InteractiveBrowserCredentialOptions brokerOptions))
+                {
+                    chain.Add(CreateBrokerAuthenticationCredential(brokerOptions));
+                }
             }
 #endif
             if (chain.Count == 0)
