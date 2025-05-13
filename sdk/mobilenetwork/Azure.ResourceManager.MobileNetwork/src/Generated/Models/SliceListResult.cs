@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
-    /// <summary>
-    /// Response for network slice API service call.
-    /// Serialized Name: SliceListResult
-    /// </summary>
+    /// <summary> Response for network slice API service call. </summary>
     internal partial class SliceListResult
     {
         /// <summary>
@@ -55,14 +52,8 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SliceListResult"/>. </summary>
-        /// <param name="value">
-        /// A list of network slices in a mobile network.
-        /// Serialized Name: SliceListResult.value
-        /// </param>
-        /// <param name="nextLink">
-        /// The URL to get the next set of results.
-        /// Serialized Name: SliceListResult.nextLink
-        /// </param>
+        /// <param name="value"> A list of network slices in a mobile network. </param>
+        /// <param name="nextLink"> The URL to get the next set of results. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SliceListResult(IReadOnlyList<MobileNetworkSliceData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -71,15 +62,9 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// A list of network slices in a mobile network.
-        /// Serialized Name: SliceListResult.value
-        /// </summary>
+        /// <summary> A list of network slices in a mobile network. </summary>
         public IReadOnlyList<MobileNetworkSliceData> Value { get; }
-        /// <summary>
-        /// The URL to get the next set of results.
-        /// Serialized Name: SliceListResult.nextLink
-        /// </summary>
+        /// <summary> The URL to get the next set of results. </summary>
         public string NextLink { get; }
     }
 }

@@ -11,12 +11,13 @@ namespace Azure.AI.Projects
 {
     public partial class OpenApiToolDefinition
     {
-        public OpenApiToolDefinition(string name, string description, BinaryData spec, OpenApiAuthDetails auth):this(
+        public OpenApiToolDefinition(string name, string description, BinaryData spec, OpenApiAuthDetails auth, IList<string> defaultParams = null) :this(
                 new OpenApiFunctionDefinition(
                     name: name,
                     description: description,
                     spec: spec,
                     auth: auth,
+                    defaultParams: defaultParams ?? [],
                     serializedAdditionalRawData: null
                     )
             ){}

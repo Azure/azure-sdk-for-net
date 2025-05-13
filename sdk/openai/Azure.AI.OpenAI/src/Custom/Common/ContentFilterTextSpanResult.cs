@@ -6,7 +6,7 @@ using System.Diagnostics.CodeAnalysis;
 namespace Azure.AI.OpenAI;
 
 [Experimental("AOAI001")]
-[CodeGenModel("AzureContentFilterCompletionTextSpanDetectionResult")]
+[CodeGenType("AzureContentFilterCompletionTextSpanDetectionResult")]
 #if !AZURE_OPENAI_GA
 public partial class ContentFilterTextSpanResult
 #else

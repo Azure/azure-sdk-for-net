@@ -51,7 +51,7 @@ namespace Azure.Compute.Batch
         }
 
         /// <summary> Initializes a new instance of <see cref="AutoUserSpecification"/>. </summary>
-        /// <param name="scope"> The scope for the auto user. The default value is pool. If the pool is running Windows, a value of Task should be specified if stricter isolation between tasks is required, such as if the task mutates the registry in a way which could impact other tasks. </param>
+        /// <param name="scope"> The scope for the auto user. The default value is pool. If the pool is running Windows a value of Task should be specified if stricter isolation between tasks is required. For example, if the task mutates the registry in a way which could impact other tasks, or if certificates have been specified on the pool which should not be accessible by normal tasks but should be accessible by StartTasks. </param>
         /// <param name="elevationLevel"> The elevation level of the auto user. The default value is nonAdmin. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal AutoUserSpecification(AutoUserScope? scope, ElevationLevel? elevationLevel, IDictionary<string, BinaryData> serializedAdditionalRawData)
@@ -61,7 +61,7 @@ namespace Azure.Compute.Batch
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The scope for the auto user. The default value is pool. If the pool is running Windows, a value of Task should be specified if stricter isolation between tasks is required, such as if the task mutates the registry in a way which could impact other tasks. </summary>
+        /// <summary> The scope for the auto user. The default value is pool. If the pool is running Windows a value of Task should be specified if stricter isolation between tasks is required. For example, if the task mutates the registry in a way which could impact other tasks, or if certificates have been specified on the pool which should not be accessible by normal tasks but should be accessible by StartTasks. </summary>
         public AutoUserScope? Scope { get; set; }
         /// <summary> The elevation level of the auto user. The default value is nonAdmin. </summary>
         public ElevationLevel? ElevationLevel { get; set; }

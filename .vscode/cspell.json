@@ -62,6 +62,7 @@
   "words": [
     "AADDS",
     "AADKERB",
+    "AOAI",
     "apos",
     "azsdk",
     "blazor",
@@ -152,6 +153,7 @@
     "structs",
     "Sysctls",
     "SYSLIB",
+    "Tswtz",
     "Uefi",
     "uints",
     "unbilled",
@@ -183,6 +185,13 @@
       "filename": "**/eng/pipelines/templates/jobs/ci.yml",
       "words": [
         "warnaserror"
+      ]
+    },
+    {
+      "filename": "**/sdk/agricultureplatform/**/*.cs",
+      "words": [
+        "agri",
+        "mobo"
       ]
     },
     {
@@ -241,6 +250,12 @@
       ]
     },
     {
+      "filename": "**/sdk/arizeaiobservabilityeval/**/*.cs",
+      "words": [
+        "Arize"
+      ]
+    },
+    {
       "filename": "**/sdk/avs/**/*.cs",
       "words": [
         "dhcps",
@@ -274,8 +289,10 @@
       "filename": "**/sdk/batch/**/*.cs",
       "words": [
         "cifs",
+        "Cleanedup",
         "ocpdate",
         "Reimage",
+        "Reimaged",
         "Reimaging",
         "reimaging",
         "SSDLRS"
@@ -342,7 +359,11 @@
         "cbor",
         "ccfs",
         "cose",
-        "scitt"
+        "Jwks",
+        "PHDR",
+        "PKIX",
+        "scitt",
+        "tstr"
       ]
     },
     {
@@ -408,6 +429,12 @@
         "dapr",
         "grpc",
         "proto"
+      ]
+    },
+    {
+      "filename": "**/sdk/containerregistry/**/*",
+      "words": [
+        "Abac"
       ]
     },
     {
@@ -770,6 +797,32 @@
         "Hhmm",
         "Hhmmss",
         "Hhmms"
+      ]
+    },
+    {
+      "filename": "**/sdk/migrationassessment/**/*.cs",
+      "words": [
+        "Paas",
+        "Reasonings",
+        "Vcpu",
+        "Hadr",
+        "Mbps",
+        "MSAZR",
+        "MSAZRDE",
+        "MSAZRUSGOV",
+        "MSMCAZR",
+        "Dadsv",
+        "Dasv",
+        "Ddsv",
+        "Eadsv",
+        "Easv",
+        "Ebdsv",
+        "Ebsv",
+        "Edsv",
+        "Mdsv",
+        "Idms",
+        "Recieved",
+        "Cluter"
       ]
     },
     {
@@ -1172,6 +1225,7 @@
       "filename": "**/sdk/recoveryservices-datareplication/**/*.cs",
       "words": [
         "dras",
+        "fqdns",
         "nics",
         "reprotect"
       ]
@@ -1331,7 +1385,8 @@
         "Stdev",
         "Unrestorable",
         "Vcores",
-        "Dtcs"
+        "Dtcs",
+        "Freemium"
       ]
     },
     {
@@ -1513,6 +1568,15 @@
       ]
     },
     {
+      "filename": "**/sdk/workloadssapvirtualinstance/**/*.cs",
+      "words": [
+        "acss",
+        "ascs",
+        "hana",
+        "mbps"
+      ]
+    },
+    {
       "filename": "**/sdk/containerinstance/**/*.cs",
       "words": [
         "Noreuse",
@@ -1581,13 +1645,14 @@
     {
       "filename": "**/sdk/iot/Azure.ResourceManager.IotFirmwareDefense/**/*.cs",
       "words": [
-        "RELRO",
-        "Relro",
         "relro",
-        "Rpath",
         "rpath",
         "runpath",
-        "Cves"
+        "cves",
+        "ocsp",
+        "sbom",
+        "diffie",
+        "iotfirmwaredefense"
       ]
     },
     {

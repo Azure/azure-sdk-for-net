@@ -53,6 +53,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             var tracerProvider = serviceProvider!.GetService<TracerProvider>();
             if (tracerProvider != null)
             {
+                // Ensure that the AzureMonitorTraceExporter is registered only once
+                serviceProvider!.EnsureSingleUseAzureMonitorExporterRegistration();
+
                 // Add a processor manually to the TracerProvider created by the SDK
                 var exporterOptions = serviceProvider!.GetRequiredService<IOptionsMonitor<AzureMonitorExporterOptions>>().Get(Options.DefaultName);
 
@@ -73,6 +76,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             var loggerProvider = serviceProvider!.GetService<LoggerProvider>();
             if (loggerProvider != null)
             {
+                // Ensure that the AzureMonitorLogExporter is registered only once
+                serviceProvider!.EnsureSingleUseAzureMonitorExporterRegistration();
+
                 // Add a processor manually to the LoggerProvider created by the SDK
                 var exporterOptions = serviceProvider!.GetRequiredService<IOptionsMonitor<AzureMonitorExporterOptions>>().Get(Options.DefaultName);
                 var exporter = new AzureMonitorLogExporter(exporterOptions);

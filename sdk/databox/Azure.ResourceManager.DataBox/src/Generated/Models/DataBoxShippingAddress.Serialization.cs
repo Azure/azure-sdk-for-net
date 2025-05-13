@@ -58,8 +58,11 @@ namespace Azure.ResourceManager.DataBox.Models
             }
             writer.WritePropertyName("country"u8);
             writer.WriteStringValue(Country);
-            writer.WritePropertyName("postalCode"u8);
-            writer.WriteStringValue(PostalCode);
+            if (Optional.IsDefined(PostalCode))
+            {
+                writer.WritePropertyName("postalCode"u8);
+                writer.WriteStringValue(PostalCode);
+            }
             if (Optional.IsDefined(ZipExtendedCode))
             {
                 writer.WritePropertyName("zipExtendedCode"u8);

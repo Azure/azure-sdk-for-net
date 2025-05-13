@@ -48,7 +48,7 @@ namespace Azure.AI.Projects
         /// <summary> Initializes a new instance of <see cref="AzureAISearchResource"/>. </summary>
         public AzureAISearchResource()
         {
-            IndexList = new ChangeTrackingList<IndexResource>();
+            IndexList = new ChangeTrackingList<AISearchIndexResource>();
         }
 
         /// <summary> Initializes a new instance of <see cref="AzureAISearchResource"/>. </summary>
@@ -57,7 +57,7 @@ namespace Azure.AI.Projects
         /// resource attached to the agent.
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AzureAISearchResource(IList<IndexResource> indexList, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AzureAISearchResource(IList<AISearchIndexResource> indexList, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IndexList = indexList;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -67,6 +67,6 @@ namespace Azure.AI.Projects
         /// The indices attached to this agent. There can be a maximum of 1 index
         /// resource attached to the agent.
         /// </summary>
-        public IList<IndexResource> IndexList { get; }
+        public IList<AISearchIndexResource> IndexList { get; }
     }
 }

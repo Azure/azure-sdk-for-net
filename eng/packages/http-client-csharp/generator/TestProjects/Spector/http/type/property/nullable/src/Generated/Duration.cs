@@ -10,7 +10,6 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using _Type.Property.Nullable.Models;
 
 namespace _Type.Property.Nullable
 {

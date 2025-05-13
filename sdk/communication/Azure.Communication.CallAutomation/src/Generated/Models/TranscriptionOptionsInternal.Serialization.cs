@@ -21,10 +21,10 @@ namespace Azure.Communication.CallAutomation
             writer.WriteStringValue(TransportType.ToString());
             writer.WritePropertyName("locale"u8);
             writer.WriteStringValue(Locale);
-            if (Optional.IsDefined(SpeechRecognitionModelEndpointId))
+            if (Optional.IsDefined(SpeechModelEndpointId))
             {
-                writer.WritePropertyName("speechRecognitionModelEndpointId"u8);
-                writer.WriteStringValue(SpeechRecognitionModelEndpointId);
+                writer.WritePropertyName("speechModelEndpointId"u8);
+                writer.WriteStringValue(SpeechModelEndpointId);
             }
             writer.WritePropertyName("startTranscription"u8);
             writer.WriteBooleanValue(StartTranscription);

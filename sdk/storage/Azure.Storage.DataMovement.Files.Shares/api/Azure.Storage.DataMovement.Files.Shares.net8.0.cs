@@ -40,6 +40,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
         public System.DateTimeOffset? FileLastWrittenOn { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> FileMetadata { get { throw null; } set { } }
         public bool? FilePermissions { get { throw null; } set { } }
+        public bool IsNfs { get { throw null; } set { } }
         public Azure.Storage.Files.Shares.Models.ShareFileRequestConditions SourceConditions { get { throw null; } set { } }
     }
 }

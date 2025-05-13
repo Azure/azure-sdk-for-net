@@ -283,7 +283,7 @@ namespace Azure.Core.Extensions.Tests
         public void CreatesAzurePipelinesCredential()
         {
             IConfiguration configuration = GetConfiguration(
-                new KeyValuePair<string, string>("credential", "azurepipelinescredential"),
+                new KeyValuePair<string, string>("credential", "azurepipelines"),
                 new KeyValuePair<string, string>("clientId", "ConfigurationClientId"),
                 new KeyValuePair<string, string>("tenantId", "ConfigurationTenantId"),
                 new KeyValuePair<string, string>("serviceConnectionId", "SomeServiceConnectionId"),
@@ -316,7 +316,7 @@ namespace Azure.Core.Extensions.Tests
         public void CreatesAzurePipelinesCredential_AdditionalTenants(string additionalTenants)
         {
             IConfiguration configuration = GetConfiguration(
-                new KeyValuePair<string, string>("credential", "azurepipelinescredential"),
+                new KeyValuePair<string, string>("credential", "azurepipelines"),
                 new KeyValuePair<string, string>("clientId", "ConfigurationClientId"),
                 new KeyValuePair<string, string>("tenantId", "ConfigurationTenantId"),
                 new KeyValuePair<string, string>("serviceConnectionId", "SomeServiceConnectionId"),
@@ -352,7 +352,7 @@ namespace Azure.Core.Extensions.Tests
         public void CreatesAzurePipelinesCredential_InvalidConfig(string clientId, string tenantId, string serviceConnectionId, string systemAccessToken)
         {
             IConfiguration configuration = GetConfiguration(
-                new KeyValuePair<string, string>("credential", "azurepipelinescredential"),
+                new KeyValuePair<string, string>("credential", "azurepipelines"),
                 new KeyValuePair<string, string>("clientId", clientId),
                 new KeyValuePair<string, string>("tenantId", tenantId),
                 new KeyValuePair<string, string>("serviceConnectionId", serviceConnectionId),

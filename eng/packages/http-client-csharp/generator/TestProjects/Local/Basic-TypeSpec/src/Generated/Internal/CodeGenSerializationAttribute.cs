@@ -12,11 +12,14 @@ namespace BasicTypeSpec
     [AttributeUsage((AttributeTargets.Class | AttributeTargets.Struct), AllowMultiple = true, Inherited = true)]
     internal partial class CodeGenSerializationAttribute : Attribute
     {
+        /// <param name="propertyName"> The property name which these hooks apply to. </param>
         public CodeGenSerializationAttribute(string propertyName)
         {
             PropertyName = propertyName;
         }
 
+        /// <param name="propertyName"> The property name which these hooks apply to. </param>
+        /// <param name="propertySerializationName"> The serialization name of the property. </param>
         public CodeGenSerializationAttribute(string propertyName, string propertySerializationName)
         {
             PropertyName = propertyName;
