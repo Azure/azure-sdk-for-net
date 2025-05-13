@@ -85,7 +85,7 @@ agentsClient.Administration.DeleteAgent(agentId: agent.Id);
 ```
 
 Asynchronous sample:
-```C# Snippet:ExtensionsAgentsClientAsync
+```C# Snippet:ExtensionsAgentsBasicsAsync
 
 var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
 var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
