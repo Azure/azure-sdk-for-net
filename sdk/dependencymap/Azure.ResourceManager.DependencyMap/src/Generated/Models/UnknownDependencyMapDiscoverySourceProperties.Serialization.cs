@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.DependencyMap.Models
             }
             DependencyMapProvisioningState? provisioningState = default;
             SourceType sourceType = "Unknown";
-            string sourceId = default;
+            ResourceIdentifier sourceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DependencyMap.Models
                 }
                 if (property.NameEquals("sourceId"u8))
                 {
-                    sourceId = property.Value.GetString();
+                    sourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

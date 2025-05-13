@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.DependencyMap.Models
 {
@@ -18,7 +19,7 @@ namespace Azure.ResourceManager.DependencyMap.Models
         /// <param name="sourceType"> Source type of Discovery Source resource. </param>
         /// <param name="sourceId"> Source ArmId of Discovery Source resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownDependencyMapDiscoverySourceProperties(DependencyMapProvisioningState? provisioningState, SourceType sourceType, string sourceId, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(provisioningState, sourceType, sourceId, serializedAdditionalRawData)
+        internal UnknownDependencyMapDiscoverySourceProperties(DependencyMapProvisioningState? provisioningState, SourceType sourceType, ResourceIdentifier sourceId, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(provisioningState, sourceType, sourceId, serializedAdditionalRawData)
         {
             SourceType = sourceType;
         }

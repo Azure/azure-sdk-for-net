@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.DependencyMap.Models
 {
@@ -52,7 +53,7 @@ namespace Azure.ResourceManager.DependencyMap.Models
         /// <summary> Initializes a new instance of <see cref="DependencyMapDiscoverySourceProperties"/>. </summary>
         /// <param name="sourceId"> Source ArmId of Discovery Source resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceId"/> is null. </exception>
-        protected DependencyMapDiscoverySourceProperties(string sourceId)
+        protected DependencyMapDiscoverySourceProperties(ResourceIdentifier sourceId)
         {
             Argument.AssertNotNull(sourceId, nameof(sourceId));
 
@@ -64,7 +65,7 @@ namespace Azure.ResourceManager.DependencyMap.Models
         /// <param name="sourceType"> Source type of Discovery Source resource. </param>
         /// <param name="sourceId"> Source ArmId of Discovery Source resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DependencyMapDiscoverySourceProperties(DependencyMapProvisioningState? provisioningState, SourceType sourceType, string sourceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DependencyMapDiscoverySourceProperties(DependencyMapProvisioningState? provisioningState, SourceType sourceType, ResourceIdentifier sourceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProvisioningState = provisioningState;
             SourceType = sourceType;
@@ -82,6 +83,6 @@ namespace Azure.ResourceManager.DependencyMap.Models
         /// <summary> Source type of Discovery Source resource. </summary>
         internal SourceType SourceType { get; set; }
         /// <summary> Source ArmId of Discovery Source resource. </summary>
-        public string SourceId { get; set; }
+        public ResourceIdentifier SourceId { get; set; }
     }
 }

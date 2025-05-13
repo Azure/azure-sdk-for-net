@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.DependencyMap.Models
         /// <param name="sourceType"> Source type of Discovery Source resource. </param>
         /// <param name="sourceId"> Source ArmId of Discovery Source resource. </param>
         /// <returns> A new <see cref="Models.DependencyMapDiscoverySourceProperties"/> instance for mocking. </returns>
-        public static DependencyMapDiscoverySourceProperties DependencyMapDiscoverySourceProperties(DependencyMapProvisioningState? provisioningState = null, string sourceType = null, string sourceId = null)
+        public static DependencyMapDiscoverySourceProperties DependencyMapDiscoverySourceProperties(DependencyMapProvisioningState? provisioningState = null, string sourceType = null, ResourceIdentifier sourceId = null)
         {
             return new UnknownDependencyMapDiscoverySourceProperties(provisioningState, sourceType == null ? default : new SourceType(sourceType), sourceId, serializedAdditionalRawData: null);
         }
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.DependencyMap.Models
         /// <param name="provisioningState"> Provisioning state of Discovery Source resource. </param>
         /// <param name="sourceId"> Source ArmId of Discovery Source resource. </param>
         /// <returns> A new <see cref="Models.OffAzureDiscoverySourceProperties"/> instance for mocking. </returns>
-        public static OffAzureDiscoverySourceProperties OffAzureDiscoverySourceProperties(DependencyMapProvisioningState? provisioningState = null, string sourceId = null)
+        public static OffAzureDiscoverySourceProperties OffAzureDiscoverySourceProperties(DependencyMapProvisioningState? provisioningState = null, ResourceIdentifier sourceId = null)
         {
             return new OffAzureDiscoverySourceProperties(provisioningState, SourceType.OffAzure, sourceId, serializedAdditionalRawData: null);
         }
