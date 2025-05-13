@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.PureStorageBlock.Models
 {
@@ -54,19 +55,19 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
         /// <param name="storagePoolInternalId"> Pure Storage's internal ID for the storage pool. </param>
         /// <param name="storagePoolResourceId"> Azure resource ID of the storage pool. </param>
         /// <param name="displayName"> Human-readable name of the AVS VM. </param>
-        /// <param name="createdTimestamp"> Date at which the AVS VM was created, as an RFC 3339 timestamp. </param>
+        /// <param name="createdOn"> Date at which the AVS VM was created, as an RFC 3339 timestamp. </param>
         /// <param name="softDeletion"> AVS VM's soft-deletion state. </param>
         /// <param name="volumeContainerType"> Specify which control plane handles the lifecycle of the volume container. </param>
         /// <param name="avs"> AVS VM details. </param>
         /// <param name="space"> Contains properties related to used Flash space. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PureStorageAvsVmProperties(string storagePoolInternalId, string storagePoolResourceId, string displayName, string createdTimestamp, SoftDeletion softDeletion, VolumeContainerType? volumeContainerType, PureStorageAvsVmDetails avs, Space space, ResourceProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PureStorageAvsVmProperties(string storagePoolInternalId, ResourceIdentifier storagePoolResourceId, string displayName, DateTimeOffset? createdOn, SoftDeletion softDeletion, VolumeContainerType? volumeContainerType, PureStorageAvsVmDetails avs, Space space, ResourceProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             StoragePoolInternalId = storagePoolInternalId;
             StoragePoolResourceId = storagePoolResourceId;
             DisplayName = displayName;
-            CreatedTimestamp = createdTimestamp;
+            CreatedOn = createdOn;
             SoftDeletion = softDeletion;
             VolumeContainerType = volumeContainerType;
             Avs = avs;
@@ -78,11 +79,11 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
         /// <summary> Pure Storage's internal ID for the storage pool. </summary>
         public string StoragePoolInternalId { get; }
         /// <summary> Azure resource ID of the storage pool. </summary>
-        public string StoragePoolResourceId { get; }
+        public ResourceIdentifier StoragePoolResourceId { get; }
         /// <summary> Human-readable name of the AVS VM. </summary>
         public string DisplayName { get; }
         /// <summary> Date at which the AVS VM was created, as an RFC 3339 timestamp. </summary>
-        public string CreatedTimestamp { get; }
+        public DateTimeOffset? CreatedOn { get; }
         /// <summary> AVS VM's soft-deletion state. </summary>
         public SoftDeletion SoftDeletion { get; }
         /// <summary> Specify which control plane handles the lifecycle of the volume container. </summary>

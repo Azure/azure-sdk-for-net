@@ -49,10 +49,10 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (options.Format != "W" && Optional.IsDefined(CreatedTimestamp))
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("createdTimestamp"u8);
-                writer.WriteStringValue(CreatedTimestamp);
+                writer.WriteStringValue(CreatedOn.Value, "O");
             }
             if (Optional.IsDefined(SoftDeletion))
             {
@@ -117,9 +117,9 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
                 return null;
             }
             string storagePoolInternalId = default;
-            string storagePoolResourceId = default;
+            ResourceIdentifier storagePoolResourceId = default;
             string displayName = default;
-            string createdTimestamp = default;
+            DateTimeOffset? createdTimestamp = default;
             SoftDeletion softDeletion = default;
             VolumeContainerType? volumeContainerType = default;
             PureStorageAvsVmDetails avs = default;
@@ -136,7 +136,11 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
                 }
                 if (property.NameEquals("storagePoolResourceId"u8))
                 {
-                    storagePoolResourceId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    storagePoolResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("displayName"u8))
@@ -146,7 +150,11 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
                 }
                 if (property.NameEquals("createdTimestamp"u8))
                 {
-                    createdTimestamp = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    createdTimestamp = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("softDeletion"u8))

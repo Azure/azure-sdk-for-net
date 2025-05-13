@@ -481,20 +481,20 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
         /// <param name="storagePoolInternalId"> Pure Storage's internal ID for the storage pool. </param>
         /// <param name="storagePoolResourceId"> Azure resource ID of the storage pool. </param>
         /// <param name="displayName"> Human-readable name of the AVS VM. </param>
-        /// <param name="createdTimestamp"> Date at which the AVS VM was created, as an RFC 3339 timestamp. </param>
+        /// <param name="createdOn"> Date at which the AVS VM was created, as an RFC 3339 timestamp. </param>
         /// <param name="softDeletion"> AVS VM's soft-deletion state. </param>
         /// <param name="volumeContainerType"> Specify which control plane handles the lifecycle of the volume container. </param>
         /// <param name="avs"> AVS VM details. </param>
         /// <param name="space"> Contains properties related to used Flash space. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <returns> A new <see cref="Models.PureStorageAvsVmProperties"/> instance for mocking. </returns>
-        public static PureStorageAvsVmProperties PureStorageAvsVmProperties(string storagePoolInternalId = null, string storagePoolResourceId = null, string displayName = null, string createdTimestamp = null, SoftDeletion softDeletion = null, VolumeContainerType? volumeContainerType = null, PureStorageAvsVmDetails avs = null, Space space = null, ResourceProvisioningState? provisioningState = null)
+        public static PureStorageAvsVmProperties PureStorageAvsVmProperties(string storagePoolInternalId = null, ResourceIdentifier storagePoolResourceId = null, string displayName = null, DateTimeOffset? createdOn = null, SoftDeletion softDeletion = null, VolumeContainerType? volumeContainerType = null, PureStorageAvsVmDetails avs = null, Space space = null, ResourceProvisioningState? provisioningState = null)
         {
             return new PureStorageAvsVmProperties(
                 storagePoolInternalId,
                 storagePoolResourceId,
                 displayName,
-                createdTimestamp,
+                createdOn,
                 softDeletion,
                 volumeContainerType,
                 avs,
