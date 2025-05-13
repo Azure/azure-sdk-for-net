@@ -1,6 +1,6 @@
 # Microsoft Azure Dependency Map management client library for .NET
 
-**[Describe the service briefly first.]**
+Azure Dependency Map is a service that enables automated and manual mapping of dependencies between services, microservices, and components within an Azure ecosystem.
 
 This library follows the [new Azure SDK guidelines](https://azure.github.io/azure-sdk/general_introduction.html), and provides many core capabilities:
 
