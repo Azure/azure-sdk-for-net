@@ -45,6 +45,15 @@
   .PARAMETER outputCacheFile
   Path to a file that the script will output all the validated links after running all checks.
 
+  .PARAMETER localGithubClonedRoot
+  Path to the root of a local github clone. This is used to resolve links to local files in the repo instead of making web requests.
+
+  .PARAMETER localBuildRepoName
+  The name of the repo that is being built. This is used to resolve links to local files in the repo instead of making web requests.
+
+  .PARAMETER localBuildRepoPath
+  The path to the local build repo. This is used to resolve links to local files in the repo instead of making web requests.
+
   .PARAMETER requestTimeoutSec
   The number of seconds before we timeout when sending an individual web request. Default is 15 seconds.
 
@@ -73,7 +82,9 @@ param (
   [string] $inputCacheFile,
   [string] $outputCacheFile,
   [string] $localGithubClonedRoot = "",
-  [string] $requestTimeoutSec  = 15
+  [string] $localBuildRepoName = "",
+  [string] $localBuildRepoPath = "",
+  [string] $requestTimeoutSec = 15
 )
 
 Set-StrictMode -Version 3.0
@@ -82,8 +93,17 @@ $ProgressPreference = "SilentlyContinue"; # Disable invoke-webrequest progress d
 
 function ProcessLink([System.Uri]$linkUri) {
   # To help improve performance and rate limiting issues with github links we try to resolve them based on a local clone if one exists.
-  if ($localGithubClonedRoot -and $linkUri -match '^https://github.com/Azure/(?<repo>[^/]+)/(?:blob|tree)/(main|.*_[^/]+|.*/v[^/]+)/(?<path>.*)$') {
-    $localPath = Join-Path $localGithubClonedRoot $matches['repo'] $matches['path']
+  if (($localGithubClonedRoot -or $localBuildRepoName) -and $linkUri -match '^https://github.com/(?<org>Azure)/(?<repo>[^/]+)/(?:blob|tree)/(main|.*_[^/]+|.*/v[^/]+)/(?<path>.*)$') {
+
+    if ($localBuildRepoName -eq ($matches['org'] + "/" + $matches['repo'])) {
+      # If the link is to the current repo, use the local build path
+      $localPath = Join-Path $localBuildRepoPath $matches['path']
+    }
+    else {
+      # Otherwise use the local github clone path
+      $localPath = Join-Path $localGithubClonedRoot $matches['repo'] $matches['path']
+    }
+
     if (Test-Path $localPath) {
       return $true
     }
@@ -165,7 +185,7 @@ $emptyLinkMessage = "There is at least one empty link in the page. Please replac
 if (!$userAgent) {
   $userAgent = "Chrome/87.0.4280.88"
 }
-function NormalizeUrl([string]$url){
+function NormalizeUrl([string]$url) {
   if (Test-Path $url) {
     $url = "file://" + (Resolve-Path $url).ToString();
   }
