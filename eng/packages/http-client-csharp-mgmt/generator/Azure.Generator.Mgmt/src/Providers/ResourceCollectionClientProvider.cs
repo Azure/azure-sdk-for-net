@@ -75,6 +75,11 @@ namespace Azure.Generator.Management.Providers
 
         private MethodProvider[] BuildGetAllMethods()
         {
+            if (_getAll is null)
+            {
+                return [];
+            }
+
             // implement paging method GetAll
             var getAll = BuildGetAllMethod(false);
             var getAllAsync = BuildGetAllMethod(true);
