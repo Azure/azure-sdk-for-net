@@ -25,6 +25,8 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
 
         protected virtual bool IsRoundTripOrderDeterministic => true;
 
+        protected virtual IPersistableModel<TElement>? Proxy => null;
+
         protected override string GetJsonFolderName()
         {
             var className = GetType().Name;
@@ -47,12 +49,17 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
 
         protected override void RoundTripTest(string format, RoundTripStrategy<TCollection> strategy)
         {
+            // TODO -> we may need to update this to make sure the proxy tests are not getting skipped with this check since it was added after the proxy prototype was abandoned
             if (!strategy.UsesContext && !HasReflectionBuilderSupport)
             {
                 Assert.Ignore($"Collection type {CollectionTypeName} does not have reflection builder support.  Skipping test.");
             }
 
             var options = new ModelReaderWriterOptions(format);
+            if (Proxy is not null)
+            {
+                options.AddProxy(Proxy);
+            }
 
             Assert.AreEqual(typeof(TCollection), Instance!.GetType());
 

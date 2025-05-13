@@ -52,7 +52,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
         protected override void CompareModels(AvailabilitySetData model, AvailabilitySetData model2, string format)
             => CompareAvailabilitySetData(model, model2, format);
 
-        internal static void CompareAvailabilitySetData(AvailabilitySetData model, AvailabilitySetData model2, string format, params string[] propertySkips)
+        internal static void CompareAvailabilitySetData(AvailabilitySetData model, AvailabilitySetData model2, string format, params string[] propertySkips, bool nameAlwaysExists = false)
         {
             if (model is null)
             {
@@ -71,6 +71,20 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
             }
             if (format == "J" && !skips.Contains("resourceType"))
             {
+            // TODO not sure how to handle this merge conflict without more context
+            // Assert.AreEqual(format == "W" ? null : model.Id, model2.Id);
+            // Assert.AreEqual(model.Location, model2.Location);
+            // if (nameAlwaysExists)
+            // {
+            //     Assert.AreEqual(model.Name, model2.Name);
+            // }
+            // else
+            // {
+            //     Assert.AreEqual(format == "W" ? null : model.Name, model2.Name);
+            // }
+            // Assert.AreEqual(model.PlatformFaultDomainCount, model2.PlatformFaultDomainCount);
+            // Assert.AreEqual(model.PlatformUpdateDomainCount, model2.PlatformUpdateDomainCount);
+            // if (format == "J")
                 Assert.AreEqual(model.ResourceType, model2.ResourceType);
             }
             if (!skips.Contains("location"))

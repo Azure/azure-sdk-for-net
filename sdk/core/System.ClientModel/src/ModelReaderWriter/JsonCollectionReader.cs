@@ -57,7 +57,7 @@ internal class JsonCollectionReader : CollectionReader
         }
         else if (itemInstance is IJsonModel<object> iJsonModel)
         {
-            jsonModel = iJsonModel;
+            jsonModel = options.ResolveProxy(iJsonModel);
         }
         else
         {
