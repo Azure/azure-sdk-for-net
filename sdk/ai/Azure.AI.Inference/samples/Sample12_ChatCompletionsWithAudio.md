@@ -18,6 +18,8 @@ An audio input can be provided using a URI pointer to an audio file:
 var endpoint = new Uri(System.Environment.GetEnvironmentVariable("AZURE_AI_CHAT_ENDPOINT"));
 var credential = new AzureKeyCredential(System.Environment.GetEnvironmentVariable("AZURE_AI_CHAT_KEY"));
 
+ChatMessageAudioContentItem audioContentItem = new ChatMessageAudioContentItem(new Uri("https://example.com/audio.mp3"));
+
 var client = new ChatCompletionsClient(endpoint, credential, new AzureAIInferenceClientOptions());
 
 var requestOptions = new ChatCompletionsOptions()
@@ -27,7 +29,7 @@ var requestOptions = new ChatCompletionsOptions()
         new ChatRequestSystemMessage("You are a helpful assistant that helps provide translations."),
         new ChatRequestUserMessage(
             new ChatMessageTextContentItem("Translate this audio for me"),
-            new ChatMessageAudioContentItem(new Uri("https://example.com/audio.mp3"))),
+            audioContentItem),
     },
 };
 
@@ -52,7 +54,7 @@ var requestOptions = new ChatCompletionsOptions()
         new ChatRequestSystemMessage("You are a helpful assistant that helps provide translations."),
         new ChatRequestUserMessage(
             new ChatMessageTextContentItem("Translate this audio for me"),
-            new ChatMessageAudioContentItem(new Uri("https://example.com/audio.mp3"))),
+            audioContentItem),
     },
 };
 

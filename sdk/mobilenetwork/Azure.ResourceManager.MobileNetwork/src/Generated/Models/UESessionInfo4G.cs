@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
-    /// <summary>
-    /// UE Session Info for 4G
-    /// Serialized Name: UeSessionInfo4G
-    /// </summary>
+    /// <summary> UE Session Info for 4G. </summary>
     public partial class UESessionInfo4G
     {
         /// <summary>
@@ -49,18 +46,9 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="UESessionInfo4G"/>. </summary>
-        /// <param name="ebi">
-        /// EPS bearer identifier
-        /// Serialized Name: UeSessionInfo4G.ebi
-        /// </param>
-        /// <param name="apn">
-        /// Access point name
-        /// Serialized Name: UeSessionInfo4G.apn
-        /// </param>
-        /// <param name="pdnType">
-        /// Packet Data Network Type
-        /// Serialized Name: UeSessionInfo4G.pdnType
-        /// </param>
+        /// <param name="ebi"> EPS bearer identifier. </param>
+        /// <param name="apn"> Access point name. </param>
+        /// <param name="pdnType"> Packet Data Network Type. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="apn"/> is null. </exception>
         public UESessionInfo4G(int ebi, string apn, PdnType pdnType)
         {
@@ -72,22 +60,10 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="UESessionInfo4G"/>. </summary>
-        /// <param name="ebi">
-        /// EPS bearer identifier
-        /// Serialized Name: UeSessionInfo4G.ebi
-        /// </param>
-        /// <param name="apn">
-        /// Access point name
-        /// Serialized Name: UeSessionInfo4G.apn
-        /// </param>
-        /// <param name="pdnType">
-        /// Packet Data Network Type
-        /// Serialized Name: UeSessionInfo4G.pdnType
-        /// </param>
-        /// <param name="ipV4Addr">
-        /// IPv4 address.
-        /// Serialized Name: UeSessionInfo4G.ueIpAddress.ipV4Addr
-        /// </param>
+        /// <param name="ebi"> EPS bearer identifier. </param>
+        /// <param name="apn"> Access point name. </param>
+        /// <param name="pdnType"> Packet Data Network Type. </param>
+        /// <param name="ipV4Addr"> IPv4 address. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal UESessionInfo4G(int ebi, string apn, PdnType pdnType, string ipV4Addr, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -103,28 +79,16 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         {
         }
 
-        /// <summary>
-        /// EPS bearer identifier
-        /// Serialized Name: UeSessionInfo4G.ebi
-        /// </summary>
+        /// <summary> EPS bearer identifier. </summary>
         [WirePath("ebi")]
         public int Ebi { get; set; }
-        /// <summary>
-        /// Access point name
-        /// Serialized Name: UeSessionInfo4G.apn
-        /// </summary>
+        /// <summary> Access point name. </summary>
         [WirePath("apn")]
         public string Apn { get; set; }
-        /// <summary>
-        /// Packet Data Network Type
-        /// Serialized Name: UeSessionInfo4G.pdnType
-        /// </summary>
+        /// <summary> Packet Data Network Type. </summary>
         [WirePath("pdnType")]
         public PdnType PdnType { get; set; }
-        /// <summary>
-        /// IPv4 address.
-        /// Serialized Name: UeSessionInfo4G.ueIpAddress.ipV4Addr
-        /// </summary>
+        /// <summary> IPv4 address. </summary>
         [WirePath("ueIpAddress.ipV4Addr")]
         public string IPV4Addr { get; set; }
     }

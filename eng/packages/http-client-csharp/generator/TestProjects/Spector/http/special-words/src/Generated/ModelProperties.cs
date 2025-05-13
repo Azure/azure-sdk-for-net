@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using SpecialWords._Models;
+using SpecialWords._ModelProperties;
 
 namespace SpecialWords
 {

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
@@ -51,6 +52,78 @@ namespace Azure.Security.KeyVault.Administration.Models
                 writer.WriteEndArray();
             }
             writer.WriteEndObject();
+        }
+
+        internal static RoleDefinitionProperties DeserializeRoleDefinitionProperties(JsonElement element)
+        {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string roleName = default;
+            string description = default;
+            KeyVaultRoleType? type = default;
+            IList<KeyVaultPermission> permissions = default;
+            IList<KeyVaultRoleScope> assignableScopes = default;
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("roleName"u8))
+                {
+                    roleName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("description"u8))
+                {
+                    description = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("type"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    type = new KeyVaultRoleType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("permissions"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<KeyVaultPermission> array = new List<KeyVaultPermission>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(KeyVaultPermission.DeserializeKeyVaultPermission(item));
+                    }
+                    permissions = array;
+                    continue;
+                }
+                if (property.NameEquals("assignableScopes"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<KeyVaultRoleScope> array = new List<KeyVaultRoleScope>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(new KeyVaultRoleScope(item.GetString()));
+                    }
+                    assignableScopes = array;
+                    continue;
+                }
+            }
+            return new RoleDefinitionProperties(roleName, description, type, permissions ?? new ChangeTrackingList<KeyVaultPermission>(), assignableScopes ?? new ChangeTrackingList<KeyVaultRoleScope>());
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static RoleDefinitionProperties FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeRoleDefinitionProperties(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

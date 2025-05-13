@@ -22,6 +22,7 @@ namespace Azure.Security.KeyVault.Certificates
         private const string StatusDetailsPropertyName = "status_details";
         private const string TargetPropertyName = "target";
         private const string ErrorPropertyName = "error";
+        private const string PreserveCertificateOrderPropertyName = "preserveCertOrder";
         private const string Collection = "certificates/";
 
         private IssuerParameters _issuer;
@@ -123,6 +124,12 @@ namespace Azure.Security.KeyVault.Certificates
         /// </summary>
         public CertificateOperationError Error { get; internal set; }
 
+        /// <summary>
+        /// Gets or sets a value indicating whether the certificate chain preserves its original order.
+        /// The default value is false, which sets the leaf certificate at index 0.
+        /// </summary>
+        public bool? PreserveCertificateOrder { get; internal set; }
+
         void IJsonDeserializable.ReadProperties(JsonElement json)
         {
             foreach (JsonProperty prop in json.EnumerateObject())
@@ -166,6 +173,10 @@ namespace Azure.Security.KeyVault.Certificates
                     case ErrorPropertyName:
                         Error = new CertificateOperationError();
                         ((IJsonDeserializable)Error).ReadProperties(prop.Value);
+                        break;
+
+                    case PreserveCertificateOrderPropertyName:
+                        PreserveCertificateOrder = prop.Value.GetBoolean();
                         break;
                 }
             }

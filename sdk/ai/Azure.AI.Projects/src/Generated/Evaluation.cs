@@ -71,6 +71,7 @@ namespace Azure.AI.Projects
         /// Please note <see cref="InputData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ApplicationInsightsConfiguration"/> and <see cref="Dataset"/>.
         /// </param>
+        /// <param name="target"> Evaluation target specifying the model config and parameters. </param>
         /// <param name="displayName"> Display Name for evaluation. It helps to find the evaluation easily in AI Foundry. It does not need to be unique. </param>
         /// <param name="description"> Description of the evaluation. It can be used to store additional information about the evaluation and is mutable. </param>
         /// <param name="systemData"> Metadata containing createdBy and modifiedBy information. </param>
@@ -79,10 +80,11 @@ namespace Azure.AI.Projects
         /// <param name="properties"> Evaluation's properties. Unlike tags, properties are add-only. Once added, a property cannot be removed. </param>
         /// <param name="evaluators"> Evaluators to be used for the evaluation. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal Evaluation(string id, InputData data, string displayName, string description, SystemData systemData, string status, IDictionary<string, string> tags, IDictionary<string, string> properties, IDictionary<string, EvaluatorConfiguration> evaluators, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal Evaluation(string id, InputData data, EvaluationTarget target, string displayName, string description, SystemData systemData, string status, IDictionary<string, string> tags, IDictionary<string, string> properties, IDictionary<string, EvaluatorConfiguration> evaluators, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             Data = data;
+            Target = target;
             DisplayName = displayName;
             Description = description;
             SystemData = systemData;
@@ -106,6 +108,8 @@ namespace Azure.AI.Projects
         /// The available derived classes include <see cref="ApplicationInsightsConfiguration"/> and <see cref="Dataset"/>.
         /// </summary>
         public InputData Data { get; set; }
+        /// <summary> Evaluation target specifying the model config and parameters. </summary>
+        public EvaluationTarget Target { get; set; }
         /// <summary> Display Name for evaluation. It helps to find the evaluation easily in AI Foundry. It does not need to be unique. </summary>
         public string DisplayName { get; set; }
         /// <summary> Description of the evaluation. It can be used to store additional information about the evaluation and is mutable. </summary>

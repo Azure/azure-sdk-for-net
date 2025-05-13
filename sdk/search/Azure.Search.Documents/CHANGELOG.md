@@ -1,15 +1,20 @@
 # Release History
 
-## 11.7.0-beta.3 (Unreleased)
+## 11.7.0-beta.4 (Unreleased)
 
 ### Features Added
-- Added extension methods to get `SearchClient`, `SearchIndexClient` and `SearchIndexerClient` using [AIProjectClient](https://learn.microsoft.com/dotnet/api/azure.ai.projects.aiprojectclient?view=azure-dotnet-preview).
 
 ### Breaking Changes
 
 ### Bugs Fixed
 
 ### Other Changes
+
+## 11.7.0-beta.3 (2025-03-25)
+
+### Features Added
+- Added support for the `GetIndexStatsSummary` API in `SearchIndexClient`.
+- Added extension methods to get `SearchClient`, `SearchIndexClient` and `SearchIndexerClient` using [AIProjectClient](https://learn.microsoft.com/dotnet/api/azure.ai.projects.aiprojectclient?view=azure-dotnet-preview).
 
 ## 11.7.0-beta.2 (2024-11-25)
 

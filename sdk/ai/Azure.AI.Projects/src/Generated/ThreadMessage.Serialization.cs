@@ -80,10 +80,10 @@ namespace Azure.AI.Projects
                 writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
-            if (AgentId != null)
+            if (AssistantId != null)
             {
                 writer.WritePropertyName("assistant_id"u8);
-                writer.WriteStringValue(AgentId);
+                writer.WriteStringValue(AssistantId);
             }
             else
             {

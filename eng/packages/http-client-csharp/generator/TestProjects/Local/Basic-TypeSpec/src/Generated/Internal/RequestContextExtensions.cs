@@ -13,6 +13,7 @@ namespace BasicTypeSpec
 {
     internal static partial class RequestContextExtensions
     {
+        /// <param name="requestContext"></param>
         public static ValueTuple<CancellationToken, ErrorOptions> Parse(this RequestContext requestContext)
         {
             if (requestContext == null)

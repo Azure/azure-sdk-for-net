@@ -7,7 +7,7 @@ using System.Diagnostics.CodeAnalysis;
 namespace Azure.AI.OpenAI.Chat;
 
 [Experimental("AOAI001")]
-[CodeGenModel("PineconeChatDataSourceParameters")]
+[CodeGenType("PineconeChatDataSourceParameters")]
 internal partial class InternalPineconeChatDataSourceParameters
 {
     [CodeGenMember("IncludeContexts")]

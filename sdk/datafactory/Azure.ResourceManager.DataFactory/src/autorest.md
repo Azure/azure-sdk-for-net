@@ -8,11 +8,11 @@ azure-arm: true
 csharp: true
 library-name: DataFactory
 namespace: Azure.ResourceManager.DataFactory
-require: https://github.com/Azure/azure-rest-api-specs/blob/1982dfc5db1a54ac3cf824449e08590cee74d9a5/specification/datafactory/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/4c0f7731c93696af01bd2bb9927bf28d2afcbc98/specification/datafactory/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
-  output-folder: $(this-folder)/../samples/Generated
+  output-folder: $(this-folder)/../tests/Generated
   clear-output-folder: true
   skipped-operations:
   - ChangeDataCapture_CreateOrUpdate  # Missing required property
@@ -125,6 +125,7 @@ rename-mapping:
   DatasetSchemaDataElement.name: SchemaColumnName
   DatasetSchemaDataElement.type: SchemaColumnType
   DatasetCompression.type: DatasetCompressionType
+  ValueType: DatasetSourceValueType
   DayOfWeek: DataFactoryDayOfWeek
   DaysOfWeek: DataFactoryDayOfWeek
   DelimitedTextDataset.typeProperties.location: DataLocation
@@ -253,6 +254,8 @@ rename-mapping:
   WebActivity.typeProperties.headers: RequestHeaders
   WebHookActivity.typeProperties.headers: RequestHeaders
   LinkedService.version: LinkedServiceVersion
+  SapOdpLinkedService.typeProperties.sncMode: SncFlag
+  SapTableLinkedService.typeProperties.sncMode: SncFlag
 
 prepend-rp-prefix:
   - BlobEventsTrigger

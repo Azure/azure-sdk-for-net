@@ -3,6 +3,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using System.Reflection;
 using Azure.Core;
 
 namespace Azure.Identity
@@ -62,10 +64,12 @@ namespace Azure.Identity
                 chain.Add(CreateVisualStudioCredential());
             }
 
+#pragma warning disable CS0618 // Type or member is obsolete
             if (!Options.ExcludeVisualStudioCodeCredential)
             {
                 chain.Add(CreateVisualStudioCodeCredential());
             }
+#pragma warning restore CS0618 // Type or member is obsolete
 
             if (!Options.ExcludeAzureCliCredential)
             {
@@ -86,7 +90,12 @@ namespace Azure.Identity
             {
                 chain.Add(CreateInteractiveBrowserCredential());
             }
-
+#if PREVIEW_FEATURE_FLAG
+            if (!Options.ExcludeBrokerCredential && TryCreateDevelopmentBrokerOptions(out InteractiveBrowserCredentialOptions brokerOptions))
+            {
+                chain.Add(CreateBrokerAuthenticationCredential(brokerOptions));
+            }
+#endif
             if (chain.Count == 0)
             {
                 throw new ArgumentException("At least one credential type must be included in the authentication flow.", "options");
@@ -180,6 +189,23 @@ namespace Azure.Identity
                 Pipeline);
         }
 
+        public TokenCredential CreateBrokerAuthenticationCredential(InteractiveBrowserCredentialOptions brokerOptions)
+        {
+            var options = Options.Clone<DevelopmentBrokerOptions>();
+            ((IMsalSettablePublicClientInitializerOptions)options).BeforeBuildClient = ((IMsalSettablePublicClientInitializerOptions)brokerOptions).BeforeBuildClient;
+
+            options.TokenCachePersistenceOptions = new TokenCachePersistenceOptions();
+
+            options.TenantId = Options.InteractiveBrowserTenantId;
+            options.IsChainedCredential = true;
+
+            return new InteractiveBrowserCredential(
+                Options.InteractiveBrowserTenantId,
+                Options.InteractiveBrowserCredentialClientId ?? Constants.DeveloperSignOnClientId,
+                options,
+                Pipeline);
+        }
+
         public virtual TokenCredential CreateAzureDeveloperCliCredential()
         {
             var options = Options.Clone<AzureDeveloperCliCredentialOptions>();
@@ -212,11 +238,13 @@ namespace Azure.Identity
 
         public virtual TokenCredential CreateVisualStudioCodeCredential()
         {
+#pragma warning disable CS0618 // Type or member is obsolete
             var options = Options.Clone<VisualStudioCodeCredentialOptions>();
             options.TenantId = Options.VisualStudioCodeTenantId;
             options.IsChainedCredential = true;
 
             return new VisualStudioCodeCredential(options, Pipeline, default, default, default);
+#pragma warning restore CS0618 // Type or member is obsolete
         }
 
         public virtual TokenCredential CreateAzurePowerShellCredential()
@@ -227,6 +255,33 @@ namespace Azure.Identity
             options.IsChainedCredential = true;
 
             return new AzurePowerShellCredential(options, Pipeline, default);
+        }
+
+        /// <summary>
+        /// Creates a DevelopmentBrokerOptions instance if the Azure.Identity.Broker assembly is loaded.
+        /// This is used to enable broker authentication for development purposes.
+        /// </summary>
+        /// <param name="options"></param>
+        internal static bool TryCreateDevelopmentBrokerOptions(out InteractiveBrowserCredentialOptions options)
+        {
+            options = null;
+            try
+            {
+                // Use Type.GetType and ConstructorInfo because they can be analyzed by the ILLinker and are
+                // AOT friendly.
+
+                // Try to get the options type
+                Type optionsType = Type.GetType("Azure.Identity.Broker.DevelopmentBrokerOptions, Azure.Identity.Broker", throwOnError: false);
+                ConstructorInfo optionsCtor = optionsType?.GetConstructor(Type.EmptyTypes);
+                object optionsInstance = optionsCtor?.Invoke(null);
+                options = optionsInstance as InteractiveBrowserCredentialOptions;
+
+                return options != null;
+            }
+            catch
+            {
+                return false;
+            }
         }
     }
 }

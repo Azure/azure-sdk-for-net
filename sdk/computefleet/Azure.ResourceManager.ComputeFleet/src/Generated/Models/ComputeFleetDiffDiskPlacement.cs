@@ -16,9 +16,9 @@ namespace Azure.ResourceManager.ComputeFleet.Models
     /// resource disk space for Ephemeral OS disk provisioning. For more information on
     /// Ephemeral OS disk size requirements, please refer Ephemeral OS disk size
     /// requirements for Windows VM at
-    /// https://docs.microsoft.com/azure/virtual-machines/windows/ephemeral-os-disks#size-requirements
+    /// https://learn.microsoft.com/azure/virtual-machines/windows/ephemeral-os-disks#size-requirements
     /// and Linux VM at
-    /// https://docs.microsoft.com/azure/virtual-machines/linux/ephemeral-os-disks#size-requirements
+    /// https://learn.microsoft.com/azure/virtual-machines/linux/ephemeral-os-disks#size-requirements
     /// Minimum api-version for NvmeDisk: 2024-03-01.
     /// </summary>
     public readonly partial struct ComputeFleetDiffDiskPlacement : IEquatable<ComputeFleetDiffDiskPlacement>

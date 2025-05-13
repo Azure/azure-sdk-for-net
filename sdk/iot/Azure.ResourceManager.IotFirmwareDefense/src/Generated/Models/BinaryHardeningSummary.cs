@@ -10,46 +10,92 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.IotFirmwareDefense.Models
 {
-    /// <summary> Properties for a binary hardening analysis summary. </summary>
+    /// <summary>
+    /// Properties for a binary hardening analysis summary.
+    /// Serialized Name: BinaryHardeningSummaryResource
+    /// </summary>
     public partial class BinaryHardeningSummary : FirmwareAnalysisSummaryProperties
     {
         /// <summary> Initializes a new instance of <see cref="BinaryHardeningSummary"/>. </summary>
-        internal BinaryHardeningSummary()
+        public BinaryHardeningSummary()
         {
             SummaryType = FirmwareAnalysisSummaryType.BinaryHardening;
         }
 
         /// <summary> Initializes a new instance of <see cref="BinaryHardeningSummary"/>. </summary>
-        /// <param name="summaryType"> Describes the type of summary. </param>
+        /// <param name="summaryType">
+        /// The type of summary.
+        /// Serialized Name: SummaryResourceProperties.summaryType
+        /// </param>
+        /// <param name="provisioningState">
+        /// The status of the last operation.
+        /// Serialized Name: SummaryResourceProperties.provisioningState
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="totalFiles"> Total number of binaries that were analyzed. </param>
-        /// <param name="nxPercentage"> NX summary percentage. </param>
-        /// <param name="piePercentage"> PIE summary percentage. </param>
-        /// <param name="relroPercentage"> RELRO summary percentage. </param>
-        /// <param name="canaryPercentage"> Canary summary percentage. </param>
-        /// <param name="strippedPercentage"> Stripped summary percentage. </param>
-        internal BinaryHardeningSummary(FirmwareAnalysisSummaryType summaryType, IDictionary<string, BinaryData> serializedAdditionalRawData, long? totalFiles, int? nxPercentage, int? piePercentage, int? relroPercentage, int? canaryPercentage, int? strippedPercentage) : base(summaryType, serializedAdditionalRawData)
+        /// <param name="totalFiles">
+        /// Total number of binaries that were analyzed
+        /// Serialized Name: BinaryHardeningSummaryResource.totalFiles
+        /// </param>
+        /// <param name="notExecutableStackCount">
+        /// Total number of analyzed files that were found to have a nonexecutable stack
+        /// Serialized Name: BinaryHardeningSummaryResource.notExecutableStackCount
+        /// </param>
+        /// <param name="positionIndependentExecutableCount">
+        /// Total number of analyzed files that were compiled to be a position independent executable
+        /// Serialized Name: BinaryHardeningSummaryResource.positionIndependentExecutableCount
+        /// </param>
+        /// <param name="relocationReadOnlyCount">
+        /// Total number of analyzed files that have enabled relocation read-only protections
+        /// Serialized Name: BinaryHardeningSummaryResource.relocationReadOnlyCount
+        /// </param>
+        /// <param name="stackCanaryCount">
+        /// Total number of analyzed files that have stack canaries enabled
+        /// Serialized Name: BinaryHardeningSummaryResource.stackCanaryCount
+        /// </param>
+        /// <param name="strippedBinaryCount">
+        /// Total number of analyzed files that have debug symbols stripped
+        /// Serialized Name: BinaryHardeningSummaryResource.strippedBinaryCount
+        /// </param>
+        internal BinaryHardeningSummary(FirmwareAnalysisSummaryType summaryType, FirmwareProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData, long? totalFiles, long? notExecutableStackCount, long? positionIndependentExecutableCount, long? relocationReadOnlyCount, long? stackCanaryCount, long? strippedBinaryCount) : base(summaryType, provisioningState, serializedAdditionalRawData)
         {
             TotalFiles = totalFiles;
-            NXPercentage = nxPercentage;
-            PiePercentage = piePercentage;
-            RelroPercentage = relroPercentage;
-            CanaryPercentage = canaryPercentage;
-            StrippedPercentage = strippedPercentage;
+            NotExecutableStackCount = notExecutableStackCount;
+            PositionIndependentExecutableCount = positionIndependentExecutableCount;
+            RelocationReadOnlyCount = relocationReadOnlyCount;
+            StackCanaryCount = stackCanaryCount;
+            StrippedBinaryCount = strippedBinaryCount;
             SummaryType = summaryType;
         }
 
-        /// <summary> Total number of binaries that were analyzed. </summary>
-        public long? TotalFiles { get; }
-        /// <summary> NX summary percentage. </summary>
-        public int? NXPercentage { get; }
-        /// <summary> PIE summary percentage. </summary>
-        public int? PiePercentage { get; }
-        /// <summary> RELRO summary percentage. </summary>
-        public int? RelroPercentage { get; }
-        /// <summary> Canary summary percentage. </summary>
-        public int? CanaryPercentage { get; }
-        /// <summary> Stripped summary percentage. </summary>
-        public int? StrippedPercentage { get; }
+        /// <summary>
+        /// Total number of binaries that were analyzed
+        /// Serialized Name: BinaryHardeningSummaryResource.totalFiles
+        /// </summary>
+        public long? TotalFiles { get; set; }
+        /// <summary>
+        /// Total number of analyzed files that were found to have a nonexecutable stack
+        /// Serialized Name: BinaryHardeningSummaryResource.notExecutableStackCount
+        /// </summary>
+        public long? NotExecutableStackCount { get; set; }
+        /// <summary>
+        /// Total number of analyzed files that were compiled to be a position independent executable
+        /// Serialized Name: BinaryHardeningSummaryResource.positionIndependentExecutableCount
+        /// </summary>
+        public long? PositionIndependentExecutableCount { get; set; }
+        /// <summary>
+        /// Total number of analyzed files that have enabled relocation read-only protections
+        /// Serialized Name: BinaryHardeningSummaryResource.relocationReadOnlyCount
+        /// </summary>
+        public long? RelocationReadOnlyCount { get; set; }
+        /// <summary>
+        /// Total number of analyzed files that have stack canaries enabled
+        /// Serialized Name: BinaryHardeningSummaryResource.stackCanaryCount
+        /// </summary>
+        public long? StackCanaryCount { get; set; }
+        /// <summary>
+        /// Total number of analyzed files that have debug symbols stripped
+        /// Serialized Name: BinaryHardeningSummaryResource.strippedBinaryCount
+        /// </summary>
+        public long? StrippedBinaryCount { get; set; }
     }
 }

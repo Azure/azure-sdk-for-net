@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
 using System.Threading;
@@ -17,15 +18,15 @@ namespace Azure.Communication
     internal sealed class EntraTokenCredential : ICommunicationTokenCredential
     {
         private const string TeamsExtensionScopePrefix = "https://auth.msft.communication.azure.com/";
-        private const string ComunicationClientsScopePrefix = "https://communication.azure.com/clients/";
-        private const string TeamsExtensionEndpoint = "/access/teamsPhone/:exchangeAccessToken";
+        private const string CommunicationClientsScopePrefix = "https://communication.azure.com/clients/";
+        private const string TeamsExtensionEndpoint = "/access/teamsExtension/:exchangeAccessToken";
         private const string TeamsExtensionApiVersion = "2025-03-02-preview";
-        private const string ComunicationClientsEndpoint = "/access/entra/:exchangeAccessToken";
-        private const string ComunicationClientsApiVersion = "2024-04-01-preview";
+        private const string CommunicationClientsEndpoint = "/access/entra/:exchangeAccessToken";
+        private const string CommunicationClientsApiVersion = "2025-03-02-preview";
 
         private HttpPipeline _pipeline;
         private string _resourceEndpoint;
-        private string[] _scopes { get; set; }
+        private ICollection<string> _scopes { get; }
         private readonly ThreadSafeRefreshableAccessTokenCache _accessTokenCache;
 
         /// <summary>
@@ -36,7 +37,7 @@ namespace Azure.Communication
         public EntraTokenCredential(EntraCommunicationTokenCredentialOptions options, HttpPipelineTransport pipelineTransport = null)
         {
             this._resourceEndpoint = options.ResourceEndpoint;
-            this._scopes = options.Scopes;
+            this._scopes = (ICollection<string>)options.Scopes.Clone();
             _pipeline = CreatePipelineFromOptions(options, pipelineTransport);
             _accessTokenCache = new ThreadSafeRefreshableAccessTokenCache(
                     ExchangeEntraToken,
@@ -47,7 +48,7 @@ namespace Azure.Communication
 
         private HttpPipeline CreatePipelineFromOptions(EntraCommunicationTokenCredentialOptions options, HttpPipelineTransport pipelineTransport)
         {
-            var authenticationPolicy = new BearerTokenAuthenticationPolicy(options.TokenCredential, options.Scopes);
+            var authenticationPolicy = new BearerTokenAuthenticationPolicy(options.TokenCredential, _scopes);
             var entraTokenGuardPolicy = new EntraTokenGuardPolicy();
             var clientOptions = ClientOptions.Default;
             if (pipelineTransport != null)
@@ -135,19 +136,19 @@ namespace Azure.Communication
         {
             if (_scopes == null || !_scopes.Any())
             {
-                throw new ArgumentException($"Scopes validation failed. Ensure all scopes start with either {TeamsExtensionScopePrefix} or {ComunicationClientsScopePrefix}.", nameof(_scopes));
+                throw new ArgumentException($"Scopes validation failed. Ensure all scopes start with either {TeamsExtensionScopePrefix} or {CommunicationClientsScopePrefix}.", nameof(_scopes));
             }
             else if (_scopes.All(item => item.StartsWith(TeamsExtensionScopePrefix)))
             {
                 return (TeamsExtensionEndpoint, TeamsExtensionApiVersion);
             }
-            else if (_scopes.All(item => item.StartsWith(ComunicationClientsScopePrefix)))
+            else if (_scopes.All(item => item.StartsWith(CommunicationClientsScopePrefix)))
             {
-                return (ComunicationClientsEndpoint, ComunicationClientsApiVersion);
+                return (CommunicationClientsEndpoint, CommunicationClientsApiVersion);
             }
             else
             {
-                throw new ArgumentException($"Scopes validation failed. Ensure all scopes start with either {TeamsExtensionScopePrefix} or {ComunicationClientsScopePrefix}.", nameof(_scopes));
+                throw new ArgumentException($"Scopes validation failed. Ensure all scopes start with either {TeamsExtensionScopePrefix} or {CommunicationClientsScopePrefix}.", nameof(_scopes));
             }
         }
 

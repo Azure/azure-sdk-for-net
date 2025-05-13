@@ -45,6 +45,16 @@ namespace Azure.AI.Projects.Tests
             }
         }
 
+        [RecordedTest]
+        public async Task TranslatorTest()
+        {
+            ConnectionsClient connectionsClient = GetClient();
+            ConnectionResponse conn = await connectionsClient.GetConnectionAsync(
+                connectionName: "sampleconnection"
+                );
+            Assert.IsNotNull(conn);
+        }
+
         #region helpers
         private ConnectionsClient GetClient()
         {

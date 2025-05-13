@@ -5,6 +5,7 @@ using System;
 using System.Globalization;
 using System.IO;
 using System.Net.Sockets;
+using System.Net.WebSockets;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -140,14 +141,16 @@ namespace Azure.Messaging.EventHubs.Core
         ///
         private static bool ShouldRetryException(Exception exception)
         {
-            if ((exception is TaskCanceledException) || (exception is OperationCanceledException))
+            // Transform the exception into a more relevant type, if possible.
+
+            exception = exception switch
             {
-                exception = exception?.InnerException;
-            }
-            else if (exception is AggregateException aggregateEx)
-            {
-                exception = aggregateEx?.Flatten().InnerException;
-            }
+                TaskCanceledException => exception?.InnerException,
+                OperationCanceledException => exception?.InnerException,
+                WebSocketException => exception?.InnerException ?? exception,
+                AggregateException aggregateEx => aggregateEx?.Flatten().InnerException,
+                _ => exception
+            };
 
             switch (exception)
             {

@@ -11,7 +11,8 @@ $PackageRepositoryUri = "https://www.nuget.org/packages"
 
 $DependencyCalculationPackages = @(
   "Azure.Core",
-  "Azure.ResourceManager"
+  "Azure.ResourceManager",
+  "System.ClientModel"
 )
 
 function processTestProject($projPath) {
@@ -41,15 +42,15 @@ function Get-AllPackageInfoFromRepo($serviceDirectory)
   # Save-Package-Properties.ps1
   $shouldAddDevVersion = Get-Variable -Name 'addDevVersion' -ValueOnly -ErrorAction 'Ignore'
   $ServiceProj = Join-Path -Path $EngDir -ChildPath "service.proj"
-  Write-Host "Get-AllPackageInfoFromRepo::Executing msbuild"
-  Write-Host "dotnet msbuild /nologo /t:GetPackageInfo $ServiceProj /p:ServiceDirectory=$serviceDirectory /p:AddDevVersion=$shouldAddDevVersion"
+  Write-Host "dotnet msbuild /nologo /t:GetPackageInfo ""$ServiceProj"" /p:ServiceDirectory=$serviceDirectory /p:AddDevVersion=$shouldAddDevVersion -tl:off"
 
   $msbuildOutput = dotnet msbuild `
     /nologo `
     /t:GetPackageInfo `
-    $ServiceProj `
+    "$ServiceProj" `
     /p:ServiceDirectory=$serviceDirectory `
-    /p:AddDevVersion=$shouldAddDevVersion
+    /p:AddDevVersion=$shouldAddDevVersion `
+    -tl:off
 
   foreach ($projectOutput in $msbuildOutput)
   {
@@ -58,7 +59,7 @@ function Get-AllPackageInfoFromRepo($serviceDirectory)
       continue
     }
 
-    $pkgPath, $serviceDirectory, $pkgName, $pkgVersion, $sdkType, $isNewSdk, $dllFolder = $projectOutput.Split(' ',[System.StringSplitOptions]::RemoveEmptyEntries).Trim("'")
+    $pkgPath, $serviceDirectory, $pkgName, $pkgVersion, $sdkType, $isNewSdk, $dllFolder = $projectOutput.Split("' '", [System.StringSplitOptions]::RemoveEmptyEntries).Trim("' ")
     if(!(Test-Path $pkgPath)) {
       Write-Host "Parsed package path `$pkgPath` does not exist so skipping the package line '$projectOutput'."
       continue
@@ -114,6 +115,49 @@ function Get-AllPackageInfoFromRepo($serviceDirectory)
 
         Write-Host "Cleaning up $outputFilePath."
       }
+    }
+
+    $ciProps = $pkgProp.GetCIYmlForArtifact()
+
+    if ($ciProps) {
+      # CheckAOTCompat is opt _in_, so we should default to false if not specified
+      $shouldAot = GetValueSafelyFrom-Yaml $ciProps.ParsedYml @("extends", "parameters", "CheckAOTCompat")
+      if ($null -ne $shouldAot) {
+        $parsedBool = $null
+        if ([bool]::TryParse($shouldAot, [ref]$parsedBool)) {
+          $pkgProp.CIParameters["CheckAOTCompat"] = $parsedBool
+        }
+
+        # when AOTCompat is true, there is an additional parameter we need to retrieve
+        $aotArtifacts = GetValueSafelyFrom-Yaml $ciProps.ParsedYml @("extends", "parameters", "AOTTestInputs")
+        if ($aotArtifacts) {
+          $aotArtifacts = $aotArtifacts | Where-Object { $_.ArtifactName -eq $pkgProp.ArtifactName }
+          $pkgProp.CIParameters["AOTTestInputs"] = $aotArtifacts
+        }
+      }
+      else {
+        $pkgProp.CIParameters["CheckAOTCompat"] = $false
+        $pkgProp.CIParameters["AOTTestInputs"] = @()
+      }
+
+      # BuildSnippets is opt _out_, so we should default to true if not specified
+      $shouldSnippet = GetValueSafelyFrom-Yaml $ciProps.ParsedYml @("extends", "parameters", "BuildSnippets")
+      if ($null -ne $shouldSnippet) {
+        $parsedBool = $null
+        if ([bool]::TryParse($shouldSnippet, [ref]$parsedBool)) {
+          $pkgProp.CIParameters["BuildSnippets"] = $parsedBool
+        }
+      }
+      else {
+        $pkgProp.CIParameters["BuildSnippets"] = $true
+      }
+    }
+    # if the package isn't associated with a CI.yml, we still want to set the defaults values for these parameters
+    # so that when we are checking the package set for which need to "Build Snippets" or "Check AOT" we won't crash due to the property being null
+    else {
+      $pkgProp.CIParameters["CheckAOTCompat"] = $false
+      $pkgProp.CIParameters["AOTTestInputs"] = @()
+      $pkgProp.CIParameters["BuildSnippets"] = $true
     }
 
     $allPackageProps += $pkgProp

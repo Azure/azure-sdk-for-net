@@ -46,20 +46,20 @@ namespace Azure.AI.Projects
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="CreateRunRequest"/>. </summary>
-        /// <param name="agentId"> The ID of the agent that should run the thread. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="agentId"/> is null. </exception>
-        internal CreateRunRequest(string agentId)
+        /// <param name="assistantId"> The ID of the agent that should run the thread. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="assistantId"/> is null. </exception>
+        internal CreateRunRequest(string assistantId)
         {
-            Argument.AssertNotNull(agentId, nameof(agentId));
+            Argument.AssertNotNull(assistantId, nameof(assistantId));
 
-            AgentId = agentId;
+            AssistantId = assistantId;
             AdditionalMessages = new ChangeTrackingList<ThreadMessageOptions>();
             OverrideTools = new ChangeTrackingList<ToolDefinition>();
             Metadata = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="CreateRunRequest"/>. </summary>
-        /// <param name="agentId"> The ID of the agent that should run the thread. </param>
+        /// <param name="assistantId"> The ID of the agent that should run the thread. </param>
         /// <param name="overrideModelName"> The overridden model name that the agent should use to run the thread. </param>
         /// <param name="overrideInstructions"> The overridden system instructions that the agent should use to run the thread. </param>
         /// <param name="additionalInstructions">
@@ -70,7 +70,7 @@ namespace Azure.AI.Projects
         /// <param name="overrideTools">
         /// The overridden list of enabled tools that the agent should use to run the thread.
         /// Please note <see cref="ToolDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AzureAISearchToolDefinition"/>, <see cref="AzureFunctionToolDefinition"/>, <see cref="BingGroundingToolDefinition"/>, <see cref="CodeInterpreterToolDefinition"/>, <see cref="MicrosoftFabricToolDefinition"/>, <see cref="FileSearchToolDefinition"/>, <see cref="FunctionToolDefinition"/>, <see cref="OpenApiToolDefinition"/> and <see cref="SharepointToolDefinition"/>.
+        /// The available derived classes include <see cref="AzureAISearchToolDefinition"/>, <see cref="AzureFunctionToolDefinition"/>, <see cref="BingCustomSearchToolDefinition"/>, <see cref="BingGroundingToolDefinition"/>, <see cref="CodeInterpreterToolDefinition"/>, <see cref="ConnectedAgentToolDefinition"/>, <see cref="MicrosoftFabricToolDefinition"/>, <see cref="FileSearchToolDefinition"/>, <see cref="FunctionToolDefinition"/>, <see cref="OpenApiToolDefinition"/> and <see cref="SharepointToolDefinition"/>.
         /// </param>
         /// <param name="stream">
         /// If `true`, returns a stream of events that happen during the Run as server-sent events,
@@ -103,9 +103,9 @@ namespace Azure.AI.Projects
         /// <param name="parallelToolCalls"> If `true` functions will run in parallel during tool use. </param>
         /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CreateRunRequest(string agentId, string overrideModelName, string overrideInstructions, string additionalInstructions, IReadOnlyList<ThreadMessageOptions> additionalMessages, IReadOnlyList<ToolDefinition> overrideTools, bool? stream, float? temperature, float? topP, int? maxPromptTokens, int? maxCompletionTokens, TruncationObject truncationStrategy, BinaryData toolChoice, BinaryData responseFormat, bool? parallelToolCalls, IReadOnlyDictionary<string, string> metadata, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CreateRunRequest(string assistantId, string overrideModelName, string overrideInstructions, string additionalInstructions, IReadOnlyList<ThreadMessageOptions> additionalMessages, IReadOnlyList<ToolDefinition> overrideTools, bool? stream, float? temperature, float? topP, int? maxPromptTokens, int? maxCompletionTokens, TruncationObject truncationStrategy, BinaryData toolChoice, BinaryData responseFormat, bool? parallelToolCalls, IReadOnlyDictionary<string, string> metadata, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            AgentId = agentId;
+            AssistantId = assistantId;
             OverrideModelName = overrideModelName;
             OverrideInstructions = overrideInstructions;
             AdditionalInstructions = additionalInstructions;
@@ -130,7 +130,7 @@ namespace Azure.AI.Projects
         }
 
         /// <summary> The ID of the agent that should run the thread. </summary>
-        public string AgentId { get; }
+        public string AssistantId { get; }
         /// <summary> The overridden model name that the agent should use to run the thread. </summary>
         public string OverrideModelName { get; }
         /// <summary> The overridden system instructions that the agent should use to run the thread. </summary>
@@ -145,7 +145,7 @@ namespace Azure.AI.Projects
         /// <summary>
         /// The overridden list of enabled tools that the agent should use to run the thread.
         /// Please note <see cref="ToolDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AzureAISearchToolDefinition"/>, <see cref="AzureFunctionToolDefinition"/>, <see cref="BingGroundingToolDefinition"/>, <see cref="CodeInterpreterToolDefinition"/>, <see cref="MicrosoftFabricToolDefinition"/>, <see cref="FileSearchToolDefinition"/>, <see cref="FunctionToolDefinition"/>, <see cref="OpenApiToolDefinition"/> and <see cref="SharepointToolDefinition"/>.
+        /// The available derived classes include <see cref="AzureAISearchToolDefinition"/>, <see cref="AzureFunctionToolDefinition"/>, <see cref="BingCustomSearchToolDefinition"/>, <see cref="BingGroundingToolDefinition"/>, <see cref="CodeInterpreterToolDefinition"/>, <see cref="ConnectedAgentToolDefinition"/>, <see cref="MicrosoftFabricToolDefinition"/>, <see cref="FileSearchToolDefinition"/>, <see cref="FunctionToolDefinition"/>, <see cref="OpenApiToolDefinition"/> and <see cref="SharepointToolDefinition"/>.
         /// </summary>
         public IReadOnlyList<ToolDefinition> OverrideTools { get; }
         /// <summary>

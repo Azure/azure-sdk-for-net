@@ -242,7 +242,7 @@ namespace Azure.Search.Documents.Tests.Samples
                                 new SearchableField("StreetAddress"),
                                 new SearchableField("City") { IsFilterable = true, IsSortable = true, IsFacetable = true },
                                 new SearchableField("StateProvince") { IsFilterable = true, IsSortable = true, IsFacetable = true },
-                                new SearchableField("Country") { SynonymMapNames = new[] { synonymMapName }, IsFilterable = true, IsSortable = true, IsFacetable = true },
+                                new SearchableField("Country") { SynonymMapNames = { synonymMapName }, IsFilterable = true, IsSortable = true, IsFacetable = true },
                                 new SearchableField("PostalCode") { IsFilterable = true, IsSortable = true, IsFacetable = true }
                             }
                         }
