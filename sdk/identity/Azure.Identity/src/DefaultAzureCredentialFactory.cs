@@ -80,15 +80,15 @@ namespace Azure.Identity
                 {
                     chain.Add(CreateManagedIdentityCredential());
                 }
-
-                if (!Options.ExcludeSharedTokenCacheCredential)
-                {
-                    chain.Add(CreateSharedTokenCacheCredential());
-                }
             }
 
             if (!_useProdCredentials)
             {
+                if (!Options.ExcludeSharedTokenCacheCredential)
+                {
+                    chain.Add(CreateSharedTokenCacheCredential());
+                }
+
                 if (!Options.ExcludeVisualStudioCredential)
                 {
                     chain.Add(CreateVisualStudioCredential());

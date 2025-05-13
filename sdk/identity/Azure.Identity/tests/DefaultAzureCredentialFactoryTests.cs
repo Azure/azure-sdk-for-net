@@ -515,6 +515,7 @@ namespace Azure.Identity.Tests
             }))
             {
                 var expCredentialTypes = new List<Type>();
+                expCredentialTypes.ConditionalAdd(!excludeSharedTokenCacheCredential, typeof(SharedTokenCacheCredential));
                 expCredentialTypes.ConditionalAdd(!excludeVisualStudioCredential, typeof(VisualStudioCredential));
                 expCredentialTypes.ConditionalAdd(!excludeVisualStudioCodeCredential, typeof(VisualStudioCodeCredential));
                 expCredentialTypes.ConditionalAdd(!excludeCliCredential, typeof(AzureCliCredential));
@@ -585,7 +586,6 @@ namespace Azure.Identity.Tests
                 expCredentialTypes.ConditionalAdd(!excludeEnvironmentCredential, typeof(EnvironmentCredential));
                 expCredentialTypes.ConditionalAdd(!excludeWorkloadIdentityCredential, typeof(WorkloadIdentityCredential));
                 expCredentialTypes.ConditionalAdd(!excludeManagedIdentityCredential, typeof(ManagedIdentityCredential));
-                expCredentialTypes.ConditionalAdd(!excludeSharedTokenCacheCredential, typeof(SharedTokenCacheCredential));
 
                 var options = new DefaultAzureCredentialOptions
                 {
