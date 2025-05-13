@@ -328,7 +328,6 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="fileId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/PersistentAgentsFiles.xml" path="doc/members/member[@name='GetFileAsync(string,CancellationToken)']/*" />
         public virtual async Task<Response<PersistentAgentFileInfo>> GetFileAsync(string fileId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
@@ -343,7 +342,6 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="fileId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/PersistentAgentsFiles.xml" path="doc/members/member[@name='GetFile(string,CancellationToken)']/*" />
         public virtual Response<PersistentAgentFileInfo> GetFile(string fileId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
@@ -374,7 +372,6 @@ namespace Azure.AI.Agents.Persistent
         /// <exception cref="ArgumentException"> <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/PersistentAgentsFiles.xml" path="doc/members/member[@name='GetFileAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> GetFileAsync(string fileId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
@@ -414,7 +411,6 @@ namespace Azure.AI.Agents.Persistent
         /// <exception cref="ArgumentException"> <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/PersistentAgentsFiles.xml" path="doc/members/member[@name='GetFile(string,RequestContext)']/*" />
         public virtual Response GetFile(string fileId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
@@ -438,7 +434,6 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="fileId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/PersistentAgentsFiles.xml" path="doc/members/member[@name='GetFileContentAsync(string,CancellationToken)']/*" />
         public virtual async Task<Response<BinaryData>> GetFileContentAsync(string fileId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
@@ -453,7 +448,6 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="fileId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/PersistentAgentsFiles.xml" path="doc/members/member[@name='GetFileContent(string,CancellationToken)']/*" />
         public virtual Response<BinaryData> GetFileContent(string fileId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
@@ -484,7 +478,6 @@ namespace Azure.AI.Agents.Persistent
         /// <exception cref="ArgumentException"> <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/PersistentAgentsFiles.xml" path="doc/members/member[@name='GetFileContentAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> GetFileContentAsync(string fileId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
@@ -524,7 +517,6 @@ namespace Azure.AI.Agents.Persistent
         /// <exception cref="ArgumentException"> <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/PersistentAgentsFiles.xml" path="doc/members/member[@name='GetFileContent(string,RequestContext)']/*" />
         public virtual Response GetFileContent(string fileId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));

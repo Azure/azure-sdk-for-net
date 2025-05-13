@@ -13,15 +13,15 @@ namespace Azure.AI.Agents.Persistent
     /// <summary> Client options for PersistentAgentsAdministrationClient. </summary>
     public partial class PersistentAgentsAdministrationClientOptions : ClientOptions
     {
-        private const ServiceVersion LatestVersion = ServiceVersion.V1;
+        private const ServiceVersion LatestVersion = ServiceVersion.V2025_05_15_Preview;
 
         /// <summary> The version of the service to use. </summary>
         public enum ServiceVersion
         {
             /// <summary> Service version "2025-05-01". </summary>
             V2025_05_01 = 1,
-            /// <summary> Service version "v1". </summary>
-            V1 = 2,
+            /// <summary> Service version "2025-05-15-preview". </summary>
+            V2025_05_15_Preview = 2,
         }
 
         internal string Version { get; }
@@ -32,7 +32,7 @@ namespace Azure.AI.Agents.Persistent
             Version = version switch
             {
                 ServiceVersion.V2025_05_01 => "2025-05-01",
-                ServiceVersion.V1 => "v1",
+                ServiceVersion.V2025_05_15_Preview => "2025-05-15-preview",
                 _ => throw new NotSupportedException()
             };
         }
