@@ -52,7 +52,7 @@ namespace Azure.AI.Projects
 
         /// <summary> Initializes a new instance of <see cref="PendingUploadRequest"/>. </summary>
         /// <param name="pendingUploadId"> If PendingUploadId is not provided, a random GUID will be used. </param>
-        /// <param name="connectionName"> Name of Azure blob storage connection to use for generating temporary SAS token. </param>
+        /// <param name="connectionName"> Azure Storage Account connection name to use for generating temporary SAS token. </param>
         /// <param name="pendingUploadType"> BlobReference is the only supported type. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal PendingUploadRequest(string pendingUploadId, string connectionName, PendingUploadType pendingUploadType, IDictionary<string, BinaryData> serializedAdditionalRawData)
@@ -65,7 +65,7 @@ namespace Azure.AI.Projects
 
         /// <summary> If PendingUploadId is not provided, a random GUID will be used. </summary>
         public string PendingUploadId { get; set; }
-        /// <summary> Name of Azure blob storage connection to use for generating temporary SAS token. </summary>
+        /// <summary> Azure Storage Account connection name to use for generating temporary SAS token. </summary>
         public string ConnectionName { get; set; }
         /// <summary> BlobReference is the only supported type. </summary>
         public PendingUploadType PendingUploadType { get; } = PendingUploadType.BlobReference;

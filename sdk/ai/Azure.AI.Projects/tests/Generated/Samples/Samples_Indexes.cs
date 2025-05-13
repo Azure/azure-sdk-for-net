@@ -239,6 +239,24 @@ namespace Azure.AI.Projects.Samples
                 type = "AzureSearch",
                 connectionName = "<connectionName>",
                 indexName = "<indexName>",
+                fieldMapping = new
+                {
+                    contentFields = new object[]
+            {
+"<contentFields>"
+            },
+                    filepathField = "<filepathField>",
+                    titleField = "<titleField>",
+                    urlField = "<urlField>",
+                    vectorFields = new object[]
+            {
+"<vectorFields>"
+            },
+                    metadataFields = new object[]
+            {
+"<metadataFields>"
+            },
+                },
                 description = "<description>",
                 tags = new
                 {
@@ -269,6 +287,24 @@ namespace Azure.AI.Projects.Samples
                 type = "AzureSearch",
                 connectionName = "<connectionName>",
                 indexName = "<indexName>",
+                fieldMapping = new
+                {
+                    contentFields = new object[]
+            {
+"<contentFields>"
+            },
+                    filepathField = "<filepathField>",
+                    titleField = "<titleField>",
+                    urlField = "<urlField>",
+                    vectorFields = new object[]
+            {
+"<vectorFields>"
+            },
+                    metadataFields = new object[]
+            {
+"<metadataFields>"
+            },
+                },
                 description = "<description>",
                 tags = new
                 {
@@ -294,7 +330,7 @@ namespace Azure.AI.Projects.Samples
             TokenCredential credential = new DefaultAzureCredential();
             Indexes client = new AIProjectClient(endpoint, credential).GetIndexesClient(apiVersion: "2025-05-15-preview");
 
-            foreach (BinaryData item in client.GetVersions("<name>", null, null))
+            foreach (BinaryData item in client.GetVersions("<name>", null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("type").ToString());
@@ -311,7 +347,7 @@ namespace Azure.AI.Projects.Samples
             TokenCredential credential = new DefaultAzureCredential();
             Indexes client = new AIProjectClient(endpoint, credential).GetIndexesClient(apiVersion: "2025-05-15-preview");
 
-            await foreach (BinaryData item in client.GetVersionsAsync("<name>", null, null))
+            await foreach (BinaryData item in client.GetVersionsAsync("<name>", null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("type").ToString());
@@ -354,7 +390,7 @@ namespace Azure.AI.Projects.Samples
             TokenCredential credential = new DefaultAzureCredential();
             Indexes client = new AIProjectClient(endpoint, credential).GetIndexesClient(apiVersion: "2025-05-15-preview");
 
-            foreach (BinaryData item in client.GetVersions("<name>", "<continuationToken>", null))
+            foreach (BinaryData item in client.GetVersions("<name>", null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("type").ToString());
@@ -374,7 +410,7 @@ namespace Azure.AI.Projects.Samples
             TokenCredential credential = new DefaultAzureCredential();
             Indexes client = new AIProjectClient(endpoint, credential).GetIndexesClient(apiVersion: "2025-05-15-preview");
 
-            await foreach (BinaryData item in client.GetVersionsAsync("<name>", "<continuationToken>", null))
+            await foreach (BinaryData item in client.GetVersionsAsync("<name>", null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("type").ToString());
@@ -394,7 +430,7 @@ namespace Azure.AI.Projects.Samples
             TokenCredential credential = new DefaultAzureCredential();
             Indexes client = new AIProjectClient(endpoint, credential).GetIndexesClient(apiVersion: "2025-05-15-preview");
 
-            foreach (Index item in client.GetVersions("<name>", continuationToken: "<continuationToken>"))
+            foreach (Index item in client.GetVersions("<name>"))
             {
             }
         }
@@ -407,7 +443,7 @@ namespace Azure.AI.Projects.Samples
             TokenCredential credential = new DefaultAzureCredential();
             Indexes client = new AIProjectClient(endpoint, credential).GetIndexesClient(apiVersion: "2025-05-15-preview");
 
-            await foreach (Index item in client.GetVersionsAsync("<name>", continuationToken: "<continuationToken>"))
+            await foreach (Index item in client.GetVersionsAsync("<name>"))
             {
             }
         }
@@ -420,7 +456,7 @@ namespace Azure.AI.Projects.Samples
             TokenCredential credential = new DefaultAzureCredential();
             Indexes client = new AIProjectClient(endpoint, credential).GetIndexesClient(apiVersion: "2025-05-15-preview");
 
-            foreach (BinaryData item in client.GetIndices(null, null))
+            foreach (BinaryData item in client.GetIndices(null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("type").ToString());
@@ -437,7 +473,7 @@ namespace Azure.AI.Projects.Samples
             TokenCredential credential = new DefaultAzureCredential();
             Indexes client = new AIProjectClient(endpoint, credential).GetIndexesClient(apiVersion: "2025-05-15-preview");
 
-            await foreach (BinaryData item in client.GetIndicesAsync(null, null))
+            await foreach (BinaryData item in client.GetIndicesAsync(null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("type").ToString());
@@ -480,7 +516,7 @@ namespace Azure.AI.Projects.Samples
             TokenCredential credential = new DefaultAzureCredential();
             Indexes client = new AIProjectClient(endpoint, credential).GetIndexesClient(apiVersion: "2025-05-15-preview");
 
-            foreach (BinaryData item in client.GetIndices("<continuationToken>", null))
+            foreach (BinaryData item in client.GetIndices(null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("type").ToString());
@@ -500,7 +536,7 @@ namespace Azure.AI.Projects.Samples
             TokenCredential credential = new DefaultAzureCredential();
             Indexes client = new AIProjectClient(endpoint, credential).GetIndexesClient(apiVersion: "2025-05-15-preview");
 
-            await foreach (BinaryData item in client.GetIndicesAsync("<continuationToken>", null))
+            await foreach (BinaryData item in client.GetIndicesAsync(null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("type").ToString());
@@ -520,7 +556,7 @@ namespace Azure.AI.Projects.Samples
             TokenCredential credential = new DefaultAzureCredential();
             Indexes client = new AIProjectClient(endpoint, credential).GetIndexesClient(apiVersion: "2025-05-15-preview");
 
-            foreach (Index item in client.GetIndices(continuationToken: "<continuationToken>"))
+            foreach (Index item in client.GetIndices())
             {
             }
         }
@@ -533,7 +569,7 @@ namespace Azure.AI.Projects.Samples
             TokenCredential credential = new DefaultAzureCredential();
             Indexes client = new AIProjectClient(endpoint, credential).GetIndexesClient(apiVersion: "2025-05-15-preview");
 
-            await foreach (Index item in client.GetIndicesAsync(continuationToken: "<continuationToken>"))
+            await foreach (Index item in client.GetIndicesAsync())
             {
             }
         }

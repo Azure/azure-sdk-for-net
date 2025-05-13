@@ -18,19 +18,22 @@ namespace Azure.AI.Projects
         /// <param name="databaseName"> Name of the CosmosDB Database. </param>
         /// <param name="containerName"> Name of CosmosDB Container. </param>
         /// <param name="embeddingConfiguration"> Embedding model configuration. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/>, <paramref name="databaseName"/>, <paramref name="containerName"/> or <paramref name="embeddingConfiguration"/> is null. </exception>
-        public CosmosDBIndex(string connectionName, string databaseName, string containerName, EmbeddingConfiguration embeddingConfiguration)
+        /// <param name="fieldMapping"> Field mapping configuration. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/>, <paramref name="databaseName"/>, <paramref name="containerName"/>, <paramref name="embeddingConfiguration"/> or <paramref name="fieldMapping"/> is null. </exception>
+        public CosmosDBIndex(string connectionName, string databaseName, string containerName, EmbeddingConfiguration embeddingConfiguration, FieldMapping fieldMapping)
         {
             Argument.AssertNotNull(connectionName, nameof(connectionName));
             Argument.AssertNotNull(databaseName, nameof(databaseName));
             Argument.AssertNotNull(containerName, nameof(containerName));
             Argument.AssertNotNull(embeddingConfiguration, nameof(embeddingConfiguration));
+            Argument.AssertNotNull(fieldMapping, nameof(fieldMapping));
 
             Type = IndexType.CosmosDB;
             ConnectionName = connectionName;
             DatabaseName = databaseName;
             ContainerName = containerName;
             EmbeddingConfiguration = embeddingConfiguration;
+            FieldMapping = fieldMapping;
         }
 
         /// <summary> Initializes a new instance of <see cref="CosmosDBIndex"/>. </summary>
@@ -45,12 +48,14 @@ namespace Azure.AI.Projects
         /// <param name="databaseName"> Name of the CosmosDB Database. </param>
         /// <param name="containerName"> Name of CosmosDB Container. </param>
         /// <param name="embeddingConfiguration"> Embedding model configuration. </param>
-        internal CosmosDBIndex(IndexType type, string id, string name, string version, string description, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, string connectionName, string databaseName, string containerName, EmbeddingConfiguration embeddingConfiguration) : base(type, id, name, version, description, tags, serializedAdditionalRawData)
+        /// <param name="fieldMapping"> Field mapping configuration. </param>
+        internal CosmosDBIndex(IndexType type, string id, string name, string version, string description, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, string connectionName, string databaseName, string containerName, EmbeddingConfiguration embeddingConfiguration, FieldMapping fieldMapping) : base(type, id, name, version, description, tags, serializedAdditionalRawData)
         {
             ConnectionName = connectionName;
             DatabaseName = databaseName;
             ContainerName = containerName;
             EmbeddingConfiguration = embeddingConfiguration;
+            FieldMapping = fieldMapping;
         }
 
         /// <summary> Initializes a new instance of <see cref="CosmosDBIndex"/> for deserialization. </summary>
@@ -66,5 +71,7 @@ namespace Azure.AI.Projects
         public string ContainerName { get; set; }
         /// <summary> Embedding model configuration. </summary>
         public EmbeddingConfiguration EmbeddingConfiguration { get; set; }
+        /// <summary> Field mapping configuration. </summary>
+        public FieldMapping FieldMapping { get; set; }
     }
 }

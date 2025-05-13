@@ -457,7 +457,7 @@ Console.WriteLine(result.GetProperty("id").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
 ]]></code></example>
     </member>
-    <member name="GetEvaluationsAsync(int?,int?,int?,CancellationToken)">
+    <member name="GetEvaluationsAsync(CancellationToken)">
       <example>
 This sample shows how to call GetEvaluationsAsync.
 <code><![CDATA[
@@ -470,7 +470,7 @@ await foreach (Evaluation item in client.GetEvaluationsAsync())
 }
 ]]></code></example>
     </member>
-    <member name="GetEvaluations(int?,int?,int?,CancellationToken)">
+    <member name="GetEvaluations(CancellationToken)">
       <example>
 This sample shows how to call GetEvaluations.
 <code><![CDATA[
@@ -483,7 +483,7 @@ foreach (Evaluation item in client.GetEvaluations())
 }
 ]]></code></example>
     </member>
-    <member name="GetEvaluationsAsync(int?,int?,int?,RequestContext)">
+    <member name="GetEvaluationsAsync(RequestContext)">
       <example>
 This sample shows how to call GetEvaluationsAsync and parse the result.
 <code><![CDATA[
@@ -491,7 +491,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 Evaluations client = new AIProjectClient(endpoint, credential).GetEvaluationsClient(apiVersion: "2025-05-15-preview");
 
-await foreach (BinaryData item in client.GetEvaluationsAsync(null, 8, 21, null))
+await foreach (BinaryData item in client.GetEvaluationsAsync(null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("id").ToString());
@@ -500,7 +500,7 @@ await foreach (BinaryData item in client.GetEvaluationsAsync(null, 8, 21, null))
 }
 ]]></code></example>
     </member>
-    <member name="GetEvaluations(int?,int?,int?,RequestContext)">
+    <member name="GetEvaluations(RequestContext)">
       <example>
 This sample shows how to call GetEvaluations and parse the result.
 <code><![CDATA[
@@ -508,7 +508,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 Evaluations client = new AIProjectClient(endpoint, credential).GetEvaluationsClient(apiVersion: "2025-05-15-preview");
 
-foreach (BinaryData item in client.GetEvaluations(null, 8, 21, null))
+foreach (BinaryData item in client.GetEvaluations(null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("id").ToString());

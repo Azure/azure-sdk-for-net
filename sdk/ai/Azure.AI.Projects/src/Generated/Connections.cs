@@ -270,33 +270,27 @@ namespace Azure.AI.Projects
         /// <summary> List all connections in the project, without populating connection credentials. </summary>
         /// <param name="connectionType"> List connections of this specific type. </param>
         /// <param name="defaultConnection"> List connections that are default connections. </param>
-        /// <param name="maxCount"> The number of result items to return. </param>
-        /// <param name="skip"> The number of result items to skip. </param>
-        /// <param name="maxpagesize"> The maximum number of result items per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Docs/Connections.xml" path="doc/members/member[@name='GetConnectionsAsync(ConnectionType?,bool?,int?,int?,int?,CancellationToken)']/*" />
-        public virtual AsyncPageable<Connection> GetConnectionsAsync(ConnectionType? connectionType = null, bool? defaultConnection = null, int? maxCount = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/Connections.xml" path="doc/members/member[@name='GetConnectionsAsync(ConnectionType?,bool?,CancellationToken)']/*" />
+        public virtual AsyncPageable<Connection> GetConnectionsAsync(ConnectionType? connectionType = null, bool? defaultConnection = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetConnectionsRequest(connectionType?.ToString(), defaultConnection, maxCount, skip, pageSizeHint, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetConnectionsNextPageRequest(nextLink, connectionType?.ToString(), defaultConnection, maxCount, skip, pageSizeHint, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => Connection.DeserializeConnection(e), ClientDiagnostics, _pipeline, "Connections.GetConnections", "value", "nextLink", maxpagesize, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetConnectionsRequest(connectionType?.ToString(), defaultConnection, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetConnectionsNextPageRequest(nextLink, connectionType?.ToString(), defaultConnection, context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => Connection.DeserializeConnection(e), ClientDiagnostics, _pipeline, "Connections.GetConnections", "value", "nextLink", context);
         }
 
         /// <summary> List all connections in the project, without populating connection credentials. </summary>
         /// <param name="connectionType"> List connections of this specific type. </param>
         /// <param name="defaultConnection"> List connections that are default connections. </param>
-        /// <param name="maxCount"> The number of result items to return. </param>
-        /// <param name="skip"> The number of result items to skip. </param>
-        /// <param name="maxpagesize"> The maximum number of result items per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Docs/Connections.xml" path="doc/members/member[@name='GetConnections(ConnectionType?,bool?,int?,int?,int?,CancellationToken)']/*" />
-        public virtual Pageable<Connection> GetConnections(ConnectionType? connectionType = null, bool? defaultConnection = null, int? maxCount = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/Connections.xml" path="doc/members/member[@name='GetConnections(ConnectionType?,bool?,CancellationToken)']/*" />
+        public virtual Pageable<Connection> GetConnections(ConnectionType? connectionType = null, bool? defaultConnection = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetConnectionsRequest(connectionType?.ToString(), defaultConnection, maxCount, skip, pageSizeHint, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetConnectionsNextPageRequest(nextLink, connectionType?.ToString(), defaultConnection, maxCount, skip, pageSizeHint, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => Connection.DeserializeConnection(e), ClientDiagnostics, _pipeline, "Connections.GetConnections", "value", "nextLink", maxpagesize, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetConnectionsRequest(connectionType?.ToString(), defaultConnection, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetConnectionsNextPageRequest(nextLink, connectionType?.ToString(), defaultConnection, context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => Connection.DeserializeConnection(e), ClientDiagnostics, _pipeline, "Connections.GetConnections", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -309,25 +303,22 @@ namespace Azure.AI.Projects
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetConnectionsAsync(ConnectionType?,bool?,int?,int?,int?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetConnectionsAsync(ConnectionType?,bool?,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="connectionType"> List connections of this specific type. Allowed values: "AzureOpenAI" | "AzureBlob" | "AzureStorageAccount" | "CognitiveSearch" | "CosmosDB" | "ApiKey" | "AppConfig" | "AppInsights" | "CustomKeys". </param>
         /// <param name="defaultConnection"> List connections that are default connections. </param>
-        /// <param name="maxCount"> The number of result items to return. </param>
-        /// <param name="skip"> The number of result items to skip. </param>
-        /// <param name="maxpagesize"> The maximum number of result items per page. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/Connections.xml" path="doc/members/member[@name='GetConnectionsAsync(string,bool?,int?,int?,int?,RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetConnectionsAsync(string connectionType, bool? defaultConnection, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
+        /// <include file="Docs/Connections.xml" path="doc/members/member[@name='GetConnectionsAsync(string,bool?,RequestContext)']/*" />
+        public virtual AsyncPageable<BinaryData> GetConnectionsAsync(string connectionType, bool? defaultConnection, RequestContext context)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetConnectionsRequest(connectionType, defaultConnection, maxCount, skip, pageSizeHint, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetConnectionsNextPageRequest(nextLink, connectionType, defaultConnection, maxCount, skip, pageSizeHint, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "Connections.GetConnections", "value", "nextLink", maxpagesize, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetConnectionsRequest(connectionType, defaultConnection, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetConnectionsNextPageRequest(nextLink, connectionType, defaultConnection, context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "Connections.GetConnections", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -340,25 +331,22 @@ namespace Azure.AI.Projects
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetConnections(ConnectionType?,bool?,int?,int?,int?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetConnections(ConnectionType?,bool?,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="connectionType"> List connections of this specific type. Allowed values: "AzureOpenAI" | "AzureBlob" | "AzureStorageAccount" | "CognitiveSearch" | "CosmosDB" | "ApiKey" | "AppConfig" | "AppInsights" | "CustomKeys". </param>
         /// <param name="defaultConnection"> List connections that are default connections. </param>
-        /// <param name="maxCount"> The number of result items to return. </param>
-        /// <param name="skip"> The number of result items to skip. </param>
-        /// <param name="maxpagesize"> The maximum number of result items per page. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/Connections.xml" path="doc/members/member[@name='GetConnections(string,bool?,int?,int?,int?,RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetConnections(string connectionType, bool? defaultConnection, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
+        /// <include file="Docs/Connections.xml" path="doc/members/member[@name='GetConnections(string,bool?,RequestContext)']/*" />
+        public virtual Pageable<BinaryData> GetConnections(string connectionType, bool? defaultConnection, RequestContext context)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetConnectionsRequest(connectionType, defaultConnection, maxCount, skip, pageSizeHint, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetConnectionsNextPageRequest(nextLink, connectionType, defaultConnection, maxCount, skip, pageSizeHint, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "Connections.GetConnections", "value", "nextLink", maxpagesize, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetConnectionsRequest(connectionType, defaultConnection, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetConnectionsNextPageRequest(nextLink, connectionType, defaultConnection, context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "Connections.GetConnections", "value", "nextLink", context);
         }
 
         internal HttpMessage CreateGetConnectionRequest(string name, RequestContext context)
@@ -392,7 +380,7 @@ namespace Azure.AI.Projects
             return message;
         }
 
-        internal HttpMessage CreateGetConnectionsRequest(string connectionType, bool? defaultConnection, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
+        internal HttpMessage CreateGetConnectionsRequest(string connectionType, bool? defaultConnection, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -409,24 +397,12 @@ namespace Azure.AI.Projects
             {
                 uri.AppendQuery("defaultConnection", defaultConnection.Value, true);
             }
-            if (maxCount != null)
-            {
-                uri.AppendQuery("top", maxCount.Value, true);
-            }
-            if (skip != null)
-            {
-                uri.AppendQuery("skip", skip.Value, true);
-            }
-            if (maxpagesize != null)
-            {
-                uri.AppendQuery("maxpagesize", maxpagesize.Value, true);
-            }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
         }
 
-        internal HttpMessage CreateGetConnectionsNextPageRequest(string nextLink, string connectionType, bool? defaultConnection, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
+        internal HttpMessage CreateGetConnectionsNextPageRequest(string nextLink, string connectionType, bool? defaultConnection, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;

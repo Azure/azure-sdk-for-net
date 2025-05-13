@@ -60,6 +60,7 @@ namespace Azure.AI.Projects
             string dataUri = default;
             DatasetType type = default;
             bool? isReference = default;
+            string connectionName = default;
             string id = default;
             string name = default;
             string version = default;
@@ -86,6 +87,11 @@ namespace Azure.AI.Projects
                         continue;
                     }
                     isReference = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("connectionName"u8))
+                {
+                    connectionName = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -132,6 +138,7 @@ namespace Azure.AI.Projects
                 dataUri,
                 type,
                 isReference,
+                connectionName,
                 id,
                 name,
                 version,

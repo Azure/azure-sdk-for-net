@@ -24,7 +24,7 @@ namespace Azure.AI.Projects.Samples
             TokenCredential credential = new DefaultAzureCredential();
             Connections client = new AIProjectClient(endpoint, credential).GetConnectionsClient(apiVersion: "2025-05-15-preview");
 
-            foreach (BinaryData item in client.GetConnections("AzureOpenAI", true, null, 8, 21, null))
+            foreach (BinaryData item in client.GetConnections("AzureOpenAI", true, null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("name").ToString());
@@ -45,7 +45,7 @@ namespace Azure.AI.Projects.Samples
             TokenCredential credential = new DefaultAzureCredential();
             Connections client = new AIProjectClient(endpoint, credential).GetConnectionsClient(apiVersion: "2025-05-15-preview");
 
-            await foreach (BinaryData item in client.GetConnectionsAsync("AzureOpenAI", true, null, 8, 21, null))
+            await foreach (BinaryData item in client.GetConnectionsAsync("AzureOpenAI", true, null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("name").ToString());

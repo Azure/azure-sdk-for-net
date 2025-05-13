@@ -16,14 +16,15 @@ namespace Azure.AI.Projects
         /// <summary> Initializes a new instance of <see cref="UnknownDatasetVersion"/>. </summary>
         /// <param name="dataUri"> URI of the data. Example: https://go.microsoft.com/fwlink/?linkid=2202330. </param>
         /// <param name="type"> Dataset type. </param>
-        /// <param name="isReference"> Indicates if dataset is reference only or managed by dataset service. If true, the underlying data will be deleted when the dataset version is deleted. </param>
+        /// <param name="isReference"> Indicates if the dataset holds a reference to the storage, or the dataset manages storage itself. If true, the underlying data will not be deleted when the dataset version is deleted. </param>
+        /// <param name="connectionName"> The Azure Storage Account connection name. Required if startPendingUploadVersion was not called before creating the Dataset. </param>
         /// <param name="id"> Asset ID, a unique identifier for the asset. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="version"> The version of the resource. </param>
         /// <param name="description"> The asset description text. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownDatasetVersion(string dataUri, DatasetType type, bool? isReference, string id, string name, string version, string description, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(dataUri, type, isReference, id, name, version, description, tags, serializedAdditionalRawData)
+        internal UnknownDatasetVersion(string dataUri, DatasetType type, bool? isReference, string connectionName, string id, string name, string version, string description, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(dataUri, type, isReference, connectionName, id, name, version, description, tags, serializedAdditionalRawData)
         {
         }
 

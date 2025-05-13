@@ -86,6 +86,7 @@ namespace Azure.AI.Projects.Samples
             Console.WriteLine(result.GetProperty("dataUri").ToString());
             Console.WriteLine(result.GetProperty("type").ToString());
             Console.WriteLine(result.GetProperty("isReference").ToString());
+            Console.WriteLine(result.GetProperty("connectionName").ToString());
             Console.WriteLine(result.GetProperty("id").ToString());
             Console.WriteLine(result.GetProperty("name").ToString());
             Console.WriteLine(result.GetProperty("version").ToString());
@@ -107,6 +108,7 @@ namespace Azure.AI.Projects.Samples
             Console.WriteLine(result.GetProperty("dataUri").ToString());
             Console.WriteLine(result.GetProperty("type").ToString());
             Console.WriteLine(result.GetProperty("isReference").ToString());
+            Console.WriteLine(result.GetProperty("connectionName").ToString());
             Console.WriteLine(result.GetProperty("id").ToString());
             Console.WriteLine(result.GetProperty("name").ToString());
             Console.WriteLine(result.GetProperty("version").ToString());
@@ -244,6 +246,7 @@ namespace Azure.AI.Projects.Samples
             {
                 type = "uri_file",
                 dataUri = "<dataUri>",
+                connectionName = "<connectionName>",
                 description = "<description>",
                 tags = new
                 {
@@ -256,6 +259,7 @@ namespace Azure.AI.Projects.Samples
             Console.WriteLine(result.GetProperty("dataUri").ToString());
             Console.WriteLine(result.GetProperty("type").ToString());
             Console.WriteLine(result.GetProperty("isReference").ToString());
+            Console.WriteLine(result.GetProperty("connectionName").ToString());
             Console.WriteLine(result.GetProperty("id").ToString());
             Console.WriteLine(result.GetProperty("name").ToString());
             Console.WriteLine(result.GetProperty("version").ToString());
@@ -275,6 +279,7 @@ namespace Azure.AI.Projects.Samples
             {
                 type = "uri_file",
                 dataUri = "<dataUri>",
+                connectionName = "<connectionName>",
                 description = "<description>",
                 tags = new
                 {
@@ -287,6 +292,7 @@ namespace Azure.AI.Projects.Samples
             Console.WriteLine(result.GetProperty("dataUri").ToString());
             Console.WriteLine(result.GetProperty("type").ToString());
             Console.WriteLine(result.GetProperty("isReference").ToString());
+            Console.WriteLine(result.GetProperty("connectionName").ToString());
             Console.WriteLine(result.GetProperty("id").ToString());
             Console.WriteLine(result.GetProperty("name").ToString());
             Console.WriteLine(result.GetProperty("version").ToString());
@@ -454,8 +460,7 @@ namespace Azure.AI.Projects.Samples
             TokenCredential credential = new DefaultAzureCredential();
             Datasets client = new AIProjectClient(endpoint, credential).GetDatasetsClient(apiVersion: "2025-05-15-preview");
 
-            using RequestContent content = RequestContent.Create(new object());
-            Response response = client.GetCredentials("vzqmzhfdzfqegdk", "cuiflnznlzybcrc", content);
+            Response response = client.GetCredentials("vzqmzhfdzfqegdk", "cuiflnznlzybcrc", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("blobReference").GetProperty("blobUri").ToString());
@@ -472,8 +477,7 @@ namespace Azure.AI.Projects.Samples
             TokenCredential credential = new DefaultAzureCredential();
             Datasets client = new AIProjectClient(endpoint, credential).GetDatasetsClient(apiVersion: "2025-05-15-preview");
 
-            using RequestContent content = RequestContent.Create(new object());
-            Response response = await client.GetCredentialsAsync("vzqmzhfdzfqegdk", "cuiflnznlzybcrc", content);
+            Response response = await client.GetCredentialsAsync("vzqmzhfdzfqegdk", "cuiflnznlzybcrc", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("blobReference").GetProperty("blobUri").ToString());
@@ -490,8 +494,7 @@ namespace Azure.AI.Projects.Samples
             TokenCredential credential = new DefaultAzureCredential();
             Datasets client = new AIProjectClient(endpoint, credential).GetDatasetsClient(apiVersion: "2025-05-15-preview");
 
-            GetCredentialsRequest body = new GetCredentialsRequest();
-            Response<AssetCredentialResponse> response = client.GetCredentials("vzqmzhfdzfqegdk", "cuiflnznlzybcrc", body);
+            Response<AssetCredentialResponse> response = client.GetCredentials("vzqmzhfdzfqegdk", "cuiflnznlzybcrc");
         }
 
         [Test]
@@ -502,8 +505,7 @@ namespace Azure.AI.Projects.Samples
             TokenCredential credential = new DefaultAzureCredential();
             Datasets client = new AIProjectClient(endpoint, credential).GetDatasetsClient(apiVersion: "2025-05-15-preview");
 
-            GetCredentialsRequest body = new GetCredentialsRequest();
-            Response<AssetCredentialResponse> response = await client.GetCredentialsAsync("vzqmzhfdzfqegdk", "cuiflnznlzybcrc", body);
+            Response<AssetCredentialResponse> response = await client.GetCredentialsAsync("vzqmzhfdzfqegdk", "cuiflnznlzybcrc");
         }
 
         [Test]
@@ -514,8 +516,7 @@ namespace Azure.AI.Projects.Samples
             TokenCredential credential = new DefaultAzureCredential();
             Datasets client = new AIProjectClient(endpoint, credential).GetDatasetsClient(apiVersion: "2025-05-15-preview");
 
-            using RequestContent content = RequestContent.Create(new object());
-            Response response = client.GetCredentials("sbblxkyqnfvdiqacezyygvts", "ikak", content);
+            Response response = client.GetCredentials("sbblxkyqnfvdiqacezyygvts", "ikak", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("blobReference").GetProperty("blobUri").ToString());
@@ -532,8 +533,7 @@ namespace Azure.AI.Projects.Samples
             TokenCredential credential = new DefaultAzureCredential();
             Datasets client = new AIProjectClient(endpoint, credential).GetDatasetsClient(apiVersion: "2025-05-15-preview");
 
-            using RequestContent content = RequestContent.Create(new object());
-            Response response = await client.GetCredentialsAsync("sbblxkyqnfvdiqacezyygvts", "ikak", content);
+            Response response = await client.GetCredentialsAsync("sbblxkyqnfvdiqacezyygvts", "ikak", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("blobReference").GetProperty("blobUri").ToString());
@@ -550,8 +550,7 @@ namespace Azure.AI.Projects.Samples
             TokenCredential credential = new DefaultAzureCredential();
             Datasets client = new AIProjectClient(endpoint, credential).GetDatasetsClient(apiVersion: "2025-05-15-preview");
 
-            GetCredentialsRequest body = new GetCredentialsRequest();
-            Response<AssetCredentialResponse> response = client.GetCredentials("sbblxkyqnfvdiqacezyygvts", "ikak", body);
+            Response<AssetCredentialResponse> response = client.GetCredentials("sbblxkyqnfvdiqacezyygvts", "ikak");
         }
 
         [Test]
@@ -562,8 +561,7 @@ namespace Azure.AI.Projects.Samples
             TokenCredential credential = new DefaultAzureCredential();
             Datasets client = new AIProjectClient(endpoint, credential).GetDatasetsClient(apiVersion: "2025-05-15-preview");
 
-            GetCredentialsRequest body = new GetCredentialsRequest();
-            Response<AssetCredentialResponse> response = await client.GetCredentialsAsync("sbblxkyqnfvdiqacezyygvts", "ikak", body);
+            Response<AssetCredentialResponse> response = await client.GetCredentialsAsync("sbblxkyqnfvdiqacezyygvts", "ikak");
         }
 
         [Test]
@@ -574,7 +572,7 @@ namespace Azure.AI.Projects.Samples
             TokenCredential credential = new DefaultAzureCredential();
             Datasets client = new AIProjectClient(endpoint, credential).GetDatasetsClient(apiVersion: "2025-05-15-preview");
 
-            foreach (BinaryData item in client.GetVersions("<name>", null, null))
+            foreach (BinaryData item in client.GetVersions("<name>", null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("dataUri").ToString());
@@ -592,7 +590,7 @@ namespace Azure.AI.Projects.Samples
             TokenCredential credential = new DefaultAzureCredential();
             Datasets client = new AIProjectClient(endpoint, credential).GetDatasetsClient(apiVersion: "2025-05-15-preview");
 
-            await foreach (BinaryData item in client.GetVersionsAsync("<name>", null, null))
+            await foreach (BinaryData item in client.GetVersionsAsync("<name>", null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("dataUri").ToString());
@@ -636,12 +634,13 @@ namespace Azure.AI.Projects.Samples
             TokenCredential credential = new DefaultAzureCredential();
             Datasets client = new AIProjectClient(endpoint, credential).GetDatasetsClient(apiVersion: "2025-05-15-preview");
 
-            foreach (BinaryData item in client.GetVersions("<name>", "<continuationToken>", null))
+            foreach (BinaryData item in client.GetVersions("<name>", null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("dataUri").ToString());
                 Console.WriteLine(result.GetProperty("type").ToString());
                 Console.WriteLine(result.GetProperty("isReference").ToString());
+                Console.WriteLine(result.GetProperty("connectionName").ToString());
                 Console.WriteLine(result.GetProperty("id").ToString());
                 Console.WriteLine(result.GetProperty("name").ToString());
                 Console.WriteLine(result.GetProperty("version").ToString());
@@ -658,12 +657,13 @@ namespace Azure.AI.Projects.Samples
             TokenCredential credential = new DefaultAzureCredential();
             Datasets client = new AIProjectClient(endpoint, credential).GetDatasetsClient(apiVersion: "2025-05-15-preview");
 
-            await foreach (BinaryData item in client.GetVersionsAsync("<name>", "<continuationToken>", null))
+            await foreach (BinaryData item in client.GetVersionsAsync("<name>", null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("dataUri").ToString());
                 Console.WriteLine(result.GetProperty("type").ToString());
                 Console.WriteLine(result.GetProperty("isReference").ToString());
+                Console.WriteLine(result.GetProperty("connectionName").ToString());
                 Console.WriteLine(result.GetProperty("id").ToString());
                 Console.WriteLine(result.GetProperty("name").ToString());
                 Console.WriteLine(result.GetProperty("version").ToString());
@@ -680,7 +680,7 @@ namespace Azure.AI.Projects.Samples
             TokenCredential credential = new DefaultAzureCredential();
             Datasets client = new AIProjectClient(endpoint, credential).GetDatasetsClient(apiVersion: "2025-05-15-preview");
 
-            foreach (DatasetVersion item in client.GetVersions("<name>", continuationToken: "<continuationToken>"))
+            foreach (DatasetVersion item in client.GetVersions("<name>"))
             {
             }
         }
@@ -693,7 +693,7 @@ namespace Azure.AI.Projects.Samples
             TokenCredential credential = new DefaultAzureCredential();
             Datasets client = new AIProjectClient(endpoint, credential).GetDatasetsClient(apiVersion: "2025-05-15-preview");
 
-            await foreach (DatasetVersion item in client.GetVersionsAsync("<name>", continuationToken: "<continuationToken>"))
+            await foreach (DatasetVersion item in client.GetVersionsAsync("<name>"))
             {
             }
         }
@@ -706,7 +706,7 @@ namespace Azure.AI.Projects.Samples
             TokenCredential credential = new DefaultAzureCredential();
             Datasets client = new AIProjectClient(endpoint, credential).GetDatasetsClient(apiVersion: "2025-05-15-preview");
 
-            foreach (BinaryData item in client.GetDatasetVersions(null, null))
+            foreach (BinaryData item in client.GetDatasetVersions(null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("dataUri").ToString());
@@ -724,7 +724,7 @@ namespace Azure.AI.Projects.Samples
             TokenCredential credential = new DefaultAzureCredential();
             Datasets client = new AIProjectClient(endpoint, credential).GetDatasetsClient(apiVersion: "2025-05-15-preview");
 
-            await foreach (BinaryData item in client.GetDatasetVersionsAsync(null, null))
+            await foreach (BinaryData item in client.GetDatasetVersionsAsync(null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("dataUri").ToString());
@@ -768,12 +768,13 @@ namespace Azure.AI.Projects.Samples
             TokenCredential credential = new DefaultAzureCredential();
             Datasets client = new AIProjectClient(endpoint, credential).GetDatasetsClient(apiVersion: "2025-05-15-preview");
 
-            foreach (BinaryData item in client.GetDatasetVersions("<continuationToken>", null))
+            foreach (BinaryData item in client.GetDatasetVersions(null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("dataUri").ToString());
                 Console.WriteLine(result.GetProperty("type").ToString());
                 Console.WriteLine(result.GetProperty("isReference").ToString());
+                Console.WriteLine(result.GetProperty("connectionName").ToString());
                 Console.WriteLine(result.GetProperty("id").ToString());
                 Console.WriteLine(result.GetProperty("name").ToString());
                 Console.WriteLine(result.GetProperty("version").ToString());
@@ -790,12 +791,13 @@ namespace Azure.AI.Projects.Samples
             TokenCredential credential = new DefaultAzureCredential();
             Datasets client = new AIProjectClient(endpoint, credential).GetDatasetsClient(apiVersion: "2025-05-15-preview");
 
-            await foreach (BinaryData item in client.GetDatasetVersionsAsync("<continuationToken>", null))
+            await foreach (BinaryData item in client.GetDatasetVersionsAsync(null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("dataUri").ToString());
                 Console.WriteLine(result.GetProperty("type").ToString());
                 Console.WriteLine(result.GetProperty("isReference").ToString());
+                Console.WriteLine(result.GetProperty("connectionName").ToString());
                 Console.WriteLine(result.GetProperty("id").ToString());
                 Console.WriteLine(result.GetProperty("name").ToString());
                 Console.WriteLine(result.GetProperty("version").ToString());
@@ -812,7 +814,7 @@ namespace Azure.AI.Projects.Samples
             TokenCredential credential = new DefaultAzureCredential();
             Datasets client = new AIProjectClient(endpoint, credential).GetDatasetsClient(apiVersion: "2025-05-15-preview");
 
-            foreach (DatasetVersion item in client.GetDatasetVersions(continuationToken: "<continuationToken>"))
+            foreach (DatasetVersion item in client.GetDatasetVersions())
             {
             }
         }
@@ -825,7 +827,7 @@ namespace Azure.AI.Projects.Samples
             TokenCredential credential = new DefaultAzureCredential();
             Datasets client = new AIProjectClient(endpoint, credential).GetDatasetsClient(apiVersion: "2025-05-15-preview");
 
-            await foreach (DatasetVersion item in client.GetDatasetVersionsAsync(continuationToken: "<continuationToken>"))
+            await foreach (DatasetVersion item in client.GetDatasetVersionsAsync())
             {
             }
         }

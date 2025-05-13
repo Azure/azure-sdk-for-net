@@ -505,7 +505,7 @@ namespace Azure.AI.Projects.Samples
             TokenCredential credential = new DefaultAzureCredential();
             Evaluations client = new AIProjectClient(endpoint, credential).GetEvaluationsClient(apiVersion: "2025-05-15-preview");
 
-            foreach (BinaryData item in client.GetEvaluations(null, 8, 21, null))
+            foreach (BinaryData item in client.GetEvaluations(null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("id").ToString());
@@ -522,7 +522,7 @@ namespace Azure.AI.Projects.Samples
             TokenCredential credential = new DefaultAzureCredential();
             Evaluations client = new AIProjectClient(endpoint, credential).GetEvaluationsClient(apiVersion: "2025-05-15-preview");
 
-            await foreach (BinaryData item in client.GetEvaluationsAsync(null, 8, 21, null))
+            await foreach (BinaryData item in client.GetEvaluationsAsync(null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("id").ToString());

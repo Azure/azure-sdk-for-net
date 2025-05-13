@@ -39,6 +39,11 @@ namespace Azure.AI.Projects
             writer.WriteStringValue(ConnectionName);
             writer.WritePropertyName("indexName"u8);
             writer.WriteStringValue(IndexName);
+            if (Optional.IsDefined(FieldMapping))
+            {
+                writer.WritePropertyName("fieldMapping"u8);
+                writer.WriteObjectValue(FieldMapping, options);
+            }
         }
 
         AzureAISearchIndex IJsonModel<AzureAISearchIndex>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -63,6 +68,7 @@ namespace Azure.AI.Projects
             }
             string connectionName = default;
             string indexName = default;
+            FieldMapping fieldMapping = default;
             IndexType type = default;
             string id = default;
             string name = default;
@@ -81,6 +87,15 @@ namespace Azure.AI.Projects
                 if (property.NameEquals("indexName"u8))
                 {
                     indexName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("fieldMapping"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    fieldMapping = FieldMapping.DeserializeFieldMapping(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("type"u8))
@@ -137,7 +152,8 @@ namespace Azure.AI.Projects
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 serializedAdditionalRawData,
                 connectionName,
-                indexName);
+                indexName,
+                fieldMapping);
         }
 
         BinaryData IPersistableModel<AzureAISearchIndex>.Write(ModelReaderWriterOptions options)
