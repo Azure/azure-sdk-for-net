@@ -1,4 +1,4 @@
-# Sample2: Using Deployments in Azure.AI.Projects
+# Sample using Deployments in Azure.AI.Projects
 
 This sample demonstrates how to use the synchronous and asynchronous `.deployments` methods to enumerate AI models deployed to your AI Foundry Project.
 

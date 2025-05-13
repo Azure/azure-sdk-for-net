@@ -1,4 +1,4 @@
-# Sample for Azure.AI.Projects with `Evaluations`
+# Sample using `Evaluations` in Azure.AI.Projects
 
 In this example, we will demonstrate creating, listing and retrieving evaluations using the `Evaluations` client in `Azure.AI.Projects`. This uses a Dataset as the input data for the evaluation and an Evaluator ID for the evaluation type.
 
