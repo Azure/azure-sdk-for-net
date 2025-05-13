@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Encode.Numeric.Models;
+using Encode.Numeric._Property;
 
 namespace Encode.Numeric
 {

@@ -8,35 +8,27 @@ param (
 . $PSScriptRoot/generate-dependency-functions.ps1
 
 $RepoRoot = Resolve-Path (Join-Path "$PSScriptRoot" ".." ".." "..")
+$packageSet = "$ProjectNames" -split ","
 
-# set changed services given the set of changed packages, this will mean that
-# ChangedServices will be appropriate for the batched set of packages if that is indeed how
-# we set the targeted artifacts
+# retrieve the package info files
 $packageProperties = Get-ChildItem -Recurse "$PackageInfoFolder" *.json `
 | Foreach-Object { Get-Content -Raw -Path $_.FullName | ConvertFrom-Json }
 
-$packageSet = "$ProjectNames" -split ","
-
-$changedServicesArray = $packageProperties | Where-Object { $packageSet -contains $_.ArtifactName }
-| ForEach-Object { $_.ServiceDirectory } | Get-Unique
+# filter the package info files to only those that are part of the targeted batch (present in $ProjectNames arg)
+# so that we can accurate determine the affected services for the current batch
+$changedServicesArray = $packageProperties | Where-Object { $packageSet -contains $_.ArtifactName } `
+    | ForEach-Object { $_.ServiceDirectory } | Get-Unique
 $changedServices = $changedServicesArray -join ","
 
-$changedProjects = $packageProperties | Where-Object { $packageSet -contains $_.ArtifactName }
-| ForEach-Object { "$($_.DirectoryPath)/**/*.csproj"; }
-
-$projectsForGeneration = ($changedProjects | ForEach-Object { "`$(RepoRoot)$_" } | Sort-Object)
-$projectGroups = @()
-$projectGroups += ,$projectsForGeneration
-
 if ($SetOverrideFile) {
-    $outputFile = (Write-Test-Dependency-Group-To-Files -ProjectFileConfigName "packages" -ProjectGroups $projectGroups -MatrixOutputFolder $OutputPath)[0]
+    $outputFile = Write-PkgInfoToDependencyGroupFile -OutputPath $OutputPath -PackageInfoFolder $PackageInfoFolder -ProjectNames $packageSet
     Get-ChildItem -Recurse $OutputPath | ForEach-Object { Write-Host "Dumping $($_.FullName)"; Get-Content -Raw -Path $_.FullName | Write-Host }
     # the projectlistoverride file must be provided as a relative path
     $relativeOutputPath = [System.IO.Path]::GetRelativePath($RepoRoot, "$OutputPath/$outputFile")
     Write-Host "##vso[task.setvariable variable=ProjectListOverrideFile;]$relativeOutputPath"
 }
 
-# Filter JSON files to only keep those matching package names in packageSet
+# remove any package.json files that are not part of the targeted batch
 Get-ChildItem -Recurse "$PackageInfoFolder" *.json | ForEach-Object {
     $fileContent = Get-Content -Raw -Path $_.FullName | ConvertFrom-Json
     if ($packageSet -notcontains $fileContent.Name) {

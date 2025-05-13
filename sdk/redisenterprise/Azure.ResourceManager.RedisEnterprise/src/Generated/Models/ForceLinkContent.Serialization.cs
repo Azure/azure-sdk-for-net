@@ -34,15 +34,8 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 throw new FormatException($"The model {nameof(ForceLinkContent)} does not support writing '{format}' format.");
             }
 
-            writer.WritePropertyName("groupNickname"u8);
-            writer.WriteStringValue(GroupNickname);
-            writer.WritePropertyName("linkedDatabases"u8);
-            writer.WriteStartArray();
-            foreach (var item in LinkedDatabases)
-            {
-                writer.WriteObjectValue(item, options);
-            }
-            writer.WriteEndArray();
+            writer.WritePropertyName("geoReplication"u8);
+            writer.WriteObjectValue(GeoReplication, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -80,25 +73,14 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             {
                 return null;
             }
-            string groupNickname = default;
-            IList<RedisEnterpriseLinkedDatabase> linkedDatabases = default;
+            ForceLinkParametersGeoReplication geoReplication = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("groupNickname"u8))
+                if (property.NameEquals("geoReplication"u8))
                 {
-                    groupNickname = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("linkedDatabases"u8))
-                {
-                    List<RedisEnterpriseLinkedDatabase> array = new List<RedisEnterpriseLinkedDatabase>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(RedisEnterpriseLinkedDatabase.DeserializeRedisEnterpriseLinkedDatabase(item, options));
-                    }
-                    linkedDatabases = array;
+                    geoReplication = ForceLinkParametersGeoReplication.DeserializeForceLinkParametersGeoReplication(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -107,7 +89,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ForceLinkContent(groupNickname, linkedDatabases, serializedAdditionalRawData);
+            return new ForceLinkContent(geoReplication, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ForceLinkContent>.Write(ModelReaderWriterOptions options)

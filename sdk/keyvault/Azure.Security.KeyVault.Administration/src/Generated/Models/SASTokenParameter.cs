@@ -9,7 +9,7 @@ using System;
 
 namespace Azure.Security.KeyVault.Administration.Models
 {
-    /// <summary> The SASTokenParameter. </summary>
+    /// <summary> An authentication method and location for the operation. </summary>
     internal partial class SASTokenParameter
     {
         /// <summary> Initializes a new instance of <see cref="SASTokenParameter"/>. </summary>

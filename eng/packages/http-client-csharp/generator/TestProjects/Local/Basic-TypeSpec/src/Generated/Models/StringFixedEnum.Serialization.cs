@@ -7,10 +7,11 @@
 
 using System;
 
-namespace BasicTypeSpec.Models
+namespace BasicTypeSpec
 {
     internal static partial class StringFixedEnumExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this StringFixedEnum value) => value switch
         {
             StringFixedEnum.One => "1",
@@ -19,6 +20,7 @@ namespace BasicTypeSpec.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown StringFixedEnum value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static StringFixedEnum ToStringFixedEnum(this string value)
         {
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "1"))

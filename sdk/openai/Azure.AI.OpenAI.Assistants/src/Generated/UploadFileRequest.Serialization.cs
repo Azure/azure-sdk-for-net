@@ -14,7 +14,7 @@ using Azure.Core;
 
 namespace Azure.AI.OpenAI.Assistants
 {
-    internal partial class UploadFileRequest : IUtf8JsonSerializable, IJsonModel<UploadFileRequest>
+    public partial class UploadFileRequest : IUtf8JsonSerializable, IJsonModel<UploadFileRequest>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<UploadFileRequest>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 

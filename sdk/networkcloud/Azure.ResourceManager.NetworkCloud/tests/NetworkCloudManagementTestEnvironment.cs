@@ -22,6 +22,9 @@ namespace Azure.ResourceManager.NetworkCloud.Tests
         public string ClusterExtendedLocation => GetRecordedVariable("CLUSTER_EXTENDED_LOCATION");
         public string ClusterRG => GetRecordedVariable("CLUSTER_RG");
         public string ClusterVersion => GetRecordedVariable("CLUSTER_VERSION");
+        public string UserAssignedIdentity => GetRecordedVariable("USER_ASSIGNED_IDENTITY");
+        public string ContainerUri => GetRecordedVariable("CONTAINER_URI", options => options.IsSecret("https://sanitized.blob.core.windows.net/container"));
+        public string VaultUri => GetRecordedVariable("VAULT_URI", options => options.IsSecret("https://sanitized.vault.azure.net"));
 
         // Kubernetes Cluster
 

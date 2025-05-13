@@ -105,6 +105,11 @@ namespace Azure.ResourceManager.Compute
                 writer.WritePropertyName("hardwareProfile"u8);
                 writer.WriteObjectValue(HardwareProfile, options);
             }
+            if (Optional.IsDefined(ResilientVmDeletionStatus))
+            {
+                writer.WritePropertyName("resilientVMDeletionStatus"u8);
+                writer.WriteStringValue(ResilientVmDeletionStatus.Value.ToString());
+            }
             if (Optional.IsDefined(StorageProfile))
             {
                 writer.WritePropertyName("storageProfile"u8);
@@ -215,6 +220,7 @@ namespace Azure.ResourceManager.Compute
             string vmId = default;
             VirtualMachineScaleSetVmInstanceView instanceView = default;
             VirtualMachineHardwareProfile hardwareProfile = default;
+            ResilientVmDeletionStatus? resilientVmDeletionStatus = default;
             VirtualMachineStorageProfile storageProfile = default;
             AdditionalCapabilities additionalCapabilities = default;
             VirtualMachineOSProfile osProfile = default;
@@ -382,6 +388,15 @@ namespace Azure.ResourceManager.Compute
                             hardwareProfile = VirtualMachineHardwareProfile.DeserializeVirtualMachineHardwareProfile(property0.Value, options);
                             continue;
                         }
+                        if (property0.NameEquals("resilientVMDeletionStatus"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            resilientVmDeletionStatus = new ResilientVmDeletionStatus(property0.Value.GetString());
+                            continue;
+                        }
                         if (property0.NameEquals("storageProfile"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -519,6 +534,7 @@ namespace Azure.ResourceManager.Compute
                 vmId,
                 instanceView,
                 hardwareProfile,
+                resilientVmDeletionStatus,
                 storageProfile,
                 additionalCapabilities,
                 osProfile,

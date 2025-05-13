@@ -471,6 +471,31 @@ namespace Azure.Storage.Blobs.Test
             }
         }
 
+        [RecordedTest]
+        public async Task CreateAsync_PremiumPageBlobAccessTier()
+        {
+            BlobServiceClient premiumService = BlobsClientBuilder.GetServiceClient_PremiumBlobAccount_SharedKey();
+            await using DisposingContainer test = await GetTestContainerAsync(service: premiumService, premium: true);
+
+            // Arrange
+            PageBlobClient blob = await CreatePageBlobClientAsync(test.Container, Constants.KB);
+
+            PremiumPageBlobAccessTier accessTier = PremiumPageBlobAccessTier.P60;
+            PageBlobCreateOptions optionsAccessTier = new()
+            {
+                PremiumPageBlobAccessTier = accessTier
+            };
+
+            // Act
+            Response<BlobContentInfo> response = await blob.CreateAsync(
+                size: Constants.KB,
+                options: optionsAccessTier);
+
+            // Assert
+            BlobProperties properties = await blob.GetPropertiesAsync();
+            Assert.AreEqual(accessTier.ToString(), properties.AccessTier);
+        }
+
         /// <summary>
         /// Data for CreateAsync, GetPageRangesAsync, and GetPageRangesDiffAsync AccessConditions Fail tests.
         /// </summary>
@@ -3454,8 +3479,6 @@ namespace Azure.Storage.Blobs.Test
             await using DisposingContainer test = await GetTestContainerAsync();
 
             // Arrange
-            await test.Container.SetAccessPolicyAsync(PublicAccessType.BlobContainer);
-
             var data = GetRandomBuffer(Constants.KB);
 
             using var stream = new MemoryStream(data);
@@ -3469,9 +3492,11 @@ namespace Azure.Storage.Blobs.Test
             await destBlob.CreateIfNotExistsAsync(Constants.KB);
             var range = new HttpRange(0, Constants.KB);
 
+            Uri sourceUri = sourceBlob.GenerateSasUri(BlobSasPermissions.Read, Recording.UtcNow.AddDays(1));
+
             // Act
             Response<PageInfo> response = await destBlob.UploadPagesFromUriAsync(
-                sourceUri: sourceBlob.Uri,
+                sourceUri: sourceUri,
                 sourceRange: range,
                 range: range);
 

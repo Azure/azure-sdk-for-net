@@ -9,6 +9,7 @@ using System.Net;
 using System.Security.Cryptography;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Web;
 using Azure.Core.TestFramework;
 using Azure.Identity;
 using Azure.Storage.Files.Shares.Models;
@@ -180,6 +181,13 @@ namespace Azure.Storage.Files.Shares.Tests
             // Assert
             bool exists = await aadFileClient.ExistsAsync();
             Assert.IsNotNull(exists);
+        }
+
+        [Test]
+        public void Ctor_DevelopmentThrows()
+        {
+            var ex = Assert.Throws<ArgumentException>(() => new ShareFileClient("UseDevelopmentStorage=true", "share", "dir/file"));
+            Assert.AreEqual("connectionString", ex.ParamName);
         }
 
         [RecordedTest]
@@ -6917,7 +6925,7 @@ namespace Azure.Storage.Files.Shares.Tests
             // Assert
             Assert.AreNotEqual(default, getSymLinkResponse.Value.ETag);
             Assert.AreNotEqual(default, getSymLinkResponse.Value.LastModified);
-            Assert.AreEqual(source.Uri.ToString(), getSymLinkResponse.Value.LinkText);
+            Assert.AreEqual(WebUtility.UrlEncode(source.Uri.ToString()), getSymLinkResponse.Value.LinkText);
         }
 
         [RecordedTest]
