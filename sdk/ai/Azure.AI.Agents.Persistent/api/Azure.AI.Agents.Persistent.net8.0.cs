@@ -5,8 +5,8 @@ namespace Azure.AI.Agents.Persistent
         public AISearchIndexResource(string indexConnectionId, string indexName) { }
         public string Filter { get { throw null; } set { } }
         public string IndexAssetId { get { throw null; } set { } }
-        public string IndexConnectionId { get { throw null; } set { } }
-        public string IndexName { get { throw null; } set { } }
+        public string IndexConnectionId { get { throw null; } }
+        public string IndexName { get { throw null; } }
         public Azure.AI.Agents.Persistent.AzureAISearchQueryType? QueryType { get { throw null; } set { } }
         public int? TopK { get { throw null; } set { } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -68,7 +68,7 @@ namespace Azure.AI.Agents.Persistent
     public partial class AzureFunctionBinding : System.ClientModel.Primitives.IJsonModel<Azure.AI.Agents.Persistent.AzureFunctionBinding>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.AzureFunctionBinding>
     {
         public AzureFunctionBinding(Azure.AI.Agents.Persistent.AzureFunctionStorageQueue storageQueue) { }
-        public Azure.AI.Agents.Persistent.AzureFunctionStorageQueue StorageQueue { get { throw null; } set { } }
+        public Azure.AI.Agents.Persistent.AzureFunctionStorageQueue StorageQueue { get { throw null; } }
         public Azure.AI.Agents.Persistent.AzureFunctionBindingType Type { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Agents.Persistent.AzureFunctionBinding System.ClientModel.Primitives.IJsonModel<Azure.AI.Agents.Persistent.AzureFunctionBinding>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -97,7 +97,7 @@ namespace Azure.AI.Agents.Persistent
     public partial class AzureFunctionStorageQueue : System.ClientModel.Primitives.IJsonModel<Azure.AI.Agents.Persistent.AzureFunctionStorageQueue>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.AzureFunctionStorageQueue>
     {
         public AzureFunctionStorageQueue(string storageServiceEndpoint, string queueName) { }
-        public string QueueName { get { throw null; } set { } }
+        public string QueueName { get { throw null; } }
         public string StorageServiceEndpoint { get { throw null; } set { } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Agents.Persistent.AzureFunctionStorageQueue System.ClientModel.Primitives.IJsonModel<Azure.AI.Agents.Persistent.AzureFunctionStorageQueue>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -844,11 +844,11 @@ namespace Azure.AI.Agents.Persistent
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public MessageStreamEvent(string value) { throw null; }
-        public static Azure.AI.Agents.Persistent.MessageStreamEvent ThreadMessageCompleted { get { throw null; } }
-        public static Azure.AI.Agents.Persistent.MessageStreamEvent ThreadMessageCreated { get { throw null; } }
-        public static Azure.AI.Agents.Persistent.MessageStreamEvent ThreadMessageDelta { get { throw null; } }
-        public static Azure.AI.Agents.Persistent.MessageStreamEvent ThreadMessageIncomplete { get { throw null; } }
-        public static Azure.AI.Agents.Persistent.MessageStreamEvent ThreadMessageInProgress { get { throw null; } }
+        public static Azure.AI.Agents.Persistent.MessageStreamEvent MessageCompleted { get { throw null; } }
+        public static Azure.AI.Agents.Persistent.MessageStreamEvent MessageCreated { get { throw null; } }
+        public static Azure.AI.Agents.Persistent.MessageStreamEvent MessageDelta { get { throw null; } }
+        public static Azure.AI.Agents.Persistent.MessageStreamEvent MessageIncomplete { get { throw null; } }
+        public static Azure.AI.Agents.Persistent.MessageStreamEvent MessageInProgress { get { throw null; } }
         public bool Equals(Azure.AI.Agents.Persistent.MessageStreamEvent other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
@@ -989,11 +989,11 @@ namespace Azure.AI.Agents.Persistent
     }
     public partial class OpenApiFunctionDefinition : System.ClientModel.Primitives.IJsonModel<Azure.AI.Agents.Persistent.OpenApiFunctionDefinition>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.OpenApiFunctionDefinition>
     {
-        public OpenApiFunctionDefinition(string name, System.BinaryData spec, Azure.AI.Agents.Persistent.OpenApiAuthDetails auth) { }
-        public Azure.AI.Agents.Persistent.OpenApiAuthDetails Auth { get { throw null; } set { } }
+        public OpenApiFunctionDefinition(string name, System.BinaryData spec, Azure.AI.Agents.Persistent.OpenApiAuthDetails openApiAuthentication) { }
         public System.Collections.Generic.IList<string> DefaultParams { get { throw null; } }
         public string Description { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
+        public Azure.AI.Agents.Persistent.OpenApiAuthDetails OpenApiAuthentication { get { throw null; } set { } }
         public System.BinaryData Spec { get { throw null; } set { } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Agents.Persistent.OpenApiFunctionDefinition System.ClientModel.Primitives.IJsonModel<Azure.AI.Agents.Persistent.OpenApiFunctionDefinition>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1027,7 +1027,7 @@ namespace Azure.AI.Agents.Persistent
     public partial class OpenApiToolDefinition : Azure.AI.Agents.Persistent.ToolDefinition, System.ClientModel.Primitives.IJsonModel<Azure.AI.Agents.Persistent.OpenApiToolDefinition>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.OpenApiToolDefinition>
     {
         public OpenApiToolDefinition(Azure.AI.Agents.Persistent.OpenApiFunctionDefinition openapi) { }
-        public OpenApiToolDefinition(string name, string description, System.BinaryData spec, Azure.AI.Agents.Persistent.OpenApiAuthDetails auth, System.Collections.Generic.IList<string> defaultParams = null) { }
+        public OpenApiToolDefinition(string name, string description, System.BinaryData spec, Azure.AI.Agents.Persistent.OpenApiAuthDetails openApiAuthentication, System.Collections.Generic.IList<string> defaultParams = null) { }
         public Azure.AI.Agents.Persistent.OpenApiFunctionDefinition Openapi { get { throw null; } set { } }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Agents.Persistent.OpenApiToolDefinition System.ClientModel.Primitives.IJsonModel<Azure.AI.Agents.Persistent.OpenApiToolDefinition>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1106,8 +1106,10 @@ namespace Azure.AI.Agents.Persistent
         public PersistentAgentsAdministrationClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
         public PersistentAgentsAdministrationClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.AI.Agents.Persistent.PersistentAgentsAdministrationClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual Azure.Response CreateAgent(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response<Azure.AI.Agents.Persistent.PersistentAgent> CreateAgent(string model, string name = null, string description = null, string instructions = null, System.Collections.Generic.IEnumerable<Azure.AI.Agents.Persistent.ToolDefinition> tools = null, Azure.AI.Agents.Persistent.ToolResources toolResources = null, float? temperature = default(float?), float? topP = default(float?), System.BinaryData responseFormat = null, System.Collections.Generic.IReadOnlyDictionary<string, string> metadata = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual System.Threading.Tasks.Task<Azure.Response> CreateAgentAsync(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Agents.Persistent.PersistentAgent>> CreateAgentAsync(string model, string name = null, string description = null, string instructions = null, System.Collections.Generic.IEnumerable<Azure.AI.Agents.Persistent.ToolDefinition> tools = null, Azure.AI.Agents.Persistent.ToolResources toolResources = null, float? temperature = default(float?), float? topP = default(float?), System.BinaryData responseFormat = null, System.Collections.Generic.IReadOnlyDictionary<string, string> metadata = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<bool> DeleteAgent(string agentId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1118,18 +1120,20 @@ namespace Azure.AI.Agents.Persistent
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Agents.Persistent.PersistentAgent>> GetAgentAsync(string assistantId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.AI.Agents.Persistent.PersistentAgent> GetAgents(int? limit = default(int?), Azure.AI.Agents.Persistent.ListSortOrder? order = default(Azure.AI.Agents.Persistent.ListSortOrder?), string after = null, string before = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.AI.Agents.Persistent.PersistentAgent> GetAgentsAsync(int? limit = default(int?), Azure.AI.Agents.Persistent.ListSortOrder? order = default(Azure.AI.Agents.Persistent.ListSortOrder?), string after = null, string before = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual Azure.Response UpdateAgent(string assistantId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response<Azure.AI.Agents.Persistent.PersistentAgent> UpdateAgent(string assistantId, string model = null, string name = null, string description = null, string instructions = null, System.Collections.Generic.IEnumerable<Azure.AI.Agents.Persistent.ToolDefinition> tools = null, Azure.AI.Agents.Persistent.ToolResources toolResources = null, float? temperature = default(float?), float? topP = default(float?), System.BinaryData responseFormat = null, System.Collections.Generic.IReadOnlyDictionary<string, string> metadata = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual System.Threading.Tasks.Task<Azure.Response> UpdateAgentAsync(string assistantId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Agents.Persistent.PersistentAgent>> UpdateAgentAsync(string assistantId, string model = null, string name = null, string description = null, string instructions = null, System.Collections.Generic.IEnumerable<Azure.AI.Agents.Persistent.ToolDefinition> tools = null, Azure.AI.Agents.Persistent.ToolResources toolResources = null, float? temperature = default(float?), float? topP = default(float?), System.BinaryData responseFormat = null, System.Collections.Generic.IReadOnlyDictionary<string, string> metadata = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class PersistentAgentsAdministrationClientOptions : Azure.Core.ClientOptions
     {
-        public PersistentAgentsAdministrationClientOptions(Azure.AI.Agents.Persistent.PersistentAgentsAdministrationClientOptions.ServiceVersion version = Azure.AI.Agents.Persistent.PersistentAgentsAdministrationClientOptions.ServiceVersion.V1) { }
+        public PersistentAgentsAdministrationClientOptions(Azure.AI.Agents.Persistent.PersistentAgentsAdministrationClientOptions.ServiceVersion version = Azure.AI.Agents.Persistent.PersistentAgentsAdministrationClientOptions.ServiceVersion.V2025_05_15_Preview) { }
         public enum ServiceVersion
         {
             V2025_05_01 = 1,
-            V1 = 2,
+            V2025_05_15_Preview = 2,
         }
     }
     public partial class PersistentAgentsClient
@@ -1143,8 +1147,6 @@ namespace Azure.AI.Agents.Persistent
         public Azure.AI.Agents.Persistent.ThreadRuns Runs { get { throw null; } }
         public Azure.AI.Agents.Persistent.ThreadRunSteps ThreadRunSteps { get { throw null; } }
         public Azure.AI.Agents.Persistent.Threads Threads { get { throw null; } }
-        public Azure.AI.Agents.Persistent.VectorStoreFileBatches VectorStoreFileBatches { get { throw null; } }
-        public Azure.AI.Agents.Persistent.VectorStoreFiles VectorStoreFiles { get { throw null; } }
         public Azure.AI.Agents.Persistent.VectorStores VectorStores { get { throw null; } }
         public virtual Azure.Response<Azure.AI.Agents.Persistent.ThreadRun> CreateThreadAndRun(string assistantId, Azure.AI.Agents.Persistent.ThreadAndRunOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Agents.Persistent.ThreadRun>> CreateThreadAndRunAsync(string assistantId, Azure.AI.Agents.Persistent.ThreadAndRunOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1189,6 +1191,7 @@ namespace Azure.AI.Agents.Persistent
     }
     public static partial class PersistentAgentsModelFactory
     {
+        public static Azure.AI.Agents.Persistent.AISearchIndexResource AISearchIndexResource(string indexConnectionId = null, string indexName = null, Azure.AI.Agents.Persistent.AzureAISearchQueryType? queryType = default(Azure.AI.Agents.Persistent.AzureAISearchQueryType?), int? topK = default(int?), string filter = null, string indexAssetId = null) { throw null; }
         public static Azure.AI.Agents.Persistent.AzureFunctionBinding AzureFunctionBinding(Azure.AI.Agents.Persistent.AzureFunctionBindingType type = default(Azure.AI.Agents.Persistent.AzureFunctionBindingType), Azure.AI.Agents.Persistent.AzureFunctionStorageQueue storageQueue = null) { throw null; }
         public static Azure.AI.Agents.Persistent.FileSearchToolCallContent FileSearchToolCallContent(Azure.AI.Agents.Persistent.FileSearchToolCallContentType type = default(Azure.AI.Agents.Persistent.FileSearchToolCallContentType), string text = null) { throw null; }
         public static Azure.AI.Agents.Persistent.IncompleteRunDetails IncompleteRunDetails(Azure.AI.Agents.Persistent.IncompleteDetailsReason reason = default(Azure.AI.Agents.Persistent.IncompleteDetailsReason)) { throw null; }
@@ -1354,21 +1357,21 @@ namespace Azure.AI.Agents.Persistent
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public PersistentAgentStreamEvent(string value) { throw null; }
-        public static Azure.AI.Agents.Persistent.PersistentAgentStreamEvent Cancelled { get { throw null; } }
-        public static Azure.AI.Agents.Persistent.PersistentAgentStreamEvent Completed { get { throw null; } }
-        public static Azure.AI.Agents.Persistent.PersistentAgentStreamEvent Created { get { throw null; } }
-        public static Azure.AI.Agents.Persistent.PersistentAgentStreamEvent Delta { get { throw null; } }
         public static Azure.AI.Agents.Persistent.PersistentAgentStreamEvent Done { get { throw null; } }
         public static Azure.AI.Agents.Persistent.PersistentAgentStreamEvent Error { get { throw null; } }
-        public static Azure.AI.Agents.Persistent.PersistentAgentStreamEvent Expired { get { throw null; } }
-        public static Azure.AI.Agents.Persistent.PersistentAgentStreamEvent Failed { get { throw null; } }
-        public static Azure.AI.Agents.Persistent.PersistentAgentStreamEvent InProgress { get { throw null; } }
+        public static Azure.AI.Agents.Persistent.PersistentAgentStreamEvent MessageCompleted { get { throw null; } }
+        public static Azure.AI.Agents.Persistent.PersistentAgentStreamEvent MessageCreated { get { throw null; } }
+        public static Azure.AI.Agents.Persistent.PersistentAgentStreamEvent MessageDelta { get { throw null; } }
+        public static Azure.AI.Agents.Persistent.PersistentAgentStreamEvent MessageIncomplete { get { throw null; } }
+        public static Azure.AI.Agents.Persistent.PersistentAgentStreamEvent MessageInProgress { get { throw null; } }
+        public static Azure.AI.Agents.Persistent.PersistentAgentStreamEvent RunStepCancelled { get { throw null; } }
+        public static Azure.AI.Agents.Persistent.PersistentAgentStreamEvent RunStepCompleted { get { throw null; } }
+        public static Azure.AI.Agents.Persistent.PersistentAgentStreamEvent RunStepCreated { get { throw null; } }
+        public static Azure.AI.Agents.Persistent.PersistentAgentStreamEvent RunStepDelta { get { throw null; } }
+        public static Azure.AI.Agents.Persistent.PersistentAgentStreamEvent RunStepExpired { get { throw null; } }
+        public static Azure.AI.Agents.Persistent.PersistentAgentStreamEvent RunStepFailed { get { throw null; } }
+        public static Azure.AI.Agents.Persistent.PersistentAgentStreamEvent RunStepInProgress { get { throw null; } }
         public static Azure.AI.Agents.Persistent.PersistentAgentStreamEvent ThreadCreated { get { throw null; } }
-        public static Azure.AI.Agents.Persistent.PersistentAgentStreamEvent ThreadMessageCompleted { get { throw null; } }
-        public static Azure.AI.Agents.Persistent.PersistentAgentStreamEvent ThreadMessageCreated { get { throw null; } }
-        public static Azure.AI.Agents.Persistent.PersistentAgentStreamEvent ThreadMessageDelta { get { throw null; } }
-        public static Azure.AI.Agents.Persistent.PersistentAgentStreamEvent ThreadMessageIncomplete { get { throw null; } }
-        public static Azure.AI.Agents.Persistent.PersistentAgentStreamEvent ThreadMessageInProgress { get { throw null; } }
         public static Azure.AI.Agents.Persistent.PersistentAgentStreamEvent ThreadRunCancelled { get { throw null; } }
         public static Azure.AI.Agents.Persistent.PersistentAgentStreamEvent ThreadRunCancelling { get { throw null; } }
         public static Azure.AI.Agents.Persistent.PersistentAgentStreamEvent ThreadRunCompleted { get { throw null; } }
@@ -2135,13 +2138,13 @@ namespace Azure.AI.Agents.Persistent
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public RunStepStreamEvent(string value) { throw null; }
-        public static Azure.AI.Agents.Persistent.RunStepStreamEvent Cancelled { get { throw null; } }
-        public static Azure.AI.Agents.Persistent.RunStepStreamEvent Completed { get { throw null; } }
-        public static Azure.AI.Agents.Persistent.RunStepStreamEvent Created { get { throw null; } }
-        public static Azure.AI.Agents.Persistent.RunStepStreamEvent Delta { get { throw null; } }
-        public static Azure.AI.Agents.Persistent.RunStepStreamEvent Expired { get { throw null; } }
-        public static Azure.AI.Agents.Persistent.RunStepStreamEvent Failed { get { throw null; } }
-        public static Azure.AI.Agents.Persistent.RunStepStreamEvent InProgress { get { throw null; } }
+        public static Azure.AI.Agents.Persistent.RunStepStreamEvent RunStepCancelled { get { throw null; } }
+        public static Azure.AI.Agents.Persistent.RunStepStreamEvent RunStepCompleted { get { throw null; } }
+        public static Azure.AI.Agents.Persistent.RunStepStreamEvent RunStepCreated { get { throw null; } }
+        public static Azure.AI.Agents.Persistent.RunStepStreamEvent RunStepDelta { get { throw null; } }
+        public static Azure.AI.Agents.Persistent.RunStepStreamEvent RunStepExpired { get { throw null; } }
+        public static Azure.AI.Agents.Persistent.RunStepStreamEvent RunStepFailed { get { throw null; } }
+        public static Azure.AI.Agents.Persistent.RunStepStreamEvent RunStepInProgress { get { throw null; } }
         public bool Equals(Azure.AI.Agents.Persistent.RunStepStreamEvent other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
@@ -2528,7 +2531,7 @@ namespace Azure.AI.Agents.Persistent
         public ToolOutput(Azure.AI.Agents.Persistent.RequiredToolCall toolCall) { }
         public ToolOutput(Azure.AI.Agents.Persistent.RequiredToolCall toolCall, string output) { }
         public ToolOutput(string toolCallId) { }
-        public ToolOutput(string toolCallId, string output) { }
+        public ToolOutput(string toolCallId, string output = null) { }
         public string Output { get { throw null; } set { } }
         public string ToolCallId { get { throw null; } set { } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -2772,25 +2775,6 @@ namespace Azure.AI.Agents.Persistent
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.VectorStoreFileBatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.VectorStoreFileBatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class VectorStoreFileBatches
-    {
-        protected VectorStoreFileBatches() { }
-        public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
-        public virtual Azure.Response CancelVectorStoreFileBatch(string vectorStoreId, string batchId, Azure.RequestContext context) { throw null; }
-        public virtual Azure.Response<Azure.AI.Agents.Persistent.VectorStoreFileBatch> CancelVectorStoreFileBatch(string vectorStoreId, string batchId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> CancelVectorStoreFileBatchAsync(string vectorStoreId, string batchId, Azure.RequestContext context) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Agents.Persistent.VectorStoreFileBatch>> CancelVectorStoreFileBatchAsync(string vectorStoreId, string batchId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response CreateVectorStoreFileBatch(string vectorStoreId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Response<Azure.AI.Agents.Persistent.VectorStoreFileBatch> CreateVectorStoreFileBatch(string vectorStoreId, System.Collections.Generic.IEnumerable<string> fileIds = null, System.Collections.Generic.IEnumerable<Azure.AI.Agents.Persistent.VectorStoreDataSource> dataSources = null, Azure.AI.Agents.Persistent.VectorStoreChunkingStrategy chunkingStrategy = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> CreateVectorStoreFileBatchAsync(string vectorStoreId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Agents.Persistent.VectorStoreFileBatch>> CreateVectorStoreFileBatchAsync(string vectorStoreId, System.Collections.Generic.IEnumerable<string> fileIds = null, System.Collections.Generic.IEnumerable<Azure.AI.Agents.Persistent.VectorStoreDataSource> dataSources = null, Azure.AI.Agents.Persistent.VectorStoreChunkingStrategy chunkingStrategy = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response GetVectorStoreFileBatch(string vectorStoreId, string batchId, Azure.RequestContext context) { throw null; }
-        public virtual Azure.Response<Azure.AI.Agents.Persistent.VectorStoreFileBatch> GetVectorStoreFileBatch(string vectorStoreId, string batchId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> GetVectorStoreFileBatchAsync(string vectorStoreId, string batchId, Azure.RequestContext context) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Agents.Persistent.VectorStoreFileBatch>> GetVectorStoreFileBatchAsync(string vectorStoreId, string batchId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.AI.Agents.Persistent.VectorStoreFile> GetVectorStoreFileBatchFiles(string vectorStoreId, string batchId, Azure.AI.Agents.Persistent.VectorStoreFileStatusFilter? filter = default(Azure.AI.Agents.Persistent.VectorStoreFileStatusFilter?), int? limit = default(int?), Azure.AI.Agents.Persistent.ListSortOrder? order = default(Azure.AI.Agents.Persistent.ListSortOrder?), string after = null, string before = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.AI.Agents.Persistent.VectorStoreFile> GetVectorStoreFileBatchFilesAsync(string vectorStoreId, string batchId, Azure.AI.Agents.Persistent.VectorStoreFileStatusFilter? filter = default(Azure.AI.Agents.Persistent.VectorStoreFileStatusFilter?), int? limit = default(int?), Azure.AI.Agents.Persistent.ListSortOrder? order = default(Azure.AI.Agents.Persistent.ListSortOrder?), string after = null, string before = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct VectorStoreFileBatchObject : System.IEquatable<Azure.AI.Agents.Persistent.VectorStoreFileBatchObject>
     {
@@ -2891,23 +2875,6 @@ namespace Azure.AI.Agents.Persistent
         public static bool operator !=(Azure.AI.Agents.Persistent.VectorStoreFileObject left, Azure.AI.Agents.Persistent.VectorStoreFileObject right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class VectorStoreFiles
-    {
-        protected VectorStoreFiles() { }
-        public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
-        public virtual Azure.Response CreateVectorStoreFile(string vectorStoreId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Response<Azure.AI.Agents.Persistent.VectorStoreFile> CreateVectorStoreFile(string vectorStoreId, string fileId = null, Azure.AI.Agents.Persistent.VectorStoreDataSource dataSource = null, Azure.AI.Agents.Persistent.VectorStoreChunkingStrategy chunkingStrategy = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> CreateVectorStoreFileAsync(string vectorStoreId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Agents.Persistent.VectorStoreFile>> CreateVectorStoreFileAsync(string vectorStoreId, string fileId = null, Azure.AI.Agents.Persistent.VectorStoreDataSource dataSource = null, Azure.AI.Agents.Persistent.VectorStoreChunkingStrategy chunkingStrategy = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<bool> DeleteVectorStoreFile(string vectorStoreId, string fileId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> DeleteVectorStoreFileAsync(string vectorStoreId, string fileId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response GetVectorStoreFile(string vectorStoreId, string fileId, Azure.RequestContext context) { throw null; }
-        public virtual Azure.Response<Azure.AI.Agents.Persistent.VectorStoreFile> GetVectorStoreFile(string vectorStoreId, string fileId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> GetVectorStoreFileAsync(string vectorStoreId, string fileId, Azure.RequestContext context) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Agents.Persistent.VectorStoreFile>> GetVectorStoreFileAsync(string vectorStoreId, string fileId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.AI.Agents.Persistent.VectorStoreFile> GetVectorStoreFiles(string vectorStoreId, Azure.AI.Agents.Persistent.VectorStoreFileStatusFilter? filter = default(Azure.AI.Agents.Persistent.VectorStoreFileStatusFilter?), int? limit = default(int?), Azure.AI.Agents.Persistent.ListSortOrder? order = default(Azure.AI.Agents.Persistent.ListSortOrder?), string after = null, string before = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.AI.Agents.Persistent.VectorStoreFile> GetVectorStoreFilesAsync(string vectorStoreId, Azure.AI.Agents.Persistent.VectorStoreFileStatusFilter? filter = default(Azure.AI.Agents.Persistent.VectorStoreFileStatusFilter?), int? limit = default(int?), Azure.AI.Agents.Persistent.ListSortOrder? order = default(Azure.AI.Agents.Persistent.ListSortOrder?), string after = null, string before = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct VectorStoreFileStatus : System.IEquatable<Azure.AI.Agents.Persistent.VectorStoreFileStatus>
     {
@@ -2952,16 +2919,30 @@ namespace Azure.AI.Agents.Persistent
     {
         protected VectorStores() { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
+        public virtual Azure.Response<Azure.AI.Agents.Persistent.VectorStoreFileBatch> CancelVectorStoreFileBatch(string vectorStoreId, string batchId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Agents.Persistent.VectorStoreFileBatch>> CancelVectorStoreFileBatchAsync(string vectorStoreId, string batchId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response CreateVectorStore(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response<Azure.AI.Agents.Persistent.PersistentAgentsVectorStore> CreateVectorStore(System.Collections.Generic.IEnumerable<string> fileIds = null, string name = null, Azure.AI.Agents.Persistent.VectorStoreConfiguration storeConfiguration = null, Azure.AI.Agents.Persistent.VectorStoreExpirationPolicy expiresAfter = null, Azure.AI.Agents.Persistent.VectorStoreChunkingStrategy chunkingStrategy = null, System.Collections.Generic.IReadOnlyDictionary<string, string> metadata = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> CreateVectorStoreAsync(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Agents.Persistent.PersistentAgentsVectorStore>> CreateVectorStoreAsync(System.Collections.Generic.IEnumerable<string> fileIds = null, string name = null, Azure.AI.Agents.Persistent.VectorStoreConfiguration storeConfiguration = null, Azure.AI.Agents.Persistent.VectorStoreExpirationPolicy expiresAfter = null, Azure.AI.Agents.Persistent.VectorStoreChunkingStrategy chunkingStrategy = null, System.Collections.Generic.IReadOnlyDictionary<string, string> metadata = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.AI.Agents.Persistent.VectorStoreFile> CreateVectorStoreFile(string vectorStoreId, string fileId = null, Azure.AI.Agents.Persistent.VectorStoreDataSource dataSource = null, Azure.AI.Agents.Persistent.VectorStoreChunkingStrategy chunkingStrategy = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Agents.Persistent.VectorStoreFile>> CreateVectorStoreFileAsync(string vectorStoreId, string fileId = null, Azure.AI.Agents.Persistent.VectorStoreDataSource dataSource = null, Azure.AI.Agents.Persistent.VectorStoreChunkingStrategy chunkingStrategy = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.AI.Agents.Persistent.VectorStoreFileBatch> CreateVectorStoreFileBatch(string vectorStoreId, System.Collections.Generic.IEnumerable<string> fileIds = null, System.Collections.Generic.IEnumerable<Azure.AI.Agents.Persistent.VectorStoreDataSource> dataSources = null, Azure.AI.Agents.Persistent.VectorStoreChunkingStrategy chunkingStrategy = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Agents.Persistent.VectorStoreFileBatch>> CreateVectorStoreFileBatchAsync(string vectorStoreId, System.Collections.Generic.IEnumerable<string> fileIds = null, System.Collections.Generic.IEnumerable<Azure.AI.Agents.Persistent.VectorStoreDataSource> dataSources = null, Azure.AI.Agents.Persistent.VectorStoreChunkingStrategy chunkingStrategy = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<bool> DeleteVectorStore(string vectorStoreId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> DeleteVectorStoreAsync(string vectorStoreId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> DeleteVectorStoreFile(string vectorStoreId, string fileId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> DeleteVectorStoreFileAsync(string vectorStoreId, string fileId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response GetVectorStore(string vectorStoreId, Azure.RequestContext context) { throw null; }
         public virtual Azure.Response<Azure.AI.Agents.Persistent.PersistentAgentsVectorStore> GetVectorStore(string vectorStoreId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetVectorStoreAsync(string vectorStoreId, Azure.RequestContext context) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Agents.Persistent.PersistentAgentsVectorStore>> GetVectorStoreAsync(string vectorStoreId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.AI.Agents.Persistent.VectorStoreFile> GetVectorStoreFile(string vectorStoreId, string fileId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Agents.Persistent.VectorStoreFile>> GetVectorStoreFileAsync(string vectorStoreId, string fileId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.AI.Agents.Persistent.VectorStoreFileBatch> GetVectorStoreFileBatch(string vectorStoreId, string batchId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Agents.Persistent.VectorStoreFileBatch>> GetVectorStoreFileBatchAsync(string vectorStoreId, string batchId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.AI.Agents.Persistent.VectorStoreFile> GetVectorStoreFiles(string vectorStoreId, Azure.AI.Agents.Persistent.VectorStoreFileStatusFilter? filter = default(Azure.AI.Agents.Persistent.VectorStoreFileStatusFilter?), int? limit = default(int?), Azure.AI.Agents.Persistent.ListSortOrder? order = default(Azure.AI.Agents.Persistent.ListSortOrder?), string after = null, string before = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.AI.Agents.Persistent.VectorStoreFile> GetVectorStoreFilesAsync(string vectorStoreId, Azure.AI.Agents.Persistent.VectorStoreFileStatusFilter? filter = default(Azure.AI.Agents.Persistent.VectorStoreFileStatusFilter?), int? limit = default(int?), Azure.AI.Agents.Persistent.ListSortOrder? order = default(Azure.AI.Agents.Persistent.ListSortOrder?), string after = null, string before = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.AI.Agents.Persistent.PersistentAgentsVectorStore> GetVectorStores(int? limit = default(int?), Azure.AI.Agents.Persistent.ListSortOrder? order = default(Azure.AI.Agents.Persistent.ListSortOrder?), string after = null, string before = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.AI.Agents.Persistent.PersistentAgentsVectorStore> GetVectorStoresAsync(int? limit = default(int?), Azure.AI.Agents.Persistent.ListSortOrder? order = default(Azure.AI.Agents.Persistent.ListSortOrder?), string after = null, string before = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response ModifyVectorStore(string vectorStoreId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
