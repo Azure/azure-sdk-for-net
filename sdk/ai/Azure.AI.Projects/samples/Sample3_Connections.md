@@ -36,6 +36,14 @@ Console.WriteLine(specificConnection);
 Console.WriteLine("Get the properties of a connection with credentials:");
 var specificConnectionCredentials = connectionsClient.GetWithCredentials(connectionName);
 Console.WriteLine(specificConnectionCredentials);
+
+Console.WriteLine($"Get the properties of the default connection:");
+var defaultConnection = connectionsClient.GetDefault(includeCredentials: false);
+Console.WriteLine(defaultConnection);
+
+Console.WriteLine($"Get the properties of the default connection with credentials:");
+var defaultConnectionCredentials = connectionsClient.GetDefault(includeCredentials: true);
+Console.WriteLine(defaultConnectionCredentials);
 ```
 
 ## Asynchronous sample:
@@ -65,4 +73,12 @@ Console.WriteLine(specificConnection);
 Console.WriteLine("Get the properties of a connection with credentials:");
 var specificConnectionCredentials = await connectionsClient.GetWithCredentialsAsync(connectionName);
 Console.WriteLine(specificConnectionCredentials);
+
+Console.WriteLine($"Get the properties of the default connection:");
+var defaultConnection = await connectionsClient.GetDefaultAsync(includeCredentials: false);
+Console.WriteLine(defaultConnection);
+
+Console.WriteLine($"Get the properties of the default connection with credentials:");
+var defaultConnectionCredentials = await connectionsClient.GetDefaultAsync(includeCredentials: true);
+Console.WriteLine(defaultConnectionCredentials);
 ```
