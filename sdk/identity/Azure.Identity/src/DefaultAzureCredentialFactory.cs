@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 using Azure.Core;
 
@@ -13,8 +12,6 @@ namespace Azure.Identity
     {
         private static readonly TokenCredential[] s_defaultCredentialChain = new DefaultAzureCredentialFactory(new DefaultAzureCredentialOptions()).CreateCredentialChain();
         private bool _useDefaultCredentialChain;
-        private bool _useDevCredentials;
-        private bool _useProdCredentials;
 
         public DefaultAzureCredentialFactory(DefaultAzureCredentialOptions options)
             : this(options, CredentialPipeline.GetInstance(options))
@@ -23,18 +20,7 @@ namespace Azure.Identity
         protected DefaultAzureCredentialFactory(DefaultAzureCredentialOptions options, CredentialPipeline pipeline)
         {
             Pipeline = pipeline;
-
             _useDefaultCredentialChain = options == null;
-
-            string credentialSelection = EnvironmentVariables.CredentialSelection?.Trim();
-            _useDevCredentials = Constants.DevCredentials.Equals(credentialSelection, StringComparison.OrdinalIgnoreCase);
-            _useProdCredentials = Constants.ProdCredentials.Equals(credentialSelection, StringComparison.OrdinalIgnoreCase);
-
-            if (credentialSelection != null && !_useDevCredentials && !_useProdCredentials)
-            {
-                throw new InvalidOperationException($"Invalid value for environment variable AZURE_CREDENTIAL_SELECTION: {credentialSelection}. Valid values are 'dev' or 'prod'.");
-            }
-
             Options = options?.Clone<DefaultAzureCredentialOptions>() ?? new DefaultAzureCredentialOptions();
         }
 
@@ -43,6 +29,15 @@ namespace Azure.Identity
 
         public TokenCredential[] CreateCredentialChain()
         {
+            string credentialSelection = EnvironmentVariables.CredentialSelection?.Trim();
+            bool _useDevCredentials = Constants.DevCredentials.Equals(credentialSelection, StringComparison.OrdinalIgnoreCase);
+            bool _useProdCredentials = Constants.ProdCredentials.Equals(credentialSelection, StringComparison.OrdinalIgnoreCase);
+
+            if (credentialSelection != null && !_useDevCredentials && !_useProdCredentials)
+            {
+                throw new InvalidOperationException($"Invalid value for environment variable AZURE_CREDENTIAL_SELECTION: {credentialSelection}. Valid values are 'dev' or 'prod'.");
+            }
+
             if (_useDefaultCredentialChain)
             {
                 if (_useDevCredentials)

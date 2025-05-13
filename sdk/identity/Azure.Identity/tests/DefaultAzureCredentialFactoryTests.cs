@@ -476,6 +476,23 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
+        public void InvalidAZURE_CREDENTIAL_SELECTION_Throws()
+        {
+            using (new TestEnvVar(new Dictionary<string, string>
+            {
+                { "AZURE_CLIENT_ID", null },
+                { "AZURE_USERNAME", null },
+                { "AZURE_TENANT_ID", null },
+                { "AZURE_CREDENTIAL_SELECTION", "bogus" }
+            }))
+            {
+                DefaultAzureCredentialOptions options = new DefaultAzureCredentialOptions();
+                var factory = new DefaultAzureCredentialFactory(options);
+                Assert.Throws<InvalidOperationException>(() => factory.CreateCredentialChain());
+            }
+        }
+
+        [Test]
         [TestCaseSource(nameof(ExcludeCredOptions))]
         public void ValidateExcludeOptionsHonoredWithAZURE_CREDENTIAL_SELECTION_DevMode(
             bool excludeEnvironmentCredential,
