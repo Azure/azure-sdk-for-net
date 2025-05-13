@@ -251,7 +251,7 @@ PersistentAgentsVectorStore vectorStore = await client.VectorStores.CreateVector
     name: "sample_vector_store"
 );
 
-VectorStoreFileBatch vctFile = await client.VectorStoreFileBatches.CreateVectorStoreFileBatchAsync(
+VectorStoreFileBatch vctFile = await client.VectorStores.CreateVectorStoreFileBatchAsync(
     vectorStoreId: vectorStore.Id,
     dataSources: [ ds ]
 );

@@ -20,7 +20,7 @@ namespace Azure.AI.Agents.Persistent
     /// A collection of vector-store file operations under
     /// `/vector_stores/{vectorStoreId}/files`.
     /// </summary>
-    public partial class VectorStoreFiles
+    internal partial class VectorStoreFiles
     {
         private static readonly string[] AuthorizationScopes = new string[] { "https://ai.azure.com/.default" };
         private readonly TokenCredential _tokenCredential;

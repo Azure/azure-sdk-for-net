@@ -147,7 +147,7 @@ namespace Azure.AI.Agents.Persistent
         /// <summary> Initializes a new instance of VectorStoresClient. </summary>
         internal virtual VectorStores GetVectorStoresClient()
         {
-            return Volatile.Read(ref _cachedVectorStores) ?? Interlocked.CompareExchange(ref _cachedVectorStores, new VectorStores(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, _apiVersion), null) ?? _cachedVectorStores;
+            return Volatile.Read(ref _cachedVectorStores) ?? Interlocked.CompareExchange(ref _cachedVectorStores, new VectorStores(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, _apiVersion, GetVectorStoreFilesClient(), GetVectorStoreFileBatchesClient()), null) ?? _cachedVectorStores;
         }
 
         /// <summary> Initializes a new instance of VectorStoreFilesClient. </summary>

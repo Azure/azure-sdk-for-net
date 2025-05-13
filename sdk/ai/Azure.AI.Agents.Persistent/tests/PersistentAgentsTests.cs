@@ -769,7 +769,7 @@ namespace Azure.AI.Agents.Persistent.Tests
                 );
                 if (testType == VecrorStoreTestType.Batch)
                 {
-                    await client.VectorStoreFileBatches.CreateVectorStoreFileBatchAsync(
+                    await client.VectorStores.CreateVectorStoreFileBatchAsync(
                         vectorStoreId: vectorStore.Id,
                         dataSources: vectorStoreConf?.DataSources,
                         fileIds: fileIds
@@ -777,7 +777,7 @@ namespace Azure.AI.Agents.Persistent.Tests
                 }
                 else
                 {
-                    await client.VectorStoreFiles.CreateVectorStoreFileAsync(
+                    await client.VectorStores.CreateVectorStoreFileAsync(
                         vectorStoreId: vectorStore.Id,
                         dataSource: vectorStoreConf?.DataSources[0],
                         fileId: fileDataSource?.Id
