@@ -23,6 +23,8 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
 
         protected virtual bool IsRoundTripOrderDeterministic => true;
 
+        protected virtual IPersistableModel<TElement>? Proxy => null;
+
         protected override string GetJsonFolderName()
         {
             var className = GetType().Name;
@@ -62,6 +64,10 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         protected override void RoundTripTest(string format, RoundTripStrategy<TCollection> strategy)
         {
             var options = new ModelReaderWriterOptions(format);
+            if (Proxy is not null)
+            {
+                options.AddProxy(Proxy);
+            }
 
             if (MrwCollectionTests<TCollection, TElement>.AssertFailures(Instance, format, strategy, options))
                 return;

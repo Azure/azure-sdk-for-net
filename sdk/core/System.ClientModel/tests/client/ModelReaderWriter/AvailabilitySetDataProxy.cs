@@ -11,43 +11,40 @@ using System.Text.Json;
 
 namespace System.ClientModel.Tests.Client.Models.ResourceManager.Compute
 {
-    public partial class AvailabilitySetData : IJsonModel<AvailabilitySetData>
+    public partial class AvailabilitySetDataProxy : IJsonModel<AvailabilitySetData>
     {
         void IJsonModel<AvailabilitySetData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             ModelReaderWriterHelper.ValidateFormat(this, options.Format);
 
-            Serialize(writer, options);
+            Serialize((AvailabilitySetData)options.ProxiedModel, writer, options);
         }
 
-        private void Serialize(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        private void Serialize(AvailabilitySetData aset, Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            if (options.Format == "J")
-            {
-                writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(Name);
-            }
+            writer.WritePropertyName("name"u8);
+            writer.WriteStringValue(aset.Name);
             if (options.Format == "J")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id.ToString());
+                writer.WriteStringValue(aset.Id.ToString());
             }
             if (options.Format == "J")
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(ResourceType.ToString());
+                writer.WriteStringValue(aset.ResourceType.ToString());
             }
-            if (OptionalProperty.IsDefined(Sku))
+            if (OptionalProperty.IsDefined(aset.Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                writer.WriteObjectValue(aset.Sku);
             }
-            if (OptionalProperty.IsCollectionDefined(Tags))
+            if (OptionalProperty.IsCollectionDefined(aset.Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
-                foreach (var item in Tags)
+                foreach (var item in aset.Tags)
                 {
                     writer.WritePropertyName(item.Key);
                     writer.WriteStringValue(item.Value);
@@ -55,35 +52,37 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager.Compute
                 writer.WriteEndObject();
             }
             writer.WritePropertyName("location"u8);
-            writer.WriteStringValue(Location);
+            writer.WriteStringValue(aset.Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (OptionalProperty.IsDefined(PlatformUpdateDomainCount))
+            if (OptionalProperty.IsDefined(aset.PlatformUpdateDomainCount))
             {
                 writer.WritePropertyName("platformUpdateDomainCount"u8);
-                writer.WriteNumberValue(PlatformUpdateDomainCount.Value);
+                writer.WriteNumberValue(aset.PlatformUpdateDomainCount.Value);
             }
-            if (OptionalProperty.IsDefined(PlatformFaultDomainCount))
+            if (OptionalProperty.IsDefined(aset.PlatformFaultDomainCount))
             {
                 writer.WritePropertyName("platformFaultDomainCount"u8);
-                writer.WriteNumberValue(PlatformFaultDomainCount.Value);
+                writer.WriteNumberValue(aset.PlatformFaultDomainCount.Value);
             }
-            if (OptionalProperty.IsCollectionDefined(VirtualMachines))
+            if (OptionalProperty.IsCollectionDefined(aset.VirtualMachines))
             {
                 writer.WritePropertyName("virtualMachines"u8);
                 writer.WriteStartArray();
-                foreach (var item in VirtualMachines)
+                foreach (var item in aset.VirtualMachines)
                 {
                     JsonSerializer.Serialize(writer, item);
                 }
                 writer.WriteEndArray();
             }
-            if (OptionalProperty.IsDefined(ProximityPlacementGroup))
+            if (OptionalProperty.IsDefined(aset.ProximityPlacementGroup))
             {
                 writer.WritePropertyName("proximityPlacementGroup"u8);
-                JsonSerializer.Serialize(writer, ProximityPlacementGroup);
+                JsonSerializer.Serialize(writer, aset.ProximityPlacementGroup);
             }
             writer.WriteEndObject();
+            writer.WritePropertyName("extra"u8);
+            writer.WriteStringValue($"{aset.Name}_extra");
             writer.WriteEndObject();
         }
 
@@ -107,6 +106,7 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager.Compute
             OptionalProperty<IList<WritableSubResource>> virtualMachines = default;
             OptionalProperty<WritableSubResource> proximityPlacementGroup = default;
             OptionalProperty<IReadOnlyList<InstanceViewStatus>> statuses = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"u8))
@@ -228,8 +228,10 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager.Compute
                     }
                     continue;
                 }
+                rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
-            return new AvailabilitySetData(id, name, type, systemData.Value, OptionalProperty.ToDictionary(tags), location, sku.Value, OptionalProperty.ToNullable(platformUpdateDomainCount), OptionalProperty.ToNullable(platformFaultDomainCount), OptionalProperty.ToList(virtualMachines), proximityPlacementGroup, OptionalProperty.ToList(statuses), new Dictionary<string, BinaryData>());
+
+            return new AvailabilitySetData(id, name, type, systemData.Value, OptionalProperty.ToDictionary(tags), location, sku.Value, OptionalProperty.ToNullable(platformUpdateDomainCount), OptionalProperty.ToNullable(platformFaultDomainCount), OptionalProperty.ToList(virtualMachines), proximityPlacementGroup, OptionalProperty.ToList(statuses), rawDataDictionary);
         }
 
         AvailabilitySetData IPersistableModel<AvailabilitySetData>.Create(BinaryData data, ModelReaderWriterOptions options)
@@ -238,22 +240,6 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager.Compute
 
             using var doc = JsonDocument.Parse(data);
             return DeserializeAvailabilitySetData(doc.RootElement, options);
-        }
-
-        private struct AvailabilitySetDataProperties
-        {
-            public OptionalProperty<ComputeSku> Sku { get; set; }
-            public OptionalProperty<IDictionary<string, string>> Tags { get; set; }
-            public string Location { get; set; }
-            public string Id { get; set; }
-            public string Name { get; set; }
-            public string ResourceType { get; set; }
-            public OptionalProperty<SystemData> SystemData { get; set; }
-            public OptionalProperty<int> PlatformUpdateDomainCount { get; set; }
-            public OptionalProperty<int> PlatformFaultDomainCount { get; set; }
-            public OptionalProperty<IList<WritableSubResource>> VirtualMachines { get; set; }
-            public OptionalProperty<WritableSubResource> ProximityPlacementGroup { get; set; }
-            public OptionalProperty<IReadOnlyList<InstanceViewStatus>> Statuses { get; set; }
         }
 
         AvailabilitySetData IJsonModel<AvailabilitySetData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

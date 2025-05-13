@@ -26,7 +26,7 @@ internal class JsonCollectionWriter : CollectionWriter
         }
         else if (model is IJsonModel<object> jsonModel)
         {
-            jsonModel.Write(writer, options);
+            options.ResolveProxy(jsonModel).Write(writer, options);
         }
         else if (model is IEnumerable enumerable)
         {

@@ -85,5 +85,77 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
             Assert.AreEqual(File.ReadAllText(TestData.GetLocation("ResourceProviderData/ResourceProviderData-TwoSpaces.json")).TrimEnd(), stjResult);
 #endif
         }
+
+        [Test]
+        public void ProxySerialization()
+        {
+            var options = new ModelReaderWriterOptions("J");
+            options.AddProxy(new ResourceProviderDataProxy());
+
+            var model = ModelReaderWriter.Read<ResourceProviderData>(BinaryData.FromString(WirePayload));
+            Assert.NotNull(model);
+            var binaryData = ModelReaderWriter.Write(model!, options);
+            Assert.AreEqual(File.ReadAllText(TestData.GetLocation("ResourceProviderData/ResourceProviderData-Collapsed-MissingId.json")).TrimEnd(), binaryData.ToString());
+            Assert.AreNotEqual(WirePayload, binaryData.ToString());
+
+            var model2 = ModelReaderWriter.Read<ResourceProviderData>(binaryData, options);
+            Assert.NotNull(model2);
+            Assert.NotNull(model2!.Id);
+            Assert.AreEqual("TestValue", model2.Id);
+
+            Assert.AreEqual(model!.Namespace, model2.Namespace);
+            Assert.AreEqual(model.RegistrationPolicy, model2.RegistrationPolicy);
+            Assert.AreEqual(model.RegistrationState, model2.RegistrationState);
+            Assert.AreEqual(model.ResourceTypes.Count, model2.ResourceTypes.Count);
+        }
+
+        [Test]
+        public void ProxyWithStjSerialization()
+        {
+            var options = new ModelReaderWriterOptions("J");
+            options.AddProxy(new ResourceProviderDataProxy());
+
+            var stjOptions = new JsonSerializerOptions
+            {
+                Converters = { new JsonModelConverter(options) }
+            };
+
+            var model = JsonSerializer.Deserialize<ResourceProviderData>(WirePayload, stjOptions);
+            Assert.NotNull(model);
+            var json = JsonSerializer.Serialize(model, stjOptions);
+            Assert.AreEqual(File.ReadAllText(TestData.GetLocation("ResourceProviderData/ResourceProviderData-Collapsed-MissingId.json")).TrimEnd(), json);
+            Assert.AreNotEqual(WirePayload, json);
+
+            var model2 = JsonSerializer.Deserialize<ResourceProviderData>(json, stjOptions);
+            Assert.NotNull(model2);
+            Assert.NotNull(model2!.Id);
+            Assert.AreEqual("TestValue", model2.Id);
+            Assert.AreEqual(model!.Namespace, model2.Namespace);
+            Assert.AreEqual(model.RegistrationPolicy, model2.RegistrationPolicy);
+            Assert.AreEqual(model.RegistrationState, model2.RegistrationState);
+            Assert.AreEqual(model.ResourceTypes.Count, model2.ResourceTypes.Count);
+        }
+
+        [Test]
+        public void ProxySerializationOfNestedType()
+        {
+            var options = new ModelReaderWriterOptions("J");
+            //this is a nested type of ResourceProviderData
+            options.AddProxy(new ProviderResourceTypeProxy());
+
+            var model = ModelReaderWriter.Read<ResourceProviderData>(BinaryData.FromString(WirePayload));
+            Assert.NotNull(model);
+            var binaryData = ModelReaderWriter.Write(model!, options);
+            Assert.AreEqual(File.ReadAllText(TestData.GetLocation("ResourceProviderData/ResourceProviderData-Collapsed-With-x.json")).TrimEnd(), binaryData.ToString());
+            Assert.AreNotEqual(WirePayload, binaryData.ToString());
+
+            var model2 = ModelReaderWriter.Read<ResourceProviderData>(binaryData, options);
+            Assert.NotNull(model2);
+            Assert.AreEqual(model!.Id, model2!.Id);
+            Assert.AreEqual(model.Namespace, model2.Namespace);
+            Assert.AreEqual(model.RegistrationPolicy, model2.RegistrationPolicy);
+            Assert.AreEqual(model.RegistrationState, model2.RegistrationState);
+            Assert.AreEqual(model.ResourceTypes.Count, model2.ResourceTypes.Count);
+        }
     }
 }

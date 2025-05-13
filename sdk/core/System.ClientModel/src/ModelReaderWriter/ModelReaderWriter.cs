@@ -5,6 +5,7 @@ using System.ClientModel.Internal;
 using System.Collections;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
+using System.Text.Json;
 
 namespace System.ClientModel.Primitives;
 
@@ -154,7 +155,7 @@ public static class ModelReaderWriter
         }
         else
         {
-            return model.Write(options);
+            return options.ResolveProxy(model).Write(options);
         }
     }
 
@@ -277,7 +278,15 @@ public static class ModelReaderWriter
         }
         else if (returnObj is IPersistableModel<object> persistableModel)
         {
-            return persistableModel.Create(data, options);
+            if (ShouldWriteAsJson(persistableModel, options, out IJsonModel<object>? jsonModel))
+            {
+                Utf8JsonReader reader = new(data);
+                return options.ResolveProxy(jsonModel).Create(ref reader, options);
+            }
+            else
+            {
+                return options.ResolveProxy(persistableModel).Create(data, options);
+            }
         }
         else
         {

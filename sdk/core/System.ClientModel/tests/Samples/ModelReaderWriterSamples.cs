@@ -59,6 +59,94 @@ internal class ModelReaderWriterSamples
         #endregion
     }
 
+    public void Write_Proxy()
+    {
+        #region Snippet:Readme_Write_Proxy
+        InputModel model = new InputModel();
+
+        ModelReaderWriterOptions options = new ModelReaderWriterOptions("W");
+        options.AddProxy(new InputModelProxy());
+
+        BinaryData data = ModelReaderWriter.Write(model, options);
+        #endregion
+    }
+
+    public void Read_Proxy()
+    {
+        #region Snippet:Readme_Read_Proxy
+        string json = @"{
+              ""x"": 1,
+              ""y"": 2,
+              ""z"": 3
+            }";
+
+        ModelReaderWriterOptions options = new ModelReaderWriterOptions("W");
+        options.AddProxy(new OutputModelProxy());
+
+        OutputModel? model = ModelReaderWriter.Read<OutputModel>(BinaryData.FromString(json), options);
+        #endregion
+    }
+
+    #region Snippet:Readme_Read_Proxy_ClassStub
+    public class OutputModelProxy : IJsonModel<OutputModel>
+    #endregion
+    {
+        void IJsonModel<OutputModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            throw new NotImplementedException();
+        }
+
+        OutputModel IJsonModel<OutputModel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            throw new NotImplementedException();
+        }
+
+        BinaryData IPersistableModel<OutputModel>.Write(ModelReaderWriterOptions options)
+        {
+            throw new NotImplementedException();
+        }
+
+        OutputModel IPersistableModel<OutputModel>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            throw new NotImplementedException();
+        }
+
+        string IPersistableModel<OutputModel>.GetFormatFromOptions(ModelReaderWriterOptions options)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    #region Snippet:Readme_Write_Proxy_ClassStub
+    public class InputModelProxy : IJsonModel<InputModel>
+    #endregion
+    {
+        void IJsonModel<InputModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            throw new NotImplementedException();
+        }
+
+        InputModel IJsonModel<InputModel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            throw new NotImplementedException();
+        }
+
+        BinaryData IPersistableModel<InputModel>.Write(ModelReaderWriterOptions options)
+        {
+            throw new NotImplementedException();
+        }
+
+        InputModel IPersistableModel<InputModel>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            throw new NotImplementedException();
+        }
+
+        string IPersistableModel<InputModel>.GetFormatFromOptions(ModelReaderWriterOptions options)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
     public void ModelReaderWriterContext_Usage()
     {
         var myObject = new MyPersistableModel();

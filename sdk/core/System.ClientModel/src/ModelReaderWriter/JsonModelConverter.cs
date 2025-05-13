@@ -20,8 +20,8 @@ namespace System.ClientModel.Primitives;
 public class JsonModelConverter : JsonConverter<IJsonModel<object>>
 #pragma warning restore AZC0014 // Avoid using banned types in public API
 {
-    private ModelReaderWriterOptions _options;
-    private ModelReaderWriterContext? _context;
+    private readonly ModelReaderWriterOptions _options;
+    private readonly ModelReaderWriterContext? _context;
 
     /// <summary>
     /// Initializes a new instance of <see cref="JsonModelConverter"/> with a default options of <see cref="ModelReaderWriterOptions.Json"/>.
@@ -87,7 +87,10 @@ public class JsonModelConverter : JsonConverter<IJsonModel<object>>
             return context.GetTypeBuilder(typeToConvert).CreateObject() as IJsonModel<object>;
         }
 
-        IJsonModel<object>? iJsonModel = _context is null ? NonAotCompatActivate() : AotCompatActivate();
+        if (!_options.TryGetProxy(typeToConvert, out IJsonModel<object>? iJsonModel))
+        {
+            iJsonModel = _context is null ? NonAotCompatActivate() : AotCompatActivate();
+        }
 
         if (iJsonModel is null)
         {
@@ -101,6 +104,6 @@ public class JsonModelConverter : JsonConverter<IJsonModel<object>>
     public override void Write(Utf8JsonWriter writer, IJsonModel<object> value, JsonSerializerOptions options)
 #pragma warning restore AZC0014 // Avoid using banned types in public API
     {
-        value.Write(writer, _options);
+        _options.ResolveProxy(value).Write(writer, _options);
     }
 }

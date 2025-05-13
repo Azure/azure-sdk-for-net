@@ -54,3 +54,47 @@ string json = @"{
     }";
 OutputModel? model = JsonSerializer.Deserialize<OutputModel>(json, options);
 ```
+
+## Using a Proxy
+
+In more advanced scenarios a library user might want to override the behavior of how a model is read or written.
+In this case you can implement your own class which implements the same interface, either `IPersistableModel<T>` or `IJsonModel<T>`, and register it with the `ModelReaderWriterOptions`.
+Unlike the `PersistableModelProxy` attribute the proxy is only valid for a single instance of `ModelReaderWriterOptions` giving you more flexibility to turn it on or off.
+
+Using a proxy with the following definition
+
+```C# Snippet:Readme_Read_Proxy_ClassStub
+public class OutputModelProxy : IJsonModel<OutputModel>
+```
+
+The example below shows how to read JSON to create a strongly-typed model instance using a proxy.
+
+```C# Snippet:Readme_Read_Proxy
+string json = @"{
+      ""x"": 1,
+      ""y"": 2,
+      ""z"": 3
+    }";
+
+ModelReaderWriterOptions options = new ModelReaderWriterOptions("W");
+options.AddProxy(new OutputModelProxy());
+
+OutputModel? model = ModelReaderWriter.Read<OutputModel>(BinaryData.FromString(json), options);
+```
+
+Using a proxy with the following definition
+
+```C# Snippet:Readme_Write_Proxy_ClassStub
+public class InputModelProxy : IJsonModel<InputModel>
+```
+
+The example below shows how to write a persitable model using a proxy to `BinaryData`
+
+```C# Snippet:Readme_Write_Proxy
+InputModel model = new InputModel();
+
+ModelReaderWriterOptions options = new ModelReaderWriterOptions("W");
+options.AddProxy(new InputModelProxy());
+
+BinaryData data = ModelReaderWriter.Write(model, options);
+```
