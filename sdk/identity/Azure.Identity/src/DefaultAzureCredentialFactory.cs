@@ -35,7 +35,7 @@ namespace Azure.Identity
 
             if (credentialSelection != null && !_useDevCredentials && !_useProdCredentials)
             {
-                throw new InvalidOperationException($"Invalid value for environment variable AZURE_CREDENTIAL_SELECTION: {credentialSelection}. Valid values are 'dev' or 'prod'.");
+                throw new InvalidOperationException($"Invalid value for environment variable AZURE_TOKEN_CREDENTIALS: {credentialSelection}. Valid values are 'dev' or 'prod'.");
             }
 
             if (_useDefaultCredentialChain)

@@ -415,14 +415,14 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
-        public void ValidateDefaultAzureCredentialAZURE_CREDENTIAL_SELECTION_Honored([Values(null, "dev", "prod")] string setDisableDevTools)
+        public void ValidateDefaultAzureCredentialAZURE_TOKEN_CREDENTIALS_Honored([Values(null, "dev", "prod")] string setDisableDevTools)
         {
             using (new TestEnvVar(new Dictionary<string, string>
             {
                 { "AZURE_CLIENT_ID", null },
                 { "AZURE_USERNAME", null },
                 { "AZURE_TENANT_ID", null },
-                { "AZURE_CREDENTIAL_SELECTION", setDisableDevTools }
+                { "AZURE_TOKEN_CREDENTIALS", setDisableDevTools }
             }))
             {
                 DefaultAzureCredentialOptions options = new DefaultAzureCredentialOptions();
@@ -476,14 +476,14 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
-        public void InvalidAZURE_CREDENTIAL_SELECTION_Throws()
+        public void InvalidAZURE_TOKEN_CREDENTIALS_Throws()
         {
             using (new TestEnvVar(new Dictionary<string, string>
             {
                 { "AZURE_CLIENT_ID", null },
                 { "AZURE_USERNAME", null },
                 { "AZURE_TENANT_ID", null },
-                { "AZURE_CREDENTIAL_SELECTION", "bogus" }
+                { "AZURE_TOKEN_CREDENTIALS", "bogus" }
             }))
             {
                 DefaultAzureCredentialOptions options = new DefaultAzureCredentialOptions();
@@ -494,7 +494,7 @@ namespace Azure.Identity.Tests
 
         [Test]
         [TestCaseSource(nameof(ExcludeCredOptions))]
-        public void ValidateExcludeOptionsHonoredWithAZURE_CREDENTIAL_SELECTION_DevMode(
+        public void ValidateExcludeOptionsHonoredWithAZURE_TOKEN_CREDENTIALS_DevMode(
             bool excludeEnvironmentCredential,
             bool excludeWorkloadIdentityCredential,
             bool excludeManagedIdentityCredential,
@@ -511,7 +511,7 @@ namespace Azure.Identity.Tests
                 { "AZURE_CLIENT_ID", null },
                 { "AZURE_USERNAME", null },
                 { "AZURE_TENANT_ID", null },
-                { "AZURE_CREDENTIAL_SELECTION", "dev" }
+                { "AZURE_TOKEN_CREDENTIALS", "dev" }
             }))
             {
                 var expCredentialTypes = new List<Type>();
@@ -561,7 +561,7 @@ namespace Azure.Identity.Tests
 
         [Test]
         [TestCaseSource(nameof(ExcludeCredOptions))]
-        public void ValidateExcludeOptionsHonoredWithAZURE_CREDENTIAL_SELECTION_ProdMode(
+        public void ValidateExcludeOptionsHonoredWithAZURE_TOKEN_CREDENTIALS_ProdMode(
             bool excludeEnvironmentCredential,
             bool excludeWorkloadIdentityCredential,
             bool excludeManagedIdentityCredential,
@@ -578,7 +578,7 @@ namespace Azure.Identity.Tests
                 { "AZURE_CLIENT_ID", null },
                 { "AZURE_USERNAME", null },
                 { "AZURE_TENANT_ID", null },
-                { "AZURE_CREDENTIAL_SELECTION", "prod" }
+                { "AZURE_TOKEN_CREDENTIALS", "prod" }
             }))
             {
                 var expCredentialTypes = new List<Type>();
