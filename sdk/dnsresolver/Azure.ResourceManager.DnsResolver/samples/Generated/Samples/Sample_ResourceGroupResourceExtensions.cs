@@ -10,12 +10,13 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.DnsResolver.Models;
+using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.DnsResolver.Samples
 {
-    public partial class Sample_VirtualNetworkDnsResolverResource
+    public partial class Sample_ResourceGroupResourceExtensions
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
@@ -29,16 +30,16 @@ namespace Azure.ResourceManager.DnsResolver.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this VirtualNetworkDnsResolverResource created on azure
-            // for more information of creating VirtualNetworkDnsResolverResource, please refer to the document of VirtualNetworkDnsResolverResource
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
             string subscriptionId = "abdd4249-9f34-4cc6-8e42-c2e32110603e";
             string resourceGroupName = "sampleResourceGroup";
-            string virtualNetworkName = "sampleVirtualNetwork";
-            ResourceIdentifier virtualNetworkDnsResolverResourceId = VirtualNetworkDnsResolverResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualNetworkName);
-            VirtualNetworkDnsResolverResource virtualNetworkDnsResolver = client.GetVirtualNetworkDnsResolverResource(virtualNetworkDnsResolverResourceId);
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (WritableSubResource item in virtualNetworkDnsResolver.GetDnsResolversAsync())
+            string virtualNetworkName = "sampleVirtualNetwork";
+            await foreach (WritableSubResource item in resourceGroupResource.GetDnsResolversAsync(virtualNetworkName))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -58,16 +59,16 @@ namespace Azure.ResourceManager.DnsResolver.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this VirtualNetworkDnsResolverResource created on azure
-            // for more information of creating VirtualNetworkDnsResolverResource, please refer to the document of VirtualNetworkDnsResolverResource
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
             string subscriptionId = "abdd4249-9f34-4cc6-8e42-c2e32110603e";
             string resourceGroupName = "sampleResourceGroup";
-            string virtualNetworkName = "sampleVirtualNetwork";
-            ResourceIdentifier virtualNetworkDnsResolverResourceId = VirtualNetworkDnsResolverResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualNetworkName);
-            VirtualNetworkDnsResolverResource virtualNetworkDnsResolver = client.GetVirtualNetworkDnsResolverResource(virtualNetworkDnsResolverResourceId);
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (VirtualNetworkDnsForwardingRuleset item in virtualNetworkDnsResolver.GetDnsForwardingRulesetsAsync())
+            string virtualNetworkName = "sampleVirtualNetwork";
+            await foreach (VirtualNetworkDnsForwardingRuleset item in resourceGroupResource.GetDnsForwardingRulesetsAsync(virtualNetworkName))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -87,16 +88,16 @@ namespace Azure.ResourceManager.DnsResolver.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this VirtualNetworkDnsResolverResource created on azure
-            // for more information of creating VirtualNetworkDnsResolverResource, please refer to the document of VirtualNetworkDnsResolverResource
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
             string subscriptionId = "abdd4249-9f34-4cc6-8e42-c2e32110603e";
             string resourceGroupName = "sampleResourceGroup";
-            string virtualNetworkName = "sampleVirtualNetwork";
-            ResourceIdentifier virtualNetworkDnsResolverResourceId = VirtualNetworkDnsResolverResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualNetworkName);
-            VirtualNetworkDnsResolverResource virtualNetworkDnsResolver = client.GetVirtualNetworkDnsResolverResource(virtualNetworkDnsResolverResourceId);
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (WritableSubResource item in virtualNetworkDnsResolver.GetDnsResolverPoliciesByVirtualNetworkAsync())
+            string virtualNetworkName = "sampleVirtualNetwork";
+            await foreach (WritableSubResource item in resourceGroupResource.GetDnsResolverPoliciesByVirtualNetworkAsync(virtualNetworkName))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
