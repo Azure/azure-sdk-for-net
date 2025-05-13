@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
 using Azure.Communication.CallAutomation.Tests.Infrastructure;
-using Microsoft.Azure.Amqp.Framing;
 using NUnit.Framework;
 
 namespace Azure.Communication.CallAutomation.Tests.CallConnections
