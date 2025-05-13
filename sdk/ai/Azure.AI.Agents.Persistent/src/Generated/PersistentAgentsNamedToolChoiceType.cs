@@ -25,9 +25,6 @@ namespace Azure.AI.Agents.Persistent
         private const string FunctionValue = "function";
         private const string CodeInterpreterValue = "code_interpreter";
         private const string FileSearchValue = "file_search";
-        private const string BingGroundingValue = "bing_grounding";
-        private const string MicrosoftFabricValue = "fabric_dataagent";
-        private const string SharepointValue = "sharepoint_grounding";
         private const string AzureAISearchValue = "azure_ai_search";
         private const string BingCustomSearchValue = "bing_custom_search";
         private const string ConnectedAgentValue = "connected_agent";
@@ -38,12 +35,6 @@ namespace Azure.AI.Agents.Persistent
         public static PersistentAgentsNamedToolChoiceType CodeInterpreter { get; } = new PersistentAgentsNamedToolChoiceType(CodeInterpreterValue);
         /// <summary> Tool type `file_search`. </summary>
         public static PersistentAgentsNamedToolChoiceType FileSearch { get; } = new PersistentAgentsNamedToolChoiceType(FileSearchValue);
-        /// <summary> Tool type `bing_grounding`. </summary>
-        public static PersistentAgentsNamedToolChoiceType BingGrounding { get; } = new PersistentAgentsNamedToolChoiceType(BingGroundingValue);
-        /// <summary> Tool type `fabric_dataagent`. </summary>
-        public static PersistentAgentsNamedToolChoiceType MicrosoftFabric { get; } = new PersistentAgentsNamedToolChoiceType(MicrosoftFabricValue);
-        /// <summary> Tool type `sharepoint_grounding`. </summary>
-        public static PersistentAgentsNamedToolChoiceType Sharepoint { get; } = new PersistentAgentsNamedToolChoiceType(SharepointValue);
         /// <summary> Tool type `azure_ai_search`. </summary>
         public static PersistentAgentsNamedToolChoiceType AzureAISearch { get; } = new PersistentAgentsNamedToolChoiceType(AzureAISearchValue);
         /// <summary> Tool type `bing_custom_search`. </summary>

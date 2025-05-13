@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Agents.Persistent
 {
     /// <summary> A set of index resources used by the `azure_ai_search` tool. </summary>
-    public partial class AzureAISearchResource
+    public partial class AzureAISearchToolResource
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,19 +45,19 @@ namespace Azure.AI.Agents.Persistent
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="AzureAISearchResource"/>. </summary>
-        public AzureAISearchResource()
+        /// <summary> Initializes a new instance of <see cref="AzureAISearchToolResource"/>. </summary>
+        public AzureAISearchToolResource()
         {
             IndexList = new ChangeTrackingList<AISearchIndexResource>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="AzureAISearchResource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureAISearchToolResource"/>. </summary>
         /// <param name="indexList">
         /// The indices attached to this agent. There can be a maximum of 1 index
         /// resource attached to the agent.
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AzureAISearchResource(IList<AISearchIndexResource> indexList, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AzureAISearchToolResource(IList<AISearchIndexResource> indexList, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IndexList = indexList;
             _serializedAdditionalRawData = serializedAdditionalRawData;

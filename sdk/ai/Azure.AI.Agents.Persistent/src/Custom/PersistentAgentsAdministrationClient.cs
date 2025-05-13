@@ -46,10 +46,10 @@ namespace Azure.AI.Agents.Persistent
             // TODO: Remve this code when 1DP endpoint will be available and just call the upsteam constructor.
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(credential, nameof(credential));
+            options ??= new PersistentAgentsAdministrationClientOptions();
 
             if (s_is_test_run && endpoint.Split(';').Length == 4)
             {
-                options ??= new PersistentAgentsAdministrationClientOptions(PersistentAgentsAdministrationClientOptions.ServiceVersion.V2025_05_01);
                 ClientDiagnostics = new ClientDiagnostics(options, true);
                 _tokenCredential = credential;
                 _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, ["https://management.azure.com/.default"]) }, new ResponseClassifier());
@@ -58,7 +58,6 @@ namespace Azure.AI.Agents.Persistent
             }
             else
             {
-                options ??= new PersistentAgentsAdministrationClientOptions();
                 ClientDiagnostics = new ClientDiagnostics(options, true);
                 _tokenCredential = credential;
                 _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) }, new ResponseClassifier());
