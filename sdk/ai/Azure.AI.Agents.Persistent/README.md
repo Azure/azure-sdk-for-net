@@ -834,7 +834,7 @@ OpenApiToolDefinition openapiTool = new(
     name: "get_weather",
     description: "Retrieve weather information for a location",
     spec: BinaryData.FromBytes(System.IO.File.ReadAllBytes(file_path)),
-    auth: oaiAuth,
+    openApiAuthentication: oaiAuth,
     defaultParams: [ "format" ]
 );
 
