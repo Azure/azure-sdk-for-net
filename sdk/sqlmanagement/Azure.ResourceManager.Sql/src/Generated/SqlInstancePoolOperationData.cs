@@ -14,10 +14,10 @@ using Azure.ResourceManager.Sql.Models;
 namespace Azure.ResourceManager.Sql
 {
     /// <summary>
-    /// A class representing the InstancePoolOperation data model.
+    /// A class representing the SqlInstancePoolOperation data model.
     /// A instance pool operation.
     /// </summary>
-    public partial class InstancePoolOperationData : ResourceData
+    public partial class SqlInstancePoolOperationData : ResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -51,12 +51,12 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="InstancePoolOperationData"/>. </summary>
-        public InstancePoolOperationData()
+        /// <summary> Initializes a new instance of <see cref="SqlInstancePoolOperationData"/>. </summary>
+        public SqlInstancePoolOperationData()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="InstancePoolOperationData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlInstancePoolOperationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="description"> The operation description. </param>
         /// <param name="isCancellable"> Whether the operation can be cancelled. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal InstancePoolOperationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string instancePoolName, string operation, string operationFriendlyName, int? percentComplete, DateTimeOffset? startOn, ManagementOperationState? state, int? errorCode, string errorDescription, int? errorSeverity, ErrorType? errorType, DateTimeOffset? estimatedCompleteOn, string description, bool? isCancellable, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal SqlInstancePoolOperationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string instancePoolName, string operation, string operationFriendlyName, int? percentComplete, DateTimeOffset? startOn, ManagementOperationState? state, int? errorCode, string errorDescription, int? errorSeverity, ErrorType? errorType, DateTimeOffset? estimatedCompleteOn, string description, bool? isCancellable, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             InstancePoolName = instancePoolName;
             Operation = operation;

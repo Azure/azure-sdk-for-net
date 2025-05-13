@@ -134,10 +134,10 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("storageThroughputMBps"u8);
                 writer.WriteNumberValue(StorageThroughputMBps.Value);
             }
-            if (Optional.IsDefined(TotalMemoryMB))
+            if (Optional.IsDefined(TotalMemoryInMB))
             {
                 writer.WritePropertyName("totalMemoryMB"u8);
-                writer.WriteNumberValue(TotalMemoryMB.Value);
+                writer.WriteNumberValue(TotalMemoryInMB.Value);
             }
             if (Optional.IsDefined(Collation))
             {

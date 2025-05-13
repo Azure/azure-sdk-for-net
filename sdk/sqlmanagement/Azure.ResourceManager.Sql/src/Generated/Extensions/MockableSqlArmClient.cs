@@ -600,15 +600,15 @@ namespace Azure.ResourceManager.Sql.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="InstancePoolOperationResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="InstancePoolOperationResource.CreateResourceIdentifier" /> to create an <see cref="InstancePoolOperationResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="SqlInstancePoolOperationResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SqlInstancePoolOperationResource.CreateResourceIdentifier" /> to create a <see cref="SqlInstancePoolOperationResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="InstancePoolOperationResource"/> object. </returns>
-        public virtual InstancePoolOperationResource GetInstancePoolOperationResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SqlInstancePoolOperationResource"/> object. </returns>
+        public virtual SqlInstancePoolOperationResource GetSqlInstancePoolOperationResource(ResourceIdentifier id)
         {
-            InstancePoolOperationResource.ValidateResourceId(id);
-            return new InstancePoolOperationResource(Client, id);
+            SqlInstancePoolOperationResource.ValidateResourceId(id);
+            return new SqlInstancePoolOperationResource(Client, id);
         }
 
         /// <summary>

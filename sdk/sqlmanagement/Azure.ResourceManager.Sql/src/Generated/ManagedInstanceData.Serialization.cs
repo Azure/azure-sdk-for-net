@@ -127,10 +127,10 @@ namespace Azure.ResourceManager.Sql
                 writer.WritePropertyName("storageThroughputMBps"u8);
                 writer.WriteNumberValue(StorageThroughputMBps.Value);
             }
-            if (Optional.IsDefined(TotalMemoryMB))
+            if (Optional.IsDefined(TotalMemoryInMB))
             {
                 writer.WritePropertyName("totalMemoryMB"u8);
-                writer.WriteNumberValue(TotalMemoryMB.Value);
+                writer.WriteNumberValue(TotalMemoryInMB.Value);
             }
             if (Optional.IsDefined(Collation))
             {
@@ -1216,7 +1216,7 @@ namespace Azure.ResourceManager.Sql
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TotalMemoryMB), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TotalMemoryInMB), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("    totalMemoryMB: ");
@@ -1224,10 +1224,10 @@ namespace Azure.ResourceManager.Sql
             }
             else
             {
-                if (Optional.IsDefined(TotalMemoryMB))
+                if (Optional.IsDefined(TotalMemoryInMB))
                 {
                     builder.Append("    totalMemoryMB: ");
-                    builder.AppendLine($"{TotalMemoryMB.Value}");
+                    builder.AppendLine($"{TotalMemoryInMB.Value}");
                 }
             }
 

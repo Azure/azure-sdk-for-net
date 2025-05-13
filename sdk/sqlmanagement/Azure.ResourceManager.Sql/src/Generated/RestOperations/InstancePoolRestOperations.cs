@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="instancePoolName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="instancePoolName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<InstancePoolOperationData>> GetAsync(string subscriptionId, string resourceGroupName, string instancePoolName, Guid operationId, CancellationToken cancellationToken = default)
+        public async Task<Response<SqlInstancePoolOperationData>> GetAsync(string subscriptionId, string resourceGroupName, string instancePoolName, Guid operationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -188,13 +188,13 @@ namespace Azure.ResourceManager.Sql
             {
                 case 200:
                     {
-                        InstancePoolOperationData value = default;
+                        SqlInstancePoolOperationData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = InstancePoolOperationData.DeserializeInstancePoolOperationData(document.RootElement);
+                        value = SqlInstancePoolOperationData.DeserializeSqlInstancePoolOperationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((InstancePoolOperationData)null, message.Response);
+                    return Response.FromValue((SqlInstancePoolOperationData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="instancePoolName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="instancePoolName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<InstancePoolOperationData> Get(string subscriptionId, string resourceGroupName, string instancePoolName, Guid operationId, CancellationToken cancellationToken = default)
+        public Response<SqlInstancePoolOperationData> Get(string subscriptionId, string resourceGroupName, string instancePoolName, Guid operationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -220,13 +220,13 @@ namespace Azure.ResourceManager.Sql
             {
                 case 200:
                     {
-                        InstancePoolOperationData value = default;
+                        SqlInstancePoolOperationData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = InstancePoolOperationData.DeserializeInstancePoolOperationData(document.RootElement);
+                        value = SqlInstancePoolOperationData.DeserializeSqlInstancePoolOperationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((InstancePoolOperationData)null, message.Response);
+                    return Response.FromValue((SqlInstancePoolOperationData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }

@@ -398,6 +398,9 @@ rename-mapping:
   ReplicaSynchronizationHealth: SqlReplicaSynchronizationHealth
   ReplicationModeType: SqlReplicationModeType
   RoleChangeType: DistributedAvailabilityGroupRoleChangeType
+  InstancePoolOperation: SqlInstancePoolOperation
+  ManagedInstance.properties.totalMemoryMB: TotalMemoryInMB
+  ManagedInstanceUpdate.properties.totalMemoryMB: TotalMemoryInMB
 
 prompted-enum-values:
   - Default

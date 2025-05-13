@@ -18,28 +18,28 @@ using Azure.Core.Pipeline;
 namespace Azure.ResourceManager.Sql
 {
     /// <summary>
-    /// A class representing a collection of <see cref="InstancePoolOperationResource"/> and their operations.
-    /// Each <see cref="InstancePoolOperationResource"/> in the collection will belong to the same instance of <see cref="InstancePoolResource"/>.
-    /// To get an <see cref="InstancePoolOperationCollection"/> instance call the GetInstancePoolOperations method from an instance of <see cref="InstancePoolResource"/>.
+    /// A class representing a collection of <see cref="SqlInstancePoolOperationResource"/> and their operations.
+    /// Each <see cref="SqlInstancePoolOperationResource"/> in the collection will belong to the same instance of <see cref="InstancePoolResource"/>.
+    /// To get a <see cref="SqlInstancePoolOperationCollection"/> instance call the GetSqlInstancePoolOperations method from an instance of <see cref="InstancePoolResource"/>.
     /// </summary>
-    public partial class InstancePoolOperationCollection : ArmCollection, IEnumerable<InstancePoolOperationResource>, IAsyncEnumerable<InstancePoolOperationResource>
+    public partial class SqlInstancePoolOperationCollection : ArmCollection, IEnumerable<SqlInstancePoolOperationResource>, IAsyncEnumerable<SqlInstancePoolOperationResource>
     {
-        private readonly ClientDiagnostics _instancePoolOperationClientDiagnostics;
-        private readonly InstancePoolRestOperations _instancePoolOperationRestClient;
+        private readonly ClientDiagnostics _sqlInstancePoolOperationInstancePoolOperationsClientDiagnostics;
+        private readonly InstancePoolRestOperations _sqlInstancePoolOperationInstancePoolOperationsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="InstancePoolOperationCollection"/> class for mocking. </summary>
-        protected InstancePoolOperationCollection()
+        /// <summary> Initializes a new instance of the <see cref="SqlInstancePoolOperationCollection"/> class for mocking. </summary>
+        protected SqlInstancePoolOperationCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="InstancePoolOperationCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SqlInstancePoolOperationCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        internal InstancePoolOperationCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal SqlInstancePoolOperationCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _instancePoolOperationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", InstancePoolOperationResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(InstancePoolOperationResource.ResourceType, out string instancePoolOperationApiVersion);
-            _instancePoolOperationRestClient = new InstancePoolRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, instancePoolOperationApiVersion);
+            _sqlInstancePoolOperationInstancePoolOperationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", SqlInstancePoolOperationResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(SqlInstancePoolOperationResource.ResourceType, out string sqlInstancePoolOperationInstancePoolOperationsApiVersion);
+            _sqlInstancePoolOperationInstancePoolOperationsRestClient = new InstancePoolRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, sqlInstancePoolOperationInstancePoolOperationsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -68,22 +68,22 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="InstancePoolOperationResource"/></description>
+        /// <description><see cref="SqlInstancePoolOperationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="operationId"> The <see cref="Guid"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<InstancePoolOperationResource>> GetAsync(Guid operationId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SqlInstancePoolOperationResource>> GetAsync(Guid operationId, CancellationToken cancellationToken = default)
         {
-            using var scope = _instancePoolOperationClientDiagnostics.CreateScope("InstancePoolOperationCollection.Get");
+            using var scope = _sqlInstancePoolOperationInstancePoolOperationsClientDiagnostics.CreateScope("SqlInstancePoolOperationCollection.Get");
             scope.Start();
             try
             {
-                var response = await _instancePoolOperationRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, operationId, cancellationToken).ConfigureAwait(false);
+                var response = await _sqlInstancePoolOperationInstancePoolOperationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, operationId, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new InstancePoolOperationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SqlInstancePoolOperationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -109,22 +109,22 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="InstancePoolOperationResource"/></description>
+        /// <description><see cref="SqlInstancePoolOperationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="operationId"> The <see cref="Guid"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<InstancePoolOperationResource> Get(Guid operationId, CancellationToken cancellationToken = default)
+        public virtual Response<SqlInstancePoolOperationResource> Get(Guid operationId, CancellationToken cancellationToken = default)
         {
-            using var scope = _instancePoolOperationClientDiagnostics.CreateScope("InstancePoolOperationCollection.Get");
+            using var scope = _sqlInstancePoolOperationInstancePoolOperationsClientDiagnostics.CreateScope("SqlInstancePoolOperationCollection.Get");
             scope.Start();
             try
             {
-                var response = _instancePoolOperationRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, operationId, cancellationToken);
+                var response = _sqlInstancePoolOperationInstancePoolOperationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, operationId, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new InstancePoolOperationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SqlInstancePoolOperationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -150,17 +150,17 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="InstancePoolOperationResource"/></description>
+        /// <description><see cref="SqlInstancePoolOperationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="InstancePoolOperationResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<InstancePoolOperationResource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="SqlInstancePoolOperationResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SqlInstancePoolOperationResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _instancePoolOperationRestClient.CreateListByInstancePoolRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _instancePoolOperationRestClient.CreateListByInstancePoolNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new InstancePoolOperationResource(Client, InstancePoolOperationData.DeserializeInstancePoolOperationData(e)), _instancePoolOperationClientDiagnostics, Pipeline, "InstancePoolOperationCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlInstancePoolOperationInstancePoolOperationsRestClient.CreateListByInstancePoolRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sqlInstancePoolOperationInstancePoolOperationsRestClient.CreateListByInstancePoolNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SqlInstancePoolOperationResource(Client, SqlInstancePoolOperationData.DeserializeSqlInstancePoolOperationData(e)), _sqlInstancePoolOperationInstancePoolOperationsClientDiagnostics, Pipeline, "SqlInstancePoolOperationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -180,17 +180,17 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="InstancePoolOperationResource"/></description>
+        /// <description><see cref="SqlInstancePoolOperationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="InstancePoolOperationResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<InstancePoolOperationResource> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SqlInstancePoolOperationResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SqlInstancePoolOperationResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _instancePoolOperationRestClient.CreateListByInstancePoolRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _instancePoolOperationRestClient.CreateListByInstancePoolNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new InstancePoolOperationResource(Client, InstancePoolOperationData.DeserializeInstancePoolOperationData(e)), _instancePoolOperationClientDiagnostics, Pipeline, "InstancePoolOperationCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlInstancePoolOperationInstancePoolOperationsRestClient.CreateListByInstancePoolRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sqlInstancePoolOperationInstancePoolOperationsRestClient.CreateListByInstancePoolNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SqlInstancePoolOperationResource(Client, SqlInstancePoolOperationData.DeserializeSqlInstancePoolOperationData(e)), _sqlInstancePoolOperationInstancePoolOperationsClientDiagnostics, Pipeline, "SqlInstancePoolOperationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="InstancePoolOperationResource"/></description>
+        /// <description><see cref="SqlInstancePoolOperationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -218,11 +218,11 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<bool>> ExistsAsync(Guid operationId, CancellationToken cancellationToken = default)
         {
-            using var scope = _instancePoolOperationClientDiagnostics.CreateScope("InstancePoolOperationCollection.Exists");
+            using var scope = _sqlInstancePoolOperationInstancePoolOperationsClientDiagnostics.CreateScope("SqlInstancePoolOperationCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _instancePoolOperationRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, operationId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _sqlInstancePoolOperationInstancePoolOperationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, operationId, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="InstancePoolOperationResource"/></description>
+        /// <description><see cref="SqlInstancePoolOperationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -257,11 +257,11 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<bool> Exists(Guid operationId, CancellationToken cancellationToken = default)
         {
-            using var scope = _instancePoolOperationClientDiagnostics.CreateScope("InstancePoolOperationCollection.Exists");
+            using var scope = _sqlInstancePoolOperationInstancePoolOperationsClientDiagnostics.CreateScope("SqlInstancePoolOperationCollection.Exists");
             scope.Start();
             try
             {
-                var response = _instancePoolOperationRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, operationId, cancellationToken: cancellationToken);
+                var response = _sqlInstancePoolOperationInstancePoolOperationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, operationId, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -288,22 +288,22 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="InstancePoolOperationResource"/></description>
+        /// <description><see cref="SqlInstancePoolOperationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="operationId"> The <see cref="Guid"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<NullableResponse<InstancePoolOperationResource>> GetIfExistsAsync(Guid operationId, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<SqlInstancePoolOperationResource>> GetIfExistsAsync(Guid operationId, CancellationToken cancellationToken = default)
         {
-            using var scope = _instancePoolOperationClientDiagnostics.CreateScope("InstancePoolOperationCollection.GetIfExists");
+            using var scope = _sqlInstancePoolOperationInstancePoolOperationsClientDiagnostics.CreateScope("SqlInstancePoolOperationCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _instancePoolOperationRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, operationId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _sqlInstancePoolOperationInstancePoolOperationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, operationId, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    return new NoValueResponse<InstancePoolOperationResource>(response.GetRawResponse());
-                return Response.FromValue(new InstancePoolOperationResource(Client, response.Value), response.GetRawResponse());
+                    return new NoValueResponse<SqlInstancePoolOperationResource>(response.GetRawResponse());
+                return Response.FromValue(new SqlInstancePoolOperationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -329,22 +329,22 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="InstancePoolOperationResource"/></description>
+        /// <description><see cref="SqlInstancePoolOperationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="operationId"> The <see cref="Guid"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual NullableResponse<InstancePoolOperationResource> GetIfExists(Guid operationId, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<SqlInstancePoolOperationResource> GetIfExists(Guid operationId, CancellationToken cancellationToken = default)
         {
-            using var scope = _instancePoolOperationClientDiagnostics.CreateScope("InstancePoolOperationCollection.GetIfExists");
+            using var scope = _sqlInstancePoolOperationInstancePoolOperationsClientDiagnostics.CreateScope("SqlInstancePoolOperationCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _instancePoolOperationRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, operationId, cancellationToken: cancellationToken);
+                var response = _sqlInstancePoolOperationInstancePoolOperationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, operationId, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                    return new NoValueResponse<InstancePoolOperationResource>(response.GetRawResponse());
-                return Response.FromValue(new InstancePoolOperationResource(Client, response.Value), response.GetRawResponse());
+                    return new NoValueResponse<SqlInstancePoolOperationResource>(response.GetRawResponse());
+                return Response.FromValue(new SqlInstancePoolOperationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -353,7 +353,7 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        IEnumerator<InstancePoolOperationResource> IEnumerable<InstancePoolOperationResource>.GetEnumerator()
+        IEnumerator<SqlInstancePoolOperationResource> IEnumerable<SqlInstancePoolOperationResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -363,7 +363,7 @@ namespace Azure.ResourceManager.Sql
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<InstancePoolOperationResource> IAsyncEnumerable<InstancePoolOperationResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<SqlInstancePoolOperationResource> IAsyncEnumerable<SqlInstancePoolOperationResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

@@ -928,22 +928,22 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="InstancePoolOperationResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="InstancePoolOperationResource.CreateResourceIdentifier" /> to create an <see cref="InstancePoolOperationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SqlInstancePoolOperationResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SqlInstancePoolOperationResource.CreateResourceIdentifier" /> to create a <see cref="SqlInstancePoolOperationResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableSqlArmClient.GetInstancePoolOperationResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSqlArmClient.GetSqlInstancePoolOperationResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="InstancePoolOperationResource"/> object. </returns>
-        public static InstancePoolOperationResource GetInstancePoolOperationResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SqlInstancePoolOperationResource"/> object. </returns>
+        public static SqlInstancePoolOperationResource GetSqlInstancePoolOperationResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableSqlArmClient(client).GetInstancePoolOperationResource(id);
+            return GetMockableSqlArmClient(client).GetSqlInstancePoolOperationResource(id);
         }
 
         /// <summary>

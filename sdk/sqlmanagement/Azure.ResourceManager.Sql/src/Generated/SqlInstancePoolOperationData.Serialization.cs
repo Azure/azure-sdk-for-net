@@ -16,11 +16,11 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    public partial class InstancePoolOperationData : IUtf8JsonSerializable, IJsonModel<InstancePoolOperationData>
+    public partial class SqlInstancePoolOperationData : IUtf8JsonSerializable, IJsonModel<SqlInstancePoolOperationData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<InstancePoolOperationData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SqlInstancePoolOperationData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<InstancePoolOperationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<SqlInstancePoolOperationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -31,10 +31,10 @@ namespace Azure.ResourceManager.Sql
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<InstancePoolOperationData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SqlInstancePoolOperationData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InstancePoolOperationData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(SqlInstancePoolOperationData)} does not support writing '{format}' format.");
             }
 
             base.JsonModelWriteCore(writer, options);
@@ -108,19 +108,19 @@ namespace Azure.ResourceManager.Sql
             writer.WriteEndObject();
         }
 
-        InstancePoolOperationData IJsonModel<InstancePoolOperationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        SqlInstancePoolOperationData IJsonModel<SqlInstancePoolOperationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<InstancePoolOperationData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SqlInstancePoolOperationData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InstancePoolOperationData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(SqlInstancePoolOperationData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeInstancePoolOperationData(document.RootElement, options);
+            return DeserializeSqlInstancePoolOperationData(document.RootElement, options);
         }
 
-        internal static InstancePoolOperationData DeserializeInstancePoolOperationData(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static SqlInstancePoolOperationData DeserializeSqlInstancePoolOperationData(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.Sql
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new InstancePoolOperationData(
+            return new SqlInstancePoolOperationData(
                 id,
                 name,
                 type,
@@ -618,9 +618,9 @@ namespace Azure.ResourceManager.Sql
             return BinaryData.FromString(builder.ToString());
         }
 
-        BinaryData IPersistableModel<InstancePoolOperationData>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<SqlInstancePoolOperationData>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<InstancePoolOperationData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SqlInstancePoolOperationData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
@@ -629,26 +629,26 @@ namespace Azure.ResourceManager.Sql
                 case "bicep":
                     return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(InstancePoolOperationData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SqlInstancePoolOperationData)} does not support writing '{options.Format}' format.");
             }
         }
 
-        InstancePoolOperationData IPersistableModel<InstancePoolOperationData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        SqlInstancePoolOperationData IPersistableModel<SqlInstancePoolOperationData>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<InstancePoolOperationData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SqlInstancePoolOperationData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeInstancePoolOperationData(document.RootElement, options);
+                        return DeserializeSqlInstancePoolOperationData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(InstancePoolOperationData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SqlInstancePoolOperationData)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<InstancePoolOperationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<SqlInstancePoolOperationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

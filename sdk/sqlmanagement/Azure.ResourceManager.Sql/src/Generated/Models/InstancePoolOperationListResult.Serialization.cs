@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            IReadOnlyList<InstancePoolOperationData> value = default;
+            IReadOnlyList<SqlInstancePoolOperationData> value = default;
             string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -100,10 +100,10 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    List<InstancePoolOperationData> array = new List<InstancePoolOperationData>();
+                    List<SqlInstancePoolOperationData> array = new List<SqlInstancePoolOperationData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(InstancePoolOperationData.DeserializeInstancePoolOperationData(item, options));
+                        array.Add(SqlInstancePoolOperationData.DeserializeSqlInstancePoolOperationData(item, options));
                     }
                     value = array;
                     continue;
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new InstancePoolOperationListResult(value ?? new ChangeTrackingList<InstancePoolOperationData>(), nextLink, serializedAdditionalRawData);
+            return new InstancePoolOperationListResult(value ?? new ChangeTrackingList<SqlInstancePoolOperationData>(), nextLink, serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)

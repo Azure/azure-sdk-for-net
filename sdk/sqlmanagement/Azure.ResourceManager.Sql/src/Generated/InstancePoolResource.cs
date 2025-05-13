@@ -100,11 +100,11 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of InstancePoolOperationResources in the InstancePool. </summary>
-        /// <returns> An object representing collection of InstancePoolOperationResources and their operations over a InstancePoolOperationResource. </returns>
-        public virtual InstancePoolOperationCollection GetInstancePoolOperations()
+        /// <summary> Gets a collection of SqlInstancePoolOperationResources in the InstancePool. </summary>
+        /// <returns> An object representing collection of SqlInstancePoolOperationResources and their operations over a SqlInstancePoolOperationResource. </returns>
+        public virtual SqlInstancePoolOperationCollection GetSqlInstancePoolOperations()
         {
-            return GetCachedClient(client => new InstancePoolOperationCollection(client, Id));
+            return GetCachedClient(client => new SqlInstancePoolOperationCollection(client, Id));
         }
 
         /// <summary>
@@ -124,16 +124,16 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="InstancePoolOperationResource"/></description>
+        /// <description><see cref="SqlInstancePoolOperationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="operationId"> The <see cref="Guid"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual async Task<Response<InstancePoolOperationResource>> GetInstancePoolOperationAsync(Guid operationId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SqlInstancePoolOperationResource>> GetSqlInstancePoolOperationAsync(Guid operationId, CancellationToken cancellationToken = default)
         {
-            return await GetInstancePoolOperations().GetAsync(operationId, cancellationToken).ConfigureAwait(false);
+            return await GetSqlInstancePoolOperations().GetAsync(operationId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -153,16 +153,16 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="InstancePoolOperationResource"/></description>
+        /// <description><see cref="SqlInstancePoolOperationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="operationId"> The <see cref="Guid"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual Response<InstancePoolOperationResource> GetInstancePoolOperation(Guid operationId, CancellationToken cancellationToken = default)
+        public virtual Response<SqlInstancePoolOperationResource> GetSqlInstancePoolOperation(Guid operationId, CancellationToken cancellationToken = default)
         {
-            return GetInstancePoolOperations().Get(operationId, cancellationToken);
+            return GetSqlInstancePoolOperations().Get(operationId, cancellationToken);
         }
 
         /// <summary>
