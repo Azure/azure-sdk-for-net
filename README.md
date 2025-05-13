@@ -52,6 +52,54 @@ Documentation and code samples for these libraries can be found [here](https://a
 * File an issue via [Github Issues](https://github.com/Azure/azure-sdk-for-net/issues/new/choose).
 * Check [previous questions](https://stackoverflow.com/questions/tagged/azure+.net) or ask new ones on StackOverflow using `azure` and `.net` tags.
 
+
+## Data Collection
+The software may collect information about you and your use of the software and send it to Microsoft. Microsoft may use this information to provide services and improve our products and services. You may turn off the telemetry as described below. You can learn more about data collection and use in the help documentation and Microsoft’s [privacy statement](https://go.microsoft.com/fwlink/?LinkID=824704). For more information on the data collected by the Azure SDK, please visit the [Telemetry Guidelines](https://azure.github.io/azure-sdk/general_azurecore.html#telemetry-policy) page.
+
+### Telemetry Configuration
+Telemetry collection is on by default.
+
+To opt out, you can disable telemetry at client construction. Create a `ClientOptions` for your specific client, every service client has an option class. Set `ApplicationId` as empty under `Diagnostics` inside service client option. Then pass service client option as argument during client creation. This will disable telemetry for all methods in the client. Do this for every new client.
+
+The example below uses the `Azure.Storage.Blobs` package. In your code, you can replace `Azure.Storage.Blobs` with the package you are using and use the corresponding `<Service>ClientOptions` instead of `BlobClientOptions`.
+
+```csharp
+using Azure.Identity;
+using Azure.Storage.Blobs;
+
+namespace dotnet.Service;
+
+public class BlobService
+{
+    private BlobServiceClient blobServiceClient;
+
+    public BlobService()
+    {
+        // Your blob service uri
+        var blobServiceEndpoint = "https://<storageaccountname>.blob.core.windows.net";
+
+        // Managed identity token credential discovered when running in Azure environments
+        TokenCredential credential = new ManagedIdentityCredential();
+
+        // Setup client options
+        var clientOptions = new BlobClientOptions
+        {
+            Diagnostics = { ApplicationId = string.Empty } // Set empty user agent
+        };
+
+        blobServiceClient = new BlobServiceClient(new Uri(blobServiceEndpoint), credential, clientOptions);
+    }
+
+    public BlobContainerClient GetContainerClient(string containerName)
+    {
+        return blobServiceClient.GetBlobContainerClient(containerName);
+    }
+
+    //TODO: do something with the container clinet like get BlobClient and download or upload a blob
+}
+```
+
+
 ### Community
 
 * Chat with other community members [![Join the chat at https://gitter.im/azure/azure-sdk-for-net](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/azure/azure-sdk-for-net?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
