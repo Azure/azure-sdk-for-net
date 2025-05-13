@@ -9,6 +9,7 @@
 ### Bugs Fixed
 
 ### Other Changes
+- Changed BlobBatch.RequestCount to be virtual so that it can be overridden and mocked.
 
 ## 12.22.0-beta.1 (2025-05-06)
 
