@@ -1,6 +1,6 @@
 # Release History
 
-## 2.0.0 (2025-06-10)
+## 2.0.0 (2025-06-06)
 
 ### Features Added
 - Upgraded api-version tag from 'package-preview-2023-07' to 'package-2025-05'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/b26a190235f162b15d77dad889d104d06871fb4f/specification/dnsresolver/resource-manager/readme.md.
@@ -8,16 +8,6 @@
 
 ### Breaking Changes
 - BlockResponseCode has been removed from the DnsSecurityRule Action type and can no longer be specified.
-
-## 1.2.0-beta.2 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
 
 ## 1.2.0-beta.1 (2024-10-24)
 
