@@ -15,6 +15,8 @@ namespace Encode.Datetime
 {
     public partial class Rfc7231DatetimeProperty : IJsonModel<Rfc7231DatetimeProperty>
     {
+        internal Rfc7231DatetimeProperty() => throw null;
+
         void IJsonModel<Rfc7231DatetimeProperty>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;

@@ -11,6 +11,7 @@ namespace BasicTypeSpec
 {
     internal static partial class FloatFixedEnumExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static float ToSerialSingle(this FloatFixedEnum value) => value switch
         {
             FloatFixedEnum.OneDotOne => 1.1F,
@@ -19,6 +20,7 @@ namespace BasicTypeSpec
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown FloatFixedEnum value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static FloatFixedEnum ToFloatFixedEnum(this float value)
         {
             if (value == 1.1F)

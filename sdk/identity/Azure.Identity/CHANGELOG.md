@@ -1,14 +1,11 @@
 # Release History
 
-## 1.14.0-beta.5 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
+## 1.14.0 (2025-05-12)
 
 ### Other Changes
+
+- Removed references to `Username`, `Password`, `AZURE_USERNAME`, and `AZURE_PASSWORD` in XML comments from `EnvironmentCredentialOptions` and `EnvironmentCredential` due to lack of MFA support. See [MFA enforcement details](https://aka.ms/azsdk/identity/mfa).
+- Marked `AZURE_USERNAME` and `AZURE_PASSWORD` as obsolete due to lack of MFA support. See [MFA enforcement details](https://aka.ms/azsdk/identity/mfa).
 
 ## 1.14.0-beta.4 (2025-05-01)
 

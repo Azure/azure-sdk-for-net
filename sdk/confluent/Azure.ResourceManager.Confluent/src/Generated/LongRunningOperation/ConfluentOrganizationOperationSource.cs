@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Confluent
 
         ConfluentOrganizationResource IOperationSource<ConfluentOrganizationResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ConfluentOrganizationData>(response.Content);
+            var data = ModelReaderWriter.Read<ConfluentOrganizationData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerConfluentContext.Default);
             return new ConfluentOrganizationResource(_client, data);
         }
 
         async ValueTask<ConfluentOrganizationResource> IOperationSource<ConfluentOrganizationResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ConfluentOrganizationData>(response.Content);
+            var data = ModelReaderWriter.Read<ConfluentOrganizationData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerConfluentContext.Default);
             return await Task.FromResult(new ConfluentOrganizationResource(_client, data)).ConfigureAwait(false);
         }
     }

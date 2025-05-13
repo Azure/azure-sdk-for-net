@@ -14,6 +14,10 @@
     <Compile Remove="Providers\TestData\ResourceClientProviderTests\Verify_ConstructorWithId.cs" />
     <Compile Remove="Providers\TestData\ResourceClientProviderTests\Verify_SyncOperationMethod.cs" />
     <Compile Remove="Providers\TestData\ResourceClientProviderTests\Verify_ValidateIdMethod.cs" />
+    <Compile Remove="Providers\TestData\ResourceCollectionClientProviderTests\Verify_GetOperationMethod.cs" />
+    <Compile Remove="Providers\TestData\ResourceCollectionClientProviderTests\Verify_GetAsyncOperationMethod.cs" />
+    <Compile Remove="Providers\TestData\ResourceCollectionClientProviderTests\Verify_ExistsOperationMethod.cs" />
+    <Compile Remove="Providers\TestData\ResourceCollectionClientProviderTests\Verify_ExistsAsyncOperationMethod.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -49,6 +53,18 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Providers\TestData\ResourceClientProviderTests\Verify_ValidateIdMethod.cs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Providers\TestData\ResourceCollectionClientProviderTests\Verify_GetOperationMethod.cs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Providers\TestData\ResourceCollectionClientProviderTests\Verify_GetAsyncOperationMethod.cs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Providers\TestData\ResourceCollectionClientProviderTests\Verify_ExistsOperationMethod.cs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Providers\TestData\ResourceCollectionClientProviderTests\Verify_ExistsAsyncOperationMethod.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>

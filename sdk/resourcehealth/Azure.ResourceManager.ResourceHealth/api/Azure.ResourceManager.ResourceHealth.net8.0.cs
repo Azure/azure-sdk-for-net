@@ -1,5 +1,11 @@
 namespace Azure.ResourceManager.ResourceHealth
 {
+    public partial class AzureResourceManagerResourceHealthContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureResourceManagerResourceHealthContext() { }
+        public static Azure.ResourceManager.ResourceHealth.AzureResourceManagerResourceHealthContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class ResourceHealthEventCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.ResourceHealth.ResourceHealthEventResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ResourceHealth.ResourceHealthEventResource>, System.Collections.IEnumerable
     {
         protected ResourceHealthEventCollection() { }

@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Datadog
 
         MonitoringTagRuleData IJsonModel<MonitoringTagRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MonitoringTagRuleData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<MonitoringTagRuleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<MonitoringTagRuleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<MonitoringTagRuleData>(Data, options, AzureResourceManagerDatadogContext.Default);
 
-        MonitoringTagRuleData IPersistableModel<MonitoringTagRuleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MonitoringTagRuleData>(data, options);
+        MonitoringTagRuleData IPersistableModel<MonitoringTagRuleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MonitoringTagRuleData>(data, options, AzureResourceManagerDatadogContext.Default);
 
         string IPersistableModel<MonitoringTagRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MonitoringTagRuleData>)Data).GetFormatFromOptions(options);
     }

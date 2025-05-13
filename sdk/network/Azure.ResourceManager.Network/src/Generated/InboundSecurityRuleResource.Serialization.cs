@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Network
 
         InboundSecurityRuleData IJsonModel<InboundSecurityRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<InboundSecurityRuleData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<InboundSecurityRuleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<InboundSecurityRuleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<InboundSecurityRuleData>(Data, options, AzureResourceManagerNetworkContext.Default);
 
-        InboundSecurityRuleData IPersistableModel<InboundSecurityRuleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<InboundSecurityRuleData>(data, options);
+        InboundSecurityRuleData IPersistableModel<InboundSecurityRuleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<InboundSecurityRuleData>(data, options, AzureResourceManagerNetworkContext.Default);
 
         string IPersistableModel<InboundSecurityRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<InboundSecurityRuleData>)Data).GetFormatFromOptions(options);
     }

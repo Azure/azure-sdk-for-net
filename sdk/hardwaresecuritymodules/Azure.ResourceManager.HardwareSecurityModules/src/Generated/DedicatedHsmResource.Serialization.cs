@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.HardwareSecurityModules
 
         DedicatedHsmData IJsonModel<DedicatedHsmData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DedicatedHsmData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<DedicatedHsmData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<DedicatedHsmData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DedicatedHsmData>(Data, options, AzureResourceManagerHardwareSecurityModulesContext.Default);
 
-        DedicatedHsmData IPersistableModel<DedicatedHsmData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DedicatedHsmData>(data, options);
+        DedicatedHsmData IPersistableModel<DedicatedHsmData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DedicatedHsmData>(data, options, AzureResourceManagerHardwareSecurityModulesContext.Default);
 
         string IPersistableModel<DedicatedHsmData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DedicatedHsmData>)Data).GetFormatFromOptions(options);
     }

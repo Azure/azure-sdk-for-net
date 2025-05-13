@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Sql
 
         ServerAdvancedThreatProtectionData IJsonModel<ServerAdvancedThreatProtectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ServerAdvancedThreatProtectionData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ServerAdvancedThreatProtectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<ServerAdvancedThreatProtectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ServerAdvancedThreatProtectionData>(Data, options, AzureResourceManagerSqlContext.Default);
 
-        ServerAdvancedThreatProtectionData IPersistableModel<ServerAdvancedThreatProtectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ServerAdvancedThreatProtectionData>(data, options);
+        ServerAdvancedThreatProtectionData IPersistableModel<ServerAdvancedThreatProtectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ServerAdvancedThreatProtectionData>(data, options, AzureResourceManagerSqlContext.Default);
 
         string IPersistableModel<ServerAdvancedThreatProtectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ServerAdvancedThreatProtectionData>)Data).GetFormatFromOptions(options);
     }

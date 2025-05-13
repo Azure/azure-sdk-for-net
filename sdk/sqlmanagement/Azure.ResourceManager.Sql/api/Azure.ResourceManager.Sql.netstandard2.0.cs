@@ -1,5 +1,11 @@
 namespace Azure.ResourceManager.Sql
 {
+    public partial class AzureResourceManagerSqlContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureResourceManagerSqlContext() { }
+        public static Azure.ResourceManager.Sql.AzureResourceManagerSqlContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class BackupShortTermRetentionPolicyCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.BackupShortTermRetentionPolicyResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.BackupShortTermRetentionPolicyResource>, System.Collections.IEnumerable
     {
         protected BackupShortTermRetentionPolicyCollection() { }
