@@ -62,6 +62,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vectorStoreId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/VectorStoreFiles.xml" path="doc/members/member[@name='CreateVectorStoreFileAsync(string,string,VectorStoreDataSource,VectorStoreChunkingStrategy,CancellationToken)']/*" />
         public virtual async Task<Response<VectorStoreFile>> CreateVectorStoreFileAsync(string vectorStoreId, string fileId = null, VectorStoreDataSource dataSource = null, VectorStoreChunkingStrategy chunkingStrategy = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
@@ -80,6 +81,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vectorStoreId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/VectorStoreFiles.xml" path="doc/members/member[@name='CreateVectorStoreFile(string,string,VectorStoreDataSource,VectorStoreChunkingStrategy,CancellationToken)']/*" />
         public virtual Response<VectorStoreFile> CreateVectorStoreFile(string vectorStoreId, string fileId = null, VectorStoreDataSource dataSource = null, VectorStoreChunkingStrategy chunkingStrategy = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
@@ -112,6 +114,7 @@ namespace Azure.AI.Agents.Persistent
         /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/VectorStoreFiles.xml" path="doc/members/member[@name='CreateVectorStoreFileAsync(string,RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> CreateVectorStoreFileAsync(string vectorStoreId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
@@ -153,6 +156,7 @@ namespace Azure.AI.Agents.Persistent
         /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/VectorStoreFiles.xml" path="doc/members/member[@name='CreateVectorStoreFile(string,RequestContent,RequestContext)']/*" />
         public virtual Response CreateVectorStoreFile(string vectorStoreId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
@@ -178,6 +182,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vectorStoreId"/> or <paramref name="fileId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> or <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/VectorStoreFiles.xml" path="doc/members/member[@name='GetVectorStoreFileAsync(string,string,CancellationToken)']/*" />
         public virtual async Task<Response<VectorStoreFile>> GetVectorStoreFileAsync(string vectorStoreId, string fileId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
@@ -194,6 +199,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vectorStoreId"/> or <paramref name="fileId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> or <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/VectorStoreFiles.xml" path="doc/members/member[@name='GetVectorStoreFile(string,string,CancellationToken)']/*" />
         public virtual Response<VectorStoreFile> GetVectorStoreFile(string vectorStoreId, string fileId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
@@ -226,6 +232,7 @@ namespace Azure.AI.Agents.Persistent
         /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> or <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/VectorStoreFiles.xml" path="doc/members/member[@name='GetVectorStoreFileAsync(string,string,RequestContext)']/*" />
         public virtual async Task<Response> GetVectorStoreFileAsync(string vectorStoreId, string fileId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
@@ -267,6 +274,7 @@ namespace Azure.AI.Agents.Persistent
         /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> or <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/VectorStoreFiles.xml" path="doc/members/member[@name='GetVectorStoreFile(string,string,RequestContext)']/*" />
         public virtual Response GetVectorStoreFile(string vectorStoreId, string fileId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));

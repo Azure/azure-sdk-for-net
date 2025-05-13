@@ -1,0 +1,571 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <members>
+    <member name="CreateMessageAsync(string,MessageRole,BinaryData,IEnumerable{MessageAttachment},IReadOnlyDictionary{string,string},CancellationToken)">
+      <example>
+This sample shows how to call CreateMessageAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+ThreadMessages client = new PersistentAgentsAdministrationClient(endpoint, credential).GetThreadMessagesClient();
+
+Response<PersistentThreadMessage> response = await client.CreateMessageAsync("zipaoiwxasiavnmlnkg", MessageRole.User, (BinaryData)null);
+]]></code></example>
+    </member>
+    <member name="CreateMessage(string,MessageRole,BinaryData,IEnumerable{MessageAttachment},IReadOnlyDictionary{string,string},CancellationToken)">
+      <example>
+This sample shows how to call CreateMessage.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+ThreadMessages client = new PersistentAgentsAdministrationClient(endpoint, credential).GetThreadMessagesClient();
+
+Response<PersistentThreadMessage> response = client.CreateMessage("zipaoiwxasiavnmlnkg", MessageRole.User, (BinaryData)null);
+]]></code></example>
+    </member>
+    <member name="CreateMessageAsync(string,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call CreateMessageAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+ThreadMessages client = new PersistentAgentsAdministrationClient(endpoint, credential).GetThreadMessagesClient();
+
+using RequestContent content = RequestContent.Create(new
+{
+    role = "user",
+    attachments = new object[]
+    {
+        new
+        {
+            file_id = "uslxhectlaptpkjcxnjzhkzprso",
+            data_source = new
+            {
+                uri = "soctjzrqyjyxixlqr",
+                type = "uri_asset",
+            },
+            tools = Array.Empty<object>(),
+        }
+    },
+    metadata = new
+    {
+        key3153 = "qn",
+    },
+});
+Response response = await client.CreateMessageAsync("zipaoiwxasiavnmlnkg", content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("object").ToString());
+Console.WriteLine(result.GetProperty("created_at").ToString());
+Console.WriteLine(result.GetProperty("thread_id").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("incomplete_details").GetProperty("reason").ToString());
+Console.WriteLine(result.GetProperty("completed_at").ToString());
+Console.WriteLine(result.GetProperty("incomplete_at").ToString());
+Console.WriteLine(result.GetProperty("role").ToString());
+Console.WriteLine(result.GetProperty("content")[0].GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("assistant_id").ToString());
+Console.WriteLine(result.GetProperty("run_id").ToString());
+Console.WriteLine(result.GetProperty("attachments")[0].GetProperty("tools")[0].ToString());
+Console.WriteLine(result.GetProperty("metadata").GetProperty("<key>").ToString());
+]]></code></example>
+    </member>
+    <member name="CreateMessage(string,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call CreateMessage and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+ThreadMessages client = new PersistentAgentsAdministrationClient(endpoint, credential).GetThreadMessagesClient();
+
+using RequestContent content = RequestContent.Create(new
+{
+    role = "user",
+    attachments = new object[]
+    {
+        new
+        {
+            file_id = "uslxhectlaptpkjcxnjzhkzprso",
+            data_source = new
+            {
+                uri = "soctjzrqyjyxixlqr",
+                type = "uri_asset",
+            },
+            tools = Array.Empty<object>(),
+        }
+    },
+    metadata = new
+    {
+        key3153 = "qn",
+    },
+});
+Response response = client.CreateMessage("zipaoiwxasiavnmlnkg", content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("object").ToString());
+Console.WriteLine(result.GetProperty("created_at").ToString());
+Console.WriteLine(result.GetProperty("thread_id").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("incomplete_details").GetProperty("reason").ToString());
+Console.WriteLine(result.GetProperty("completed_at").ToString());
+Console.WriteLine(result.GetProperty("incomplete_at").ToString());
+Console.WriteLine(result.GetProperty("role").ToString());
+Console.WriteLine(result.GetProperty("content")[0].GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("assistant_id").ToString());
+Console.WriteLine(result.GetProperty("run_id").ToString());
+Console.WriteLine(result.GetProperty("attachments")[0].GetProperty("tools")[0].ToString());
+Console.WriteLine(result.GetProperty("metadata").GetProperty("<key>").ToString());
+]]></code></example>
+    </member>
+    <member name="GetMessageAsync(string,string,CancellationToken)">
+      <example>
+This sample shows how to call GetMessageAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+ThreadMessages client = new PersistentAgentsAdministrationClient(endpoint, credential).GetThreadMessagesClient();
+
+Response<PersistentThreadMessage> response = await client.GetMessageAsync("wazfimispaosrwcw", "rntlkaswrsmq");
+]]></code>
+This sample shows how to call GetMessageAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+ThreadMessages client = new PersistentAgentsAdministrationClient(endpoint, credential).GetThreadMessagesClient();
+
+Response<PersistentThreadMessage> response = await client.GetMessageAsync("gnhpgvsdkyugddnkifumj", "krpdbqetvarfbwcczwa");
+]]></code></example>
+    </member>
+    <member name="GetMessage(string,string,CancellationToken)">
+      <example>
+This sample shows how to call GetMessage.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+ThreadMessages client = new PersistentAgentsAdministrationClient(endpoint, credential).GetThreadMessagesClient();
+
+Response<PersistentThreadMessage> response = client.GetMessage("wazfimispaosrwcw", "rntlkaswrsmq");
+]]></code>
+This sample shows how to call GetMessage.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+ThreadMessages client = new PersistentAgentsAdministrationClient(endpoint, credential).GetThreadMessagesClient();
+
+Response<PersistentThreadMessage> response = client.GetMessage("gnhpgvsdkyugddnkifumj", "krpdbqetvarfbwcczwa");
+]]></code></example>
+    </member>
+    <member name="GetMessageAsync(string,string,RequestContext)">
+      <example>
+This sample shows how to call GetMessageAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+ThreadMessages client = new PersistentAgentsAdministrationClient(endpoint, credential).GetThreadMessagesClient();
+
+Response response = await client.GetMessageAsync("wazfimispaosrwcw", "rntlkaswrsmq", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("object").ToString());
+Console.WriteLine(result.GetProperty("created_at").ToString());
+Console.WriteLine(result.GetProperty("thread_id").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("incomplete_details").GetProperty("reason").ToString());
+Console.WriteLine(result.GetProperty("completed_at").ToString());
+Console.WriteLine(result.GetProperty("incomplete_at").ToString());
+Console.WriteLine(result.GetProperty("role").ToString());
+Console.WriteLine(result.GetProperty("content")[0].GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("assistant_id").ToString());
+Console.WriteLine(result.GetProperty("run_id").ToString());
+Console.WriteLine(result.GetProperty("attachments")[0].GetProperty("tools")[0].ToString());
+Console.WriteLine(result.GetProperty("metadata").GetProperty("<key>").ToString());
+]]></code>
+This sample shows how to call GetMessageAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+ThreadMessages client = new PersistentAgentsAdministrationClient(endpoint, credential).GetThreadMessagesClient();
+
+Response response = await client.GetMessageAsync("gnhpgvsdkyugddnkifumj", "krpdbqetvarfbwcczwa", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("object").ToString());
+Console.WriteLine(result.GetProperty("created_at").ToString());
+Console.WriteLine(result.GetProperty("thread_id").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("incomplete_details").GetProperty("reason").ToString());
+Console.WriteLine(result.GetProperty("completed_at").ToString());
+Console.WriteLine(result.GetProperty("incomplete_at").ToString());
+Console.WriteLine(result.GetProperty("role").ToString());
+Console.WriteLine(result.GetProperty("content")[0].GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("assistant_id").ToString());
+Console.WriteLine(result.GetProperty("run_id").ToString());
+Console.WriteLine(result.GetProperty("attachments")[0].GetProperty("tools")[0].ToString());
+Console.WriteLine(result.GetProperty("metadata").GetProperty("<key>").ToString());
+]]></code></example>
+    </member>
+    <member name="GetMessage(string,string,RequestContext)">
+      <example>
+This sample shows how to call GetMessage and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+ThreadMessages client = new PersistentAgentsAdministrationClient(endpoint, credential).GetThreadMessagesClient();
+
+Response response = client.GetMessage("wazfimispaosrwcw", "rntlkaswrsmq", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("object").ToString());
+Console.WriteLine(result.GetProperty("created_at").ToString());
+Console.WriteLine(result.GetProperty("thread_id").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("incomplete_details").GetProperty("reason").ToString());
+Console.WriteLine(result.GetProperty("completed_at").ToString());
+Console.WriteLine(result.GetProperty("incomplete_at").ToString());
+Console.WriteLine(result.GetProperty("role").ToString());
+Console.WriteLine(result.GetProperty("content")[0].GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("assistant_id").ToString());
+Console.WriteLine(result.GetProperty("run_id").ToString());
+Console.WriteLine(result.GetProperty("attachments")[0].GetProperty("tools")[0].ToString());
+Console.WriteLine(result.GetProperty("metadata").GetProperty("<key>").ToString());
+]]></code>
+This sample shows how to call GetMessage and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+ThreadMessages client = new PersistentAgentsAdministrationClient(endpoint, credential).GetThreadMessagesClient();
+
+Response response = client.GetMessage("gnhpgvsdkyugddnkifumj", "krpdbqetvarfbwcczwa", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("object").ToString());
+Console.WriteLine(result.GetProperty("created_at").ToString());
+Console.WriteLine(result.GetProperty("thread_id").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("incomplete_details").GetProperty("reason").ToString());
+Console.WriteLine(result.GetProperty("completed_at").ToString());
+Console.WriteLine(result.GetProperty("incomplete_at").ToString());
+Console.WriteLine(result.GetProperty("role").ToString());
+Console.WriteLine(result.GetProperty("content")[0].GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("assistant_id").ToString());
+Console.WriteLine(result.GetProperty("run_id").ToString());
+Console.WriteLine(result.GetProperty("attachments")[0].GetProperty("tools")[0].ToString());
+Console.WriteLine(result.GetProperty("metadata").GetProperty("<key>").ToString());
+]]></code></example>
+    </member>
+    <member name="UpdateMessageAsync(string,string,IReadOnlyDictionary{string,string},CancellationToken)">
+      <example>
+This sample shows how to call UpdateMessageAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+ThreadMessages client = new PersistentAgentsAdministrationClient(endpoint, credential).GetThreadMessagesClient();
+
+Response<PersistentThreadMessage> response = await client.UpdateMessageAsync("sbdgvkmigm", "jjhbtcdqkx");
+]]></code>
+This sample shows how to call UpdateMessageAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+ThreadMessages client = new PersistentAgentsAdministrationClient(endpoint, credential).GetThreadMessagesClient();
+
+Response<PersistentThreadMessage> response = await client.UpdateMessageAsync("houmkok", "dac");
+]]></code></example>
+    </member>
+    <member name="UpdateMessage(string,string,IReadOnlyDictionary{string,string},CancellationToken)">
+      <example>
+This sample shows how to call UpdateMessage.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+ThreadMessages client = new PersistentAgentsAdministrationClient(endpoint, credential).GetThreadMessagesClient();
+
+Response<PersistentThreadMessage> response = client.UpdateMessage("sbdgvkmigm", "jjhbtcdqkx");
+]]></code>
+This sample shows how to call UpdateMessage.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+ThreadMessages client = new PersistentAgentsAdministrationClient(endpoint, credential).GetThreadMessagesClient();
+
+Response<PersistentThreadMessage> response = client.UpdateMessage("houmkok", "dac");
+]]></code></example>
+    </member>
+    <member name="UpdateMessageAsync(string,string,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call UpdateMessageAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+ThreadMessages client = new PersistentAgentsAdministrationClient(endpoint, credential).GetThreadMessagesClient();
+
+using RequestContent content = RequestContent.Create(new
+{
+    metadata = new
+    {
+        key1225 = "spvnrxlujhmwk",
+    },
+});
+Response response = await client.UpdateMessageAsync("sbdgvkmigm", "jjhbtcdqkx", content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("object").ToString());
+Console.WriteLine(result.GetProperty("created_at").ToString());
+Console.WriteLine(result.GetProperty("thread_id").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("incomplete_details").GetProperty("reason").ToString());
+Console.WriteLine(result.GetProperty("completed_at").ToString());
+Console.WriteLine(result.GetProperty("incomplete_at").ToString());
+Console.WriteLine(result.GetProperty("role").ToString());
+Console.WriteLine(result.GetProperty("content")[0].GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("assistant_id").ToString());
+Console.WriteLine(result.GetProperty("run_id").ToString());
+Console.WriteLine(result.GetProperty("attachments")[0].GetProperty("tools")[0].ToString());
+Console.WriteLine(result.GetProperty("metadata").GetProperty("<key>").ToString());
+]]></code>
+This sample shows how to call UpdateMessageAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+ThreadMessages client = new PersistentAgentsAdministrationClient(endpoint, credential).GetThreadMessagesClient();
+
+using RequestContent content = RequestContent.Create(new object());
+Response response = await client.UpdateMessageAsync("houmkok", "dac", content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("object").ToString());
+Console.WriteLine(result.GetProperty("created_at").ToString());
+Console.WriteLine(result.GetProperty("thread_id").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("incomplete_details").GetProperty("reason").ToString());
+Console.WriteLine(result.GetProperty("completed_at").ToString());
+Console.WriteLine(result.GetProperty("incomplete_at").ToString());
+Console.WriteLine(result.GetProperty("role").ToString());
+Console.WriteLine(result.GetProperty("content")[0].GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("assistant_id").ToString());
+Console.WriteLine(result.GetProperty("run_id").ToString());
+Console.WriteLine(result.GetProperty("attachments")[0].GetProperty("tools")[0].ToString());
+Console.WriteLine(result.GetProperty("metadata").GetProperty("<key>").ToString());
+]]></code></example>
+    </member>
+    <member name="UpdateMessage(string,string,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call UpdateMessage and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+ThreadMessages client = new PersistentAgentsAdministrationClient(endpoint, credential).GetThreadMessagesClient();
+
+using RequestContent content = RequestContent.Create(new
+{
+    metadata = new
+    {
+        key1225 = "spvnrxlujhmwk",
+    },
+});
+Response response = client.UpdateMessage("sbdgvkmigm", "jjhbtcdqkx", content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("object").ToString());
+Console.WriteLine(result.GetProperty("created_at").ToString());
+Console.WriteLine(result.GetProperty("thread_id").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("incomplete_details").GetProperty("reason").ToString());
+Console.WriteLine(result.GetProperty("completed_at").ToString());
+Console.WriteLine(result.GetProperty("incomplete_at").ToString());
+Console.WriteLine(result.GetProperty("role").ToString());
+Console.WriteLine(result.GetProperty("content")[0].GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("assistant_id").ToString());
+Console.WriteLine(result.GetProperty("run_id").ToString());
+Console.WriteLine(result.GetProperty("attachments")[0].GetProperty("tools")[0].ToString());
+Console.WriteLine(result.GetProperty("metadata").GetProperty("<key>").ToString());
+]]></code>
+This sample shows how to call UpdateMessage and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+ThreadMessages client = new PersistentAgentsAdministrationClient(endpoint, credential).GetThreadMessagesClient();
+
+using RequestContent content = RequestContent.Create(new object());
+Response response = client.UpdateMessage("houmkok", "dac", content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("object").ToString());
+Console.WriteLine(result.GetProperty("created_at").ToString());
+Console.WriteLine(result.GetProperty("thread_id").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("incomplete_details").GetProperty("reason").ToString());
+Console.WriteLine(result.GetProperty("completed_at").ToString());
+Console.WriteLine(result.GetProperty("incomplete_at").ToString());
+Console.WriteLine(result.GetProperty("role").ToString());
+Console.WriteLine(result.GetProperty("content")[0].GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("assistant_id").ToString());
+Console.WriteLine(result.GetProperty("run_id").ToString());
+Console.WriteLine(result.GetProperty("attachments")[0].GetProperty("tools")[0].ToString());
+Console.WriteLine(result.GetProperty("metadata").GetProperty("<key>").ToString());
+]]></code></example>
+    </member>
+    <member name="GetMessagesAsync(string,string,int?,ListSortOrder?,string,string,CancellationToken)">
+      <example>
+This sample shows how to call GetMessagesAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+ThreadMessages client = new PersistentAgentsAdministrationClient(endpoint, credential).GetThreadMessagesClient();
+
+await foreach (PersistentThreadMessage item in client.GetMessagesAsync("rxigqqgnuzjqffpk"))
+{
+}
+]]></code>
+This sample shows how to call GetMessagesAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+ThreadMessages client = new PersistentAgentsAdministrationClient(endpoint, credential).GetThreadMessagesClient();
+
+await foreach (PersistentThreadMessage item in client.GetMessagesAsync("fzxnlymcyzxdahitxdeoqcn"))
+{
+}
+]]></code></example>
+    </member>
+    <member name="GetMessages(string,string,int?,ListSortOrder?,string,string,CancellationToken)">
+      <example>
+This sample shows how to call GetMessages.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+ThreadMessages client = new PersistentAgentsAdministrationClient(endpoint, credential).GetThreadMessagesClient();
+
+foreach (PersistentThreadMessage item in client.GetMessages("rxigqqgnuzjqffpk"))
+{
+}
+]]></code>
+This sample shows how to call GetMessages.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+ThreadMessages client = new PersistentAgentsAdministrationClient(endpoint, credential).GetThreadMessagesClient();
+
+foreach (PersistentThreadMessage item in client.GetMessages("fzxnlymcyzxdahitxdeoqcn"))
+{
+}
+]]></code></example>
+    </member>
+    <member name="GetMessagesAsync(string,string,int?,string,string,string,RequestContext)">
+      <example>
+This sample shows how to call GetMessagesAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+ThreadMessages client = new PersistentAgentsAdministrationClient(endpoint, credential).GetThreadMessagesClient();
+
+await foreach (BinaryData item in client.GetMessagesAsync("rxigqqgnuzjqffpk", "mtwpthaktboemc", 20, "asc", "prlgmgvf", "wbhklengvltnlzp", (RequestContext)null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("object").ToString());
+    Console.WriteLine(result.GetProperty("created_at").ToString());
+    Console.WriteLine(result.GetProperty("thread_id").ToString());
+    Console.WriteLine(result.GetProperty("status").ToString());
+    Console.WriteLine(result.GetProperty("incomplete_details").GetProperty("reason").ToString());
+    Console.WriteLine(result.GetProperty("completed_at").ToString());
+    Console.WriteLine(result.GetProperty("incomplete_at").ToString());
+    Console.WriteLine(result.GetProperty("role").ToString());
+    Console.WriteLine(result.GetProperty("content")[0].GetProperty("type").ToString());
+    Console.WriteLine(result.GetProperty("assistant_id").ToString());
+    Console.WriteLine(result.GetProperty("run_id").ToString());
+    Console.WriteLine(result.GetProperty("attachments")[0].GetProperty("tools")[0].ToString());
+    Console.WriteLine(result.GetProperty("metadata").GetProperty("<key>").ToString());
+}
+]]></code>
+This sample shows how to call GetMessagesAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+ThreadMessages client = new PersistentAgentsAdministrationClient(endpoint, credential).GetThreadMessagesClient();
+
+await foreach (BinaryData item in client.GetMessagesAsync("fzxnlymcyzxdahitxdeoqcn", (string)null, (int?)null, (string)null, (string)null, (string)null, (RequestContext)null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("object").ToString());
+    Console.WriteLine(result.GetProperty("created_at").ToString());
+    Console.WriteLine(result.GetProperty("thread_id").ToString());
+    Console.WriteLine(result.GetProperty("status").ToString());
+    Console.WriteLine(result.GetProperty("incomplete_details").GetProperty("reason").ToString());
+    Console.WriteLine(result.GetProperty("completed_at").ToString());
+    Console.WriteLine(result.GetProperty("incomplete_at").ToString());
+    Console.WriteLine(result.GetProperty("role").ToString());
+    Console.WriteLine(result.GetProperty("content")[0].GetProperty("type").ToString());
+    Console.WriteLine(result.GetProperty("assistant_id").ToString());
+    Console.WriteLine(result.GetProperty("run_id").ToString());
+    Console.WriteLine(result.GetProperty("attachments")[0].GetProperty("tools")[0].ToString());
+    Console.WriteLine(result.GetProperty("metadata").GetProperty("<key>").ToString());
+}
+]]></code></example>
+    </member>
+    <member name="GetMessages(string,string,int?,string,string,string,RequestContext)">
+      <example>
+This sample shows how to call GetMessages and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+ThreadMessages client = new PersistentAgentsAdministrationClient(endpoint, credential).GetThreadMessagesClient();
+
+foreach (BinaryData item in client.GetMessages("rxigqqgnuzjqffpk", "mtwpthaktboemc", 20, "asc", "prlgmgvf", "wbhklengvltnlzp", (RequestContext)null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("object").ToString());
+    Console.WriteLine(result.GetProperty("created_at").ToString());
+    Console.WriteLine(result.GetProperty("thread_id").ToString());
+    Console.WriteLine(result.GetProperty("status").ToString());
+    Console.WriteLine(result.GetProperty("incomplete_details").GetProperty("reason").ToString());
+    Console.WriteLine(result.GetProperty("completed_at").ToString());
+    Console.WriteLine(result.GetProperty("incomplete_at").ToString());
+    Console.WriteLine(result.GetProperty("role").ToString());
+    Console.WriteLine(result.GetProperty("content")[0].GetProperty("type").ToString());
+    Console.WriteLine(result.GetProperty("assistant_id").ToString());
+    Console.WriteLine(result.GetProperty("run_id").ToString());
+    Console.WriteLine(result.GetProperty("attachments")[0].GetProperty("tools")[0].ToString());
+    Console.WriteLine(result.GetProperty("metadata").GetProperty("<key>").ToString());
+}
+]]></code>
+This sample shows how to call GetMessages and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+ThreadMessages client = new PersistentAgentsAdministrationClient(endpoint, credential).GetThreadMessagesClient();
+
+foreach (BinaryData item in client.GetMessages("fzxnlymcyzxdahitxdeoqcn", (string)null, (int?)null, (string)null, (string)null, (string)null, (RequestContext)null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("object").ToString());
+    Console.WriteLine(result.GetProperty("created_at").ToString());
+    Console.WriteLine(result.GetProperty("thread_id").ToString());
+    Console.WriteLine(result.GetProperty("status").ToString());
+    Console.WriteLine(result.GetProperty("incomplete_details").GetProperty("reason").ToString());
+    Console.WriteLine(result.GetProperty("completed_at").ToString());
+    Console.WriteLine(result.GetProperty("incomplete_at").ToString());
+    Console.WriteLine(result.GetProperty("role").ToString());
+    Console.WriteLine(result.GetProperty("content")[0].GetProperty("type").ToString());
+    Console.WriteLine(result.GetProperty("assistant_id").ToString());
+    Console.WriteLine(result.GetProperty("run_id").ToString());
+    Console.WriteLine(result.GetProperty("attachments")[0].GetProperty("tools")[0].ToString());
+    Console.WriteLine(result.GetProperty("metadata").GetProperty("<key>").ToString());
+}
+]]></code></example>
+    </member>
+  </members>
+</doc>

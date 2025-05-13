@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <members>
+    <member name="GetFileAsync(string,CancellationToken)">
+      <example>
+This sample shows how to call GetFileAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+PersistentAgentsFiles client = new PersistentAgentsAdministrationClient(endpoint, credential).GetPersistentAgentsFilesClient();
+
+Response<PersistentAgentFileInfo> response = await client.GetFileAsync("lsvyhecgodljeaavd");
+]]></code>
+This sample shows how to call GetFileAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+PersistentAgentsFiles client = new PersistentAgentsAdministrationClient(endpoint, credential).GetPersistentAgentsFilesClient();
+
+Response<PersistentAgentFileInfo> response = await client.GetFileAsync("cpkshmceejnyuivzhyorchrl");
+]]></code></example>
+    </member>
+    <member name="GetFile(string,CancellationToken)">
+      <example>
+This sample shows how to call GetFile.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+PersistentAgentsFiles client = new PersistentAgentsAdministrationClient(endpoint, credential).GetPersistentAgentsFilesClient();
+
+Response<PersistentAgentFileInfo> response = client.GetFile("lsvyhecgodljeaavd");
+]]></code>
+This sample shows how to call GetFile.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+PersistentAgentsFiles client = new PersistentAgentsAdministrationClient(endpoint, credential).GetPersistentAgentsFilesClient();
+
+Response<PersistentAgentFileInfo> response = client.GetFile("cpkshmceejnyuivzhyorchrl");
+]]></code></example>
+    </member>
+    <member name="GetFileAsync(string,RequestContext)">
+      <example>
+This sample shows how to call GetFileAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+PersistentAgentsFiles client = new PersistentAgentsAdministrationClient(endpoint, credential).GetPersistentAgentsFilesClient();
+
+Response response = await client.GetFileAsync("lsvyhecgodljeaavd", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("object").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("bytes").ToString());
+Console.WriteLine(result.GetProperty("filename").ToString());
+Console.WriteLine(result.GetProperty("created_at").ToString());
+Console.WriteLine(result.GetProperty("purpose").ToString());
+]]></code>
+This sample shows how to call GetFileAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+PersistentAgentsFiles client = new PersistentAgentsAdministrationClient(endpoint, credential).GetPersistentAgentsFilesClient();
+
+Response response = await client.GetFileAsync("cpkshmceejnyuivzhyorchrl", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("object").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("bytes").ToString());
+Console.WriteLine(result.GetProperty("filename").ToString());
+Console.WriteLine(result.GetProperty("created_at").ToString());
+Console.WriteLine(result.GetProperty("purpose").ToString());
+]]></code></example>
+    </member>
+    <member name="GetFile(string,RequestContext)">
+      <example>
+This sample shows how to call GetFile and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+PersistentAgentsFiles client = new PersistentAgentsAdministrationClient(endpoint, credential).GetPersistentAgentsFilesClient();
+
+Response response = client.GetFile("lsvyhecgodljeaavd", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("object").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("bytes").ToString());
+Console.WriteLine(result.GetProperty("filename").ToString());
+Console.WriteLine(result.GetProperty("created_at").ToString());
+Console.WriteLine(result.GetProperty("purpose").ToString());
+]]></code>
+This sample shows how to call GetFile and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+PersistentAgentsFiles client = new PersistentAgentsAdministrationClient(endpoint, credential).GetPersistentAgentsFilesClient();
+
+Response response = client.GetFile("cpkshmceejnyuivzhyorchrl", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("object").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("bytes").ToString());
+Console.WriteLine(result.GetProperty("filename").ToString());
+Console.WriteLine(result.GetProperty("created_at").ToString());
+Console.WriteLine(result.GetProperty("purpose").ToString());
+]]></code></example>
+    </member>
+    <member name="GetFileContentAsync(string,CancellationToken)">
+      <example>
+This sample shows how to call GetFileContentAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+PersistentAgentsFiles client = new PersistentAgentsAdministrationClient(endpoint, credential).GetPersistentAgentsFilesClient();
+
+Response<BinaryData> response = await client.GetFileContentAsync("dfzstslvjtioavergjgq");
+]]></code>
+This sample shows how to call GetFileContentAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+PersistentAgentsFiles client = new PersistentAgentsAdministrationClient(endpoint, credential).GetPersistentAgentsFilesClient();
+
+Response<BinaryData> response = await client.GetFileContentAsync("jpzynxpsrccmo");
+]]></code></example>
+    </member>
+    <member name="GetFileContent(string,CancellationToken)">
+      <example>
+This sample shows how to call GetFileContent.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+PersistentAgentsFiles client = new PersistentAgentsAdministrationClient(endpoint, credential).GetPersistentAgentsFilesClient();
+
+Response<BinaryData> response = client.GetFileContent("dfzstslvjtioavergjgq");
+]]></code>
+This sample shows how to call GetFileContent.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+PersistentAgentsFiles client = new PersistentAgentsAdministrationClient(endpoint, credential).GetPersistentAgentsFilesClient();
+
+Response<BinaryData> response = client.GetFileContent("jpzynxpsrccmo");
+]]></code></example>
+    </member>
+    <member name="GetFileContentAsync(string,RequestContext)">
+      <example>
+This sample shows how to call GetFileContentAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+PersistentAgentsFiles client = new PersistentAgentsAdministrationClient(endpoint, credential).GetPersistentAgentsFilesClient();
+
+Response response = await client.GetFileContentAsync("dfzstslvjtioavergjgq", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call GetFileContentAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+PersistentAgentsFiles client = new PersistentAgentsAdministrationClient(endpoint, credential).GetPersistentAgentsFilesClient();
+
+Response response = await client.GetFileContentAsync("jpzynxpsrccmo", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code></example>
+    </member>
+    <member name="GetFileContent(string,RequestContext)">
+      <example>
+This sample shows how to call GetFileContent and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+PersistentAgentsFiles client = new PersistentAgentsAdministrationClient(endpoint, credential).GetPersistentAgentsFilesClient();
+
+Response response = client.GetFileContent("dfzstslvjtioavergjgq", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call GetFileContent and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+PersistentAgentsFiles client = new PersistentAgentsAdministrationClient(endpoint, credential).GetPersistentAgentsFilesClient();
+
+Response response = client.GetFileContent("jpzynxpsrccmo", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code></example>
+    </member>
+  </members>
+</doc>

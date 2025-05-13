@@ -18,10 +18,11 @@ namespace Azure.AI.Agents.Persistent
             queryType ??= AzureAISearchQueryType.Simple;
 
             // Initialize properties or perform other logic here
-            var indexList = new AISearchIndexResource
+            var indexList = new AISearchIndexResource(
+                indexConnectionId: indexConnectionId,
+                indexName: indexName
+            )
             {
-                IndexConnectionId = indexConnectionId,
-                IndexName = indexName,
                 TopK = topK,
                 Filter = filter,
                 QueryType = queryType

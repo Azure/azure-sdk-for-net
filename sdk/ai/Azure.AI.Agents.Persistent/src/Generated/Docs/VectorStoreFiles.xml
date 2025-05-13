@@ -1,0 +1,341 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <members>
+    <member name="CreateVectorStoreFileAsync(string,string,VectorStoreDataSource,VectorStoreChunkingStrategy,CancellationToken)">
+      <example>
+This sample shows how to call CreateVectorStoreFileAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+VectorStoreFiles client = new PersistentAgentsAdministrationClient(endpoint, credential).GetVectorStoreFilesClient();
+
+Response<VectorStoreFile> response = await client.CreateVectorStoreFileAsync("kox");
+]]></code></example>
+    </member>
+    <member name="CreateVectorStoreFile(string,string,VectorStoreDataSource,VectorStoreChunkingStrategy,CancellationToken)">
+      <example>
+This sample shows how to call CreateVectorStoreFile.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+VectorStoreFiles client = new PersistentAgentsAdministrationClient(endpoint, credential).GetVectorStoreFilesClient();
+
+Response<VectorStoreFile> response = client.CreateVectorStoreFile("kox");
+]]></code></example>
+    </member>
+    <member name="CreateVectorStoreFileAsync(string,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call CreateVectorStoreFileAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+VectorStoreFiles client = new PersistentAgentsAdministrationClient(endpoint, credential).GetVectorStoreFilesClient();
+
+using RequestContent content = RequestContent.Create(new
+{
+    file_id = "emdzaopxo",
+    data_source = new
+    {
+        uri = "soctjzrqyjyxixlqr",
+        type = "uri_asset",
+    },
+});
+Response response = await client.CreateVectorStoreFileAsync("kox", content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("object").ToString());
+Console.WriteLine(result.GetProperty("usage_bytes").ToString());
+Console.WriteLine(result.GetProperty("created_at").ToString());
+Console.WriteLine(result.GetProperty("vector_store_id").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("last_error").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("last_error").GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("chunking_strategy").GetProperty("type").ToString());
+]]></code></example>
+    </member>
+    <member name="CreateVectorStoreFile(string,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call CreateVectorStoreFile and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+VectorStoreFiles client = new PersistentAgentsAdministrationClient(endpoint, credential).GetVectorStoreFilesClient();
+
+using RequestContent content = RequestContent.Create(new
+{
+    file_id = "emdzaopxo",
+    data_source = new
+    {
+        uri = "soctjzrqyjyxixlqr",
+        type = "uri_asset",
+    },
+});
+Response response = client.CreateVectorStoreFile("kox", content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("object").ToString());
+Console.WriteLine(result.GetProperty("usage_bytes").ToString());
+Console.WriteLine(result.GetProperty("created_at").ToString());
+Console.WriteLine(result.GetProperty("vector_store_id").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("last_error").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("last_error").GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("chunking_strategy").GetProperty("type").ToString());
+]]></code></example>
+    </member>
+    <member name="GetVectorStoreFileAsync(string,string,CancellationToken)">
+      <example>
+This sample shows how to call GetVectorStoreFileAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+VectorStoreFiles client = new PersistentAgentsAdministrationClient(endpoint, credential).GetVectorStoreFilesClient();
+
+Response<VectorStoreFile> response = await client.GetVectorStoreFileAsync("bds", "qusinxkarhcskvxntuym");
+]]></code>
+This sample shows how to call GetVectorStoreFileAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+VectorStoreFiles client = new PersistentAgentsAdministrationClient(endpoint, credential).GetVectorStoreFilesClient();
+
+Response<VectorStoreFile> response = await client.GetVectorStoreFileAsync("fakyvuniwxszpqxxcovnohhacypzp", "sar");
+]]></code></example>
+    </member>
+    <member name="GetVectorStoreFile(string,string,CancellationToken)">
+      <example>
+This sample shows how to call GetVectorStoreFile.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+VectorStoreFiles client = new PersistentAgentsAdministrationClient(endpoint, credential).GetVectorStoreFilesClient();
+
+Response<VectorStoreFile> response = client.GetVectorStoreFile("bds", "qusinxkarhcskvxntuym");
+]]></code>
+This sample shows how to call GetVectorStoreFile.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+VectorStoreFiles client = new PersistentAgentsAdministrationClient(endpoint, credential).GetVectorStoreFilesClient();
+
+Response<VectorStoreFile> response = client.GetVectorStoreFile("fakyvuniwxszpqxxcovnohhacypzp", "sar");
+]]></code></example>
+    </member>
+    <member name="GetVectorStoreFileAsync(string,string,RequestContext)">
+      <example>
+This sample shows how to call GetVectorStoreFileAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+VectorStoreFiles client = new PersistentAgentsAdministrationClient(endpoint, credential).GetVectorStoreFilesClient();
+
+Response response = await client.GetVectorStoreFileAsync("bds", "qusinxkarhcskvxntuym", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("object").ToString());
+Console.WriteLine(result.GetProperty("usage_bytes").ToString());
+Console.WriteLine(result.GetProperty("created_at").ToString());
+Console.WriteLine(result.GetProperty("vector_store_id").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("last_error").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("last_error").GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("chunking_strategy").GetProperty("type").ToString());
+]]></code>
+This sample shows how to call GetVectorStoreFileAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+VectorStoreFiles client = new PersistentAgentsAdministrationClient(endpoint, credential).GetVectorStoreFilesClient();
+
+Response response = await client.GetVectorStoreFileAsync("fakyvuniwxszpqxxcovnohhacypzp", "sar", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("object").ToString());
+Console.WriteLine(result.GetProperty("usage_bytes").ToString());
+Console.WriteLine(result.GetProperty("created_at").ToString());
+Console.WriteLine(result.GetProperty("vector_store_id").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("last_error").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("last_error").GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("chunking_strategy").GetProperty("type").ToString());
+]]></code></example>
+    </member>
+    <member name="GetVectorStoreFile(string,string,RequestContext)">
+      <example>
+This sample shows how to call GetVectorStoreFile and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+VectorStoreFiles client = new PersistentAgentsAdministrationClient(endpoint, credential).GetVectorStoreFilesClient();
+
+Response response = client.GetVectorStoreFile("bds", "qusinxkarhcskvxntuym", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("object").ToString());
+Console.WriteLine(result.GetProperty("usage_bytes").ToString());
+Console.WriteLine(result.GetProperty("created_at").ToString());
+Console.WriteLine(result.GetProperty("vector_store_id").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("last_error").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("last_error").GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("chunking_strategy").GetProperty("type").ToString());
+]]></code>
+This sample shows how to call GetVectorStoreFile and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+VectorStoreFiles client = new PersistentAgentsAdministrationClient(endpoint, credential).GetVectorStoreFilesClient();
+
+Response response = client.GetVectorStoreFile("fakyvuniwxszpqxxcovnohhacypzp", "sar", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("object").ToString());
+Console.WriteLine(result.GetProperty("usage_bytes").ToString());
+Console.WriteLine(result.GetProperty("created_at").ToString());
+Console.WriteLine(result.GetProperty("vector_store_id").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("last_error").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("last_error").GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("chunking_strategy").GetProperty("type").ToString());
+]]></code></example>
+    </member>
+    <member name="GetVectorStoreFilesAsync(string,VectorStoreFileStatusFilter?,int?,ListSortOrder?,string,string,CancellationToken)">
+      <example>
+This sample shows how to call GetVectorStoreFilesAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+VectorStoreFiles client = new PersistentAgentsAdministrationClient(endpoint, credential).GetVectorStoreFilesClient();
+
+await foreach (VectorStoreFile item in client.GetVectorStoreFilesAsync("nuppye"))
+{
+}
+]]></code>
+This sample shows how to call GetVectorStoreFilesAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+VectorStoreFiles client = new PersistentAgentsAdministrationClient(endpoint, credential).GetVectorStoreFilesClient();
+
+await foreach (VectorStoreFile item in client.GetVectorStoreFilesAsync("rijuypqar"))
+{
+}
+]]></code></example>
+    </member>
+    <member name="GetVectorStoreFiles(string,VectorStoreFileStatusFilter?,int?,ListSortOrder?,string,string,CancellationToken)">
+      <example>
+This sample shows how to call GetVectorStoreFiles.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+VectorStoreFiles client = new PersistentAgentsAdministrationClient(endpoint, credential).GetVectorStoreFilesClient();
+
+foreach (VectorStoreFile item in client.GetVectorStoreFiles("nuppye"))
+{
+}
+]]></code>
+This sample shows how to call GetVectorStoreFiles.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+VectorStoreFiles client = new PersistentAgentsAdministrationClient(endpoint, credential).GetVectorStoreFilesClient();
+
+foreach (VectorStoreFile item in client.GetVectorStoreFiles("rijuypqar"))
+{
+}
+]]></code></example>
+    </member>
+    <member name="GetVectorStoreFilesAsync(string,string,int?,string,string,string,RequestContext)">
+      <example>
+This sample shows how to call GetVectorStoreFilesAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+VectorStoreFiles client = new PersistentAgentsAdministrationClient(endpoint, credential).GetVectorStoreFilesClient();
+
+await foreach (BinaryData item in client.GetVectorStoreFilesAsync("nuppye", "in_progress", 8, "asc", "cayfrop", "rdxomcqockbejgfxd", (RequestContext)null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("object").ToString());
+    Console.WriteLine(result.GetProperty("usage_bytes").ToString());
+    Console.WriteLine(result.GetProperty("created_at").ToString());
+    Console.WriteLine(result.GetProperty("vector_store_id").ToString());
+    Console.WriteLine(result.GetProperty("status").ToString());
+    Console.WriteLine(result.GetProperty("last_error").GetProperty("code").ToString());
+    Console.WriteLine(result.GetProperty("last_error").GetProperty("message").ToString());
+    Console.WriteLine(result.GetProperty("chunking_strategy").GetProperty("type").ToString());
+}
+]]></code>
+This sample shows how to call GetVectorStoreFilesAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+VectorStoreFiles client = new PersistentAgentsAdministrationClient(endpoint, credential).GetVectorStoreFilesClient();
+
+await foreach (BinaryData item in client.GetVectorStoreFilesAsync("rijuypqar", (string)null, (int?)null, (string)null, (string)null, (string)null, (RequestContext)null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("object").ToString());
+    Console.WriteLine(result.GetProperty("usage_bytes").ToString());
+    Console.WriteLine(result.GetProperty("created_at").ToString());
+    Console.WriteLine(result.GetProperty("vector_store_id").ToString());
+    Console.WriteLine(result.GetProperty("status").ToString());
+    Console.WriteLine(result.GetProperty("last_error").GetProperty("code").ToString());
+    Console.WriteLine(result.GetProperty("last_error").GetProperty("message").ToString());
+    Console.WriteLine(result.GetProperty("chunking_strategy").GetProperty("type").ToString());
+}
+]]></code></example>
+    </member>
+    <member name="GetVectorStoreFiles(string,string,int?,string,string,string,RequestContext)">
+      <example>
+This sample shows how to call GetVectorStoreFiles and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+VectorStoreFiles client = new PersistentAgentsAdministrationClient(endpoint, credential).GetVectorStoreFilesClient();
+
+foreach (BinaryData item in client.GetVectorStoreFiles("nuppye", "in_progress", 8, "asc", "cayfrop", "rdxomcqockbejgfxd", (RequestContext)null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("object").ToString());
+    Console.WriteLine(result.GetProperty("usage_bytes").ToString());
+    Console.WriteLine(result.GetProperty("created_at").ToString());
+    Console.WriteLine(result.GetProperty("vector_store_id").ToString());
+    Console.WriteLine(result.GetProperty("status").ToString());
+    Console.WriteLine(result.GetProperty("last_error").GetProperty("code").ToString());
+    Console.WriteLine(result.GetProperty("last_error").GetProperty("message").ToString());
+    Console.WriteLine(result.GetProperty("chunking_strategy").GetProperty("type").ToString());
+}
+]]></code>
+This sample shows how to call GetVectorStoreFiles and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+VectorStoreFiles client = new PersistentAgentsAdministrationClient(endpoint, credential).GetVectorStoreFilesClient();
+
+foreach (BinaryData item in client.GetVectorStoreFiles("rijuypqar", (string)null, (int?)null, (string)null, (string)null, (string)null, (RequestContext)null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("object").ToString());
+    Console.WriteLine(result.GetProperty("usage_bytes").ToString());
+    Console.WriteLine(result.GetProperty("created_at").ToString());
+    Console.WriteLine(result.GetProperty("vector_store_id").ToString());
+    Console.WriteLine(result.GetProperty("status").ToString());
+    Console.WriteLine(result.GetProperty("last_error").GetProperty("code").ToString());
+    Console.WriteLine(result.GetProperty("last_error").GetProperty("message").ToString());
+    Console.WriteLine(result.GetProperty("chunking_strategy").GetProperty("type").ToString());
+}
+]]></code></example>
+    </member>
+  </members>
+</doc>

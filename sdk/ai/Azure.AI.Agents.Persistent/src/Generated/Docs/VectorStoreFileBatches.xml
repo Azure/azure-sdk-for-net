@@ -1,0 +1,4245 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <members>
+    <member name="CreateVectorStoreFileBatchAsync(string,IEnumerable{string},IEnumerable{VectorStoreDataSource},VectorStoreChunkingStrategy,CancellationToken)">
+      <example>
+This sample shows how to call CreateVectorStoreFileBatchAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+VectorStoreFileBatches client = new PersistentAgentsAdministrationClient(endpoint, credential).GetVectorStoreFileBatchesClient();
+
+Response<VectorStoreFileBatch> response = await client.CreateVectorStoreFileBatchAsync("bvcjtemrnqtycjuaerlxllednm");
+]]></code>
+This sample shows how to call CreateVectorStoreFileBatchAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+VectorStoreFileBatches client = new PersistentAgentsAdministrationClient(endpoint, credential).GetVectorStoreFileBatchesClient();
+
+Response<VectorStoreFileBatch> response = await client.CreateVectorStoreFileBatchAsync("eyxdrn");
+]]></code></example>
+    </member>
+    <member name="CreateVectorStoreFileBatch(string,IEnumerable{string},IEnumerable{VectorStoreDataSource},VectorStoreChunkingStrategy,CancellationToken)">
+      <example>
+This sample shows how to call CreateVectorStoreFileBatch.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+VectorStoreFileBatches client = new PersistentAgentsAdministrationClient(endpoint, credential).GetVectorStoreFileBatchesClient();
+
+Response<VectorStoreFileBatch> response = client.CreateVectorStoreFileBatch("bvcjtemrnqtycjuaerlxllednm");
+]]></code>
+This sample shows how to call CreateVectorStoreFileBatch.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+VectorStoreFileBatches client = new PersistentAgentsAdministrationClient(endpoint, credential).GetVectorStoreFileBatchesClient();
+
+Response<VectorStoreFileBatch> response = client.CreateVectorStoreFileBatch("eyxdrn");
+]]></code></example>
+    </member>
+    <member name="CreateVectorStoreFileBatchAsync(string,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call CreateVectorStoreFileBatchAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+VectorStoreFileBatches client = new PersistentAgentsAdministrationClient(endpoint, credential).GetVectorStoreFileBatchesClient();
+
+using RequestContent content = RequestContent.Create(new
+{
+    file_ids = new object[]
+    {
+        "sseovtmhsfpghlqyzulhnhhhasall",
+        "sseovtmhsfpghlqyzulhnhhhasall",
+        "sseovtmhsfpghlqyzulhnhhhasall",
+        "sseovtmhsfpghlqyzulhnhhhasall",
+        "sseovtmhsfpghlqyzulhnhhhasall",
+        "sseovtmhsfpghlqyzulhnhhhasall",
+        "sseovtmhsfpghlqyzulhnhhhasall",
+        "sseovtmhsfpghlqyzulhnhhhasall"
+    },
+    data_sources = new object[]
+    {
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        }
+    },
+});
+Response response = await client.CreateVectorStoreFileBatchAsync("bvcjtemrnqtycjuaerlxllednm", content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("object").ToString());
+Console.WriteLine(result.GetProperty("created_at").ToString());
+Console.WriteLine(result.GetProperty("vector_store_id").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("file_counts").GetProperty("in_progress").ToString());
+Console.WriteLine(result.GetProperty("file_counts").GetProperty("completed").ToString());
+Console.WriteLine(result.GetProperty("file_counts").GetProperty("failed").ToString());
+Console.WriteLine(result.GetProperty("file_counts").GetProperty("cancelled").ToString());
+Console.WriteLine(result.GetProperty("file_counts").GetProperty("total").ToString());
+]]></code>
+This sample shows how to call CreateVectorStoreFileBatchAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+VectorStoreFileBatches client = new PersistentAgentsAdministrationClient(endpoint, credential).GetVectorStoreFileBatchesClient();
+
+using RequestContent content = RequestContent.Create(new object());
+Response response = await client.CreateVectorStoreFileBatchAsync("eyxdrn", content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("object").ToString());
+Console.WriteLine(result.GetProperty("created_at").ToString());
+Console.WriteLine(result.GetProperty("vector_store_id").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("file_counts").GetProperty("in_progress").ToString());
+Console.WriteLine(result.GetProperty("file_counts").GetProperty("completed").ToString());
+Console.WriteLine(result.GetProperty("file_counts").GetProperty("failed").ToString());
+Console.WriteLine(result.GetProperty("file_counts").GetProperty("cancelled").ToString());
+Console.WriteLine(result.GetProperty("file_counts").GetProperty("total").ToString());
+]]></code></example>
+    </member>
+    <member name="CreateVectorStoreFileBatch(string,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call CreateVectorStoreFileBatch and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+VectorStoreFileBatches client = new PersistentAgentsAdministrationClient(endpoint, credential).GetVectorStoreFileBatchesClient();
+
+using RequestContent content = RequestContent.Create(new
+{
+    file_ids = new object[]
+    {
+        "sseovtmhsfpghlqyzulhnhhhasall",
+        "sseovtmhsfpghlqyzulhnhhhasall",
+        "sseovtmhsfpghlqyzulhnhhhasall",
+        "sseovtmhsfpghlqyzulhnhhhasall",
+        "sseovtmhsfpghlqyzulhnhhhasall",
+        "sseovtmhsfpghlqyzulhnhhhasall",
+        "sseovtmhsfpghlqyzulhnhhhasall",
+        "sseovtmhsfpghlqyzulhnhhhasall"
+    },
+    data_sources = new object[]
+    {
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        },
+        new
+        {
+            uri = "soctjzrqyjyxixlqr",
+            type = "uri_asset",
+        }
+    },
+});
+Response response = client.CreateVectorStoreFileBatch("bvcjtemrnqtycjuaerlxllednm", content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("object").ToString());
+Console.WriteLine(result.GetProperty("created_at").ToString());
+Console.WriteLine(result.GetProperty("vector_store_id").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("file_counts").GetProperty("in_progress").ToString());
+Console.WriteLine(result.GetProperty("file_counts").GetProperty("completed").ToString());
+Console.WriteLine(result.GetProperty("file_counts").GetProperty("failed").ToString());
+Console.WriteLine(result.GetProperty("file_counts").GetProperty("cancelled").ToString());
+Console.WriteLine(result.GetProperty("file_counts").GetProperty("total").ToString());
+]]></code>
+This sample shows how to call CreateVectorStoreFileBatch and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+VectorStoreFileBatches client = new PersistentAgentsAdministrationClient(endpoint, credential).GetVectorStoreFileBatchesClient();
+
+using RequestContent content = RequestContent.Create(new object());
+Response response = client.CreateVectorStoreFileBatch("eyxdrn", content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("object").ToString());
+Console.WriteLine(result.GetProperty("created_at").ToString());
+Console.WriteLine(result.GetProperty("vector_store_id").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("file_counts").GetProperty("in_progress").ToString());
+Console.WriteLine(result.GetProperty("file_counts").GetProperty("completed").ToString());
+Console.WriteLine(result.GetProperty("file_counts").GetProperty("failed").ToString());
+Console.WriteLine(result.GetProperty("file_counts").GetProperty("cancelled").ToString());
+Console.WriteLine(result.GetProperty("file_counts").GetProperty("total").ToString());
+]]></code></example>
+    </member>
+    <member name="GetVectorStoreFileBatchAsync(string,string,CancellationToken)">
+      <example>
+This sample shows how to call GetVectorStoreFileBatchAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+VectorStoreFileBatches client = new PersistentAgentsAdministrationClient(endpoint, credential).GetVectorStoreFileBatchesClient();
+
+Response<VectorStoreFileBatch> response = await client.GetVectorStoreFileBatchAsync("kdcqszoqvfaipuhvijnwxmegovmeuv", "juytv");
+]]></code>
+This sample shows how to call GetVectorStoreFileBatchAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+VectorStoreFileBatches client = new PersistentAgentsAdministrationClient(endpoint, credential).GetVectorStoreFileBatchesClient();
+
+Response<VectorStoreFileBatch> response = await client.GetVectorStoreFileBatchAsync("kz", "pmzxfueg");
+]]></code></example>
+    </member>
+    <member name="GetVectorStoreFileBatch(string,string,CancellationToken)">
+      <example>
+This sample shows how to call GetVectorStoreFileBatch.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+VectorStoreFileBatches client = new PersistentAgentsAdministrationClient(endpoint, credential).GetVectorStoreFileBatchesClient();
+
+Response<VectorStoreFileBatch> response = client.GetVectorStoreFileBatch("kdcqszoqvfaipuhvijnwxmegovmeuv", "juytv");
+]]></code>
+This sample shows how to call GetVectorStoreFileBatch.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+VectorStoreFileBatches client = new PersistentAgentsAdministrationClient(endpoint, credential).GetVectorStoreFileBatchesClient();
+
+Response<VectorStoreFileBatch> response = client.GetVectorStoreFileBatch("kz", "pmzxfueg");
+]]></code></example>
+    </member>
+    <member name="GetVectorStoreFileBatchAsync(string,string,RequestContext)">
+      <example>
+This sample shows how to call GetVectorStoreFileBatchAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+VectorStoreFileBatches client = new PersistentAgentsAdministrationClient(endpoint, credential).GetVectorStoreFileBatchesClient();
+
+Response response = await client.GetVectorStoreFileBatchAsync("kdcqszoqvfaipuhvijnwxmegovmeuv", "juytv", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("object").ToString());
+Console.WriteLine(result.GetProperty("created_at").ToString());
+Console.WriteLine(result.GetProperty("vector_store_id").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("file_counts").GetProperty("in_progress").ToString());
+Console.WriteLine(result.GetProperty("file_counts").GetProperty("completed").ToString());
+Console.WriteLine(result.GetProperty("file_counts").GetProperty("failed").ToString());
+Console.WriteLine(result.GetProperty("file_counts").GetProperty("cancelled").ToString());
+Console.WriteLine(result.GetProperty("file_counts").GetProperty("total").ToString());
+]]></code>
+This sample shows how to call GetVectorStoreFileBatchAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+VectorStoreFileBatches client = new PersistentAgentsAdministrationClient(endpoint, credential).GetVectorStoreFileBatchesClient();
+
+Response response = await client.GetVectorStoreFileBatchAsync("kz", "pmzxfueg", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("object").ToString());
+Console.WriteLine(result.GetProperty("created_at").ToString());
+Console.WriteLine(result.GetProperty("vector_store_id").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("file_counts").GetProperty("in_progress").ToString());
+Console.WriteLine(result.GetProperty("file_counts").GetProperty("completed").ToString());
+Console.WriteLine(result.GetProperty("file_counts").GetProperty("failed").ToString());
+Console.WriteLine(result.GetProperty("file_counts").GetProperty("cancelled").ToString());
+Console.WriteLine(result.GetProperty("file_counts").GetProperty("total").ToString());
+]]></code></example>
+    </member>
+    <member name="GetVectorStoreFileBatch(string,string,RequestContext)">
+      <example>
+This sample shows how to call GetVectorStoreFileBatch and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+VectorStoreFileBatches client = new PersistentAgentsAdministrationClient(endpoint, credential).GetVectorStoreFileBatchesClient();
+
+Response response = client.GetVectorStoreFileBatch("kdcqszoqvfaipuhvijnwxmegovmeuv", "juytv", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("object").ToString());
+Console.WriteLine(result.GetProperty("created_at").ToString());
+Console.WriteLine(result.GetProperty("vector_store_id").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("file_counts").GetProperty("in_progress").ToString());
+Console.WriteLine(result.GetProperty("file_counts").GetProperty("completed").ToString());
+Console.WriteLine(result.GetProperty("file_counts").GetProperty("failed").ToString());
+Console.WriteLine(result.GetProperty("file_counts").GetProperty("cancelled").ToString());
+Console.WriteLine(result.GetProperty("file_counts").GetProperty("total").ToString());
+]]></code>
+This sample shows how to call GetVectorStoreFileBatch and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+VectorStoreFileBatches client = new PersistentAgentsAdministrationClient(endpoint, credential).GetVectorStoreFileBatchesClient();
+
+Response response = client.GetVectorStoreFileBatch("kz", "pmzxfueg", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("object").ToString());
+Console.WriteLine(result.GetProperty("created_at").ToString());
+Console.WriteLine(result.GetProperty("vector_store_id").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("file_counts").GetProperty("in_progress").ToString());
+Console.WriteLine(result.GetProperty("file_counts").GetProperty("completed").ToString());
+Console.WriteLine(result.GetProperty("file_counts").GetProperty("failed").ToString());
+Console.WriteLine(result.GetProperty("file_counts").GetProperty("cancelled").ToString());
+Console.WriteLine(result.GetProperty("file_counts").GetProperty("total").ToString());
+]]></code></example>
+    </member>
+    <member name="CancelVectorStoreFileBatchAsync(string,string,CancellationToken)">
+      <example>
+This sample shows how to call CancelVectorStoreFileBatchAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+VectorStoreFileBatches client = new PersistentAgentsAdministrationClient(endpoint, credential).GetVectorStoreFileBatchesClient();
+
+Response<VectorStoreFileBatch> response = await client.CancelVectorStoreFileBatchAsync("kpjojtaxsspjvzyxmfgwxusqde", "lqtvimqtqecqy");
+]]></code>
+This sample shows how to call CancelVectorStoreFileBatchAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+VectorStoreFileBatches client = new PersistentAgentsAdministrationClient(endpoint, credential).GetVectorStoreFileBatchesClient();
+
+Response<VectorStoreFileBatch> response = await client.CancelVectorStoreFileBatchAsync("fldyjeftzzkqinhz", "qsniwwejf");
+]]></code></example>
+    </member>
+    <member name="CancelVectorStoreFileBatch(string,string,CancellationToken)">
+      <example>
+This sample shows how to call CancelVectorStoreFileBatch.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+VectorStoreFileBatches client = new PersistentAgentsAdministrationClient(endpoint, credential).GetVectorStoreFileBatchesClient();
+
+Response<VectorStoreFileBatch> response = client.CancelVectorStoreFileBatch("kpjojtaxsspjvzyxmfgwxusqde", "lqtvimqtqecqy");
+]]></code>
+This sample shows how to call CancelVectorStoreFileBatch.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+VectorStoreFileBatches client = new PersistentAgentsAdministrationClient(endpoint, credential).GetVectorStoreFileBatchesClient();
+
+Response<VectorStoreFileBatch> response = client.CancelVectorStoreFileBatch("fldyjeftzzkqinhz", "qsniwwejf");
+]]></code></example>
+    </member>
+    <member name="CancelVectorStoreFileBatchAsync(string,string,RequestContext)">
+      <example>
+This sample shows how to call CancelVectorStoreFileBatchAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+VectorStoreFileBatches client = new PersistentAgentsAdministrationClient(endpoint, credential).GetVectorStoreFileBatchesClient();
+
+Response response = await client.CancelVectorStoreFileBatchAsync("kpjojtaxsspjvzyxmfgwxusqde", "lqtvimqtqecqy", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("object").ToString());
+Console.WriteLine(result.GetProperty("created_at").ToString());
+Console.WriteLine(result.GetProperty("vector_store_id").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("file_counts").GetProperty("in_progress").ToString());
+Console.WriteLine(result.GetProperty("file_counts").GetProperty("completed").ToString());
+Console.WriteLine(result.GetProperty("file_counts").GetProperty("failed").ToString());
+Console.WriteLine(result.GetProperty("file_counts").GetProperty("cancelled").ToString());
+Console.WriteLine(result.GetProperty("file_counts").GetProperty("total").ToString());
+]]></code>
+This sample shows how to call CancelVectorStoreFileBatchAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+VectorStoreFileBatches client = new PersistentAgentsAdministrationClient(endpoint, credential).GetVectorStoreFileBatchesClient();
+
+Response response = await client.CancelVectorStoreFileBatchAsync("fldyjeftzzkqinhz", "qsniwwejf", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("object").ToString());
+Console.WriteLine(result.GetProperty("created_at").ToString());
+Console.WriteLine(result.GetProperty("vector_store_id").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("file_counts").GetProperty("in_progress").ToString());
+Console.WriteLine(result.GetProperty("file_counts").GetProperty("completed").ToString());
+Console.WriteLine(result.GetProperty("file_counts").GetProperty("failed").ToString());
+Console.WriteLine(result.GetProperty("file_counts").GetProperty("cancelled").ToString());
+Console.WriteLine(result.GetProperty("file_counts").GetProperty("total").ToString());
+]]></code></example>
+    </member>
+    <member name="CancelVectorStoreFileBatch(string,string,RequestContext)">
+      <example>
+This sample shows how to call CancelVectorStoreFileBatch and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+VectorStoreFileBatches client = new PersistentAgentsAdministrationClient(endpoint, credential).GetVectorStoreFileBatchesClient();
+
+Response response = client.CancelVectorStoreFileBatch("kpjojtaxsspjvzyxmfgwxusqde", "lqtvimqtqecqy", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("object").ToString());
+Console.WriteLine(result.GetProperty("created_at").ToString());
+Console.WriteLine(result.GetProperty("vector_store_id").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("file_counts").GetProperty("in_progress").ToString());
+Console.WriteLine(result.GetProperty("file_counts").GetProperty("completed").ToString());
+Console.WriteLine(result.GetProperty("file_counts").GetProperty("failed").ToString());
+Console.WriteLine(result.GetProperty("file_counts").GetProperty("cancelled").ToString());
+Console.WriteLine(result.GetProperty("file_counts").GetProperty("total").ToString());
+]]></code>
+This sample shows how to call CancelVectorStoreFileBatch and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+VectorStoreFileBatches client = new PersistentAgentsAdministrationClient(endpoint, credential).GetVectorStoreFileBatchesClient();
+
+Response response = client.CancelVectorStoreFileBatch("fldyjeftzzkqinhz", "qsniwwejf", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("object").ToString());
+Console.WriteLine(result.GetProperty("created_at").ToString());
+Console.WriteLine(result.GetProperty("vector_store_id").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("file_counts").GetProperty("in_progress").ToString());
+Console.WriteLine(result.GetProperty("file_counts").GetProperty("completed").ToString());
+Console.WriteLine(result.GetProperty("file_counts").GetProperty("failed").ToString());
+Console.WriteLine(result.GetProperty("file_counts").GetProperty("cancelled").ToString());
+Console.WriteLine(result.GetProperty("file_counts").GetProperty("total").ToString());
+]]></code></example>
+    </member>
+    <member name="GetVectorStoreFileBatchFilesAsync(string,string,VectorStoreFileStatusFilter?,int?,ListSortOrder?,string,string,CancellationToken)">
+      <example>
+This sample shows how to call GetVectorStoreFileBatchFilesAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+VectorStoreFileBatches client = new PersistentAgentsAdministrationClient(endpoint, credential).GetVectorStoreFileBatchesClient();
+
+await foreach (VectorStoreFile item in client.GetVectorStoreFileBatchFilesAsync("itweqinnhpanpqxkxwqfi", "b"))
+{
+}
+]]></code>
+This sample shows how to call GetVectorStoreFileBatchFilesAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+VectorStoreFileBatches client = new PersistentAgentsAdministrationClient(endpoint, credential).GetVectorStoreFileBatchesClient();
+
+await foreach (VectorStoreFile item in client.GetVectorStoreFileBatchFilesAsync("awzuqhqpzl", "gipykvmemjcss"))
+{
+}
+]]></code></example>
+    </member>
+    <member name="GetVectorStoreFileBatchFiles(string,string,VectorStoreFileStatusFilter?,int?,ListSortOrder?,string,string,CancellationToken)">
+      <example>
+This sample shows how to call GetVectorStoreFileBatchFiles.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+VectorStoreFileBatches client = new PersistentAgentsAdministrationClient(endpoint, credential).GetVectorStoreFileBatchesClient();
+
+foreach (VectorStoreFile item in client.GetVectorStoreFileBatchFiles("itweqinnhpanpqxkxwqfi", "b"))
+{
+}
+]]></code>
+This sample shows how to call GetVectorStoreFileBatchFiles.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+VectorStoreFileBatches client = new PersistentAgentsAdministrationClient(endpoint, credential).GetVectorStoreFileBatchesClient();
+
+foreach (VectorStoreFile item in client.GetVectorStoreFileBatchFiles("awzuqhqpzl", "gipykvmemjcss"))
+{
+}
+]]></code></example>
+    </member>
+    <member name="GetVectorStoreFileBatchFilesAsync(string,string,string,int?,string,string,string,RequestContext)">
+      <example>
+This sample shows how to call GetVectorStoreFileBatchFilesAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+VectorStoreFileBatches client = new PersistentAgentsAdministrationClient(endpoint, credential).GetVectorStoreFileBatchesClient();
+
+await foreach (BinaryData item in client.GetVectorStoreFileBatchFilesAsync("itweqinnhpanpqxkxwqfi", "b", "in_progress", 22, "asc", "uotopjkuhxuxypqooudmdt", "lunnzgjqyjlrlvsldrkhrjvaqfovp", (RequestContext)null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("object").ToString());
+    Console.WriteLine(result.GetProperty("usage_bytes").ToString());
+    Console.WriteLine(result.GetProperty("created_at").ToString());
+    Console.WriteLine(result.GetProperty("vector_store_id").ToString());
+    Console.WriteLine(result.GetProperty("status").ToString());
+    Console.WriteLine(result.GetProperty("last_error").GetProperty("code").ToString());
+    Console.WriteLine(result.GetProperty("last_error").GetProperty("message").ToString());
+    Console.WriteLine(result.GetProperty("chunking_strategy").GetProperty("type").ToString());
+}
+]]></code>
+This sample shows how to call GetVectorStoreFileBatchFilesAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+VectorStoreFileBatches client = new PersistentAgentsAdministrationClient(endpoint, credential).GetVectorStoreFileBatchesClient();
+
+await foreach (BinaryData item in client.GetVectorStoreFileBatchFilesAsync("awzuqhqpzl", "gipykvmemjcss", (string)null, (int?)null, (string)null, (string)null, (string)null, (RequestContext)null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("object").ToString());
+    Console.WriteLine(result.GetProperty("usage_bytes").ToString());
+    Console.WriteLine(result.GetProperty("created_at").ToString());
+    Console.WriteLine(result.GetProperty("vector_store_id").ToString());
+    Console.WriteLine(result.GetProperty("status").ToString());
+    Console.WriteLine(result.GetProperty("last_error").GetProperty("code").ToString());
+    Console.WriteLine(result.GetProperty("last_error").GetProperty("message").ToString());
+    Console.WriteLine(result.GetProperty("chunking_strategy").GetProperty("type").ToString());
+}
+]]></code></example>
+    </member>
+    <member name="GetVectorStoreFileBatchFiles(string,string,string,int?,string,string,string,RequestContext)">
+      <example>
+This sample shows how to call GetVectorStoreFileBatchFiles and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+VectorStoreFileBatches client = new PersistentAgentsAdministrationClient(endpoint, credential).GetVectorStoreFileBatchesClient();
+
+foreach (BinaryData item in client.GetVectorStoreFileBatchFiles("itweqinnhpanpqxkxwqfi", "b", "in_progress", 22, "asc", "uotopjkuhxuxypqooudmdt", "lunnzgjqyjlrlvsldrkhrjvaqfovp", (RequestContext)null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("object").ToString());
+    Console.WriteLine(result.GetProperty("usage_bytes").ToString());
+    Console.WriteLine(result.GetProperty("created_at").ToString());
+    Console.WriteLine(result.GetProperty("vector_store_id").ToString());
+    Console.WriteLine(result.GetProperty("status").ToString());
+    Console.WriteLine(result.GetProperty("last_error").GetProperty("code").ToString());
+    Console.WriteLine(result.GetProperty("last_error").GetProperty("message").ToString());
+    Console.WriteLine(result.GetProperty("chunking_strategy").GetProperty("type").ToString());
+}
+]]></code>
+This sample shows how to call GetVectorStoreFileBatchFiles and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+VectorStoreFileBatches client = new PersistentAgentsAdministrationClient(endpoint, credential).GetVectorStoreFileBatchesClient();
+
+foreach (BinaryData item in client.GetVectorStoreFileBatchFiles("awzuqhqpzl", "gipykvmemjcss", (string)null, (int?)null, (string)null, (string)null, (string)null, (RequestContext)null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("object").ToString());
+    Console.WriteLine(result.GetProperty("usage_bytes").ToString());
+    Console.WriteLine(result.GetProperty("created_at").ToString());
+    Console.WriteLine(result.GetProperty("vector_store_id").ToString());
+    Console.WriteLine(result.GetProperty("status").ToString());
+    Console.WriteLine(result.GetProperty("last_error").GetProperty("code").ToString());
+    Console.WriteLine(result.GetProperty("last_error").GetProperty("message").ToString());
+    Console.WriteLine(result.GetProperty("chunking_strategy").GetProperty("type").ToString());
+}
+]]></code></example>
+    </member>
+  </members>
+</doc>

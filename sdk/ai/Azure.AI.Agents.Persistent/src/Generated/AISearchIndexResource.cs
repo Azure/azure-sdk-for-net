@@ -81,11 +81,6 @@ namespace Azure.AI.Agents.Persistent
         internal AISearchIndexResource()
         {
         }
-
-        /// <summary> An index connection id in an IndexResource attached to this agent. </summary>
-        public string IndexConnectionId { get; set; }
-        /// <summary> The name of an index in an IndexResource attached to this agent. </summary>
-        public string IndexName { get; set; }
         /// <summary> Type of query in an AIIndexResource attached to this agent. </summary>
         public AzureAISearchQueryType? QueryType { get; set; }
         /// <summary> Number of documents to retrieve from search and present to the model. </summary>

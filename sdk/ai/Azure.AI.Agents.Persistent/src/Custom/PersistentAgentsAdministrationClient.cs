@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.Design;
 using System.IO;
 using System.Linq;
@@ -330,6 +331,168 @@ namespace Azure.AI.Agents.Persistent
             try
             {
                 using HttpMessage message = CreateGetAgentRequest(agentId, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Creates a new agent.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="CreateAgentAsync(string,string,string,string,IEnumerable{ToolDefinition},ToolResources,float?,float?,BinaryData,IReadOnlyDictionary{string,string},CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual async Task<Response> CreateAgentAsync(RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("PersistentAgentsAdministrationClient.CreateAgent");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateCreateAgentRequest(content, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Creates a new agent.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="CreateAgent(string,string,string,string,IEnumerable{ToolDefinition},ToolResources,float?,float?,BinaryData,IReadOnlyDictionary{string,string},CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Response CreateAgent(RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("PersistentAgentsAdministrationClient.CreateAgent");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateCreateAgentRequest(content, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Modifies an existing agent.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="UpdateAgentAsync(string,string,string,string,string,IEnumerable{ToolDefinition},ToolResources,float?,float?,BinaryData,IReadOnlyDictionary{string,string},CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="assistantId"> The ID of the agent to modify. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="assistantId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="assistantId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual async Task<Response> UpdateAgentAsync(string assistantId, RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(assistantId, nameof(assistantId));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("PersistentAgentsAdministrationClient.UpdateAgent");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateUpdateAgentRequest(assistantId, content, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Modifies an existing agent.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="UpdateAgent(string,string,string,string,string,IEnumerable{ToolDefinition},ToolResources,float?,float?,BinaryData,IReadOnlyDictionary{string,string},CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="assistantId"> The ID of the agent to modify. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="assistantId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="assistantId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Response UpdateAgent(string assistantId, RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(assistantId, nameof(assistantId));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("PersistentAgentsAdministrationClient.UpdateAgent");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateUpdateAgentRequest(assistantId, content, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)

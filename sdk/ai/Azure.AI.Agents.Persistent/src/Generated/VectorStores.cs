@@ -60,6 +60,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="chunkingStrategy"> The chunking strategy used to chunk the file(s). If not set, will use the auto strategy. Only applicable if file_ids is non-empty. </param>
         /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <include file="Docs/VectorStores.xml" path="doc/members/member[@name='CreateVectorStoreAsync(IEnumerable{string},string,VectorStoreConfiguration,VectorStoreExpirationPolicy,VectorStoreChunkingStrategy,IReadOnlyDictionary{string,string},CancellationToken)']/*" />
         public virtual async Task<Response<PersistentAgentsVectorStore>> CreateVectorStoreAsync(IEnumerable<string> fileIds = null, string name = null, VectorStoreConfiguration storeConfiguration = null, VectorStoreExpirationPolicy expiresAfter = null, VectorStoreChunkingStrategy chunkingStrategy = null, IReadOnlyDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
         {
             CreateVectorStoreRequest createVectorStoreRequest = new CreateVectorStoreRequest(
@@ -83,6 +84,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="chunkingStrategy"> The chunking strategy used to chunk the file(s). If not set, will use the auto strategy. Only applicable if file_ids is non-empty. </param>
         /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <include file="Docs/VectorStores.xml" path="doc/members/member[@name='CreateVectorStore(IEnumerable{string},string,VectorStoreConfiguration,VectorStoreExpirationPolicy,VectorStoreChunkingStrategy,IReadOnlyDictionary{string,string},CancellationToken)']/*" />
         public virtual Response<PersistentAgentsVectorStore> CreateVectorStore(IEnumerable<string> fileIds = null, string name = null, VectorStoreConfiguration storeConfiguration = null, VectorStoreExpirationPolicy expiresAfter = null, VectorStoreChunkingStrategy chunkingStrategy = null, IReadOnlyDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
         {
             CreateVectorStoreRequest createVectorStoreRequest = new CreateVectorStoreRequest(
@@ -118,6 +120,7 @@ namespace Azure.AI.Agents.Persistent
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/VectorStores.xml" path="doc/members/member[@name='CreateVectorStoreAsync(RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> CreateVectorStoreAsync(RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -156,6 +159,7 @@ namespace Azure.AI.Agents.Persistent
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/VectorStores.xml" path="doc/members/member[@name='CreateVectorStore(RequestContent,RequestContext)']/*" />
         public virtual Response CreateVectorStore(RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -179,6 +183,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vectorStoreId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/VectorStores.xml" path="doc/members/member[@name='GetVectorStoreAsync(string,CancellationToken)']/*" />
         public virtual async Task<Response<PersistentAgentsVectorStore>> GetVectorStoreAsync(string vectorStoreId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
@@ -193,6 +198,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vectorStoreId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/VectorStores.xml" path="doc/members/member[@name='GetVectorStore(string,CancellationToken)']/*" />
         public virtual Response<PersistentAgentsVectorStore> GetVectorStore(string vectorStoreId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
@@ -223,6 +229,7 @@ namespace Azure.AI.Agents.Persistent
         /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/VectorStores.xml" path="doc/members/member[@name='GetVectorStoreAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> GetVectorStoreAsync(string vectorStoreId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
@@ -262,6 +269,7 @@ namespace Azure.AI.Agents.Persistent
         /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/VectorStores.xml" path="doc/members/member[@name='GetVectorStore(string,RequestContext)']/*" />
         public virtual Response GetVectorStore(string vectorStoreId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
@@ -288,6 +296,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vectorStoreId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/VectorStores.xml" path="doc/members/member[@name='ModifyVectorStoreAsync(string,string,VectorStoreExpirationPolicy,IReadOnlyDictionary{string,string},CancellationToken)']/*" />
         public virtual async Task<Response<PersistentAgentsVectorStore>> ModifyVectorStoreAsync(string vectorStoreId, string name = null, VectorStoreExpirationPolicy expiresAfter = null, IReadOnlyDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
@@ -306,6 +315,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vectorStoreId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/VectorStores.xml" path="doc/members/member[@name='ModifyVectorStore(string,string,VectorStoreExpirationPolicy,IReadOnlyDictionary{string,string},CancellationToken)']/*" />
         public virtual Response<PersistentAgentsVectorStore> ModifyVectorStore(string vectorStoreId, string name = null, VectorStoreExpirationPolicy expiresAfter = null, IReadOnlyDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
@@ -338,6 +348,7 @@ namespace Azure.AI.Agents.Persistent
         /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/VectorStores.xml" path="doc/members/member[@name='ModifyVectorStoreAsync(string,RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> ModifyVectorStoreAsync(string vectorStoreId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
@@ -379,6 +390,7 @@ namespace Azure.AI.Agents.Persistent
         /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/VectorStores.xml" path="doc/members/member[@name='ModifyVectorStore(string,RequestContent,RequestContext)']/*" />
         public virtual Response ModifyVectorStore(string vectorStoreId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
