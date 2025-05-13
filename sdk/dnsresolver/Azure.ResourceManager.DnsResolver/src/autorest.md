@@ -20,6 +20,9 @@ modelerfour:
   flatten-payloads: false
 use-model-reader-writer: true
 
+partial-resources:
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}: VirtualNetwork
+
 override-operation-name:
   DnsResolvers_ListByVirtualNetwork: GetDnsResolvers
   DnsForwardingRulesets_ListByVirtualNetwork: GetDnsForwardingRulesets

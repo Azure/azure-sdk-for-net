@@ -6,27 +6,15 @@
 #nullable disable
 
 using System;
-using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
 using Azure.Core;
-using Azure.Core.Pipeline;
-using Azure.ResourceManager.DnsResolver.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.DnsResolver.Mocking
 {
     /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
     public partial class MockableDnsResolverResourceGroupResource : ArmResource
     {
-        private ClientDiagnostics _dnsResolverClientDiagnostics;
-        private DnsResolversRestOperations _dnsResolverRestClient;
-        private ClientDiagnostics _dnsForwardingRulesetClientDiagnostics;
-        private DnsForwardingRulesetsRestOperations _dnsForwardingRulesetRestClient;
-        private ClientDiagnostics _dnsResolverPolicyClientDiagnostics;
-        private DnsResolverPoliciesRestOperations _dnsResolverPolicyRestClient;
-
         /// <summary> Initializes a new instance of the <see cref="MockableDnsResolverResourceGroupResource"/> class for mocking. </summary>
         protected MockableDnsResolverResourceGroupResource()
         {
@@ -38,13 +26,6 @@ namespace Azure.ResourceManager.DnsResolver.Mocking
         internal MockableDnsResolverResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
-
-        private ClientDiagnostics DnsResolverClientDiagnostics => _dnsResolverClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DnsResolver", DnsResolverResource.ResourceType.Namespace, Diagnostics);
-        private DnsResolversRestOperations DnsResolverRestClient => _dnsResolverRestClient ??= new DnsResolversRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(DnsResolverResource.ResourceType));
-        private ClientDiagnostics DnsForwardingRulesetClientDiagnostics => _dnsForwardingRulesetClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DnsResolver", DnsForwardingRulesetResource.ResourceType.Namespace, Diagnostics);
-        private DnsForwardingRulesetsRestOperations DnsForwardingRulesetRestClient => _dnsForwardingRulesetRestClient ??= new DnsForwardingRulesetsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(DnsForwardingRulesetResource.ResourceType));
-        private ClientDiagnostics DnsResolverPolicyClientDiagnostics => _dnsResolverPolicyClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DnsResolver", DnsResolverPolicyResource.ResourceType.Namespace, Diagnostics);
-        private DnsResolverPoliciesRestOperations DnsResolverPolicyRestClient => _dnsResolverPolicyRestClient ??= new DnsResolverPoliciesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(DnsResolverPolicyResource.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -326,220 +307,6 @@ namespace Azure.ResourceManager.DnsResolver.Mocking
         public virtual Response<DnsResolverDomainListResource> GetDnsResolverDomainList(string dnsResolverDomainListName, CancellationToken cancellationToken = default)
         {
             return GetDnsResolverDomainLists().Get(dnsResolverDomainListName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists DNS resolver resource IDs linked to a virtual network.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/listDnsResolvers</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DnsResolvers_ListByVirtualNetwork</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DnsResolverResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="virtualNetworkName"> The name of the virtual network. </param>
-        /// <param name="top"> The maximum number of results to return. If not specified, returns up to 100 results. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="virtualNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkName"/> is null. </exception>
-        /// <returns> An async collection of <see cref="WritableSubResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<WritableSubResource> GetDnsResolversAsync(string virtualNetworkName, int? top = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(virtualNetworkName, nameof(virtualNetworkName));
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => DnsResolverRestClient.CreateListByVirtualNetworkRequest(Id.SubscriptionId, Id.ResourceGroupName, virtualNetworkName, top);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DnsResolverRestClient.CreateListByVirtualNetworkNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, virtualNetworkName, top);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => JsonSerializer.Deserialize<WritableSubResource>(e.GetRawText()), DnsResolverClientDiagnostics, Pipeline, "MockableDnsResolverResourceGroupResource.GetDnsResolvers", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists DNS resolver resource IDs linked to a virtual network.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/listDnsResolvers</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DnsResolvers_ListByVirtualNetwork</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DnsResolverResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="virtualNetworkName"> The name of the virtual network. </param>
-        /// <param name="top"> The maximum number of results to return. If not specified, returns up to 100 results. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="virtualNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkName"/> is null. </exception>
-        /// <returns> A collection of <see cref="WritableSubResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<WritableSubResource> GetDnsResolvers(string virtualNetworkName, int? top = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(virtualNetworkName, nameof(virtualNetworkName));
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => DnsResolverRestClient.CreateListByVirtualNetworkRequest(Id.SubscriptionId, Id.ResourceGroupName, virtualNetworkName, top);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DnsResolverRestClient.CreateListByVirtualNetworkNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, virtualNetworkName, top);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => JsonSerializer.Deserialize<WritableSubResource>(e.GetRawText()), DnsResolverClientDiagnostics, Pipeline, "MockableDnsResolverResourceGroupResource.GetDnsResolvers", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists DNS forwarding ruleset resource IDs attached to a virtual network.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/listDnsForwardingRulesets</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DnsForwardingRulesets_ListByVirtualNetwork</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DnsForwardingRulesetResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="virtualNetworkName"> The name of the virtual network. </param>
-        /// <param name="top"> The maximum number of results to return. If not specified, returns up to 100 results. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="virtualNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkName"/> is null. </exception>
-        /// <returns> An async collection of <see cref="VirtualNetworkDnsForwardingRuleset"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<VirtualNetworkDnsForwardingRuleset> GetDnsForwardingRulesetsAsync(string virtualNetworkName, int? top = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(virtualNetworkName, nameof(virtualNetworkName));
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => DnsForwardingRulesetRestClient.CreateListByVirtualNetworkRequest(Id.SubscriptionId, Id.ResourceGroupName, virtualNetworkName, top);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DnsForwardingRulesetRestClient.CreateListByVirtualNetworkNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, virtualNetworkName, top);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => VirtualNetworkDnsForwardingRuleset.DeserializeVirtualNetworkDnsForwardingRuleset(e), DnsForwardingRulesetClientDiagnostics, Pipeline, "MockableDnsResolverResourceGroupResource.GetDnsForwardingRulesets", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists DNS forwarding ruleset resource IDs attached to a virtual network.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/listDnsForwardingRulesets</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DnsForwardingRulesets_ListByVirtualNetwork</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DnsForwardingRulesetResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="virtualNetworkName"> The name of the virtual network. </param>
-        /// <param name="top"> The maximum number of results to return. If not specified, returns up to 100 results. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="virtualNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkName"/> is null. </exception>
-        /// <returns> A collection of <see cref="VirtualNetworkDnsForwardingRuleset"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<VirtualNetworkDnsForwardingRuleset> GetDnsForwardingRulesets(string virtualNetworkName, int? top = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(virtualNetworkName, nameof(virtualNetworkName));
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => DnsForwardingRulesetRestClient.CreateListByVirtualNetworkRequest(Id.SubscriptionId, Id.ResourceGroupName, virtualNetworkName, top);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DnsForwardingRulesetRestClient.CreateListByVirtualNetworkNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, virtualNetworkName, top);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => VirtualNetworkDnsForwardingRuleset.DeserializeVirtualNetworkDnsForwardingRuleset(e), DnsForwardingRulesetClientDiagnostics, Pipeline, "MockableDnsResolverResourceGroupResource.GetDnsForwardingRulesets", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists DNS resolver policy resource IDs linked to a virtual network.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/listDnsResolverPolicies</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DnsResolverPolicies_ListByVirtualNetwork</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DnsResolverPolicyResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="virtualNetworkName"> The name of the virtual network. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="virtualNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkName"/> is null. </exception>
-        /// <returns> An async collection of <see cref="WritableSubResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<WritableSubResource> GetDnsResolverPoliciesByVirtualNetworkAsync(string virtualNetworkName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(virtualNetworkName, nameof(virtualNetworkName));
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => DnsResolverPolicyRestClient.CreateListByVirtualNetworkRequest(Id.SubscriptionId, Id.ResourceGroupName, virtualNetworkName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DnsResolverPolicyRestClient.CreateListByVirtualNetworkNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, virtualNetworkName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => JsonSerializer.Deserialize<WritableSubResource>(e.GetRawText()), DnsResolverPolicyClientDiagnostics, Pipeline, "MockableDnsResolverResourceGroupResource.GetDnsResolverPoliciesByVirtualNetwork", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists DNS resolver policy resource IDs linked to a virtual network.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/listDnsResolverPolicies</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DnsResolverPolicies_ListByVirtualNetwork</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DnsResolverPolicyResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="virtualNetworkName"> The name of the virtual network. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="virtualNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkName"/> is null. </exception>
-        /// <returns> A collection of <see cref="WritableSubResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<WritableSubResource> GetDnsResolverPoliciesByVirtualNetwork(string virtualNetworkName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(virtualNetworkName, nameof(virtualNetworkName));
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => DnsResolverPolicyRestClient.CreateListByVirtualNetworkRequest(Id.SubscriptionId, Id.ResourceGroupName, virtualNetworkName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DnsResolverPolicyRestClient.CreateListByVirtualNetworkNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, virtualNetworkName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => JsonSerializer.Deserialize<WritableSubResource>(e.GetRawText()), DnsResolverPolicyClientDiagnostics, Pipeline, "MockableDnsResolverResourceGroupResource.GetDnsResolverPoliciesByVirtualNetwork", "value", "nextLink", cancellationToken);
         }
     }
 }
