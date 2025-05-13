@@ -161,6 +161,9 @@ namespace Azure.Data.Tables
             }
             else if (typeof(T).IsEnum)
             {
+                if (!Enum.IsDefined(memberInfo.Type, propertyValue))
+                    return false;
+
                 value = (T)Enum.Parse(memberInfo.Type, propertyValue as string);
             }
             else if (typeof(T).IsGenericType &&
@@ -168,6 +171,9 @@ namespace Azure.Data.Tables
                      typeof(T).GetGenericArguments() is { Length: 1 } arguments &&
                      arguments[0].IsEnum)
             {
+                if (!Enum.IsDefined(arguments[0], propertyValue))
+                    return false;
+
                 value = (T)Enum.Parse(arguments[0], propertyValue as string);
             }
             else if (typeof(T) == typeof(ETag))
