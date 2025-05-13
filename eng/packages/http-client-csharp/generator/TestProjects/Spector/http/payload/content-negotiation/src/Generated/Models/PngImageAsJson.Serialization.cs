@@ -15,6 +15,8 @@ namespace Payload.ContentNegotiation._DifferentBody
 {
     public partial class PngImageAsJson : IJsonModel<PngImageAsJson>
     {
+        internal PngImageAsJson() => throw null;
+
         void IJsonModel<PngImageAsJson>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;

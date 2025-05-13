@@ -129,7 +129,7 @@ namespace Azure.Communication.ProgrammableConnectivity
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureCommunicationProgrammableConnectivityContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(NumberVerificationWithoutCodeContent)} does not support writing '{options.Format}' format.");
             }

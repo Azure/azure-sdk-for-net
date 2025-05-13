@@ -62,7 +62,6 @@ namespace Azure.Generator.Visitors
                    constructor.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Internal) &&
                    endpoint != null;
             bool isPrimaryConstructor = hasNoInitializer && options != null;
-
             if (isPrimaryConstructor)
             {
                 var assignClientDiagnostics = clientDiagnosticsProperty.Assign(
@@ -75,6 +74,13 @@ namespace Azure.Generator.Visitors
             }
             else if (isSubClientConstructor)
             {
+                XmlDocProvider? updatedXmlDocs = constructor.XmlDocs;
+                if (updatedXmlDocs != null)
+                {
+                    List<XmlDocParamStatement> updatedParametersXmlDoc = [new XmlDocParamStatement(clientDiagnosticsProperty.AsParameter), .. updatedXmlDocs.Parameters];
+                    updatedXmlDocs?.Update(parameters: updatedParametersXmlDoc);
+                }
+
                 var updatedSignature = new ConstructorSignature(
                    constructor.Signature.Type,
                    constructor.Signature.Description,
@@ -87,7 +93,7 @@ namespace Azure.Generator.Visitors
                     ? [assignClientDiagnostics, constructor.BodyStatements]
                     : [assignClientDiagnostics];
 
-                constructor.Update(signature: updatedSignature, bodyStatements: updatedBody);
+                constructor.Update(signature: updatedSignature, bodyStatements: updatedBody, xmlDocs: updatedXmlDocs);
             }
 
             return constructor;

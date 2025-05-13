@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.AppService
 
         StaticSiteDatabaseConnectionData IJsonModel<StaticSiteDatabaseConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<StaticSiteDatabaseConnectionData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<StaticSiteDatabaseConnectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<StaticSiteDatabaseConnectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<StaticSiteDatabaseConnectionData>(Data, options, AzureResourceManagerAppServiceContext.Default);
 
-        StaticSiteDatabaseConnectionData IPersistableModel<StaticSiteDatabaseConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<StaticSiteDatabaseConnectionData>(data, options);
+        StaticSiteDatabaseConnectionData IPersistableModel<StaticSiteDatabaseConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<StaticSiteDatabaseConnectionData>(data, options, AzureResourceManagerAppServiceContext.Default);
 
         string IPersistableModel<StaticSiteDatabaseConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<StaticSiteDatabaseConnectionData>)Data).GetFormatFromOptions(options);
     }

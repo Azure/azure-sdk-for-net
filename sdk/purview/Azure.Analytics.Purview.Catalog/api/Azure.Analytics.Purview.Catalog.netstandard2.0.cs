@@ -1,5 +1,11 @@
 namespace Azure.Analytics.Purview.Catalog
 {
+    public partial class AzureAnalyticsPurviewCatalogContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureAnalyticsPurviewCatalogContext() { }
+        public static Azure.Analytics.Purview.Catalog.AzureAnalyticsPurviewCatalogContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class PurviewCatalogClient
     {
         protected PurviewCatalogClient() { }

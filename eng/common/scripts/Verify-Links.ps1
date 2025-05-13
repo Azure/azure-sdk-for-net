@@ -72,6 +72,7 @@ param (
   [string] $userAgent,
   [string] $inputCacheFile,
   [string] $outputCacheFile,
+  [string] $localGithubClonedRoot = "",
   [string] $requestTimeoutSec  = 15
 )
 
@@ -80,6 +81,14 @@ Set-StrictMode -Version 3.0
 $ProgressPreference = "SilentlyContinue"; # Disable invoke-webrequest progress dialog
 
 function ProcessLink([System.Uri]$linkUri) {
+  # To help improve performance and rate limiting issues with github links we try to resolve them based on a local clone if one exists.
+  if ($localGithubClonedRoot -and $linkUri -match '^https://github.com/Azure/(?<repo>[^/]+)/(?:blob|tree)/(main|.*_[^/]+|.*/v[^/]+)/(?<path>.*)$') {
+    $localPath = Join-Path $localGithubClonedRoot $matches['repo'] $matches['path']
+    if (Test-Path $localPath) {
+      return $true
+    }
+    return ProcessStandardLink $linkUri
+  }
   if ($linkUri -match '^https?://?github\.com/(?<account>)[^/]+/(?<repo>)[^/]+/wiki/.+') {
     # in an unauthenticated session, urls for missing pages will redirect to the wiki root
     return ProcessRedirectLink $linkUri -invalidStatusCodes 302
@@ -507,6 +516,7 @@ if ($inputCacheFile)
   $goodLinks = $cacheContent.Split("`n").Where({ $_.Trim() -ne "" -and !$_.StartsWith("#") })
 
   foreach ($goodLink in $goodLinks) {
+    $goodLink = $goodLink.Trim()
     $checkedLinks[$goodLink] = $true
   }
 }
@@ -587,7 +597,7 @@ try {
 
   if ($outputCacheFile)
   {
-    $goodLinks = $checkedLinks.Keys.Where({ "True" -eq $checkedLinks[$_].ToString() }) | Sort-Object
+    $goodLinks = $checkedLinks.Keys.Where({ "True" -eq $checkedLinks[$_].ToString()}) | Sort-Object -Unique
 
     Write-Host "Writing the list of validated links to $outputCacheFile"
     $goodLinks | Set-Content $outputCacheFile

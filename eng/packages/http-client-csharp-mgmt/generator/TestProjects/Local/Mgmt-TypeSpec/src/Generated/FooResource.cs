@@ -31,17 +31,23 @@ namespace MgmtTypeSpec
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="FooResource"/> class. </summary>
+        /// <param name="client"> The client parameters to use in these operations. </param>
+        /// <param name="data"> The resource that is the target of operations. </param>
         internal FooResource(ArmClient client, FooData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
+        /// <summary> Initializes a new instance of <see cref="FooResource"/> class. </summary>
+        /// <param name="client"> The client parameters to use in these operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal FooResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _fooClientDiagnostics = new ClientDiagnostics("MgmtTypeSpec", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string fooApiVersion);
-            _fooRestClient = new Foos(Pipeline, Endpoint, fooApiVersion);
+            _fooRestClient = new Foos(_fooClientDiagnostics, Pipeline, Endpoint, fooApiVersion);
             ValidateResourceId(id);
         }
 
@@ -61,6 +67,7 @@ namespace MgmtTypeSpec
             }
         }
 
+        /// <param name="id"></param>
         [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
