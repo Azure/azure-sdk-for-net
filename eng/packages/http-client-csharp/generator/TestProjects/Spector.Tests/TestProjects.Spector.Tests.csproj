@@ -15,6 +15,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Azure.Generator\test\common\Azure.Generator.Tests.Common.csproj" />
+    <ProjectReference Include="..\Spector\http\azure\core\page\src\_Specs_.Azure.Core.Page.csproj" />
     <ProjectReference Include="..\Spector\http\azure\client-generator-core\flatten-property\src\_Specs_.Azure.ClientGenerator.Core.FlattenProperty.csproj" />
     <ProjectReference Include="..\Spector\http\azure\client-generator-core\usage\src\_Specs_.Azure.ClientGenerator.Core.Usage.csproj" />
     <ProjectReference Include="..\Spector\http\azure\special-headers\client-request-id\src\Azure.SpecialHeaders.XmsClientRequestId.csproj" />
