@@ -21,8 +21,6 @@ if ($EmitterPackagePath.StartsWith("/")) {
 $packageRoot = Resolve-Path "$RepoRoot/$EmitterPackagePath"
 $testResultsPath = $OutputDirectory ? $OutputDirectory : (Join-Path $packageRoot "artifacts" "test")
 
-$errors = @()
-
 function Build-Emitter {
     param (
         [string]$packageRoot,
@@ -36,27 +34,15 @@ function Build-Emitter {
         if ($UnitTests) {
             # test the emitter
             Invoke-LoggedCommand "npm run prettier" -GroupOutput -ErrorAction Stop
-            if ($LastExitCode) {
-                $errors += "Prettier failed"
-            }
 
             Invoke-LoggedCommand "npm run lint" -GroupOutput -ErrorAction Stop
-            if ($LastExitCode) {
-                $errors += "Lint failed"
-            }
 
             Invoke-LoggedCommand "npm install @types/node --save-dev" -GroupOutput
             Invoke-LoggedCommand "npm run build:emitter" -GroupOutput
             Invoke-LoggedCommand "npm run test:emitter" -GroupOutput -ErrorAction Stop
-            if ($LastExitCode) {
-                $errors += "Emitter tests failed"
-            }
 
             Invoke-LoggedCommand "npm run build:generator" -GroupOutput
             Invoke-LoggedCommand "npm run test:generator" -GroupOutput -ErrorAction Stop
-            if ($LastExitCode) {
-                $errors += "Generator tests failed"
-            }
         }
 }
 
@@ -84,22 +70,9 @@ try {
     if ($GenerationChecks) {
         Set-StrictMode -Version 1
         # run E2E Test for TypeSpec emitter
-        try
-        {
-            & "$RepoRoot/eng/scripts/typespec/Check-CodeGeneration.ps1" -EmitterPackagePath $packageRoot -Filter $Filter -Reset
-        }
-        catch
-        {
-            $errors += "Code generation check failed"
-        }
+        & "$RepoRoot/eng/scripts/typespec/Check-CodeGeneration.ps1" -EmitterPackagePath $packageRoot -Filter $Filter -Reset
     }
 }
 finally {
     Pop-Location
-}
-
-if ($errors.Length) {
-    Write-Host ''
-    Write-Error ($errors -join ', ')
-    exit 1
 }
