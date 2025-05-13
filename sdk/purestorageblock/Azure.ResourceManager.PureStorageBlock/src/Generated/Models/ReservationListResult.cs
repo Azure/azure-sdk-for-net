@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
         /// <summary> Initializes a new instance of <see cref="ReservationListResult"/>. </summary>
         /// <param name="value"> The Reservation items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal ReservationListResult(IEnumerable<ReservationData> value)
+        internal ReservationListResult(IEnumerable<PureStorageReservationData> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
         /// <param name="value"> The Reservation items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ReservationListResult(IReadOnlyList<ReservationData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ReservationListResult(IReadOnlyList<PureStorageReservationData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
         }
 
         /// <summary> The Reservation items on this page. </summary>
-        public IReadOnlyList<ReservationData> Value { get; }
+        public IReadOnlyList<PureStorageReservationData> Value { get; }
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }
     }

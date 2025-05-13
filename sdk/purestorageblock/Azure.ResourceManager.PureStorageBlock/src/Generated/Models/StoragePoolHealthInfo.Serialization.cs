@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
                 return null;
             }
             HealthDetails health = default;
-            IReadOnlyList<Alert> alerts = default;
+            IReadOnlyList<PureStorageHealthAlert> alerts = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -93,10 +93,10 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
                 }
                 if (property.NameEquals("alerts"u8))
                 {
-                    List<Alert> array = new List<Alert>();
+                    List<PureStorageHealthAlert> array = new List<PureStorageHealthAlert>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Alert.DeserializeAlert(item, options));
+                        array.Add(PureStorageHealthAlert.DeserializePureStorageHealthAlert(item, options));
                     }
                     alerts = array;
                     continue;

@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.PureStorageBlock
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string storagePoolName, string avsVmId, string volumeId, AvsVmVolumePatch patch)
+        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string storagePoolName, string avsVmId, string volumeId, PureStorageAvsVmVolumePatch patch)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.PureStorageBlock
             return uri;
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string storagePoolName, string avsVmId, string volumeId, AvsVmVolumePatch patch)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string storagePoolName, string avsVmId, string volumeId, PureStorageAvsVmVolumePatch patch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.PureStorageBlock
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="storagePoolName"/>, <paramref name="avsVmId"/>, <paramref name="volumeId"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="storagePoolName"/>, <paramref name="avsVmId"/> or <paramref name="volumeId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string storagePoolName, string avsVmId, string volumeId, AvsVmVolumePatch patch, CancellationToken cancellationToken = default)
+        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string storagePoolName, string avsVmId, string volumeId, PureStorageAvsVmVolumePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.PureStorageBlock
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="storagePoolName"/>, <paramref name="avsVmId"/>, <paramref name="volumeId"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="storagePoolName"/>, <paramref name="avsVmId"/> or <paramref name="volumeId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Update(string subscriptionId, string resourceGroupName, string storagePoolName, string avsVmId, string volumeId, AvsVmVolumePatch patch, CancellationToken cancellationToken = default)
+        public Response Update(string subscriptionId, string resourceGroupName, string storagePoolName, string avsVmId, string volumeId, PureStorageAvsVmVolumePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.PureStorageBlock
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="storagePoolName"/>, <paramref name="avsVmId"/> or <paramref name="volumeId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="storagePoolName"/>, <paramref name="avsVmId"/> or <paramref name="volumeId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<AvsVmVolumeData>> GetAsync(string subscriptionId, string resourceGroupName, string storagePoolName, string avsVmId, string volumeId, CancellationToken cancellationToken = default)
+        public async Task<Response<PureStorageAvsVmVolumeData>> GetAsync(string subscriptionId, string resourceGroupName, string storagePoolName, string avsVmId, string volumeId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -209,13 +209,13 @@ namespace Azure.ResourceManager.PureStorageBlock
             {
                 case 200:
                     {
-                        AvsVmVolumeData value = default;
+                        PureStorageAvsVmVolumeData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = AvsVmVolumeData.DeserializeAvsVmVolumeData(document.RootElement);
+                        value = PureStorageAvsVmVolumeData.DeserializePureStorageAvsVmVolumeData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((AvsVmVolumeData)null, message.Response);
+                    return Response.FromValue((PureStorageAvsVmVolumeData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.PureStorageBlock
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="storagePoolName"/>, <paramref name="avsVmId"/> or <paramref name="volumeId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="storagePoolName"/>, <paramref name="avsVmId"/> or <paramref name="volumeId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<AvsVmVolumeData> Get(string subscriptionId, string resourceGroupName, string storagePoolName, string avsVmId, string volumeId, CancellationToken cancellationToken = default)
+        public Response<PureStorageAvsVmVolumeData> Get(string subscriptionId, string resourceGroupName, string storagePoolName, string avsVmId, string volumeId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -244,13 +244,13 @@ namespace Azure.ResourceManager.PureStorageBlock
             {
                 case 200:
                     {
-                        AvsVmVolumeData value = default;
+                        PureStorageAvsVmVolumeData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = AvsVmVolumeData.DeserializeAvsVmVolumeData(document.RootElement);
+                        value = PureStorageAvsVmVolumeData.DeserializePureStorageAvsVmVolumeData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((AvsVmVolumeData)null, message.Response);
+                    return Response.FromValue((PureStorageAvsVmVolumeData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }

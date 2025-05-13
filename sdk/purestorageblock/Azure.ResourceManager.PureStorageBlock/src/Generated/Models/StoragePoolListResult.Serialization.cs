@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
             {
                 return null;
             }
-            IReadOnlyList<StoragePoolData> value = default;
+            IReadOnlyList<PureStoragePoolData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -91,10 +91,10 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<StoragePoolData> array = new List<StoragePoolData>();
+                    List<PureStoragePoolData> array = new List<PureStoragePoolData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StoragePoolData.DeserializeStoragePoolData(item, options));
+                        array.Add(PureStoragePoolData.DeserializePureStoragePoolData(item, options));
                     }
                     value = array;
                     continue;

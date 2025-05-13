@@ -35,75 +35,75 @@ namespace Azure.ResourceManager.PureStorageBlock.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ReservationResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ReservationResource.CreateResourceIdentifier" /> to create a <see cref="ReservationResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="PureStorageReservationResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PureStorageReservationResource.CreateResourceIdentifier" /> to create a <see cref="PureStorageReservationResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ReservationResource"/> object. </returns>
-        public virtual ReservationResource GetReservationResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="PureStorageReservationResource"/> object. </returns>
+        public virtual PureStorageReservationResource GetPureStorageReservationResource(ResourceIdentifier id)
         {
-            ReservationResource.ValidateResourceId(id);
-            return new ReservationResource(Client, id);
+            PureStorageReservationResource.ValidateResourceId(id);
+            return new PureStorageReservationResource(Client, id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="StoragePoolResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="StoragePoolResource.CreateResourceIdentifier" /> to create a <see cref="StoragePoolResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="PureStoragePoolResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PureStoragePoolResource.CreateResourceIdentifier" /> to create a <see cref="PureStoragePoolResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="StoragePoolResource"/> object. </returns>
-        public virtual StoragePoolResource GetStoragePoolResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="PureStoragePoolResource"/> object. </returns>
+        public virtual PureStoragePoolResource GetPureStoragePoolResource(ResourceIdentifier id)
         {
-            StoragePoolResource.ValidateResourceId(id);
-            return new StoragePoolResource(Client, id);
+            PureStoragePoolResource.ValidateResourceId(id);
+            return new PureStoragePoolResource(Client, id);
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="AvsStorageContainerResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AvsStorageContainerResource.CreateResourceIdentifier" /> to create an <see cref="AvsStorageContainerResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="PureStorageAvsStorageContainerResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PureStorageAvsStorageContainerResource.CreateResourceIdentifier" /> to create a <see cref="PureStorageAvsStorageContainerResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AvsStorageContainerResource"/> object. </returns>
-        public virtual AvsStorageContainerResource GetAvsStorageContainerResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="PureStorageAvsStorageContainerResource"/> object. </returns>
+        public virtual PureStorageAvsStorageContainerResource GetPureStorageAvsStorageContainerResource(ResourceIdentifier id)
         {
-            AvsStorageContainerResource.ValidateResourceId(id);
-            return new AvsStorageContainerResource(Client, id);
+            PureStorageAvsStorageContainerResource.ValidateResourceId(id);
+            return new PureStorageAvsStorageContainerResource(Client, id);
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="AvsStorageContainerVolumeResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AvsStorageContainerVolumeResource.CreateResourceIdentifier" /> to create an <see cref="AvsStorageContainerVolumeResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="PureStorageAvsStorageContainerVolumeResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PureStorageAvsStorageContainerVolumeResource.CreateResourceIdentifier" /> to create a <see cref="PureStorageAvsStorageContainerVolumeResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AvsStorageContainerVolumeResource"/> object. </returns>
-        public virtual AvsStorageContainerVolumeResource GetAvsStorageContainerVolumeResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="PureStorageAvsStorageContainerVolumeResource"/> object. </returns>
+        public virtual PureStorageAvsStorageContainerVolumeResource GetPureStorageAvsStorageContainerVolumeResource(ResourceIdentifier id)
         {
-            AvsStorageContainerVolumeResource.ValidateResourceId(id);
-            return new AvsStorageContainerVolumeResource(Client, id);
+            PureStorageAvsStorageContainerVolumeResource.ValidateResourceId(id);
+            return new PureStorageAvsStorageContainerVolumeResource(Client, id);
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="AvsVmResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AvsVmResource.CreateResourceIdentifier" /> to create an <see cref="AvsVmResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="PureStorageAvsVmResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PureStorageAvsVmResource.CreateResourceIdentifier" /> to create a <see cref="PureStorageAvsVmResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AvsVmResource"/> object. </returns>
-        public virtual AvsVmResource GetAvsVmResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="PureStorageAvsVmResource"/> object. </returns>
+        public virtual PureStorageAvsVmResource GetPureStorageAvsVmResource(ResourceIdentifier id)
         {
-            AvsVmResource.ValidateResourceId(id);
-            return new AvsVmResource(Client, id);
+            PureStorageAvsVmResource.ValidateResourceId(id);
+            return new PureStorageAvsVmResource(Client, id);
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="AvsVmVolumeResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AvsVmVolumeResource.CreateResourceIdentifier" /> to create an <see cref="AvsVmVolumeResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="PureStorageAvsVmVolumeResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PureStorageAvsVmVolumeResource.CreateResourceIdentifier" /> to create a <see cref="PureStorageAvsVmVolumeResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AvsVmVolumeResource"/> object. </returns>
-        public virtual AvsVmVolumeResource GetAvsVmVolumeResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="PureStorageAvsVmVolumeResource"/> object. </returns>
+        public virtual PureStorageAvsVmVolumeResource GetPureStorageAvsVmVolumeResource(ResourceIdentifier id)
         {
-            AvsVmVolumeResource.ValidateResourceId(id);
-            return new AvsVmVolumeResource(Client, id);
+            PureStorageAvsVmVolumeResource.ValidateResourceId(id);
+            return new PureStorageAvsVmVolumeResource(Client, id);
         }
     }
 }

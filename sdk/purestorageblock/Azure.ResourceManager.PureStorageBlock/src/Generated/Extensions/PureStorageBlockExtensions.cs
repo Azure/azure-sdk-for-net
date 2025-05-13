@@ -33,134 +33,134 @@ namespace Azure.ResourceManager.PureStorageBlock
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ReservationResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ReservationResource.CreateResourceIdentifier" /> to create a <see cref="ReservationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="PureStorageReservationResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PureStorageReservationResource.CreateResourceIdentifier" /> to create a <see cref="PureStorageReservationResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockablePureStorageBlockArmClient.GetReservationResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockablePureStorageBlockArmClient.GetPureStorageReservationResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ReservationResource"/> object. </returns>
-        public static ReservationResource GetReservationResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="PureStorageReservationResource"/> object. </returns>
+        public static PureStorageReservationResource GetPureStorageReservationResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockablePureStorageBlockArmClient(client).GetReservationResource(id);
+            return GetMockablePureStorageBlockArmClient(client).GetPureStorageReservationResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="StoragePoolResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="StoragePoolResource.CreateResourceIdentifier" /> to create a <see cref="StoragePoolResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="PureStoragePoolResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PureStoragePoolResource.CreateResourceIdentifier" /> to create a <see cref="PureStoragePoolResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockablePureStorageBlockArmClient.GetStoragePoolResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockablePureStorageBlockArmClient.GetPureStoragePoolResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="StoragePoolResource"/> object. </returns>
-        public static StoragePoolResource GetStoragePoolResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="PureStoragePoolResource"/> object. </returns>
+        public static PureStoragePoolResource GetPureStoragePoolResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockablePureStorageBlockArmClient(client).GetStoragePoolResource(id);
+            return GetMockablePureStorageBlockArmClient(client).GetPureStoragePoolResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="AvsStorageContainerResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AvsStorageContainerResource.CreateResourceIdentifier" /> to create an <see cref="AvsStorageContainerResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="PureStorageAvsStorageContainerResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PureStorageAvsStorageContainerResource.CreateResourceIdentifier" /> to create a <see cref="PureStorageAvsStorageContainerResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockablePureStorageBlockArmClient.GetAvsStorageContainerResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockablePureStorageBlockArmClient.GetPureStorageAvsStorageContainerResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="AvsStorageContainerResource"/> object. </returns>
-        public static AvsStorageContainerResource GetAvsStorageContainerResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="PureStorageAvsStorageContainerResource"/> object. </returns>
+        public static PureStorageAvsStorageContainerResource GetPureStorageAvsStorageContainerResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockablePureStorageBlockArmClient(client).GetAvsStorageContainerResource(id);
+            return GetMockablePureStorageBlockArmClient(client).GetPureStorageAvsStorageContainerResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="AvsStorageContainerVolumeResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AvsStorageContainerVolumeResource.CreateResourceIdentifier" /> to create an <see cref="AvsStorageContainerVolumeResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="PureStorageAvsStorageContainerVolumeResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PureStorageAvsStorageContainerVolumeResource.CreateResourceIdentifier" /> to create a <see cref="PureStorageAvsStorageContainerVolumeResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockablePureStorageBlockArmClient.GetAvsStorageContainerVolumeResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockablePureStorageBlockArmClient.GetPureStorageAvsStorageContainerVolumeResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="AvsStorageContainerVolumeResource"/> object. </returns>
-        public static AvsStorageContainerVolumeResource GetAvsStorageContainerVolumeResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="PureStorageAvsStorageContainerVolumeResource"/> object. </returns>
+        public static PureStorageAvsStorageContainerVolumeResource GetPureStorageAvsStorageContainerVolumeResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockablePureStorageBlockArmClient(client).GetAvsStorageContainerVolumeResource(id);
+            return GetMockablePureStorageBlockArmClient(client).GetPureStorageAvsStorageContainerVolumeResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="AvsVmResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AvsVmResource.CreateResourceIdentifier" /> to create an <see cref="AvsVmResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="PureStorageAvsVmResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PureStorageAvsVmResource.CreateResourceIdentifier" /> to create a <see cref="PureStorageAvsVmResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockablePureStorageBlockArmClient.GetAvsVmResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockablePureStorageBlockArmClient.GetPureStorageAvsVmResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="AvsVmResource"/> object. </returns>
-        public static AvsVmResource GetAvsVmResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="PureStorageAvsVmResource"/> object. </returns>
+        public static PureStorageAvsVmResource GetPureStorageAvsVmResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockablePureStorageBlockArmClient(client).GetAvsVmResource(id);
+            return GetMockablePureStorageBlockArmClient(client).GetPureStorageAvsVmResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="AvsVmVolumeResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AvsVmVolumeResource.CreateResourceIdentifier" /> to create an <see cref="AvsVmVolumeResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="PureStorageAvsVmVolumeResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PureStorageAvsVmVolumeResource.CreateResourceIdentifier" /> to create a <see cref="PureStorageAvsVmVolumeResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockablePureStorageBlockArmClient.GetAvsVmVolumeResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockablePureStorageBlockArmClient.GetPureStorageAvsVmVolumeResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="AvsVmVolumeResource"/> object. </returns>
-        public static AvsVmVolumeResource GetAvsVmVolumeResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="PureStorageAvsVmVolumeResource"/> object. </returns>
+        public static PureStorageAvsVmVolumeResource GetPureStorageAvsVmVolumeResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockablePureStorageBlockArmClient(client).GetAvsVmVolumeResource(id);
+            return GetMockablePureStorageBlockArmClient(client).GetPureStorageAvsVmVolumeResource(id);
         }
 
         /// <summary>
-        /// Gets a collection of ReservationResources in the ResourceGroupResource.
+        /// Gets a collection of PureStorageReservationResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockablePureStorageBlockResourceGroupResource.GetReservations()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockablePureStorageBlockResourceGroupResource.GetPureStorageReservations()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of ReservationResources and their operations over a ReservationResource. </returns>
-        public static ReservationCollection GetReservations(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of PureStorageReservationResources and their operations over a PureStorageReservationResource. </returns>
+        public static PureStorageReservationCollection GetPureStorageReservations(this ResourceGroupResource resourceGroupResource)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockablePureStorageBlockResourceGroupResource(resourceGroupResource).GetReservations();
+            return GetMockablePureStorageBlockResourceGroupResource(resourceGroupResource).GetPureStorageReservations();
         }
 
         /// <summary>
@@ -180,12 +180,12 @@ namespace Azure.ResourceManager.PureStorageBlock
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ReservationResource"/></description>
+        /// <description><see cref="PureStorageReservationResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockablePureStorageBlockResourceGroupResource.GetReservationAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockablePureStorageBlockResourceGroupResource.GetPureStorageReservationAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -194,11 +194,11 @@ namespace Azure.ResourceManager.PureStorageBlock
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="reservationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="reservationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<ReservationResource>> GetReservationAsync(this ResourceGroupResource resourceGroupResource, string reservationName, CancellationToken cancellationToken = default)
+        public static async Task<Response<PureStorageReservationResource>> GetPureStorageReservationAsync(this ResourceGroupResource resourceGroupResource, string reservationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockablePureStorageBlockResourceGroupResource(resourceGroupResource).GetReservationAsync(reservationName, cancellationToken).ConfigureAwait(false);
+            return await GetMockablePureStorageBlockResourceGroupResource(resourceGroupResource).GetPureStorageReservationAsync(reservationName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -218,12 +218,12 @@ namespace Azure.ResourceManager.PureStorageBlock
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ReservationResource"/></description>
+        /// <description><see cref="PureStorageReservationResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockablePureStorageBlockResourceGroupResource.GetReservation(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockablePureStorageBlockResourceGroupResource.GetPureStorageReservation(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -232,28 +232,28 @@ namespace Azure.ResourceManager.PureStorageBlock
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="reservationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="reservationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public static Response<ReservationResource> GetReservation(this ResourceGroupResource resourceGroupResource, string reservationName, CancellationToken cancellationToken = default)
+        public static Response<PureStorageReservationResource> GetPureStorageReservation(this ResourceGroupResource resourceGroupResource, string reservationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockablePureStorageBlockResourceGroupResource(resourceGroupResource).GetReservation(reservationName, cancellationToken);
+            return GetMockablePureStorageBlockResourceGroupResource(resourceGroupResource).GetPureStorageReservation(reservationName, cancellationToken);
         }
 
         /// <summary>
-        /// Gets a collection of StoragePoolResources in the ResourceGroupResource.
+        /// Gets a collection of PureStoragePoolResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockablePureStorageBlockResourceGroupResource.GetStoragePools()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockablePureStorageBlockResourceGroupResource.GetPureStoragePools()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of StoragePoolResources and their operations over a StoragePoolResource. </returns>
-        public static StoragePoolCollection GetStoragePools(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of PureStoragePoolResources and their operations over a PureStoragePoolResource. </returns>
+        public static PureStoragePoolCollection GetPureStoragePools(this ResourceGroupResource resourceGroupResource)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockablePureStorageBlockResourceGroupResource(resourceGroupResource).GetStoragePools();
+            return GetMockablePureStorageBlockResourceGroupResource(resourceGroupResource).GetPureStoragePools();
         }
 
         /// <summary>
@@ -273,12 +273,12 @@ namespace Azure.ResourceManager.PureStorageBlock
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="StoragePoolResource"/></description>
+        /// <description><see cref="PureStoragePoolResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockablePureStorageBlockResourceGroupResource.GetStoragePoolAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockablePureStorageBlockResourceGroupResource.GetPureStoragePoolAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -287,11 +287,11 @@ namespace Azure.ResourceManager.PureStorageBlock
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="storagePoolName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="storagePoolName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<StoragePoolResource>> GetStoragePoolAsync(this ResourceGroupResource resourceGroupResource, string storagePoolName, CancellationToken cancellationToken = default)
+        public static async Task<Response<PureStoragePoolResource>> GetPureStoragePoolAsync(this ResourceGroupResource resourceGroupResource, string storagePoolName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockablePureStorageBlockResourceGroupResource(resourceGroupResource).GetStoragePoolAsync(storagePoolName, cancellationToken).ConfigureAwait(false);
+            return await GetMockablePureStorageBlockResourceGroupResource(resourceGroupResource).GetPureStoragePoolAsync(storagePoolName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -311,12 +311,12 @@ namespace Azure.ResourceManager.PureStorageBlock
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="StoragePoolResource"/></description>
+        /// <description><see cref="PureStoragePoolResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockablePureStorageBlockResourceGroupResource.GetStoragePool(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockablePureStorageBlockResourceGroupResource.GetPureStoragePool(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -325,11 +325,11 @@ namespace Azure.ResourceManager.PureStorageBlock
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="storagePoolName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="storagePoolName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public static Response<StoragePoolResource> GetStoragePool(this ResourceGroupResource resourceGroupResource, string storagePoolName, CancellationToken cancellationToken = default)
+        public static Response<PureStoragePoolResource> GetPureStoragePool(this ResourceGroupResource resourceGroupResource, string storagePoolName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockablePureStorageBlockResourceGroupResource(resourceGroupResource).GetStoragePool(storagePoolName, cancellationToken);
+            return GetMockablePureStorageBlockResourceGroupResource(resourceGroupResource).GetPureStoragePool(storagePoolName, cancellationToken);
         }
 
         /// <summary>
@@ -349,23 +349,23 @@ namespace Azure.ResourceManager.PureStorageBlock
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ReservationResource"/></description>
+        /// <description><see cref="PureStorageReservationResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockablePureStorageBlockSubscriptionResource.GetReservations(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockablePureStorageBlockSubscriptionResource.GetPureStorageReservations(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="ReservationResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ReservationResource> GetReservationsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="PureStorageReservationResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<PureStorageReservationResource> GetPureStorageReservationsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockablePureStorageBlockSubscriptionResource(subscriptionResource).GetReservationsAsync(cancellationToken);
+            return GetMockablePureStorageBlockSubscriptionResource(subscriptionResource).GetPureStorageReservationsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -385,23 +385,23 @@ namespace Azure.ResourceManager.PureStorageBlock
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ReservationResource"/></description>
+        /// <description><see cref="PureStorageReservationResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockablePureStorageBlockSubscriptionResource.GetReservations(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockablePureStorageBlockSubscriptionResource.GetPureStorageReservations(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="ReservationResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ReservationResource> GetReservations(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="PureStorageReservationResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<PureStorageReservationResource> GetPureStorageReservations(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockablePureStorageBlockSubscriptionResource(subscriptionResource).GetReservations(cancellationToken);
+            return GetMockablePureStorageBlockSubscriptionResource(subscriptionResource).GetPureStorageReservations(cancellationToken);
         }
 
         /// <summary>
@@ -421,23 +421,23 @@ namespace Azure.ResourceManager.PureStorageBlock
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="StoragePoolResource"/></description>
+        /// <description><see cref="PureStoragePoolResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockablePureStorageBlockSubscriptionResource.GetStoragePools(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockablePureStorageBlockSubscriptionResource.GetPureStoragePools(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="StoragePoolResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<StoragePoolResource> GetStoragePoolsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="PureStoragePoolResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<PureStoragePoolResource> GetPureStoragePoolsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockablePureStorageBlockSubscriptionResource(subscriptionResource).GetStoragePoolsAsync(cancellationToken);
+            return GetMockablePureStorageBlockSubscriptionResource(subscriptionResource).GetPureStoragePoolsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -457,23 +457,23 @@ namespace Azure.ResourceManager.PureStorageBlock
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="StoragePoolResource"/></description>
+        /// <description><see cref="PureStoragePoolResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockablePureStorageBlockSubscriptionResource.GetStoragePools(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockablePureStorageBlockSubscriptionResource.GetPureStoragePools(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="StoragePoolResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<StoragePoolResource> GetStoragePools(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="PureStoragePoolResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<PureStoragePoolResource> GetPureStoragePools(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockablePureStorageBlockSubscriptionResource(subscriptionResource).GetStoragePools(cancellationToken);
+            return GetMockablePureStorageBlockSubscriptionResource(subscriptionResource).GetPureStoragePools(cancellationToken);
         }
     }
 }

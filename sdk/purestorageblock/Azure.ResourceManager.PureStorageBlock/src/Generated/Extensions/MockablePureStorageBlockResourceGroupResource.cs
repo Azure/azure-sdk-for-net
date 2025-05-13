@@ -33,11 +33,11 @@ namespace Azure.ResourceManager.PureStorageBlock.Mocking
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of ReservationResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of ReservationResources and their operations over a ReservationResource. </returns>
-        public virtual ReservationCollection GetReservations()
+        /// <summary> Gets a collection of PureStorageReservationResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of PureStorageReservationResources and their operations over a PureStorageReservationResource. </returns>
+        public virtual PureStorageReservationCollection GetPureStorageReservations()
         {
-            return GetCachedClient(client => new ReservationCollection(client, Id));
+            return GetCachedClient(client => new PureStorageReservationCollection(client, Id));
         }
 
         /// <summary>
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ReservationResource"/></description>
+        /// <description><see cref="PureStorageReservationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -66,9 +66,9 @@ namespace Azure.ResourceManager.PureStorageBlock.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="reservationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="reservationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ReservationResource>> GetReservationAsync(string reservationName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PureStorageReservationResource>> GetPureStorageReservationAsync(string reservationName, CancellationToken cancellationToken = default)
         {
-            return await GetReservations().GetAsync(reservationName, cancellationToken).ConfigureAwait(false);
+            return await GetPureStorageReservations().GetAsync(reservationName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ReservationResource"/></description>
+        /// <description><see cref="PureStorageReservationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -97,47 +97,16 @@ namespace Azure.ResourceManager.PureStorageBlock.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="reservationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="reservationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ReservationResource> GetReservation(string reservationName, CancellationToken cancellationToken = default)
+        public virtual Response<PureStorageReservationResource> GetPureStorageReservation(string reservationName, CancellationToken cancellationToken = default)
         {
-            return GetReservations().Get(reservationName, cancellationToken);
+            return GetPureStorageReservations().Get(reservationName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of StoragePoolResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of StoragePoolResources and their operations over a StoragePoolResource. </returns>
-        public virtual StoragePoolCollection GetStoragePools()
+        /// <summary> Gets a collection of PureStoragePoolResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of PureStoragePoolResources and their operations over a PureStoragePoolResource. </returns>
+        public virtual PureStoragePoolCollection GetPureStoragePools()
         {
-            return GetCachedClient(client => new StoragePoolCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Get a storage pool
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/storagePools/{storagePoolName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StoragePool_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="StoragePoolResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="storagePoolName"> Name of the storage pool. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="storagePoolName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="storagePoolName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<StoragePoolResource>> GetStoragePoolAsync(string storagePoolName, CancellationToken cancellationToken = default)
-        {
-            return await GetStoragePools().GetAsync(storagePoolName, cancellationToken).ConfigureAwait(false);
+            return GetCachedClient(client => new PureStoragePoolCollection(client, Id));
         }
 
         /// <summary>
@@ -157,7 +126,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="StoragePoolResource"/></description>
+        /// <description><see cref="PureStoragePoolResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -166,9 +135,40 @@ namespace Azure.ResourceManager.PureStorageBlock.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="storagePoolName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="storagePoolName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<StoragePoolResource> GetStoragePool(string storagePoolName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PureStoragePoolResource>> GetPureStoragePoolAsync(string storagePoolName, CancellationToken cancellationToken = default)
         {
-            return GetStoragePools().Get(storagePoolName, cancellationToken);
+            return await GetPureStoragePools().GetAsync(storagePoolName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a storage pool
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/storagePools/{storagePoolName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>StoragePool_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PureStoragePoolResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="storagePoolName"> Name of the storage pool. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="storagePoolName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="storagePoolName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<PureStoragePoolResource> GetPureStoragePool(string storagePoolName, CancellationToken cancellationToken = default)
+        {
+            return GetPureStoragePools().Get(storagePoolName, cancellationToken);
         }
     }
 }
