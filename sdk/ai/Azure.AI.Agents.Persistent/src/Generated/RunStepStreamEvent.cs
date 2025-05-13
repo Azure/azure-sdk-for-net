@@ -26,9 +26,9 @@ namespace Azure.AI.Agents.Persistent
         private const string InProgressValue = "thread.run.step.in_progress";
         private const string DeltaValue = "thread.run.step.delta";
         private const string CompletedValue = "thread.run.step.completed";
-        private const string ThreadRunStepFailedValue = "thread.run.step.failed";
-        private const string ThreadRunStepCancelledValue = "thread.run.step.cancelled";
-        private const string ThreadRunStepExpiredValue = "thread.run.step.expired";
+        private const string FailedValue = "thread.run.step.failed";
+        private const string CancelledValue = "thread.run.step.cancelled";
+        private const string ExpiredValue = "thread.run.step.expired";
 
         /// <summary> Event sent when a new thread run step is created. The data of this event is of type RunStep. </summary>
         public static RunStepStreamEvent Created { get; } = new RunStepStreamEvent(CreatedValue);
@@ -39,11 +39,11 @@ namespace Azure.AI.Agents.Persistent
         /// <summary> Event sent when a run step is completed. The data of this event is of type RunStep. </summary>
         public static RunStepStreamEvent Completed { get; } = new RunStepStreamEvent(CompletedValue);
         /// <summary> Event sent when a run step fails. The data of this event is of type RunStep. </summary>
-        public static RunStepStreamEvent ThreadRunStepFailed { get; } = new RunStepStreamEvent(ThreadRunStepFailedValue);
+        public static RunStepStreamEvent Failed { get; } = new RunStepStreamEvent(FailedValue);
         /// <summary> Event sent when a run step is cancelled. The data of this event is of type RunStep. </summary>
-        public static RunStepStreamEvent ThreadRunStepCancelled { get; } = new RunStepStreamEvent(ThreadRunStepCancelledValue);
+        public static RunStepStreamEvent Cancelled { get; } = new RunStepStreamEvent(CancelledValue);
         /// <summary> Event sent when a run step is expired. The data of this event is of type RunStep. </summary>
-        public static RunStepStreamEvent ThreadRunStepExpired { get; } = new RunStepStreamEvent(ThreadRunStepExpiredValue);
+        public static RunStepStreamEvent Expired { get; } = new RunStepStreamEvent(ExpiredValue);
         /// <summary> Determines if two <see cref="RunStepStreamEvent"/> values are the same. </summary>
         public static bool operator ==(RunStepStreamEvent left, RunStepStreamEvent right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RunStepStreamEvent"/> values are not the same. </summary>

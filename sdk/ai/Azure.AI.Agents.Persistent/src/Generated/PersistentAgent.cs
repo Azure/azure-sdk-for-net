@@ -201,7 +201,7 @@ namespace Azure.AI.Agents.Persistent
         /// <description><see cref="PersistentAgentsResponseFormatMode"/></description>
         /// </item>
         /// <item>
-        /// <description><see cref="PersistentAgentsResponseFormat"/></description>
+        /// <description><see cref="InternalPersistentAgentsResponseFormat"/></description>
         /// </item>
         /// <item>
         /// <description><see cref="ResponseFormatJsonSchemaType"/></description>
