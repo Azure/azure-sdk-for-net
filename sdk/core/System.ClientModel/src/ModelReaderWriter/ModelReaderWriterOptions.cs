@@ -107,7 +107,7 @@ public class ModelReaderWriterOptions
     /// <returns> The <see cref="IPersistableModel{T}"/> proxy if one was found otherwise returns <paramref name="model"/>. </returns>
     public IPersistableModel<T> ResolveProxy<T>(IPersistableModel<T> model)
     {
-        if (_proxies is null || !_proxies.TryGetValue(model.GetType(), out object? result))
+        if (_proxies is null || !_proxies.TryGetValue(typeof(T), out object? result))
         {
             return model;
         }
@@ -123,7 +123,7 @@ public class ModelReaderWriterOptions
     /// <returns> The <see cref="IJsonModel{T}"/> proxy if one was found otherwise returns <paramref name="model"/>. </returns>
     public IJsonModel<T> ResolveProxy<T>(IJsonModel<T> model)
     {
-        if (_proxies is null || !_proxies.TryGetValue(model.GetType(), out object? result) || result is not IJsonModel<T> jsonResult)
+        if (_proxies is null || !_proxies.TryGetValue(typeof(T), out object? result) || result is not IJsonModel<T> jsonResult)
         {
             return model;
         }
