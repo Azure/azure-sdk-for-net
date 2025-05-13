@@ -43,6 +43,11 @@ namespace Azure.AI.Projects
                 writer.WritePropertyName("isReference"u8);
                 writer.WriteBooleanValue(IsReference.Value);
             }
+            if (Optional.IsDefined(ConnectionName))
+            {
+                writer.WritePropertyName("connectionName"u8);
+                writer.WriteStringValue(ConnectionName);
+            }
             if (options.Format != "W" && Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);

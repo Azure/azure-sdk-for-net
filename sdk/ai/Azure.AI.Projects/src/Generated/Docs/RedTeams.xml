@@ -261,7 +261,7 @@ Console.WriteLine(result.GetProperty("id").ToString());
 Console.WriteLine(result.GetProperty("target").GetProperty("type").ToString());
 ]]></code></example>
     </member>
-    <member name="GetRedTeamsAsync(int?,int?,int?,CancellationToken)">
+    <member name="GetRedTeamsAsync(CancellationToken)">
       <example>
 This sample shows how to call GetRedTeamsAsync.
 <code><![CDATA[
@@ -274,7 +274,7 @@ await foreach (RedTeam item in client.GetRedTeamsAsync())
 }
 ]]></code></example>
     </member>
-    <member name="GetRedTeams(int?,int?,int?,CancellationToken)">
+    <member name="GetRedTeams(CancellationToken)">
       <example>
 This sample shows how to call GetRedTeams.
 <code><![CDATA[
@@ -287,7 +287,7 @@ foreach (RedTeam item in client.GetRedTeams())
 }
 ]]></code></example>
     </member>
-    <member name="GetRedTeamsAsync(int?,int?,int?,RequestContext)">
+    <member name="GetRedTeamsAsync(RequestContext)">
       <example>
 This sample shows how to call GetRedTeamsAsync and parse the result.
 <code><![CDATA[
@@ -295,7 +295,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 RedTeams client = new AIProjectClient(endpoint, credential).GetRedTeamsClient(apiVersion: "2025-05-15-preview");
 
-await foreach (BinaryData item in client.GetRedTeamsAsync(null, 8, 21, null))
+await foreach (BinaryData item in client.GetRedTeamsAsync(null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("id").ToString());
@@ -303,7 +303,7 @@ await foreach (BinaryData item in client.GetRedTeamsAsync(null, 8, 21, null))
 }
 ]]></code></example>
     </member>
-    <member name="GetRedTeams(int?,int?,int?,RequestContext)">
+    <member name="GetRedTeams(RequestContext)">
       <example>
 This sample shows how to call GetRedTeams and parse the result.
 <code><![CDATA[
@@ -311,7 +311,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 RedTeams client = new AIProjectClient(endpoint, credential).GetRedTeamsClient(apiVersion: "2025-05-15-preview");
 
-foreach (BinaryData item in client.GetRedTeams(null, 8, 21, null))
+foreach (BinaryData item in client.GetRedTeams(null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("id").ToString());

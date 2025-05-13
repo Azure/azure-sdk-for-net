@@ -67,6 +67,7 @@ JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("dataUri").ToString());
 Console.WriteLine(result.GetProperty("type").ToString());
 Console.WriteLine(result.GetProperty("isReference").ToString());
+Console.WriteLine(result.GetProperty("connectionName").ToString());
 Console.WriteLine(result.GetProperty("id").ToString());
 Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("version").ToString());
@@ -102,6 +103,7 @@ JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("dataUri").ToString());
 Console.WriteLine(result.GetProperty("type").ToString());
 Console.WriteLine(result.GetProperty("isReference").ToString());
+Console.WriteLine(result.GetProperty("connectionName").ToString());
 Console.WriteLine(result.GetProperty("id").ToString());
 Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("version").ToString());
@@ -186,6 +188,7 @@ using RequestContent content = RequestContent.Create(new
 {
     type = "uri_file",
     dataUri = "<dataUri>",
+    connectionName = "<connectionName>",
     description = "<description>",
     tags = new
     {
@@ -198,6 +201,7 @@ JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("dataUri").ToString());
 Console.WriteLine(result.GetProperty("type").ToString());
 Console.WriteLine(result.GetProperty("isReference").ToString());
+Console.WriteLine(result.GetProperty("connectionName").ToString());
 Console.WriteLine(result.GetProperty("id").ToString());
 Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("version").ToString());
@@ -236,6 +240,7 @@ using RequestContent content = RequestContent.Create(new
 {
     type = "uri_file",
     dataUri = "<dataUri>",
+    connectionName = "<connectionName>",
     description = "<description>",
     tags = new
     {
@@ -248,6 +253,7 @@ JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("dataUri").ToString());
 Console.WriteLine(result.GetProperty("type").ToString());
 Console.WriteLine(result.GetProperty("isReference").ToString());
+Console.WriteLine(result.GetProperty("connectionName").ToString());
 Console.WriteLine(result.GetProperty("id").ToString());
 Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("version").ToString());
@@ -395,7 +401,7 @@ Console.WriteLine(result.GetProperty("pendingUploadId").ToString());
 Console.WriteLine(result.GetProperty("pendingUploadType").ToString());
 ]]></code></example>
     </member>
-    <member name="GetCredentialsAsync(string,string,GetCredentialsRequest,CancellationToken)">
+    <member name="GetCredentialsAsync(string,string,CancellationToken)">
       <example>
 This sample shows how to call GetCredentialsAsync.
 <code><![CDATA[
@@ -403,8 +409,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 Datasets client = new AIProjectClient(endpoint, credential).GetDatasetsClient(apiVersion: "2025-05-15-preview");
 
-GetCredentialsRequest body = new GetCredentialsRequest();
-Response<AssetCredentialResponse> response = await client.GetCredentialsAsync("vzqmzhfdzfqegdk", "cuiflnznlzybcrc", body);
+Response<AssetCredentialResponse> response = await client.GetCredentialsAsync("vzqmzhfdzfqegdk", "cuiflnznlzybcrc");
 ]]></code>
 This sample shows how to call GetCredentialsAsync.
 <code><![CDATA[
@@ -412,11 +417,10 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 Datasets client = new AIProjectClient(endpoint, credential).GetDatasetsClient(apiVersion: "2025-05-15-preview");
 
-GetCredentialsRequest body = new GetCredentialsRequest();
-Response<AssetCredentialResponse> response = await client.GetCredentialsAsync("sbblxkyqnfvdiqacezyygvts", "ikak", body);
+Response<AssetCredentialResponse> response = await client.GetCredentialsAsync("sbblxkyqnfvdiqacezyygvts", "ikak");
 ]]></code></example>
     </member>
-    <member name="GetCredentials(string,string,GetCredentialsRequest,CancellationToken)">
+    <member name="GetCredentials(string,string,CancellationToken)">
       <example>
 This sample shows how to call GetCredentials.
 <code><![CDATA[
@@ -424,8 +428,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 Datasets client = new AIProjectClient(endpoint, credential).GetDatasetsClient(apiVersion: "2025-05-15-preview");
 
-GetCredentialsRequest body = new GetCredentialsRequest();
-Response<AssetCredentialResponse> response = client.GetCredentials("vzqmzhfdzfqegdk", "cuiflnznlzybcrc", body);
+Response<AssetCredentialResponse> response = client.GetCredentials("vzqmzhfdzfqegdk", "cuiflnznlzybcrc");
 ]]></code>
 This sample shows how to call GetCredentials.
 <code><![CDATA[
@@ -433,11 +436,10 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 Datasets client = new AIProjectClient(endpoint, credential).GetDatasetsClient(apiVersion: "2025-05-15-preview");
 
-GetCredentialsRequest body = new GetCredentialsRequest();
-Response<AssetCredentialResponse> response = client.GetCredentials("sbblxkyqnfvdiqacezyygvts", "ikak", body);
+Response<AssetCredentialResponse> response = client.GetCredentials("sbblxkyqnfvdiqacezyygvts", "ikak");
 ]]></code></example>
     </member>
-    <member name="GetCredentialsAsync(string,string,RequestContent,RequestContext)">
+    <member name="GetCredentialsAsync(string,string,RequestContext)">
       <example>
 This sample shows how to call GetCredentialsAsync and parse the result.
 <code><![CDATA[
@@ -445,8 +447,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 Datasets client = new AIProjectClient(endpoint, credential).GetDatasetsClient(apiVersion: "2025-05-15-preview");
 
-using RequestContent content = RequestContent.Create(new object());
-Response response = await client.GetCredentialsAsync("vzqmzhfdzfqegdk", "cuiflnznlzybcrc", content);
+Response response = await client.GetCredentialsAsync("vzqmzhfdzfqegdk", "cuiflnznlzybcrc", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("blobReference").GetProperty("blobUri").ToString());
@@ -460,8 +461,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 Datasets client = new AIProjectClient(endpoint, credential).GetDatasetsClient(apiVersion: "2025-05-15-preview");
 
-using RequestContent content = RequestContent.Create(new object());
-Response response = await client.GetCredentialsAsync("sbblxkyqnfvdiqacezyygvts", "ikak", content);
+Response response = await client.GetCredentialsAsync("sbblxkyqnfvdiqacezyygvts", "ikak", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("blobReference").GetProperty("blobUri").ToString());
@@ -470,7 +470,7 @@ Console.WriteLine(result.GetProperty("blobReference").GetProperty("credential").
 Console.WriteLine(result.GetProperty("blobReference").GetProperty("credential").GetProperty("type").ToString());
 ]]></code></example>
     </member>
-    <member name="GetCredentials(string,string,RequestContent,RequestContext)">
+    <member name="GetCredentials(string,string,RequestContext)">
       <example>
 This sample shows how to call GetCredentials and parse the result.
 <code><![CDATA[
@@ -478,8 +478,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 Datasets client = new AIProjectClient(endpoint, credential).GetDatasetsClient(apiVersion: "2025-05-15-preview");
 
-using RequestContent content = RequestContent.Create(new object());
-Response response = client.GetCredentials("vzqmzhfdzfqegdk", "cuiflnznlzybcrc", content);
+Response response = client.GetCredentials("vzqmzhfdzfqegdk", "cuiflnznlzybcrc", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("blobReference").GetProperty("blobUri").ToString());
@@ -493,8 +492,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 Datasets client = new AIProjectClient(endpoint, credential).GetDatasetsClient(apiVersion: "2025-05-15-preview");
 
-using RequestContent content = RequestContent.Create(new object());
-Response response = client.GetCredentials("sbblxkyqnfvdiqacezyygvts", "ikak", content);
+Response response = client.GetCredentials("sbblxkyqnfvdiqacezyygvts", "ikak", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("blobReference").GetProperty("blobUri").ToString());
@@ -503,7 +501,7 @@ Console.WriteLine(result.GetProperty("blobReference").GetProperty("credential").
 Console.WriteLine(result.GetProperty("blobReference").GetProperty("credential").GetProperty("type").ToString());
 ]]></code></example>
     </member>
-    <member name="GetVersionsAsync(string,string,CancellationToken)">
+    <member name="GetVersionsAsync(string,CancellationToken)">
       <example>
 This sample shows how to call GetVersionsAsync.
 <code><![CDATA[
@@ -521,12 +519,12 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 Datasets client = new AIProjectClient(endpoint, credential).GetDatasetsClient(apiVersion: "2025-05-15-preview");
 
-await foreach (DatasetVersion item in client.GetVersionsAsync("<name>", continuationToken: "<continuationToken>"))
+await foreach (DatasetVersion item in client.GetVersionsAsync("<name>"))
 {
 }
 ]]></code></example>
     </member>
-    <member name="GetVersions(string,string,CancellationToken)">
+    <member name="GetVersions(string,CancellationToken)">
       <example>
 This sample shows how to call GetVersions.
 <code><![CDATA[
@@ -544,12 +542,12 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 Datasets client = new AIProjectClient(endpoint, credential).GetDatasetsClient(apiVersion: "2025-05-15-preview");
 
-foreach (DatasetVersion item in client.GetVersions("<name>", continuationToken: "<continuationToken>"))
+foreach (DatasetVersion item in client.GetVersions("<name>"))
 {
 }
 ]]></code></example>
     </member>
-    <member name="GetVersionsAsync(string,string,RequestContext)">
+    <member name="GetVersionsAsync(string,RequestContext)">
       <example>
 This sample shows how to call GetVersionsAsync and parse the result.
 <code><![CDATA[
@@ -557,7 +555,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 Datasets client = new AIProjectClient(endpoint, credential).GetDatasetsClient(apiVersion: "2025-05-15-preview");
 
-await foreach (BinaryData item in client.GetVersionsAsync("<name>", null, null))
+await foreach (BinaryData item in client.GetVersionsAsync("<name>", null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("dataUri").ToString());
@@ -572,12 +570,13 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 Datasets client = new AIProjectClient(endpoint, credential).GetDatasetsClient(apiVersion: "2025-05-15-preview");
 
-await foreach (BinaryData item in client.GetVersionsAsync("<name>", "<continuationToken>", null))
+await foreach (BinaryData item in client.GetVersionsAsync("<name>", null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("dataUri").ToString());
     Console.WriteLine(result.GetProperty("type").ToString());
     Console.WriteLine(result.GetProperty("isReference").ToString());
+    Console.WriteLine(result.GetProperty("connectionName").ToString());
     Console.WriteLine(result.GetProperty("id").ToString());
     Console.WriteLine(result.GetProperty("name").ToString());
     Console.WriteLine(result.GetProperty("version").ToString());
@@ -586,7 +585,7 @@ await foreach (BinaryData item in client.GetVersionsAsync("<name>", "<continuati
 }
 ]]></code></example>
     </member>
-    <member name="GetVersions(string,string,RequestContext)">
+    <member name="GetVersions(string,RequestContext)">
       <example>
 This sample shows how to call GetVersions and parse the result.
 <code><![CDATA[
@@ -594,7 +593,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 Datasets client = new AIProjectClient(endpoint, credential).GetDatasetsClient(apiVersion: "2025-05-15-preview");
 
-foreach (BinaryData item in client.GetVersions("<name>", null, null))
+foreach (BinaryData item in client.GetVersions("<name>", null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("dataUri").ToString());
@@ -609,12 +608,13 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 Datasets client = new AIProjectClient(endpoint, credential).GetDatasetsClient(apiVersion: "2025-05-15-preview");
 
-foreach (BinaryData item in client.GetVersions("<name>", "<continuationToken>", null))
+foreach (BinaryData item in client.GetVersions("<name>", null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("dataUri").ToString());
     Console.WriteLine(result.GetProperty("type").ToString());
     Console.WriteLine(result.GetProperty("isReference").ToString());
+    Console.WriteLine(result.GetProperty("connectionName").ToString());
     Console.WriteLine(result.GetProperty("id").ToString());
     Console.WriteLine(result.GetProperty("name").ToString());
     Console.WriteLine(result.GetProperty("version").ToString());
@@ -623,7 +623,7 @@ foreach (BinaryData item in client.GetVersions("<name>", "<continuationToken>", 
 }
 ]]></code></example>
     </member>
-    <member name="GetDatasetVersionsAsync(string,CancellationToken)">
+    <member name="GetDatasetVersionsAsync(CancellationToken)">
       <example>
 This sample shows how to call GetDatasetVersionsAsync.
 <code><![CDATA[
@@ -641,12 +641,12 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 Datasets client = new AIProjectClient(endpoint, credential).GetDatasetsClient(apiVersion: "2025-05-15-preview");
 
-await foreach (DatasetVersion item in client.GetDatasetVersionsAsync(continuationToken: "<continuationToken>"))
+await foreach (DatasetVersion item in client.GetDatasetVersionsAsync())
 {
 }
 ]]></code></example>
     </member>
-    <member name="GetDatasetVersions(string,CancellationToken)">
+    <member name="GetDatasetVersions(CancellationToken)">
       <example>
 This sample shows how to call GetDatasetVersions.
 <code><![CDATA[
@@ -664,12 +664,12 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 Datasets client = new AIProjectClient(endpoint, credential).GetDatasetsClient(apiVersion: "2025-05-15-preview");
 
-foreach (DatasetVersion item in client.GetDatasetVersions(continuationToken: "<continuationToken>"))
+foreach (DatasetVersion item in client.GetDatasetVersions())
 {
 }
 ]]></code></example>
     </member>
-    <member name="GetDatasetVersionsAsync(string,RequestContext)">
+    <member name="GetDatasetVersionsAsync(RequestContext)">
       <example>
 This sample shows how to call GetDatasetVersionsAsync and parse the result.
 <code><![CDATA[
@@ -677,7 +677,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 Datasets client = new AIProjectClient(endpoint, credential).GetDatasetsClient(apiVersion: "2025-05-15-preview");
 
-await foreach (BinaryData item in client.GetDatasetVersionsAsync(null, null))
+await foreach (BinaryData item in client.GetDatasetVersionsAsync(null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("dataUri").ToString());
@@ -692,12 +692,13 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 Datasets client = new AIProjectClient(endpoint, credential).GetDatasetsClient(apiVersion: "2025-05-15-preview");
 
-await foreach (BinaryData item in client.GetDatasetVersionsAsync("<continuationToken>", null))
+await foreach (BinaryData item in client.GetDatasetVersionsAsync(null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("dataUri").ToString());
     Console.WriteLine(result.GetProperty("type").ToString());
     Console.WriteLine(result.GetProperty("isReference").ToString());
+    Console.WriteLine(result.GetProperty("connectionName").ToString());
     Console.WriteLine(result.GetProperty("id").ToString());
     Console.WriteLine(result.GetProperty("name").ToString());
     Console.WriteLine(result.GetProperty("version").ToString());
@@ -706,7 +707,7 @@ await foreach (BinaryData item in client.GetDatasetVersionsAsync("<continuationT
 }
 ]]></code></example>
     </member>
-    <member name="GetDatasetVersions(string,RequestContext)">
+    <member name="GetDatasetVersions(RequestContext)">
       <example>
 This sample shows how to call GetDatasetVersions and parse the result.
 <code><![CDATA[
@@ -714,7 +715,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 Datasets client = new AIProjectClient(endpoint, credential).GetDatasetsClient(apiVersion: "2025-05-15-preview");
 
-foreach (BinaryData item in client.GetDatasetVersions(null, null))
+foreach (BinaryData item in client.GetDatasetVersions(null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("dataUri").ToString());
@@ -729,12 +730,13 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 Datasets client = new AIProjectClient(endpoint, credential).GetDatasetsClient(apiVersion: "2025-05-15-preview");
 
-foreach (BinaryData item in client.GetDatasetVersions("<continuationToken>", null))
+foreach (BinaryData item in client.GetDatasetVersions(null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("dataUri").ToString());
     Console.WriteLine(result.GetProperty("type").ToString());
     Console.WriteLine(result.GetProperty("isReference").ToString());
+    Console.WriteLine(result.GetProperty("connectionName").ToString());
     Console.WriteLine(result.GetProperty("id").ToString());
     Console.WriteLine(result.GetProperty("name").ToString());
     Console.WriteLine(result.GetProperty("version").ToString());

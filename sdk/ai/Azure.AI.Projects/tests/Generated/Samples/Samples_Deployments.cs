@@ -76,7 +76,7 @@ namespace Azure.AI.Projects.Samples
             TokenCredential credential = new DefaultAzureCredential();
             Deployments client = new AIProjectClient(endpoint, credential).GetDeploymentsClient(apiVersion: "2025-05-15-preview");
 
-            foreach (BinaryData item in client.GetDeployments("kznreojrvlwdq", "gplerszsuyisseeksnyvkaqperxox", null, null, 8, 21, null))
+            foreach (BinaryData item in client.GetDeployments("kznreojrvlwdq", "gplerszsuyisseeksnyvkaqperxox", null, null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("type").ToString());
@@ -92,7 +92,7 @@ namespace Azure.AI.Projects.Samples
             TokenCredential credential = new DefaultAzureCredential();
             Deployments client = new AIProjectClient(endpoint, credential).GetDeploymentsClient(apiVersion: "2025-05-15-preview");
 
-            await foreach (BinaryData item in client.GetDeploymentsAsync("kznreojrvlwdq", "gplerszsuyisseeksnyvkaqperxox", null, null, 8, 21, null))
+            await foreach (BinaryData item in client.GetDeploymentsAsync("kznreojrvlwdq", "gplerszsuyisseeksnyvkaqperxox", null, null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("type").ToString());

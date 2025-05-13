@@ -168,14 +168,15 @@ namespace Azure.AI.Projects
         /// <summary> Initializes a new instance of <see cref="Projects.DatasetVersion"/>. </summary>
         /// <param name="dataUri"> URI of the data. Example: https://go.microsoft.com/fwlink/?linkid=2202330. </param>
         /// <param name="type"> Dataset type. </param>
-        /// <param name="isReference"> Indicates if dataset is reference only or managed by dataset service. If true, the underlying data will be deleted when the dataset version is deleted. </param>
+        /// <param name="isReference"> Indicates if the dataset holds a reference to the storage, or the dataset manages storage itself. If true, the underlying data will not be deleted when the dataset version is deleted. </param>
+        /// <param name="connectionName"> The Azure Storage Account connection name. Required if startPendingUploadVersion was not called before creating the Dataset. </param>
         /// <param name="id"> Asset ID, a unique identifier for the asset. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="version"> The version of the resource. </param>
         /// <param name="description"> The asset description text. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
         /// <returns> A new <see cref="Projects.DatasetVersion"/> instance for mocking. </returns>
-        public static DatasetVersion DatasetVersion(string dataUri = null, string type = null, bool? isReference = null, string id = null, string name = null, string version = null, string description = null, IDictionary<string, string> tags = null)
+        public static DatasetVersion DatasetVersion(string dataUri = null, string type = null, bool? isReference = null, string connectionName = null, string id = null, string name = null, string version = null, string description = null, IDictionary<string, string> tags = null)
         {
             tags ??= new Dictionary<string, string>();
 
@@ -183,6 +184,7 @@ namespace Azure.AI.Projects
                 dataUri,
                 type == null ? default : new DatasetType(type),
                 isReference,
+                connectionName,
                 id,
                 name,
                 version,
@@ -193,14 +195,15 @@ namespace Azure.AI.Projects
 
         /// <summary> Initializes a new instance of <see cref="Projects.FileDatasetVersion"/>. </summary>
         /// <param name="dataUri"> URI of the data. Example: https://go.microsoft.com/fwlink/?linkid=2202330. </param>
-        /// <param name="isReference"> Indicates if dataset is reference only or managed by dataset service. If true, the underlying data will be deleted when the dataset version is deleted. </param>
+        /// <param name="isReference"> Indicates if the dataset holds a reference to the storage, or the dataset manages storage itself. If true, the underlying data will not be deleted when the dataset version is deleted. </param>
+        /// <param name="connectionName"> The Azure Storage Account connection name. Required if startPendingUploadVersion was not called before creating the Dataset. </param>
         /// <param name="id"> Asset ID, a unique identifier for the asset. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="version"> The version of the resource. </param>
         /// <param name="description"> The asset description text. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
         /// <returns> A new <see cref="Projects.FileDatasetVersion"/> instance for mocking. </returns>
-        public static FileDatasetVersion FileDatasetVersion(string dataUri = null, bool? isReference = null, string id = null, string name = null, string version = null, string description = null, IDictionary<string, string> tags = null)
+        public static FileDatasetVersion FileDatasetVersion(string dataUri = null, bool? isReference = null, string connectionName = null, string id = null, string name = null, string version = null, string description = null, IDictionary<string, string> tags = null)
         {
             tags ??= new Dictionary<string, string>();
 
@@ -208,6 +211,7 @@ namespace Azure.AI.Projects
                 dataUri,
                 DatasetType.UriFile,
                 isReference,
+                connectionName,
                 id,
                 name,
                 version,
@@ -218,14 +222,15 @@ namespace Azure.AI.Projects
 
         /// <summary> Initializes a new instance of <see cref="Projects.FolderDatasetVersion"/>. </summary>
         /// <param name="dataUri"> URI of the data. Example: https://go.microsoft.com/fwlink/?linkid=2202330. </param>
-        /// <param name="isReference"> Indicates if dataset is reference only or managed by dataset service. If true, the underlying data will be deleted when the dataset version is deleted. </param>
+        /// <param name="isReference"> Indicates if the dataset holds a reference to the storage, or the dataset manages storage itself. If true, the underlying data will not be deleted when the dataset version is deleted. </param>
+        /// <param name="connectionName"> The Azure Storage Account connection name. Required if startPendingUploadVersion was not called before creating the Dataset. </param>
         /// <param name="id"> Asset ID, a unique identifier for the asset. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="version"> The version of the resource. </param>
         /// <param name="description"> The asset description text. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
         /// <returns> A new <see cref="Projects.FolderDatasetVersion"/> instance for mocking. </returns>
-        public static FolderDatasetVersion FolderDatasetVersion(string dataUri = null, bool? isReference = null, string id = null, string name = null, string version = null, string description = null, IDictionary<string, string> tags = null)
+        public static FolderDatasetVersion FolderDatasetVersion(string dataUri = null, bool? isReference = null, string connectionName = null, string id = null, string name = null, string version = null, string description = null, IDictionary<string, string> tags = null)
         {
             tags ??= new Dictionary<string, string>();
 
@@ -233,6 +238,7 @@ namespace Azure.AI.Projects
                 dataUri,
                 DatasetType.UriFolder,
                 isReference,
+                connectionName,
                 id,
                 name,
                 version,
@@ -243,7 +249,7 @@ namespace Azure.AI.Projects
 
         /// <summary> Initializes a new instance of <see cref="Projects.PendingUploadRequest"/>. </summary>
         /// <param name="pendingUploadId"> If PendingUploadId is not provided, a random GUID will be used. </param>
-        /// <param name="connectionName"> Name of Azure blob storage connection to use for generating temporary SAS token. </param>
+        /// <param name="connectionName"> Azure Storage Account connection name to use for generating temporary SAS token. </param>
         /// <param name="pendingUploadType"> BlobReference is the only supported type. </param>
         /// <returns> A new <see cref="Projects.PendingUploadRequest"/> instance for mocking. </returns>
         public static PendingUploadRequest PendingUploadRequest(string pendingUploadId = null, string connectionName = null, PendingUploadType pendingUploadType = default)
@@ -319,8 +325,9 @@ namespace Azure.AI.Projects
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
         /// <param name="connectionName"> Name of connection to Azure AI Search. </param>
         /// <param name="indexName"> Name of index in Azure AI Search resource to attach. </param>
+        /// <param name="fieldMapping"> Field mapping configuration. </param>
         /// <returns> A new <see cref="Projects.AzureAISearchIndex"/> instance for mocking. </returns>
-        public static AzureAISearchIndex AzureAISearchIndex(string id = null, string name = null, string version = null, string description = null, IDictionary<string, string> tags = null, string connectionName = null, string indexName = null)
+        public static AzureAISearchIndex AzureAISearchIndex(string id = null, string name = null, string version = null, string description = null, IDictionary<string, string> tags = null, string connectionName = null, string indexName = null, FieldMapping fieldMapping = null)
         {
             tags ??= new Dictionary<string, string>();
 
@@ -333,7 +340,8 @@ namespace Azure.AI.Projects
                 tags,
                 serializedAdditionalRawData: null,
                 connectionName,
-                indexName);
+                indexName,
+                fieldMapping);
         }
 
         /// <summary> Initializes a new instance of <see cref="Projects.ManagedAzureAISearchIndex"/>. </summary>
@@ -369,8 +377,9 @@ namespace Azure.AI.Projects
         /// <param name="databaseName"> Name of the CosmosDB Database. </param>
         /// <param name="containerName"> Name of CosmosDB Container. </param>
         /// <param name="embeddingConfiguration"> Embedding model configuration. </param>
+        /// <param name="fieldMapping"> Field mapping configuration. </param>
         /// <returns> A new <see cref="Projects.CosmosDBIndex"/> instance for mocking. </returns>
-        public static CosmosDBIndex CosmosDBIndex(string id = null, string name = null, string version = null, string description = null, IDictionary<string, string> tags = null, string connectionName = null, string databaseName = null, string containerName = null, EmbeddingConfiguration embeddingConfiguration = null)
+        public static CosmosDBIndex CosmosDBIndex(string id = null, string name = null, string version = null, string description = null, IDictionary<string, string> tags = null, string connectionName = null, string databaseName = null, string containerName = null, EmbeddingConfiguration embeddingConfiguration = null, FieldMapping fieldMapping = null)
         {
             tags ??= new Dictionary<string, string>();
 
@@ -385,7 +394,8 @@ namespace Azure.AI.Projects
                 connectionName,
                 databaseName,
                 containerName,
-                embeddingConfiguration);
+                embeddingConfiguration,
+                fieldMapping);
         }
 
         /// <summary> Initializes a new instance of <see cref="Projects.Deployment"/>. </summary>

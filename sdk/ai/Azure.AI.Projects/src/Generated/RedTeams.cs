@@ -274,31 +274,25 @@ namespace Azure.AI.Projects
         }
 
         /// <summary> List a redteam by name. </summary>
-        /// <param name="maxCount"> The number of result items to return. </param>
-        /// <param name="skip"> The number of result items to skip. </param>
-        /// <param name="maxpagesize"> The maximum number of result items per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Docs/RedTeams.xml" path="doc/members/member[@name='GetRedTeamsAsync(int?,int?,int?,CancellationToken)']/*" />
-        public virtual AsyncPageable<RedTeam> GetRedTeamsAsync(int? maxCount = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/RedTeams.xml" path="doc/members/member[@name='GetRedTeamsAsync(CancellationToken)']/*" />
+        public virtual AsyncPageable<RedTeam> GetRedTeamsAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetRedTeamsRequest(maxCount, skip, pageSizeHint, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetRedTeamsNextPageRequest(nextLink, maxCount, skip, pageSizeHint, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => RedTeam.DeserializeRedTeam(e), ClientDiagnostics, _pipeline, "RedTeams.GetRedTeams", "value", "nextLink", maxpagesize, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetRedTeamsRequest(context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetRedTeamsNextPageRequest(nextLink, context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => RedTeam.DeserializeRedTeam(e), ClientDiagnostics, _pipeline, "RedTeams.GetRedTeams", "value", "nextLink", context);
         }
 
         /// <summary> List a redteam by name. </summary>
-        /// <param name="maxCount"> The number of result items to return. </param>
-        /// <param name="skip"> The number of result items to skip. </param>
-        /// <param name="maxpagesize"> The maximum number of result items per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Docs/RedTeams.xml" path="doc/members/member[@name='GetRedTeams(int?,int?,int?,CancellationToken)']/*" />
-        public virtual Pageable<RedTeam> GetRedTeams(int? maxCount = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/RedTeams.xml" path="doc/members/member[@name='GetRedTeams(CancellationToken)']/*" />
+        public virtual Pageable<RedTeam> GetRedTeams(CancellationToken cancellationToken = default)
         {
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetRedTeamsRequest(maxCount, skip, pageSizeHint, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetRedTeamsNextPageRequest(nextLink, maxCount, skip, pageSizeHint, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => RedTeam.DeserializeRedTeam(e), ClientDiagnostics, _pipeline, "RedTeams.GetRedTeams", "value", "nextLink", maxpagesize, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetRedTeamsRequest(context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetRedTeamsNextPageRequest(nextLink, context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => RedTeam.DeserializeRedTeam(e), ClientDiagnostics, _pipeline, "RedTeams.GetRedTeams", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -311,23 +305,20 @@ namespace Azure.AI.Projects
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetRedTeamsAsync(int?,int?,int?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetRedTeamsAsync(CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="maxCount"> The number of result items to return. </param>
-        /// <param name="skip"> The number of result items to skip. </param>
-        /// <param name="maxpagesize"> The maximum number of result items per page. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/RedTeams.xml" path="doc/members/member[@name='GetRedTeamsAsync(int?,int?,int?,RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetRedTeamsAsync(int? maxCount, int? skip, int? maxpagesize, RequestContext context)
+        /// <include file="Docs/RedTeams.xml" path="doc/members/member[@name='GetRedTeamsAsync(RequestContext)']/*" />
+        public virtual AsyncPageable<BinaryData> GetRedTeamsAsync(RequestContext context)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetRedTeamsRequest(maxCount, skip, pageSizeHint, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetRedTeamsNextPageRequest(nextLink, maxCount, skip, pageSizeHint, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "RedTeams.GetRedTeams", "value", "nextLink", maxpagesize, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetRedTeamsRequest(context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetRedTeamsNextPageRequest(nextLink, context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "RedTeams.GetRedTeams", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -340,23 +331,20 @@ namespace Azure.AI.Projects
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetRedTeams(int?,int?,int?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetRedTeams(CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="maxCount"> The number of result items to return. </param>
-        /// <param name="skip"> The number of result items to skip. </param>
-        /// <param name="maxpagesize"> The maximum number of result items per page. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/RedTeams.xml" path="doc/members/member[@name='GetRedTeams(int?,int?,int?,RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetRedTeams(int? maxCount, int? skip, int? maxpagesize, RequestContext context)
+        /// <include file="Docs/RedTeams.xml" path="doc/members/member[@name='GetRedTeams(RequestContext)']/*" />
+        public virtual Pageable<BinaryData> GetRedTeams(RequestContext context)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetRedTeamsRequest(maxCount, skip, pageSizeHint, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetRedTeamsNextPageRequest(nextLink, maxCount, skip, pageSizeHint, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "RedTeams.GetRedTeams", "value", "nextLink", maxpagesize, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetRedTeamsRequest(context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetRedTeamsNextPageRequest(nextLink, context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "RedTeams.GetRedTeams", "value", "nextLink", context);
         }
 
         internal HttpMessage CreateGetRedTeamRequest(string name, RequestContext context)
@@ -374,7 +362,7 @@ namespace Azure.AI.Projects
             return message;
         }
 
-        internal HttpMessage CreateGetRedTeamsRequest(int? maxCount, int? skip, int? maxpagesize, RequestContext context)
+        internal HttpMessage CreateGetRedTeamsRequest(RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -383,18 +371,6 @@ namespace Azure.AI.Projects
             uri.Reset(_endpoint);
             uri.AppendPath("/redTeams/runs", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            if (maxCount != null)
-            {
-                uri.AppendQuery("top", maxCount.Value, true);
-            }
-            if (skip != null)
-            {
-                uri.AppendQuery("skip", skip.Value, true);
-            }
-            if (maxpagesize != null)
-            {
-                uri.AppendQuery("maxpagesize", maxpagesize.Value, true);
-            }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -416,7 +392,7 @@ namespace Azure.AI.Projects
             return message;
         }
 
-        internal HttpMessage CreateGetRedTeamsNextPageRequest(string nextLink, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
+        internal HttpMessage CreateGetRedTeamsNextPageRequest(string nextLink, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;

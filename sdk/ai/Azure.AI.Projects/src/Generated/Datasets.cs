@@ -458,40 +458,34 @@ namespace Azure.AI.Projects
         /// <summary> Get the SAS credential to access the storage account associated with a Dataset version. </summary>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="version"> The specific version id of the DatasetVersion to operate on. </param>
-        /// <param name="body"> Parameters for the action. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="version"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="version"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/Datasets.xml" path="doc/members/member[@name='GetCredentialsAsync(string,string,GetCredentialsRequest,CancellationToken)']/*" />
-        public virtual async Task<Response<AssetCredentialResponse>> GetCredentialsAsync(string name, string version, GetCredentialsRequest body, CancellationToken cancellationToken = default)
+        /// <include file="Docs/Datasets.xml" path="doc/members/member[@name='GetCredentialsAsync(string,string,CancellationToken)']/*" />
+        public virtual async Task<Response<AssetCredentialResponse>> GetCredentialsAsync(string name, string version, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(version, nameof(version));
-            Argument.AssertNotNull(body, nameof(body));
 
-            using RequestContent content = body.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetCredentialsAsync(name, version, content, context).ConfigureAwait(false);
+            Response response = await GetCredentialsAsync(name, version, context).ConfigureAwait(false);
             return Response.FromValue(AssetCredentialResponse.FromResponse(response), response);
         }
 
         /// <summary> Get the SAS credential to access the storage account associated with a Dataset version. </summary>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="version"> The specific version id of the DatasetVersion to operate on. </param>
-        /// <param name="body"> Parameters for the action. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="version"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="version"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/Datasets.xml" path="doc/members/member[@name='GetCredentials(string,string,GetCredentialsRequest,CancellationToken)']/*" />
-        public virtual Response<AssetCredentialResponse> GetCredentials(string name, string version, GetCredentialsRequest body, CancellationToken cancellationToken = default)
+        /// <include file="Docs/Datasets.xml" path="doc/members/member[@name='GetCredentials(string,string,CancellationToken)']/*" />
+        public virtual Response<AssetCredentialResponse> GetCredentials(string name, string version, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(version, nameof(version));
-            Argument.AssertNotNull(body, nameof(body));
 
-            using RequestContent content = body.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetCredentials(name, version, content, context);
+            Response response = GetCredentials(name, version, context);
             return Response.FromValue(AssetCredentialResponse.FromResponse(response), response);
         }
 
@@ -505,31 +499,29 @@ namespace Azure.AI.Projects
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetCredentialsAsync(string,string,GetCredentialsRequest,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetCredentialsAsync(string,string,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="version"> The specific version id of the DatasetVersion to operate on. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="version"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="version"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Datasets.xml" path="doc/members/member[@name='GetCredentialsAsync(string,string,RequestContent,RequestContext)']/*" />
-        public virtual async Task<Response> GetCredentialsAsync(string name, string version, RequestContent content, RequestContext context = null)
+        /// <include file="Docs/Datasets.xml" path="doc/members/member[@name='GetCredentialsAsync(string,string,RequestContext)']/*" />
+        public virtual async Task<Response> GetCredentialsAsync(string name, string version, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(version, nameof(version));
-            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("Datasets.GetCredentials");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetCredentialsRequest(name, version, content, context);
+                using HttpMessage message = CreateGetCredentialsRequest(name, version, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -549,31 +541,29 @@ namespace Azure.AI.Projects
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetCredentials(string,string,GetCredentialsRequest,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetCredentials(string,string,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="version"> The specific version id of the DatasetVersion to operate on. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="version"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="version"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Datasets.xml" path="doc/members/member[@name='GetCredentials(string,string,RequestContent,RequestContext)']/*" />
-        public virtual Response GetCredentials(string name, string version, RequestContent content, RequestContext context = null)
+        /// <include file="Docs/Datasets.xml" path="doc/members/member[@name='GetCredentials(string,string,RequestContext)']/*" />
+        public virtual Response GetCredentials(string name, string version, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(version, nameof(version));
-            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("Datasets.GetCredentials");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetCredentialsRequest(name, version, content, context);
+                using HttpMessage message = CreateGetCredentialsRequest(name, version, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -585,35 +575,33 @@ namespace Azure.AI.Projects
 
         /// <summary> List all versions of the given DatasetVersion. </summary>
         /// <param name="name"> The name of the resource. </param>
-        /// <param name="continuationToken"> Continuation token for pagination. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/Datasets.xml" path="doc/members/member[@name='GetVersionsAsync(string,string,CancellationToken)']/*" />
-        public virtual AsyncPageable<DatasetVersion> GetVersionsAsync(string name, string continuationToken = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/Datasets.xml" path="doc/members/member[@name='GetVersionsAsync(string,CancellationToken)']/*" />
+        public virtual AsyncPageable<DatasetVersion> GetVersionsAsync(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetVersionsRequest(name, continuationToken, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetVersionsNextPageRequest(nextLink, name, continuationToken, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetVersionsRequest(name, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetVersionsNextPageRequest(nextLink, name, context);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => DatasetVersion.DeserializeDatasetVersion(e), ClientDiagnostics, _pipeline, "Datasets.GetVersions", "value", "nextLink", context);
         }
 
         /// <summary> List all versions of the given DatasetVersion. </summary>
         /// <param name="name"> The name of the resource. </param>
-        /// <param name="continuationToken"> Continuation token for pagination. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/Datasets.xml" path="doc/members/member[@name='GetVersions(string,string,CancellationToken)']/*" />
-        public virtual Pageable<DatasetVersion> GetVersions(string name, string continuationToken = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/Datasets.xml" path="doc/members/member[@name='GetVersions(string,CancellationToken)']/*" />
+        public virtual Pageable<DatasetVersion> GetVersions(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetVersionsRequest(name, continuationToken, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetVersionsNextPageRequest(nextLink, name, continuationToken, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetVersionsRequest(name, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetVersionsNextPageRequest(nextLink, name, context);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => DatasetVersion.DeserializeDatasetVersion(e), ClientDiagnostics, _pipeline, "Datasets.GetVersions", "value", "nextLink", context);
         }
 
@@ -627,25 +615,24 @@ namespace Azure.AI.Projects
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetVersionsAsync(string,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetVersionsAsync(string,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> The name of the resource. </param>
-        /// <param name="continuationToken"> Continuation token for pagination. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/Datasets.xml" path="doc/members/member[@name='GetVersionsAsync(string,string,RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetVersionsAsync(string name, string continuationToken, RequestContext context)
+        /// <include file="Docs/Datasets.xml" path="doc/members/member[@name='GetVersionsAsync(string,RequestContext)']/*" />
+        public virtual AsyncPageable<BinaryData> GetVersionsAsync(string name, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetVersionsRequest(name, continuationToken, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetVersionsNextPageRequest(nextLink, name, continuationToken, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetVersionsRequest(name, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetVersionsNextPageRequest(nextLink, name, context);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "Datasets.GetVersions", "value", "nextLink", context);
         }
 
@@ -659,49 +646,46 @@ namespace Azure.AI.Projects
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetVersions(string,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetVersions(string,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> The name of the resource. </param>
-        /// <param name="continuationToken"> Continuation token for pagination. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/Datasets.xml" path="doc/members/member[@name='GetVersions(string,string,RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetVersions(string name, string continuationToken, RequestContext context)
+        /// <include file="Docs/Datasets.xml" path="doc/members/member[@name='GetVersions(string,RequestContext)']/*" />
+        public virtual Pageable<BinaryData> GetVersions(string name, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetVersionsRequest(name, continuationToken, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetVersionsNextPageRequest(nextLink, name, continuationToken, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetVersionsRequest(name, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetVersionsNextPageRequest(nextLink, name, context);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "Datasets.GetVersions", "value", "nextLink", context);
         }
 
         /// <summary> List the latest version of each DatasetVersion. </summary>
-        /// <param name="continuationToken"> Continuation token for pagination. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Docs/Datasets.xml" path="doc/members/member[@name='GetDatasetVersionsAsync(string,CancellationToken)']/*" />
-        public virtual AsyncPageable<DatasetVersion> GetDatasetVersionsAsync(string continuationToken = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/Datasets.xml" path="doc/members/member[@name='GetDatasetVersionsAsync(CancellationToken)']/*" />
+        public virtual AsyncPageable<DatasetVersion> GetDatasetVersionsAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDatasetVersionsRequest(continuationToken, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDatasetVersionsNextPageRequest(nextLink, continuationToken, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDatasetVersionsRequest(context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDatasetVersionsNextPageRequest(nextLink, context);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => DatasetVersion.DeserializeDatasetVersion(e), ClientDiagnostics, _pipeline, "Datasets.GetDatasetVersions", "value", "nextLink", context);
         }
 
         /// <summary> List the latest version of each DatasetVersion. </summary>
-        /// <param name="continuationToken"> Continuation token for pagination. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Docs/Datasets.xml" path="doc/members/member[@name='GetDatasetVersions(string,CancellationToken)']/*" />
-        public virtual Pageable<DatasetVersion> GetDatasetVersions(string continuationToken = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/Datasets.xml" path="doc/members/member[@name='GetDatasetVersions(CancellationToken)']/*" />
+        public virtual Pageable<DatasetVersion> GetDatasetVersions(CancellationToken cancellationToken = default)
         {
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDatasetVersionsRequest(continuationToken, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDatasetVersionsNextPageRequest(nextLink, continuationToken, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDatasetVersionsRequest(context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDatasetVersionsNextPageRequest(nextLink, context);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => DatasetVersion.DeserializeDatasetVersion(e), ClientDiagnostics, _pipeline, "Datasets.GetDatasetVersions", "value", "nextLink", context);
         }
 
@@ -715,20 +699,19 @@ namespace Azure.AI.Projects
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetDatasetVersionsAsync(string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetDatasetVersionsAsync(CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="continuationToken"> Continuation token for pagination. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/Datasets.xml" path="doc/members/member[@name='GetDatasetVersionsAsync(string,RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetDatasetVersionsAsync(string continuationToken, RequestContext context)
+        /// <include file="Docs/Datasets.xml" path="doc/members/member[@name='GetDatasetVersionsAsync(RequestContext)']/*" />
+        public virtual AsyncPageable<BinaryData> GetDatasetVersionsAsync(RequestContext context)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDatasetVersionsRequest(continuationToken, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDatasetVersionsNextPageRequest(nextLink, continuationToken, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDatasetVersionsRequest(context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDatasetVersionsNextPageRequest(nextLink, context);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "Datasets.GetDatasetVersions", "value", "nextLink", context);
         }
 
@@ -742,24 +725,23 @@ namespace Azure.AI.Projects
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetDatasetVersions(string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetDatasetVersions(CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="continuationToken"> Continuation token for pagination. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/Datasets.xml" path="doc/members/member[@name='GetDatasetVersions(string,RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetDatasetVersions(string continuationToken, RequestContext context)
+        /// <include file="Docs/Datasets.xml" path="doc/members/member[@name='GetDatasetVersions(RequestContext)']/*" />
+        public virtual Pageable<BinaryData> GetDatasetVersions(RequestContext context)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDatasetVersionsRequest(continuationToken, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDatasetVersionsNextPageRequest(nextLink, continuationToken, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDatasetVersionsRequest(context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDatasetVersionsNextPageRequest(nextLink, context);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "Datasets.GetDatasetVersions", "value", "nextLink", context);
         }
 
-        internal HttpMessage CreateGetVersionsRequest(string name, string continuationToken, RequestContext context)
+        internal HttpMessage CreateGetVersionsRequest(string name, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -770,16 +752,12 @@ namespace Azure.AI.Projects
             uri.AppendPath(name, true);
             uri.AppendPath("/versions", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            if (continuationToken != null)
-            {
-                uri.AppendQuery("continuationToken", continuationToken, true);
-            }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
         }
 
-        internal HttpMessage CreateGetDatasetVersionsRequest(string continuationToken, RequestContext context)
+        internal HttpMessage CreateGetDatasetVersionsRequest(RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -788,10 +766,6 @@ namespace Azure.AI.Projects
             uri.Reset(_endpoint);
             uri.AppendPath("/datasets", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            if (continuationToken != null)
-            {
-                uri.AppendQuery("continuationToken", continuationToken, true);
-            }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -870,7 +844,7 @@ namespace Azure.AI.Projects
             return message;
         }
 
-        internal HttpMessage CreateGetCredentialsRequest(string name, string version, RequestContent content, RequestContext context)
+        internal HttpMessage CreateGetCredentialsRequest(string name, string version, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -885,12 +859,10 @@ namespace Azure.AI.Projects
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            request.Content = content;
             return message;
         }
 
-        internal HttpMessage CreateGetVersionsNextPageRequest(string nextLink, string name, string continuationToken, RequestContext context)
+        internal HttpMessage CreateGetVersionsNextPageRequest(string nextLink, string name, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -903,7 +875,7 @@ namespace Azure.AI.Projects
             return message;
         }
 
-        internal HttpMessage CreateGetDatasetVersionsNextPageRequest(string nextLink, string continuationToken, RequestContext context)
+        internal HttpMessage CreateGetDatasetVersionsNextPageRequest(string nextLink, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;

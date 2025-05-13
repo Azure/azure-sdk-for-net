@@ -181,6 +181,24 @@ using RequestContent content = RequestContent.Create(new
     type = "AzureSearch",
     connectionName = "<connectionName>",
     indexName = "<indexName>",
+    fieldMapping = new
+    {
+        contentFields = new object[]
+        {
+            "<contentFields>"
+        },
+        filepathField = "<filepathField>",
+        titleField = "<titleField>",
+        urlField = "<urlField>",
+        vectorFields = new object[]
+        {
+            "<vectorFields>"
+        },
+        metadataFields = new object[]
+        {
+            "<metadataFields>"
+        },
+    },
     description = "<description>",
     tags = new
     {
@@ -230,6 +248,24 @@ using RequestContent content = RequestContent.Create(new
     type = "AzureSearch",
     connectionName = "<connectionName>",
     indexName = "<indexName>",
+    fieldMapping = new
+    {
+        contentFields = new object[]
+        {
+            "<contentFields>"
+        },
+        filepathField = "<filepathField>",
+        titleField = "<titleField>",
+        urlField = "<urlField>",
+        vectorFields = new object[]
+        {
+            "<vectorFields>"
+        },
+        metadataFields = new object[]
+        {
+            "<metadataFields>"
+        },
+    },
     description = "<description>",
     tags = new
     {
@@ -247,7 +283,7 @@ Console.WriteLine(result.GetProperty("description").ToString());
 Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
 ]]></code></example>
     </member>
-    <member name="GetVersionsAsync(string,string,CancellationToken)">
+    <member name="GetVersionsAsync(string,CancellationToken)">
       <example>
 This sample shows how to call GetVersionsAsync.
 <code><![CDATA[
@@ -265,12 +301,12 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 Indexes client = new AIProjectClient(endpoint, credential).GetIndexesClient(apiVersion: "2025-05-15-preview");
 
-await foreach (Index item in client.GetVersionsAsync("<name>", continuationToken: "<continuationToken>"))
+await foreach (Index item in client.GetVersionsAsync("<name>"))
 {
 }
 ]]></code></example>
     </member>
-    <member name="GetVersions(string,string,CancellationToken)">
+    <member name="GetVersions(string,CancellationToken)">
       <example>
 This sample shows how to call GetVersions.
 <code><![CDATA[
@@ -288,12 +324,12 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 Indexes client = new AIProjectClient(endpoint, credential).GetIndexesClient(apiVersion: "2025-05-15-preview");
 
-foreach (Index item in client.GetVersions("<name>", continuationToken: "<continuationToken>"))
+foreach (Index item in client.GetVersions("<name>"))
 {
 }
 ]]></code></example>
     </member>
-    <member name="GetVersionsAsync(string,string,RequestContext)">
+    <member name="GetVersionsAsync(string,RequestContext)">
       <example>
 This sample shows how to call GetVersionsAsync and parse the result.
 <code><![CDATA[
@@ -301,7 +337,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 Indexes client = new AIProjectClient(endpoint, credential).GetIndexesClient(apiVersion: "2025-05-15-preview");
 
-await foreach (BinaryData item in client.GetVersionsAsync("<name>", null, null))
+await foreach (BinaryData item in client.GetVersionsAsync("<name>", null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("type").ToString());
@@ -315,7 +351,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 Indexes client = new AIProjectClient(endpoint, credential).GetIndexesClient(apiVersion: "2025-05-15-preview");
 
-await foreach (BinaryData item in client.GetVersionsAsync("<name>", "<continuationToken>", null))
+await foreach (BinaryData item in client.GetVersionsAsync("<name>", null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("type").ToString());
@@ -327,7 +363,7 @@ await foreach (BinaryData item in client.GetVersionsAsync("<name>", "<continuati
 }
 ]]></code></example>
     </member>
-    <member name="GetVersions(string,string,RequestContext)">
+    <member name="GetVersions(string,RequestContext)">
       <example>
 This sample shows how to call GetVersions and parse the result.
 <code><![CDATA[
@@ -335,7 +371,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 Indexes client = new AIProjectClient(endpoint, credential).GetIndexesClient(apiVersion: "2025-05-15-preview");
 
-foreach (BinaryData item in client.GetVersions("<name>", null, null))
+foreach (BinaryData item in client.GetVersions("<name>", null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("type").ToString());
@@ -349,7 +385,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 Indexes client = new AIProjectClient(endpoint, credential).GetIndexesClient(apiVersion: "2025-05-15-preview");
 
-foreach (BinaryData item in client.GetVersions("<name>", "<continuationToken>", null))
+foreach (BinaryData item in client.GetVersions("<name>", null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("type").ToString());
@@ -361,7 +397,7 @@ foreach (BinaryData item in client.GetVersions("<name>", "<continuationToken>", 
 }
 ]]></code></example>
     </member>
-    <member name="GetIndicesAsync(string,CancellationToken)">
+    <member name="GetIndicesAsync(CancellationToken)">
       <example>
 This sample shows how to call GetIndicesAsync.
 <code><![CDATA[
@@ -379,12 +415,12 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 Indexes client = new AIProjectClient(endpoint, credential).GetIndexesClient(apiVersion: "2025-05-15-preview");
 
-await foreach (Index item in client.GetIndicesAsync(continuationToken: "<continuationToken>"))
+await foreach (Index item in client.GetIndicesAsync())
 {
 }
 ]]></code></example>
     </member>
-    <member name="GetIndices(string,CancellationToken)">
+    <member name="GetIndices(CancellationToken)">
       <example>
 This sample shows how to call GetIndices.
 <code><![CDATA[
@@ -402,12 +438,12 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 Indexes client = new AIProjectClient(endpoint, credential).GetIndexesClient(apiVersion: "2025-05-15-preview");
 
-foreach (Index item in client.GetIndices(continuationToken: "<continuationToken>"))
+foreach (Index item in client.GetIndices())
 {
 }
 ]]></code></example>
     </member>
-    <member name="GetIndicesAsync(string,RequestContext)">
+    <member name="GetIndicesAsync(RequestContext)">
       <example>
 This sample shows how to call GetIndicesAsync and parse the result.
 <code><![CDATA[
@@ -415,7 +451,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 Indexes client = new AIProjectClient(endpoint, credential).GetIndexesClient(apiVersion: "2025-05-15-preview");
 
-await foreach (BinaryData item in client.GetIndicesAsync(null, null))
+await foreach (BinaryData item in client.GetIndicesAsync(null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("type").ToString());
@@ -429,7 +465,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 Indexes client = new AIProjectClient(endpoint, credential).GetIndexesClient(apiVersion: "2025-05-15-preview");
 
-await foreach (BinaryData item in client.GetIndicesAsync("<continuationToken>", null))
+await foreach (BinaryData item in client.GetIndicesAsync(null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("type").ToString());
@@ -441,7 +477,7 @@ await foreach (BinaryData item in client.GetIndicesAsync("<continuationToken>", 
 }
 ]]></code></example>
     </member>
-    <member name="GetIndices(string,RequestContext)">
+    <member name="GetIndices(RequestContext)">
       <example>
 This sample shows how to call GetIndices and parse the result.
 <code><![CDATA[
@@ -449,7 +485,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 Indexes client = new AIProjectClient(endpoint, credential).GetIndexesClient(apiVersion: "2025-05-15-preview");
 
-foreach (BinaryData item in client.GetIndices(null, null))
+foreach (BinaryData item in client.GetIndices(null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("type").ToString());
@@ -463,7 +499,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 Indexes client = new AIProjectClient(endpoint, credential).GetIndexesClient(apiVersion: "2025-05-15-preview");
 
-foreach (BinaryData item in client.GetIndices("<continuationToken>", null))
+foreach (BinaryData item in client.GetIndices(null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("type").ToString());

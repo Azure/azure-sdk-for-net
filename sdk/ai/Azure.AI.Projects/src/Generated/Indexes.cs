@@ -329,35 +329,33 @@ namespace Azure.AI.Projects
 
         /// <summary> List all versions of the given Index. </summary>
         /// <param name="name"> The name of the resource. </param>
-        /// <param name="continuationToken"> Continuation token for pagination. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/Indexes.xml" path="doc/members/member[@name='GetVersionsAsync(string,string,CancellationToken)']/*" />
-        public virtual AsyncPageable<Index> GetVersionsAsync(string name, string continuationToken = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/Indexes.xml" path="doc/members/member[@name='GetVersionsAsync(string,CancellationToken)']/*" />
+        public virtual AsyncPageable<Index> GetVersionsAsync(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetVersionsRequest(name, continuationToken, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetVersionsNextPageRequest(nextLink, name, continuationToken, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetVersionsRequest(name, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetVersionsNextPageRequest(nextLink, name, context);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => Index.DeserializeIndex(e), ClientDiagnostics, _pipeline, "Indexes.GetVersions", "value", "nextLink", context);
         }
 
         /// <summary> List all versions of the given Index. </summary>
         /// <param name="name"> The name of the resource. </param>
-        /// <param name="continuationToken"> Continuation token for pagination. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/Indexes.xml" path="doc/members/member[@name='GetVersions(string,string,CancellationToken)']/*" />
-        public virtual Pageable<Index> GetVersions(string name, string continuationToken = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/Indexes.xml" path="doc/members/member[@name='GetVersions(string,CancellationToken)']/*" />
+        public virtual Pageable<Index> GetVersions(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetVersionsRequest(name, continuationToken, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetVersionsNextPageRequest(nextLink, name, continuationToken, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetVersionsRequest(name, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetVersionsNextPageRequest(nextLink, name, context);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => Index.DeserializeIndex(e), ClientDiagnostics, _pipeline, "Indexes.GetVersions", "value", "nextLink", context);
         }
 
@@ -371,25 +369,24 @@ namespace Azure.AI.Projects
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetVersionsAsync(string,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetVersionsAsync(string,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> The name of the resource. </param>
-        /// <param name="continuationToken"> Continuation token for pagination. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/Indexes.xml" path="doc/members/member[@name='GetVersionsAsync(string,string,RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetVersionsAsync(string name, string continuationToken, RequestContext context)
+        /// <include file="Docs/Indexes.xml" path="doc/members/member[@name='GetVersionsAsync(string,RequestContext)']/*" />
+        public virtual AsyncPageable<BinaryData> GetVersionsAsync(string name, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetVersionsRequest(name, continuationToken, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetVersionsNextPageRequest(nextLink, name, continuationToken, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetVersionsRequest(name, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetVersionsNextPageRequest(nextLink, name, context);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "Indexes.GetVersions", "value", "nextLink", context);
         }
 
@@ -403,49 +400,46 @@ namespace Azure.AI.Projects
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetVersions(string,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetVersions(string,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> The name of the resource. </param>
-        /// <param name="continuationToken"> Continuation token for pagination. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/Indexes.xml" path="doc/members/member[@name='GetVersions(string,string,RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetVersions(string name, string continuationToken, RequestContext context)
+        /// <include file="Docs/Indexes.xml" path="doc/members/member[@name='GetVersions(string,RequestContext)']/*" />
+        public virtual Pageable<BinaryData> GetVersions(string name, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetVersionsRequest(name, continuationToken, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetVersionsNextPageRequest(nextLink, name, continuationToken, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetVersionsRequest(name, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetVersionsNextPageRequest(nextLink, name, context);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "Indexes.GetVersions", "value", "nextLink", context);
         }
 
         /// <summary> List the latest version of each Index. </summary>
-        /// <param name="continuationToken"> Continuation token for pagination. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Docs/Indexes.xml" path="doc/members/member[@name='GetIndicesAsync(string,CancellationToken)']/*" />
-        public virtual AsyncPageable<Index> GetIndicesAsync(string continuationToken = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/Indexes.xml" path="doc/members/member[@name='GetIndicesAsync(CancellationToken)']/*" />
+        public virtual AsyncPageable<Index> GetIndicesAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetIndicesRequest(continuationToken, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetIndicesNextPageRequest(nextLink, continuationToken, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetIndicesRequest(context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetIndicesNextPageRequest(nextLink, context);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => Index.DeserializeIndex(e), ClientDiagnostics, _pipeline, "Indexes.GetIndices", "value", "nextLink", context);
         }
 
         /// <summary> List the latest version of each Index. </summary>
-        /// <param name="continuationToken"> Continuation token for pagination. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Docs/Indexes.xml" path="doc/members/member[@name='GetIndices(string,CancellationToken)']/*" />
-        public virtual Pageable<Index> GetIndices(string continuationToken = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/Indexes.xml" path="doc/members/member[@name='GetIndices(CancellationToken)']/*" />
+        public virtual Pageable<Index> GetIndices(CancellationToken cancellationToken = default)
         {
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetIndicesRequest(continuationToken, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetIndicesNextPageRequest(nextLink, continuationToken, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetIndicesRequest(context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetIndicesNextPageRequest(nextLink, context);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => Index.DeserializeIndex(e), ClientDiagnostics, _pipeline, "Indexes.GetIndices", "value", "nextLink", context);
         }
 
@@ -459,20 +453,19 @@ namespace Azure.AI.Projects
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetIndicesAsync(string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetIndicesAsync(CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="continuationToken"> Continuation token for pagination. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/Indexes.xml" path="doc/members/member[@name='GetIndicesAsync(string,RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetIndicesAsync(string continuationToken, RequestContext context)
+        /// <include file="Docs/Indexes.xml" path="doc/members/member[@name='GetIndicesAsync(RequestContext)']/*" />
+        public virtual AsyncPageable<BinaryData> GetIndicesAsync(RequestContext context)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetIndicesRequest(continuationToken, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetIndicesNextPageRequest(nextLink, continuationToken, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetIndicesRequest(context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetIndicesNextPageRequest(nextLink, context);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "Indexes.GetIndices", "value", "nextLink", context);
         }
 
@@ -486,24 +479,23 @@ namespace Azure.AI.Projects
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetIndices(string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetIndices(CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="continuationToken"> Continuation token for pagination. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/Indexes.xml" path="doc/members/member[@name='GetIndices(string,RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetIndices(string continuationToken, RequestContext context)
+        /// <include file="Docs/Indexes.xml" path="doc/members/member[@name='GetIndices(RequestContext)']/*" />
+        public virtual Pageable<BinaryData> GetIndices(RequestContext context)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetIndicesRequest(continuationToken, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetIndicesNextPageRequest(nextLink, continuationToken, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetIndicesRequest(context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetIndicesNextPageRequest(nextLink, context);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "Indexes.GetIndices", "value", "nextLink", context);
         }
 
-        internal HttpMessage CreateGetVersionsRequest(string name, string continuationToken, RequestContext context)
+        internal HttpMessage CreateGetVersionsRequest(string name, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -514,16 +506,12 @@ namespace Azure.AI.Projects
             uri.AppendPath(name, true);
             uri.AppendPath("/versions", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            if (continuationToken != null)
-            {
-                uri.AppendQuery("continuationToken", continuationToken, true);
-            }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
         }
 
-        internal HttpMessage CreateGetIndicesRequest(string continuationToken, RequestContext context)
+        internal HttpMessage CreateGetIndicesRequest(RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -532,10 +520,6 @@ namespace Azure.AI.Projects
             uri.Reset(_endpoint);
             uri.AppendPath("/indexes", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            if (continuationToken != null)
-            {
-                uri.AppendQuery("continuationToken", continuationToken, true);
-            }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -594,7 +578,7 @@ namespace Azure.AI.Projects
             return message;
         }
 
-        internal HttpMessage CreateGetVersionsNextPageRequest(string nextLink, string name, string continuationToken, RequestContext context)
+        internal HttpMessage CreateGetVersionsNextPageRequest(string nextLink, string name, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -607,7 +591,7 @@ namespace Azure.AI.Projects
             return message;
         }
 
-        internal HttpMessage CreateGetIndicesNextPageRequest(string nextLink, string continuationToken, RequestContext context)
+        internal HttpMessage CreateGetIndicesNextPageRequest(string nextLink, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;

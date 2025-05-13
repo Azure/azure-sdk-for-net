@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doc>
   <members>
-    <member name="GetConnectionsAsync(ConnectionType?,bool?,int?,int?,int?,CancellationToken)">
+    <member name="GetConnectionsAsync(ConnectionType?,bool?,CancellationToken)">
       <example>
 This sample shows how to call GetConnectionsAsync.
 <code><![CDATA[
@@ -14,7 +14,7 @@ await foreach (Connection item in client.GetConnectionsAsync())
 }
 ]]></code></example>
     </member>
-    <member name="GetConnections(ConnectionType?,bool?,int?,int?,int?,CancellationToken)">
+    <member name="GetConnections(ConnectionType?,bool?,CancellationToken)">
       <example>
 This sample shows how to call GetConnections.
 <code><![CDATA[
@@ -27,7 +27,7 @@ foreach (Connection item in client.GetConnections())
 }
 ]]></code></example>
     </member>
-    <member name="GetConnectionsAsync(string,bool?,int?,int?,int?,RequestContext)">
+    <member name="GetConnectionsAsync(string,bool?,RequestContext)">
       <example>
 This sample shows how to call GetConnectionsAsync and parse the result.
 <code><![CDATA[
@@ -35,7 +35,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 Connections client = new AIProjectClient(endpoint, credential).GetConnectionsClient(apiVersion: "2025-05-15-preview");
 
-await foreach (BinaryData item in client.GetConnectionsAsync("AzureOpenAI", true, null, 8, 21, null))
+await foreach (BinaryData item in client.GetConnectionsAsync("AzureOpenAI", true, null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("name").ToString());
@@ -48,7 +48,7 @@ await foreach (BinaryData item in client.GetConnectionsAsync("AzureOpenAI", true
 }
 ]]></code></example>
     </member>
-    <member name="GetConnections(string,bool?,int?,int?,int?,RequestContext)">
+    <member name="GetConnections(string,bool?,RequestContext)">
       <example>
 This sample shows how to call GetConnections and parse the result.
 <code><![CDATA[
@@ -56,7 +56,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 Connections client = new AIProjectClient(endpoint, credential).GetConnectionsClient(apiVersion: "2025-05-15-preview");
 
-foreach (BinaryData item in client.GetConnections("AzureOpenAI", true, null, 8, 21, null))
+foreach (BinaryData item in client.GetConnections("AzureOpenAI", true, null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("name").ToString());

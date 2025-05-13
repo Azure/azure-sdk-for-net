@@ -296,7 +296,7 @@ namespace Azure.AI.Projects.Samples
             TokenCredential credential = new DefaultAzureCredential();
             RedTeams client = new AIProjectClient(endpoint, credential).GetRedTeamsClient(apiVersion: "2025-05-15-preview");
 
-            foreach (BinaryData item in client.GetRedTeams(null, 8, 21, null))
+            foreach (BinaryData item in client.GetRedTeams(null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("id").ToString());
@@ -312,7 +312,7 @@ namespace Azure.AI.Projects.Samples
             TokenCredential credential = new DefaultAzureCredential();
             RedTeams client = new AIProjectClient(endpoint, credential).GetRedTeamsClient(apiVersion: "2025-05-15-preview");
 
-            await foreach (BinaryData item in client.GetRedTeamsAsync(null, 8, 21, null))
+            await foreach (BinaryData item in client.GetRedTeamsAsync(null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("id").ToString());

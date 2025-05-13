@@ -37,10 +37,12 @@ namespace Azure.AI.Projects
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="connectionName"> Name of connection to Azure AI Search. </param>
         /// <param name="indexName"> Name of index in Azure AI Search resource to attach. </param>
-        internal AzureAISearchIndex(IndexType type, string id, string name, string version, string description, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, string connectionName, string indexName) : base(type, id, name, version, description, tags, serializedAdditionalRawData)
+        /// <param name="fieldMapping"> Field mapping configuration. </param>
+        internal AzureAISearchIndex(IndexType type, string id, string name, string version, string description, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, string connectionName, string indexName, FieldMapping fieldMapping) : base(type, id, name, version, description, tags, serializedAdditionalRawData)
         {
             ConnectionName = connectionName;
             IndexName = indexName;
+            FieldMapping = fieldMapping;
         }
 
         /// <summary> Initializes a new instance of <see cref="AzureAISearchIndex"/> for deserialization. </summary>
@@ -52,5 +54,7 @@ namespace Azure.AI.Projects
         public string ConnectionName { get; set; }
         /// <summary> Name of index in Azure AI Search resource to attach. </summary>
         public string IndexName { get; set; }
+        /// <summary> Field mapping configuration. </summary>
+        public FieldMapping FieldMapping { get; set; }
     }
 }
