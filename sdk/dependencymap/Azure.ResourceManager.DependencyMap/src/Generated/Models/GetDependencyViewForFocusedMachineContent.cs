@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.DependencyMap.Models
 {
@@ -48,7 +49,7 @@ namespace Azure.ResourceManager.DependencyMap.Models
         /// <summary> Initializes a new instance of <see cref="GetDependencyViewForFocusedMachineContent"/>. </summary>
         /// <param name="focusedMachineId"> Machine arm id. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="focusedMachineId"/> is null. </exception>
-        public GetDependencyViewForFocusedMachineContent(string focusedMachineId)
+        public GetDependencyViewForFocusedMachineContent(ResourceIdentifier focusedMachineId)
         {
             Argument.AssertNotNull(focusedMachineId, nameof(focusedMachineId));
 
@@ -59,7 +60,7 @@ namespace Azure.ResourceManager.DependencyMap.Models
         /// <param name="focusedMachineId"> Machine arm id. </param>
         /// <param name="filters"> Filters for GetSingleMachineDependencyView. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal GetDependencyViewForFocusedMachineContent(string focusedMachineId, DependencyMapVisualizationFilter filters, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal GetDependencyViewForFocusedMachineContent(ResourceIdentifier focusedMachineId, DependencyMapVisualizationFilter filters, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             FocusedMachineId = focusedMachineId;
             Filters = filters;
@@ -72,7 +73,7 @@ namespace Azure.ResourceManager.DependencyMap.Models
         }
 
         /// <summary> Machine arm id. </summary>
-        public string FocusedMachineId { get; }
+        public ResourceIdentifier FocusedMachineId { get; }
         /// <summary> Filters for GetSingleMachineDependencyView. </summary>
         public DependencyMapVisualizationFilter Filters { get; set; }
     }

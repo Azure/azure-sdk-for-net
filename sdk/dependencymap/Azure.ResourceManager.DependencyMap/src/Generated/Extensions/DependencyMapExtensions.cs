@@ -33,58 +33,58 @@ namespace Azure.ResourceManager.DependencyMap
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="MapsResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MapsResource.CreateResourceIdentifier" /> to create a <see cref="MapsResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DependencyMapResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DependencyMapResource.CreateResourceIdentifier" /> to create a <see cref="DependencyMapResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableDependencyMapArmClient.GetMapsResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDependencyMapArmClient.GetDependencyMapResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="MapsResource"/> object. </returns>
-        public static MapsResource GetMapsResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DependencyMapResource"/> object. </returns>
+        public static DependencyMapResource GetDependencyMapResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableDependencyMapArmClient(client).GetMapsResource(id);
+            return GetMockableDependencyMapArmClient(client).GetDependencyMapResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DiscoverySourceResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DiscoverySourceResource.CreateResourceIdentifier" /> to create a <see cref="DiscoverySourceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DependencyMapDiscoverySourceResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DependencyMapDiscoverySourceResource.CreateResourceIdentifier" /> to create a <see cref="DependencyMapDiscoverySourceResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableDependencyMapArmClient.GetDiscoverySourceResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDependencyMapArmClient.GetDependencyMapDiscoverySourceResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="DiscoverySourceResource"/> object. </returns>
-        public static DiscoverySourceResource GetDiscoverySourceResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DependencyMapDiscoverySourceResource"/> object. </returns>
+        public static DependencyMapDiscoverySourceResource GetDependencyMapDiscoverySourceResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableDependencyMapArmClient(client).GetDiscoverySourceResource(id);
+            return GetMockableDependencyMapArmClient(client).GetDependencyMapDiscoverySourceResource(id);
         }
 
         /// <summary>
-        /// Gets a collection of MapsResources in the ResourceGroupResource.
+        /// Gets a collection of DependencyMapResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableDependencyMapResourceGroupResource.GetMapsResources()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDependencyMapResourceGroupResource.GetDependencyMaps()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of MapsResources and their operations over a MapsResource. </returns>
-        public static MapsResourceCollection GetMapsResources(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of DependencyMapResources and their operations over a DependencyMapResource. </returns>
+        public static DependencyMapCollection GetDependencyMaps(this ResourceGroupResource resourceGroupResource)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableDependencyMapResourceGroupResource(resourceGroupResource).GetMapsResources();
+            return GetMockableDependencyMapResourceGroupResource(resourceGroupResource).GetDependencyMaps();
         }
 
         /// <summary>
@@ -104,12 +104,12 @@ namespace Azure.ResourceManager.DependencyMap
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="MapsResource"/></description>
+        /// <description><see cref="DependencyMapResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableDependencyMapResourceGroupResource.GetMapsResourceAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDependencyMapResourceGroupResource.GetDependencyMapAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -118,11 +118,11 @@ namespace Azure.ResourceManager.DependencyMap
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="mapName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="mapName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<MapsResource>> GetMapsResourceAsync(this ResourceGroupResource resourceGroupResource, string mapName, CancellationToken cancellationToken = default)
+        public static async Task<Response<DependencyMapResource>> GetDependencyMapAsync(this ResourceGroupResource resourceGroupResource, string mapName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockableDependencyMapResourceGroupResource(resourceGroupResource).GetMapsResourceAsync(mapName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableDependencyMapResourceGroupResource(resourceGroupResource).GetDependencyMapAsync(mapName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -142,12 +142,12 @@ namespace Azure.ResourceManager.DependencyMap
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="MapsResource"/></description>
+        /// <description><see cref="DependencyMapResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableDependencyMapResourceGroupResource.GetMapsResource(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDependencyMapResourceGroupResource.GetDependencyMap(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -156,11 +156,11 @@ namespace Azure.ResourceManager.DependencyMap
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="mapName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="mapName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public static Response<MapsResource> GetMapsResource(this ResourceGroupResource resourceGroupResource, string mapName, CancellationToken cancellationToken = default)
+        public static Response<DependencyMapResource> GetDependencyMap(this ResourceGroupResource resourceGroupResource, string mapName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableDependencyMapResourceGroupResource(resourceGroupResource).GetMapsResource(mapName, cancellationToken);
+            return GetMockableDependencyMapResourceGroupResource(resourceGroupResource).GetDependencyMap(mapName, cancellationToken);
         }
 
         /// <summary>
@@ -180,23 +180,23 @@ namespace Azure.ResourceManager.DependencyMap
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="MapsResource"/></description>
+        /// <description><see cref="DependencyMapResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableDependencyMapSubscriptionResource.GetMapsResources(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDependencyMapSubscriptionResource.GetDependencyMaps(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="MapsResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<MapsResource> GetMapsResourcesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="DependencyMapResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<DependencyMapResource> GetDependencyMapsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableDependencyMapSubscriptionResource(subscriptionResource).GetMapsResourcesAsync(cancellationToken);
+            return GetMockableDependencyMapSubscriptionResource(subscriptionResource).GetDependencyMapsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -216,23 +216,23 @@ namespace Azure.ResourceManager.DependencyMap
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="MapsResource"/></description>
+        /// <description><see cref="DependencyMapResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableDependencyMapSubscriptionResource.GetMapsResources(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDependencyMapSubscriptionResource.GetDependencyMaps(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="MapsResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<MapsResource> GetMapsResources(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DependencyMapResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<DependencyMapResource> GetDependencyMaps(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableDependencyMapSubscriptionResource(subscriptionResource).GetMapsResources(cancellationToken);
+            return GetMockableDependencyMapSubscriptionResource(subscriptionResource).GetDependencyMaps(cancellationToken);
         }
     }
 }

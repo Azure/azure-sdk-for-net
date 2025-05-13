@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.DependencyMap.Models
 {
@@ -49,7 +50,7 @@ namespace Azure.ResourceManager.DependencyMap.Models
         /// <param name="focusedMachineId"> Source machine arm id. </param>
         /// <param name="connectedMachineId"> Destination machine arm id. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="focusedMachineId"/> or <paramref name="connectedMachineId"/> is null. </exception>
-        public GetConnectionsWithConnectedMachineForFocusedMachineContent(string focusedMachineId, string connectedMachineId)
+        public GetConnectionsWithConnectedMachineForFocusedMachineContent(ResourceIdentifier focusedMachineId, ResourceIdentifier connectedMachineId)
         {
             Argument.AssertNotNull(focusedMachineId, nameof(focusedMachineId));
             Argument.AssertNotNull(connectedMachineId, nameof(connectedMachineId));
@@ -63,7 +64,7 @@ namespace Azure.ResourceManager.DependencyMap.Models
         /// <param name="connectedMachineId"> Destination machine arm id. </param>
         /// <param name="filters"> Filters for GetNetworkConnectionsBetweenMachines. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal GetConnectionsWithConnectedMachineForFocusedMachineContent(string focusedMachineId, string connectedMachineId, DependencyMapVisualizationFilter filters, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal GetConnectionsWithConnectedMachineForFocusedMachineContent(ResourceIdentifier focusedMachineId, ResourceIdentifier connectedMachineId, DependencyMapVisualizationFilter filters, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             FocusedMachineId = focusedMachineId;
             ConnectedMachineId = connectedMachineId;
@@ -77,9 +78,9 @@ namespace Azure.ResourceManager.DependencyMap.Models
         }
 
         /// <summary> Source machine arm id. </summary>
-        public string FocusedMachineId { get; }
+        public ResourceIdentifier FocusedMachineId { get; }
         /// <summary> Destination machine arm id. </summary>
-        public string ConnectedMachineId { get; }
+        public ResourceIdentifier ConnectedMachineId { get; }
         /// <summary> Filters for GetNetworkConnectionsBetweenMachines. </summary>
         public DependencyMapVisualizationFilter Filters { get; set; }
     }

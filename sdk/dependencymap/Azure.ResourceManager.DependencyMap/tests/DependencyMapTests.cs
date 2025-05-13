@@ -15,7 +15,10 @@ namespace Azure.ResourceManager.DependencyMap.Tests
 {
     public class DependencyMapTests : DependencyMapManagementTestBase
     {
-        public DependencyMapTests() : base(true) { }
+        public DependencyMapTests(bool isAsync)
+            : base(isAsync)//, RecordedTestMode.Record)
+        {
+        }
 
         [SetUp]
         public async Task CreateClients()
@@ -27,15 +30,17 @@ namespace Azure.ResourceManager.DependencyMap.Tests
         }
 
         [TestCase]
+        [RecordedTest]
+        [Ignore("Ignore until we have a stable API for Dependency Map")]
         public async Task TestMapsResourceCRUD()
         {
             var rgName = Recording.GenerateAssetName("rgdependencyMap");
             var mapName = Recording.GenerateAssetName("mapsTest1");
             var location = AzureLocation.WestUS2;
             var subscription = await DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, new ResourceGroupData(location));
-            var mapResourceId = MapsResource.CreateResourceIdentifier(subscription.Id, rgName, mapName);
-            var mapsCollection = new MapsResourceCollection(Client, mapResourceId);
-            var createMapsOperations = await mapsCollection.CreateOrUpdateAsync(WaitUntil.Completed, mapName, new MapsResourceData(location));
+            var mapResourceId = DependencyMapResource.CreateResourceIdentifier(subscription.Id, rgName, mapName);
+            var mapsCollection = new DependencyMapCollection(Client, mapResourceId);
+            var createMapsOperations = await mapsCollection.CreateOrUpdateAsync(WaitUntil.Completed, mapName, new DependencyMapData(location));
             await createMapsOperations.WaitForCompletionAsync();
 
             Assert.IsTrue(createMapsOperations.HasCompleted);

@@ -7,12 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.DependencyMap.Models
 {
-    /// <summary> ExportDependencies request model. </summary>
-    public partial class ExportDependenciesContent
+    /// <summary> The properties of Maps resource. </summary>
+    internal partial class DependencyMapProperties
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,35 +45,21 @@ namespace Azure.ResourceManager.DependencyMap.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ExportDependenciesContent"/>. </summary>
-        /// <param name="focusedMachineId"> Machine arm id. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="focusedMachineId"/> is null. </exception>
-        public ExportDependenciesContent(ResourceIdentifier focusedMachineId)
+        /// <summary> Initializes a new instance of <see cref="DependencyMapProperties"/>. </summary>
+        public DependencyMapProperties()
         {
-            Argument.AssertNotNull(focusedMachineId, nameof(focusedMachineId));
-
-            FocusedMachineId = focusedMachineId;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ExportDependenciesContent"/>. </summary>
-        /// <param name="focusedMachineId"> Machine arm id. </param>
-        /// <param name="filters"> Filters for ExportDependencies. </param>
+        /// <summary> Initializes a new instance of <see cref="DependencyMapProperties"/>. </summary>
+        /// <param name="provisioningState"> Provisioning state of Maps resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ExportDependenciesContent(ResourceIdentifier focusedMachineId, DependencyMapVisualizationFilter filters, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DependencyMapProperties(DependencyMapProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            FocusedMachineId = focusedMachineId;
-            Filters = filters;
+            ProvisioningState = provisioningState;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ExportDependenciesContent"/> for deserialization. </summary>
-        internal ExportDependenciesContent()
-        {
-        }
-
-        /// <summary> Machine arm id. </summary>
-        public ResourceIdentifier FocusedMachineId { get; }
-        /// <summary> Filters for ExportDependencies. </summary>
-        public DependencyMapVisualizationFilter Filters { get; set; }
+        /// <summary> Provisioning state of Maps resource. </summary>
+        public DependencyMapProvisioningState? ProvisioningState { get; }
     }
 }

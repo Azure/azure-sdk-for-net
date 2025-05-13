@@ -15,8 +15,8 @@ namespace Azure.ResourceManager.DependencyMap.Mocking
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
     public partial class MockableDependencyMapSubscriptionResource : ArmResource
     {
-        private ClientDiagnostics _mapsResourceMapsClientDiagnostics;
-        private MapsRestOperations _mapsResourceMapsRestClient;
+        private ClientDiagnostics _dependencyMapMapsClientDiagnostics;
+        private MapsRestOperations _dependencyMapMapsRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="MockableDependencyMapSubscriptionResource"/> class for mocking. </summary>
         protected MockableDependencyMapSubscriptionResource()
@@ -30,8 +30,8 @@ namespace Azure.ResourceManager.DependencyMap.Mocking
         {
         }
 
-        private ClientDiagnostics MapsResourceMapsClientDiagnostics => _mapsResourceMapsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DependencyMap", MapsResource.ResourceType.Namespace, Diagnostics);
-        private MapsRestOperations MapsResourceMapsRestClient => _mapsResourceMapsRestClient ??= new MapsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(MapsResource.ResourceType));
+        private ClientDiagnostics DependencyMapMapsClientDiagnostics => _dependencyMapMapsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DependencyMap", DependencyMapResource.ResourceType.Namespace, Diagnostics);
+        private MapsRestOperations DependencyMapMapsRestClient => _dependencyMapMapsRestClient ??= new MapsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(DependencyMapResource.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -56,17 +56,17 @@ namespace Azure.ResourceManager.DependencyMap.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="MapsResource"/></description>
+        /// <description><see cref="DependencyMapResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MapsResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<MapsResource> GetMapsResourcesAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="DependencyMapResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DependencyMapResource> GetDependencyMapsAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => MapsResourceMapsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => MapsResourceMapsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MapsResource(Client, MapsResourceData.DeserializeMapsResourceData(e)), MapsResourceMapsClientDiagnostics, Pipeline, "MockableDependencyMapSubscriptionResource.GetMapsResources", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => DependencyMapMapsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DependencyMapMapsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DependencyMapResource(Client, DependencyMapData.DeserializeDependencyMapData(e)), DependencyMapMapsClientDiagnostics, Pipeline, "MockableDependencyMapSubscriptionResource.GetDependencyMaps", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -86,17 +86,17 @@ namespace Azure.ResourceManager.DependencyMap.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="MapsResource"/></description>
+        /// <description><see cref="DependencyMapResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MapsResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<MapsResource> GetMapsResources(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DependencyMapResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DependencyMapResource> GetDependencyMaps(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => MapsResourceMapsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => MapsResourceMapsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MapsResource(Client, MapsResourceData.DeserializeMapsResourceData(e)), MapsResourceMapsClientDiagnostics, Pipeline, "MockableDependencyMapSubscriptionResource.GetMapsResources", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => DependencyMapMapsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DependencyMapMapsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DependencyMapResource(Client, DependencyMapData.DeserializeDependencyMapData(e)), DependencyMapMapsClientDiagnostics, Pipeline, "MockableDependencyMapSubscriptionResource.GetDependencyMaps", "value", "nextLink", cancellationToken);
         }
     }
 }

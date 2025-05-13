@@ -7,12 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.DependencyMap.Models
 {
-    /// <summary> ExportDependencies request model. </summary>
-    public partial class ExportDependenciesContent
+    /// <summary> UTC DateTime filter for dependency map visualization apis. </summary>
+    public partial class DependencyMapDateTimeFilter
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,35 +45,25 @@ namespace Azure.ResourceManager.DependencyMap.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ExportDependenciesContent"/>. </summary>
-        /// <param name="focusedMachineId"> Machine arm id. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="focusedMachineId"/> is null. </exception>
-        public ExportDependenciesContent(ResourceIdentifier focusedMachineId)
+        /// <summary> Initializes a new instance of <see cref="DependencyMapDateTimeFilter"/>. </summary>
+        public DependencyMapDateTimeFilter()
         {
-            Argument.AssertNotNull(focusedMachineId, nameof(focusedMachineId));
-
-            FocusedMachineId = focusedMachineId;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ExportDependenciesContent"/>. </summary>
-        /// <param name="focusedMachineId"> Machine arm id. </param>
-        /// <param name="filters"> Filters for ExportDependencies. </param>
+        /// <summary> Initializes a new instance of <see cref="DependencyMapDateTimeFilter"/>. </summary>
+        /// <param name="startOn"> Start date time for dependency map visualization query. </param>
+        /// <param name="endOn"> End date time for dependency map visualization query. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ExportDependenciesContent(ResourceIdentifier focusedMachineId, DependencyMapVisualizationFilter filters, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DependencyMapDateTimeFilter(DateTimeOffset? startOn, DateTimeOffset? endOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            FocusedMachineId = focusedMachineId;
-            Filters = filters;
+            StartOn = startOn;
+            EndOn = endOn;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ExportDependenciesContent"/> for deserialization. </summary>
-        internal ExportDependenciesContent()
-        {
-        }
-
-        /// <summary> Machine arm id. </summary>
-        public ResourceIdentifier FocusedMachineId { get; }
-        /// <summary> Filters for ExportDependencies. </summary>
-        public DependencyMapVisualizationFilter Filters { get; set; }
+        /// <summary> Start date time for dependency map visualization query. </summary>
+        public DateTimeOffset? StartOn { get; set; }
+        /// <summary> End date time for dependency map visualization query. </summary>
+        public DateTimeOffset? EndOn { get; set; }
     }
 }

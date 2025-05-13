@@ -35,27 +35,27 @@ namespace Azure.ResourceManager.DependencyMap.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="MapsResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MapsResource.CreateResourceIdentifier" /> to create a <see cref="MapsResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="DependencyMapResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DependencyMapResource.CreateResourceIdentifier" /> to create a <see cref="DependencyMapResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MapsResource"/> object. </returns>
-        public virtual MapsResource GetMapsResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DependencyMapResource"/> object. </returns>
+        public virtual DependencyMapResource GetDependencyMapResource(ResourceIdentifier id)
         {
-            MapsResource.ValidateResourceId(id);
-            return new MapsResource(Client, id);
+            DependencyMapResource.ValidateResourceId(id);
+            return new DependencyMapResource(Client, id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DiscoverySourceResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DiscoverySourceResource.CreateResourceIdentifier" /> to create a <see cref="DiscoverySourceResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="DependencyMapDiscoverySourceResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DependencyMapDiscoverySourceResource.CreateResourceIdentifier" /> to create a <see cref="DependencyMapDiscoverySourceResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DiscoverySourceResource"/> object. </returns>
-        public virtual DiscoverySourceResource GetDiscoverySourceResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DependencyMapDiscoverySourceResource"/> object. </returns>
+        public virtual DependencyMapDiscoverySourceResource GetDependencyMapDiscoverySourceResource(ResourceIdentifier id)
         {
-            DiscoverySourceResource.ValidateResourceId(id);
-            return new DiscoverySourceResource(Client, id);
+            DependencyMapDiscoverySourceResource.ValidateResourceId(id);
+            return new DependencyMapDiscoverySourceResource(Client, id);
         }
     }
 }

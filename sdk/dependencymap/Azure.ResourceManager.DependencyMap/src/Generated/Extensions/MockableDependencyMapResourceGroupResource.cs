@@ -33,11 +33,11 @@ namespace Azure.ResourceManager.DependencyMap.Mocking
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of MapsResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of MapsResources and their operations over a MapsResource. </returns>
-        public virtual MapsResourceCollection GetMapsResources()
+        /// <summary> Gets a collection of DependencyMapResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of DependencyMapResources and their operations over a DependencyMapResource. </returns>
+        public virtual DependencyMapCollection GetDependencyMaps()
         {
-            return GetCachedClient(client => new MapsResourceCollection(client, Id));
+            return GetCachedClient(client => new DependencyMapCollection(client, Id));
         }
 
         /// <summary>
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DependencyMap.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="MapsResource"/></description>
+        /// <description><see cref="DependencyMapResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -66,9 +66,9 @@ namespace Azure.ResourceManager.DependencyMap.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="mapName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="mapName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<MapsResource>> GetMapsResourceAsync(string mapName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DependencyMapResource>> GetDependencyMapAsync(string mapName, CancellationToken cancellationToken = default)
         {
-            return await GetMapsResources().GetAsync(mapName, cancellationToken).ConfigureAwait(false);
+            return await GetDependencyMaps().GetAsync(mapName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.DependencyMap.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="MapsResource"/></description>
+        /// <description><see cref="DependencyMapResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -97,9 +97,9 @@ namespace Azure.ResourceManager.DependencyMap.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="mapName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="mapName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<MapsResource> GetMapsResource(string mapName, CancellationToken cancellationToken = default)
+        public virtual Response<DependencyMapResource> GetDependencyMap(string mapName, CancellationToken cancellationToken = default)
         {
-            return GetMapsResources().Get(mapName, cancellationToken);
+            return GetDependencyMaps().Get(mapName, cancellationToken);
         }
     }
 }

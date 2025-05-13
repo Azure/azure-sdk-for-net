@@ -7,12 +7,12 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
+using System.Linq;
 
 namespace Azure.ResourceManager.DependencyMap.Models
 {
-    /// <summary> ExportDependencies request model. </summary>
-    public partial class ExportDependenciesContent
+    /// <summary> Process name filter for dependency map visualization apis. </summary>
+    public partial class DependencyMapProcessNameFilter
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,35 +46,37 @@ namespace Azure.ResourceManager.DependencyMap.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ExportDependenciesContent"/>. </summary>
-        /// <param name="focusedMachineId"> Machine arm id. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="focusedMachineId"/> is null. </exception>
-        public ExportDependenciesContent(ResourceIdentifier focusedMachineId)
+        /// <summary> Initializes a new instance of <see cref="DependencyMapProcessNameFilter"/>. </summary>
+        /// <param name="operator"> Operator for process name filter. </param>
+        /// <param name="processNames"> List of process names on which the operator should be applied. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="processNames"/> is null. </exception>
+        public DependencyMapProcessNameFilter(DependencyMapProcessNameFilterOperator @operator, IEnumerable<string> processNames)
         {
-            Argument.AssertNotNull(focusedMachineId, nameof(focusedMachineId));
+            Argument.AssertNotNull(processNames, nameof(processNames));
 
-            FocusedMachineId = focusedMachineId;
+            Operator = @operator;
+            ProcessNames = processNames.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ExportDependenciesContent"/>. </summary>
-        /// <param name="focusedMachineId"> Machine arm id. </param>
-        /// <param name="filters"> Filters for ExportDependencies. </param>
+        /// <summary> Initializes a new instance of <see cref="DependencyMapProcessNameFilter"/>. </summary>
+        /// <param name="operator"> Operator for process name filter. </param>
+        /// <param name="processNames"> List of process names on which the operator should be applied. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ExportDependenciesContent(ResourceIdentifier focusedMachineId, DependencyMapVisualizationFilter filters, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DependencyMapProcessNameFilter(DependencyMapProcessNameFilterOperator @operator, IList<string> processNames, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            FocusedMachineId = focusedMachineId;
-            Filters = filters;
+            Operator = @operator;
+            ProcessNames = processNames;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ExportDependenciesContent"/> for deserialization. </summary>
-        internal ExportDependenciesContent()
+        /// <summary> Initializes a new instance of <see cref="DependencyMapProcessNameFilter"/> for deserialization. </summary>
+        internal DependencyMapProcessNameFilter()
         {
         }
 
-        /// <summary> Machine arm id. </summary>
-        public ResourceIdentifier FocusedMachineId { get; }
-        /// <summary> Filters for ExportDependencies. </summary>
-        public DependencyMapVisualizationFilter Filters { get; set; }
+        /// <summary> Operator for process name filter. </summary>
+        public DependencyMapProcessNameFilterOperator Operator { get; }
+        /// <summary> List of process names on which the operator should be applied. </summary>
+        public IList<string> ProcessNames { get; }
     }
 }

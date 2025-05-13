@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.DependencyMap.Models
             {
                 return null;
             }
-            string focusedMachineId = default;
-            string connectedMachineId = default;
+            ResourceIdentifier focusedMachineId = default;
+            ResourceIdentifier connectedMachineId = default;
             DependencyMapVisualizationFilter filters = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -89,12 +89,12 @@ namespace Azure.ResourceManager.DependencyMap.Models
             {
                 if (property.NameEquals("focusedMachineId"u8))
                 {
-                    focusedMachineId = property.Value.GetString();
+                    focusedMachineId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("connectedMachineId"u8))
                 {
-                    connectedMachineId = property.Value.GetString();
+                    connectedMachineId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("filters"u8))

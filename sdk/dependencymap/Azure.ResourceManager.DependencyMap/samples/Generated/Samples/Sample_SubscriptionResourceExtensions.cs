@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DependencyMap.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetMapsResources_MapsListBySubscriptionGeneratedByMaximumSetRule()
+        public async Task GetDependencyMaps_MapsListBySubscriptionGeneratedByMaximumSetRule()
         {
             // Generated from example definition: 2025-01-31-preview/Maps_ListBySubscription.json
             // this example is just showing the usage of "MapsResource_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
@@ -35,11 +35,11 @@ namespace Azure.ResourceManager.DependencyMap.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (MapsResource item in subscriptionResource.GetMapsResourcesAsync())
+            await foreach (DependencyMapResource item in subscriptionResource.GetDependencyMapsAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                MapsResourceData resourceData = item.Data;
+                DependencyMapData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }

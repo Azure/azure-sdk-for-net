@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.DependencyMap.Models
 {
@@ -49,7 +50,7 @@ namespace Azure.ResourceManager.DependencyMap.Models
         /// <param name="focusedMachineId"> Machine arm id. </param>
         /// <param name="processIdOnFocusedMachine"> Process id. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="focusedMachineId"/> or <paramref name="processIdOnFocusedMachine"/> is null. </exception>
-        public GetConnectionsForProcessOnFocusedMachineContent(string focusedMachineId, string processIdOnFocusedMachine)
+        public GetConnectionsForProcessOnFocusedMachineContent(ResourceIdentifier focusedMachineId, string processIdOnFocusedMachine)
         {
             Argument.AssertNotNull(focusedMachineId, nameof(focusedMachineId));
             Argument.AssertNotNull(processIdOnFocusedMachine, nameof(processIdOnFocusedMachine));
@@ -63,7 +64,7 @@ namespace Azure.ResourceManager.DependencyMap.Models
         /// <param name="processIdOnFocusedMachine"> Process id. </param>
         /// <param name="filters"> Filters for GetProcessNetworkConnections. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal GetConnectionsForProcessOnFocusedMachineContent(string focusedMachineId, string processIdOnFocusedMachine, DependencyMapVisualizationFilter filters, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal GetConnectionsForProcessOnFocusedMachineContent(ResourceIdentifier focusedMachineId, string processIdOnFocusedMachine, DependencyMapVisualizationFilter filters, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             FocusedMachineId = focusedMachineId;
             ProcessIdOnFocusedMachine = processIdOnFocusedMachine;
@@ -77,7 +78,7 @@ namespace Azure.ResourceManager.DependencyMap.Models
         }
 
         /// <summary> Machine arm id. </summary>
-        public string FocusedMachineId { get; }
+        public ResourceIdentifier FocusedMachineId { get; }
         /// <summary> Process id. </summary>
         public string ProcessIdOnFocusedMachine { get; }
         /// <summary> Filters for GetProcessNetworkConnections. </summary>

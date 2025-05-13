@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.DependencyMap.Models
             {
                 return null;
             }
-            IReadOnlyList<MapsResourceData> value = default;
+            IReadOnlyList<DependencyMapData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -91,10 +91,10 @@ namespace Azure.ResourceManager.DependencyMap.Models
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<MapsResourceData> array = new List<MapsResourceData>();
+                    List<DependencyMapData> array = new List<DependencyMapData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MapsResourceData.DeserializeMapsResourceData(item, options));
+                        array.Add(DependencyMapData.DeserializeDependencyMapData(item, options));
                     }
                     value = array;
                     continue;

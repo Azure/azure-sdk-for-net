@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.DependencyMap.Models
         /// <param name="dateTime"> DateTime filter. </param>
         /// <param name="processNameFilter"> Process name filter. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DependencyMapVisualizationFilter(DateTimeFilter dateTime, ProcessNameFilter processNameFilter, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DependencyMapVisualizationFilter(DependencyMapDateTimeFilter dateTime, DependencyMapProcessNameFilter processNameFilter, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DateTime = dateTime;
             ProcessNameFilter = processNameFilter;
@@ -62,8 +62,8 @@ namespace Azure.ResourceManager.DependencyMap.Models
         }
 
         /// <summary> DateTime filter. </summary>
-        public DateTimeFilter DateTime { get; set; }
+        public DependencyMapDateTimeFilter DateTime { get; set; }
         /// <summary> Process name filter. </summary>
-        public ProcessNameFilter ProcessNameFilter { get; set; }
+        public DependencyMapProcessNameFilter ProcessNameFilter { get; set; }
     }
 }

@@ -81,8 +81,8 @@ namespace Azure.ResourceManager.DependencyMap.Models
             {
                 return null;
             }
-            DateTimeFilter dateTime = default;
-            ProcessNameFilter processNameFilter = default;
+            DependencyMapDateTimeFilter dateTime = default;
+            DependencyMapProcessNameFilter processNameFilter = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.DependencyMap.Models
                     {
                         continue;
                     }
-                    dateTime = DateTimeFilter.DeserializeDateTimeFilter(property.Value, options);
+                    dateTime = DependencyMapDateTimeFilter.DeserializeDependencyMapDateTimeFilter(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("processNameFilter"u8))
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.DependencyMap.Models
                     {
                         continue;
                     }
-                    processNameFilter = ProcessNameFilter.DeserializeProcessNameFilter(property.Value, options);
+                    processNameFilter = DependencyMapProcessNameFilter.DeserializeDependencyMapProcessNameFilter(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
