@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="description"> The operation description. </param>
         /// <param name="isCancellable"> Whether the operation can be cancelled. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SqlInstancePoolOperationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string instancePoolName, string operation, string operationFriendlyName, int? percentComplete, DateTimeOffset? startOn, ManagementOperationState? state, int? errorCode, string errorDescription, int? errorSeverity, ErrorType? errorType, DateTimeOffset? estimatedCompleteOn, string description, bool? isCancellable, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal SqlInstancePoolOperationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string instancePoolName, string operation, string operationFriendlyName, int? percentComplete, DateTimeOffset? startOn, ManagementOperationState? state, int? errorCode, string errorDescription, int? errorSeverity, SqlInstancePoolOperationErrorType? errorType, DateTimeOffset? estimatedCompleteOn, string description, bool? isCancellable, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             InstancePoolName = instancePoolName;
             Operation = operation;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Sql
         public int? ErrorSeverity { get; }
         /// <summary> Error type (e.g. None, User). </summary>
         [WirePath("properties.errorType")]
-        public ErrorType? ErrorType { get; }
+        public SqlInstancePoolOperationErrorType? ErrorType { get; }
         /// <summary> The estimated completion time of the operation. </summary>
         [WirePath("properties.estimatedCompletionTime")]
         public DateTimeOffset? EstimatedCompleteOn { get; }

@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Sql
             int? errorCode = default;
             string errorDescription = default;
             int? errorSeverity = default;
-            ErrorType? errorType = default;
+            SqlInstancePoolOperationErrorType? errorType = default;
             DateTimeOffset? estimatedCompletionTime = default;
             string description = default;
             bool? isCancellable = default;
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.Sql
                             {
                                 continue;
                             }
-                            errorType = new ErrorType(property0.Value.GetString());
+                            errorType = new SqlInstancePoolOperationErrorType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("estimatedCompletionTime"u8))
@@ -625,7 +625,7 @@ namespace Azure.ResourceManager.Sql
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSqlContext.Default);
                 case "bicep":
                     return SerializeBicep(options);
                 default:

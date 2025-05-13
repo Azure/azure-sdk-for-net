@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Sql
 
         SqlInstancePoolOperationData IJsonModel<SqlInstancePoolOperationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SqlInstancePoolOperationData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SqlInstancePoolOperationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<SqlInstancePoolOperationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SqlInstancePoolOperationData>(Data, options, AzureResourceManagerSqlContext.Default);
 
-        SqlInstancePoolOperationData IPersistableModel<SqlInstancePoolOperationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SqlInstancePoolOperationData>(data, options);
+        SqlInstancePoolOperationData IPersistableModel<SqlInstancePoolOperationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SqlInstancePoolOperationData>(data, options, AzureResourceManagerSqlContext.Default);
 
         string IPersistableModel<SqlInstancePoolOperationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SqlInstancePoolOperationData>)Data).GetFormatFromOptions(options);
     }

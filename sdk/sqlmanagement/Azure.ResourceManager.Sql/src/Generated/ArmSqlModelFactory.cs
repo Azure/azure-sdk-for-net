@@ -2497,7 +2497,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="description"> The operation description. </param>
         /// <param name="isCancellable"> Whether the operation can be cancelled. </param>
         /// <returns> A new <see cref="Sql.SqlInstancePoolOperationData"/> instance for mocking. </returns>
-        public static SqlInstancePoolOperationData SqlInstancePoolOperationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string instancePoolName = null, string operation = null, string operationFriendlyName = null, int? percentComplete = null, DateTimeOffset? startOn = null, ManagementOperationState? state = null, int? errorCode = null, string errorDescription = null, int? errorSeverity = null, ErrorType? errorType = null, DateTimeOffset? estimatedCompleteOn = null, string description = null, bool? isCancellable = null)
+        public static SqlInstancePoolOperationData SqlInstancePoolOperationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string instancePoolName = null, string operation = null, string operationFriendlyName = null, int? percentComplete = null, DateTimeOffset? startOn = null, ManagementOperationState? state = null, int? errorCode = null, string errorDescription = null, int? errorSeverity = null, SqlInstancePoolOperationErrorType? errorType = null, DateTimeOffset? estimatedCompleteOn = null, string description = null, bool? isCancellable = null)
         {
             return new SqlInstancePoolOperationData(
                 id,

@@ -401,6 +401,7 @@ rename-mapping:
   InstancePoolOperation: SqlInstancePoolOperation
   ManagedInstance.properties.totalMemoryMB: TotalMemoryInMB
   ManagedInstanceUpdate.properties.totalMemoryMB: TotalMemoryInMB
+  ErrorType: SqlInstancePoolOperationErrorType
 
 prompted-enum-values:
   - Default

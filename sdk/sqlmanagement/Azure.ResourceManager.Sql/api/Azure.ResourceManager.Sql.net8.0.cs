@@ -4658,7 +4658,7 @@ namespace Azure.ResourceManager.Sql
         public int? ErrorCode { get { throw null; } }
         public string ErrorDescription { get { throw null; } }
         public int? ErrorSeverity { get { throw null; } }
-        public Azure.ResourceManager.Sql.Models.ErrorType? ErrorType { get { throw null; } }
+        public Azure.ResourceManager.Sql.Models.SqlInstancePoolOperationErrorType? ErrorType { get { throw null; } }
         public System.DateTimeOffset? EstimatedCompleteOn { get { throw null; } }
         public string InstancePoolName { get { throw null; } }
         public bool? IsCancellable { get { throw null; } }
@@ -7535,7 +7535,7 @@ namespace Azure.ResourceManager.Sql.Models
         public static Azure.ResourceManager.Sql.SqlDatabaseSecurityAlertPolicyData SqlDatabaseSecurityAlertPolicyData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Sql.Models.SecurityAlertsPolicyState? state = default(Azure.ResourceManager.Sql.Models.SecurityAlertsPolicyState?), System.Collections.Generic.IEnumerable<string> disabledAlerts = null, System.Collections.Generic.IEnumerable<string> emailAddresses = null, bool? sendToEmailAccountAdmins = default(bool?), string storageEndpoint = null, string storageAccountAccessKey = null, int? retentionDays = default(int?), System.DateTimeOffset? createdOn = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.ResourceManager.Sql.SqlDistributedAvailabilityGroupData SqlDistributedAvailabilityGroupData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string distributedAvailabilityGroupName = null, System.Guid? distributedAvailabilityGroupId = default(System.Guid?), Azure.ResourceManager.Sql.Models.SqlReplicationModeType? replicationMode = default(Azure.ResourceManager.Sql.Models.SqlReplicationModeType?), Azure.ResourceManager.Sql.Models.SqlServerSideLinkRole? partnerLinkRole = default(Azure.ResourceManager.Sql.Models.SqlServerSideLinkRole?), string partnerAvailabilityGroupName = null, string partnerEndpoint = null, Azure.ResourceManager.Sql.Models.SqlServerSideLinkRole? instanceLinkRole = default(Azure.ResourceManager.Sql.Models.SqlServerSideLinkRole?), string instanceAvailabilityGroupName = null, Azure.ResourceManager.Sql.Models.SqlServerFailoverModeType? failoverMode = default(Azure.ResourceManager.Sql.Models.SqlServerFailoverModeType?), Azure.ResourceManager.Sql.Models.SeedingModeType? seedingMode = default(Azure.ResourceManager.Sql.Models.SeedingModeType?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.Models.DistributedAvailabilityGroupDatabase> databases = null) { throw null; }
         public static Azure.ResourceManager.Sql.SqlFirewallRuleData SqlFirewallRuleData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType? resourceType = default(Azure.Core.ResourceType?), string startIPAddress = null, string endIPAddress = null) { throw null; }
-        public static Azure.ResourceManager.Sql.SqlInstancePoolOperationData SqlInstancePoolOperationData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string instancePoolName = null, string operation = null, string operationFriendlyName = null, int? percentComplete = default(int?), System.DateTimeOffset? startOn = default(System.DateTimeOffset?), Azure.ResourceManager.Sql.Models.ManagementOperationState? state = default(Azure.ResourceManager.Sql.Models.ManagementOperationState?), int? errorCode = default(int?), string errorDescription = null, int? errorSeverity = default(int?), Azure.ResourceManager.Sql.Models.ErrorType? errorType = default(Azure.ResourceManager.Sql.Models.ErrorType?), System.DateTimeOffset? estimatedCompleteOn = default(System.DateTimeOffset?), string description = null, bool? isCancellable = default(bool?)) { throw null; }
+        public static Azure.ResourceManager.Sql.SqlInstancePoolOperationData SqlInstancePoolOperationData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string instancePoolName = null, string operation = null, string operationFriendlyName = null, int? percentComplete = default(int?), System.DateTimeOffset? startOn = default(System.DateTimeOffset?), Azure.ResourceManager.Sql.Models.ManagementOperationState? state = default(Azure.ResourceManager.Sql.Models.ManagementOperationState?), int? errorCode = default(int?), string errorDescription = null, int? errorSeverity = default(int?), Azure.ResourceManager.Sql.Models.SqlInstancePoolOperationErrorType? errorType = default(Azure.ResourceManager.Sql.Models.SqlInstancePoolOperationErrorType?), System.DateTimeOffset? estimatedCompleteOn = default(System.DateTimeOffset?), string description = null, bool? isCancellable = default(bool?)) { throw null; }
         public static Azure.ResourceManager.Sql.Models.SqlLocationCapabilities SqlLocationCapabilities(string name = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.Models.SqlServerVersionCapability> supportedServerVersions = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.Models.ManagedInstanceVersionCapability> supportedManagedInstanceVersions = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.Models.JobAgentVersionCapability> supportedJobAgentVersions = null, Azure.ResourceManager.Sql.Models.SqlCapabilityStatus? status = default(Azure.ResourceManager.Sql.Models.SqlCapabilityStatus?), string reason = null) { throw null; }
         public static Azure.ResourceManager.Sql.Models.SqlManagedInstanceRefreshExternalGovernanceStatusOperationResult SqlManagedInstanceRefreshExternalGovernanceStatusOperationResult(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Guid? requestId = default(System.Guid?), string requestType = null, string queuedTime = null, string managedInstanceName = null, string status = null, string errorMessage = null) { throw null; }
         public static Azure.ResourceManager.Sql.Models.SqlNameAvailabilityContent SqlNameAvailabilityContent(string name = null, Azure.ResourceManager.Sql.Models.SqlNameAvailabilityResourceType resourceType = default(Azure.ResourceManager.Sql.Models.SqlNameAvailabilityResourceType)) { throw null; }
@@ -8601,24 +8601,6 @@ namespace Azure.ResourceManager.Sql.Models
         public static bool operator ==(Azure.ResourceManager.Sql.Models.EncryptionProtectorName left, Azure.ResourceManager.Sql.Models.EncryptionProtectorName right) { throw null; }
         public static implicit operator Azure.ResourceManager.Sql.Models.EncryptionProtectorName (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Sql.Models.EncryptionProtectorName left, Azure.ResourceManager.Sql.Models.EncryptionProtectorName right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ErrorType : System.IEquatable<Azure.ResourceManager.Sql.Models.ErrorType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ErrorType(string value) { throw null; }
-        public static Azure.ResourceManager.Sql.Models.ErrorType None { get { throw null; } }
-        public static Azure.ResourceManager.Sql.Models.ErrorType User { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Sql.Models.ErrorType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Sql.Models.ErrorType left, Azure.ResourceManager.Sql.Models.ErrorType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Sql.Models.ErrorType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Sql.Models.ErrorType left, Azure.ResourceManager.Sql.Models.ErrorType right) { throw null; }
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -11587,6 +11569,24 @@ namespace Azure.ResourceManager.Sql.Models
         public static bool operator ==(Azure.ResourceManager.Sql.Models.SqlDayOfWeek left, Azure.ResourceManager.Sql.Models.SqlDayOfWeek right) { throw null; }
         public static implicit operator Azure.ResourceManager.Sql.Models.SqlDayOfWeek (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Sql.Models.SqlDayOfWeek left, Azure.ResourceManager.Sql.Models.SqlDayOfWeek right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct SqlInstancePoolOperationErrorType : System.IEquatable<Azure.ResourceManager.Sql.Models.SqlInstancePoolOperationErrorType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public SqlInstancePoolOperationErrorType(string value) { throw null; }
+        public static Azure.ResourceManager.Sql.Models.SqlInstancePoolOperationErrorType None { get { throw null; } }
+        public static Azure.ResourceManager.Sql.Models.SqlInstancePoolOperationErrorType User { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Sql.Models.SqlInstancePoolOperationErrorType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Sql.Models.SqlInstancePoolOperationErrorType left, Azure.ResourceManager.Sql.Models.SqlInstancePoolOperationErrorType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Sql.Models.SqlInstancePoolOperationErrorType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Sql.Models.SqlInstancePoolOperationErrorType left, Azure.ResourceManager.Sql.Models.SqlInstancePoolOperationErrorType right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class SqlLocationCapabilities : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Sql.Models.SqlLocationCapabilities>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sql.Models.SqlLocationCapabilities>
