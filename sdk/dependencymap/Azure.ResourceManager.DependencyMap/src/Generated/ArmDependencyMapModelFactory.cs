@@ -16,53 +16,6 @@ namespace Azure.ResourceManager.DependencyMap.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmDependencyMapModelFactory
     {
-        /// <summary> Initializes a new instance of <see cref="DependencyMap.DiscoverySourceResourceData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="properties">
-        /// The resource-specific properties for this resource.
-        /// Please note <see cref="Models.DiscoverySourceResourceProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Models.OffAzureDiscoverySourceResourceProperties"/>.
-        /// </param>
-        /// <returns> A new <see cref="DependencyMap.DiscoverySourceResourceData"/> instance for mocking. </returns>
-        public static DiscoverySourceResourceData DiscoverySourceResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, DiscoverySourceResourceProperties properties = null)
-        {
-            tags ??= new Dictionary<string, string>();
-
-            return new DiscoverySourceResourceData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags,
-                location,
-                properties,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.DiscoverySourceResourceProperties"/>. </summary>
-        /// <param name="provisioningState"> Provisioning state of Discovery Source resource. </param>
-        /// <param name="sourceType"> Source type of Discovery Source resource. </param>
-        /// <param name="sourceId"> Source ArmId of Discovery Source resource. </param>
-        /// <returns> A new <see cref="Models.DiscoverySourceResourceProperties"/> instance for mocking. </returns>
-        public static DiscoverySourceResourceProperties DiscoverySourceResourceProperties(ProvisioningState? provisioningState = null, string sourceType = null, string sourceId = null)
-        {
-            return new UnknownDiscoverySourceResourceProperties(provisioningState, sourceType == null ? default : new SourceType(sourceType), sourceId, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.OffAzureDiscoverySourceResourceProperties"/>. </summary>
-        /// <param name="provisioningState"> Provisioning state of Discovery Source resource. </param>
-        /// <param name="sourceId"> Source ArmId of Discovery Source resource. </param>
-        /// <returns> A new <see cref="Models.OffAzureDiscoverySourceResourceProperties"/> instance for mocking. </returns>
-        public static OffAzureDiscoverySourceResourceProperties OffAzureDiscoverySourceResourceProperties(ProvisioningState? provisioningState = null, string sourceId = null)
-        {
-            return new OffAzureDiscoverySourceResourceProperties(provisioningState, SourceType.OffAzure, sourceId, serializedAdditionalRawData: null);
-        }
-
         /// <summary> Initializes a new instance of <see cref="DependencyMap.MapsResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -123,6 +76,53 @@ namespace Azure.ResourceManager.DependencyMap.Models
         public static ExportDependenciesContent ExportDependenciesContent(string focusedMachineId = null, DependencyMapVisualizationFilter filters = null)
         {
             return new ExportDependenciesContent(focusedMachineId, filters, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DependencyMap.DiscoverySourceResourceData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="properties">
+        /// The resource-specific properties for this resource.
+        /// Please note <see cref="Models.DiscoverySourceResourceProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Models.OffAzureDiscoverySourceResourceProperties"/>.
+        /// </param>
+        /// <returns> A new <see cref="DependencyMap.DiscoverySourceResourceData"/> instance for mocking. </returns>
+        public static DiscoverySourceResourceData DiscoverySourceResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, DiscoverySourceResourceProperties properties = null)
+        {
+            tags ??= new Dictionary<string, string>();
+
+            return new DiscoverySourceResourceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                properties,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.DiscoverySourceResourceProperties"/>. </summary>
+        /// <param name="provisioningState"> Provisioning state of Discovery Source resource. </param>
+        /// <param name="sourceType"> Source type of Discovery Source resource. </param>
+        /// <param name="sourceId"> Source ArmId of Discovery Source resource. </param>
+        /// <returns> A new <see cref="Models.DiscoverySourceResourceProperties"/> instance for mocking. </returns>
+        public static DiscoverySourceResourceProperties DiscoverySourceResourceProperties(ProvisioningState? provisioningState = null, string sourceType = null, string sourceId = null)
+        {
+            return new UnknownDiscoverySourceResourceProperties(provisioningState, sourceType == null ? default : new SourceType(sourceType), sourceId, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.OffAzureDiscoverySourceResourceProperties"/>. </summary>
+        /// <param name="provisioningState"> Provisioning state of Discovery Source resource. </param>
+        /// <param name="sourceId"> Source ArmId of Discovery Source resource. </param>
+        /// <returns> A new <see cref="Models.OffAzureDiscoverySourceResourceProperties"/> instance for mocking. </returns>
+        public static OffAzureDiscoverySourceResourceProperties OffAzureDiscoverySourceResourceProperties(ProvisioningState? provisioningState = null, string sourceId = null)
+        {
+            return new OffAzureDiscoverySourceResourceProperties(provisioningState, SourceType.OffAzure, sourceId, serializedAdditionalRawData: null);
         }
     }
 }

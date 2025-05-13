@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.DependencyMap
 
         DiscoverySourceResource IOperationSource<DiscoverySourceResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DiscoverySourceResourceData>(response.Content);
+            var data = ModelReaderWriter.Read<DiscoverySourceResourceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDependencyMapContext.Default);
             return new DiscoverySourceResource(_client, data);
         }
 
         async ValueTask<DiscoverySourceResource> IOperationSource<DiscoverySourceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DiscoverySourceResourceData>(response.Content);
+            var data = ModelReaderWriter.Read<DiscoverySourceResourceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDependencyMapContext.Default);
             return await Task.FromResult(new DiscoverySourceResource(_client, data)).ConfigureAwait(false);
         }
     }

@@ -1,5 +1,11 @@
 namespace Azure.ResourceManager.DependencyMap
 {
+    public partial class AzureResourceManagerDependencyMapContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureResourceManagerDependencyMapContext() { }
+        public static Azure.ResourceManager.DependencyMap.AzureResourceManagerDependencyMapContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public static partial class DependencyMapExtensions
     {
         public static Azure.ResourceManager.DependencyMap.DiscoverySourceResource GetDiscoverySourceResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }

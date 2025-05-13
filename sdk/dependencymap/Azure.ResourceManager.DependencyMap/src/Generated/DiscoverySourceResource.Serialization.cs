@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.DependencyMap
 
         DiscoverySourceResourceData IJsonModel<DiscoverySourceResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DiscoverySourceResourceData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<DiscoverySourceResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<DiscoverySourceResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DiscoverySourceResourceData>(Data, options, AzureResourceManagerDependencyMapContext.Default);
 
-        DiscoverySourceResourceData IPersistableModel<DiscoverySourceResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DiscoverySourceResourceData>(data, options);
+        DiscoverySourceResourceData IPersistableModel<DiscoverySourceResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DiscoverySourceResourceData>(data, options, AzureResourceManagerDependencyMapContext.Default);
 
         string IPersistableModel<DiscoverySourceResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DiscoverySourceResourceData>)Data).GetFormatFromOptions(options);
     }

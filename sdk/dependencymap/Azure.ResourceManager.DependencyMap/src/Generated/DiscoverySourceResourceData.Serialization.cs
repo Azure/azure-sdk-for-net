@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.DependencyMap
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDependencyMapContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(DiscoverySourceResourceData)} does not support writing '{options.Format}' format.");
             }

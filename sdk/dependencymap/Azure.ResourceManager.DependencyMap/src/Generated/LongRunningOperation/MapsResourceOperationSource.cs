@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.DependencyMap
 
         MapsResource IOperationSource<MapsResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<MapsResourceData>(response.Content);
+            var data = ModelReaderWriter.Read<MapsResourceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDependencyMapContext.Default);
             return new MapsResource(_client, data);
         }
 
         async ValueTask<MapsResource> IOperationSource<MapsResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<MapsResourceData>(response.Content);
+            var data = ModelReaderWriter.Read<MapsResourceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDependencyMapContext.Default);
             return await Task.FromResult(new MapsResource(_client, data)).ConfigureAwait(false);
         }
     }

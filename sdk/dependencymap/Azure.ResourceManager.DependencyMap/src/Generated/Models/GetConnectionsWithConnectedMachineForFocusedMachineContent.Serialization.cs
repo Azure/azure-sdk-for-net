@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.DependencyMap.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDependencyMapContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(GetConnectionsWithConnectedMachineForFocusedMachineContent)} does not support writing '{options.Format}' format.");
             }
