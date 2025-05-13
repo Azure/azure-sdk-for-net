@@ -22,7 +22,7 @@ namespace Azure.Storage.Queues.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public int ApproximateMessagesCount
         {
-            get => checked((int)ApproximateMessagesCountLong);
+            get => (int)ApproximateMessagesCountLong;
             internal set => ApproximateMessagesCountLong = value;
         }
 
