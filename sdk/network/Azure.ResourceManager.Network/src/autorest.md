@@ -24,11 +24,9 @@ sample-gen:
     - VirtualMachineScaleSetVMs_ListPublicIPAddresses
     - VirtualMachineScaleSetVMs_ListNetworkInterfaces
     - VirtualMachineScaleSets_GetNetworkInterface
-    - NetworkSecurityPerimeterOperationStatus_Get
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
-  lenient-model-deduplication: true
 use-model-reader-writer: true
 model-namespace: true
 public-clients: false
@@ -356,7 +354,7 @@ directive:
   - remove-operation: 'VirtualNetworks_ListDdosProtectionStatus'
   - remove-operation: 'NetworkSecurityPerimeterAssociations_Reconcile'
   - remove-operation: 'NetworkSecurityPerimeterAccessRules_Reconcile'
-  - remove-operation: 'NetworkSecurityPerimeterOperationStatus_Get'
+  - remove-operation: 'NetworkSecurityPerimeterOperationStatuses_Get'
   # This part is for generate partial class in network
   # these operations are renamed because their api-versions are different from others in the same operation group
   # - rename-operation:
