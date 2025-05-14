@@ -14,11 +14,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    public partial class DeploymentParameter : IUtf8JsonSerializable, IJsonModel<DeploymentParameter>
+    public partial class DeploymentExtensionConfigItem : IUtf8JsonSerializable, IJsonModel<DeploymentExtensionConfigItem>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DeploymentParameter>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DeploymentExtensionConfigItem>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<DeploymentParameter>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<DeploymentExtensionConfigItem>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -29,12 +29,17 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DeploymentParameter>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DeploymentExtensionConfigItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DeploymentParameter)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(DeploymentExtensionConfigItem)} does not support writing '{format}' format.");
             }
 
+            if (options.Format != "W" && Optional.IsDefined(ExtensionConfigPropertyType))
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ExtensionConfigPropertyType.Value.ToString());
+            }
             if (Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
@@ -47,15 +52,10 @@ namespace Azure.ResourceManager.Resources.Models
                 }
 #endif
             }
-            if (Optional.IsDefined(DeploymentParameterType))
+            if (Optional.IsDefined(KeyVaultReference))
             {
-                writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(DeploymentParameterType);
-            }
-            if (Optional.IsDefined(Reference))
-            {
-                writer.WritePropertyName("reference"u8);
-                writer.WriteObjectValue(Reference, options);
+                writer.WritePropertyName("keyVaultReference"u8);
+                writer.WriteObjectValue(KeyVaultReference, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -74,19 +74,19 @@ namespace Azure.ResourceManager.Resources.Models
             }
         }
 
-        DeploymentParameter IJsonModel<DeploymentParameter>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        DeploymentExtensionConfigItem IJsonModel<DeploymentExtensionConfigItem>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DeploymentParameter>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DeploymentExtensionConfigItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DeploymentParameter)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(DeploymentExtensionConfigItem)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDeploymentParameter(document.RootElement, options);
+            return DeserializeDeploymentExtensionConfigItem(document.RootElement, options);
         }
 
-        internal static DeploymentParameter DeserializeDeploymentParameter(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static DeploymentExtensionConfigItem DeserializeDeploymentExtensionConfigItem(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -94,13 +94,22 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
+            ExtensionConfigPropertyType? type = default;
             BinaryData value = default;
-            string type = default;
-            KeyVaultParameterReferenceAutoGenerated reference = default;
+            KeyVaultParameterReference keyVaultReference = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("type"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    type = new ExtensionConfigPropertyType(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -110,18 +119,13 @@ namespace Azure.ResourceManager.Resources.Models
                     value = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("type"u8))
-                {
-                    type = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("reference"u8))
+                if (property.NameEquals("keyVaultReference"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    reference = KeyVaultParameterReferenceAutoGenerated.DeserializeKeyVaultParameterReferenceAutoGenerated(property.Value, options);
+                    keyVaultReference = KeyVaultParameterReference.DeserializeKeyVaultParameterReference(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -130,7 +134,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new DeploymentParameter(value, type, reference, serializedAdditionalRawData);
+            return new DeploymentExtensionConfigItem(type, value, keyVaultReference, serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -143,6 +147,21 @@ namespace Azure.ResourceManager.Resources.Models
             string propertyOverride = null;
 
             builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ExtensionConfigPropertyType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  type: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ExtensionConfigPropertyType))
+                {
+                    builder.Append("  type: ");
+                    builder.AppendLine($"'{ExtensionConfigPropertyType.Value.ToString()}'");
+                }
+            }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Value), out propertyOverride);
             if (hasPropertyOverride)
@@ -159,41 +178,18 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DeploymentParameterType), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(KeyVaultReference), out propertyOverride);
             if (hasPropertyOverride)
             {
-                builder.Append("  type: ");
+                builder.Append("  keyVaultReference: ");
                 builder.AppendLine(propertyOverride);
             }
             else
             {
-                if (Optional.IsDefined(DeploymentParameterType))
+                if (Optional.IsDefined(KeyVaultReference))
                 {
-                    builder.Append("  type: ");
-                    if (DeploymentParameterType.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{DeploymentParameterType}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{DeploymentParameterType}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Reference), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  reference: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Reference))
-                {
-                    builder.Append("  reference: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, Reference, options, 2, false, "  reference: ");
+                    builder.Append("  keyVaultReference: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, KeyVaultReference, options, 2, false, "  keyVaultReference: ");
                 }
             }
 
@@ -201,9 +197,9 @@ namespace Azure.ResourceManager.Resources.Models
             return BinaryData.FromString(builder.ToString());
         }
 
-        BinaryData IPersistableModel<DeploymentParameter>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<DeploymentExtensionConfigItem>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DeploymentParameter>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DeploymentExtensionConfigItem>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
@@ -212,26 +208,26 @@ namespace Azure.ResourceManager.Resources.Models
                 case "bicep":
                     return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(DeploymentParameter)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DeploymentExtensionConfigItem)} does not support writing '{options.Format}' format.");
             }
         }
 
-        DeploymentParameter IPersistableModel<DeploymentParameter>.Create(BinaryData data, ModelReaderWriterOptions options)
+        DeploymentExtensionConfigItem IPersistableModel<DeploymentExtensionConfigItem>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DeploymentParameter>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DeploymentExtensionConfigItem>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeDeploymentParameter(document.RootElement, options);
+                        return DeserializeDeploymentExtensionConfigItem(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DeploymentParameter)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DeploymentExtensionConfigItem)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<DeploymentParameter>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<DeploymentExtensionConfigItem>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

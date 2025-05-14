@@ -66,7 +66,10 @@ namespace Azure.ResourceManager.Resources.Models
             BinaryData template = default;
             ArmDeploymentTemplateLink templateLink = default;
             BinaryData parameters = default;
+            IDictionary<string, DeploymentExternalInput> externalInputs = default;
+            IDictionary<string, DeploymentExternalInputDefinition> externalInputDefinitions = default;
             ArmDeploymentParametersLink parametersLink = default;
+            IDictionary<string, IDictionary<string, DeploymentExtensionConfigItem>> extensionConfigs = default;
             ArmDeploymentMode mode = default;
             DebugSetting debugSetting = default;
             ErrorDeployment onErrorDeployment = default;
@@ -112,6 +115,34 @@ namespace Azure.ResourceManager.Resources.Models
                     parameters = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
+                if (property.NameEquals("externalInputs"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, DeploymentExternalInput> dictionary = new Dictionary<string, DeploymentExternalInput>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, DeploymentExternalInput.DeserializeDeploymentExternalInput(property0.Value, options));
+                    }
+                    externalInputs = dictionary;
+                    continue;
+                }
+                if (property.NameEquals("externalInputDefinitions"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, DeploymentExternalInputDefinition> dictionary = new Dictionary<string, DeploymentExternalInputDefinition>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, DeploymentExternalInputDefinition.DeserializeDeploymentExternalInputDefinition(property0.Value, options));
+                    }
+                    externalInputDefinitions = dictionary;
+                    continue;
+                }
                 if (property.NameEquals("parametersLink"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -119,6 +150,32 @@ namespace Azure.ResourceManager.Resources.Models
                         continue;
                     }
                     parametersLink = ArmDeploymentParametersLink.DeserializeArmDeploymentParametersLink(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("extensionConfigs"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, IDictionary<string, DeploymentExtensionConfigItem>> dictionary = new Dictionary<string, IDictionary<string, DeploymentExtensionConfigItem>>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(property0.Name, null);
+                        }
+                        else
+                        {
+                            Dictionary<string, DeploymentExtensionConfigItem> dictionary0 = new Dictionary<string, DeploymentExtensionConfigItem>();
+                            foreach (var property1 in property0.Value.EnumerateObject())
+                            {
+                                dictionary0.Add(property1.Name, DeploymentExtensionConfigItem.DeserializeDeploymentExtensionConfigItem(property1.Value, options));
+                            }
+                            dictionary.Add(property0.Name, dictionary0);
+                        }
+                    }
+                    extensionConfigs = dictionary;
                     continue;
                 }
                 if (property.NameEquals("mode"u8))
@@ -172,7 +229,10 @@ namespace Azure.ResourceManager.Resources.Models
                 template,
                 templateLink,
                 parameters,
+                externalInputs ?? new ChangeTrackingDictionary<string, DeploymentExternalInput>(),
+                externalInputDefinitions ?? new ChangeTrackingDictionary<string, DeploymentExternalInputDefinition>(),
                 parametersLink,
+                extensionConfigs ?? new ChangeTrackingDictionary<string, IDictionary<string, DeploymentExtensionConfigItem>>(),
                 mode,
                 debugSetting,
                 onErrorDeployment,
