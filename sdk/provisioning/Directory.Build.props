@@ -17,7 +17,6 @@
   <ItemGroup Condition="'$(AssemblyName)' != 'Generator'">
     <Compile Include="$(AzureCoreSharedSources)ExperimentalAttribute.cs" LinkBase="Shared\Core" />
   </ItemGroup>
-  
   <ItemGroup>
     <!--
     Azure.Core isn't being found on builds with
