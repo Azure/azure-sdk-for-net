@@ -67,6 +67,12 @@ namespace Azure.Health.Insights.ClinicalMatching
         string System.ClientModel.Primitives.IPersistableModel<Azure.Health.Insights.ClinicalMatching.AreaProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Health.Insights.ClinicalMatching.AreaProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class AzureHealthInsightsClinicalMatchingContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureHealthInsightsClinicalMatchingContext() { }
+        public static Azure.Health.Insights.ClinicalMatching.AzureHealthInsightsClinicalMatchingContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class ClinicalCodedElement : System.ClientModel.Primitives.IJsonModel<Azure.Health.Insights.ClinicalMatching.ClinicalCodedElement>, System.ClientModel.Primitives.IPersistableModel<Azure.Health.Insights.ClinicalMatching.ClinicalCodedElement>
     {
         public ClinicalCodedElement(string system, string code) { }

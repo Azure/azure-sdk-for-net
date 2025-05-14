@@ -15,6 +15,8 @@ namespace _Specs_.Azure.ClientGenerator.Core.Usage._ModelInOperation
 {
     public partial class InputModel : IJsonModel<InputModel>
     {
+        internal InputModel() => throw null;
+
         void IJsonModel<InputModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;

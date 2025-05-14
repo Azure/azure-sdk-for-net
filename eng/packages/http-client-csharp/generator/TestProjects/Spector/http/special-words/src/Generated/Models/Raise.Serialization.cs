@@ -15,6 +15,8 @@ namespace SpecialWords._Models
 {
     public partial class Raise : IJsonModel<Raise>
     {
+        internal Raise() => throw null;
+
         void IJsonModel<Raise>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;

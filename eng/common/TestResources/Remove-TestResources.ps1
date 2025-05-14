@@ -235,6 +235,7 @@ if ($ServiceDirectory) {
 
     # Make sure environment files from New-TestResources -OutFile are removed.
     Get-ChildItem -Path $root -Filter "$ResourceType-resources.json.env" -Recurse | Remove-Item -Force:$Force
+    Get-ChildItem -Path $root -Filter ".env" -Recurse -Force | Remove-Item -Force
 }
 
 $verifyDeleteScript = {

@@ -19,7 +19,7 @@ namespace Parameters.Path
 
         public PathClient(Uri endpoint, PathClientOptions options) => throw null;
 
-        public HttpPipeline Pipeline => throw null;
+        public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response Normal(string name, RequestContext context) => throw null;
 

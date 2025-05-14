@@ -24,13 +24,13 @@ namespace Azure.Generator.Management.Tests.Common
                         decorators: [new InputDecoratorInfo(KnownDecorators.ArmResourceInternal, null)]);
             var responseType = InputFactory.OperationResponse(statusCodes: [200], bodytype: responseModel);
             var testNameParameter = InputFactory.Parameter("testName", InputPrimitiveType.String, location: InputRequestLocation.Path);
-            var operation = InputFactory.Operation(name: "Get", responses: [responseType], parameters: [testNameParameter], path: "/providers/a/test/{testName}", decorators: [new InputDecoratorInfo(KnownDecorators.ArmResourceRead, null)]);
+            var operation = InputFactory.Operation(name: "get", responses: [responseType], parameters: [testNameParameter], path: "/providers/a/test/{testName}", decorators: [new InputDecoratorInfo(KnownDecorators.ArmResourceRead, null)]);
             var resourceMetadataArguments = new Dictionary<string, BinaryData>
             {
                 { KnownDecorators.ResourceModel, BinaryData.FromString($"\"{ResourceModelName}\"") },
                 { KnownDecorators.ResourceType, BinaryData.FromString("\"a/test\"") }
             };
-            var client = InputFactory.Client(TestClientName, methods: [InputFactory.BasicServiceMethod("Get", operation)], decorators: [new InputDecoratorInfo(KnownDecorators.ResourceMetadata, resourceMetadataArguments), new InputDecoratorInfo(KnownDecorators.ArmProviderNamespace, null)]);
+            var client = InputFactory.Client(TestClientName, methods: [InputFactory.BasicServiceMethod("Get", operation, parameters: [testNameParameter])], decorators: [new InputDecoratorInfo(KnownDecorators.ResourceMetadata, resourceMetadataArguments), new InputDecoratorInfo(KnownDecorators.ArmProviderNamespace, null)]);
             return (client, [responseModel]);
         }
     }

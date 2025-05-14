@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Network
 
         SubnetData IJsonModel<SubnetData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SubnetData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SubnetData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<SubnetData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SubnetData>(Data, options, AzureResourceManagerNetworkContext.Default);
 
-        SubnetData IPersistableModel<SubnetData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SubnetData>(data, options);
+        SubnetData IPersistableModel<SubnetData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SubnetData>(data, options, AzureResourceManagerNetworkContext.Default);
 
         string IPersistableModel<SubnetData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SubnetData>)Data).GetFormatFromOptions(options);
     }

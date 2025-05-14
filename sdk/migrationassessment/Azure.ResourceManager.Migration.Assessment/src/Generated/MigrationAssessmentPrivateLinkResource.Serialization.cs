@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Migration.Assessment
 
         MigrationAssessmentPrivateLinkResourceData IJsonModel<MigrationAssessmentPrivateLinkResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MigrationAssessmentPrivateLinkResourceData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<MigrationAssessmentPrivateLinkResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<MigrationAssessmentPrivateLinkResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<MigrationAssessmentPrivateLinkResourceData>(Data, options, AzureResourceManagerMigrationAssessmentContext.Default);
 
-        MigrationAssessmentPrivateLinkResourceData IPersistableModel<MigrationAssessmentPrivateLinkResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MigrationAssessmentPrivateLinkResourceData>(data, options);
+        MigrationAssessmentPrivateLinkResourceData IPersistableModel<MigrationAssessmentPrivateLinkResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MigrationAssessmentPrivateLinkResourceData>(data, options, AzureResourceManagerMigrationAssessmentContext.Default);
 
         string IPersistableModel<MigrationAssessmentPrivateLinkResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MigrationAssessmentPrivateLinkResourceData>)Data).GetFormatFromOptions(options);
     }

@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.DesktopVirtualization
 
         HostPoolData IJsonModel<HostPoolData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<HostPoolData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<HostPoolData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<HostPoolData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<HostPoolData>(Data, options, AzureResourceManagerDesktopVirtualizationContext.Default);
 
-        HostPoolData IPersistableModel<HostPoolData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<HostPoolData>(data, options);
+        HostPoolData IPersistableModel<HostPoolData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<HostPoolData>(data, options, AzureResourceManagerDesktopVirtualizationContext.Default);
 
         string IPersistableModel<HostPoolData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<HostPoolData>)Data).GetFormatFromOptions(options);
     }

@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.CosmosDB
 
         GraphResourceGetResultData IJsonModel<GraphResourceGetResultData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<GraphResourceGetResultData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<GraphResourceGetResultData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<GraphResourceGetResultData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<GraphResourceGetResultData>(Data, options, AzureResourceManagerCosmosDBContext.Default);
 
-        GraphResourceGetResultData IPersistableModel<GraphResourceGetResultData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<GraphResourceGetResultData>(data, options);
+        GraphResourceGetResultData IPersistableModel<GraphResourceGetResultData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<GraphResourceGetResultData>(data, options, AzureResourceManagerCosmosDBContext.Default);
 
         string IPersistableModel<GraphResourceGetResultData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<GraphResourceGetResultData>)Data).GetFormatFromOptions(options);
     }
