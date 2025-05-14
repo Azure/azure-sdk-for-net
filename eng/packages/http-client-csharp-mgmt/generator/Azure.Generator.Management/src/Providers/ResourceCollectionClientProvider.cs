@@ -69,7 +69,7 @@ namespace Azure.Generator.Management.Providers
 
         protected override ValueExpression ResourceTypeExpression => Static(_resource.Type).Property("ResourceType");
 
-        protected override CSharpType ResourceClientCharpType => _resource.Type;
+        protected override CSharpType ResourceClientCSharpType => _resource.Type;
 
         protected override MethodProvider[] BuildMethods() => [BuildValidateResourceIdMethod(), .. BuildCreateOrUpdateMethods(), .. BuildGetMethods(), .. BuildGetAllMethods(), .. BuildExistsMethods(), .. BuildGetIfExistsMethods(), .. BuildEnumeratorMethods()];
 
@@ -209,7 +209,7 @@ namespace Azure.Generator.Management.Providers
                 isAsync ? "GetIfExistsAsync" : "GetIfExists",
                 $"Tries to get details for this resource from the service.",
                 convenienceMethod.Signature.Modifiers,
-                isAsync ? new CSharpType(typeof(Task<>), new CSharpType(typeof(NullableResponse<>), ResourceClientCharpType)) : new CSharpType(typeof(NullableResponse<>), ResourceClientCharpType),
+                isAsync ? new CSharpType(typeof(Task<>), new CSharpType(typeof(NullableResponse<>), ResourceClientCSharpType)) : new CSharpType(typeof(NullableResponse<>), ResourceClientCSharpType),
                 convenienceMethod.Signature.ReturnDescription,
                 GetOperationMethodParameters(convenienceMethod, false),
                 convenienceMethod.Signature.Attributes,
@@ -255,7 +255,7 @@ namespace Azure.Generator.Management.Providers
                             Return(New.Instance(new CSharpType(typeof(NoValueResponse<>), _resource.Type), responseVariable.Invoke("GetRawResponse")))
                         }
             ];
-            var returnValueExpression =  New.Instance(ResourceClientCharpType, This.Property("Client"), responseVariable.Property("Value"));
+            var returnValueExpression =  New.Instance(ResourceClientCSharpType, This.Property("Client"), responseVariable.Property("Value"));
             statements.Add(Return(Static(typeof(Response)).Invoke(nameof(Response.FromValue), returnValueExpression, responseVariable.Invoke("GetRawResponse"))));
 
             return statements;
