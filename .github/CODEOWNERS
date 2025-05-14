@@ -754,10 +754,10 @@
 # ServiceOwners:                                                   @tjsomasundaram
 
 # PRLabel: %Network - DNS Private Resolver
-/sdk/dnsresolver/                                                  @jamesvoong @jotrivet
+/sdk/dnsresolver/Azure.ResourceManager.*/                          @jamesvoongms @jotrivet
 
-# ServiceLabel: %Network - DNS Private Resolver
-# ServiceOwners:                                                   @jamesvoong @jotrivet
+# ServiceLabel: %Network - DNS Private Resolver %Mgmt
+# ServiceOwners:                                                   @jamesvoongms @jotrivet
 
 # PRLabel: %OpenAI
 /sdk/openai/                                                       @jpalvarezl @trrwilson @joseharriaga @m-nash @ralph-msft
