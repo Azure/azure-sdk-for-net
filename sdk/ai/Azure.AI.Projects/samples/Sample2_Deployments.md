@@ -12,54 +12,52 @@ This sample demonstrates how to use the synchronous and asynchronous `.deploymen
 
 ## Synchronous Sample
 
-```csharp Snippet:DeploymentExampleSync
-var endpoint = Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
-var deploymentName = Environment.GetEnvironmentVariable("DEPLOYMENT_NAME");
-var modelPublisher = Environment.GetEnvironmentVariable("MODEL_PUBLISHER");
-
-var credential = new AzureKeyCredential(Environment.GetEnvironmentVariable("PROJECT_API_KEY"));
-var projectClient = new AIProjectClient(endpoint, credential);
+```C# Snippet:DeploymentExampleSync
+var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
+var deploymentName = System.Environment.GetEnvironmentVariable("DEPLOYMENT_NAME");
+var modelPublisher = System.Environment.GetEnvironmentVariable("MODEL_PUBLISHER");
+AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
+Deployments deployments = projectClient.GetDeploymentsClient();
 
 Console.WriteLine("List all deployments:");
-foreach (var deployment in projectClient.Deployments.List())
+foreach (var deployment in deployments.GetDeployments())
 {
     Console.WriteLine(deployment);
 }
 
 Console.WriteLine($"List all deployments by the model publisher `{modelPublisher}`:");
-foreach (var deployment in projectClient.Deployments.List(modelPublisher: modelPublisher))
+foreach (var deployment in deployments.GetDeployments(modelPublisher: modelPublisher))
 {
     Console.WriteLine(deployment);
 }
 
 Console.WriteLine($"Get a single deployment named `{deploymentName}`:");
-var deploymentDetails = projectClient.Deployments.Get(deploymentName);
+var deploymentDetails = deployments.GetDeployment(deploymentName);
 Console.WriteLine(deploymentDetails);
 ```
 
 ## Asynchronous Sample
 
-```csharp Snippet:DeploymentExampleAsync
-var endpoint = Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
-var deploymentName = Environment.GetEnvironmentVariable("DEPLOYMENT_NAME");
-var modelPublisher = Environment.GetEnvironmentVariable("MODEL_PUBLISHER");
-
-var credential = new AzureKeyCredential(Environment.GetEnvironmentVariable("PROJECT_API_KEY"));
-var projectClient = new AIProjectClient(endpoint, credential);
+```C# Snippet:DeploymentExampleAsync
+var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
+var deploymentName = System.Environment.GetEnvironmentVariable("DEPLOYMENT_NAME");
+var modelPublisher = System.Environment.GetEnvironmentVariable("MODEL_PUBLISHER");
+AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
+Deployments deployments = projectClient.GetDeploymentsClient();
 
 Console.WriteLine("List all deployments:");
-await foreach (var deployment in projectClient.Deployments.ListAsync())
+await foreach (var deployment in deployments.GetDeploymentsAsync())
 {
     Console.WriteLine(deployment);
 }
 
 Console.WriteLine($"List all deployments by the model publisher `{modelPublisher}`:");
-await foreach (var deployment in projectClient.Deployments.ListAsync(modelPublisher: modelPublisher))
+await foreach (var deployment in deployments.GetDeploymentsAsync(modelPublisher: modelPublisher))
 {
     Console.WriteLine(deployment);
 }
 
 Console.WriteLine($"Get a single deployment named `{deploymentName}`:");
-var deploymentDetails = await projectClient.Deployments.GetAsync(deploymentName);
+var deploymentDetails = deployments.GetDeploymentAsync(deploymentName);
 Console.WriteLine(deploymentDetails);
 ```
