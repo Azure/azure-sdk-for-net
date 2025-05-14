@@ -18,6 +18,7 @@ description: Samples for the Azure.AI.Projects client library.
 | [Sample3_Connections](https://github.com/Azure/azure-sdk-for-net/blob/feature/azure-ai-projects-1dp/sdk/ai/Azure.AI.Projects/samples/Sample3_Connections.md) | Sample for connections functions. |
 | [Sample4_Indexes](https://github.com/Azure/azure-sdk-for-net/blob/feature/azure-ai-projects-1dp/sdk/ai/Azure.AI.Projects/samples/Sample4_Indexes.md) | Sample for indexes functions. |
 | [Sample5_Evaluations](https://github.com/Azure/azure-sdk-for-net/blob/feature/azure-ai-projects-1dp/sdk/ai/Azure.AI.Projects/samples/Sample5_Evaluations.md) | Sample for evaluations functions. |
+| [Sample8_Telemetry](https://github.com/Azure/azure-sdk-for-net/blob/feature/azure-ai-projects-1dp/sdk/ai/Azure.AI.Projects/samples/Sample8_Telemetry.md) | Sample for telemetry functions. |
 
 # Azure.AI.Projects Samples for Agents and AzureOpenAI Extensions
 

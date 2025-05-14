@@ -62,11 +62,13 @@ namespace Azure.AI.Projects
         /// <summary>
         /// Get the default connection.
         /// </summary>
+        /// <param name="connectionType"> List connections of this specific type. </param>
+        /// <param name="includeCredentials">Whether to include credentials in the response. Default is false.</param>
         /// <returns>A <see cref="Connection"/> object.</returns>
         /// <exception cref="RequestFailedException">Thrown when the request fails.</exception>
-        public Connection GetDefault(bool includeCredentials = false)
+        public Connection GetDefault(ConnectionType? connectionType = null, bool includeCredentials = false)
         {
-            foreach (var connection in GetConnections())
+            foreach (var connection in GetConnections(connectionType))
             {
                 // Use the instance method instead of incorrectly calling it as static
                 if (includeCredentials)
@@ -82,9 +84,11 @@ namespace Azure.AI.Projects
         /// <summary>
         /// Get the default connection.
         /// </summary>
+        /// <param name="connectionType"> List connections of this specific type. </param>
+        /// <param name="includeCredentials">Whether to include credentials in the response. Default is false.</param>
         /// <returns>A <see cref="Connection"/> object.</returns>
         /// <exception cref="RequestFailedException">Thrown when the request fails.</exception>
-        public async Task<Connection> GetDefaultAsync(bool includeCredentials = false)
+        public async Task<Connection> GetDefaultAsync(ConnectionType? connectionType = null, bool includeCredentials = false)
         {
             await foreach (var connection in GetConnectionsAsync().ConfigureAwait(false))
             {
