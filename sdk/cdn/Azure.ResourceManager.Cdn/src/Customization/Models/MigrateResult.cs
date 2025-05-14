@@ -8,7 +8,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    public partial class CanMigrateResult
+    public partial class MigrateResult
     {
         /// <summary>
         /// Initializes a Id

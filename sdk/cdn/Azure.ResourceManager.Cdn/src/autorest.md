@@ -353,6 +353,8 @@ rename-mapping:
   Status: ValidationStatus
   DeliveryRuleActionParameters: DeliveryRuleActionProperties
   DeliveryRuleConditionParameters: DeliveryRuleConditionProperties
+  CanMigrateResult.id: ResourceId
+  MigrateResult.id: ResourceId
 
 directive:
   - from: swagger-document

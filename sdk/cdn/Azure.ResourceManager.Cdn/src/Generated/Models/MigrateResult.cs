@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="MigrateResult"/>. </summary>
-        /// <param name="id">
+        /// <param name="resourceId">
         /// Resource ID.
         /// Serialized Name: MigrateResult.id
         /// </param>
@@ -69,9 +69,9 @@ namespace Azure.ResourceManager.Cdn.Models
         /// Serialized Name: MigrateResult.properties.migratedProfileResourceId
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MigrateResult(ResourceIdentifier id, string migrateResultType, WritableSubResource migratedProfileResourceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MigrateResult(ResourceIdentifier resourceId, string migrateResultType, WritableSubResource migratedProfileResourceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Id = id;
+            ResourceId = resourceId;
             MigrateResultType = migrateResultType;
             MigratedProfileResourceId = migratedProfileResourceId;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// Resource ID.
         /// Serialized Name: MigrateResult.id
         /// </summary>
-        public ResourceIdentifier Id { get; }
+        public ResourceIdentifier ResourceId { get; }
         /// <summary>
         /// Resource type.
         /// Serialized Name: MigrateResult.type

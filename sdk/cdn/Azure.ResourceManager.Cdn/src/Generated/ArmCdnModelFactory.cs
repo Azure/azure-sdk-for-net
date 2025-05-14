@@ -1259,7 +1259,7 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.CanMigrateResult"/>. </summary>
-        /// <param name="id">
+        /// <param name="resourceId">
         /// Resource ID.
         /// Serialized Name: CanMigrateResult.id
         /// </param>
@@ -1277,12 +1277,12 @@ namespace Azure.ResourceManager.Cdn.Models
         /// </param>
         /// <param name="errors"> Serialized Name: CanMigrateResult.properties.errors. </param>
         /// <returns> A new <see cref="Models.CanMigrateResult"/> instance for mocking. </returns>
-        public static CanMigrateResult CanMigrateResult(ResourceIdentifier id = null, string canMigrateResultType = null, bool? canMigrate = null, CanMigrateDefaultSku? defaultSku = null, IEnumerable<MigrationErrorType> errors = null)
+        public static CanMigrateResult CanMigrateResult(ResourceIdentifier resourceId = null, string canMigrateResultType = null, bool? canMigrate = null, CanMigrateDefaultSku? defaultSku = null, IEnumerable<MigrationErrorType> errors = null)
         {
             errors ??= new List<MigrationErrorType>();
 
             return new CanMigrateResult(
-                id,
+                resourceId,
                 canMigrateResultType,
                 canMigrate,
                 defaultSku,
@@ -1339,7 +1339,7 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MigrateResult"/>. </summary>
-        /// <param name="id">
+        /// <param name="resourceId">
         /// Resource ID.
         /// Serialized Name: MigrateResult.id
         /// </param>
@@ -1352,9 +1352,9 @@ namespace Azure.ResourceManager.Cdn.Models
         /// Serialized Name: MigrateResult.properties.migratedProfileResourceId
         /// </param>
         /// <returns> A new <see cref="Models.MigrateResult"/> instance for mocking. </returns>
-        public static MigrateResult MigrateResult(ResourceIdentifier id = null, string migrateResultType = null, ResourceIdentifier migratedProfileResourceIdId = null)
+        public static MigrateResult MigrateResult(ResourceIdentifier resourceId = null, string migrateResultType = null, ResourceIdentifier migratedProfileResourceIdId = null)
         {
-            return new MigrateResult(id, migrateResultType, migratedProfileResourceIdId != null ? ResourceManagerModelFactory.WritableSubResource(migratedProfileResourceIdId) : null, serializedAdditionalRawData: null);
+            return new MigrateResult(resourceId, migrateResultType, migratedProfileResourceIdId != null ? ResourceManagerModelFactory.WritableSubResource(migratedProfileResourceIdId) : null, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SsoUri"/>. </summary>

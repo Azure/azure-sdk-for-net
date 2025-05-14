@@ -35,10 +35,10 @@ namespace Azure.ResourceManager.Cdn.Models
                 throw new FormatException($"The model {nameof(MigrateResult)} does not support writing '{format}' format.");
             }
 
-            if (options.Format != "W" && Optional.IsDefined(Id))
+            if (options.Format != "W" && Optional.IsDefined(ResourceId))
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                writer.WriteStringValue(ResourceId);
             }
             if (options.Format != "W" && Optional.IsDefined(MigrateResultType))
             {

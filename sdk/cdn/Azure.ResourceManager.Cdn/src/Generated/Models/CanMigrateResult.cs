@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="CanMigrateResult"/>. </summary>
-        /// <param name="id">
+        /// <param name="resourceId">
         /// Resource ID.
         /// Serialized Name: CanMigrateResult.id
         /// </param>
@@ -74,9 +74,9 @@ namespace Azure.ResourceManager.Cdn.Models
         /// </param>
         /// <param name="errors"> Serialized Name: CanMigrateResult.properties.errors. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CanMigrateResult(ResourceIdentifier id, string canMigrateResultType, bool? canMigrate, CanMigrateDefaultSku? defaultSku, IReadOnlyList<MigrationErrorType> errors, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CanMigrateResult(ResourceIdentifier resourceId, string canMigrateResultType, bool? canMigrate, CanMigrateDefaultSku? defaultSku, IReadOnlyList<MigrationErrorType> errors, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Id = id;
+            ResourceId = resourceId;
             CanMigrateResultType = canMigrateResultType;
             CanMigrate = canMigrate;
             DefaultSku = defaultSku;
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// Resource ID.
         /// Serialized Name: CanMigrateResult.id
         /// </summary>
-        public ResourceIdentifier Id { get; }
+        public ResourceIdentifier ResourceId { get; }
         /// <summary>
         /// Resource type.
         /// Serialized Name: CanMigrateResult.type
