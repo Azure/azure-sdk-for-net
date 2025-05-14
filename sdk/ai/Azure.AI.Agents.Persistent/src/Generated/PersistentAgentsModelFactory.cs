@@ -217,7 +217,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="toolCalls">
         /// A list of tool call details for this run step.
         /// Please note <see cref="Persistent.RunStepToolCall"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Persistent.RunStepAzureAISearchToolCall"/>, <see cref="Persistent.RunStepBingCustomSearchToolCall"/>, <see cref="Persistent.RunStepBingGroundingToolCall"/>, <see cref="Persistent.RunStepCodeInterpreterToolCall"/>, <see cref="Persistent.RunStepMicrosoftFabricToolCall"/>, <see cref="Persistent.RunStepFileSearchToolCall"/>, <see cref="Persistent.RunStepFunctionToolCall"/>, <see cref="Persistent.RunStepOpenAPIToolCall"/> and <see cref="Persistent.RunStepSharepointToolCall"/>.
+        /// The available derived classes include <see cref="Persistent.RunStepAzureAISearchToolCall"/>, <see cref="Persistent.RunStepBingGroundingToolCall"/>, <see cref="Persistent.RunStepCodeInterpreterToolCall"/>, <see cref="Persistent.RunStepFileSearchToolCall"/>, <see cref="Persistent.RunStepFunctionToolCall"/> and <see cref="Persistent.RunStepOpenAPIToolCall"/>.
         /// </param>
         /// <returns> A new <see cref="Persistent.RunStepToolCallDetails"/> instance for mocking. </returns>
         public static RunStepToolCallDetails RunStepToolCallDetails(IEnumerable<RunStepToolCall> toolCalls = null)
@@ -322,39 +322,6 @@ namespace Azure.AI.Agents.Persistent
             azureAISearch ??= new Dictionary<string, string>();
 
             return new RunStepAzureAISearchToolCall("azure_ai_search", id, serializedAdditionalRawData: null, azureAISearch);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Persistent.RunStepSharepointToolCall"/>. </summary>
-        /// <param name="id"> The ID of the tool call. This ID must be referenced when you submit tool outputs. </param>
-        /// <param name="sharePoint"> Reserved for future use. </param>
-        /// <returns> A new <see cref="Persistent.RunStepSharepointToolCall"/> instance for mocking. </returns>
-        public static RunStepSharepointToolCall RunStepSharepointToolCall(string id = null, IReadOnlyDictionary<string, string> sharePoint = null)
-        {
-            sharePoint ??= new Dictionary<string, string>();
-
-            return new RunStepSharepointToolCall("sharepoint_grounding", id, serializedAdditionalRawData: null, sharePoint);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Persistent.RunStepMicrosoftFabricToolCall"/>. </summary>
-        /// <param name="id"> The ID of the tool call. This ID must be referenced when you submit tool outputs. </param>
-        /// <param name="microsoftFabric"> Reserved for future use. </param>
-        /// <returns> A new <see cref="Persistent.RunStepMicrosoftFabricToolCall"/> instance for mocking. </returns>
-        public static RunStepMicrosoftFabricToolCall RunStepMicrosoftFabricToolCall(string id = null, IReadOnlyDictionary<string, string> microsoftFabric = null)
-        {
-            microsoftFabric ??= new Dictionary<string, string>();
-
-            return new RunStepMicrosoftFabricToolCall("fabric_dataagent", id, serializedAdditionalRawData: null, microsoftFabric);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Persistent.RunStepBingCustomSearchToolCall"/>. </summary>
-        /// <param name="id"> The ID of the tool call. This ID must be referenced when you submit tool outputs. </param>
-        /// <param name="bingCustomSearch"> Reserved for future use. </param>
-        /// <returns> A new <see cref="Persistent.RunStepBingCustomSearchToolCall"/> instance for mocking. </returns>
-        public static RunStepBingCustomSearchToolCall RunStepBingCustomSearchToolCall(string id = null, IReadOnlyDictionary<string, string> bingCustomSearch = null)
-        {
-            bingCustomSearch ??= new Dictionary<string, string>();
-
-            return new RunStepBingCustomSearchToolCall("bing_custom_search", id, serializedAdditionalRawData: null, bingCustomSearch);
         }
 
         /// <summary> Initializes a new instance of <see cref="Persistent.RunStepOpenAPIToolCall"/>. </summary>

@@ -5,9 +5,9 @@ using System.Collections.Generic;
 
 namespace Azure.AI.Agents.Persistent
 {
-    public partial class AzureAISearchResource
+    public partial class AzureAISearchToolResource
     {
-        public AzureAISearchResource(
+        public AzureAISearchToolResource(
             string indexConnectionId,
             string indexName,
             int topK,
@@ -20,13 +20,13 @@ namespace Azure.AI.Agents.Persistent
             // Initialize properties or perform other logic here
             var indexList = new AISearchIndexResource(
                 indexConnectionId: indexConnectionId,
-                indexName: indexName
-            )
-            {
-                TopK = topK,
-                Filter = filter,
-                QueryType = queryType
-            };
+                indexName: indexName,
+                topK: topK,
+                filter: filter,
+                queryType: queryType,
+                indexAssetId: null,
+                serializedAdditionalRawData: null
+            );
 
             // Additional initialization logic if needed
             this.IndexList = new List<AISearchIndexResource> { indexList };

@@ -341,7 +341,7 @@ Search requires an existing Azure AI Search Index. For more information and setu
 guides, see [Azure AI Search Tool Guide](https://learn.microsoft.com/azure/ai-services/agents/how-to/tools/azure-ai-search).
 
 ```C# Snippet:AgentsCreateAgentWithAzureAISearchTool
-AzureAISearchResource searchResource = new(
+AzureAISearchToolResource searchResource = new(
     connectionID,
     "sample_index",
     5,

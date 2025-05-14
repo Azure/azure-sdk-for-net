@@ -1532,16 +1532,15 @@ namespace Azure.AI.Agents.Persistent.Tests
 
         private ToolResources GetAISearchToolResource(AzureAISearchQueryTypeEnum queryType)
         {
-            AISearchIndexResource indexList = new(TestEnvironment.AI_SEARCH_CONNECTION_ID, "sample_index")
-            {
-                QueryType = SearchQueryTypes[queryType]
-            };
             return new ToolResources()
             {
-                AzureAISearch = new AzureAISearchResource
-                {
-                    IndexList = { indexList }
-                }
+                AzureAISearch = new AzureAISearchToolResource(
+                    indexConnectionId: TestEnvironment.AI_SEARCH_CONNECTION_ID,
+                    indexName: "sample_index",
+                    queryType: SearchQueryTypes[queryType],
+                    filter: null,
+                    topK: 5
+                )
             };
         }
 
