@@ -6,6 +6,9 @@ parameters:
   - name: ForceDirect
     type: boolean
     default: false
+  - name: ExcludePaths
+    type: object
+    default: []
 
 steps:
   - script: |
@@ -18,6 +21,7 @@ steps:
     parameters:
       ServiceDirectory: ${{parameters.ServiceDirectory}}
       PackageInfoDirectory: $(Build.ArtifactStagingDirectory)/PackageInfoPublishing
+      ExcludePaths: ${{ parameters.ExcludePaths }}
 
   # when we publish the packageinfo as an artifact, it actually cleans up the original files. Since we need them during matrix generation steps
   # that will execute directly after the pregeneration steps here, we output them to a publishing directory, copy from there into the target PackageInfoDirectory,
@@ -34,12 +38,31 @@ steps:
       ArtifactPath: '$(Build.ArtifactStagingDirectory)/PackageInfoPublishing'
 
   - pwsh: |
-      $packageInfos = Get-ChildItem -Path "$(Build.ArtifactStagingDirectory)/PackageInfo" -Filter "*.json" -Recurse
-      $packageInfos | ForEach-Object {
-        $content = Get-Content -Raw -Path $_.FullName | ConvertFrom-Json
-        $content.IncludedForValidation = $false
-        $content | ConvertTo-Json -Depth 32 | Out-File $_.FullName
+      $packageInfos = Get-ChildItem -Path "$(Build.ArtifactStagingDirectory)/PackageInfo" -Filter "*.json" -Recurse `
+        | ForEach-Object { Get-Content $_.FullName | ConvertFrom-Json }
+
+      $directPackages = $packageInfos | Where-Object { $_.IncludedForValidation -eq $false }
+
+      if (!$directPackages) {
+        Write-Host "Falling back to Azure.Template from the original package list. There are no other direct packages for assembly."
+
+        # grab just the Azure.Template package from the original list, set it to direct
+        Get-ChildItem -Path "$(Build.ArtifactStagingDirectory)/PackageInfo" -Filter "Azure.Template.json" -Recurse |
+          ForEach-Object {
+            $json = Get-Content $_.FullName | ConvertFrom-Json
+            $json.IncludedForValidation = $false
+            $json | ConvertTo-Json -Depth 100 | Set-Content $_.FullName
+          }
       }
-    displayName: Set all packages to direct
+
+      # remove all the indirect packages from the list of packages that we want to generate matrix for
+      Get-ChildItem -Path "$(Build.ArtifactStagingDirectory)/PackageInfo" -Filter "*.json" -Recurse |
+        ForEach-Object {
+          $json = Get-Content $_.FullName | ConvertFrom-Json
+          if ($json.IncludedForValidation -eq $true) {
+            Remove-Item $_.FullName -Force
+          }
+        }
+    displayName: Only target direct packages for build and test
     condition: and(succeededOrFailed(), eq(${{ parameters.ForceDirect }}, true))
 

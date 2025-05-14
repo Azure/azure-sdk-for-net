@@ -41,6 +41,16 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("preCopyScript"u8);
                 JsonSerializer.Serialize(writer, PreCopyScript);
             }
+            if (Optional.IsDefined(WriteMethod))
+            {
+                writer.WritePropertyName("writeMethod"u8);
+                writer.WriteStringValue(WriteMethod.Value.ToString());
+            }
+            if (Optional.IsDefined(UpsertSettings))
+            {
+                writer.WritePropertyName("upsertSettings"u8);
+                writer.WriteObjectValue(UpsertSettings, options);
+            }
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
@@ -76,6 +86,8 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             DataFactoryElement<string> preCopyScript = default;
+            AzurePostgreSqlWriteMethodEnum? writeMethod = default;
+            AzurePostgreSqlSinkUpsertSettings upsertSettings = default;
             string type = default;
             DataFactoryElement<int> writeBatchSize = default;
             DataFactoryElement<string> writeBatchTimeout = default;
@@ -94,6 +106,24 @@ namespace Azure.ResourceManager.DataFactory.Models
                         continue;
                     }
                     preCopyScript = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
+                    continue;
+                }
+                if (property.NameEquals("writeMethod"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    writeMethod = new AzurePostgreSqlWriteMethodEnum(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("upsertSettings"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    upsertSettings = AzurePostgreSqlSinkUpsertSettings.DeserializeAzurePostgreSqlSinkUpsertSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("type"u8))
@@ -167,7 +197,9 @@ namespace Azure.ResourceManager.DataFactory.Models
                 maxConcurrentConnections,
                 disableMetricsCollection,
                 additionalProperties,
-                preCopyScript);
+                preCopyScript,
+                writeMethod,
+                upsertSettings);
         }
 
         BinaryData IPersistableModel<AzurePostgreSqlSink>.Write(ModelReaderWriterOptions options)

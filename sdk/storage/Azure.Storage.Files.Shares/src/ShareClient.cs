@@ -158,6 +158,7 @@ namespace Azure.Storage.Files.Shares
             Argument.AssertNotNullOrWhiteSpace(shareName, nameof(shareName));
             options ??= new ShareClientOptions();
             var conn = StorageConnectionString.Parse(connectionString);
+            ShareErrors.AssertNotDevelopment(conn, nameof(connectionString));
             ShareUriBuilder uriBuilder = new ShareUriBuilder(conn.FileEndpoint) { ShareName = shareName };
             _uri = uriBuilder.ToUri();
             _accountName = conn.AccountName;
@@ -1422,7 +1423,8 @@ namespace Azure.Storage.Files.Shares
                     return Response.FromValue(true, response);
                 }
                 catch (RequestFailedException storageRequestFailedException)
-                when (storageRequestFailedException.ErrorCode == ShareErrorCode.ShareNotFound)
+                when (storageRequestFailedException.ErrorCode == ShareErrorCode.ShareNotFound
+                    || storageRequestFailedException.ErrorCode == ShareErrorCode.ShareSnapshotNotFound)
                 {
                     return Response.FromValue(false, default);
                 }

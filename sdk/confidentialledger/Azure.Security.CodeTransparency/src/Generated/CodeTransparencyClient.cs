@@ -8,7 +8,6 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -44,38 +43,28 @@ namespace Azure.Security.CodeTransparency
         {
         }
 
-        /// <summary> Get the status the entry operation. </summary>
-        /// <param name="operationId"> ID of the operation to retrieve. </param>
+        /// <summary> Get the transparency service configuration, mandatory in IETF SCITT draft. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/CodeTransparencyClient.xml" path="doc/members/member[@name='GetEntryStatusAsync(string,CancellationToken)']/*" />
-        public virtual async Task<Response<GetOperationResult>> GetEntryStatusAsync(string operationId, CancellationToken cancellationToken = default)
+        /// <include file="Docs/CodeTransparencyClient.xml" path="doc/members/member[@name='GetTransparencyConfigCborAsync(CancellationToken)']/*" />
+        public virtual async Task<Response<BinaryData>> GetTransparencyConfigCborAsync(CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
-
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetEntryStatusAsync(operationId, context).ConfigureAwait(false);
-            return Response.FromValue(GetOperationResult.FromResponse(response), response);
+            Response response = await GetTransparencyConfigCborAsync(context).ConfigureAwait(false);
+            return Response.FromValue(response.Content, response);
         }
 
-        /// <summary> Get the status the entry operation. </summary>
-        /// <param name="operationId"> ID of the operation to retrieve. </param>
+        /// <summary> Get the transparency service configuration, mandatory in IETF SCITT draft. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/CodeTransparencyClient.xml" path="doc/members/member[@name='GetEntryStatus(string,CancellationToken)']/*" />
-        public virtual Response<GetOperationResult> GetEntryStatus(string operationId, CancellationToken cancellationToken = default)
+        /// <include file="Docs/CodeTransparencyClient.xml" path="doc/members/member[@name='GetTransparencyConfigCbor(CancellationToken)']/*" />
+        public virtual Response<BinaryData> GetTransparencyConfigCbor(CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
-
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetEntryStatus(operationId, context);
-            return Response.FromValue(GetOperationResult.FromResponse(response), response);
+            Response response = GetTransparencyConfigCbor(context);
+            return Response.FromValue(response.Content, response);
         }
 
         /// <summary>
-        /// [Protocol Method] Get the status the entry operation
+        /// [Protocol Method] Get the transparency service configuration, mandatory in IETF SCITT draft
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -84,27 +73,22 @@ namespace Azure.Security.CodeTransparency
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetEntryStatusAsync(string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetTransparencyConfigCborAsync(CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="operationId"> ID of the operation to retrieve. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/CodeTransparencyClient.xml" path="doc/members/member[@name='GetEntryStatusAsync(string,RequestContext)']/*" />
-        public virtual async Task<Response> GetEntryStatusAsync(string operationId, RequestContext context)
+        /// <include file="Docs/CodeTransparencyClient.xml" path="doc/members/member[@name='GetTransparencyConfigCborAsync(RequestContext)']/*" />
+        public virtual async Task<Response> GetTransparencyConfigCborAsync(RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
-
-            using var scope = ClientDiagnostics.CreateScope("CodeTransparencyClient.GetEntryStatus");
+            using var scope = ClientDiagnostics.CreateScope("CodeTransparencyClient.GetTransparencyConfigCbor");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetEntryStatusRequest(operationId, context);
+                using HttpMessage message = CreateGetTransparencyConfigCborRequest(context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -115,7 +99,7 @@ namespace Azure.Security.CodeTransparency
         }
 
         /// <summary>
-        /// [Protocol Method] Get the status the entry operation
+        /// [Protocol Method] Get the transparency service configuration, mandatory in IETF SCITT draft
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -124,27 +108,22 @@ namespace Azure.Security.CodeTransparency
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetEntryStatus(string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetTransparencyConfigCbor(CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="operationId"> ID of the operation to retrieve. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/CodeTransparencyClient.xml" path="doc/members/member[@name='GetEntryStatus(string,RequestContext)']/*" />
-        public virtual Response GetEntryStatus(string operationId, RequestContext context)
+        /// <include file="Docs/CodeTransparencyClient.xml" path="doc/members/member[@name='GetTransparencyConfigCbor(RequestContext)']/*" />
+        public virtual Response GetTransparencyConfigCbor(RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
-
-            using var scope = ClientDiagnostics.CreateScope("CodeTransparencyClient.GetEntryStatus");
+            using var scope = ClientDiagnostics.CreateScope("CodeTransparencyClient.GetTransparencyConfigCbor");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetEntryStatusRequest(operationId, context);
+                using HttpMessage message = CreateGetTransparencyConfigCborRequest(context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -154,28 +133,28 @@ namespace Azure.Security.CodeTransparency
             }
         }
 
-        /// <summary> Get the status of all entries operations. </summary>
+        /// <summary> Get the public keys used by the service to sign receipts, mentioned in IETF SCITT draft as part of jwks_uri implementation. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Docs/CodeTransparencyClient.xml" path="doc/members/member[@name='GetEntryStatusesAsync(CancellationToken)']/*" />
-        public virtual async Task<Response<ListOperationResult>> GetEntryStatusesAsync(CancellationToken cancellationToken = default)
+        /// <include file="Docs/CodeTransparencyClient.xml" path="doc/members/member[@name='GetPublicKeysAsync(CancellationToken)']/*" />
+        public virtual async Task<Response<JwksDocument>> GetPublicKeysAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetEntryStatusesAsync(context).ConfigureAwait(false);
-            return Response.FromValue(ListOperationResult.FromResponse(response), response);
+            Response response = await GetPublicKeysAsync(context).ConfigureAwait(false);
+            return Response.FromValue(JwksDocument.FromResponse(response), response);
         }
 
-        /// <summary> Get the status of all entries operations. </summary>
+        /// <summary> Get the public keys used by the service to sign receipts, mentioned in IETF SCITT draft as part of jwks_uri implementation. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Docs/CodeTransparencyClient.xml" path="doc/members/member[@name='GetEntryStatuses(CancellationToken)']/*" />
-        public virtual Response<ListOperationResult> GetEntryStatuses(CancellationToken cancellationToken = default)
+        /// <include file="Docs/CodeTransparencyClient.xml" path="doc/members/member[@name='GetPublicKeys(CancellationToken)']/*" />
+        public virtual Response<JwksDocument> GetPublicKeys(CancellationToken cancellationToken = default)
         {
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetEntryStatuses(context);
-            return Response.FromValue(ListOperationResult.FromResponse(response), response);
+            Response response = GetPublicKeys(context);
+            return Response.FromValue(JwksDocument.FromResponse(response), response);
         }
 
         /// <summary>
-        /// [Protocol Method] Get the status of all entries operations
+        /// [Protocol Method] Get the public keys used by the service to sign receipts, mentioned in IETF SCITT draft as part of jwks_uri implementation
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -184,7 +163,7 @@ namespace Azure.Security.CodeTransparency
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetEntryStatusesAsync(CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetPublicKeysAsync(CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -192,14 +171,14 @@ namespace Azure.Security.CodeTransparency
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/CodeTransparencyClient.xml" path="doc/members/member[@name='GetEntryStatusesAsync(RequestContext)']/*" />
-        public virtual async Task<Response> GetEntryStatusesAsync(RequestContext context)
+        /// <include file="Docs/CodeTransparencyClient.xml" path="doc/members/member[@name='GetPublicKeysAsync(RequestContext)']/*" />
+        public virtual async Task<Response> GetPublicKeysAsync(RequestContext context)
         {
-            using var scope = ClientDiagnostics.CreateScope("CodeTransparencyClient.GetEntryStatuses");
+            using var scope = ClientDiagnostics.CreateScope("CodeTransparencyClient.GetPublicKeys");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetEntryStatusesRequest(context);
+                using HttpMessage message = CreateGetPublicKeysRequest(context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -210,7 +189,7 @@ namespace Azure.Security.CodeTransparency
         }
 
         /// <summary>
-        /// [Protocol Method] Get the status of all entries operations
+        /// [Protocol Method] Get the public keys used by the service to sign receipts, mentioned in IETF SCITT draft as part of jwks_uri implementation
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -219,7 +198,7 @@ namespace Azure.Security.CodeTransparency
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetEntryStatuses(CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetPublicKeys(CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -227,14 +206,14 @@ namespace Azure.Security.CodeTransparency
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/CodeTransparencyClient.xml" path="doc/members/member[@name='GetEntryStatuses(RequestContext)']/*" />
-        public virtual Response GetEntryStatuses(RequestContext context)
+        /// <include file="Docs/CodeTransparencyClient.xml" path="doc/members/member[@name='GetPublicKeys(RequestContext)']/*" />
+        public virtual Response GetPublicKeys(RequestContext context)
         {
-            using var scope = ClientDiagnostics.CreateScope("CodeTransparencyClient.GetEntryStatuses");
+            using var scope = ClientDiagnostics.CreateScope("CodeTransparencyClient.GetPublicKeys");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetEntryStatusesRequest(context);
+                using HttpMessage message = CreateGetPublicKeysRequest(context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -244,40 +223,38 @@ namespace Azure.Security.CodeTransparency
             }
         }
 
-        /// <summary> Get Entry with or without receipt embedded in its unprotected header. </summary>
-        /// <param name="entryId"> ID of the entry to retrieve. </param>
-        /// <param name="embedReceipt"> Embed a receipt as part of the response. </param>
+        /// <summary> Get status of the long running registration operation, mandatory in IETF SCITT draft. </summary>
+        /// <param name="operationId"> ID of the operation to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="entryId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="entryId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/CodeTransparencyClient.xml" path="doc/members/member[@name='GetEntryAsync(string,bool?,CancellationToken)']/*" />
-        public virtual async Task<Response<BinaryData>> GetEntryAsync(string entryId, bool? embedReceipt = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/CodeTransparencyClient.xml" path="doc/members/member[@name='GetOperationAsync(string,CancellationToken)']/*" />
+        public virtual async Task<Response<BinaryData>> GetOperationAsync(string operationId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(entryId, nameof(entryId));
+            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetEntryAsync(entryId, embedReceipt, context).ConfigureAwait(false);
+            Response response = await GetOperationAsync(operationId, context).ConfigureAwait(false);
             return Response.FromValue(response.Content, response);
         }
 
-        /// <summary> Get Entry with or without receipt embedded in its unprotected header. </summary>
-        /// <param name="entryId"> ID of the entry to retrieve. </param>
-        /// <param name="embedReceipt"> Embed a receipt as part of the response. </param>
+        /// <summary> Get status of the long running registration operation, mandatory in IETF SCITT draft. </summary>
+        /// <param name="operationId"> ID of the operation to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="entryId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="entryId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/CodeTransparencyClient.xml" path="doc/members/member[@name='GetEntry(string,bool?,CancellationToken)']/*" />
-        public virtual Response<BinaryData> GetEntry(string entryId, bool? embedReceipt = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/CodeTransparencyClient.xml" path="doc/members/member[@name='GetOperation(string,CancellationToken)']/*" />
+        public virtual Response<BinaryData> GetOperation(string operationId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(entryId, nameof(entryId));
+            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetEntry(entryId, embedReceipt, context);
+            Response response = GetOperation(operationId, context);
             return Response.FromValue(response.Content, response);
         }
 
         /// <summary>
-        /// [Protocol Method] Get Entry with or without receipt embedded in its unprotected header
+        /// [Protocol Method] Get status of the long running registration operation, mandatory in IETF SCITT draft
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -286,20 +263,129 @@ namespace Azure.Security.CodeTransparency
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetEntryAsync(string,bool?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetOperationAsync(string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="operationId"> ID of the operation to retrieve. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/CodeTransparencyClient.xml" path="doc/members/member[@name='GetOperationAsync(string,RequestContext)']/*" />
+        public virtual async Task<Response> GetOperationAsync(string operationId, RequestContext context)
+        {
+            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
+
+            using var scope = ClientDiagnostics.CreateScope("CodeTransparencyClient.GetOperation");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetOperationRequest(operationId, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Get status of the long running registration operation, mandatory in IETF SCITT draft
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetOperation(string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="operationId"> ID of the operation to retrieve. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/CodeTransparencyClient.xml" path="doc/members/member[@name='GetOperation(string,RequestContext)']/*" />
+        public virtual Response GetOperation(string operationId, RequestContext context)
+        {
+            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
+
+            using var scope = ClientDiagnostics.CreateScope("CodeTransparencyClient.GetOperation");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetOperationRequest(operationId, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Get receipt. </summary>
+        /// <param name="entryId"> ID of the entry to retrieve. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="entryId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="entryId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/CodeTransparencyClient.xml" path="doc/members/member[@name='GetEntryAsync(string,CancellationToken)']/*" />
+        public virtual async Task<Response<BinaryData>> GetEntryAsync(string entryId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(entryId, nameof(entryId));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await GetEntryAsync(entryId, context).ConfigureAwait(false);
+            return Response.FromValue(response.Content, response);
+        }
+
+        /// <summary> Get receipt. </summary>
+        /// <param name="entryId"> ID of the entry to retrieve. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="entryId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="entryId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/CodeTransparencyClient.xml" path="doc/members/member[@name='GetEntry(string,CancellationToken)']/*" />
+        public virtual Response<BinaryData> GetEntry(string entryId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(entryId, nameof(entryId));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = GetEntry(entryId, context);
+            return Response.FromValue(response.Content, response);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Get receipt
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetEntryAsync(string,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="entryId"> ID of the entry to retrieve. </param>
-        /// <param name="embedReceipt"> Embed a receipt as part of the response. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="entryId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="entryId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/CodeTransparencyClient.xml" path="doc/members/member[@name='GetEntryAsync(string,bool?,RequestContext)']/*" />
-        public virtual async Task<Response> GetEntryAsync(string entryId, bool? embedReceipt, RequestContext context)
+        /// <include file="Docs/CodeTransparencyClient.xml" path="doc/members/member[@name='GetEntryAsync(string,RequestContext)']/*" />
+        public virtual async Task<Response> GetEntryAsync(string entryId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(entryId, nameof(entryId));
 
@@ -307,7 +393,7 @@ namespace Azure.Security.CodeTransparency
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetEntryRequest(entryId, embedReceipt, context);
+                using HttpMessage message = CreateGetEntryRequest(entryId, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -318,7 +404,7 @@ namespace Azure.Security.CodeTransparency
         }
 
         /// <summary>
-        /// [Protocol Method] Get Entry with or without receipt embedded in its unprotected header
+        /// [Protocol Method] Get receipt
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -327,20 +413,19 @@ namespace Azure.Security.CodeTransparency
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetEntry(string,bool?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetEntry(string,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="entryId"> ID of the entry to retrieve. </param>
-        /// <param name="embedReceipt"> Embed a receipt as part of the response. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="entryId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="entryId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/CodeTransparencyClient.xml" path="doc/members/member[@name='GetEntry(string,bool?,RequestContext)']/*" />
-        public virtual Response GetEntry(string entryId, bool? embedReceipt, RequestContext context)
+        /// <include file="Docs/CodeTransparencyClient.xml" path="doc/members/member[@name='GetEntry(string,RequestContext)']/*" />
+        public virtual Response GetEntry(string entryId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(entryId, nameof(entryId));
 
@@ -348,7 +433,7 @@ namespace Azure.Security.CodeTransparency
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetEntryRequest(entryId, embedReceipt, context);
+                using HttpMessage message = CreateGetEntryRequest(entryId, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -358,38 +443,38 @@ namespace Azure.Security.CodeTransparency
             }
         }
 
-        /// <summary> Get the receipt of an entry given a specific entry id. </summary>
+        /// <summary> Get the transparent statement consisting of the signed statement and the receipt embedded in the header. </summary>
         /// <param name="entryId"> ID of the entry to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="entryId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="entryId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/CodeTransparencyClient.xml" path="doc/members/member[@name='GetEntryReceiptAsync(string,CancellationToken)']/*" />
-        public virtual async Task<Response<BinaryData>> GetEntryReceiptAsync(string entryId, CancellationToken cancellationToken = default)
+        /// <include file="Docs/CodeTransparencyClient.xml" path="doc/members/member[@name='GetEntryStatementAsync(string,CancellationToken)']/*" />
+        public virtual async Task<Response<BinaryData>> GetEntryStatementAsync(string entryId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(entryId, nameof(entryId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetEntryReceiptAsync(entryId, context).ConfigureAwait(false);
+            Response response = await GetEntryStatementAsync(entryId, context).ConfigureAwait(false);
             return Response.FromValue(response.Content, response);
         }
 
-        /// <summary> Get the receipt of an entry given a specific entry id. </summary>
+        /// <summary> Get the transparent statement consisting of the signed statement and the receipt embedded in the header. </summary>
         /// <param name="entryId"> ID of the entry to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="entryId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="entryId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/CodeTransparencyClient.xml" path="doc/members/member[@name='GetEntryReceipt(string,CancellationToken)']/*" />
-        public virtual Response<BinaryData> GetEntryReceipt(string entryId, CancellationToken cancellationToken = default)
+        /// <include file="Docs/CodeTransparencyClient.xml" path="doc/members/member[@name='GetEntryStatement(string,CancellationToken)']/*" />
+        public virtual Response<BinaryData> GetEntryStatement(string entryId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(entryId, nameof(entryId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetEntryReceipt(entryId, context);
+            Response response = GetEntryStatement(entryId, context);
             return Response.FromValue(response.Content, response);
         }
 
         /// <summary>
-        /// [Protocol Method] Get the receipt of an entry given a specific entry id.
+        /// [Protocol Method] Get the transparent statement consisting of the signed statement and the receipt embedded in the header
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -398,7 +483,7 @@ namespace Azure.Security.CodeTransparency
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetEntryReceiptAsync(string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetEntryStatementAsync(string,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -409,16 +494,16 @@ namespace Azure.Security.CodeTransparency
         /// <exception cref="ArgumentException"> <paramref name="entryId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/CodeTransparencyClient.xml" path="doc/members/member[@name='GetEntryReceiptAsync(string,RequestContext)']/*" />
-        public virtual async Task<Response> GetEntryReceiptAsync(string entryId, RequestContext context)
+        /// <include file="Docs/CodeTransparencyClient.xml" path="doc/members/member[@name='GetEntryStatementAsync(string,RequestContext)']/*" />
+        public virtual async Task<Response> GetEntryStatementAsync(string entryId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(entryId, nameof(entryId));
 
-            using var scope = ClientDiagnostics.CreateScope("CodeTransparencyClient.GetEntryReceipt");
+            using var scope = ClientDiagnostics.CreateScope("CodeTransparencyClient.GetEntryStatement");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetEntryReceiptRequest(entryId, context);
+                using HttpMessage message = CreateGetEntryStatementRequest(entryId, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -429,7 +514,7 @@ namespace Azure.Security.CodeTransparency
         }
 
         /// <summary>
-        /// [Protocol Method] Get the receipt of an entry given a specific entry id.
+        /// [Protocol Method] Get the transparent statement consisting of the signed statement and the receipt embedded in the header
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -438,7 +523,7 @@ namespace Azure.Security.CodeTransparency
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetEntryReceipt(string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetEntryStatement(string,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -449,16 +534,16 @@ namespace Azure.Security.CodeTransparency
         /// <exception cref="ArgumentException"> <paramref name="entryId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/CodeTransparencyClient.xml" path="doc/members/member[@name='GetEntryReceipt(string,RequestContext)']/*" />
-        public virtual Response GetEntryReceipt(string entryId, RequestContext context)
+        /// <include file="Docs/CodeTransparencyClient.xml" path="doc/members/member[@name='GetEntryStatement(string,RequestContext)']/*" />
+        public virtual Response GetEntryStatement(string entryId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(entryId, nameof(entryId));
 
-            using var scope = ClientDiagnostics.CreateScope("CodeTransparencyClient.GetEntryReceipt");
+            using var scope = ClientDiagnostics.CreateScope("CodeTransparencyClient.GetEntryStatement");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetEntryReceiptRequest(entryId, context);
+                using HttpMessage message = CreateGetEntryStatementRequest(entryId, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -466,603 +551,6 @@ namespace Azure.Security.CodeTransparency
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        /// <summary> Get service parameters. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Docs/CodeTransparencyClient.xml" path="doc/members/member[@name='GetParametersAsync(CancellationToken)']/*" />
-        public virtual async Task<Response<ParametersResult>> GetParametersAsync(CancellationToken cancellationToken = default)
-        {
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetParametersAsync(context).ConfigureAwait(false);
-            return Response.FromValue(ParametersResult.FromResponse(response), response);
-        }
-
-        /// <summary> Get service parameters. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Docs/CodeTransparencyClient.xml" path="doc/members/member[@name='GetParameters(CancellationToken)']/*" />
-        public virtual Response<ParametersResult> GetParameters(CancellationToken cancellationToken = default)
-        {
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetParameters(context);
-            return Response.FromValue(ParametersResult.FromResponse(response), response);
-        }
-
-        /// <summary>
-        /// [Protocol Method] Get service parameters
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetParametersAsync(CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/CodeTransparencyClient.xml" path="doc/members/member[@name='GetParametersAsync(RequestContext)']/*" />
-        public virtual async Task<Response> GetParametersAsync(RequestContext context)
-        {
-            using var scope = ClientDiagnostics.CreateScope("CodeTransparencyClient.GetParameters");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetParametersRequest(context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Get service parameters
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetParameters(CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/CodeTransparencyClient.xml" path="doc/members/member[@name='GetParameters(RequestContext)']/*" />
-        public virtual Response GetParameters(RequestContext context)
-        {
-            using var scope = ClientDiagnostics.CreateScope("CodeTransparencyClient.GetParameters");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetParametersRequest(context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Get the DID configuration file. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Docs/CodeTransparencyClient.xml" path="doc/members/member[@name='GetDidConfigAsync(CancellationToken)']/*" />
-        public virtual async Task<Response<DidDocument>> GetDidConfigAsync(CancellationToken cancellationToken = default)
-        {
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetDidConfigAsync(context).ConfigureAwait(false);
-            return Response.FromValue(DidDocument.FromResponse(response), response);
-        }
-
-        /// <summary> Get the DID configuration file. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Docs/CodeTransparencyClient.xml" path="doc/members/member[@name='GetDidConfig(CancellationToken)']/*" />
-        public virtual Response<DidDocument> GetDidConfig(CancellationToken cancellationToken = default)
-        {
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetDidConfig(context);
-            return Response.FromValue(DidDocument.FromResponse(response), response);
-        }
-
-        /// <summary>
-        /// [Protocol Method] Get the DID configuration file.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetDidConfigAsync(CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/CodeTransparencyClient.xml" path="doc/members/member[@name='GetDidConfigAsync(RequestContext)']/*" />
-        public virtual async Task<Response> GetDidConfigAsync(RequestContext context)
-        {
-            using var scope = ClientDiagnostics.CreateScope("CodeTransparencyClient.GetDidConfig");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetDidConfigRequest(context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Get the DID configuration file.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetDidConfig(CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/CodeTransparencyClient.xml" path="doc/members/member[@name='GetDidConfig(RequestContext)']/*" />
-        public virtual Response GetDidConfig(RequestContext context)
-        {
-            using var scope = ClientDiagnostics.CreateScope("CodeTransparencyClient.GetDidConfig");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetDidConfigRequest(context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Get CodeTransparency configuration information. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Docs/CodeTransparencyClient.xml" path="doc/members/member[@name='GetCodeTransparencyConfigAsync(CancellationToken)']/*" />
-        public virtual async Task<Response<CodeTransparencyConfiguration>> GetCodeTransparencyConfigAsync(CancellationToken cancellationToken = default)
-        {
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetCodeTransparencyConfigAsync(context).ConfigureAwait(false);
-            return Response.FromValue(CodeTransparencyConfiguration.FromResponse(response), response);
-        }
-
-        /// <summary> Get CodeTransparency configuration information. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Docs/CodeTransparencyClient.xml" path="doc/members/member[@name='GetCodeTransparencyConfig(CancellationToken)']/*" />
-        public virtual Response<CodeTransparencyConfiguration> GetCodeTransparencyConfig(CancellationToken cancellationToken = default)
-        {
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetCodeTransparencyConfig(context);
-            return Response.FromValue(CodeTransparencyConfiguration.FromResponse(response), response);
-        }
-
-        /// <summary>
-        /// [Protocol Method] Get CodeTransparency configuration information.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetCodeTransparencyConfigAsync(CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/CodeTransparencyClient.xml" path="doc/members/member[@name='GetCodeTransparencyConfigAsync(RequestContext)']/*" />
-        public virtual async Task<Response> GetCodeTransparencyConfigAsync(RequestContext context)
-        {
-            using var scope = ClientDiagnostics.CreateScope("CodeTransparencyClient.GetCodeTransparencyConfig");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetCodeTransparencyConfigRequest(context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Get CodeTransparency configuration information.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetCodeTransparencyConfig(CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/CodeTransparencyClient.xml" path="doc/members/member[@name='GetCodeTransparencyConfig(RequestContext)']/*" />
-        public virtual Response GetCodeTransparencyConfig(RequestContext context)
-        {
-            using var scope = ClientDiagnostics.CreateScope("CodeTransparencyClient.GetCodeTransparencyConfig");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetCodeTransparencyConfigRequest(context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Get CodeTransparency version information. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Docs/CodeTransparencyClient.xml" path="doc/members/member[@name='GetCodeTransparencyVersionAsync(CancellationToken)']/*" />
-        public virtual async Task<Response<VersionResult>> GetCodeTransparencyVersionAsync(CancellationToken cancellationToken = default)
-        {
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetCodeTransparencyVersionAsync(context).ConfigureAwait(false);
-            return Response.FromValue(VersionResult.FromResponse(response), response);
-        }
-
-        /// <summary> Get CodeTransparency version information. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Docs/CodeTransparencyClient.xml" path="doc/members/member[@name='GetCodeTransparencyVersion(CancellationToken)']/*" />
-        public virtual Response<VersionResult> GetCodeTransparencyVersion(CancellationToken cancellationToken = default)
-        {
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetCodeTransparencyVersion(context);
-            return Response.FromValue(VersionResult.FromResponse(response), response);
-        }
-
-        /// <summary>
-        /// [Protocol Method] Get CodeTransparency version information.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetCodeTransparencyVersionAsync(CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/CodeTransparencyClient.xml" path="doc/members/member[@name='GetCodeTransparencyVersionAsync(RequestContext)']/*" />
-        public virtual async Task<Response> GetCodeTransparencyVersionAsync(RequestContext context)
-        {
-            using var scope = ClientDiagnostics.CreateScope("CodeTransparencyClient.GetCodeTransparencyVersion");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetCodeTransparencyVersionRequest(context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Get CodeTransparency version information.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetCodeTransparencyVersion(CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/CodeTransparencyClient.xml" path="doc/members/member[@name='GetCodeTransparencyVersion(RequestContext)']/*" />
-        public virtual Response GetCodeTransparencyVersion(RequestContext context)
-        {
-            using var scope = ClientDiagnostics.CreateScope("CodeTransparencyClient.GetCodeTransparencyVersion");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetCodeTransparencyVersionRequest(context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Historical query to get a list of entries of a given range. </summary>
-        /// <param name="from"> Starting Transaction Id. </param>
-        /// <param name="to"> Ending Transaction Id. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Docs/CodeTransparencyClient.xml" path="doc/members/member[@name='GetEntryIdsAsync(long?,long?,CancellationToken)']/*" />
-        public virtual AsyncPageable<string> GetEntryIdsAsync(long? @from = null, long? to = null, CancellationToken cancellationToken = default)
-        {
-            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetEntryIdsRequest(@from, to, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetEntryIdsNextPageRequest(nextLink, @from, to, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => e.GetString(), ClientDiagnostics, _pipeline, "CodeTransparencyClient.GetEntryIds", "transactionIds", "nextLink", context);
-        }
-
-        /// <summary> Historical query to get a list of entries of a given range. </summary>
-        /// <param name="from"> Starting Transaction Id. </param>
-        /// <param name="to"> Ending Transaction Id. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Docs/CodeTransparencyClient.xml" path="doc/members/member[@name='GetEntryIds(long?,long?,CancellationToken)']/*" />
-        public virtual Pageable<string> GetEntryIds(long? @from = null, long? to = null, CancellationToken cancellationToken = default)
-        {
-            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetEntryIdsRequest(@from, to, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetEntryIdsNextPageRequest(nextLink, @from, to, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => e.GetString(), ClientDiagnostics, _pipeline, "CodeTransparencyClient.GetEntryIds", "transactionIds", "nextLink", context);
-        }
-
-        /// <summary>
-        /// [Protocol Method] Historical query to get a list of entries of a given range
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetEntryIdsAsync(long?,long?,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="from"> Starting Transaction Id. </param>
-        /// <param name="to"> Ending Transaction Id. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/CodeTransparencyClient.xml" path="doc/members/member[@name='GetEntryIdsAsync(long?,long?,RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetEntryIdsAsync(long? @from, long? to, RequestContext context)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetEntryIdsRequest(@from, to, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetEntryIdsNextPageRequest(nextLink, @from, to, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "CodeTransparencyClient.GetEntryIds", "transactionIds", "nextLink", context);
-        }
-
-        /// <summary>
-        /// [Protocol Method] Historical query to get a list of entries of a given range
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetEntryIds(long?,long?,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="from"> Starting Transaction Id. </param>
-        /// <param name="to"> Ending Transaction Id. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/CodeTransparencyClient.xml" path="doc/members/member[@name='GetEntryIds(long?,long?,RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetEntryIds(long? @from, long? to, RequestContext context)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetEntryIdsRequest(@from, to, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetEntryIdsNextPageRequest(nextLink, @from, to, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "CodeTransparencyClient.GetEntryIds", "transactionIds", "nextLink", context);
-        }
-
-        internal HttpMessage CreateGetEntryStatusRequest(string operationId, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/operations/", false);
-            uri.AppendPath(operationId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateGetEntryStatusesRequest(RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/operations", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateGetEntryRequest(string entryId, bool? embedReceipt, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/entries/", false);
-            uri.AppendPath(entryId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (embedReceipt != null)
-            {
-                uri.AppendQuery("embedReceipt", embedReceipt.Value, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/cose");
-            return message;
-        }
-
-        internal HttpMessage CreateGetEntryReceiptRequest(string entryId, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/entries/", false);
-            uri.AppendPath(entryId, true);
-            uri.AppendPath("/receipt", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/cbor");
-            return message;
-        }
-
-        internal HttpMessage CreateGetEntryIdsRequest(long? @from, long? to, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/entries/txIds", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (@from != null)
-            {
-                uri.AppendQuery("from", @from.Value, true);
-            }
-            if (to != null)
-            {
-                uri.AppendQuery("to", to.Value, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateGetParametersRequest(RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/parameters", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateGetDidConfigRequest(RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/.well-known/did.json", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateGetCodeTransparencyConfigRequest(RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/configuration", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateGetCodeTransparencyVersionRequest(RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/version", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateGetEntryIdsNextPageRequest(string nextLink, long? @from, long? to, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
         }
 
         private static RequestContext DefaultRequestContext = new RequestContext();
@@ -1076,7 +564,13 @@ namespace Azure.Security.CodeTransparency
             return new RequestContext() { CancellationToken = cancellationToken };
         }
 
-        private static ResponseClassifier _responseClassifier200;
-        private static ResponseClassifier ResponseClassifier200 => _responseClassifier200 ??= new StatusCodeClassifier(stackalloc ushort[] { 200 });
+        private static ResponseClassifier _responseClassifier200500503;
+        private static ResponseClassifier ResponseClassifier200500503 => _responseClassifier200500503 ??= new StatusCodeClassifier(stackalloc ushort[] { 200, 500, 503 });
+        private static ResponseClassifier _responseClassifier200400404429500503;
+        private static ResponseClassifier ResponseClassifier200400404429500503 => _responseClassifier200400404429500503 ??= new StatusCodeClassifier(stackalloc ushort[] { 200, 400, 404, 429, 500, 503 });
+        private static ResponseClassifier _responseClassifier201202400404429500503;
+        private static ResponseClassifier ResponseClassifier201202400404429500503 => _responseClassifier201202400404429500503 ??= new StatusCodeClassifier(stackalloc ushort[] { 201, 202, 400, 404, 429, 500, 503 });
+        private static ResponseClassifier _responseClassifier200202400404429500503;
+        private static ResponseClassifier ResponseClassifier200202400404429500503 => _responseClassifier200202400404429500503 ??= new StatusCodeClassifier(stackalloc ushort[] { 200, 202, 400, 404, 429, 500, 503 });
     }
 }

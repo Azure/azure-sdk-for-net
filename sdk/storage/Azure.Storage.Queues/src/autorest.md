@@ -4,7 +4,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 
 ``` yaml
 input-file:
-    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/5da3c08b92d05858b728b013b69502dc93485373/specification/storage/data-plane/Microsoft.QueueStorage/stable/2018-03-28/queue.json
+    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/39970688f01821bbb1d2a09182d882da86a51a18/specification/storage/data-plane/Microsoft.QueueStorage/stable/2018-03-28/queue.json
 generation1-convenience-client: true
 # https://github.com/Azure/autorest/issues/4075
 skip-semantics-validation: true

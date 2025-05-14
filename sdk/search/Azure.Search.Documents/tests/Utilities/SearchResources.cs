@@ -175,6 +175,7 @@ namespace Azure.Search.Documents.Tests
         /// <returns>A new TestResources context.</returns>
         public static async Task<SearchResources> CreateWithEmptyIndexAsync<T>(SearchTestBase fixture, bool isSample = false)
         {
+            // TODO: consider setting up RequiresCleanup so the index is deleted at the end of the test run.
             var resources = new SearchResources(fixture);
             await resources.CreateSearchServiceAndIndexAsync(isSample, name =>
                 new SearchIndex(name)
@@ -195,6 +196,7 @@ namespace Azure.Search.Documents.Tests
         /// <returns>A new TestResources context.</returns>
         public static async Task<SearchResources> CreateWithEmptyHotelsIndexAsync(SearchTestBase fixture, bool isSample = false)
         {
+            // TODO: consider setting up RequiresCleanup so the index is deleted at the end of the test run.
             var resources = new SearchResources(fixture);
             await resources.CreateSearchServiceAndIndexAsync(isSample);
             return resources;
@@ -211,6 +213,7 @@ namespace Azure.Search.Documents.Tests
         /// <returns>A new TestResources context.</returns>
         public static async Task<SearchResources> CreateWithHotelsIndexAsync(SearchTestBase fixture, bool isSample = false)
         {
+            // TODO: consider setting up RequiresCleanup so the index is deleted at the end of the test run.
             var resources = new SearchResources(fixture);
             await resources.CreateSearchServiceIndexAndDocumentsAsync(isSample);
             return resources;
@@ -230,6 +233,7 @@ namespace Azure.Search.Documents.Tests
         /// <returns>A new <see cref="SearchResources"/> context.</returns>
         public static async Task<SearchResources> CreateWithBlobStorageAsync(SearchTestBase fixture, bool populate = false, bool isSample = false)
         {
+            // TODO: consider setting up RequiresCleanup so the index is deleted at the end of the test run.
             var resources = new SearchResources(fixture);
             await resources.CreateHotelsBlobContainerAsync(populate, isSample);
             return resources;
@@ -249,6 +253,7 @@ namespace Azure.Search.Documents.Tests
         /// <returns>A new <see cref="SearchResources"/> context.</returns>
         public static async Task<SearchResources> CreateWithBlobStorageAndIndexAsync(SearchTestBase fixture, bool populate = false, bool isSample = false)
         {
+            // TODO: consider setting up RequiresCleanup so the index is deleted at the end of the test run.
             var resources = new SearchResources(fixture);
 
             // Keep them ordered or records may not match seeded random names.
@@ -271,6 +276,8 @@ namespace Azure.Search.Documents.Tests
         /// <returns>The shared TestResources context.</returns>
         public static async Task<SearchResources> GetSharedHotelsIndexAsync(SearchTestBase fixture, bool isSample = false)
         {
+            // TODO: consider whether we should delete the index at the end of the test run here.
+            //       SharedSearchResources seems to purposely cache the index.
             await SharedSearchResources.EnsureInitialized(async () => await CreateWithHotelsIndexAsync(fixture, isSample), isSample);
 
             // Clone it for the current fixture (note that setting these values

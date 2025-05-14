@@ -11,7 +11,7 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> A copy activity Azure PostgreSQL source. </summary>
+    /// <summary> A copy activity Azure Database for PostgreSQL source. </summary>
     public partial class AzurePostgreSqlSource : TabularSource
     {
         /// <summary> Initializes a new instance of <see cref="AzurePostgreSqlSource"/>. </summary>

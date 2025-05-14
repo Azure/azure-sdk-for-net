@@ -1,6 +1,6 @@
 # Release History
 
-## 1.7.0-beta.1 (Unreleased)
+## 1.9.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,30 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.8.0 (2025-05-09)
+
+### Features Added
+
+- Added support for Amazon RDS for Oracle V2 linked service.
+- Added property to Azure Databricks linked service definition.
+- Added certificate authentication support for Microsoft 365 SharePoint linked service.
+- Added Snowflake V2 linked service definition.
+
+## 1.7.0 (2025-03-18)
+
+### Features Added
+
+- Added swagger support for handling multiple result sets in Snowflake scripts.
+- Added connection properties to LinkedService definitions for Greenplum V2 support.
+- Added support for Teradata connection properties and Teradata sink.
+- Added support for Oracle connection properties.
+- Added support for PostgreSQL Entra.
+
+### Bugs Fixed
+
+- Fixed the sncMode property of the LinkedService in SAPTable.
+- Fixed the problem of an unknown linked service type 'LakeHouse'.
 
 ## 1.6.0 (2024-11-11)
 

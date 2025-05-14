@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.AppContainers.Models;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
@@ -21,7 +22,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateOrUpdateContainerApp()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/stable/2024-03-01/examples/ContainerApps_CreateOrUpdate.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/stable/2025-01-01/examples/ContainerApps_CreateOrUpdate.json
             // this example is just showing the usage of "ContainerApps_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -43,6 +44,13 @@ namespace Azure.ResourceManager.AppContainers.Samples
             string containerAppName = "testcontainerapp0";
             ContainerAppData data = new ContainerAppData(new AzureLocation("East US"))
             {
+                Identity = new ManagedServiceIdentity("SystemAssigned,UserAssigned")
+                {
+                    UserAssignedIdentities =
+{
+[new ResourceIdentifier("/subscriptions/34adfa4f-cedf-4dc0-ba29-b6d1a69ab345/resourcegroups/rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/myidentity")] = new UserAssignedIdentity()
+},
+                },
                 EnvironmentId = new ResourceIdentifier("/subscriptions/34adfa4f-cedf-4dc0-ba29-b6d1a69ab345/resourceGroups/rg/providers/Microsoft.App/managedEnvironments/demokube"),
                 WorkloadProfileName = "My-GP-01",
                 Configuration = new ContainerAppConfiguration
@@ -98,8 +106,16 @@ ExposedPort = 3456,
                         LogLevel = ContainerAppDaprLogLevel.Debug,
                         IsApiLoggingEnabled = true,
                     },
+                    EnableMetrics = true,
                     MaxInactiveRevisions = 10,
                     ServiceType = "redis",
+                    IdentitySettings = {new ContainerAppIdentitySettings("/subscriptions/34adfa4f-cedf-4dc0-ba29-b6d1a69ab345/resourcegroups/rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/myidentity")
+{
+Lifecycle = ContainerAppIdentitySettingsLifeCycle.All,
+}, new ContainerAppIdentitySettings("system")
+{
+Lifecycle = ContainerAppIdentitySettingsLifeCycle.Init,
+}},
                 },
                 Template = new ContainerAppTemplate
                 {
@@ -130,11 +146,24 @@ ProbeType = ContainerAppProbeType.Liveness,
 }},
 Image = "repo/testcontainerapp0:v1",
 Name = "testcontainerapp0",
+VolumeMounts = {new ContainerAppVolumeMount
+{
+VolumeName = "azurefile",
+MountPath = "/mnt/path1",
+SubPath = "subPath1",
+}, new ContainerAppVolumeMount
+{
+VolumeName = "nfsazurefile",
+MountPath = "/mnt/path2",
+SubPath = "subPath2",
+}},
 }},
                     Scale = new ContainerAppScale
                     {
                         MinReplicas = 1,
                         MaxReplicas = 5,
+                        CooldownPeriod = 350,
+                        PollingInterval = 35,
                         Rules = {new ContainerAppScaleRule
 {
 Name = "httpscalingrule",
@@ -146,8 +175,43 @@ Metadata =
 ["concurrentRequests"] = "50"
 },
 },
+}, new ContainerAppScaleRule
+{
+Name = "servicebus",
+Custom = new ContainerAppCustomScaleRule
+{
+CustomScaleRuleType = "azure-servicebus",
+Metadata =
+{
+["messageCount"] = "5",
+["namespace"] = "mynamespace",
+["queueName"] = "myqueue"
+},
+Identity = "/subscriptions/34adfa4f-cedf-4dc0-ba29-b6d1a69ab345/resourcegroups/rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/myidentity",
+},
+}, new ContainerAppScaleRule
+{
+Name = "azure-queue",
+AzureQueue = new ContainerAppQueueScaleRule
+{
+AccountName = "account1",
+QueueName = "queue1",
+QueueLength = 1,
+Identity = "system",
+},
 }},
                     },
+                    Volumes = {new ContainerAppVolume
+{
+Name = "azurefile",
+StorageType = ContainerAppStorageType.AzureFile,
+StorageName = "storage",
+}, new ContainerAppVolume
+{
+Name = "nfsazurefile",
+StorageType = ContainerAppStorageType.NfsAzureFile,
+StorageName = "nfsStorage",
+}},
                     ServiceBinds = {new ContainerAppServiceBind
 {
 ServiceId = new ResourceIdentifier("/subscriptions/34adfa4f-cedf-4dc0-ba29-b6d1a69ab345/resourceGroups/rg/providers/Microsoft.App/containerApps/redisService"),
@@ -169,7 +233,7 @@ Name = "redisService",
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateOrUpdateManagedByApp()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/stable/2024-03-01/examples/ContainerApps_ManagedBy_CreateOrUpdate.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/stable/2025-01-01/examples/ContainerApps_ManagedBy_CreateOrUpdate.json
             // this example is just showing the usage of "ContainerApps_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -226,6 +290,8 @@ Name = "testcontainerappmanagedby",
                     {
                         MinReplicas = 1,
                         MaxReplicas = 5,
+                        CooldownPeriod = 350,
+                        PollingInterval = 35,
                         Rules = {new ContainerAppScaleRule
 {
 Name = "tcpscalingrule",
@@ -254,7 +320,7 @@ Metadata =
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateOrUpdateTcpApp()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/stable/2024-03-01/examples/ContainerApps_TcpApp_CreateOrUpdate.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/stable/2025-01-01/examples/ContainerApps_TcpApp_CreateOrUpdate.json
             // this example is just showing the usage of "ContainerApps_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -310,6 +376,8 @@ Name = "testcontainerapptcp",
                     {
                         MinReplicas = 1,
                         MaxReplicas = 5,
+                        CooldownPeriod = 350,
+                        PollingInterval = 35,
                         Rules = {new ContainerAppScaleRule
 {
 Name = "tcpscalingrule",
@@ -338,7 +406,7 @@ Metadata =
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetContainerApp()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/stable/2024-03-01/examples/ContainerApps_Get.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/stable/2025-01-01/examples/ContainerApps_Get.json
             // this example is just showing the usage of "ContainerApps_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -371,7 +439,7 @@ Metadata =
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListContainerAppsByResourceGroup()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/stable/2024-03-01/examples/ContainerApps_ListByResourceGroup.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/stable/2025-01-01/examples/ContainerApps_ListByResourceGroup.json
             // this example is just showing the usage of "ContainerApps_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -406,7 +474,7 @@ Metadata =
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetContainerApp()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/stable/2024-03-01/examples/ContainerApps_Get.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/stable/2025-01-01/examples/ContainerApps_Get.json
             // this example is just showing the usage of "ContainerApps_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -435,7 +503,7 @@ Metadata =
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetContainerApp()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/stable/2024-03-01/examples/ContainerApps_Get.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/stable/2025-01-01/examples/ContainerApps_Get.json
             // this example is just showing the usage of "ContainerApps_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

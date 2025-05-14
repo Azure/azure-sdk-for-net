@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
-    /// <summary>
-    /// The provisioning state of a resource e.g. SIM/SIM policy on a site.
-    /// Serialized Name: SiteProvisioningState
-    /// </summary>
+    /// <summary> The provisioning state of a resource e.g. SIM/SIM policy on a site. </summary>
     public readonly partial struct MobileNetworkSiteProvisioningState : IEquatable<MobileNetworkSiteProvisioningState>
     {
         private readonly string _value;
@@ -32,35 +29,17 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         private const string ProvisionedValue = "Provisioned";
         private const string FailedValue = "Failed";
 
-        /// <summary>
-        /// The resource should not be provisioned on this site.
-        /// Serialized Name: SiteProvisioningState.NotApplicable
-        /// </summary>
+        /// <summary> The resource should not be provisioned on this site. </summary>
         public static MobileNetworkSiteProvisioningState NotApplicable { get; } = new MobileNetworkSiteProvisioningState(NotApplicableValue);
-        /// <summary>
-        /// The resource is being added to this site.
-        /// Serialized Name: SiteProvisioningState.Adding
-        /// </summary>
+        /// <summary> The resource is being added to this site. </summary>
         public static MobileNetworkSiteProvisioningState Adding { get; } = new MobileNetworkSiteProvisioningState(AddingValue);
-        /// <summary>
-        /// The resource is being updated on this site.
-        /// Serialized Name: SiteProvisioningState.Updating
-        /// </summary>
+        /// <summary> The resource is being updated on this site. </summary>
         public static MobileNetworkSiteProvisioningState Updating { get; } = new MobileNetworkSiteProvisioningState(UpdatingValue);
-        /// <summary>
-        /// The resource is being deleted from this site.
-        /// Serialized Name: SiteProvisioningState.Deleting
-        /// </summary>
+        /// <summary> The resource is being deleted from this site. </summary>
         public static MobileNetworkSiteProvisioningState Deleting { get; } = new MobileNetworkSiteProvisioningState(DeletingValue);
-        /// <summary>
-        /// The resource is provisioned on this site.
-        /// Serialized Name: SiteProvisioningState.Provisioned
-        /// </summary>
+        /// <summary> The resource is provisioned on this site. </summary>
         public static MobileNetworkSiteProvisioningState Provisioned { get; } = new MobileNetworkSiteProvisioningState(ProvisionedValue);
-        /// <summary>
-        /// The resource failed to be provisioned on this site.
-        /// Serialized Name: SiteProvisioningState.Failed
-        /// </summary>
+        /// <summary> The resource failed to be provisioned on this site. </summary>
         public static MobileNetworkSiteProvisioningState Failed { get; } = new MobileNetworkSiteProvisioningState(FailedValue);
         /// <summary> Determines if two <see cref="MobileNetworkSiteProvisioningState"/> values are the same. </summary>
         public static bool operator ==(MobileNetworkSiteProvisioningState left, MobileNetworkSiteProvisioningState right) => left.Equals(right);

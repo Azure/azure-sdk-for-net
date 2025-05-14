@@ -53,10 +53,10 @@ namespace Azure.ResourceManager.StorageActions
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.StorageActions.StorageTaskResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.StorageActions.StorageTaskResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Resources.Models.SubResource> GetStorageTaskAssignments(string maxpagesize = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Resources.Models.SubResource> GetStorageTaskAssignmentsAsync(string maxpagesize = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.StorageActions.Models.StorageTaskReportInstance> GetStorageTasksReports(string maxpagesize = null, string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.StorageActions.Models.StorageTaskReportInstance> GetStorageTasksReportsAsync(string maxpagesize = null, string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Resources.Models.SubResource> GetStorageTaskAssignments(int? maxpagesize = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Resources.Models.SubResource> GetStorageTaskAssignmentsAsync(int? maxpagesize = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.StorageActions.Models.StorageTaskReportInstance> GetStorageTasksReports(int? maxpagesize = default(int?), string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.StorageActions.Models.StorageTaskReportInstance> GetStorageTasksReportsAsync(int? maxpagesize = default(int?), string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.StorageActions.StorageTaskResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.StorageActions.StorageTaskResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.StorageActions.StorageTaskResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -332,15 +332,29 @@ namespace Azure.ResourceManager.StorageActions.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StorageActions.Models.StorageTaskProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StorageActions.Models.StorageTaskProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public enum StorageTaskProvisioningState
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct StorageTaskProvisioningState : System.IEquatable<Azure.ResourceManager.StorageActions.Models.StorageTaskProvisioningState>
     {
-        ValidateSubscriptionQuotaBegin = 0,
-        ValidateSubscriptionQuotaEnd = 1,
-        Creating = 2,
-        Succeeded = 3,
-        Deleting = 4,
-        Canceled = 5,
-        Failed = 6,
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public StorageTaskProvisioningState(string value) { throw null; }
+        public static Azure.ResourceManager.StorageActions.Models.StorageTaskProvisioningState Accepted { get { throw null; } }
+        public static Azure.ResourceManager.StorageActions.Models.StorageTaskProvisioningState Canceled { get { throw null; } }
+        public static Azure.ResourceManager.StorageActions.Models.StorageTaskProvisioningState Creating { get { throw null; } }
+        public static Azure.ResourceManager.StorageActions.Models.StorageTaskProvisioningState Deleting { get { throw null; } }
+        public static Azure.ResourceManager.StorageActions.Models.StorageTaskProvisioningState Failed { get { throw null; } }
+        public static Azure.ResourceManager.StorageActions.Models.StorageTaskProvisioningState Succeeded { get { throw null; } }
+        public static Azure.ResourceManager.StorageActions.Models.StorageTaskProvisioningState ValidateSubscriptionQuotaBegin { get { throw null; } }
+        public static Azure.ResourceManager.StorageActions.Models.StorageTaskProvisioningState ValidateSubscriptionQuotaEnd { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.StorageActions.Models.StorageTaskProvisioningState other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.StorageActions.Models.StorageTaskProvisioningState left, Azure.ResourceManager.StorageActions.Models.StorageTaskProvisioningState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.StorageActions.Models.StorageTaskProvisioningState (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.StorageActions.Models.StorageTaskProvisioningState left, Azure.ResourceManager.StorageActions.Models.StorageTaskProvisioningState right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class StorageTaskReportInstance : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StorageActions.Models.StorageTaskReportInstance>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StorageActions.Models.StorageTaskReportInstance>
     {

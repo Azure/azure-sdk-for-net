@@ -21,6 +21,7 @@ namespace Azure.Security.KeyVault.Certificates
         private static readonly JsonEncodedText s_attributesPropertyNameBytes = JsonEncodedText.Encode("attributes");
         private static readonly JsonEncodedText s_enabledPropertyNameBytes = JsonEncodedText.Encode("enabled");
         private static readonly JsonEncodedText s_tagsPropertyNameBytes = JsonEncodedText.Encode("tags");
+        private static readonly JsonEncodedText s_preserveCertificateOrderPropertyNameBytes = JsonEncodedText.Encode("preserveCertOrder");
 
         private Dictionary<string, string> _tags;
 
@@ -79,6 +80,12 @@ namespace Azure.Security.KeyVault.Certificates
         /// </summary>
         public IDictionary<string, string> Tags => LazyInitializer.EnsureInitialized(ref _tags);
 
+        /// <summary>
+        /// Gets or sets a value indicating whether the certificate chain preserves its original order.
+        /// The default value is false, which sets the leaf certificate at index 0.
+        /// </summary>
+        public bool? PreserveCertificateOrder { get; set; }
+
         void IJsonSerializable.WriteProperties(Utf8JsonWriter json)
         {
             if (Certificate != null)
@@ -127,6 +134,11 @@ namespace Azure.Security.KeyVault.Certificates
                 }
 
                 json.WriteEndObject();
+            }
+
+            if (PreserveCertificateOrder.HasValue)
+            {
+                json.WriteBoolean(s_preserveCertificateOrderPropertyNameBytes, PreserveCertificateOrder.Value);
             }
         }
     }

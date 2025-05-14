@@ -11,7 +11,7 @@ using System.Text.Json;
 using Azure;
 using Azure.Core;
 
-namespace _Type.Model.Empty.Models
+namespace _Type.Model.Empty
 {
     public partial class EmptyInput : IJsonModel<EmptyInput>
     {

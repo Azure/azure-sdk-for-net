@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.OperationalInsights
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2021-06-01";
+            _apiVersion = apiVersion ?? "2025-02-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -258,7 +258,6 @@ namespace Azure.ResourceManager.OperationalInsights
             switch (message.Response.Status)
             {
                 case 200:
-                case 201:
                 case 202:
                     return message.Response;
                 default:
@@ -286,7 +285,6 @@ namespace Azure.ResourceManager.OperationalInsights
             switch (message.Response.Status)
             {
                 case 200:
-                case 201:
                 case 202:
                     return message.Response;
                 default:
@@ -534,6 +532,7 @@ namespace Azure.ResourceManager.OperationalInsights
             switch (message.Response.Status)
             {
                 case 200:
+                case 202:
                     return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);
@@ -560,6 +559,7 @@ namespace Azure.ResourceManager.OperationalInsights
             switch (message.Response.Status)
             {
                 case 200:
+                case 202:
                     return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);
