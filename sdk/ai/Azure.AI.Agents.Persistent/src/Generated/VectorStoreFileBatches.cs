@@ -21,7 +21,7 @@ namespace Azure.AI.Agents.Persistent
     /// A collection of file-batch operations under
     /// `/vector_stores/{vectorStoreId}/file_batches`.
     /// </summary>
-    public partial class VectorStoreFileBatches
+    internal partial class VectorStoreFileBatches
     {
         private static readonly string[] AuthorizationScopes = new string[] { "https://ai.azure.com/.default" };
         private readonly TokenCredential _tokenCredential;
@@ -63,7 +63,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vectorStoreId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<VectorStoreFileBatch>> CreateVectorStoreFileBatchAsync(string vectorStoreId, IEnumerable<string> fileIds = null, IEnumerable<VectorStoreDataSource> dataSources = null, VectorStoreChunkingStrategyRequest chunkingStrategy = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<VectorStoreFileBatch>> CreateVectorStoreFileBatchAsync(string vectorStoreId, IEnumerable<string> fileIds = null, IEnumerable<VectorStoreDataSource> dataSources = null, VectorStoreChunkingStrategy chunkingStrategy = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
 
@@ -81,7 +81,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vectorStoreId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<VectorStoreFileBatch> CreateVectorStoreFileBatch(string vectorStoreId, IEnumerable<string> fileIds = null, IEnumerable<VectorStoreDataSource> dataSources = null, VectorStoreChunkingStrategyRequest chunkingStrategy = null, CancellationToken cancellationToken = default)
+        public virtual Response<VectorStoreFileBatch> CreateVectorStoreFileBatch(string vectorStoreId, IEnumerable<string> fileIds = null, IEnumerable<VectorStoreDataSource> dataSources = null, VectorStoreChunkingStrategy chunkingStrategy = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
 
@@ -101,7 +101,7 @@ namespace Azure.AI.Agents.Persistent
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="CreateVectorStoreFileBatchAsync(string,IEnumerable{string},IEnumerable{VectorStoreDataSource},VectorStoreChunkingStrategyRequest,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="CreateVectorStoreFileBatchAsync(string,IEnumerable{string},IEnumerable{VectorStoreDataSource},VectorStoreChunkingStrategy,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -142,7 +142,7 @@ namespace Azure.AI.Agents.Persistent
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="CreateVectorStoreFileBatch(string,IEnumerable{string},IEnumerable{VectorStoreDataSource},VectorStoreChunkingStrategyRequest,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="CreateVectorStoreFileBatch(string,IEnumerable{string},IEnumerable{VectorStoreDataSource},VectorStoreChunkingStrategy,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -470,6 +470,7 @@ namespace Azure.AI.Agents.Persistent
             {
                 uri.AppendQuery("filter", filter, true);
             }
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (limit != null)
             {
                 uri.AppendQuery("limit", limit.Value, true);

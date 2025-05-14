@@ -26,7 +26,7 @@ OpenApiToolDefinition openapiTool = new(
     name: "get_weather",
     description: "Retrieve weather information for a location",
     spec: BinaryData.FromBytes(System.IO.File.ReadAllBytes(file_path)),
-    auth: oaiAuth,
+    openApiAuthentication: oaiAuth,
     defaultParams: ["format"]
 );
 
@@ -45,7 +45,7 @@ OpenApiToolDefinition openapiTool = new(
     name: "get_weather",
     description: "Retrieve weather information for a location",
     spec: BinaryData.FromBytes(System.IO.File.ReadAllBytes(file_path)),
-    auth: oaiAuth,
+    openApiAuthentication: oaiAuth,
     defaultParams: [ "format" ]
 );
 
@@ -62,7 +62,7 @@ PersistentAgent agent = await client.Administration.CreateAgentAsync(
 Synchronous sample:
 ```C# Snippet:AgentsOpenAPISyncHandlePollingWithRequiredAction
 PersistentAgentThread thread = client.Threads.CreateThread();
-ThreadMessage message = client.Messages.CreateMessage(
+PersistentThreadMessage message = client.Messages.CreateMessage(
     thread.Id,
     MessageRole.User,
     "What's the weather in Seattle?");
@@ -86,7 +86,7 @@ Assert.AreEqual(
 Asynchronous sample:
 ```C# Snippet:AgentsOpenAPIHandlePollingWithRequiredAction
 PersistentAgentThread thread = await client.Threads.CreateThreadAsync();
-ThreadMessage message = await client.Messages.CreateMessageAsync(
+PersistentThreadMessage message = await client.Messages.CreateMessageAsync(
     thread.Id,
     MessageRole.User,
     "What's the weather in Seattle?");
@@ -111,12 +111,12 @@ Assert.AreEqual(
 
 Synchronous sample:
 ```C# Snippet:AgentsOpenAPISync_Print
-Pageable<ThreadMessage> messages = client.Messages.GetMessages(
+Pageable<PersistentThreadMessage> messages = client.Messages.GetMessages(
     threadId: thread.Id,
     order: ListSortOrder.Ascending
 );
 
-foreach (ThreadMessage threadMessage in messages)
+foreach (PersistentThreadMessage threadMessage in messages)
 {
     Console.Write($"{threadMessage.CreatedAt:yyyy-MM-dd HH:mm:ss} - {threadMessage.Role,10}: ");
     foreach (MessageContent contentItem in threadMessage.ContentItems)
@@ -136,12 +136,12 @@ foreach (ThreadMessage threadMessage in messages)
 
 Asynchronous sample:
 ```C# Snippet:AgentsOpenAPI_Print
-AsyncPageable<ThreadMessage> messages = client.Messages.GetMessagesAsync(
+AsyncPageable<PersistentThreadMessage> messages = client.Messages.GetMessagesAsync(
     threadId: thread.Id,
     order: ListSortOrder.Ascending
 );
 
-await foreach (ThreadMessage threadMessage in messages)
+await foreach (PersistentThreadMessage threadMessage in messages)
 {
     Console.Write($"{threadMessage.CreatedAt:yyyy-MM-dd HH:mm:ss} - {threadMessage.Role,10}: ");
     foreach (MessageContent contentItem in threadMessage.ContentItems)

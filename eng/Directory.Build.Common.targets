@@ -27,10 +27,10 @@
     <Error Condition="'$(IsClientLibrary)' == 'true' and '$(PackageReleaseNotes)' != ''" Text="Do NOT set PackageReleaseNotes property in the project. Release notes are added automatically from package changelog" />
     <PropertyGroup>
       <DirectoryPartofPath>$(PackageRootDirectory.Replace($(RepoRoot), ''))</DirectoryPartofPath>
-      <PackageProjectUrl Condition="Exists('$(PackageRootDirectory)/README.md') and '$(SkipDevBuildNumber)' != 'true'">$([System.UriBuilder]::new($(RepositoryUrl)/blob/$(SourceRevisionId)/$(DirectoryPartofPath)README.md).Uri)</PackageProjectUrl>
-      <PackageProjectUrl Condition="Exists('$(PackageRootDirectory)/README.md') and '$(SkipDevBuildNumber)' == 'true'">$([System.UriBuilder]::new($(RepositoryUrl)/blob/$(PackageId)_$(Version)/$(DirectoryPartofPath)README.md).Uri)</PackageProjectUrl>
-      <PackageReleaseNotes Condition="Exists('$(PackageRootDirectory)/CHANGELOG.md') and '$(SkipDevBuildNumber)' != 'true'">$([System.UriBuilder]::new($(RepositoryUrl)/blob/$(SourceRevisionId)/$(DirectoryPartofPath)CHANGELOG.md).Uri)</PackageReleaseNotes>
-      <PackageReleaseNotes Condition="Exists('$(PackageRootDirectory)/CHANGELOG.md') and '$(SkipDevBuildNumber)' == 'true'">$([System.UriBuilder]::new($(RepositoryUrl)/blob/$(PackageId)_$(Version)/$(DirectoryPartofPath)CHANGELOG.md).Uri)</PackageReleaseNotes>
+      <PackageProjectUrl Condition="Exists('$(PackageRootDirectory)/README.md') and '$(SkipDevBuildNumber)' != 'true'">$([System.UriBuilder]::new($(RepositoryUrl)/blob/$(SourceRevisionId)/$(DirectoryPartofPath)/README.md).Uri)</PackageProjectUrl>
+      <PackageProjectUrl Condition="Exists('$(PackageRootDirectory)/README.md') and '$(SkipDevBuildNumber)' == 'true'">$([System.UriBuilder]::new($(RepositoryUrl)/blob/$(PackageId)_$(Version)/$(DirectoryPartofPath)/README.md).Uri)</PackageProjectUrl>
+      <PackageReleaseNotes Condition="Exists('$(PackageRootDirectory)/CHANGELOG.md') and '$(SkipDevBuildNumber)' != 'true'">$([System.UriBuilder]::new($(RepositoryUrl)/blob/$(SourceRevisionId)/$(DirectoryPartofPath)/CHANGELOG.md).Uri)</PackageReleaseNotes>
+      <PackageReleaseNotes Condition="Exists('$(PackageRootDirectory)/CHANGELOG.md') and '$(SkipDevBuildNumber)' == 'true'">$([System.UriBuilder]::new($(RepositoryUrl)/blob/$(PackageId)_$(Version)/$(DirectoryPartofPath)/CHANGELOG.md).Uri)</PackageReleaseNotes>
     </PropertyGroup>
   </Target>
 

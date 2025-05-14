@@ -36,7 +36,7 @@ public partial class Sample_PersistentAgents_Vector_Store_Batch_File_Search : Sa
         var filePath = GetFile();
         PersistentAgentsClient client = new(projectEndpoint, new DefaultAzureCredential());
 
-        VectorStore vectorStore = await client.VectorStores.CreateVectorStoreAsync(
+        PersistentAgentsVectorStore vectorStore = await client.VectorStores.CreateVectorStoreAsync(
             name: "sample_vector_store"
         );
 
@@ -46,7 +46,7 @@ public partial class Sample_PersistentAgents_Vector_Store_Batch_File_Search : Sa
             {file.Id, Path.GetFileName(file.Filename)}
         };
 
-        VectorStoreFileBatch uploadTask = await client.VectorStoreFileBatches.CreateVectorStoreFileBatchAsync(
+        VectorStoreFileBatch uploadTask = await client.VectorStores.CreateVectorStoreFileBatchAsync(
             vectorStoreId: vectorStore.Id,
             fileIds: [file.Id]
         );
@@ -66,7 +66,7 @@ public partial class Sample_PersistentAgents_Vector_Store_Batch_File_Search : Sa
         #region Snippet:AgentsVectorStoreBatchFileSearchAsyncThreadAndResponse
         PersistentAgentThread thread = await client.Threads.CreateThreadAsync();
 
-        ThreadMessage message = await client.Messages.CreateMessageAsync(
+        PersistentThreadMessage message = await client.Messages.CreateMessageAsync(
             threadId: thread.Id,
             role: MessageRole.User,
             content: "What feature does Smart Eyewear offer?"
@@ -88,7 +88,7 @@ public partial class Sample_PersistentAgents_Vector_Store_Batch_File_Search : Sa
             RunStatus.Completed,
             run.Status,
             run.LastError?.Message);
-        List<ThreadMessage> messages = await client.Messages.GetMessagesAsync(
+        List<PersistentThreadMessage> messages = await client.Messages.GetMessagesAsync(
             threadId: thread.Id,
             order: ListSortOrder.Ascending
         ).ToListAsync();
@@ -96,8 +96,8 @@ public partial class Sample_PersistentAgents_Vector_Store_Batch_File_Search : Sa
         #endregion
 
         #region Snippet:AgentsVectorStoreBatchFileSearchAsyncCleanup
-        VectorStoreDeletionStatus delTask = await client.VectorStores.DeleteVectorStoreAsync(vectorStore.Id);
-        if (delTask.Deleted)
+        bool delTask = await client.VectorStores.DeleteVectorStoreAsync(vectorStore.Id);
+        if (delTask)
         {
             Console.WriteLine($"Deleted vector store {vectorStore.Id}");
         }
@@ -124,7 +124,7 @@ public partial class Sample_PersistentAgents_Vector_Store_Batch_File_Search : Sa
         var filePath = GetFile();
         PersistentAgentsClient client = new(projectEndpoint, new DefaultAzureCredential());
 
-        VectorStore vectorStore = client.VectorStores.CreateVectorStore(
+        PersistentAgentsVectorStore vectorStore = client.VectorStores.CreateVectorStore(
             name: "sample_vector_store"
         );
 
@@ -134,7 +134,7 @@ public partial class Sample_PersistentAgents_Vector_Store_Batch_File_Search : Sa
             {file.Id, Path.GetFileName(file.Filename)}
         };
 
-        var uploadTask = client.VectorStoreFileBatches.CreateVectorStoreFileBatch(
+        var uploadTask = client.VectorStores.CreateVectorStoreFileBatch(
             vectorStoreId: vectorStore.Id,
             fileIds: [file.Id]
         );
@@ -154,7 +154,7 @@ public partial class Sample_PersistentAgents_Vector_Store_Batch_File_Search : Sa
         #region Snippet:AgentsVectorStoreBatchFileSearchThreadAndResponse
         PersistentAgentThread thread = client.Threads.CreateThread();
 
-        ThreadMessage message = client.Messages.CreateMessage(
+        PersistentThreadMessage message = client.Messages.CreateMessage(
             threadId: thread.Id,
             role: MessageRole.User,
             content: "What feature does Smart Eyewear offer?"
@@ -177,7 +177,7 @@ public partial class Sample_PersistentAgents_Vector_Store_Batch_File_Search : Sa
             RunStatus.Completed,
             run.Status,
             run.LastError?.Message);
-        Pageable<ThreadMessage> messages = client.Messages.GetMessages(
+        Pageable<PersistentThreadMessage> messages = client.Messages.GetMessages(
             threadId: thread.Id,
             order: ListSortOrder.Ascending
         );
@@ -185,8 +185,8 @@ public partial class Sample_PersistentAgents_Vector_Store_Batch_File_Search : Sa
         #endregion
 
         #region Snippet:AgentsVectorStoreBatchFileSearchCleanup
-        VectorStoreDeletionStatus delTask = client.VectorStores.DeleteVectorStore(vectorStore.Id);
-        if (delTask.Deleted)
+        bool delTask = client.VectorStores.DeleteVectorStore(vectorStore.Id);
+        if (delTask)
         {
             Console.WriteLine($"Deleted vector store {vectorStore.Id}");
         }
@@ -199,9 +199,9 @@ public partial class Sample_PersistentAgents_Vector_Store_Batch_File_Search : Sa
     }
 
     #region Snippet:AgentsVectorStoreBatchFileSearchParseResults
-    private static void WriteMessages(IEnumerable<ThreadMessage> messages, Dictionary<string, string> fileIds)
+    private static void WriteMessages(IEnumerable<PersistentThreadMessage> messages, Dictionary<string, string> fileIds)
     {
-        foreach (ThreadMessage threadMessage in messages)
+        foreach (PersistentThreadMessage threadMessage in messages)
         {
             Console.Write($"{threadMessage.CreatedAt:yyyy-MM-dd HH:mm:ss} - {threadMessage.Role,10}: ");
             foreach (MessageContent contentItem in threadMessage.ContentItems)

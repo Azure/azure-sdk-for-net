@@ -10,19 +10,21 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
+using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
+using MgmtTypeSpec.Models;
 
 namespace MgmtTypeSpec
 {
     /// <summary></summary>
     public partial class FooCollection : ArmCollection, IEnumerable<FooResource>, IAsyncEnumerable<FooResource>
     {
-        private ClientDiagnostics _fooClientDiagnostics;
-        private Foos _fooRestClient;
+        private readonly ClientDiagnostics _fooClientDiagnostics;
+        private readonly Foos _fooRestClient;
 
         /// <summary> Initializes a new instance of FooCollection for mocking. </summary>
         protected FooCollection()
@@ -36,7 +38,7 @@ namespace MgmtTypeSpec
         {
             _fooClientDiagnostics = new ClientDiagnostics("MgmtTypeSpec", FooResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(FooResource.ResourceType, out string fooApiVersion);
-            _fooRestClient = new Foos(Pipeline, Endpoint, fooApiVersion);
+            _fooRestClient = new Foos(_fooClientDiagnostics, Pipeline, Endpoint, fooApiVersion);
             ValidateResourceId(id);
         }
 
@@ -50,20 +52,296 @@ namespace MgmtTypeSpec
             }
         }
 
-        /// <summary> List Foo resources by resource group. </summary>
+        /// <summary> Create a Foo. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="fooName"> The name of the Foo. </param>
+        /// <param name="resource"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        public virtual Pageable<FooResource> GetAll(CancellationToken cancellationToken = default) => throw new NotImplementedException();
+        /// <exception cref="ArgumentNullException"> <paramref name="fooName"/> or <paramref name="resource"/> is null. </exception>
+        public virtual async Task<ArmOperation<FooResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string fooName, FooData resource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(fooName, nameof(fooName));
+            Argument.AssertNotNull(resource, nameof(resource));
+
+            using DiagnosticScope scope = _fooClientDiagnostics.CreateScope("FooCollection.CreateOrUpdateAsync");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                }
+                ;
+                HttpMessage message = _fooRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, resource, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<FooData> response = Response.FromValue((FooData)result, result);
+                MgmtTypeSpecArmOperation<FooResource> operation = new MgmtTypeSpecArmOperation<FooResource>(
+                    new FooOperationSource(Client),
+                    _fooClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response.GetRawResponse(),
+                    OperationFinalStateVia.AzureAsyncOperation);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Create a Foo. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="fooName"> The name of the Foo. </param>
+        /// <param name="resource"> Resource create parameters. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="fooName"/> or <paramref name="resource"/> is null. </exception>
+        public virtual ArmOperation<FooResource> CreateOrUpdate(WaitUntil waitUntil, string fooName, FooData resource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(fooName, nameof(fooName));
+            Argument.AssertNotNull(resource, nameof(resource));
+
+            using DiagnosticScope scope = _fooClientDiagnostics.CreateScope("FooCollection.CreateOrUpdate");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                }
+                ;
+                HttpMessage message = _fooRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, resource, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<FooData> response = Response.FromValue((FooData)result, result);
+                MgmtTypeSpecArmOperation<FooResource> operation = new MgmtTypeSpecArmOperation<FooResource>(
+                    new FooOperationSource(Client),
+                    _fooClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response.GetRawResponse(),
+                    OperationFinalStateVia.AzureAsyncOperation);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletion(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Get a Foo. </summary>
+        /// <param name="fooName"> The name of the Foo. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="fooName"/> is null. </exception>
+        public virtual async Task<Response<FooResource>> GetAsync(string fooName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(fooName, nameof(fooName));
+
+            using DiagnosticScope scope = _fooClientDiagnostics.CreateScope("FooCollection.GetAsync");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                }
+                ;
+                HttpMessage message = _fooRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<FooData> response = Response.FromValue((FooData)result, result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return Response.FromValue(new FooResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Get a Foo. </summary>
+        /// <param name="fooName"> The name of the Foo. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="fooName"/> is null. </exception>
+        public virtual Response<FooResource> Get(string fooName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(fooName, nameof(fooName));
+
+            using DiagnosticScope scope = _fooClientDiagnostics.CreateScope("FooCollection.Get");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                }
+                ;
+                HttpMessage message = _fooRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<FooData> response = Response.FromValue((FooData)result, result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return Response.FromValue(new FooResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
 
         /// <summary> List Foo resources by resource group. </summary>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         public virtual AsyncPageable<FooResource> GetAllAsync(CancellationToken cancellationToken = default) => throw new NotImplementedException();
 
-        IEnumerator IEnumerable.GetEnumerator()
+        /// <summary> List Foo resources by resource group. </summary>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        public virtual Pageable<FooResource> GetAll(CancellationToken cancellationToken = default) => throw new NotImplementedException();
+
+        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <param name="fooName"> The name of the Foo. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="fooName"/> is null. </exception>
+        public virtual async Task<Response<bool>> ExistsAsync(string fooName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(fooName, nameof(fooName));
+
+            using DiagnosticScope scope = _fooClientDiagnostics.CreateScope("FooCollection.ExistsAsync");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                }
+                ;
+                HttpMessage message = _fooRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<FooData> response = Response.FromValue((FooData)result, result);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <param name="fooName"> The name of the Foo. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="fooName"/> is null. </exception>
+        public virtual Response<bool> Exists(string fooName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(fooName, nameof(fooName));
+
+            using DiagnosticScope scope = _fooClientDiagnostics.CreateScope("FooCollection.Exists");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                }
+                ;
+                HttpMessage message = _fooRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<FooData> response = Response.FromValue((FooData)result, result);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <param name="fooName"> The name of the Foo. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="fooName"/> is null. </exception>
+        public virtual async Task<NullableResponse<FooResource>> GetIfExistsAsync(string fooName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(fooName, nameof(fooName));
+
+            using DiagnosticScope scope = _fooClientDiagnostics.CreateScope("FooCollection.GetIfExistsAsync");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                }
+                ;
+                HttpMessage message = _fooRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<FooData> response = Response.FromValue((FooData)result, result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return Response.FromValue(new FooResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <param name="fooName"> The name of the Foo. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="fooName"/> is null. </exception>
+        public virtual NullableResponse<FooResource> GetIfExists(string fooName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(fooName, nameof(fooName));
+
+            using DiagnosticScope scope = _fooClientDiagnostics.CreateScope("FooCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                }
+                ;
+                HttpMessage message = _fooRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<FooData> response = Response.FromValue((FooData)result, result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return Response.FromValue(new FooResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        IEnumerator<FooResource> IEnumerable<FooResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
 
-        IEnumerator<FooResource> IEnumerable<FooResource>.GetEnumerator()
+        IEnumerator IEnumerable.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }

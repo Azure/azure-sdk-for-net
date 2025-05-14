@@ -5,11 +5,11 @@ using Autorest.CSharp.Core;
 using System.Threading;
 using System;
 using Azure.Core;
-using System.ClientModel;
+using System.Threading.Tasks;
 
 namespace Azure.AI.Agents.Persistent
 {
-    public partial class VectorStoreFiles
+    internal partial class VectorStoreFiles
     {
         /// <summary> Returns a list of vector store files. </summary>
         /// <param name="vectorStoreId"> Identifier of the vector store. </param>
@@ -133,6 +133,44 @@ namespace Azure.AI.Agents.Persistent
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetVectorStoreFilesRequest(vectorStoreId, filter, limit, order, after, before, context);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "VectorStoreFilesClient.GetVectorStoreFiles", "data", null, context);
+        }
+
+        /// <summary> Deletes a vector store file. This removes the file‐to‐store link (does not delete the file itself). </summary>
+        /// <param name="vectorStoreId"> Identifier of the vector store. </param>
+        /// <param name="fileId"> Identifier of the file. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="vectorStoreId"/> or <paramref name="fileId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> or <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<bool>> DeleteVectorStoreFileAsync(string vectorStoreId, string fileId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
+            Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
+
+            Response<InternalVectorStoreFileDeletionStatus> response = await InternalDeleteVectorStoreFileAsync(vectorStoreId, fileId, cancellationToken).ConfigureAwait(false);
+            bool isDeleted = response.GetRawResponse() != null
+                             && !response.GetRawResponse().IsError
+                             && response.Value != null
+                             && response.Value.Deleted;
+            return Response.FromValue(isDeleted, response.GetRawResponse());
+        }
+
+        /// <summary> Deletes a vector store file. This removes the file‐to‐store link (does not delete the file itself). </summary>
+        /// <param name="vectorStoreId"> Identifier of the vector store. </param>
+        /// <param name="fileId"> Identifier of the file. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="vectorStoreId"/> or <paramref name="fileId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> or <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<bool> DeleteVectorStoreFile(string vectorStoreId, string fileId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
+            Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
+
+            Response<InternalVectorStoreFileDeletionStatus> response = InternalDeleteVectorStoreFile(vectorStoreId, fileId, cancellationToken);
+            bool isDeleted = response.GetRawResponse() != null
+                             && !response.GetRawResponse().IsError
+                             && response.Value != null
+                             && response.Value.Deleted;
+            return Response.FromValue(isDeleted, response.GetRawResponse());
         }
     }
 }

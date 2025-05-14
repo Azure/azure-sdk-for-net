@@ -60,7 +60,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="chunkingStrategy"> The chunking strategy used to chunk the file(s). If not set, will use the auto strategy. Only applicable if file_ids is non-empty. </param>
         /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<VectorStore>> CreateVectorStoreAsync(IEnumerable<string> fileIds = null, string name = null, VectorStoreConfiguration storeConfiguration = null, VectorStoreExpirationPolicy expiresAfter = null, VectorStoreChunkingStrategyRequest chunkingStrategy = null, IReadOnlyDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PersistentAgentsVectorStore>> CreateVectorStoreAsync(IEnumerable<string> fileIds = null, string name = null, VectorStoreConfiguration storeConfiguration = null, VectorStoreExpirationPolicy expiresAfter = null, VectorStoreChunkingStrategy chunkingStrategy = null, IReadOnlyDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
         {
             CreateVectorStoreRequest createVectorStoreRequest = new CreateVectorStoreRequest(
                 fileIds?.ToList() as IReadOnlyList<string> ?? new ChangeTrackingList<string>(),
@@ -72,7 +72,7 @@ namespace Azure.AI.Agents.Persistent
                 null);
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await CreateVectorStoreAsync(createVectorStoreRequest.ToRequestContent(), context).ConfigureAwait(false);
-            return Response.FromValue(VectorStore.FromResponse(response), response);
+            return Response.FromValue(PersistentAgentsVectorStore.FromResponse(response), response);
         }
 
         /// <summary> Creates a vector store. </summary>
@@ -83,7 +83,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="chunkingStrategy"> The chunking strategy used to chunk the file(s). If not set, will use the auto strategy. Only applicable if file_ids is non-empty. </param>
         /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<VectorStore> CreateVectorStore(IEnumerable<string> fileIds = null, string name = null, VectorStoreConfiguration storeConfiguration = null, VectorStoreExpirationPolicy expiresAfter = null, VectorStoreChunkingStrategyRequest chunkingStrategy = null, IReadOnlyDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
+        public virtual Response<PersistentAgentsVectorStore> CreateVectorStore(IEnumerable<string> fileIds = null, string name = null, VectorStoreConfiguration storeConfiguration = null, VectorStoreExpirationPolicy expiresAfter = null, VectorStoreChunkingStrategy chunkingStrategy = null, IReadOnlyDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
         {
             CreateVectorStoreRequest createVectorStoreRequest = new CreateVectorStoreRequest(
                 fileIds?.ToList() as IReadOnlyList<string> ?? new ChangeTrackingList<string>(),
@@ -95,7 +95,7 @@ namespace Azure.AI.Agents.Persistent
                 null);
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = CreateVectorStore(createVectorStoreRequest.ToRequestContent(), context);
-            return Response.FromValue(VectorStore.FromResponse(response), response);
+            return Response.FromValue(PersistentAgentsVectorStore.FromResponse(response), response);
         }
 
         /// <summary>
@@ -108,7 +108,7 @@ namespace Azure.AI.Agents.Persistent
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="CreateVectorStoreAsync(IEnumerable{string},string,VectorStoreConfiguration,VectorStoreExpirationPolicy,VectorStoreChunkingStrategyRequest,IReadOnlyDictionary{string,string},CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="CreateVectorStoreAsync(IEnumerable{string},string,VectorStoreConfiguration,VectorStoreExpirationPolicy,VectorStoreChunkingStrategy,IReadOnlyDictionary{string,string},CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -146,7 +146,7 @@ namespace Azure.AI.Agents.Persistent
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="CreateVectorStore(IEnumerable{string},string,VectorStoreConfiguration,VectorStoreExpirationPolicy,VectorStoreChunkingStrategyRequest,IReadOnlyDictionary{string,string},CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="CreateVectorStore(IEnumerable{string},string,VectorStoreConfiguration,VectorStoreExpirationPolicy,VectorStoreChunkingStrategy,IReadOnlyDictionary{string,string},CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -179,13 +179,13 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vectorStoreId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<VectorStore>> GetVectorStoreAsync(string vectorStoreId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PersistentAgentsVectorStore>> GetVectorStoreAsync(string vectorStoreId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetVectorStoreAsync(vectorStoreId, context).ConfigureAwait(false);
-            return Response.FromValue(VectorStore.FromResponse(response), response);
+            return Response.FromValue(PersistentAgentsVectorStore.FromResponse(response), response);
         }
 
         /// <summary> Returns the vector store object matching the specified ID. </summary>
@@ -193,13 +193,13 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vectorStoreId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<VectorStore> GetVectorStore(string vectorStoreId, CancellationToken cancellationToken = default)
+        public virtual Response<PersistentAgentsVectorStore> GetVectorStore(string vectorStoreId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetVectorStore(vectorStoreId, context);
-            return Response.FromValue(VectorStore.FromResponse(response), response);
+            return Response.FromValue(PersistentAgentsVectorStore.FromResponse(response), response);
         }
 
         /// <summary>
@@ -288,14 +288,14 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vectorStoreId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<VectorStore>> ModifyVectorStoreAsync(string vectorStoreId, string name = null, VectorStoreExpirationPolicy expiresAfter = null, IReadOnlyDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PersistentAgentsVectorStore>> ModifyVectorStoreAsync(string vectorStoreId, string name = null, VectorStoreExpirationPolicy expiresAfter = null, IReadOnlyDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
 
             ModifyVectorStoreRequest modifyVectorStoreRequest = new ModifyVectorStoreRequest(name, expiresAfter, metadata ?? new ChangeTrackingDictionary<string, string>(), null);
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await ModifyVectorStoreAsync(vectorStoreId, modifyVectorStoreRequest.ToRequestContent(), context).ConfigureAwait(false);
-            return Response.FromValue(VectorStore.FromResponse(response), response);
+            return Response.FromValue(PersistentAgentsVectorStore.FromResponse(response), response);
         }
 
         /// <summary> Modifies an existing vector store. </summary>
@@ -306,14 +306,14 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vectorStoreId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<VectorStore> ModifyVectorStore(string vectorStoreId, string name = null, VectorStoreExpirationPolicy expiresAfter = null, IReadOnlyDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
+        public virtual Response<PersistentAgentsVectorStore> ModifyVectorStore(string vectorStoreId, string name = null, VectorStoreExpirationPolicy expiresAfter = null, IReadOnlyDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
 
             ModifyVectorStoreRequest modifyVectorStoreRequest = new ModifyVectorStoreRequest(name, expiresAfter, metadata ?? new ChangeTrackingDictionary<string, string>(), null);
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = ModifyVectorStore(vectorStoreId, modifyVectorStoreRequest.ToRequestContent(), context);
-            return Response.FromValue(VectorStore.FromResponse(response), response);
+            return Response.FromValue(PersistentAgentsVectorStore.FromResponse(response), response);
         }
 
         /// <summary>
@@ -403,13 +403,13 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vectorStoreId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<VectorStoreDeletionStatus>> DeleteVectorStoreAsync(string vectorStoreId, CancellationToken cancellationToken = default)
+        internal virtual async Task<Response<InternalVectorStoreDeletionStatus>> InternalDeleteVectorStoreAsync(string vectorStoreId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await DeleteVectorStoreAsync(vectorStoreId, context).ConfigureAwait(false);
-            return Response.FromValue(VectorStoreDeletionStatus.FromResponse(response), response);
+            Response response = await InternalDeleteVectorStoreAsync(vectorStoreId, context).ConfigureAwait(false);
+            return Response.FromValue(InternalVectorStoreDeletionStatus.FromResponse(response), response);
         }
 
         /// <summary> Deletes the vector store object matching the specified ID. </summary>
@@ -417,13 +417,13 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vectorStoreId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<VectorStoreDeletionStatus> DeleteVectorStore(string vectorStoreId, CancellationToken cancellationToken = default)
+        internal virtual Response<InternalVectorStoreDeletionStatus> InternalDeleteVectorStore(string vectorStoreId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = DeleteVectorStore(vectorStoreId, context);
-            return Response.FromValue(VectorStoreDeletionStatus.FromResponse(response), response);
+            Response response = InternalDeleteVectorStore(vectorStoreId, context);
+            return Response.FromValue(InternalVectorStoreDeletionStatus.FromResponse(response), response);
         }
 
         /// <summary>
@@ -436,7 +436,7 @@ namespace Azure.AI.Agents.Persistent
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="DeleteVectorStoreAsync(string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="InternalDeleteVectorStoreAsync(string,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -447,15 +447,15 @@ namespace Azure.AI.Agents.Persistent
         /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> DeleteVectorStoreAsync(string vectorStoreId, RequestContext context)
+        internal virtual async Task<Response> InternalDeleteVectorStoreAsync(string vectorStoreId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
 
-            using var scope = ClientDiagnostics.CreateScope("VectorStores.DeleteVectorStore");
+            using var scope = ClientDiagnostics.CreateScope("VectorStores.InternalDeleteVectorStore");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteVectorStoreRequest(vectorStoreId, context);
+                using HttpMessage message = CreateInternalDeleteVectorStoreRequest(vectorStoreId, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -475,7 +475,7 @@ namespace Azure.AI.Agents.Persistent
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="DeleteVectorStore(string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="InternalDeleteVectorStore(string,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -486,15 +486,15 @@ namespace Azure.AI.Agents.Persistent
         /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response DeleteVectorStore(string vectorStoreId, RequestContext context)
+        internal virtual Response InternalDeleteVectorStore(string vectorStoreId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
 
-            using var scope = ClientDiagnostics.CreateScope("VectorStores.DeleteVectorStore");
+            using var scope = ClientDiagnostics.CreateScope("VectorStores.InternalDeleteVectorStore");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteVectorStoreRequest(vectorStoreId, context);
+                using HttpMessage message = CreateInternalDeleteVectorStoreRequest(vectorStoreId, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -582,7 +582,7 @@ namespace Azure.AI.Agents.Persistent
             return message;
         }
 
-        internal HttpMessage CreateDeleteVectorStoreRequest(string vectorStoreId, RequestContext context)
+        internal HttpMessage CreateInternalDeleteVectorStoreRequest(string vectorStoreId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;

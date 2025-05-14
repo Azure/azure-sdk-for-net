@@ -50,18 +50,18 @@ namespace Azure.AI.Agents.Persistent
         private const string ThreadRunCancellingValue = "thread.run.cancelling";
         private const string ThreadRunCancelledValue = "thread.run.cancelled";
         private const string ThreadRunExpiredValue = "thread.run.expired";
-        private const string ThreadRunStepCreatedValue = "thread.run.step.created";
-        private const string ThreadRunStepInProgressValue = "thread.run.step.in_progress";
-        private const string ThreadRunStepDeltaValue = "thread.run.step.delta";
-        private const string ThreadRunStepCompletedValue = "thread.run.step.completed";
-        private const string ThreadRunStepFailedValue = "thread.run.step.failed";
-        private const string ThreadRunStepCancelledValue = "thread.run.step.cancelled";
-        private const string ThreadRunStepExpiredValue = "thread.run.step.expired";
-        private const string ThreadMessageCreatedValue = "thread.message.created";
-        private const string ThreadMessageInProgressValue = "thread.message.in_progress";
-        private const string ThreadMessageDeltaValue = "thread.message.delta";
-        private const string ThreadMessageCompletedValue = "thread.message.completed";
-        private const string ThreadMessageIncompleteValue = "thread.message.incomplete";
+        private const string RunStepCreatedValue = "thread.run.step.created";
+        private const string RunStepInProgressValue = "thread.run.step.in_progress";
+        private const string RunStepDeltaValue = "thread.run.step.delta";
+        private const string RunStepCompletedValue = "thread.run.step.completed";
+        private const string RunStepFailedValue = "thread.run.step.failed";
+        private const string RunStepCancelledValue = "thread.run.step.cancelled";
+        private const string RunStepExpiredValue = "thread.run.step.expired";
+        private const string MessageCreatedValue = "thread.message.created";
+        private const string MessageInProgressValue = "thread.message.in_progress";
+        private const string MessageDeltaValue = "thread.message.delta";
+        private const string MessageCompletedValue = "thread.message.completed";
+        private const string MessageIncompleteValue = "thread.message.incomplete";
         private const string ErrorValue = "error";
         private const string DoneValue = "done";
 
@@ -88,29 +88,29 @@ namespace Azure.AI.Agents.Persistent
         /// <summary> Event sent when a run is expired. The data of this event is of type ThreadRun. </summary>
         public static PersistentAgentStreamEvent ThreadRunExpired { get; } = new PersistentAgentStreamEvent(ThreadRunExpiredValue);
         /// <summary> Event sent when a new thread run step is created. The data of this event is of type RunStep. </summary>
-        public static PersistentAgentStreamEvent ThreadRunStepCreated { get; } = new PersistentAgentStreamEvent(ThreadRunStepCreatedValue);
+        public static PersistentAgentStreamEvent RunStepCreated { get; } = new PersistentAgentStreamEvent(RunStepCreatedValue);
         /// <summary> Event sent when a run step moves to `in_progress` status. The data of this event is of type RunStep. </summary>
-        public static PersistentAgentStreamEvent ThreadRunStepInProgress { get; } = new PersistentAgentStreamEvent(ThreadRunStepInProgressValue);
+        public static PersistentAgentStreamEvent RunStepInProgress { get; } = new PersistentAgentStreamEvent(RunStepInProgressValue);
         /// <summary> Event sent when a run step is being streamed. The data of this event is of type RunStepDeltaChunk. </summary>
-        public static PersistentAgentStreamEvent ThreadRunStepDelta { get; } = new PersistentAgentStreamEvent(ThreadRunStepDeltaValue);
+        public static PersistentAgentStreamEvent RunStepDelta { get; } = new PersistentAgentStreamEvent(RunStepDeltaValue);
         /// <summary> Event sent when a run step is completed. The data of this event is of type RunStep. </summary>
-        public static PersistentAgentStreamEvent ThreadRunStepCompleted { get; } = new PersistentAgentStreamEvent(ThreadRunStepCompletedValue);
+        public static PersistentAgentStreamEvent RunStepCompleted { get; } = new PersistentAgentStreamEvent(RunStepCompletedValue);
         /// <summary> Event sent when a run step fails. The data of this event is of type RunStep. </summary>
-        public static PersistentAgentStreamEvent ThreadRunStepFailed { get; } = new PersistentAgentStreamEvent(ThreadRunStepFailedValue);
+        public static PersistentAgentStreamEvent RunStepFailed { get; } = new PersistentAgentStreamEvent(RunStepFailedValue);
         /// <summary> Event sent when a run step is cancelled. The data of this event is of type RunStep. </summary>
-        public static PersistentAgentStreamEvent ThreadRunStepCancelled { get; } = new PersistentAgentStreamEvent(ThreadRunStepCancelledValue);
+        public static PersistentAgentStreamEvent RunStepCancelled { get; } = new PersistentAgentStreamEvent(RunStepCancelledValue);
         /// <summary> Event sent when a run step is expired. The data of this event is of type RunStep. </summary>
-        public static PersistentAgentStreamEvent ThreadRunStepExpired { get; } = new PersistentAgentStreamEvent(ThreadRunStepExpiredValue);
+        public static PersistentAgentStreamEvent RunStepExpired { get; } = new PersistentAgentStreamEvent(RunStepExpiredValue);
         /// <summary> Event sent when a new message is created. The data of this event is of type ThreadMessage. </summary>
-        public static PersistentAgentStreamEvent ThreadMessageCreated { get; } = new PersistentAgentStreamEvent(ThreadMessageCreatedValue);
+        public static PersistentAgentStreamEvent MessageCreated { get; } = new PersistentAgentStreamEvent(MessageCreatedValue);
         /// <summary> Event sent when a message moves to `in_progress` status. The data of this event is of type ThreadMessage. </summary>
-        public static PersistentAgentStreamEvent ThreadMessageInProgress { get; } = new PersistentAgentStreamEvent(ThreadMessageInProgressValue);
+        public static PersistentAgentStreamEvent MessageInProgress { get; } = new PersistentAgentStreamEvent(MessageInProgressValue);
         /// <summary> Event sent when a message is being streamed. The data of this event is of type MessageDeltaChunk. </summary>
-        public static PersistentAgentStreamEvent ThreadMessageDelta { get; } = new PersistentAgentStreamEvent(ThreadMessageDeltaValue);
+        public static PersistentAgentStreamEvent MessageDelta { get; } = new PersistentAgentStreamEvent(MessageDeltaValue);
         /// <summary> Event sent when a message is completed. The data of this event is of type ThreadMessage. </summary>
-        public static PersistentAgentStreamEvent ThreadMessageCompleted { get; } = new PersistentAgentStreamEvent(ThreadMessageCompletedValue);
+        public static PersistentAgentStreamEvent MessageCompleted { get; } = new PersistentAgentStreamEvent(MessageCompletedValue);
         /// <summary> Event sent before a message is completed. The data of this event is of type ThreadMessage. </summary>
-        public static PersistentAgentStreamEvent ThreadMessageIncomplete { get; } = new PersistentAgentStreamEvent(ThreadMessageIncompleteValue);
+        public static PersistentAgentStreamEvent MessageIncomplete { get; } = new PersistentAgentStreamEvent(MessageIncompleteValue);
         /// <summary> Event sent when an error occurs, such as an internal server error or a timeout. </summary>
         public static PersistentAgentStreamEvent Error { get; } = new PersistentAgentStreamEvent(ErrorValue);
         /// <summary> Event sent when the stream is done. </summary>

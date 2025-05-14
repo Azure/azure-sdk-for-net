@@ -129,7 +129,7 @@ public static partial class PersistentAgentsModelFactory
     /// <param name="toolResources"> Override the tools the agent can use for this run. This is useful for modifying the behavior on a per-run basis. </param>
     /// <param name="parallelToolCalls"> Determines if tools can be executed in parallel within the run. </param>
     /// <returns> A new <see cref="Azure.AI.Agents.Persistent.ThreadRun"/> instance for mocking. </returns>
-    public static ThreadRun ThreadRun(string id = null, string threadId = null, string agentId = null, RunStatus status = default, RequiredAction requiredAction = null, RunError lastError = null, string model = null, string instructions = null, IEnumerable<ToolDefinition> tools = null, DateTimeOffset createdAt = default, DateTimeOffset? expiresAt = null, DateTimeOffset? startedAt = null, DateTimeOffset? completedAt = null, DateTimeOffset? cancelledAt = null, DateTimeOffset? failedAt = null, IncompleteRunDetails incompleteDetails = default, RunCompletionUsage usage = default, float? temperature = null, float? topP = null, int? maxPromptTokens = null, int? maxCompletionTokens = null, TruncationObject truncationStrategy = null, BinaryData toolChoice = null, BinaryData responseFormat = null, IReadOnlyDictionary<string, string> metadata = null, UpdateToolResourcesOptions toolResources = null, bool? parallelToolCalls = null)
+    public static ThreadRun ThreadRun(string id = null, string threadId = null, string agentId = null, RunStatus status = default, RequiredAction requiredAction = null, RunError lastError = null, string model = null, string instructions = null, IEnumerable<ToolDefinition> tools = null, DateTimeOffset createdAt = default, DateTimeOffset? expiresAt = null, DateTimeOffset? startedAt = null, DateTimeOffset? completedAt = null, DateTimeOffset? cancelledAt = null, DateTimeOffset? failedAt = null, IncompleteRunDetails incompleteDetails = default, RunCompletionUsage usage = default, float? temperature = null, float? topP = null, int? maxPromptTokens = null, int? maxCompletionTokens = null, Truncation truncationStrategy = null, BinaryData toolChoice = null, BinaryData responseFormat = null, IReadOnlyDictionary<string, string> metadata = null, ToolResources toolResources = null, bool? parallelToolCalls = null)
     {
         tools ??= new List<ToolDefinition>();
         metadata ??= new Dictionary<string, string>();
@@ -173,7 +173,7 @@ public static partial class PersistentAgentsModelFactory
         return new RunStep(id, @object: null, type, agentId, threadId, runId, status, stepDetails, lastError, createdAt, expiredAt, completedAt, cancelledAt, failedAt, usage, metadata, serializedAdditionalRawData: null);
     }
 
-    /// <summary> Initializes a new instance of <see cref="Azure.AI.Agents.Persistent.ThreadMessage"/>. </summary>
+    /// <summary> Initializes a new instance of <see cref="Azure.AI.Agents.Persistent.PersistentThreadMessage"/>. </summary>
     /// <param name="id"> The identifier, which can be referenced in API endpoints. </param>
     /// <param name="createdAt"> The Unix timestamp, in seconds, representing when this object was created. </param>
     /// <param name="threadId"> The ID of the thread that this message belongs to. </param>
@@ -187,14 +187,14 @@ public static partial class PersistentAgentsModelFactory
     /// <param name="runId"> If applicable, the ID of the run associated with the authoring of this message. </param>
     /// <param name="attachments"> A list of files attached to the message, and the tools they were added to. </param>
     /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. </param>
-    /// <returns> A new <see cref="Azure.AI.Agents.Persistent.ThreadMessage"/> instance for mocking. </returns>
-    public static ThreadMessage ThreadMessage(string id = null, DateTimeOffset createdAt = default, string threadId = null, MessageStatus status = default, MessageIncompleteDetails incompleteDetails = null, DateTimeOffset? completedAt = null, DateTimeOffset? incompleteAt = null, MessageRole role = default, IEnumerable<MessageContent> contentItems = null, string agentId = null, string runId = null, IEnumerable<MessageAttachment> attachments = null, IDictionary<string, string> metadata = null)
+    /// <returns> A new <see cref="Azure.AI.Agents.Persistent.PersistentThreadMessage"/> instance for mocking. </returns>
+    public static PersistentThreadMessage ThreadMessage(string id = null, DateTimeOffset createdAt = default, string threadId = null, MessageStatus status = default, MessageIncompleteDetails incompleteDetails = null, DateTimeOffset? completedAt = null, DateTimeOffset? incompleteAt = null, MessageRole role = default, IEnumerable<MessageContent> contentItems = null, string agentId = null, string runId = null, IEnumerable<MessageAttachment> attachments = null, IDictionary<string, string> metadata = null)
     {
         contentItems ??= new List<MessageContent>();
         attachments ??= new List<MessageAttachment>();
         metadata ??= new Dictionary<string, string>();
 
-        return new ThreadMessage(id, @object: null, createdAt, threadId, status, incompleteDetails, completedAt, incompleteAt, role, contentItems?.ToList(), agentId, runId, attachments?.ToList(), (IReadOnlyDictionary<string, string>)metadata, serializedAdditionalRawData: null);
+        return new PersistentThreadMessage(id, @object: null, createdAt, threadId, status, incompleteDetails, completedAt, incompleteAt, role, contentItems?.ToList(), agentId, runId, attachments?.ToList(), (IReadOnlyDictionary<string, string>)metadata, serializedAdditionalRawData: null);
     }
 
     public static RequiredFunctionToolCall RequiredFunctionToolCall(string toolCallId, string functionName, string functionArguments)

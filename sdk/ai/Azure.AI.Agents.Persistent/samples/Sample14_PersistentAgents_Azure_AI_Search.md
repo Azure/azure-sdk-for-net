@@ -19,7 +19,7 @@ var connectionID = System.Environment.GetEnvironmentVariable("AZURE_AI_CONNECTIO
 
 Synchronous sample:
 ```C# Snippet:AgentsCreateAgentWithAzureAISearchTool_Sync
-AzureAISearchResource searchResource = new(
+AzureAISearchToolResource searchResource = new(
     connectionID,
     "sample_index",
     5,
@@ -43,7 +43,7 @@ PersistentAgent agent = client.Administration.CreateAgent(
 
 Asynchronous sample:
 ```C# Snippet:AgentsCreateAgentWithAzureAISearchTool
-AzureAISearchResource searchResource = new(
+AzureAISearchToolResource searchResource = new(
     connectionID,
     "sample_index",
     5,
@@ -73,7 +73,7 @@ Synchronous sample:
 PersistentAgentThread thread = client.Threads.CreateThread();
 
 // Create message to thread
-ThreadMessage message = client.Messages.CreateMessage(
+PersistentThreadMessage message = client.Messages.CreateMessage(
     thread.Id,
     MessageRole.User,
     "What is the temperature rating of the cozynights sleeping bag?");
@@ -101,7 +101,7 @@ Asynchronous sample:
 PersistentAgentThread thread = await client.Threads.CreateThreadAsync();
 
 // Create message to thread
-ThreadMessage message = await client.Messages.CreateMessageAsync(
+PersistentThreadMessage message = await client.Messages.CreateMessageAsync(
     thread.Id,
     MessageRole.User,
     "What is the temperature rating of the cozynights sleeping bag?");
@@ -127,12 +127,12 @@ Assert.AreEqual(
 
 Synchronous sample:
 ```C# Snippet:AgentsPopulateReferencesAgentWithAzureAISearchTool_Sync
-Pageable<ThreadMessage> messages = client.Messages.GetMessages(
+Pageable<PersistentThreadMessage> messages = client.Messages.GetMessages(
     threadId: thread.Id,
     order: ListSortOrder.Ascending
 );
 
-foreach (ThreadMessage threadMessage in messages)
+foreach (PersistentThreadMessage threadMessage in messages)
 {
     Console.Write($"{threadMessage.CreatedAt:yyyy-MM-dd HH:mm:ss} - {threadMessage.Role,10}: ");
     foreach (MessageContent contentItem in threadMessage.ContentItems)
@@ -145,11 +145,11 @@ foreach (ThreadMessage threadMessage in messages)
                 string annotatedText = textItem.Text;
                 foreach (MessageTextAnnotation annotation in textItem.Annotations)
                 {
-                    if (annotation is MessageTextUrlCitationAnnotation urlAnnotation)
+                    if (annotation is MessageTextUriCitationAnnotation uriAnnotation)
                     {
                         annotatedText = annotatedText.Replace(
-                            urlAnnotation.Text,
-                            $" [see {urlAnnotation.UrlCitation.Title}] ({urlAnnotation.UrlCitation.Url})");
+                            uriAnnotation.Text,
+                            $" [see {uriAnnotation.UriCitation.Title}] ({uriAnnotation.UriCitation.Uri})");
                     }
                 }
                 Console.Write(annotatedText);
@@ -170,12 +170,12 @@ foreach (ThreadMessage threadMessage in messages)
 
 Asynchronous sample:
 ```C# Snippet:AgentsPopulateReferencesAgentWithAzureAISearchTool
-AsyncPageable<ThreadMessage> messages = client.Messages.GetMessagesAsync(
+AsyncPageable<PersistentThreadMessage> messages = client.Messages.GetMessagesAsync(
     threadId: thread.Id,
     order: ListSortOrder.Ascending
 );
 
-await foreach (ThreadMessage threadMessage in messages)
+await foreach (PersistentThreadMessage threadMessage in messages)
 {
     Console.Write($"{threadMessage.CreatedAt:yyyy-MM-dd HH:mm:ss} - {threadMessage.Role,10}: ");
     foreach (MessageContent contentItem in threadMessage.ContentItems)
@@ -188,11 +188,11 @@ await foreach (ThreadMessage threadMessage in messages)
                 string annotatedText = textItem.Text;
                 foreach (MessageTextAnnotation annotation in textItem.Annotations)
                 {
-                    if (annotation is MessageTextUrlCitationAnnotation urlAnnotation)
+                    if (annotation is MessageTextUriCitationAnnotation uriAnnotation)
                     {
                         annotatedText = annotatedText.Replace(
-                            urlAnnotation.Text,
-                            $" [see {urlAnnotation.UrlCitation.Title}] ({urlAnnotation.UrlCitation.Url})");
+                            uriAnnotation.Text,
+                            $" [see {uriAnnotation.UriCitation.Title}] ({uriAnnotation.UriCitation.Uri})");
                     }
                 }
                 Console.Write(annotatedText);

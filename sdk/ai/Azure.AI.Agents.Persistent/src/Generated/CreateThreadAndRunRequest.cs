@@ -65,7 +65,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="overrideTools">
         /// The overridden list of enabled tools the agent should use to run the thread.
         /// Please note <see cref="ToolDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AzureAISearchToolDefinition"/>, <see cref="AzureFunctionToolDefinition"/>, <see cref="BingCustomSearchToolDefinition"/>, <see cref="BingGroundingToolDefinition"/>, <see cref="CodeInterpreterToolDefinition"/>, <see cref="ConnectedAgentToolDefinition"/>, <see cref="MicrosoftFabricToolDefinition"/>, <see cref="FileSearchToolDefinition"/>, <see cref="FunctionToolDefinition"/>, <see cref="OpenApiToolDefinition"/> and <see cref="SharepointToolDefinition"/>.
+        /// The available derived classes include <see cref="AzureAISearchToolDefinition"/>, <see cref="AzureFunctionToolDefinition"/>, <see cref="BingGroundingToolDefinition"/>, <see cref="CodeInterpreterToolDefinition"/>, <see cref="ConnectedAgentToolDefinition"/>, <see cref="FileSearchToolDefinition"/>, <see cref="FunctionToolDefinition"/> and <see cref="OpenApiToolDefinition"/>.
         /// </param>
         /// <param name="toolResources"> Override the tools the agent can use for this run. This is useful for modifying the behavior on a per-run basis. </param>
         /// <param name="stream">
@@ -99,7 +99,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="parallelToolCalls"> If `true` functions will run in parallel during tool use. </param>
         /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CreateThreadAndRunRequest(string assistantId, PersistentAgentThreadCreationOptions thread, string overrideModelName, string overrideInstructions, IReadOnlyList<ToolDefinition> overrideTools, UpdateToolResourcesOptions toolResources, bool? stream, float? temperature, float? topP, int? maxPromptTokens, int? maxCompletionTokens, TruncationObject truncationStrategy, BinaryData toolChoice, BinaryData responseFormat, bool? parallelToolCalls, IReadOnlyDictionary<string, string> metadata, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CreateThreadAndRunRequest(string assistantId, PersistentAgentThreadCreationOptions thread, string overrideModelName, string overrideInstructions, IReadOnlyList<ToolDefinition> overrideTools, ToolResources toolResources, bool? stream, float? temperature, float? topP, int? maxPromptTokens, int? maxCompletionTokens, Truncation truncationStrategy, BinaryData toolChoice, BinaryData responseFormat, bool? parallelToolCalls, IReadOnlyDictionary<string, string> metadata, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AssistantId = assistantId;
             Thread = thread;
@@ -136,11 +136,11 @@ namespace Azure.AI.Agents.Persistent
         /// <summary>
         /// The overridden list of enabled tools the agent should use to run the thread.
         /// Please note <see cref="ToolDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AzureAISearchToolDefinition"/>, <see cref="AzureFunctionToolDefinition"/>, <see cref="BingCustomSearchToolDefinition"/>, <see cref="BingGroundingToolDefinition"/>, <see cref="CodeInterpreterToolDefinition"/>, <see cref="ConnectedAgentToolDefinition"/>, <see cref="MicrosoftFabricToolDefinition"/>, <see cref="FileSearchToolDefinition"/>, <see cref="FunctionToolDefinition"/>, <see cref="OpenApiToolDefinition"/> and <see cref="SharepointToolDefinition"/>.
+        /// The available derived classes include <see cref="AzureAISearchToolDefinition"/>, <see cref="AzureFunctionToolDefinition"/>, <see cref="BingGroundingToolDefinition"/>, <see cref="CodeInterpreterToolDefinition"/>, <see cref="ConnectedAgentToolDefinition"/>, <see cref="FileSearchToolDefinition"/>, <see cref="FunctionToolDefinition"/> and <see cref="OpenApiToolDefinition"/>.
         /// </summary>
         public IReadOnlyList<ToolDefinition> OverrideTools { get; }
         /// <summary> Override the tools the agent can use for this run. This is useful for modifying the behavior on a per-run basis. </summary>
-        public UpdateToolResourcesOptions ToolResources { get; }
+        public ToolResources ToolResources { get; }
         /// <summary>
         /// If `true`, returns a stream of events that happen during the Run as server-sent events,
         /// terminating when the Run enters a terminal state with a `data: [DONE]` message.
@@ -172,7 +172,7 @@ namespace Azure.AI.Agents.Persistent
         /// </summary>
         public int? MaxCompletionTokens { get; }
         /// <summary> The strategy to use for dropping messages as the context windows moves forward. </summary>
-        public TruncationObject TruncationStrategy { get; }
+        public Truncation TruncationStrategy { get; }
         /// <summary>
         /// Controls whether or not and which tool is called by the model.
         /// <para>
@@ -237,7 +237,7 @@ namespace Azure.AI.Agents.Persistent
         /// <description><see cref="PersistentAgentsResponseFormatMode"/></description>
         /// </item>
         /// <item>
-        /// <description><see cref="PersistentAgentsResponseFormat"/></description>
+        /// <description><see cref="InternalPersistentAgentsResponseFormat"/></description>
         /// </item>
         /// <item>
         /// <description><see cref="ResponseFormatJsonSchemaType"/></description>
