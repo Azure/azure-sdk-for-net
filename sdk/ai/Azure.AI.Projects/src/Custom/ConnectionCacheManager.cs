@@ -72,6 +72,9 @@ namespace Azure.AI.Projects
                 case "Azure.Search.Documents.Indexes.SearchIndexerClient":
                     return ConnectionType.AzureAISearch;
 
+                case "Azure.AI.Inference.ChatCompletionsClient":
+                    return new ConnectionType("Inference");// ConnectionType.ChatCompletionsClient;
+
                 default:
                     throw new ArgumentException($"Unknown connection type for ID: {connectionId}");
             }
