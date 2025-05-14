@@ -5,6 +5,7 @@ using System;
 using System.Buffers;
 using System.Buffers.Binary;
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 
@@ -149,17 +150,32 @@ namespace Azure.Messaging.EventHubs.Core
                                         out uint hash1,
                                         out uint hash2)
         {
-            uint a, b, c;
+            uint len = (uint)data.Length;
+            uint a = 0xDEADBEEF + len + seed1;
+            uint b = a;
+            uint c = a + seed2;
 
-            a = b = c = (uint)(0xdeadbeef + data.Length + seed1);
-            c += seed2;
+            int tripletCount = data.Length > 12 ? (data.Length - 1) / 12 : 0;
 
-            int index = 0, size = data.Length;
-            while (size > 12)
+            int regionBytes = tripletCount * 12; // must be divisible by 4
+            ReadOnlySpan<byte> region = data.Slice(0, regionBytes);
+            ReadOnlySpan<uint> words = MemoryMarshal.Cast<byte, uint>(region);
+
+            int i = 0;
+            for (; i < tripletCount; i++)
             {
-                a += BinaryPrimitives.ReadUInt32LittleEndian(data.Slice(index));
-                b += BinaryPrimitives.ReadUInt32LittleEndian(data.Slice(index + 4));
-                c += BinaryPrimitives.ReadUInt32LittleEndian(data.Slice(index + 8));
+                int idx = i * 3;
+                uint w0 = BitConverter.IsLittleEndian ? words[idx] : BinaryPrimitives.ReverseEndianness(words[idx]);
+                uint w1 = BitConverter.IsLittleEndian
+                    ? words[idx + 1]
+                    : BinaryPrimitives.ReverseEndianness(words[idx + 1]);
+                uint w2 = BitConverter.IsLittleEndian
+                    ? words[idx + 2]
+                    : BinaryPrimitives.ReverseEndianness(words[idx + 2]);
+
+                a += w0;
+                b += w1;
+                c += w2;
 
                 a -= c;
                 a ^= (c << 4) | (c >> 28);
@@ -184,51 +200,50 @@ namespace Azure.Messaging.EventHubs.Core
                 c -= b;
                 c ^= (b << 4) | (b >> 28);
                 b += a;
-
-                index += 12;
-                size -= 12;
             }
 
+            int byteIndex = regionBytes;
+            int size = data.Length - byteIndex;
             switch (size)
             {
                 case 12:
-                    a += BinaryPrimitives.ReadUInt32LittleEndian(data.Slice(index));
-                    b += BinaryPrimitives.ReadUInt32LittleEndian(data.Slice(index + 4));
-                    c += BinaryPrimitives.ReadUInt32LittleEndian(data.Slice(index + 8));
+                    a += BinaryPrimitives.ReadUInt32LittleEndian(data.Slice(byteIndex));
+                    b += BinaryPrimitives.ReadUInt32LittleEndian(data.Slice(byteIndex + 4));
+                    c += BinaryPrimitives.ReadUInt32LittleEndian(data.Slice(byteIndex + 8));
                     break;
                 case 11:
-                    c += ((uint)data[index + 10]) << 16;
+                    c += (uint)data[byteIndex + 10] << 16;
                     goto case 10;
                 case 10:
-                    c += ((uint)data[index + 9]) << 8;
+                    c += (uint)data[byteIndex + 9] << 8;
                     goto case 9;
                 case 9:
-                    c += (uint)data[index + 8];
+                    c += data[byteIndex + 8];
                     goto case 8;
                 case 8:
-                    b += BinaryPrimitives.ReadUInt32LittleEndian(data.Slice(index + 4));
-                    a += BinaryPrimitives.ReadUInt32LittleEndian(data.Slice(index));
+                    b += BinaryPrimitives.ReadUInt32LittleEndian(data.Slice(byteIndex + 4));
+                    a += BinaryPrimitives.ReadUInt32LittleEndian(data.Slice(byteIndex));
                     break;
                 case 7:
-                    b += ((uint)data[index + 6]) << 16;
+                    b += (uint)data[byteIndex + 6] << 16;
                     goto case 6;
                 case 6:
-                    b += ((uint)data[index + 5]) << 8;
+                    b += (uint)data[byteIndex + 5] << 8;
                     goto case 5;
                 case 5:
-                    b += (uint)data[index + 4];
+                    b += data[byteIndex + 4];
                     goto case 4;
                 case 4:
-                    a += BinaryPrimitives.ReadUInt32LittleEndian(data.Slice(index));
+                    a += BinaryPrimitives.ReadUInt32LittleEndian(data.Slice(byteIndex));
                     break;
                 case 3:
-                    a += ((uint)data[index + 2]) << 16;
+                    a += (uint)data[byteIndex + 2] << 16;
                     goto case 2;
                 case 2:
-                    a += ((uint)data[index + 1]) << 8;
+                    a += (uint)data[byteIndex + 1] << 8;
                     goto case 1;
                 case 1:
-                    a += (uint)data[index];
+                    a += data[byteIndex];
                     break;
                 case 0:
                     hash1 = c;
