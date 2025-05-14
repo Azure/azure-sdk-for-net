@@ -19,14 +19,8 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
         {
             ConversationAnalysisClient client = Client;
 
-            #region Snippet:ConversationAnalysis_AnalyzeConversation
-            string projectName = "Menu";
-            string deploymentName = "production";
-#if !SNIPPET
-            projectName = TestEnvironment.ProjectName;
-            deploymentName = TestEnvironment.DeploymentName;
-#endif
-
+            string projectName = TestEnvironment.ProjectName;
+            string deploymentName = TestEnvironment.DeploymentName;
             AnalyzeConversationInput data = new ConversationalAITask(
                 new ConversationalAIAnalysisInput(
                     conversations: new AIConversation[] {
@@ -125,7 +119,6 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                     Console.WriteLine();
                 }
             }
-            #endregion
         }
 
         [AsyncOnly]
@@ -134,11 +127,9 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
         public async Task AnalyzeConversationalAIAsync()
         {
             ConversationAnalysisClient client = Client;
-            string projectName = "Menu";
-            string deploymentName = "production";
 
-            projectName = TestEnvironment.ProjectName;
-            deploymentName = TestEnvironment.DeploymentName;
+            string projectName = TestEnvironment.ProjectName;
+            string deploymentName = TestEnvironment.DeploymentName;
 
             AnalyzeConversationInput data = new ConversationalAITask(
                 new ConversationalAIAnalysisInput(
