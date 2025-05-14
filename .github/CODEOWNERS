@@ -753,6 +753,12 @@
 # ServiceLabel: %Notification Hub
 # ServiceOwners:                                                   @tjsomasundaram
 
+# PRLabel: %Network - DNS Private Resolver
+/sdk/dnsresolver/                                                  @jamesvoong @jotrivet
+
+# ServiceLabel: %Network - DNS Private Resolver
+# ServiceOwners:                                                   @jamesvoong @jotrivet
+
 # PRLabel: %OpenAI
 /sdk/openai/                                                       @jpalvarezl @trrwilson @joseharriaga @m-nash @ralph-msft
 
