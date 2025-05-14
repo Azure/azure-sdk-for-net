@@ -616,6 +616,7 @@ namespace Azure.ResourceManager.DnsResolver
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected VirtualNetworkDnsResolverResource() { }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string virtualNetworkName) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.DnsResolver.Models.VirtualNetworkDnsForwardingRuleset> GetDnsForwardingRulesets(int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.DnsResolver.Models.VirtualNetworkDnsForwardingRuleset> GetDnsForwardingRulesetsAsync(int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Resources.Models.WritableSubResource> GetDnsResolverPoliciesByVirtualNetwork(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
