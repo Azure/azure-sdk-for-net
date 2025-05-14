@@ -1,5 +1,5 @@
 parameters:
-  ServiceDirectory: not-set
+  ServiceDirectory: ''
   ArmTemplateParameters: '@{}'
   DeleteAfterHours: 8
   Location: ''
