@@ -20,7 +20,7 @@ namespace Azure.AI.Agents.Persistent
     /// A collection of run‐step operations under
     /// `/threads/{threadId}/runs/{runId}/steps`.
     /// </summary>
-    public partial class ThreadRunSteps
+    internal partial class ThreadRunSteps
     {
         private static readonly string[] AuthorizationScopes = new string[] { "https://ai.azure.com/.default" };
         private readonly TokenCredential _tokenCredential;

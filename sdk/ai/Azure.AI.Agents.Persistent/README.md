@@ -251,7 +251,7 @@ PersistentAgentsVectorStore vectorStore = await client.VectorStores.CreateVector
     name: "sample_vector_store"
 );
 
-VectorStoreFileBatch vctFile = await client.VectorStoreFileBatches.CreateVectorStoreFileBatchAsync(
+VectorStoreFileBatch vctFile = await client.VectorStores.CreateVectorStoreFileBatchAsync(
     vectorStoreId: vectorStore.Id,
     dataSources: [ ds ]
 );
@@ -341,7 +341,7 @@ Search requires an existing Azure AI Search Index. For more information and setu
 guides, see [Azure AI Search Tool Guide](https://learn.microsoft.com/azure/ai-services/agents/how-to/tools/azure-ai-search).
 
 ```C# Snippet:AgentsCreateAgentWithAzureAISearchTool
-AzureAISearchResource searchResource = new(
+AzureAISearchToolResource searchResource = new(
     connectionID,
     "sample_index",
     5,
@@ -834,7 +834,7 @@ OpenApiToolDefinition openapiTool = new(
     name: "get_weather",
     description: "Retrieve weather information for a location",
     spec: BinaryData.FromBytes(System.IO.File.ReadAllBytes(file_path)),
-    auth: oaiAuth,
+    openApiAuthentication: oaiAuth,
     defaultParams: [ "format" ]
 );
 
