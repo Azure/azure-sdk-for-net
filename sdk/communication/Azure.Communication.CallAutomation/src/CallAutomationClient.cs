@@ -259,7 +259,8 @@ namespace Azure.Communication.CallAutomation
             request.OperationContext = options.OperationContext;
             request.CustomCallingContext = new CustomCallingContextInternal(
                 options.CustomCallingContext?.VoipHeaders ?? new ChangeTrackingDictionary<string, string>(),
-                options.CustomCallingContext?.SipHeaders ?? new ChangeTrackingDictionary<string, string>());
+                options.CustomCallingContext?.SipHeaders ?? new ChangeTrackingDictionary<string, string>(),
+                CustomCallContextHelpers.CreateTeamsPhoneCallDetailsInternal(options.CustomCallingContext?.TeamsPhoneCallDetails));
 
             return request;
         }
@@ -295,8 +296,9 @@ namespace Azure.Communication.CallAutomation
                 RedirectCallRequestInternal request = new RedirectCallRequestInternal(options.IncomingCallContext, CommunicationIdentifierSerializer.Serialize(options.CallInvite.Target));
 
                 request.CustomCallingContext = new CustomCallingContextInternal(
-                   options.CallInvite.CustomCallingContext.VoipHeaders == null ? new ChangeTrackingDictionary<string, string>() : options.CallInvite.CustomCallingContext.VoipHeaders,
-                   options.CallInvite.CustomCallingContext.SipHeaders == null ? new ChangeTrackingDictionary<string, string>() : options.CallInvite.CustomCallingContext.SipHeaders);
+                   options.CallInvite?.CustomCallingContext?.VoipHeaders == null ? new ChangeTrackingDictionary<string, string>() : options.CallInvite?.CustomCallingContext?.VoipHeaders,
+                   options.CallInvite?.CustomCallingContext?.SipHeaders == null ? new ChangeTrackingDictionary<string, string>() : options.CallInvite?.CustomCallingContext?.SipHeaders,
+                   CustomCallContextHelpers.CreateTeamsPhoneCallDetailsInternal(options.CallInvite?.CustomCallingContext?.TeamsPhoneCallDetails));
 
                 return await AzureCommunicationServicesRestClient.RedirectCallAsync(request, cancellationToken).ConfigureAwait(false);
             }
@@ -338,8 +340,9 @@ namespace Azure.Communication.CallAutomation
                 RedirectCallRequestInternal request = new RedirectCallRequestInternal(options.IncomingCallContext, CommunicationIdentifierSerializer.Serialize(options.CallInvite.Target));
 
                 request.CustomCallingContext = new CustomCallingContextInternal(
-                                   options.CallInvite.CustomCallingContext.VoipHeaders == null ? new ChangeTrackingDictionary<string, string>() : options.CallInvite.CustomCallingContext.VoipHeaders,
-                                   options.CallInvite.CustomCallingContext.SipHeaders == null ? new ChangeTrackingDictionary<string, string>() : options.CallInvite.CustomCallingContext.SipHeaders);
+                                   options.CallInvite?.CustomCallingContext?.VoipHeaders == null ? new ChangeTrackingDictionary<string, string>() : options.CallInvite.CustomCallingContext.VoipHeaders,
+                                   options.CallInvite?.CustomCallingContext?.SipHeaders == null ? new ChangeTrackingDictionary<string, string>() : options.CallInvite.CustomCallingContext.SipHeaders,
+                                   CustomCallContextHelpers.CreateTeamsPhoneCallDetailsInternal(options.CallInvite?.CustomCallingContext?.TeamsPhoneCallDetails));
 
                 return AzureCommunicationServicesRestClient.RedirectCall(request, cancellationToken);
             }
@@ -729,8 +732,9 @@ namespace Azure.Communication.CallAutomation
             };
 
             request.CustomCallingContext = new CustomCallingContextInternal(
-               options.CallInvite.CustomCallingContext.VoipHeaders == null ? new ChangeTrackingDictionary<string, string>() : options.CallInvite.CustomCallingContext.VoipHeaders,
-               options.CallInvite.CustomCallingContext.SipHeaders == null ? new ChangeTrackingDictionary<string, string>() : options.CallInvite.CustomCallingContext.SipHeaders);
+               options.CallInvite?.CustomCallingContext?.VoipHeaders == null ? new ChangeTrackingDictionary<string, string>() : options.CallInvite?.CustomCallingContext?.VoipHeaders,
+               options.CallInvite?.CustomCallingContext?.SipHeaders == null ? new ChangeTrackingDictionary<string, string>() : options.CallInvite.CustomCallingContext.SipHeaders,
+               CustomCallContextHelpers.CreateTeamsPhoneCallDetailsInternal(options.CallInvite?.CustomCallingContext?.TeamsPhoneCallDetails));
 
             // Add CallIntelligenceOptions such as custom cognitive service domain name
             string cognitiveServicesEndpoint = options.CallIntelligenceOptions?.CognitiveServicesEndpoint?.AbsoluteUri;
@@ -766,8 +770,9 @@ namespace Azure.Communication.CallAutomation
             };
 
             request.CustomCallingContext = new CustomCallingContextInternal(
-               options.CustomCallingContext.VoipHeaders == null ? new ChangeTrackingDictionary<string, string>() : options.CustomCallingContext.VoipHeaders,
-               options.CustomCallingContext.SipHeaders == null ? new ChangeTrackingDictionary<string, string>() : options.CustomCallingContext.SipHeaders);
+               options.CustomCallingContext?.VoipHeaders == null ? new ChangeTrackingDictionary<string, string>() : options.CustomCallingContext?.VoipHeaders,
+               options.CustomCallingContext?.SipHeaders == null ? new ChangeTrackingDictionary<string, string>() : options.CustomCallingContext?.SipHeaders,
+               CustomCallContextHelpers.CreateTeamsPhoneCallDetailsInternal(options.CustomCallingContext?.TeamsPhoneCallDetails));
 
             // Add CallIntelligenceOptions such as custom cognitive service domain name
             string cognitiveServicesEndpoint = options.CallIntelligenceOptions?.CognitiveServicesEndpoint?.AbsoluteUri;
