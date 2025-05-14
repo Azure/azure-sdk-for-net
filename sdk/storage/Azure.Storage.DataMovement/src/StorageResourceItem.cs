@@ -243,7 +243,7 @@ namespace Azure.Storage.DataMovement
         protected internal abstract Task<bool> DeleteIfExistsAsync(CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Deermines whether to perform the item transfer. This should be called on the source resource item.
+        /// Determines whether to perform the item transfer. This should be called on the source resource item.
         /// </summary>
         /// <param name="destItem">
         /// The destination resource item.
