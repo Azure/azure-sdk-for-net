@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> List of connection states snapshots. </summary>
-    public partial class ConnectionMonitorQueryResult
+    /// <summary> Virtual network gateway migration parameters. </summary>
+    public partial class VirtualNetworkGatewayMigrationContent
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,26 +45,32 @@ namespace Azure.ResourceManager.Network.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ConnectionMonitorQueryResult"/>. </summary>
-        internal ConnectionMonitorQueryResult()
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworkGatewayMigrationContent"/>. </summary>
+        /// <param name="migrationType"> MigrationType for the virtual network gateway. </param>
+        public VirtualNetworkGatewayMigrationContent(VirtualNetworkGatewayMigrationType migrationType)
         {
-            States = new ChangeTrackingList<ConnectionStateSnapshot>();
+            MigrationType = migrationType;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ConnectionMonitorQueryResult"/>. </summary>
-        /// <param name="sourceStatus"> Status of connection monitor source. </param>
-        /// <param name="states"> Information about connection states. </param>
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworkGatewayMigrationContent"/>. </summary>
+        /// <param name="migrationType"> MigrationType for the virtual network gateway. </param>
+        /// <param name="resourceUri"> Resource url that needs to be passed in to migration. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConnectionMonitorQueryResult(ConnectionMonitorSourceStatus? sourceStatus, IReadOnlyList<ConnectionStateSnapshot> states, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal VirtualNetworkGatewayMigrationContent(VirtualNetworkGatewayMigrationType migrationType, Uri resourceUri, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            SourceStatus = sourceStatus;
-            States = states;
+            MigrationType = migrationType;
+            ResourceUri = resourceUri;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Status of connection monitor source. </summary>
-        public ConnectionMonitorSourceStatus? SourceStatus { get; }
-        /// <summary> Information about connection states. </summary>
-        public IReadOnlyList<ConnectionStateSnapshot> States { get; }
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworkGatewayMigrationContent"/> for deserialization. </summary>
+        internal VirtualNetworkGatewayMigrationContent()
+        {
+        }
+
+        /// <summary> MigrationType for the virtual network gateway. </summary>
+        public VirtualNetworkGatewayMigrationType MigrationType { get; }
+        /// <summary> Resource url that needs to be passed in to migration. </summary>
+        public Uri ResourceUri { get; set; }
     }
 }
