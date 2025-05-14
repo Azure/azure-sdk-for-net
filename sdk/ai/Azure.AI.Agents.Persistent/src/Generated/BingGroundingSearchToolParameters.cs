@@ -11,8 +11,8 @@ using System.Linq;
 
 namespace Azure.AI.Agents.Persistent
 {
-    /// <summary> A list of search configurations currently used by the `bing_grounding` tool. </summary>
-    public partial class BingGroundingSearchConfigurationList
+    /// <summary> The bing grounding search tool parameters. </summary>
+    public partial class BingGroundingSearchToolParameters
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,33 +46,33 @@ namespace Azure.AI.Agents.Persistent
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="BingGroundingSearchConfigurationList"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="BingGroundingSearchToolParameters"/>. </summary>
         /// <param name="searchConfigurations">
         /// The search configurations attached to this tool. There can be a maximum of 1
         /// search configuration resource attached to the tool.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="searchConfigurations"/> is null. </exception>
-        public BingGroundingSearchConfigurationList(IEnumerable<BingGroundingSearchConfiguration> searchConfigurations)
+        public BingGroundingSearchToolParameters(IEnumerable<BingGroundingSearchConfiguration> searchConfigurations)
         {
             Argument.AssertNotNull(searchConfigurations, nameof(searchConfigurations));
 
             SearchConfigurations = searchConfigurations.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="BingGroundingSearchConfigurationList"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="BingGroundingSearchToolParameters"/>. </summary>
         /// <param name="searchConfigurations">
         /// The search configurations attached to this tool. There can be a maximum of 1
         /// search configuration resource attached to the tool.
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BingGroundingSearchConfigurationList(IList<BingGroundingSearchConfiguration> searchConfigurations, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal BingGroundingSearchToolParameters(IList<BingGroundingSearchConfiguration> searchConfigurations, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SearchConfigurations = searchConfigurations;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="BingGroundingSearchConfigurationList"/> for deserialization. </summary>
-        internal BingGroundingSearchConfigurationList()
+        /// <summary> Initializes a new instance of <see cref="BingGroundingSearchToolParameters"/> for deserialization. </summary>
+        internal BingGroundingSearchToolParameters()
         {
         }
 
