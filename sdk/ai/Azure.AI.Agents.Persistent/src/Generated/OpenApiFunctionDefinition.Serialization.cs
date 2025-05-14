@@ -51,7 +51,7 @@ namespace Azure.AI.Agents.Persistent
             }
 #endif
             writer.WritePropertyName("auth"u8);
-            writer.WriteObjectValue(Auth, options);
+            writer.WriteObjectValue(OpenApiAuthentication, options);
             if (Optional.IsCollectionDefined(DefaultParams))
             {
                 writer.WritePropertyName("default_params"u8);
@@ -59,6 +59,16 @@ namespace Azure.AI.Agents.Persistent
                 foreach (var item in DefaultParams)
                 {
                     writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(Functions))
+            {
+                writer.WritePropertyName("functions"u8);
+                writer.WriteStartArray();
+                foreach (var item in Functions)
+                {
+                    writer.WriteObjectValue<InternalFunctionDefinition>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -104,6 +114,7 @@ namespace Azure.AI.Agents.Persistent
             BinaryData spec = default;
             OpenApiAuthDetails auth = default;
             IList<string> defaultParams = default;
+            IList<InternalFunctionDefinition> functions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -142,6 +153,20 @@ namespace Azure.AI.Agents.Persistent
                     defaultParams = array;
                     continue;
                 }
+                if (property.NameEquals("functions"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<InternalFunctionDefinition> array = new List<InternalFunctionDefinition>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(InternalFunctionDefinition.DeserializeInternalFunctionDefinition(item, options));
+                    }
+                    functions = array;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -154,6 +179,7 @@ namespace Azure.AI.Agents.Persistent
                 spec,
                 auth,
                 defaultParams ?? new ChangeTrackingList<string>(),
+                functions ?? new ChangeTrackingList<InternalFunctionDefinition>(),
                 serializedAdditionalRawData);
         }
 
@@ -164,7 +190,7 @@ namespace Azure.AI.Agents.Persistent
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureAIAgentsPersistentContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(OpenApiFunctionDefinition)} does not support writing '{options.Format}' format.");
             }

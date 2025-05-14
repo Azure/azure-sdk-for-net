@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.SecurityInsights
 
         SecurityInsightsAlertRuleActionData IJsonModel<SecurityInsightsAlertRuleActionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SecurityInsightsAlertRuleActionData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SecurityInsightsAlertRuleActionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<SecurityInsightsAlertRuleActionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SecurityInsightsAlertRuleActionData>(Data, options, AzureResourceManagerSecurityInsightsContext.Default);
 
-        SecurityInsightsAlertRuleActionData IPersistableModel<SecurityInsightsAlertRuleActionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SecurityInsightsAlertRuleActionData>(data, options);
+        SecurityInsightsAlertRuleActionData IPersistableModel<SecurityInsightsAlertRuleActionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SecurityInsightsAlertRuleActionData>(data, options, AzureResourceManagerSecurityInsightsContext.Default);
 
         string IPersistableModel<SecurityInsightsAlertRuleActionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SecurityInsightsAlertRuleActionData>)Data).GetFormatFromOptions(options);
     }

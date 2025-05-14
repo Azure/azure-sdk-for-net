@@ -37,7 +37,7 @@ namespace Azure.AI.Agents.Persistent
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type.ToString());
             writer.WritePropertyName("storage_queue"u8);
-            writer.WriteObjectValue(StorageQueue, options);
+            writer.WriteObjectValue<AzureFunctionStorageQueue>(StorageQueue, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -107,7 +107,7 @@ namespace Azure.AI.Agents.Persistent
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureAIAgentsPersistentContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(AzureFunctionBinding)} does not support writing '{options.Format}' format.");
             }

@@ -57,7 +57,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="tools">
         /// The overridden enabled tools used for this agent thread run.
         /// Please note <see cref="ToolDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AzureAISearchToolDefinition"/>, <see cref="AzureFunctionToolDefinition"/>, <see cref="BingCustomSearchToolDefinition"/>, <see cref="BingGroundingToolDefinition"/>, <see cref="CodeInterpreterToolDefinition"/>, <see cref="ConnectedAgentToolDefinition"/>, <see cref="MicrosoftFabricToolDefinition"/>, <see cref="FileSearchToolDefinition"/>, <see cref="FunctionToolDefinition"/>, <see cref="OpenApiToolDefinition"/> and <see cref="SharepointToolDefinition"/>.
+        /// The available derived classes include <see cref="AzureAISearchToolDefinition"/>, <see cref="AzureFunctionToolDefinition"/>, <see cref="BingGroundingToolDefinition"/>, <see cref="CodeInterpreterToolDefinition"/>, <see cref="ConnectedAgentToolDefinition"/>, <see cref="FileSearchToolDefinition"/>, <see cref="FunctionToolDefinition"/> and <see cref="OpenApiToolDefinition"/>.
         /// </param>
         /// <param name="createdAt"> The Unix timestamp, in seconds, representing when this object was created. </param>
         /// <param name="expiresAt"> The Unix timestamp, in seconds, representing when this item expires. </param>
@@ -75,7 +75,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
         /// <param name="parallelToolCalls"> Determines if tools can be executed in parallel within the run. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="threadId"/>, <paramref name="assistantId"/>, <paramref name="model"/>, <paramref name="instructions"/> or <paramref name="tools"/> is null. </exception>
-        internal ThreadRun(string id, string threadId, string assistantId, RunStatus status, RunError lastError, string model, string instructions, IEnumerable<ToolDefinition> tools, DateTimeOffset createdAt, DateTimeOffset? expiresAt, DateTimeOffset? startedAt, DateTimeOffset? completedAt, DateTimeOffset? cancelledAt, DateTimeOffset? failedAt, IncompleteRunDetails incompleteDetails, RunCompletionUsage usage, int? maxPromptTokens, int? maxCompletionTokens, TruncationObject truncationStrategy, BinaryData toolChoice, BinaryData responseFormat, IReadOnlyDictionary<string, string> metadata, bool parallelToolCalls)
+        internal ThreadRun(string id, string threadId, string assistantId, RunStatus status, RunError lastError, string model, string instructions, IEnumerable<ToolDefinition> tools, DateTimeOffset createdAt, DateTimeOffset? expiresAt, DateTimeOffset? startedAt, DateTimeOffset? completedAt, DateTimeOffset? cancelledAt, DateTimeOffset? failedAt, IncompleteRunDetails incompleteDetails, RunCompletionUsage usage, int? maxPromptTokens, int? maxCompletionTokens, Truncation truncationStrategy, BinaryData toolChoice, BinaryData responseFormat, IReadOnlyDictionary<string, string> metadata, bool parallelToolCalls)
         {
             Argument.AssertNotNull(id, nameof(id));
             Argument.AssertNotNull(threadId, nameof(threadId));
@@ -126,7 +126,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="tools">
         /// The overridden enabled tools used for this agent thread run.
         /// Please note <see cref="ToolDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AzureAISearchToolDefinition"/>, <see cref="AzureFunctionToolDefinition"/>, <see cref="BingCustomSearchToolDefinition"/>, <see cref="BingGroundingToolDefinition"/>, <see cref="CodeInterpreterToolDefinition"/>, <see cref="ConnectedAgentToolDefinition"/>, <see cref="MicrosoftFabricToolDefinition"/>, <see cref="FileSearchToolDefinition"/>, <see cref="FunctionToolDefinition"/>, <see cref="OpenApiToolDefinition"/> and <see cref="SharepointToolDefinition"/>.
+        /// The available derived classes include <see cref="AzureAISearchToolDefinition"/>, <see cref="AzureFunctionToolDefinition"/>, <see cref="BingGroundingToolDefinition"/>, <see cref="CodeInterpreterToolDefinition"/>, <see cref="ConnectedAgentToolDefinition"/>, <see cref="FileSearchToolDefinition"/>, <see cref="FunctionToolDefinition"/> and <see cref="OpenApiToolDefinition"/>.
         /// </param>
         /// <param name="createdAt"> The Unix timestamp, in seconds, representing when this object was created. </param>
         /// <param name="expiresAt"> The Unix timestamp, in seconds, representing when this item expires. </param>
@@ -147,7 +147,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="toolResources"> Override the tools the agent can use for this run. This is useful for modifying the behavior on a per-run basis. </param>
         /// <param name="parallelToolCalls"> Determines if tools can be executed in parallel within the run. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ThreadRun(string id, string @object, string threadId, string assistantId, RunStatus status, RequiredAction requiredAction, RunError lastError, string model, string instructions, IReadOnlyList<ToolDefinition> tools, DateTimeOffset createdAt, DateTimeOffset? expiresAt, DateTimeOffset? startedAt, DateTimeOffset? completedAt, DateTimeOffset? cancelledAt, DateTimeOffset? failedAt, IncompleteRunDetails incompleteDetails, RunCompletionUsage usage, float? temperature, float? topP, int? maxPromptTokens, int? maxCompletionTokens, TruncationObject truncationStrategy, BinaryData toolChoice, BinaryData responseFormat, IReadOnlyDictionary<string, string> metadata, UpdateToolResourcesOptions toolResources, bool parallelToolCalls, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ThreadRun(string id, string @object, string threadId, string assistantId, RunStatus status, RequiredAction requiredAction, RunError lastError, string model, string instructions, IReadOnlyList<ToolDefinition> tools, DateTimeOffset createdAt, DateTimeOffset? expiresAt, DateTimeOffset? startedAt, DateTimeOffset? completedAt, DateTimeOffset? cancelledAt, DateTimeOffset? failedAt, IncompleteRunDetails incompleteDetails, RunCompletionUsage usage, float? temperature, float? topP, int? maxPromptTokens, int? maxCompletionTokens, Truncation truncationStrategy, BinaryData toolChoice, BinaryData responseFormat, IReadOnlyDictionary<string, string> metadata, ToolResources toolResources, bool parallelToolCalls, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             Object = @object;
@@ -209,7 +209,7 @@ namespace Azure.AI.Agents.Persistent
         /// <summary>
         /// The overridden enabled tools used for this agent thread run.
         /// Please note <see cref="ToolDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AzureAISearchToolDefinition"/>, <see cref="AzureFunctionToolDefinition"/>, <see cref="BingCustomSearchToolDefinition"/>, <see cref="BingGroundingToolDefinition"/>, <see cref="CodeInterpreterToolDefinition"/>, <see cref="ConnectedAgentToolDefinition"/>, <see cref="MicrosoftFabricToolDefinition"/>, <see cref="FileSearchToolDefinition"/>, <see cref="FunctionToolDefinition"/>, <see cref="OpenApiToolDefinition"/> and <see cref="SharepointToolDefinition"/>.
+        /// The available derived classes include <see cref="AzureAISearchToolDefinition"/>, <see cref="AzureFunctionToolDefinition"/>, <see cref="BingGroundingToolDefinition"/>, <see cref="CodeInterpreterToolDefinition"/>, <see cref="ConnectedAgentToolDefinition"/>, <see cref="FileSearchToolDefinition"/>, <see cref="FunctionToolDefinition"/> and <see cref="OpenApiToolDefinition"/>.
         /// </summary>
         public IReadOnlyList<ToolDefinition> Tools { get; }
         /// <summary> The Unix timestamp, in seconds, representing when this object was created. </summary>
@@ -237,7 +237,7 @@ namespace Azure.AI.Agents.Persistent
         /// <summary> The maximum number of completion tokens specified to have been used over the course of the run. </summary>
         public int? MaxCompletionTokens { get; }
         /// <summary> The strategy to use for dropping messages as the context windows moves forward. </summary>
-        public TruncationObject TruncationStrategy { get; }
+        public Truncation TruncationStrategy { get; }
         /// <summary>
         /// Controls whether or not and which tool is called by the model.
         /// <para>
@@ -302,7 +302,7 @@ namespace Azure.AI.Agents.Persistent
         /// <description><see cref="PersistentAgentsResponseFormatMode"/></description>
         /// </item>
         /// <item>
-        /// <description><see cref="PersistentAgentsResponseFormat"/></description>
+        /// <description><see cref="InternalPersistentAgentsResponseFormat"/></description>
         /// </item>
         /// <item>
         /// <description><see cref="ResponseFormatJsonSchemaType"/></description>
@@ -334,7 +334,7 @@ namespace Azure.AI.Agents.Persistent
         /// <summary> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </summary>
         public IReadOnlyDictionary<string, string> Metadata { get; }
         /// <summary> Override the tools the agent can use for this run. This is useful for modifying the behavior on a per-run basis. </summary>
-        public UpdateToolResourcesOptions ToolResources { get; }
+        public ToolResources ToolResources { get; }
         /// <summary> Determines if tools can be executed in parallel within the run. </summary>
         public bool ParallelToolCalls { get; }
     }

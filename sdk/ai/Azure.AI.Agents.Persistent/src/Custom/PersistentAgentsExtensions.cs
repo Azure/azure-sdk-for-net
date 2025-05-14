@@ -20,14 +20,14 @@ namespace Azure.AI.Agents.Persistent
         /// </summary>
         /// <param name="provider"></param>
         /// <returns></returns>
-        public static PersistentAgentsAdministration GetPersistentAgentAdministrationClient(this ClientConnectionProvider provider)
+        public static PersistentAgentsClient GetPersistentAgentsClient(this ClientConnectionProvider provider)
         {
             PersistentAgentsAdministrationKey key = new();
-            PersistentAgentsAdministration agentsClient = provider.Subclients.GetClient(key , () => CreateAdministrationAgentsClient(provider));
-            return agentsClient;
+            PersistentAgentsAdministrationClient agentsClient = provider.Subclients.GetClient(key , () => CreateAdministrationAgentsClient(provider));
+            return new PersistentAgentsClient(agentsClient);
         }
 
-        private static PersistentAgentsAdministration CreateAdministrationAgentsClient(this ClientConnectionProvider provider)
+        private static PersistentAgentsAdministrationClient CreateAdministrationAgentsClient(this ClientConnectionProvider provider)
         {
             ClientConnection connection = provider.GetConnection(typeof(PersistentAgentsClient).FullName!);
             if (!connection.TryGetLocatorAsUri(out Uri? uri) || uri is null)
@@ -35,8 +35,8 @@ namespace Azure.AI.Agents.Persistent
                 throw new InvalidOperationException("Invalid URI.");
             }
             if (connection.Credential is TokenCredential cred)
-                return new PersistentAgentsAdministration(uri, cred);
-            throw new InvalidOperationException($"PersistentAgentsAdministration does not support {connection.CredentialKind}.");
+                return new PersistentAgentsAdministrationClient(uri, cred);
+            throw new InvalidOperationException($"PersistentAgentsAdministrationClient does not support {connection.CredentialKind}.");
         }
 
         private record PersistentAgentsAdministrationKey();

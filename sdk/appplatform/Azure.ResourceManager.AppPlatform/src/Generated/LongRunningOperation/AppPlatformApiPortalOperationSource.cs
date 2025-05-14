@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.AppPlatform
 
         AppPlatformApiPortalResource IOperationSource<AppPlatformApiPortalResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<AppPlatformApiPortalData>(response.Content);
+            var data = ModelReaderWriter.Read<AppPlatformApiPortalData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerAppPlatformContext.Default);
             return new AppPlatformApiPortalResource(_client, data);
         }
 
         async ValueTask<AppPlatformApiPortalResource> IOperationSource<AppPlatformApiPortalResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<AppPlatformApiPortalData>(response.Content);
+            var data = ModelReaderWriter.Read<AppPlatformApiPortalData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerAppPlatformContext.Default);
             return await Task.FromResult(new AppPlatformApiPortalResource(_client, data)).ConfigureAwait(false);
         }
     }

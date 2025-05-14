@@ -262,13 +262,13 @@ namespace Azure.AI.Agents.Persistent
             string model = default;
             string instructions = default;
             IReadOnlyList<ToolDefinition> tools = default;
-            UpdateToolResourcesOptions toolResources = default;
+            ToolResources toolResources = default;
             bool? stream = default;
             float? temperature = default;
             float? topP = default;
             int? maxPromptTokens = default;
             int? maxCompletionTokens = default;
-            TruncationObject truncationStrategy = default;
+            Truncation truncationStrategy = default;
             BinaryData toolChoice = default;
             BinaryData responseFormat = default;
             bool? parallelToolCalls = default;
@@ -332,7 +332,7 @@ namespace Azure.AI.Agents.Persistent
                         toolResources = null;
                         continue;
                     }
-                    toolResources = UpdateToolResourcesOptions.DeserializeUpdateToolResourcesOptions(property.Value, options);
+                    toolResources = ToolResources.DeserializeToolResources(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("stream"u8))
@@ -391,7 +391,7 @@ namespace Azure.AI.Agents.Persistent
                         truncationStrategy = null;
                         continue;
                     }
-                    truncationStrategy = TruncationObject.DeserializeTruncationObject(property.Value, options);
+                    truncationStrategy = Truncation.DeserializeTruncation(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tool_choice"u8))
@@ -470,7 +470,7 @@ namespace Azure.AI.Agents.Persistent
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureAIAgentsPersistentContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(CreateThreadAndRunRequest)} does not support writing '{options.Format}' format.");
             }

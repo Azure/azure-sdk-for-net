@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.AppService
 
         AppServiceVirtualNetworkData IJsonModel<AppServiceVirtualNetworkData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AppServiceVirtualNetworkData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<AppServiceVirtualNetworkData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<AppServiceVirtualNetworkData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AppServiceVirtualNetworkData>(Data, options, AzureResourceManagerAppServiceContext.Default);
 
-        AppServiceVirtualNetworkData IPersistableModel<AppServiceVirtualNetworkData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AppServiceVirtualNetworkData>(data, options);
+        AppServiceVirtualNetworkData IPersistableModel<AppServiceVirtualNetworkData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AppServiceVirtualNetworkData>(data, options, AzureResourceManagerAppServiceContext.Default);
 
         string IPersistableModel<AppServiceVirtualNetworkData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AppServiceVirtualNetworkData>)Data).GetFormatFromOptions(options);
     }

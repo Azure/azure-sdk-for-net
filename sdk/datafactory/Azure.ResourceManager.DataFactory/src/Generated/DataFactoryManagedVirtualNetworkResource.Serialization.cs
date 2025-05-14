@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.DataFactory
 
         DataFactoryManagedVirtualNetworkData IJsonModel<DataFactoryManagedVirtualNetworkData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DataFactoryManagedVirtualNetworkData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<DataFactoryManagedVirtualNetworkData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<DataFactoryManagedVirtualNetworkData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DataFactoryManagedVirtualNetworkData>(Data, options, AzureResourceManagerDataFactoryContext.Default);
 
-        DataFactoryManagedVirtualNetworkData IPersistableModel<DataFactoryManagedVirtualNetworkData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DataFactoryManagedVirtualNetworkData>(data, options);
+        DataFactoryManagedVirtualNetworkData IPersistableModel<DataFactoryManagedVirtualNetworkData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DataFactoryManagedVirtualNetworkData>(data, options, AzureResourceManagerDataFactoryContext.Default);
 
         string IPersistableModel<DataFactoryManagedVirtualNetworkData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DataFactoryManagedVirtualNetworkData>)Data).GetFormatFromOptions(options);
     }

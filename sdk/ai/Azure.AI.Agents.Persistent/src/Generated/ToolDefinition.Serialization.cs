@@ -79,15 +79,12 @@ namespace Azure.AI.Agents.Persistent
                 {
                     case "azure_ai_search": return AzureAISearchToolDefinition.DeserializeAzureAISearchToolDefinition(element, options);
                     case "azure_function": return AzureFunctionToolDefinition.DeserializeAzureFunctionToolDefinition(element, options);
-                    case "bing_custom_search": return BingCustomSearchToolDefinition.DeserializeBingCustomSearchToolDefinition(element, options);
                     case "bing_grounding": return BingGroundingToolDefinition.DeserializeBingGroundingToolDefinition(element, options);
                     case "code_interpreter": return CodeInterpreterToolDefinition.DeserializeCodeInterpreterToolDefinition(element, options);
                     case "connected_agent": return ConnectedAgentToolDefinition.DeserializeConnectedAgentToolDefinition(element, options);
-                    case "fabric_dataagent": return MicrosoftFabricToolDefinition.DeserializeMicrosoftFabricToolDefinition(element, options);
                     case "file_search": return FileSearchToolDefinition.DeserializeFileSearchToolDefinition(element, options);
                     case "function": return FunctionToolDefinition.DeserializeFunctionToolDefinition(element, options);
                     case "openapi": return OpenApiToolDefinition.DeserializeOpenApiToolDefinition(element, options);
-                    case "sharepoint_grounding": return SharepointToolDefinition.DeserializeSharepointToolDefinition(element, options);
                 }
             }
             return UnknownToolDefinition.DeserializeUnknownToolDefinition(element, options);
@@ -100,7 +97,7 @@ namespace Azure.AI.Agents.Persistent
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureAIAgentsPersistentContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ToolDefinition)} does not support writing '{options.Format}' format.");
             }

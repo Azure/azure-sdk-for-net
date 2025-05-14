@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Monitor
 
         MonitorWorkspaceResourceData IJsonModel<MonitorWorkspaceResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MonitorWorkspaceResourceData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<MonitorWorkspaceResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<MonitorWorkspaceResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<MonitorWorkspaceResourceData>(Data, options, AzureResourceManagerMonitorContext.Default);
 
-        MonitorWorkspaceResourceData IPersistableModel<MonitorWorkspaceResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MonitorWorkspaceResourceData>(data, options);
+        MonitorWorkspaceResourceData IPersistableModel<MonitorWorkspaceResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MonitorWorkspaceResourceData>(data, options, AzureResourceManagerMonitorContext.Default);
 
         string IPersistableModel<MonitorWorkspaceResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MonitorWorkspaceResourceData>)Data).GetFormatFromOptions(options);
     }

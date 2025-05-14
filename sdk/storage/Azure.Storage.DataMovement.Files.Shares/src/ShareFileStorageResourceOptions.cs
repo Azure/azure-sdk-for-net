@@ -47,6 +47,14 @@ namespace Azure.Storage.DataMovement.Files.Shares
         internal bool _isFileMetadataSet = false;
 
         /// <summary>
+        /// Optional. Specifies whether protocol validation for the resource should be skipped before starting the transfer.
+        /// By default this value is set to false.
+        /// Applies to copy, upload, and download transfers.
+        /// Note: Protocol validation requires share-level read access.
+        /// </summary>
+        public bool SkipProtocolValidation { get; set; } = false;
+
+        /// <summary>
         /// Optional. Specifies whether the Share uses NFS or SMB protocol.
         /// By default this value is set to false. If true is selected, the account used must support NFS.
         /// Applies to copy, upload, and download transfers.
