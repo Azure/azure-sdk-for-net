@@ -497,7 +497,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                     option.SmbProperties.FileCreatedOn == DefaultFileCreatedOn &&
                     option.SmbProperties.FileLastWrittenOn == DefaultLastWrittenOn &&
                     option.SmbProperties.FileChangedOn == DefaultFileChangedOn &&
-                    option.SmbProperties.FilePermissionKey == default),
+                    option.SmbProperties.FilePermissionKey == DefaultDestinationFilePermissionKey),
                 It.IsAny<ShareFileRequestConditions>(),
                 It.IsAny<CancellationToken>()),
                 Times.Once());
@@ -2075,8 +2075,8 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                     option.Metadata == DefaultFileMetadata &&
                     option.SmbProperties.FileCreatedOn == DefaultFileCreatedOn &&
                     option.SmbProperties.FileLastWrittenOn == DefaultLastWrittenOn &&
-                    option.SmbProperties.FileChangedOn == DefaultFileChangedOn),
-                //option.SmbProperties.FilePermissionKey == default),
+                    option.SmbProperties.FileChangedOn == DefaultFileChangedOn &&
+                    option.SmbProperties.FilePermissionKey == DefaultDestinationFilePermissionKey),
                 It.IsAny<ShareFileRequestConditions>(),
                 It.IsAny<CancellationToken>()),
                 Times.Once());

@@ -354,7 +354,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
         {
             CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
 
-            StorageResourceItemProperties sourceProperties = await GetPropertiesAsync().ConfigureAwait(false);
+            StorageResourceItemProperties sourceProperties = await GetPropertiesAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
             NfsFileType FileType = sourceProperties?.RawProperties?.TryGetValue(DataMovementConstants.ResourceProperties.FileType, out object fileType) == true
                     ? (NfsFileType)fileType
                     : default;
