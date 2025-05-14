@@ -32,8 +32,7 @@ namespace Azure.Search.Documents.Tests
                 var xParams = xModel.AzureOpenAIParameters;
                 var yParams = yModel.AzureOpenAIParameters;
 
-                return xParams.ResourceUri == yParams.ResourceUri &&
-                       xParams.DeploymentName == yParams.DeploymentName &&
+                return xParams.DeploymentName == yParams.DeploymentName &&
                        xParams.ModelName == yParams.ModelName;
             }
 
@@ -52,7 +51,6 @@ namespace Azure.Search.Documents.Tests
                 var parameters = model.AzureOpenAIParameters;
                 var builder = new HashCodeBuilder();
 
-                builder.Add(parameters.ResourceUri);
                 builder.Add(parameters.DeploymentName);
                 builder.Add(parameters.ModelName);
 
