@@ -89,7 +89,7 @@
     <PackageReference Update="System.ClientModel" Version="1.4.1" />
     <PackageReference Update="System.IO.Hashing" Version="8.0.0" />
     <PackageReference Update="System.Memory" Version="4.5.5" />
-    <PackageReference Update="System.Memory.Data" Version="6.0.1" />
+    <PackageReference Update="System.Memory.Data" Version="8.0.1" />
     <PackageReference Update="System.Numerics.Vectors" Version="4.5.0" />
     <PackageReference Update="System.Net.Http" Version="4.3.4" />
     <PackageReference Update="System.Diagnostics.DiagnosticSource" Version="8.0.1" />
@@ -416,7 +416,7 @@
     <PackageReference Update="System.IO.Compression" Version="4.3.0" />
     <PackageReference Update="System.IO.Pipelines" Version="4.5.1" />
     <PackageReference Update="System.Linq.Async" Version="5.0.0" />
-    <PackageReference Update="System.Memory.Data" Version="6.0.1" />
+    <PackageReference Update="System.Memory.Data" Version="8.0.1" />
     <PackageReference Update="System.Net.WebSockets.Client" Version="4.3.2" />
     <PackageReference Update="System.Reflection.Emit" Version="4.7.0" />
     <PackageReference Update="System.Runtime.InteropServices" Version="4.3.0" />
