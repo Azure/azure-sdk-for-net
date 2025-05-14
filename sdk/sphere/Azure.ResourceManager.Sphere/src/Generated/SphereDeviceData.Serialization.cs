@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Sphere
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSphereContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(SphereDeviceData)} does not support writing '{options.Format}' format.");
             }

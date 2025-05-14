@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.ServiceBus
 
         ServiceBusPrivateEndpointConnectionData IJsonModel<ServiceBusPrivateEndpointConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ServiceBusPrivateEndpointConnectionData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ServiceBusPrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<ServiceBusPrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ServiceBusPrivateEndpointConnectionData>(Data, options, AzureResourceManagerServiceBusContext.Default);
 
-        ServiceBusPrivateEndpointConnectionData IPersistableModel<ServiceBusPrivateEndpointConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ServiceBusPrivateEndpointConnectionData>(data, options);
+        ServiceBusPrivateEndpointConnectionData IPersistableModel<ServiceBusPrivateEndpointConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ServiceBusPrivateEndpointConnectionData>(data, options, AzureResourceManagerServiceBusContext.Default);
 
         string IPersistableModel<ServiceBusPrivateEndpointConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ServiceBusPrivateEndpointConnectionData>)Data).GetFormatFromOptions(options);
     }

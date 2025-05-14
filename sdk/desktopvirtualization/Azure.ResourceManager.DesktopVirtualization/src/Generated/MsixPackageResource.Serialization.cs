@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.DesktopVirtualization
 
         MsixPackageData IJsonModel<MsixPackageData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MsixPackageData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<MsixPackageData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<MsixPackageData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<MsixPackageData>(Data, options, AzureResourceManagerDesktopVirtualizationContext.Default);
 
-        MsixPackageData IPersistableModel<MsixPackageData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MsixPackageData>(data, options);
+        MsixPackageData IPersistableModel<MsixPackageData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MsixPackageData>(data, options, AzureResourceManagerDesktopVirtualizationContext.Default);
 
         string IPersistableModel<MsixPackageData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MsixPackageData>)Data).GetFormatFromOptions(options);
     }

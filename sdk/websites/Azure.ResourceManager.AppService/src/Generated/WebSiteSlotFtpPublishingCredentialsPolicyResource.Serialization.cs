@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.AppService
 
         CsmPublishingCredentialsPoliciesEntityData IJsonModel<CsmPublishingCredentialsPoliciesEntityData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<CsmPublishingCredentialsPoliciesEntityData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<CsmPublishingCredentialsPoliciesEntityData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<CsmPublishingCredentialsPoliciesEntityData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<CsmPublishingCredentialsPoliciesEntityData>(Data, options, AzureResourceManagerAppServiceContext.Default);
 
-        CsmPublishingCredentialsPoliciesEntityData IPersistableModel<CsmPublishingCredentialsPoliciesEntityData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CsmPublishingCredentialsPoliciesEntityData>(data, options);
+        CsmPublishingCredentialsPoliciesEntityData IPersistableModel<CsmPublishingCredentialsPoliciesEntityData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CsmPublishingCredentialsPoliciesEntityData>(data, options, AzureResourceManagerAppServiceContext.Default);
 
         string IPersistableModel<CsmPublishingCredentialsPoliciesEntityData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<CsmPublishingCredentialsPoliciesEntityData>)Data).GetFormatFromOptions(options);
     }

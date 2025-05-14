@@ -17,7 +17,7 @@ namespace _Type.Property.AdditionalProperties
     {
         protected SpreadDifferentModelArray() => throw null;
 
-        public HttpPipeline Pipeline => throw null;
+        public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response Get(RequestContext context) => throw null;
 

@@ -51,6 +51,7 @@ namespace Azure.Generator.Management
             AddMetadataReference(MetadataReference.CreateFromFile(typeof(ArmClient).Assembly.Location));
             AddVisitor(new RestClientVisitor());
             AddVisitor(new ResourceVisitor());
+            AddVisitor(new InheritableSystemObjectModelVisitor());
         }
     }
 }

@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Sql
 
         ManagedInstanceLongTermRetentionBackupData IJsonModel<ManagedInstanceLongTermRetentionBackupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ManagedInstanceLongTermRetentionBackupData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ManagedInstanceLongTermRetentionBackupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<ManagedInstanceLongTermRetentionBackupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ManagedInstanceLongTermRetentionBackupData>(Data, options, AzureResourceManagerSqlContext.Default);
 
-        ManagedInstanceLongTermRetentionBackupData IPersistableModel<ManagedInstanceLongTermRetentionBackupData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ManagedInstanceLongTermRetentionBackupData>(data, options);
+        ManagedInstanceLongTermRetentionBackupData IPersistableModel<ManagedInstanceLongTermRetentionBackupData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ManagedInstanceLongTermRetentionBackupData>(data, options, AzureResourceManagerSqlContext.Default);
 
         string IPersistableModel<ManagedInstanceLongTermRetentionBackupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ManagedInstanceLongTermRetentionBackupData>)Data).GetFormatFromOptions(options);
     }
