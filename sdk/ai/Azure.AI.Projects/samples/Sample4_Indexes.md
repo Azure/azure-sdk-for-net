@@ -14,22 +14,31 @@ This sample demonstrates how to use the synchronous and asynchronous `.indexes` 
 
 ## Synchronous Sample
 
-```csharp
+```C# Snippet:IndexesExampleSync
 var endpoint = Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
 var indexName = Environment.GetEnvironmentVariable("INDEX_NAME") ?? "my-index";
 var indexVersion = Environment.GetEnvironmentVariable("INDEX_VERSION") ?? "1.0";
 var aiSearchConnectionName = Environment.GetEnvironmentVariable("AI_SEARCH_CONNECTION_NAME") ?? "my-ai-search-connection-name";
 var aiSearchIndexName = Environment.GetEnvironmentVariable("AI_SEARCH_INDEX_NAME") ?? "my-ai-search-index-name";
-
 AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
 Indexes indexesClient = projectClient.GetIndexesClient();
 
+RequestContent content = RequestContent.Create(new
+{
+    connectionName = aiSearchConnectionName,
+    indexName = aiSearchIndexName,
+    indexVersion = indexVersion,
+    type = "AzureSearch",
+    description = "Sample Index for testing",
+    displayName = "Sample Index"
+});
+
 Console.WriteLine($"Create an Index named `{indexName}` referencing an existing AI Search resource:");
-var index = indexesClient.CreateVersion(
+var index = indexesClient.CreateOrUpdate(
     name: indexName,
     version: indexVersion,
-    body: new AzureAISearchIndex(connectionName: aiSearchConnectionName, indexName: aiSearchIndexName)
-    );
+    content: content
+);
 Console.WriteLine(index);
 
 Console.WriteLine($"Get an existing Index named `{indexName}`, version `{indexVersion}`:");

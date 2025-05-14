@@ -28,7 +28,7 @@ Console.WriteLine("Create an evaluation");
 Evaluations evaluations = projectClient.GetEvaluationsClient();
 
 var evaluatorConfig = new EvaluatorConfiguration(
-    id: EvaluatorIDs.Relevance // TODO: Update this to use the preferred evaluator ID
+    id: EvaluatorIDs.Relevance // TODO: Update this to use the correct evaluator ID
 );
 evaluatorConfig.InitParams.Add("deployment_name", BinaryData.FromObjectAsJson("gpt-4o"));
 
@@ -37,14 +37,14 @@ Evaluation evaluation = new Evaluation(
     evaluators: new Dictionary<string, EvaluatorConfiguration> { { "relevance", evaluatorConfig } }
 );
 evaluation.DisplayName = "Sample Evaluation";
-evaluation.Description = "Sample evaluation for testing";
+evaluation.Description = "Sample evaluation for testing"; // TODO: Make optional once bug 4115256 is fixed
 
 Console.WriteLine("Create the evaluation run");
-Evaluation evaluationResponse = evaluations.CreateRun(evaluation);
+Evaluation evaluationResponse = evaluations.Create(evaluation: evaluation);
 Console.WriteLine(evaluationResponse);
 
 Console.WriteLine("Get evaluation");
-Evaluation getEvaluationResponse = evaluations.GetEvaluation(evaluationResponse.Id);
+Evaluation getEvaluationResponse = evaluations.GetEvaluation(evaluationResponse.Name);
 Console.WriteLine(getEvaluationResponse);
 
 Console.WriteLine("List evaluations");
@@ -55,7 +55,7 @@ foreach (var eval in evaluations.GetEvaluations())
 ```
 
 ## Asynchronous sample:
-```C# Snippet:EvaluationsExampleSync
+```C# Snippet:EvaluationsExampleAsync
 var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
 var datasetName = System.Environment.GetEnvironmentVariable("DATASET_NAME");
 AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
@@ -73,7 +73,7 @@ Console.WriteLine("Create an evaluation");
 Evaluations evaluations = projectClient.GetEvaluationsClient();
 
 var evaluatorConfig = new EvaluatorConfiguration(
-    id: EvaluatorIDs.Relevance // TODO: Update this to use the preferred evaluator ID
+    id: EvaluatorIDs.Relevance // TODO: Update this to use the correct evaluator ID
 );
 evaluatorConfig.InitParams.Add("deploymentName", BinaryData.FromObjectAsJson("gpt-4o"));
 
@@ -82,14 +82,14 @@ Evaluation evaluation = new Evaluation(
     evaluators: new Dictionary<string, EvaluatorConfiguration> { { "relevance", evaluatorConfig } }
 );
 evaluation.DisplayName = "Sample Evaluation";
-evaluation.Description = "Sample evaluation for testing";
+evaluation.Description = "Sample evaluation for testing"; // TODO: Make optional once bug 4115256 is fixed
 
 Console.WriteLine("Create the evaluation run");
-Evaluation evaluationResponse = await evaluations.CreateRunAsync(evaluation);
+Evaluation evaluationResponse = await evaluations.CreateAsync(evaluation: evaluation);
 Console.WriteLine(evaluationResponse);
 
 Console.WriteLine("Get evaluation");
-Evaluation getEvaluationResponse = await evaluations.GetEvaluationAsync(evaluationResponse.Id);
+Evaluation getEvaluationResponse = await evaluations.GetEvaluationAsync(evaluationResponse.Name);
 Console.WriteLine(getEvaluationResponse);
 
 Console.WriteLine("List evaluations");

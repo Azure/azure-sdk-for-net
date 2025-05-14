@@ -46,4 +46,39 @@ public class Sample_Deployment : SamplesBase<AIProjectsTestEnvironment>
         Console.WriteLine(deploymentDetails);
         #endregion
     }
+
+    [Test]
+    [AsyncOnly]
+    public async Task DeploymentExampleAsync()
+    {
+        #region Snippet:DeploymentExampleAsync
+#if SNIPPET
+        var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
+        var deploymentName = System.Environment.GetEnvironmentVariable("DEPLOYMENT_NAME");
+        var modelPublisher = System.Environment.GetEnvironmentVariable("MODEL_PUBLISHER");
+#else
+        var endpoint = TestEnvironment.PROJECTENDPOINT;
+        var deploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
+        var modelPublisher = TestEnvironment.MODELPUBLISHER;
+#endif
+        AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
+        Deployments deployments = projectClient.GetDeploymentsClient();
+
+        Console.WriteLine("List all deployments:");
+        await foreach (var deployment in deployments.GetDeploymentsAsync())
+        {
+            Console.WriteLine(deployment);
+        }
+
+        Console.WriteLine($"List all deployments by the model publisher `{modelPublisher}`:");
+        await foreach (var deployment in deployments.GetDeploymentsAsync(modelPublisher: modelPublisher))
+        {
+            Console.WriteLine(deployment);
+        }
+
+        Console.WriteLine($"Get a single deployment named `{deploymentName}`:");
+        var deploymentDetails = deployments.GetDeploymentAsync(deploymentName);
+        Console.WriteLine(deploymentDetails);
+        #endregion
+    }
 }
