@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> The NSP logging configuration properties. </summary>
-    public partial class NetworkSecurityPerimeterLoggingConfigurationProperties
+    /// <summary> The NetworkVirtualApplianceInstanceId. </summary>
+    public partial class NetworkVirtualApplianceInstanceId
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,26 +45,21 @@ namespace Azure.ResourceManager.Network.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterLoggingConfigurationProperties"/>. </summary>
-        public NetworkSecurityPerimeterLoggingConfigurationProperties()
+        /// <summary> Initializes a new instance of <see cref="NetworkVirtualApplianceInstanceId"/>. </summary>
+        internal NetworkVirtualApplianceInstanceId()
         {
-            EnabledLogCategories = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterLoggingConfigurationProperties"/>. </summary>
-        /// <param name="enabledLogCategories"> The log categories to enable in the NSP logging configuration. </param>
-        /// <param name="version"> The version of the NSP logging configuration. </param>
+        /// <summary> Initializes a new instance of <see cref="NetworkVirtualApplianceInstanceId"/>. </summary>
+        /// <param name="instanceId"> The network virtual appliance instance id for which boot diagnostic logs is being requested. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkSecurityPerimeterLoggingConfigurationProperties(IList<string> enabledLogCategories, string version, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NetworkVirtualApplianceInstanceId(int? instanceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            EnabledLogCategories = enabledLogCategories;
-            Version = version;
+            InstanceId = instanceId;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The log categories to enable in the NSP logging configuration. </summary>
-        public IList<string> EnabledLogCategories { get; }
-        /// <summary> The version of the NSP logging configuration. </summary>
-        public string Version { get; set; }
+        /// <summary> The network virtual appliance instance id for which boot diagnostic logs is being requested. </summary>
+        public int? InstanceId { get; }
     }
 }
