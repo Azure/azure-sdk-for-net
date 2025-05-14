@@ -93,7 +93,6 @@ namespace Azure.AI.Agents.Persistent
         public ThreadMessages Messages { get => _client.GetThreadMessagesClient();}
         public Threads Threads { get => _client.GetThreadsClient(); }
         public ThreadRuns Runs { get => _client.GetThreadRunsClient(); }
-        public ThreadRunSteps ThreadRunSteps { get => _client.GetThreadRunStepsClient(); }
         public VectorStores VectorStores { get => _client.GetVectorStoresClient(); }
     }
 }
