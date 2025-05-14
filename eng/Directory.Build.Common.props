@@ -160,7 +160,6 @@
 
   <ItemGroup Condition="'$(IsProvisioningLibrary)' == 'true'">
     <PackageReference Include="Azure.Provisioning" />
-    <PackageReference Include="Azure.Core" />
   </ItemGroup>
 
   <PropertyGroup>

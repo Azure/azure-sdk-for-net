@@ -178,7 +178,6 @@
 
   <ItemGroup Condition="'$(IsProvisioningLibrary)' == 'true'">
     <PackageReference Update="Azure.Provisioning" Version="1.0.0" />
-    <PackageReference Update="Azure.Core" Version="1.46.1" />
   </ItemGroup>
 
   <ItemGroup Condition="$(MSBuildProjectName.StartsWith('Azure.Monitor.OpenTelemetry'))">
