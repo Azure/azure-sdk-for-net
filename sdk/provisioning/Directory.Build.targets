@@ -8,10 +8,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Azure.Provisioning/tests/ProvisioningTestEnvironment.cs" LinkBase="ProvisioningShared" />
   </ItemGroup>
 
-  <ItemGroup Condition="'$(AssemblyName)' != 'Azure.Provisioning' And '$(AssemblyName)' != 'Generator'">
-    <PackageReference Include="Azure.Provisioning" />
-  </ItemGroup>
-
   <ItemGroup>
     <!--
     Azure.Core isn't being found on builds with

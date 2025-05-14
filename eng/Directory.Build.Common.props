@@ -15,6 +15,7 @@
     <IsClientLibrary Condition="'$(IsClientLibrary)' == '' and $(MSBuildProjectName.StartsWith('Azure.'))">true</IsClientLibrary>
     <IsFunctionsLibrary Condition="'$(IsFunctionsLibrary)' == '' and $(MSBuildProjectName.StartsWith('Microsoft.Azure.WebJobs.Extensions.'))">true</IsFunctionsLibrary>
     <IsSourceGenerator Condition="'$(IsSourceGenerator)' == '' and $(MSBuildProjectName.EndsWith('.SourceGeneration'))">true</IsSourceGenerator>
+    <IsProvisioningLibrary Condition="'$(IsProvisioningLibrary)' == '' and $(MSBuildProjectName.StartsWith('Azure.Provisioning.'))">true</IsProvisioningLibrary>
 
     <IsTestProject Condition="'$(IsTestProject)' == '' and $(MSBuildProjectName.EndsWith('.Tests'))">true</IsTestProject>
     <IsSamplesProject Condition="'$(IsSamplesProject)' == '' and $(MSBuildProjectName.EndsWith('.Samples'))">true</IsSamplesProject>
@@ -155,6 +156,10 @@
 
   <ItemGroup Condition="'$(IsMgmtSubLibrary)' == 'true' and !$(MSBuildProjectName.Equals('Azure.ResourceManager.Tests'))">
     <PackageReference Include="Azure.ResourceManager" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(IsProvisioningLibrary)' == 'true'">
+    <PackageReference Include="Azure.Provisioning" />
   </ItemGroup>
 
   <PropertyGroup>
