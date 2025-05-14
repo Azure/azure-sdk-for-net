@@ -311,7 +311,7 @@ namespace Azure.Search.Documents.Models
           new SemanticSearchResult()
           {
               RerankerScore = rerankerScore,
-              RerankerBoostedScore= rerankerBoostedScore,
+              RerankerBoostedScore = rerankerBoostedScore,
               Captions = captions
           };
     }

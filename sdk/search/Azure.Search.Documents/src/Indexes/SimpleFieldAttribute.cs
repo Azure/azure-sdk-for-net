@@ -59,7 +59,7 @@ namespace Azure.Search.Documents.Indexes
         public string NormalizerName { get; set; }
 
         /// <summary> A value indicating whether the field should be used as a permission filter. </summary>
-        /// <value>String values from <see cref="PermissionFilter.Values">LexicalAnalyzerName</see>.</value>
+        /// <value>String values from <see cref="PermissionFilter.Values">PermissionFilter</see>.</value>
         public string PermissionFilter { get; set; }
 
         /// <inheritdoc/>
