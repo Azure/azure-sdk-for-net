@@ -33,6 +33,17 @@ public class ModelReaderWriterOptions
         Format = format;
     }
 
+    internal ModelReaderWriterOptions(ModelReaderWriterOptions options)
+    {
+        Format = options.Format;
+        _proxies = options._proxies;
+        IsCoreOwned = true;
+    }
+
+    internal bool HasProxies => _proxies is not null;
+
+    internal bool IsCoreOwned { get; }
+
     /// <summary>
     /// Gets the format to read and write the model.
     /// </summary>
