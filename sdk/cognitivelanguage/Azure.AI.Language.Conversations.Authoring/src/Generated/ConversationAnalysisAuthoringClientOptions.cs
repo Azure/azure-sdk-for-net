@@ -13,7 +13,7 @@ namespace Azure.AI.Language.Conversations.Authoring
     /// <summary> Client options for ConversationAnalysisAuthoringClient. </summary>
     public partial class ConversationAnalysisAuthoringClientOptions : ClientOptions
     {
-        private const ServiceVersion LatestVersion = ServiceVersion.V2024_11_15_Preview;
+        private const ServiceVersion LatestVersion = ServiceVersion.V2025_05_15_Preview;
 
         /// <summary> The version of the service to use. </summary>
         public enum ServiceVersion
@@ -24,6 +24,8 @@ namespace Azure.AI.Language.Conversations.Authoring
             V2023_04_15_Preview = 2,
             /// <summary> Service version "2024-11-15-preview". </summary>
             V2024_11_15_Preview = 3,
+            /// <summary> Service version "2025-05-15-preview". </summary>
+            V2025_05_15_Preview = 4,
         }
 
         internal string Version { get; }
@@ -36,6 +38,7 @@ namespace Azure.AI.Language.Conversations.Authoring
                 ServiceVersion.V2023_04_01 => "2023-04-01",
                 ServiceVersion.V2023_04_15_Preview => "2023-04-15-preview",
                 ServiceVersion.V2024_11_15_Preview => "2024-11-15-preview",
+                ServiceVersion.V2025_05_15_Preview => "2025-05-15-preview",
                 _ => throw new NotSupportedException()
             };
         }

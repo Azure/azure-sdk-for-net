@@ -53,17 +53,17 @@ namespace Azure.AI.Language.Conversations.Authoring
             Argument.AssertNotNull(trainedModelLabel, nameof(trainedModelLabel));
 
             TrainedModelLabel = trainedModelLabel;
-            AssignedResourceIds = new ChangeTrackingList<string>();
+            AssignedResources = new ChangeTrackingList<ConversationAuthoringDeploymentResource>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ConversationAuthoringCreateDeploymentDetails"/>. </summary>
         /// <param name="trainedModelLabel"> Represents the trained model label. </param>
-        /// <param name="assignedResourceIds"> Represents the resource IDs to be assigned to the deployment. If provided, the deployment will be rolled out to the resources provided here as well as the original resource in which the project is created. </param>
+        /// <param name="assignedResources"> Represents the resources to be assigned to the deployment. If provided, the deployment will be rolled out to the resources provided here as well as the original resource in which the project is created. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConversationAuthoringCreateDeploymentDetails(string trainedModelLabel, IList<string> assignedResourceIds, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ConversationAuthoringCreateDeploymentDetails(string trainedModelLabel, IList<ConversationAuthoringDeploymentResource> assignedResources, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             TrainedModelLabel = trainedModelLabel;
-            AssignedResourceIds = assignedResourceIds;
+            AssignedResources = assignedResources;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -74,7 +74,7 @@ namespace Azure.AI.Language.Conversations.Authoring
 
         /// <summary> Represents the trained model label. </summary>
         public string TrainedModelLabel { get; }
-        /// <summary> Represents the resource IDs to be assigned to the deployment. If provided, the deployment will be rolled out to the resources provided here as well as the original resource in which the project is created. </summary>
-        public IList<string> AssignedResourceIds { get; }
+        /// <summary> Represents the resources to be assigned to the deployment. If provided, the deployment will be rolled out to the resources provided here as well as the original resource in which the project is created. </summary>
+        public IList<ConversationAuthoringDeploymentResource> AssignedResources { get; }
     }
 }

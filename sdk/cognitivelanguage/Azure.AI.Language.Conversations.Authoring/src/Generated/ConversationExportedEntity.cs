@@ -59,15 +59,17 @@ namespace Azure.AI.Language.Conversations.Authoring
 
         /// <summary> Initializes a new instance of <see cref="ConversationExportedEntity"/>. </summary>
         /// <param name="category"> The category of the entity. </param>
+        /// <param name="description"> The entity description. </param>
         /// <param name="compositionMode"> The behavior to follow when the entity's components overlap with each other. </param>
         /// <param name="entities"> The list component of the entity. </param>
         /// <param name="prebuilts"> The prebuilt entities components. </param>
         /// <param name="regex"> The regex component of the entity. </param>
         /// <param name="requiredComponents"> The required components. Allowed values are 'learned', 'list', 'prebuilts' and 'regex'. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConversationExportedEntity(string category, ConversationAuthoringCompositionMode? compositionMode, ConversationAuthoringExportedEntityList entities, IList<ConversationAuthoringExportedPrebuiltEntity> prebuilts, ExportedEntityRegex regex, IList<string> requiredComponents, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ConversationExportedEntity(string category, string description, ConversationAuthoringCompositionMode? compositionMode, ConversationAuthoringExportedEntityList entities, IList<ConversationAuthoringExportedPrebuiltEntity> prebuilts, ExportedEntityRegex regex, IList<string> requiredComponents, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Category = category;
+            Description = description;
             CompositionMode = compositionMode;
             Entities = entities;
             Prebuilts = prebuilts;
@@ -83,6 +85,8 @@ namespace Azure.AI.Language.Conversations.Authoring
 
         /// <summary> The category of the entity. </summary>
         public string Category { get; }
+        /// <summary> The entity description. </summary>
+        public string Description { get; set; }
         /// <summary> The behavior to follow when the entity's components overlap with each other. </summary>
         public ConversationAuthoringCompositionMode? CompositionMode { get; set; }
         /// <summary> The list component of the entity. </summary>
