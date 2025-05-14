@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Azure.AI.Projects
 {
-        public partial class AIProjectClient
+    public partial class AIProjectClient
     {
         private Telemetry _telemetry;
         public Telemetry Telemetry => _telemetry ??= new Telemetry(this);
