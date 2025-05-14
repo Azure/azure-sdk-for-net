@@ -155,23 +155,22 @@ namespace Azure.Messaging.EventHubs.Core
             uint b = a;
             uint c = a + seed2;
 
-            int tripletCount = data.Length > 12 ? (data.Length - 1) / 12 : 0;
+            int chunks = data.Length > 12 ? (data.Length - 1) / 12 : 0;
 
-            int regionBytes = tripletCount * 12; // must be divisible by 4
-            ReadOnlySpan<byte> region = data.Slice(0, regionBytes);
-            ReadOnlySpan<uint> words = MemoryMarshal.Cast<byte, uint>(region);
-
-            int i = 0;
-            for (; i < tripletCount; i++)
+            ref byte ptr = ref MemoryMarshal.GetReference(data);
+            for (int i = 0; i < chunks; i++)
             {
-                int idx = i * 3;
-                uint w0 = BitConverter.IsLittleEndian ? words[idx] : BinaryPrimitives.ReverseEndianness(words[idx]);
-                uint w1 = BitConverter.IsLittleEndian
-                    ? words[idx + 1]
-                    : BinaryPrimitives.ReverseEndianness(words[idx + 1]);
-                uint w2 = BitConverter.IsLittleEndian
-                    ? words[idx + 2]
-                    : BinaryPrimitives.ReverseEndianness(words[idx + 2]);
+                uint w0 = Unsafe.ReadUnaligned<uint>(ref ptr);
+                uint w1 = Unsafe.ReadUnaligned<uint>(ref Unsafe.Add(ref ptr, 4));
+                uint w2 = Unsafe.ReadUnaligned<uint>(ref Unsafe.Add(ref ptr, 8));
+                ptr = ref Unsafe.Add(ref ptr, 12);
+
+                if (!BitConverter.IsLittleEndian)
+                {
+                    w0 = BinaryPrimitives.ReverseEndianness(w0);
+                    w1 = BinaryPrimitives.ReverseEndianness(w1);
+                    w2 = BinaryPrimitives.ReverseEndianness(w2);
+                }
 
                 a += w0;
                 b += w1;
@@ -202,48 +201,49 @@ namespace Azure.Messaging.EventHubs.Core
                 b += a;
             }
 
-            int byteIndex = regionBytes;
-            int size = data.Length - byteIndex;
-            switch (size)
+            int consumed = chunks * 12;
+            ref byte tail = ref Unsafe.Add(ref MemoryMarshal.GetReference(data), consumed);
+            int left = data.Length - consumed;
+            switch (left)
             {
                 case 12:
-                    a += BinaryPrimitives.ReadUInt32LittleEndian(data.Slice(byteIndex));
-                    b += BinaryPrimitives.ReadUInt32LittleEndian(data.Slice(byteIndex + 4));
-                    c += BinaryPrimitives.ReadUInt32LittleEndian(data.Slice(byteIndex + 8));
+                    a += BitConverter.IsLittleEndian ? Unsafe.ReadUnaligned<uint>(ref tail) : BinaryPrimitives.ReverseEndianness(Unsafe.ReadUnaligned<uint>(ref tail));
+                    b += BitConverter.IsLittleEndian ? Unsafe.ReadUnaligned<uint>(ref Unsafe.Add(ref tail, 4)) : BinaryPrimitives.ReverseEndianness(Unsafe.ReadUnaligned<uint>(ref Unsafe.Add(ref tail, 4)));
+                    c += BitConverter.IsLittleEndian ? Unsafe.ReadUnaligned<uint>(ref Unsafe.Add(ref tail, 8)) : BinaryPrimitives.ReverseEndianness(Unsafe.ReadUnaligned<uint>(ref Unsafe.Add(ref tail, 8)));
                     break;
                 case 11:
-                    c += (uint)data[byteIndex + 10] << 16;
+                    c += (uint)Unsafe.Add(ref tail, 10) << 16;
                     goto case 10;
                 case 10:
-                    c += (uint)data[byteIndex + 9] << 8;
+                    c += (uint)Unsafe.Add(ref tail, 9) << 8;
                     goto case 9;
                 case 9:
-                    c += data[byteIndex + 8];
+                    c += Unsafe.Add(ref tail, 8);
                     goto case 8;
                 case 8:
-                    b += BinaryPrimitives.ReadUInt32LittleEndian(data.Slice(byteIndex + 4));
-                    a += BinaryPrimitives.ReadUInt32LittleEndian(data.Slice(byteIndex));
+                    b += BitConverter.IsLittleEndian ? Unsafe.ReadUnaligned<uint>(ref Unsafe.Add(ref tail, 4)) : BinaryPrimitives.ReverseEndianness(Unsafe.ReadUnaligned<uint>(ref Unsafe.Add(ref tail, 4)));
+                    a += BitConverter.IsLittleEndian ? Unsafe.ReadUnaligned<uint>(ref tail) : BinaryPrimitives.ReverseEndianness(Unsafe.ReadUnaligned<uint>(ref tail));
                     break;
                 case 7:
-                    b += (uint)data[byteIndex + 6] << 16;
+                    b += (uint)Unsafe.Add(ref tail, 6) << 16;
                     goto case 6;
                 case 6:
-                    b += (uint)data[byteIndex + 5] << 8;
+                    b += (uint)Unsafe.Add(ref tail, 5) << 8;
                     goto case 5;
                 case 5:
-                    b += data[byteIndex + 4];
+                    b += Unsafe.Add(ref tail, 4);
                     goto case 4;
                 case 4:
-                    a += BinaryPrimitives.ReadUInt32LittleEndian(data.Slice(byteIndex));
+                    a += BitConverter.IsLittleEndian ? Unsafe.ReadUnaligned<uint>(ref tail) : BinaryPrimitives.ReverseEndianness(Unsafe.ReadUnaligned<uint>(ref tail));
                     break;
                 case 3:
-                    a += (uint)data[byteIndex + 2] << 16;
+                    a += (uint)Unsafe.Add(ref tail, 2) << 16;
                     goto case 2;
                 case 2:
-                    a += (uint)data[byteIndex + 1] << 8;
+                    a += (uint)Unsafe.Add(ref tail, 1) << 8;
                     goto case 1;
                 case 1:
-                    a += data[byteIndex];
+                    a += Unsafe.Add(ref tail, 0);
                     break;
                 case 0:
                     hash1 = c;
