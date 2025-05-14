@@ -58,8 +58,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
             this ShareFileStorageResourceOptions options,
             StorageResourceItemProperties sourceProperties)
         {
-            // Only set permissions if Copy transfer and FilePermissions is on.
-            bool setPermissions = (!sourceProperties?.Uri?.IsFile ?? false) && (options?.FilePermissions ?? false);
+            bool setPermissions = options?.FilePermissions ?? false;
 
             if ((!options?.IsNfs ?? true) && setPermissions)
             {
@@ -75,7 +74,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
             StorageResourceContainerProperties sourceProperties)
         {
             // Only set permissions if Copy transfer and FilePermissions is on.
-            bool setPermissions = (!sourceProperties?.Uri?.IsFile ?? false) && (options?.FilePermissions ?? false);
+            bool setPermissions = options?.FilePermissions ?? false;
 
             if ((!options?.IsNfs ?? true) && setPermissions)
             {
@@ -113,7 +112,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
             if (string.IsNullOrEmpty(permissionKeyValue))
             {
                 // Only set permissions if Copy transfer and FilePermissions is on.
-                bool setPermissions = (!properties?.Uri?.IsFile ?? false) && (options?.FilePermissions ?? false);
+                bool setPermissions = options?.FilePermissions ?? false;
 
                 permissionKeyValue = setPermissions
                     ? properties?.RawProperties?.TryGetValue(DataMovementConstants.ResourceProperties.DestinationFilePermissionKey, out object permissionKeyObject) == true
@@ -158,7 +157,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
             StorageResourceContainerProperties properties)
         {
             // Only set permissions if Copy transfer and FilePermissions is on.
-            bool setPermissions = (!properties?.Uri?.IsFile ?? false) && (options?.FilePermissions ?? false);
+            bool setPermissions = options?.FilePermissions ?? false;
 
             string permissionKeyValue = setPermissions
                 ? properties?.RawProperties?.TryGetValue(DataMovementConstants.ResourceProperties.DestinationFilePermissionKey, out object permissionKeyObject) == true
@@ -218,7 +217,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
             StorageResourceItemProperties sourceProperties)
         {
             // Only set NFS permissions if Copy transfer and FilePermissions is on.
-            bool setPermissions = (!sourceProperties?.Uri?.IsFile ?? false) && (options?.FilePermissions ?? false);
+            bool setPermissions = options?.FilePermissions ?? false;
 
             if (options?.IsNfs ?? false)
             {
@@ -259,7 +258,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
             string Group = default;
 
             // Only set NFS permissions if Copy transfer and FilePermissions is on.
-            bool setPermissions = (!sourceProperties?.Uri?.IsFile ?? false) && (options?.FilePermissions ?? false);
+            bool setPermissions = options?.FilePermissions ?? false;
 
             if ((options?.IsNfs ?? false) && setPermissions)
             {
@@ -383,6 +382,14 @@ namespace Azure.Storage.DataMovement.Files.Shares
             {
                 rawProperties.WriteKeyValue(DataMovementConstants.ResourceProperties.FileMode, fileProperties.PosixProperties.FileMode);
             }
+            if (fileProperties.PosixProperties.FileType != default)
+            {
+                rawProperties.WriteKeyValue(DataMovementConstants.ResourceProperties.FileType, fileProperties.PosixProperties.FileType);
+            }
+            if (fileProperties.PosixProperties.LinkCount != default)
+            {
+                rawProperties.WriteKeyValue(DataMovementConstants.ResourceProperties.LinkCount, fileProperties.PosixProperties.LinkCount);
+            }
             return new StorageResourceItemProperties()
             {
                 ResourceLength = fileProperties.ContentLength,
@@ -467,6 +474,14 @@ namespace Azure.Storage.DataMovement.Files.Shares
             if (fileProperties.PosixProperties.FileMode != default)
             {
                 existingProperties.RawProperties.WriteKeyValue(DataMovementConstants.ResourceProperties.FileMode, fileProperties.PosixProperties.FileMode);
+            }
+            if (fileProperties.PosixProperties.FileType != default)
+            {
+                existingProperties.RawProperties.WriteKeyValue(DataMovementConstants.ResourceProperties.FileType, fileProperties.PosixProperties.FileType);
+            }
+            if (fileProperties.PosixProperties.LinkCount != default)
+            {
+                existingProperties.RawProperties.WriteKeyValue(DataMovementConstants.ResourceProperties.LinkCount, fileProperties.PosixProperties.LinkCount);
             }
         }
 

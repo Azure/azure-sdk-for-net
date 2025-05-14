@@ -241,5 +241,22 @@ namespace Azure.Storage.DataMovement
         /// </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         protected internal abstract Task<bool> DeleteIfExistsAsync(CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Deermines whether to perform the item transfer. This should be called on the source resource item.
+        /// </summary>
+        /// <param name="destItem">
+        /// The destination resource item.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// Whether the item transfer can be performed.
+        /// </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        protected internal virtual Task<bool> ValidateItemTransferAsync(StorageResourceItem destItem, CancellationToken cancellationToken = default)
+            => Task.FromResult(true);
     }
 }

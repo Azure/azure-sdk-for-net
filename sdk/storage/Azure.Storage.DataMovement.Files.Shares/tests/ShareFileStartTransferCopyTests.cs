@@ -1026,5 +1026,152 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 await transferManager.StartTransferAsync(sourceResource, destinationResource, options));
             Assert.AreEqual("This Share transfer is not supported. Currently only NFS -> NFS and SMB -> SMB Share transfers are supported", ex.Message);
         }
+
+        [RecordedTest]
+        public async Task ShareFileToShareFile_NfsHardLink()
+        {
+            // Arrange
+            await using IDisposingContainer<ShareClient> source = await SourceClientBuilder.GetTestShareSasNfsAsync();
+            await using IDisposingContainer<ShareClient> destination = await DestinationClientBuilder.GetTestShareSasNfsAsync();
+
+            DateTimeOffset sourceFileCreatedOn = _defaultFileCreatedOn;
+            DateTimeOffset sourceFileLastWrittenOn = _defaultFileLastWrittenOn;
+            string sourceOwner = "345";
+            string sourceGroup = "123";
+            string sourceFileMode = "1777";
+            ShareFileCreateOptions sharefileCreateOptions = new ShareFileCreateOptions()
+            {
+                SmbProperties = new FileSmbProperties()
+                {
+                    FileCreatedOn = sourceFileCreatedOn,
+                    FileLastWrittenOn = sourceFileLastWrittenOn,
+                },
+                PosixProperties = new FilePosixProperties()
+                {
+                    Owner = sourceOwner,
+                    Group = sourceGroup,
+                    FileMode = NfsFileMode.ParseOctalFileMode(sourceFileMode),
+                }
+            };
+
+            ShareDirectoryClient directory = source.Container.GetRootDirectoryClient();
+            ShareFileClient originalClient = await CreateFileClientWithOptionsAsync(
+                container: source.Container,
+                objectLength: DataMovementTestConstants.KB,
+                createResource: true,
+                options: sharefileCreateOptions);
+            ShareFileClient hardlinkClient = InstrumentClient(directory.GetFileClient("original-hardlink"));
+
+            // Create Hardlink
+            await hardlinkClient.CreateHardLinkAsync(
+                targetFile: $"{directory.Name}/{originalClient.Name}");
+
+            // Assert hardlink was successfully created
+            ShareFileProperties sourceProperties = await hardlinkClient.GetPropertiesAsync();
+            Assert.AreEqual(2, sourceProperties.PosixProperties.LinkCount);
+            Assert.AreEqual(NfsFileType.Regular, sourceProperties.PosixProperties.FileType);
+
+            // Use the hardlink to create the source file
+            StorageResourceItem sourceResource = new ShareFileStorageResource(hardlinkClient,
+                new ShareFileStorageResourceOptions() { IsNfs = true });
+
+            // Create destination file
+            ShareFileClient destinationClient = await CreateFileClientWithOptionsAsync(
+                container: destination.Container,
+                createResource: false);
+            StorageResourceItem destinationResource = new ShareFileStorageResource(destinationClient,
+                new ShareFileStorageResourceOptions() { IsNfs = true, FilePermissions = true });
+
+            TransferOptions options = new TransferOptions();
+            TestEventsRaised testEventsRaised = new TestEventsRaised(options);
+            TransferManager transferManager = new TransferManager();
+
+            // Act - Start transfer and await for completion.
+            TransferOperation transfer = await transferManager.StartTransferAsync(
+                sourceResource,
+                destinationResource,
+                options);
+            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
+            await TestTransferWithTimeout.WaitForCompletionAsync(
+                transfer,
+                testEventsRaised,
+                cancellationTokenSource.Token);
+
+            // Assert
+            Assert.NotNull(transfer);
+            Assert.IsTrue(transfer.HasCompleted);
+            Assert.AreEqual(TransferState.Completed, transfer.Status.State);
+            await testEventsRaised.AssertSingleCompletedCheck();
+            using Stream sourceStream = await hardlinkClient.OpenReadAsync();
+            using Stream destinationStream = await destinationClient.OpenReadAsync();
+            Assert.AreEqual(sourceStream.Length, destinationStream.Length);
+
+            ShareFileProperties destinationProperties = await destinationClient.GetPropertiesAsync();
+            Assert.AreEqual(sourceFileCreatedOn, destinationProperties.SmbProperties.FileCreatedOn);
+            Assert.AreEqual(sourceFileLastWrittenOn, destinationProperties.SmbProperties.FileLastWrittenOn);
+            Assert.AreEqual(sourceOwner, destinationProperties.PosixProperties.Owner);
+            Assert.AreEqual(sourceGroup, destinationProperties.PosixProperties.Group);
+            Assert.AreEqual(sourceFileMode, destinationProperties.PosixProperties.FileMode.ToOctalFileMode());
+
+            // Assert dest was copied as regular file
+            Assert.AreEqual(1, destinationProperties.PosixProperties.LinkCount);
+            Assert.AreEqual(NfsFileType.Regular, destinationProperties.PosixProperties.FileType);
+        }
+
+        [RecordedTest]
+        public async Task ShareFileToShareFile_NfsSymbolicLink()
+        {
+            // Arrange
+            await using IDisposingContainer<ShareClient> source = await SourceClientBuilder.GetTestShareSasNfsAsync();
+            await using IDisposingContainer<ShareClient> destination = await DestinationClientBuilder.GetTestShareSasNfsAsync();
+
+            ShareDirectoryClient directory = source.Container.GetRootDirectoryClient();
+            ShareFileClient originalClient = InstrumentClient(await directory.CreateFileAsync("original", maxSize: Constants.KB));
+            ShareFileClient symlinkClient = InstrumentClient(directory.GetFileClient("original-symlink"));
+
+            // Create Symlink
+            await symlinkClient.CreateSymbolicLinkAsync(linkText: originalClient.Uri.ToString());
+
+            // Assert symlink was successfully created
+            ShareFileProperties sourceProperties = await symlinkClient.GetPropertiesAsync();
+            Assert.AreEqual(1, sourceProperties.PosixProperties.LinkCount);
+            Assert.AreEqual(NfsFileType.SymLink, sourceProperties.PosixProperties.FileType);
+
+            // Use the symlink to create the source file
+            StorageResourceItem sourceResource = new ShareFileStorageResource(symlinkClient,
+                new ShareFileStorageResourceOptions() { IsNfs = true });
+
+            // Create destination file
+            ShareFileClient destinationClient = await CreateFileClientWithOptionsAsync(
+                container: destination.Container,
+                createResource: false);
+            StorageResourceItem destinationResource = new ShareFileStorageResource(destinationClient,
+                new ShareFileStorageResourceOptions() { IsNfs = true });
+
+            TransferOptions options = new TransferOptions();
+            TestEventsRaised testEventsRaised = new TestEventsRaised(options);
+            TransferManager transferManager = new TransferManager();
+
+            // Act - Start transfer and await for completion.
+            TransferOperation transfer = await transferManager.StartTransferAsync(
+                sourceResource,
+                destinationResource,
+                options);
+            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
+            await TestTransferWithTimeout.WaitForCompletionAsync(
+                transfer,
+                testEventsRaised,
+                cancellationTokenSource.Token);
+
+            // Assert
+            Assert.NotNull(transfer);
+            Assert.IsTrue(transfer.HasCompleted);
+            Assert.AreEqual(TransferState.Completed, transfer.Status.State);
+            await testEventsRaised.AssertSingleCompletedCheck();
+
+            // Assert that Symlinks are skipped and not copied
+            bool destExists = await destinationClient.ExistsAsync();
+            Assert.IsFalse(destExists);
+        }
     }
 }

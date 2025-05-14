@@ -14,12 +14,6 @@ namespace Azure.Storage.DataMovement
     public class StorageResourceContainerProperties
     {
         /// <summary>
-        /// The Uri of the Storage Resource Container.
-        /// </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public Uri Uri { get; set; }
-
-        /// <summary>
         /// Dictionary of the properties associated with this resource container.
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]

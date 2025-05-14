@@ -250,7 +250,6 @@ namespace Azure.Storage.DataMovement.Files.Shares
             {
                 ResourceProperties = response.Value.ToStorageResourceItemProperties();
             }
-            ResourceProperties.Uri = Uri;
             return ResourceProperties;
         }
 
@@ -272,7 +271,6 @@ namespace Azure.Storage.DataMovement.Files.Shares
             StorageResourceItemProperties sourceProperties,
             CancellationToken cancellationToken = default)
         {
-            // Copy transfer
             if (sourceResource is ShareFileStorageResource)
             {
                 ShareFileStorageResource sourceShareFile = (ShareFileStorageResource)sourceResource;
@@ -346,6 +344,35 @@ namespace Azure.Storage.DataMovement.Files.Shares
                 fileMetadata: _options?.FileMetadata,
                 isDirectoryMetadataSet: _options?._isDirectoryMetadataSet ?? false,
                 directoryMetadata: _options?.DirectoryMetadata);
+        }
+
+        protected override async Task<bool> ValidateItemTransferAsync(
+            StorageResourceItem destItem,
+            CancellationToken cancellationToken = default)
+        {
+            CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
+
+            StorageResourceItemProperties sourceProperties = await GetPropertiesAsync().ConfigureAwait(false);
+            NfsFileType FileType = sourceProperties?.RawProperties?.TryGetValue(DataMovementConstants.ResourceProperties.FileType, out object fileType) == true
+                    ? (NfsFileType)fileType
+                    : default;
+            if (FileType == NfsFileType.SymLink)
+            {
+                DataMovementFileShareEventSource.Singleton.SymLinkDetected(Uri.AbsoluteUri);
+                return false;
+            }
+            else if (FileType == NfsFileType.Regular)
+            {
+                long LinkCount = sourceProperties?.RawProperties?.TryGetValue(DataMovementConstants.ResourceProperties.LinkCount, out object linkCount) == true
+                        ? (long)linkCount
+                        : default;
+                // Hardlink detected
+                if (LinkCount > 1)
+                {
+                    DataMovementFileShareEventSource.Singleton.HardLinkDetected(Uri.AbsoluteUri);
+                }
+            }
+            return true;
         }
 
         protected override async Task ValidateTransferAsync(

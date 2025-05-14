@@ -151,7 +151,6 @@ namespace Azure.Storage.DataMovement.Files.Shares
             {
                 ResourceProperties = response.Value.ToStorageResourceContainerProperties();
             }
-            ResourceProperties.Uri = Uri;
             return ResourceProperties;
         }
 
