@@ -80,6 +80,7 @@ namespace Azure.AI.Projects
         public AIProjectClient(System.Uri endpoint, Azure.Core.TokenCredential credential = null) : base (default(int)) { }
         public AIProjectClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.AI.Projects.AIProjectClientOptions options) : base (default(int)) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
+        public Azure.AI.Projects.Telemetry Telemetry { get { throw null; } }
         public override System.Collections.Generic.IEnumerable<System.ClientModel.Primitives.ClientConnection> GetAllConnections() { throw null; }
         public override System.ClientModel.Primitives.ClientConnection GetConnection(string connectionId) { throw null; }
         public virtual Azure.AI.Projects.Connections GetConnectionsClient(string apiVersion = "2025-05-15-preview") { throw null; }
@@ -271,8 +272,8 @@ namespace Azure.AI.Projects
         public virtual Azure.Pageable<System.BinaryData> GetConnections(string connectionType, bool? defaultConnection, Azure.RequestContext context) { throw null; }
         public virtual Azure.AsyncPageable<Azure.AI.Projects.Connection> GetConnectionsAsync(Azure.AI.Projects.ConnectionType? connectionType = default(Azure.AI.Projects.ConnectionType?), bool? defaultConnection = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<System.BinaryData> GetConnectionsAsync(string connectionType, bool? defaultConnection, Azure.RequestContext context) { throw null; }
-        public Azure.AI.Projects.Connection GetDefault(bool includeCredentials = false) { throw null; }
-        public System.Threading.Tasks.Task<Azure.AI.Projects.Connection> GetDefaultAsync(bool includeCredentials = false) { throw null; }
+        public Azure.AI.Projects.Connection GetDefault(Azure.AI.Projects.ConnectionType? connectionType = default(Azure.AI.Projects.ConnectionType?), bool includeCredentials = false) { throw null; }
+        public System.Threading.Tasks.Task<Azure.AI.Projects.Connection> GetDefaultAsync(Azure.AI.Projects.ConnectionType? connectionType = default(Azure.AI.Projects.ConnectionType?), bool includeCredentials = false) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ConnectionType : System.IEquatable<Azure.AI.Projects.ConnectionType>
@@ -825,6 +826,12 @@ namespace Azure.AI.Projects
         Azure.AI.Projects.TargetConfig System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.TargetConfig>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.TargetConfig>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.TargetConfig>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class Telemetry
+    {
+        public Telemetry(Azure.AI.Projects.AIProjectClient outerInstance) { }
+        public string GetConnectionString() { throw null; }
+        public System.Threading.Tasks.Task<string> GetConnectionStringAsync() { throw null; }
     }
 }
 namespace Microsoft.Extensions.Azure
