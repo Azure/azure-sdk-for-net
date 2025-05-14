@@ -83,7 +83,7 @@ Phone numbers can be searched through the search creation API by providing an ar
 
 Phone numbers can also be released using the release API.
 
-#### Browsing and Reserving Phone Numbers
+#### Browsing and reserving phone numbers
 
 The Browse and Reservations APIs provide an alternate way to acquire phone numbers via a shopping-cart-like experience. This is achieved by splitting the search operation, which finds and reserves numbers using a single LRO, into two separate synchronous steps: Browse and Reservation. 
 
