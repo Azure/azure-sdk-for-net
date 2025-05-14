@@ -9,11 +9,108 @@ This sample demonstrates how to use the synchronous and asynchronous `persistent
   - `PROJECT_ENDPOINT`: The Azure AI Project endpoint, as found in the overview page of your Azure AI Foundry project.
   - `MODEL_DEPLOYMENT_NAME`: The name of the deployment to retrieve.
 
+## Asynchronous sample
+
+1. We need to create the agents client and read in some environment variables.
+
+```C# Snippet:ExtensionsAgentsBasicsAsync
+var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
+var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
+AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
+PersistentAgentsClient agentsClient = projectClient.GetPersistentAgentsClient();
+```
+
+1. Create an agent.
+
+```C# Snippet:AgentsOverviewCreateAgent
+PersistentAgent agent = await agentsClient.Administration.CreateAgentAsync(
+    model: modelDeploymentName,
+    name: "Math Tutor",
+    instructions: "You are a personal math tutor. Write and run code to answer math questions."
+);
+```
+
+3. Create a thread.
+
+```C# Snippet:AgentsOverviewCreateThread
+PersistentAgentThread thread = await agentsClient.Threads.CreateThreadAsync();
+```
+
+4. Add a message to a thread.
+
+```C# Snippet:AgentsOverviewCreateMessage
+ThreadMessage message = await agentsClient.Messages.CreateMessageAsync(
+    thread.Id,
+    MessageRole.User,
+    "I need to solve the equation `3x + 11 = 14`. Can you help me?");
+```
+
+5. Run the agent.
+
+```C# Snippet:AgentsOverviewCreateRun
+ThreadRun run = await agentsClient.Runs.CreateRunAsync(
+    thread.Id,
+    agent.Id,
+    additionalInstructions: "Please address the user as Jane Doe. The user has a premium account.");
+```
+
+6 . Whait while run complete.
+
+```C# Snippet:AgentsOverviewWaitForRun
+do
+{
+    await Task.Delay(TimeSpan.FromMilliseconds(500));
+    run = await agentsClient.Runs.GetRunAsync(thread.Id, run.Id);
+}
+while (run.Status == RunStatus.Queued
+    || run.Status == RunStatus.InProgress);
+Assert.AreEqual(
+    RunStatus.Completed,
+    run.Status,
+    run.LastError?.Message);
+```
+
+7. List messages in chronological order.
+
+```C# Snippet:AgentsOverviewListUpdatedMessages
+AsyncPageable<ThreadMessage> messages
+    = agentsClient.Messages.GetMessagesAsync(
+        threadId: thread.Id, order: ListSortOrder.Ascending);
+
+await foreach (ThreadMessage threadMessage in messages)
+{
+    Console.Write($"{threadMessage.CreatedAt:yyyy-MM-dd HH:mm:ss} - {threadMessage.Role,10}: ");
+    foreach (MessageContent contentItem in threadMessage.ContentItems)
+    {
+        if (contentItem is MessageTextContent textItem)
+        {
+            Console.Write(textItem.Text);
+        }
+        else if (contentItem is MessageImageFileContent imageFileItem)
+        {
+            Console.Write($"<image from ID: {imageFileItem.FileId}");
+        }
+        Console.WriteLine();
+    }
+}
+```
+
+8. Clean up the resources.
+
+```C# Snippet:AgentsOverviewCleanup
+await agentsClient.Threads.DeleteThreadAsync(threadId: thread.Id);
+
+await agentsClient.Administration.DeleteAgentAsync(agentId: agent.Id);
+```
+
+
 ## Synchronous Sample
 
 ```C# Snippet:ExtensionsAgentsBasicsSync
 var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
 var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
+AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
+PersistentAgentsClient agentsClient = projectClient.GetPersistentAgentsClient();
 
 // Step 1: Create an agent
 PersistentAgent agent = agentsClient.Administration.CreateAgent(
@@ -83,73 +180,6 @@ agentsClient.Administration.DeleteAgent(agentId: agent.Id);
 ```C# Snippet:ExtensionsAgentsBasicsAsync
 var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
 var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
-
 AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
 PersistentAgentsClient agentsClient = projectClient.GetPersistentAgentsClient();
-
-// Step 1: Create an agent
-PersistentAgent agent = await agentsClient.Administration.CreateAgentAsync(
-    model: modelDeploymentName,
-    name: "Math Tutor",
-    instructions: "You are a personal math tutor. Write and run code to answer math questions."
-);
-
-//// Step 2: Create a thread
-PersistentAgentThread thread = await agentsClient.Threads.CreateThreadAsync();
-
-// Step 3: Add a message to a thread
-ThreadMessage message = await agentsClient.Messages.CreateMessageAsync(
-    thread.Id,
-    MessageRole.User,
-    "I need to solve the equation `3x + 11 = 14`. Can you help me?");
-
-// Intermission: message is now correlated with thread
-// Intermission: listing messages will retrieve the message just added
-
-AsyncPageable<ThreadMessage> messagesList = agentsClient.Messages.GetMessagesAsync(thread.Id);
-List<ThreadMessage> messagesOne = await messagesList.ToListAsync();
-Assert.AreEqual(message.Id, messagesOne[0].Id);
-
-// Step 4: Run the agent
-ThreadRun run = await agentsClient.Runs.CreateRunAsync(
-    thread.Id,
-    agent.Id,
-    additionalInstructions: "Please address the user as Jane Doe. The user has a premium account.");
-
-do
-{
-    await Task.Delay(TimeSpan.FromMilliseconds(500));
-    run = await agentsClient.Runs.GetRunAsync(thread.Id, run.Id);
-}
-while (run.Status == RunStatus.Queued
-    || run.Status == RunStatus.InProgress);
-Assert.AreEqual(
-    RunStatus.Completed,
-    run.Status,
-    run.LastError?.Message);
-    
-AsyncPageable<ThreadMessage> messages
-    = agentsClient.Messages.GetMessagesAsync(
-        threadId: thread.Id, order: ListSortOrder.Ascending);
-
-await foreach (ThreadMessage threadMessage in messages)
-{
-    Console.Write($"{threadMessage.CreatedAt:yyyy-MM-dd HH:mm:ss} - {threadMessage.Role,10}: ");
-    foreach (MessageContent contentItem in threadMessage.ContentItems)
-    {
-        if (contentItem is MessageTextContent textItem)
-        {
-            Console.Write(textItem.Text);
-        }
-        else if (contentItem is MessageImageFileContent imageFileItem)
-        {
-            Console.Write($"<image from ID: {imageFileItem.FileId}");
-        }
-        Console.WriteLine();
-    }
-}
-
-await agentsClient.Threads.DeleteThreadAsync(threadId: thread.Id);
-
-await agentsClient.Administration.DeleteAgentAsync(agentId: agent.Id);
 ```

@@ -30,11 +30,11 @@ foreach (var connection in connectionsClient.GetConnections(connectionType: Conn
 }
 
 Console.WriteLine($"Get the properties of a connection named `{connectionName}`:");
-var specificConnection = connectionsClient.GetConnection(connectionName);
+var specificConnection = connectionsClient.Get(connectionName, includeCredentials: false);
 Console.WriteLine(specificConnection);
 
 Console.WriteLine("Get the properties of a connection with credentials:");
-var specificConnectionCredentials = connectionsClient.GetWithCredentials(connectionName);
+var specificConnectionCredentials = connectionsClient.Get(connectionName, includeCredentials: true);
 Console.WriteLine(specificConnectionCredentials);
 
 Console.WriteLine($"Get the properties of the default connection:");
@@ -67,11 +67,11 @@ await foreach (var connection in connectionsClient.GetConnectionsAsync(connectio
 }
 
 Console.WriteLine($"Get the properties of a connection named `{connectionName}`:");
-var specificConnection = await connectionsClient.GetConnectionAsync(connectionName);
+var specificConnection = await connectionsClient.GetAsync(connectionName, includeCredentials: false);
 Console.WriteLine(specificConnection);
 
 Console.WriteLine("Get the properties of a connection with credentials:");
-var specificConnectionCredentials = await connectionsClient.GetWithCredentialsAsync(connectionName);
+var specificConnectionCredentials = await connectionsClient.GetAsync(connectionName, includeCredentials: true);
 Console.WriteLine(specificConnectionCredentials);
 
 Console.WriteLine($"Get the properties of the default connection:");
