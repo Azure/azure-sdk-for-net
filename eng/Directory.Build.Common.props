@@ -158,10 +158,6 @@
     <PackageReference Include="Azure.ResourceManager" />
   </ItemGroup>
 
-  <ItemGroup Condition="'$(IsProvisioningLibrary)' == 'true'">
-    <PackageReference Include="Azure.Provisioning" />
-  </ItemGroup>
-
   <PropertyGroup>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
 

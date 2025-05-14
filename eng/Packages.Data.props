@@ -176,10 +176,6 @@
     <PackageReference Update="System.IdentityModel.Tokens.Jwt" Version="6.35.0" />
   </ItemGroup>
 
-  <ItemGroup Condition="'$(IsProvisioningLibrary)' == 'true'">
-    <PackageReference Update="Azure.Provisioning" Version="1.0.0" />
-  </ItemGroup>
-
   <ItemGroup Condition="$(MSBuildProjectName.StartsWith('Azure.Monitor.OpenTelemetry'))">
     <!-- OpenTelemetry dependency approved for Azure.Monitor.OpenTelemetry.Exporter package only -->
     <PackageReference Update="OpenTelemetry" Version="1.12.0" />
