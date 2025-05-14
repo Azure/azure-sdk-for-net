@@ -56,10 +56,10 @@ namespace Azure.Storage.DataMovement.Files.Shares
 
         /// <summary>
         /// Optional. Specifies whether the Share uses NFS or SMB protocol.
-        /// By default this value is set to false. If true is selected, the account used must support NFS.
+        /// By default this value is set to SMB.
         /// Applies to copy, upload, and download transfers.
         /// </summary>
-        public bool IsNfs { get; set; } = false;
+        public ShareProtocols ShareProtocol { get; set; } = ShareProtocols.Smb;
 
         /// <summary>
         /// Optional. See <see cref="ShareFileRequestConditions"/>.

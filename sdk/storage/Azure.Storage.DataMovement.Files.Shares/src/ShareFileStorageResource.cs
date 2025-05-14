@@ -275,7 +275,9 @@ namespace Azure.Storage.DataMovement.Files.Shares
             {
                 ShareFileStorageResource sourceShareFile = (ShareFileStorageResource)sourceResource;
                 // both source and destination must be SMB and destination FilePermission option must be set.
-                if ((!sourceShareFile._options?.IsNfs ?? true) && (!_options?.IsNfs ?? true) && (_options?.FilePermissions ?? false))
+                if (((sourceShareFile._options?.ShareProtocol ?? ShareProtocols.Smb) == ShareProtocols.Smb)
+                    && ((_options?.ShareProtocol ?? ShareProtocols.Smb) == ShareProtocols.Smb)
+                    && (_options?.FilePermissions ?? false))
                 {
                     string permissionsValue = sourceProperties?.RawProperties?.GetPermission();
                     string destinationPermissionKey = sourceProperties?.RawProperties?.GetDestinationPermissionKey();
@@ -385,7 +387,8 @@ namespace Azure.Storage.DataMovement.Files.Shares
             if (sourceResource is ShareFileStorageResource sourceShareFileResource)
             {
                 // Ensure the transfer is supported (NFS -> NFS and SMB -> SMB)
-                if ((_options?.IsNfs ?? false) != (sourceShareFileResource._options?.IsNfs ?? false))
+                if ((_options?.ShareProtocol ?? ShareProtocols.Smb)
+                    != (sourceShareFileResource._options?.ShareProtocol ?? ShareProtocols.Smb))
                 {
                     throw Errors.ShareTransferNotSupported();
                 }
