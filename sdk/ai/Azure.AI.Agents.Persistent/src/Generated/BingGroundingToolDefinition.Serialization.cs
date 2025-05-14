@@ -59,7 +59,7 @@ namespace Azure.AI.Agents.Persistent
             {
                 return null;
             }
-            BingGroundingSearchConfigurationList bingGrounding = default;
+            BingGroundingSearchToolParameters bingGrounding = default;
             string type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -67,7 +67,7 @@ namespace Azure.AI.Agents.Persistent
             {
                 if (property.NameEquals("bing_grounding"u8))
                 {
-                    bingGrounding = BingGroundingSearchConfigurationList.DeserializeBingGroundingSearchConfigurationList(property.Value, options);
+                    bingGrounding = BingGroundingSearchToolParameters.DeserializeBingGroundingSearchToolParameters(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("type"u8))

@@ -318,10 +318,11 @@ To enable your Agent to perform search through Bing search API, you use `BingGro
 
 Here is an example:
 ```C# Snippet:AgentsBingGrounding_GetConnection
-BingGroundingSearchConfigurationList configurationList = new(
-    [new BingGroundingSearchConfiguration(connectionId)]
+BingGroundingToolDefinition bingGroundingTool = new(
+    new BingGroundingSearchToolParameters(
+        [new BingGroundingSearchConfiguration(connectionId)]
+    )
 );
-BingGroundingToolDefinition bingGroundingTool = new(configurationList);
 ```
 ```C# Snippet:AgentsBingGroundingAsync_CreateAgent
 PersistentAgent agent = await agentClient.Administration.CreateAgentAsync(
