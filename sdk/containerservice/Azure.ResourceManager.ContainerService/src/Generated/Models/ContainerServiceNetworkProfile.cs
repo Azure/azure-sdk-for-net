@@ -59,6 +59,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="networkPolicy"> Network policy used for building the Kubernetes network. </param>
         /// <param name="networkMode"> This cannot be specified if networkPlugin is anything other than 'azure'. </param>
         /// <param name="networkDataplane"> Network dataplane used in the Kubernetes cluster. </param>
+        /// <param name="advancedNetworking"> Advanced Networking profile for enabling observability and security feature suite on a cluster. For more information see aka.ms/aksadvancednetworking. </param>
         /// <param name="podCidr"> A CIDR notation IP range from which to assign pod IPs when kubenet is used. </param>
         /// <param name="serviceCidr"> A CIDR notation IP range from which to assign service cluster IPs. It must not overlap with any Subnet IP ranges. </param>
         /// <param name="dnsServiceIP"> An IP address assigned to the Kubernetes DNS service. It must be within the Kubernetes service address range specified in serviceCidr. </param>
@@ -70,13 +71,14 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="serviceCidrs"> One IPv4 CIDR is expected for single-stack networking. Two CIDRs, one for each IP family (IPv4/IPv6), is expected for dual-stack networking. They must not overlap with any Subnet IP ranges. </param>
         /// <param name="ipFamilies"> IP families are used to determine single-stack or dual-stack clusters. For single-stack, the expected value is IPv4. For dual-stack, the expected values are IPv4 and IPv6. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerServiceNetworkProfile(ContainerServiceNetworkPlugin? networkPlugin, ContainerServiceNetworkPluginMode? networkPluginMode, ContainerServiceNetworkPolicy? networkPolicy, ContainerServiceNetworkMode? networkMode, NetworkDataplane? networkDataplane, string podCidr, string serviceCidr, string dnsServiceIP, ContainerServiceOutboundType? outboundType, ContainerServiceLoadBalancerSku? loadBalancerSku, ManagedClusterLoadBalancerProfile loadBalancerProfile, ManagedClusterNatGatewayProfile natGatewayProfile, IList<string> podCidrs, IList<string> serviceCidrs, IList<IPFamily> ipFamilies, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ContainerServiceNetworkProfile(ContainerServiceNetworkPlugin? networkPlugin, ContainerServiceNetworkPluginMode? networkPluginMode, ContainerServiceNetworkPolicy? networkPolicy, ContainerServiceNetworkMode? networkMode, NetworkDataplane? networkDataplane, AdvancedNetworking advancedNetworking, string podCidr, string serviceCidr, string dnsServiceIP, ContainerServiceOutboundType? outboundType, ContainerServiceLoadBalancerSku? loadBalancerSku, ManagedClusterLoadBalancerProfile loadBalancerProfile, ManagedClusterNatGatewayProfile natGatewayProfile, IList<string> podCidrs, IList<string> serviceCidrs, IList<IPFamily> ipFamilies, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             NetworkPlugin = networkPlugin;
             NetworkPluginMode = networkPluginMode;
             NetworkPolicy = networkPolicy;
             NetworkMode = networkMode;
             NetworkDataplane = networkDataplane;
+            AdvancedNetworking = advancedNetworking;
             PodCidr = podCidr;
             ServiceCidr = serviceCidr;
             DnsServiceIP = dnsServiceIP;
@@ -105,6 +107,9 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <summary> Network dataplane used in the Kubernetes cluster. </summary>
         [WirePath("networkDataplane")]
         public NetworkDataplane? NetworkDataplane { get; set; }
+        /// <summary> Advanced Networking profile for enabling observability and security feature suite on a cluster. For more information see aka.ms/aksadvancednetworking. </summary>
+        [WirePath("advancedNetworking")]
+        public AdvancedNetworking AdvancedNetworking { get; set; }
         /// <summary> A CIDR notation IP range from which to assign pod IPs when kubenet is used. </summary>
         [WirePath("podCidr")]
         public string PodCidr { get; set; }

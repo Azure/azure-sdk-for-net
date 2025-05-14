@@ -52,6 +52,9 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Initializes a new instance of <see cref="ManagedClusterAutoScalerProfile"/>. </summary>
         /// <param name="balanceSimilarNodeGroups"> Valid values are 'true' and 'false'. </param>
+        /// <param name="daemonsetEvictionForEmptyNodes"> If set to true, all daemonset pods on empty nodes will be evicted before deletion of the node. If the daemonset pod cannot be evicted another node will be chosen for scaling. If set to false, the node will be deleted without ensuring that daemonset pods are deleted or evicted. </param>
+        /// <param name="daemonsetEvictionForOccupiedNodes"> If set to true, all daemonset pods on occupied nodes will be evicted before deletion of the node. If the daemonset pod cannot be evicted another node will be chosen for scaling. If set to false, the node will be deleted without ensuring that daemonset pods are deleted or evicted. </param>
+        /// <param name="ignoreDaemonsetsUtilization"> If set to true, the resources used by daemonset will be taken into account when making scaling down decisions. </param>
         /// <param name="expander"> If not specified, the default is 'random'. See [expanders](https://github.com/kubernetes/autoscaler/blob/master/cluster-autoscaler/FAQ.md#what-are-expanders) for more information. </param>
         /// <param name="maxEmptyBulkDelete"> The default is 10. </param>
         /// <param name="maxGracefulTerminationSec"> The default is 600. </param>
@@ -69,9 +72,12 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="skipNodesWithLocalStorage"> The default is true. </param>
         /// <param name="skipNodesWithSystemPods"> The default is true. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedClusterAutoScalerProfile(string balanceSimilarNodeGroups, AutoScaleExpander? expander, string maxEmptyBulkDelete, string maxGracefulTerminationSec, string maxNodeProvisionTime, string maxTotalUnreadyPercentage, string newPodScaleUpDelay, string okTotalUnreadyCount, string scanIntervalInSeconds, string scaleDownDelayAfterAdd, string scaleDownDelayAfterDelete, string scaleDownDelayAfterFailure, string scaleDownUnneededTime, string scaleDownUnreadyTime, string scaleDownUtilizationThreshold, string skipNodesWithLocalStorage, string skipNodesWithSystemPods, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ManagedClusterAutoScalerProfile(string balanceSimilarNodeGroups, bool? daemonsetEvictionForEmptyNodes, bool? daemonsetEvictionForOccupiedNodes, bool? ignoreDaemonsetsUtilization, AutoScaleExpander? expander, string maxEmptyBulkDelete, string maxGracefulTerminationSec, string maxNodeProvisionTime, string maxTotalUnreadyPercentage, string newPodScaleUpDelay, string okTotalUnreadyCount, string scanIntervalInSeconds, string scaleDownDelayAfterAdd, string scaleDownDelayAfterDelete, string scaleDownDelayAfterFailure, string scaleDownUnneededTime, string scaleDownUnreadyTime, string scaleDownUtilizationThreshold, string skipNodesWithLocalStorage, string skipNodesWithSystemPods, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             BalanceSimilarNodeGroups = balanceSimilarNodeGroups;
+            DaemonsetEvictionForEmptyNodes = daemonsetEvictionForEmptyNodes;
+            DaemonsetEvictionForOccupiedNodes = daemonsetEvictionForOccupiedNodes;
+            IgnoreDaemonsetsUtilization = ignoreDaemonsetsUtilization;
             Expander = expander;
             MaxEmptyBulkDelete = maxEmptyBulkDelete;
             MaxGracefulTerminationSec = maxGracefulTerminationSec;
@@ -94,6 +100,15 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <summary> Valid values are 'true' and 'false'. </summary>
         [WirePath("balance-similar-node-groups")]
         public string BalanceSimilarNodeGroups { get; set; }
+        /// <summary> If set to true, all daemonset pods on empty nodes will be evicted before deletion of the node. If the daemonset pod cannot be evicted another node will be chosen for scaling. If set to false, the node will be deleted without ensuring that daemonset pods are deleted or evicted. </summary>
+        [WirePath("daemonset-eviction-for-empty-nodes")]
+        public bool? DaemonsetEvictionForEmptyNodes { get; set; }
+        /// <summary> If set to true, all daemonset pods on occupied nodes will be evicted before deletion of the node. If the daemonset pod cannot be evicted another node will be chosen for scaling. If set to false, the node will be deleted without ensuring that daemonset pods are deleted or evicted. </summary>
+        [WirePath("daemonset-eviction-for-occupied-nodes")]
+        public bool? DaemonsetEvictionForOccupiedNodes { get; set; }
+        /// <summary> If set to true, the resources used by daemonset will be taken into account when making scaling down decisions. </summary>
+        [WirePath("ignore-daemonsets-utilization")]
+        public bool? IgnoreDaemonsetsUtilization { get; set; }
         /// <summary> If not specified, the default is 'random'. See [expanders](https://github.com/kubernetes/autoscaler/blob/master/cluster-autoscaler/FAQ.md#what-are-expanders) for more information. </summary>
         [WirePath("expander")]
         public AutoScaleExpander? Expander { get; set; }

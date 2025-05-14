@@ -22,10 +22,13 @@ namespace Azure.ResourceManager.ContainerService.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
+        private const string NoneValue = "none";
         private const string CalicoValue = "calico";
         private const string AzureValue = "azure";
         private const string CiliumValue = "cilium";
 
+        /// <summary> Network policies will not be enforced. This is the default value when NetworkPolicy is not specified. </summary>
+        public static ContainerServiceNetworkPolicy None { get; } = new ContainerServiceNetworkPolicy(NoneValue);
         /// <summary> Use Calico network policies. See [differences between Azure and Calico policies](https://docs.microsoft.com/azure/aks/use-network-policies#differences-between-azure-and-calico-policies-and-their-capabilities) for more information. </summary>
         public static ContainerServiceNetworkPolicy Calico { get; } = new ContainerServiceNetworkPolicy(CalicoValue);
         /// <summary> Use Azure network policies. See [differences between Azure and Calico policies](https://docs.microsoft.com/azure/aks/use-network-policies#differences-between-azure-and-calico-policies-and-their-capabilities) for more information. </summary>

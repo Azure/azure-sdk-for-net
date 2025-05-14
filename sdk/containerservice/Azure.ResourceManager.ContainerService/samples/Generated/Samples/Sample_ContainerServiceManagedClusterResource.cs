@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ContainerService.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetManagedCluster()
         {
-            // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2023-10-01/examples/ManagedClustersGet.json
+            // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2025-03-01/examples/ManagedClustersGet.json
             // this example is just showing the usage of "ManagedClusters_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ContainerService.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteManagedCluster()
         {
-            // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2023-10-01/examples/ManagedClustersDelete.json
+            // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2025-03-01/examples/ManagedClustersDelete.json
             // this example is just showing the usage of "ManagedClusters_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.ContainerService.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateManagedClusterTags()
         {
-            // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2023-10-01/examples/ManagedClustersUpdateTags.json
+            // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2025-03-01/examples/ManagedClustersUpdateTags.json
             // this example is just showing the usage of "ManagedClusters_UpdateTags" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.ContainerService.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAccessProfile_GetManagedCluster()
         {
-            // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2023-10-01/examples/ManagedClustersGetAccessProfile.json
+            // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2025-03-01/examples/ManagedClustersGetAccessProfile.json
             // this example is just showing the usage of "ManagedClusters_GetAccessProfile" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.ContainerService.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetClusterAdminCredentials_GetManagedCluster()
         {
-            // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2023-10-01/examples/ManagedClustersListClusterAdminCredentials.json
+            // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2025-03-01/examples/ManagedClustersListClusterAdminCredentials.json
             // this example is just showing the usage of "ManagedClusters_ListClusterAdminCredentials" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.ContainerService.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetClusterUserCredentials_GetManagedCluster()
         {
-            // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2023-10-01/examples/ManagedClustersListClusterUserCredentials.json
+            // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2025-03-01/examples/ManagedClustersListClusterUserCredentials.json
             // this example is just showing the usage of "ManagedClusters_ListClusterUserCredentials" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.ContainerService.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetClusterMonitoringUserCredentials_GetManagedCluster()
         {
-            // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2023-10-01/examples/ManagedClustersListClusterMonitoringUserCredentials.json
+            // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2025-03-01/examples/ManagedClustersListClusterMonitoringUserCredentials.json
             // this example is just showing the usage of "ManagedClusters_ListClusterMonitoringUserCredentials" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.ContainerService.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task ResetServicePrincipalProfile_ResetServicePrincipalProfile()
         {
-            // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2023-10-01/examples/ManagedClustersResetServicePrincipalProfile.json
+            // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2025-03-01/examples/ManagedClustersResetServicePrincipalProfile.json
             // this example is just showing the usage of "ManagedClusters_ResetServicePrincipalProfile" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.ContainerService.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task ResetAadProfile_ResetAADProfile()
         {
-            // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2023-10-01/examples/ManagedClustersResetAADProfile.json
+            // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2025-03-01/examples/ManagedClustersResetAADProfile.json
             // this example is just showing the usage of "ManagedClusters_ResetAadProfile" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.ContainerService.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task RotateClusterCertificates_RotateClusterCertificates()
         {
-            // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2023-10-01/examples/ManagedClustersRotateClusterCertificates.json
+            // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2025-03-01/examples/ManagedClustersRotateClusterCertificates.json
             // this example is just showing the usage of "ManagedClusters_RotateClusterCertificates" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.ContainerService.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task AbortLatestOperation_AbortOperationOnManagedCluster()
         {
-            // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2023-10-01/examples/ManagedClustersAbortOperation.json
+            // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2025-03-01/examples/ManagedClustersAbortOperation.json
             // this example is just showing the usage of "ManagedClusters_AbortLatestOperation" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -335,7 +335,7 @@ namespace Azure.ResourceManager.ContainerService.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task RotateServiceAccountSigningKeys_RotateClusterServiceAccountSigningKeys()
         {
-            // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2023-10-01/examples/ManagedClustersRotateServiceAccountSigningKeys.json
+            // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2025-03-01/examples/ManagedClustersRotateServiceAccountSigningKeys.json
             // this example is just showing the usage of "ManagedClusters_RotateServiceAccountSigningKeys" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -361,7 +361,7 @@ namespace Azure.ResourceManager.ContainerService.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Stop_StopManagedCluster()
         {
-            // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2023-10-01/examples/ManagedClustersStop.json
+            // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2025-03-01/examples/ManagedClustersStop.json
             // this example is just showing the usage of "ManagedClusters_Stop" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -387,7 +387,7 @@ namespace Azure.ResourceManager.ContainerService.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Start_StartManagedCluster()
         {
-            // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2023-10-01/examples/ManagedClustersStart.json
+            // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2025-03-01/examples/ManagedClustersStart.json
             // this example is just showing the usage of "ManagedClusters_Start" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -413,7 +413,7 @@ namespace Azure.ResourceManager.ContainerService.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task RunCommand_SubmitNewCommand()
         {
-            // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2023-10-01/examples/RunCommandRequest.json
+            // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2025-03-01/examples/RunCommandRequest.json
             // this example is just showing the usage of "ManagedClusters_RunCommand" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -445,7 +445,7 @@ namespace Azure.ResourceManager.ContainerService.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetCommandResult_CommandFailedResult()
         {
-            // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2023-10-01/examples/RunCommandResultFailed.json
+            // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2025-03-01/examples/RunCommandResultFailed.json
             // this example is just showing the usage of "ManagedClusters_GetCommandResult" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -472,7 +472,7 @@ namespace Azure.ResourceManager.ContainerService.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetCommandResult_CommandSucceedResult()
         {
-            // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2023-10-01/examples/RunCommandResultSucceed.json
+            // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2025-03-01/examples/RunCommandResultSucceed.json
             // this example is just showing the usage of "ManagedClusters_GetCommandResult" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -499,7 +499,7 @@ namespace Azure.ResourceManager.ContainerService.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetOutboundNetworkDependenciesEndpoints_ListOutboundNetworkDependenciesEndpointsByManagedCluster()
         {
-            // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2023-10-01/examples/OutboundNetworkDependenciesEndpointsList.json
+            // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2025-03-01/examples/OutboundNetworkDependenciesEndpointsList.json
             // this example is just showing the usage of "ManagedClusters_ListOutboundNetworkDependenciesEndpoints" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -528,7 +528,7 @@ namespace Azure.ResourceManager.ContainerService.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAvailableAgentPoolVersions_GetAvailableVersionsForAgentPool()
         {
-            // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2023-10-01/examples/AgentPoolsGetAgentPoolAvailableVersions.json
+            // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2025-03-01/examples/AgentPoolsGetAgentPoolAvailableVersions.json
             // this example is just showing the usage of "AgentPools_GetAvailableAgentPoolVersions" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -554,7 +554,7 @@ namespace Azure.ResourceManager.ContainerService.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetPrivateLinkResources_ListPrivateLinkResourcesByManagedCluster()
         {
-            // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2023-10-01/examples/PrivateLinkResourcesList.json
+            // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2025-03-01/examples/PrivateLinkResourcesList.json
             // this example is just showing the usage of "PrivateLinkResources_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -583,7 +583,7 @@ namespace Azure.ResourceManager.ContainerService.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task ResolvePrivateLinkServiceId_ResolveThePrivateLinkServiceIDForManagedCluster()
         {
-            // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2023-10-01/examples/ResolvePrivateLinkServiceId.json
+            // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2025-03-01/examples/ResolvePrivateLinkServiceId.json
             // this example is just showing the usage of "ResolvePrivateLinkServiceId_Post" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

@@ -27,6 +27,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         private const string CblMarinerValue = "CBLMariner";
         private const string Windows2019Value = "Windows2019";
         private const string Windows2022Value = "Windows2022";
+        private const string Ubuntu2204Value = "Ubuntu2204";
 
         /// <summary> Use Ubuntu as the OS for node images. </summary>
         public static ContainerServiceOSSku Ubuntu { get; } = new ContainerServiceOSSku(UbuntuValue);
@@ -38,6 +39,8 @@ namespace Azure.ResourceManager.ContainerService.Models
         public static ContainerServiceOSSku Windows2019 { get; } = new ContainerServiceOSSku(Windows2019Value);
         /// <summary> Use Windows2022 as the OS for node images. Unsupported for system node pools. Windows2022 only supports Windows2022 containers; it cannot run Windows2019 containers and vice versa. </summary>
         public static ContainerServiceOSSku Windows2022 { get; } = new ContainerServiceOSSku(Windows2022Value);
+        /// <summary> Use Ubuntu2204 as the OS for node images, however, Ubuntu 22.04 may not be supported for all nodepools. For limitations and supported kubernetes versions, see see https://aka.ms/aks/supported-ubuntu-versions. </summary>
+        public static ContainerServiceOSSku Ubuntu2204 { get; } = new ContainerServiceOSSku(Ubuntu2204Value);
         /// <summary> Determines if two <see cref="ContainerServiceOSSku"/> values are the same. </summary>
         public static bool operator ==(ContainerServiceOSSku left, ContainerServiceOSSku right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ContainerServiceOSSku"/> values are not the same. </summary>

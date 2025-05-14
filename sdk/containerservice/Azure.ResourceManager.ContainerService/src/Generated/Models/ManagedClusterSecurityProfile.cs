@@ -48,6 +48,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <summary> Initializes a new instance of <see cref="ManagedClusterSecurityProfile"/>. </summary>
         public ManagedClusterSecurityProfile()
         {
+            CustomCATrustCertificates = new ChangeTrackingList<byte[]>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedClusterSecurityProfile"/>. </summary>
@@ -55,13 +56,15 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="azureKeyVaultKms"> Azure Key Vault [key management service](https://kubernetes.io/docs/tasks/administer-cluster/kms-provider/) settings for the security profile. </param>
         /// <param name="workloadIdentity"> Workload identity settings for the security profile. Workload identity enables Kubernetes applications to access Azure cloud resources securely with Azure AD. See https://aka.ms/aks/wi for more details. </param>
         /// <param name="imageCleaner"> Image Cleaner settings for the security profile. </param>
+        /// <param name="customCATrustCertificates"> A list of up to 10 base64 encoded CAs that will be added to the trust store on all nodes in the cluster. For more information see [Custom CA Trust Certificates](https://learn.microsoft.com/en-us/azure/aks/custom-certificate-authority). </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedClusterSecurityProfile(ManagedClusterSecurityProfileDefender defender, ManagedClusterSecurityProfileKeyVaultKms azureKeyVaultKms, ManagedClusterSecurityProfileWorkloadIdentity workloadIdentity, ManagedClusterSecurityProfileImageCleaner imageCleaner, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ManagedClusterSecurityProfile(ManagedClusterSecurityProfileDefender defender, ManagedClusterSecurityProfileKeyVaultKms azureKeyVaultKms, ManagedClusterSecurityProfileWorkloadIdentity workloadIdentity, ManagedClusterSecurityProfileImageCleaner imageCleaner, IList<byte[]> customCATrustCertificates, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Defender = defender;
             AzureKeyVaultKms = azureKeyVaultKms;
             WorkloadIdentity = workloadIdentity;
             ImageCleaner = imageCleaner;
+            CustomCATrustCertificates = customCATrustCertificates;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -89,5 +92,8 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <summary> Image Cleaner settings for the security profile. </summary>
         [WirePath("imageCleaner")]
         public ManagedClusterSecurityProfileImageCleaner ImageCleaner { get; set; }
+        /// <summary> A list of up to 10 base64 encoded CAs that will be added to the trust store on all nodes in the cluster. For more information see [Custom CA Trust Certificates](https://learn.microsoft.com/en-us/azure/aks/custom-certificate-authority). </summary>
+        [WirePath("customCATrustCertificates")]
+        public IList<byte[]> CustomCATrustCertificates { get; }
     }
 }

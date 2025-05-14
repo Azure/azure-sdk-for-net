@@ -8,7 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
@@ -38,17 +37,6 @@ namespace Azure.ResourceManager.ContainerService.Models
 
             writer.WritePropertyName("enabled"u8);
             writer.WriteBooleanValue(IsEnabled);
-            if (Optional.IsCollectionDefined(NodeSelector))
-            {
-                writer.WritePropertyName("nodeSelector"u8);
-                writer.WriteStartObject();
-                foreach (var item in NodeSelector)
-                {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteStringValue(item.Value);
-                }
-                writer.WriteEndObject();
-            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -87,7 +75,6 @@ namespace Azure.ResourceManager.ContainerService.Models
                 return null;
             }
             bool enabled = default;
-            IDictionary<string, string> nodeSelector = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -97,27 +84,13 @@ namespace Azure.ResourceManager.ContainerService.Models
                     enabled = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("nodeSelector"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        dictionary.Add(property0.Name, property0.Value.GetString());
-                    }
-                    nodeSelector = dictionary;
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new IstioEgressGateway(enabled, nodeSelector ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
+            return new IstioEgressGateway(enabled, serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -142,43 +115,6 @@ namespace Azure.ResourceManager.ContainerService.Models
                 builder.Append("  enabled: ");
                 var boolValue = IsEnabled == true ? "true" : "false";
                 builder.AppendLine($"{boolValue}");
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NodeSelector), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  nodeSelector: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(NodeSelector))
-                {
-                    if (NodeSelector.Any())
-                    {
-                        builder.Append("  nodeSelector: ");
-                        builder.AppendLine("{");
-                        foreach (var item in NodeSelector)
-                        {
-                            builder.Append($"    '{item.Key}': ");
-                            if (item.Value == null)
-                            {
-                                builder.Append("null");
-                                continue;
-                            }
-                            if (item.Value.Contains(Environment.NewLine))
-                            {
-                                builder.AppendLine("'''");
-                                builder.AppendLine($"{item.Value}'''");
-                            }
-                            else
-                            {
-                                builder.AppendLine($"'{item.Value}'");
-                            }
-                        }
-                        builder.AppendLine("  }");
-                    }
-                }
             }
 
             builder.AppendLine("}");

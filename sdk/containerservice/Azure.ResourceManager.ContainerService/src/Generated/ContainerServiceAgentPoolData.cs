@@ -65,12 +65,14 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
+        /// <param name="etag"> Unique read-only string used to implement optimistic concurrency. The eTag value will change when the resource is updated. Specify an if-match or if-none-match header with the eTag value for a subsequent request to enable optimistic concurrency per the normal etag convention. </param>
         /// <param name="count"> Number of agents (VMs) to host docker containers. Allowed values must be in the range of 0 to 1000 (inclusive) for user pools and in the range of 1 to 1000 (inclusive) for system pools. The default value is 1. </param>
         /// <param name="vmSize"> VM size availability varies by region. If a node contains insufficient compute resources (memory, cpu, etc) pods might fail to run correctly. For more details on restricted VM sizes, see: https://docs.microsoft.com/azure/aks/quotas-skus-regions. </param>
         /// <param name="osDiskSizeInGB"> OS Disk Size in GB to be used to specify the disk size for every machine in the master/agent pool. If you specify 0, it will apply the default osDisk size according to the vmSize specified. </param>
         /// <param name="osDiskType"> The default is 'Ephemeral' if the VM supports it and has a cache disk larger than the requested OSDiskSizeGB. Otherwise, defaults to 'Managed'. May not be changed after creation. For more information see [Ephemeral OS](https://docs.microsoft.com/azure/aks/cluster-configuration#ephemeral-os). </param>
         /// <param name="kubeletDiskType"> Determines the placement of emptyDir volumes, container runtime data root, and Kubelet ephemeral storage. </param>
         /// <param name="workloadRuntime"> Determines the type of workload a node can run. </param>
+        /// <param name="messageOfTheDay"> A base64-encoded string which will be written to /etc/motd after decoding. This allows customization of the message of the day for Linux nodes. It must not be specified for Windows nodes. It must be a static string (i.e., will be printed raw and not be executed as a script). </param>
         /// <param name="vnetSubnetId"> If this is not specified, a VNET and subnet will be generated and used. If no podSubnetID is specified, this applies to nodes and pods, otherwise it applies to just nodes. This is of the form: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/subnets/{subnetName}. </param>
         /// <param name="podSubnetId"> If omitted, pod IPs are statically assigned on the node subnet (see vnetSubnetID for more details). This is of the form: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/subnets/{subnetName}. </param>
         /// <param name="maxPods"> The maximum number of pods that can run on a node. </param>
@@ -108,15 +110,20 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="capacityReservationGroupId"> AKS will associate the specified agent pool with the Capacity Reservation Group. </param>
         /// <param name="hostGroupId"> This is of the form: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/hostGroups/{hostGroupName}. For more information see [Azure dedicated hosts](https://docs.microsoft.com/azure/virtual-machines/dedicated-hosts). </param>
         /// <param name="networkProfile"> Network-related settings of an agent pool. </param>
+        /// <param name="windowsProfile"> The Windows agent pool's specific profile. </param>
+        /// <param name="securityProfile"> The security settings of an agent pool. </param>
+        /// <param name="gpuProfile"> GPU settings for the Agent Pool. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerServiceAgentPoolData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, int? count, string vmSize, int? osDiskSizeInGB, ContainerServiceOSDiskType? osDiskType, KubeletDiskType? kubeletDiskType, WorkloadRuntime? workloadRuntime, ResourceIdentifier vnetSubnetId, ResourceIdentifier podSubnetId, int? maxPods, ContainerServiceOSType? osType, ContainerServiceOSSku? osSku, int? maxCount, int? minCount, bool? enableAutoScaling, ScaleDownMode? scaleDownMode, AgentPoolType? typePropertiesType, AgentPoolMode? mode, string orchestratorVersion, string currentOrchestratorVersion, string nodeImageVersion, AgentPoolUpgradeSettings upgradeSettings, string provisioningState, ContainerServicePowerState powerState, IList<string> availabilityZones, bool? enableNodePublicIP, ResourceIdentifier nodePublicIPPrefixId, ScaleSetPriority? scaleSetPriority, ScaleSetEvictionPolicy? scaleSetEvictionPolicy, float? spotMaxPrice, IDictionary<string, string> tags, IDictionary<string, string> nodeLabels, IList<string> nodeTaints, ResourceIdentifier proximityPlacementGroupId, KubeletConfig kubeletConfig, LinuxOSConfig linuxOSConfig, bool? enableEncryptionAtHost, bool? enableUltraSsd, bool? enableFips, GpuInstanceProfile? gpuInstanceProfile, ContainerServiceCreationData creationData, ResourceIdentifier capacityReservationGroupId, ResourceIdentifier hostGroupId, AgentPoolNetworkProfile networkProfile, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ContainerServiceAgentPoolData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, int? count, string vmSize, int? osDiskSizeInGB, ContainerServiceOSDiskType? osDiskType, KubeletDiskType? kubeletDiskType, WorkloadRuntime? workloadRuntime, string messageOfTheDay, ResourceIdentifier vnetSubnetId, ResourceIdentifier podSubnetId, int? maxPods, ContainerServiceOSType? osType, ContainerServiceOSSku? osSku, int? maxCount, int? minCount, bool? enableAutoScaling, ScaleDownMode? scaleDownMode, AgentPoolType? typePropertiesType, AgentPoolMode? mode, string orchestratorVersion, string currentOrchestratorVersion, string nodeImageVersion, AgentPoolUpgradeSettings upgradeSettings, string provisioningState, ContainerServicePowerState powerState, IList<string> availabilityZones, bool? enableNodePublicIP, ResourceIdentifier nodePublicIPPrefixId, ScaleSetPriority? scaleSetPriority, ScaleSetEvictionPolicy? scaleSetEvictionPolicy, float? spotMaxPrice, IDictionary<string, string> tags, IDictionary<string, string> nodeLabels, IList<string> nodeTaints, ResourceIdentifier proximityPlacementGroupId, KubeletConfig kubeletConfig, LinuxOSConfig linuxOSConfig, bool? enableEncryptionAtHost, bool? enableUltraSsd, bool? enableFips, GpuInstanceProfile? gpuInstanceProfile, ContainerServiceCreationData creationData, ResourceIdentifier capacityReservationGroupId, ResourceIdentifier hostGroupId, AgentPoolNetworkProfile networkProfile, AgentPoolWindowsProfile windowsProfile, AgentPoolSecurityProfile securityProfile, GpuProfile gpuProfile, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
+            ETag = etag;
             Count = count;
             VmSize = vmSize;
             OSDiskSizeInGB = osDiskSizeInGB;
             OSDiskType = osDiskType;
             KubeletDiskType = kubeletDiskType;
             WorkloadRuntime = workloadRuntime;
+            MessageOfTheDay = messageOfTheDay;
             VnetSubnetId = vnetSubnetId;
             PodSubnetId = podSubnetId;
             MaxPods = maxPods;
@@ -154,9 +161,15 @@ namespace Azure.ResourceManager.ContainerService
             CapacityReservationGroupId = capacityReservationGroupId;
             HostGroupId = hostGroupId;
             NetworkProfile = networkProfile;
+            WindowsProfile = windowsProfile;
+            SecurityProfile = securityProfile;
+            GpuProfile = gpuProfile;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> Unique read-only string used to implement optimistic concurrency. The eTag value will change when the resource is updated. Specify an if-match or if-none-match header with the eTag value for a subsequent request to enable optimistic concurrency per the normal etag convention. </summary>
+        [WirePath("properties.eTag")]
+        public ETag? ETag { get; }
         /// <summary> Number of agents (VMs) to host docker containers. Allowed values must be in the range of 0 to 1000 (inclusive) for user pools and in the range of 1 to 1000 (inclusive) for system pools. The default value is 1. </summary>
         [WirePath("properties.count")]
         public int? Count { get; set; }
@@ -175,6 +188,9 @@ namespace Azure.ResourceManager.ContainerService
         /// <summary> Determines the type of workload a node can run. </summary>
         [WirePath("properties.workloadRuntime")]
         public WorkloadRuntime? WorkloadRuntime { get; set; }
+        /// <summary> A base64-encoded string which will be written to /etc/motd after decoding. This allows customization of the message of the day for Linux nodes. It must not be specified for Windows nodes. It must be a static string (i.e., will be printed raw and not be executed as a script). </summary>
+        [WirePath("properties.messageOfTheDay")]
+        public string MessageOfTheDay { get; set; }
         /// <summary> If this is not specified, a VNET and subnet will be generated and used. If no podSubnetID is specified, this applies to nodes and pods, otherwise it applies to just nodes. This is of the form: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/subnets/{subnetName}. </summary>
         [WirePath("properties.vnetSubnetID")]
         public ResourceIdentifier VnetSubnetId { get; set; }
@@ -310,5 +326,37 @@ namespace Azure.ResourceManager.ContainerService
         /// <summary> Network-related settings of an agent pool. </summary>
         [WirePath("properties.networkProfile")]
         public AgentPoolNetworkProfile NetworkProfile { get; set; }
+        /// <summary> The Windows agent pool's specific profile. </summary>
+        internal AgentPoolWindowsProfile WindowsProfile { get; set; }
+        /// <summary> The default value is false. Outbound NAT can only be disabled if the cluster outboundType is NAT Gateway and the Windows agent pool does not have node public IP enabled. </summary>
+        [WirePath("properties.windowsProfile.disableOutboundNat")]
+        public bool? DisableOutboundNat
+        {
+            get => WindowsProfile is null ? default : WindowsProfile.DisableOutboundNat;
+            set
+            {
+                if (WindowsProfile is null)
+                    WindowsProfile = new AgentPoolWindowsProfile();
+                WindowsProfile.DisableOutboundNat = value;
+            }
+        }
+
+        /// <summary> The security settings of an agent pool. </summary>
+        [WirePath("properties.securityProfile")]
+        public AgentPoolSecurityProfile SecurityProfile { get; set; }
+        /// <summary> GPU settings for the Agent Pool. </summary>
+        internal GpuProfile GpuProfile { get; set; }
+        /// <summary> Whether to install GPU drivers. When it's not specified, default is Install. </summary>
+        [WirePath("properties.gpuProfile.driver")]
+        public GpuDriver? GpuDriver
+        {
+            get => GpuProfile is null ? default : GpuProfile.Driver;
+            set
+            {
+                if (GpuProfile is null)
+                    GpuProfile = new GpuProfile();
+                GpuProfile.Driver = value;
+            }
+        }
     }
 }

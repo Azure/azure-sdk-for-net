@@ -61,6 +61,11 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WritePropertyName("networkDataplane"u8);
                 writer.WriteStringValue(NetworkDataplane.Value.ToString());
             }
+            if (Optional.IsDefined(AdvancedNetworking))
+            {
+                writer.WritePropertyName("advancedNetworking"u8);
+                writer.WriteObjectValue(AdvancedNetworking, options);
+            }
             if (Optional.IsDefined(PodCidr))
             {
                 writer.WritePropertyName("podCidr"u8);
@@ -168,6 +173,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             ContainerServiceNetworkPolicy? networkPolicy = default;
             ContainerServiceNetworkMode? networkMode = default;
             NetworkDataplane? networkDataplane = default;
+            AdvancedNetworking advancedNetworking = default;
             string podCidr = default;
             string serviceCidr = default;
             string dnsServiceIP = default;
@@ -225,6 +231,15 @@ namespace Azure.ResourceManager.ContainerService.Models
                         continue;
                     }
                     networkDataplane = new NetworkDataplane(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("advancedNetworking"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    advancedNetworking = AdvancedNetworking.DeserializeAdvancedNetworking(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("podCidr"u8))
@@ -332,6 +347,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 networkPolicy,
                 networkMode,
                 networkDataplane,
+                advancedNetworking,
                 podCidr,
                 serviceCidr,
                 dnsServiceIP,
@@ -428,6 +444,21 @@ namespace Azure.ResourceManager.ContainerService.Models
                 {
                     builder.Append("  networkDataplane: ");
                     builder.AppendLine($"'{NetworkDataplane.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AdvancedNetworking), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  advancedNetworking: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AdvancedNetworking))
+                {
+                    builder.Append("  advancedNetworking: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, AdvancedNetworking, options, 2, false, "  advancedNetworking: ");
                 }
             }
 
