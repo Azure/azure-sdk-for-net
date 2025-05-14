@@ -6,7 +6,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
@@ -61,7 +60,7 @@ public partial class Sample_PersistentAgents_VectorStoreFile_WithSteps : Samples
         FileSearchToolResource fileSearchToolResource = new FileSearchToolResource();
         fileSearchToolResource.VectorStoreIds.Add(vectorStore.Id);
 
-        // Create an agent with toolResources and process agent run
+        // Create an Agent with toolResources and process Agent run
         PersistentAgent agent = await client.Administration.CreateAgentAsync(
                 model: modelDeploymentName,
                 name: "SDK Test Agent - Retrieval",
@@ -80,7 +79,7 @@ public partial class Sample_PersistentAgents_VectorStoreFile_WithSteps : Samples
             MessageRole.User,
             "Can you give me the documented codes for 'banana' and 'orange'?");
 
-        // Run the agent
+        // Run the Agent
         ThreadRun run = await client.Runs.CreateRunAsync(thread, agent);
 
         do
@@ -157,7 +156,7 @@ public partial class Sample_PersistentAgents_VectorStoreFile_WithSteps : Samples
         FileSearchToolResource fileSearchToolResource = new FileSearchToolResource();
         fileSearchToolResource.VectorStoreIds.Add(vectorStore.Id);
 
-        // Create an agent with toolResources and process agent run
+        // Create an Agent with toolResources and process Agent run
         PersistentAgent agent = client.Administration.CreateAgent(
                 model: modelDeploymentName,
                 name: "SDK Test Agent - Retrieval",
@@ -176,7 +175,7 @@ public partial class Sample_PersistentAgents_VectorStoreFile_WithSteps : Samples
             MessageRole.User,
             "Can you give me the documented codes for 'banana' and 'orange'?");
 
-        // Run the agent
+        // Run the Agent
         ThreadRun run = client.Runs.CreateRun(thread, agent);
 
         do

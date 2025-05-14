@@ -1,7 +1,7 @@
 # Sample file search using `VectorStoreFile` and agents in Azure.AI.Agents.Persistent.
 
-In this example we will create the local file, upload it and its file ID to new vector store using. Then we will drill down into run steps agent have ran through.
-1. First we need to create agent client and read the environment variables that will be used in the next steps.
+This example demonstrates how to use a local file with a vector store and Agents in Azure.AI.Agents.Persistent. You will upload a file, add its file ID to a new vector store, and then examine the run steps performed by the Agent.
+1. Begin by creating the Agent client and reading the required environment variables.
 
 ```C# Snippet:PersistentAgents_VectorStoreFileSearch_CreateClient
 var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
@@ -9,7 +9,7 @@ var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLO
 PersistentAgentsClient client = new(projectEndpoint, new DefaultAzureCredential());
 ```
 
-2. Create a file and upload it to the data store.
+2. Write a sample file to disk and upload it to the data store. Store the uploaded file's ID and name in a dictionary for later reference.
 
 Synchronous sample:
 ```C# Snippet:PersistentAgents_VectorStoreFileSearch_FilesToUse_Sync
@@ -41,7 +41,7 @@ Dictionary<string, string> fileIds = new()
 };
 ```
 
-3. To create agent capable of using file search, we will create `VectorStore` and add file ID to the it using `CreateVectorStoreFileAsync`.
+3. Create a new vector store and add the uploaded file's ID to it. This enables the Agent to search the file's contents.
 
 Synchronous sample:
 ```C# Snippet:PersistentAgents_VectorStoreFileSearch_VectorStore_Sync
@@ -71,14 +71,14 @@ VectorStoreFile vctFile =  await client.VectorStores.CreateVectorStoreFileAsync(
 Console.WriteLine($"Added file to vector store. The id file in the vector store is {vctFile.Id}.");
 ```
 
-4. The ID of the created vector store will be used in the `FileSearchToolResource` needed for agent creation.
+4. Create a `FileSearchToolResource` and add the vector store's ID. Use this resource when creating the Agent, so it can access the file search capability.
 
 Synchronous sample:
 ```C# Snippet:PersistentAgents_VectorStoreFileSearch_CreateAgent_Sync
 FileSearchToolResource fileSearchToolResource = new FileSearchToolResource();
 fileSearchToolResource.VectorStoreIds.Add(vectorStore.Id);
 
-// Create an agent with toolResources and process agent run
+// Create an Agent with toolResources and process Agent run
 PersistentAgent agent = client.Administration.CreateAgent(
         model: modelDeploymentName,
         name: "SDK Test Agent - Retrieval",
@@ -92,7 +92,7 @@ Asynchronous sample:
 FileSearchToolResource fileSearchToolResource = new FileSearchToolResource();
 fileSearchToolResource.VectorStoreIds.Add(vectorStore.Id);
 
-// Create an agent with toolResources and process agent run
+// Create an Agent with toolResources and process Agent run
 PersistentAgent agent = await client.Administration.CreateAgentAsync(
         model: modelDeploymentName,
         name: "SDK Test Agent - Retrieval",
@@ -101,7 +101,7 @@ PersistentAgent agent = await client.Administration.CreateAgentAsync(
         toolResources: new ToolResources() { FileSearch = fileSearchToolResource });
 ```
 
-5. To properly render the links to the file name we use the `WriteMessages` method, which internally calls `replaceReferences` method to replace reference placeholders by file IDs or by file names.
+5. To display file names instead of IDs in Agent responses, use a helper method to replace reference placeholders with the actual file names.
 
 ```C# Snippet:PersistentAgents_VectorStoreFileSearch_Print
 private static void WriteMessages(IEnumerable<PersistentThreadMessage> messages, Dictionary<string, string> fileIds)
@@ -152,7 +152,7 @@ private static string replaceReferences(Dictionary<string, string> fileIds, stri
 }
 ```
 
-6. We will ask a question to the file contents and add it to the thread, create run and wait while it will terminate. If the run was successful, we will render the response and provide the reference to the uploaded file.
+6. Start a new thread, send a question to the Agent about the file's contents, and create a run. Wait for the run to complete, then display the Agent's response, including file references.
 
 Synchronous sample:
 ```C# Snippet:PersistentAgents_VectorStoreFileSearch_CreateThreadAndRun_Sync
@@ -165,7 +165,7 @@ PersistentThreadMessage messageResponse = client.Messages.CreateMessage(
     MessageRole.User,
     "Can you give me the documented codes for 'banana' and 'orange'?");
 
-// Run the agent
+// Run the Agent
 ThreadRun run = client.Runs.CreateRun(thread, agent);
 
 do
@@ -197,7 +197,7 @@ PersistentThreadMessage messageResponse = await client.Messages.CreateMessageAsy
     MessageRole.User,
     "Can you give me the documented codes for 'banana' and 'orange'?");
 
-// Run the agent
+// Run the Agent
 ThreadRun run = await client.Runs.CreateRunAsync(thread, agent);
 
 do
@@ -218,7 +218,7 @@ List<PersistentThreadMessage> messages = await client.Messages.GetMessagesAsync(
 WriteMessages(messages, fileIds);
 ```
 
-7. To dive into the run steps we will use `printRunStepInfo` function.
+7. Use a helper function to print detailed information about each run step, such as message creation or tool calls, including any file search results.
 
 ```C# Snippet:PersistentAgents_VectorStoreFileSearch_PrintSteps
 private static void printRunStepInfo(RunStep step)
@@ -246,7 +246,7 @@ private static void printRunStepInfo(RunStep step)
 }
 ```
 
-8. Get the steps and pring information.
+8. Iterate through all run steps to review the Agent's actions and outputs.
 
 Synchronous sample:
 ```C# Snippet:PersistentAgents_VectorStoreFileSearch_ShowRunSteps_Sync
@@ -264,7 +264,7 @@ await foreach (RunStep step in client.Runs.GetRunStepsAsync(run))
 }
 ```
 
-9. Finally, we delete all the resources, we have created in this sample.
+9. After the sample completes, delete all resources you created: the vector store, file, thread, and Agent.
 
 Synchronous sample:
 ```C# Snippet:PersistentAgents_VectorStoreFileSearch_Cleanup_Sync
