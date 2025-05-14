@@ -19,7 +19,7 @@ Dictionary<string, string> dtReferences = new()
     {file.Id, Path.GetFileName(file.Filename)}
 };
 
-var uploadTask = client.VectorStoreFileBatches.CreateVectorStoreFileBatch(
+var uploadTask = client.VectorStores.CreateVectorStoreFileBatch(
     vectorStoreId: vectorStore.Id,
     fileIds: [file.Id]
 );
@@ -54,7 +54,7 @@ Dictionary<string, string> dtReferences = new()
     {file.Id, Path.GetFileName(file.Filename)}
 };
 
-VectorStoreFileBatch uploadTask = await client.VectorStoreFileBatches.CreateVectorStoreFileBatchAsync(
+VectorStoreFileBatch uploadTask = await client.VectorStores.CreateVectorStoreFileBatchAsync(
     vectorStoreId: vectorStore.Id,
     fileIds: [file.Id]
 );
