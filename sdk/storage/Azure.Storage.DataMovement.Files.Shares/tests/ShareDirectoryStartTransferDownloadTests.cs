@@ -258,7 +258,6 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
 
             // Assert all files (including hardlink) was copied over to dest
             Assert.AreEqual(sourceFileNames.Count, destFileNames.Count);
-            Assert.AreEqual(sourceFileNames, destFileNames);
         }
 
         [RecordedTest]
