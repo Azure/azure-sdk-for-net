@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
         /// <param name="health"> Health metrics. </param>
         /// <param name="alerts"> List of health alerts. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="health"/> or <paramref name="alerts"/> is null. </exception>
-        internal StoragePoolHealthInfo(HealthDetails health, IEnumerable<Alert> alerts)
+        internal StoragePoolHealthInfo(HealthDetails health, IEnumerable<PureStorageHealthAlert> alerts)
         {
             Argument.AssertNotNull(health, nameof(health));
             Argument.AssertNotNull(alerts, nameof(alerts));
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
         /// <param name="health"> Health metrics. </param>
         /// <param name="alerts"> List of health alerts. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StoragePoolHealthInfo(HealthDetails health, IReadOnlyList<Alert> alerts, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal StoragePoolHealthInfo(HealthDetails health, IReadOnlyList<PureStorageHealthAlert> alerts, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Health = health;
             Alerts = alerts;
@@ -78,6 +78,6 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
         /// <summary> Health metrics. </summary>
         public HealthDetails Health { get; }
         /// <summary> List of health alerts. </summary>
-        public IReadOnlyList<Alert> Alerts { get; }
+        public IReadOnlyList<PureStorageHealthAlert> Alerts { get; }
     }
 }

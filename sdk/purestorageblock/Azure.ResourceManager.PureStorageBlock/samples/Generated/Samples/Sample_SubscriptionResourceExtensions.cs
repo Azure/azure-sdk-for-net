@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetStoragePools_StoragePoolsListBySubscription()
+        public async Task GetPureStoragePools_StoragePoolsListBySubscription()
         {
             // Generated from example definition: 2024-11-01-preview/StoragePools_ListBySubscription_MaximumSet_Gen.json
             // this example is just showing the usage of "StoragePool_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
@@ -35,11 +35,11 @@ namespace Azure.ResourceManager.PureStorageBlock.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (StoragePoolResource item in subscriptionResource.GetStoragePoolsAsync())
+            await foreach (PureStoragePoolResource item in subscriptionResource.GetPureStoragePoolsAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                StoragePoolData resourceData = item.Data;
+                PureStoragePoolData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }

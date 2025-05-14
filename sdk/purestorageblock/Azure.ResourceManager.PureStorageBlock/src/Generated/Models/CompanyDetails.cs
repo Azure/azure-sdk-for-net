@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
         /// <param name="companyName"> Company name. </param>
         /// <param name="address"> Company address. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CompanyDetails(string companyName, Address address, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CompanyDetails(string companyName, PureStorageAddressDetails address, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CompanyName = companyName;
             Address = address;
@@ -74,6 +74,6 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
         /// <summary> Company name. </summary>
         public string CompanyName { get; set; }
         /// <summary> Company address. </summary>
-        public Address Address { get; set; }
+        public PureStorageAddressDetails Address { get; set; }
     }
 }

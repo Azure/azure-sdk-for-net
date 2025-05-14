@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
         /// <summary> Initializes a new instance of <see cref="AvsVmVolumeListResult"/>. </summary>
         /// <param name="value"> The AvsVmVolume items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal AvsVmVolumeListResult(IEnumerable<AvsVmVolumeData> value)
+        internal AvsVmVolumeListResult(IEnumerable<PureStorageAvsVmVolumeData> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
         /// <param name="value"> The AvsVmVolume items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AvsVmVolumeListResult(IReadOnlyList<AvsVmVolumeData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AvsVmVolumeListResult(IReadOnlyList<PureStorageAvsVmVolumeData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
         }
 
         /// <summary> The AvsVmVolume items on this page. </summary>
-        public IReadOnlyList<AvsVmVolumeData> Value { get; }
+        public IReadOnlyList<PureStorageAvsVmVolumeData> Value { get; }
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }
     }

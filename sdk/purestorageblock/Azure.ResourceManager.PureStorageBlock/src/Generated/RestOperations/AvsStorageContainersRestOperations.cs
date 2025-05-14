@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.PureStorageBlock
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="storagePoolName"/> or <paramref name="storageContainerName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="storagePoolName"/> or <paramref name="storageContainerName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<AvsStorageContainerData>> GetAsync(string subscriptionId, string resourceGroupName, string storagePoolName, string storageContainerName, CancellationToken cancellationToken = default)
+        public async Task<Response<PureStorageAvsStorageContainerData>> GetAsync(string subscriptionId, string resourceGroupName, string storagePoolName, string storageContainerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -95,13 +95,13 @@ namespace Azure.ResourceManager.PureStorageBlock
             {
                 case 200:
                     {
-                        AvsStorageContainerData value = default;
+                        PureStorageAvsStorageContainerData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = AvsStorageContainerData.DeserializeAvsStorageContainerData(document.RootElement);
+                        value = PureStorageAvsStorageContainerData.DeserializePureStorageAvsStorageContainerData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((AvsStorageContainerData)null, message.Response);
+                    return Response.FromValue((PureStorageAvsStorageContainerData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.PureStorageBlock
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="storagePoolName"/> or <paramref name="storageContainerName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="storagePoolName"/> or <paramref name="storageContainerName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<AvsStorageContainerData> Get(string subscriptionId, string resourceGroupName, string storagePoolName, string storageContainerName, CancellationToken cancellationToken = default)
+        public Response<PureStorageAvsStorageContainerData> Get(string subscriptionId, string resourceGroupName, string storagePoolName, string storageContainerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -128,13 +128,13 @@ namespace Azure.ResourceManager.PureStorageBlock
             {
                 case 200:
                     {
-                        AvsStorageContainerData value = default;
+                        PureStorageAvsStorageContainerData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = AvsStorageContainerData.DeserializeAvsStorageContainerData(document.RootElement);
+                        value = PureStorageAvsStorageContainerData.DeserializePureStorageAvsStorageContainerData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((AvsStorageContainerData)null, message.Response);
+                    return Response.FromValue((PureStorageAvsStorageContainerData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
