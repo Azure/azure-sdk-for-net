@@ -1,6 +1,6 @@
 # Release History
 
-## 11.7.0-beta.4 (2025-05-15)
+## 11.7.0-beta.4 (2025-05-14)
 
 ### Features Added
 - Added new `KnowledgeAgent` resource APIs in `SearchIndexClient` and introduced `KnowledgeAgentRetrievalClient` for managing and querying KnowledgeAgents, enabling multi-index grounding for agentic retrieval.
