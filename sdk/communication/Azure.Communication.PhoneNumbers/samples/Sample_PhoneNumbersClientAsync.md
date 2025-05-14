@@ -68,3 +68,81 @@ var releaseOperation = await client.StartReleasePhoneNumberAsync(purchasedPhoneN
 await releaseOperation.WaitForCompletionResponseAsync();
 await WaitForCompletionResponseAsync(releaseOperation);
 ```
+
+## Browse available phone numbers
+
+You can find phone numbers available for purchase without reserving them by using the Browse API.
+
+```C# Snippet:BrowseAvailablePhoneNumbersAsync
+var browseRequest = new PhoneNumbersBrowseOptions("US", PhoneNumberType.TollFree);
+var browseResponse = await client.BrowseAvailableNumbersAsync(browseRequest);
+var availablePhoneNumbers = browseResponse.Value.PhoneNumbers;
+```
+
+## Create a reservation
+
+Once you find a phone number you want to purchase, you can create a reservation for it.
+
+```C# Snippet:CreateReservationAsync
+// Reserve the first two available phone numbers.
+var phoneNumbersToReserve = availablePhoneNumbers.Take(2).ToList();
+
+// The reservation ID needs to be a unique GUID.
+var reservationId = Guid.NewGuid();
+
+var request = new CreateOrUpdateReservationOptions(reservationId)
+{
+    PhoneNumbersToAdd = phoneNumbersToReserve
+};
+var response = await client.CreateOrUpdateReservationAsync(request);
+var reservation = response.Value;
+```
+
+## Checking for partial failures
+
+The Reservations API may produce partial failures, even if the operation itself is successful.
+Look at the `Error` property of each phone number to check for partial failures.
+
+```C# Snippet:CheckForPartialFailure
+var phoneNumbersWithError = reservation.PhoneNumbers.Values
+    .Where(n => n.Status == PhoneNumberAvailabilityStatus.Error);
+
+if (phoneNumbersWithError.Any())
+{
+    // Handle the error for the phone numbers that failed to reserve.
+    foreach (var phoneNumber in phoneNumbersWithError)
+    {
+        Console.WriteLine($"Failed to reserve phone number {phoneNumber.Id}. Error Code: {phoneNumber.Error?.Code} - Message: {phoneNumber.Error?.Message}");
+    }
+}
+```
+
+## Purchase a reservation
+
+Once all the desired phone numbers are in a reservation, you can purchase the reservation.
+
+```C# Snippet:StartPurchaseReservationAsync
+var purchaseReservationOperation = await client.StartPurchaseReservationAsync(reservationId);
+await purchaseReservationOperation.WaitForCompletionResponseAsync();
+```
+
+## Validate reservation purchase
+
+Similarly to the Create or Update Reservation operation, the Purchase Reservation operation may also produce partial failures.
+
+```C# Snippet:ValidateReservationPurchaseAsync
+var purchasedReservationResponse = await client.GetReservationAsync(reservationId);
+var purchasedReservation = purchasedReservationResponse.Value;
+
+var failedPhoneNumbers = purchasedReservation.PhoneNumbers.Values
+    .Where(n => n.Status == PhoneNumberAvailabilityStatus.Error);
+
+if (failedPhoneNumbers.Any())
+{
+    // Handle the error for the phone numbers that failed to reserve.
+    foreach (var phoneNumber in failedPhoneNumbers)
+    {
+        Console.WriteLine($"Failed to purchase phone number {phoneNumber.Id}. Error Code: {phoneNumber.Error?.Code} - Message: {phoneNumber.Error?.Message}");
+    }
+}
+```

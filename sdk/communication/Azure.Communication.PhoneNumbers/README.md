@@ -83,6 +83,14 @@ Phone numbers can be searched through the search creation API by providing an ar
 
 Phone numbers can also be released using the release API.
 
+#### Browsing and reserving phone numbers
+
+The Browse and Reservations APIs provide an alternate way to acquire phone numbers via a shopping-cart-like experience. This is achieved by splitting the search operation, which finds and reserves numbers using a single LRO, into two separate synchronous steps: Browse and Reservation. 
+
+The browse operation retrieves a random sample of phone numbers that are available for purchase for a given country, with optional filtering criteria to narrow down results. The returned phone numbers are not reserved for any customer.
+
+Reservations represent a collection of phone numbers that are locked by a specific customer and are awaiting purchase. They have an expiration time of 15 minutes after the last modification or 2 hours from creation time. A reservation can include numbers from different countries, in contrast with the Search operation. Customers can Create, Retrieve, Modify (add/remove numbers), Delete, and Purchase reservations. Purchasing a reservation is an LRO.
+
 ### SIP routing client
 
 Direct routing feature allows connecting customer-provided telephony infrastructure to Azure Communication Resources. In order to setup routing configuration properly, customer needs to supply the SIP trunk configuration and SIP routing rules for calls. SIP routing client provides the necessary interface for setting this configuration.
@@ -162,6 +170,53 @@ var purchasedPhoneNumber = "<purchased_phone_number>";
 var releaseOperation = await client.StartReleasePhoneNumberAsync(purchasedPhoneNumber);
 await releaseOperation.WaitForCompletionResponseAsync();
 await WaitForCompletionResponseAsync(releaseOperation);
+```
+
+#### Acquiring phone numbers using the Reservations API
+
+Using the Browse API, you can find phone numbers that are available for purchase. Note that these numbers are not reserved for any customer.
+
+```C# Snippet:BrowseAvailablePhoneNumbersAsync
+var browseRequest = new PhoneNumbersBrowseOptions("US", PhoneNumberType.TollFree);
+var browseResponse = await client.BrowseAvailableNumbersAsync(browseRequest);
+var availablePhoneNumbers = browseResponse.Value.PhoneNumbers;
+```
+
+Then, create a new reservation with the numbers from the Browse API response.
+```C# Snippet:CreateReservationAsync
+// Reserve the first two available phone numbers.
+var phoneNumbersToReserve = availablePhoneNumbers.Take(2).ToList();
+
+// The reservation ID needs to be a unique GUID.
+var reservationId = Guid.NewGuid();
+
+var request = new CreateOrUpdateReservationOptions(reservationId)
+{
+    PhoneNumbersToAdd = phoneNumbersToReserve
+};
+var response = await client.CreateOrUpdateReservationAsync(request);
+var reservation = response.Value;
+```
+
+Partial failures are possible, so it is important to check the status of each individual phone number.
+```C# Snippet:CheckForPartialFailure
+var phoneNumbersWithError = reservation.PhoneNumbers.Values
+    .Where(n => n.Status == PhoneNumberAvailabilityStatus.Error);
+
+if (phoneNumbersWithError.Any())
+{
+    // Handle the error for the phone numbers that failed to reserve.
+    foreach (var phoneNumber in phoneNumbersWithError)
+    {
+        Console.WriteLine($"Failed to reserve phone number {phoneNumber.Id}. Error Code: {phoneNumber.Error?.Code} - Message: {phoneNumber.Error?.Message}");
+    }
+}
+```
+
+Once all numbers are reserved, the reservation can be purchased.
+```C# Snippet:StartPurchaseReservationAsync
+var purchaseReservationOperation = await client.StartPurchaseReservationAsync(reservationId);
+await purchaseReservationOperation.WaitForCompletionResponseAsync();
 ```
 
 ### SipRoutingClient
