@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.RedisEnterprise
 
         RedisEnterpriseDatabaseData IJsonModel<RedisEnterpriseDatabaseData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<RedisEnterpriseDatabaseData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<RedisEnterpriseDatabaseData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<RedisEnterpriseDatabaseData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<RedisEnterpriseDatabaseData>(Data, options, AzureResourceManagerRedisEnterpriseContext.Default);
 
-        RedisEnterpriseDatabaseData IPersistableModel<RedisEnterpriseDatabaseData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<RedisEnterpriseDatabaseData>(data, options);
+        RedisEnterpriseDatabaseData IPersistableModel<RedisEnterpriseDatabaseData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<RedisEnterpriseDatabaseData>(data, options, AzureResourceManagerRedisEnterpriseContext.Default);
 
         string IPersistableModel<RedisEnterpriseDatabaseData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<RedisEnterpriseDatabaseData>)Data).GetFormatFromOptions(options);
     }

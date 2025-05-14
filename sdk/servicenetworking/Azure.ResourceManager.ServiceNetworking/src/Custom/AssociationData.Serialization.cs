@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.ServiceNetworking
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerServiceNetworkingContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(AssociationData)} does not support writing '{options.Format}' format.");
             }

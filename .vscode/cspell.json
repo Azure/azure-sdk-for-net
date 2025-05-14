@@ -1246,7 +1246,8 @@
         "vcpus",
         "esxi",
         "seleted",
-        "dras"
+        "dras",
+        "fqdns"
       ]
     },
     {
@@ -1385,7 +1386,8 @@
         "Stdev",
         "Unrestorable",
         "Vcores",
-        "Dtcs"
+        "Dtcs",
+        "Freemium"
       ]
     },
     {
@@ -1564,6 +1566,15 @@
         "hana",
         "ssdlrs",
         "Mbps"
+      ]
+    },
+    {
+      "filename": "**/sdk/workloadssapvirtualinstance/**/*.cs",
+      "words": [
+        "acss",
+        "ascs",
+        "hana",
+        "mbps"
       ]
     },
     {

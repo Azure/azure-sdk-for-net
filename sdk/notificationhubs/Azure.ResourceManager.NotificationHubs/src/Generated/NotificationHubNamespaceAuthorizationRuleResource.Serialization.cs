@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.NotificationHubs
 
         NotificationHubAuthorizationRuleData IJsonModel<NotificationHubAuthorizationRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NotificationHubAuthorizationRuleData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<NotificationHubAuthorizationRuleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<NotificationHubAuthorizationRuleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<NotificationHubAuthorizationRuleData>(Data, options, AzureResourceManagerNotificationHubsContext.Default);
 
-        NotificationHubAuthorizationRuleData IPersistableModel<NotificationHubAuthorizationRuleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NotificationHubAuthorizationRuleData>(data, options);
+        NotificationHubAuthorizationRuleData IPersistableModel<NotificationHubAuthorizationRuleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NotificationHubAuthorizationRuleData>(data, options, AzureResourceManagerNotificationHubsContext.Default);
 
         string IPersistableModel<NotificationHubAuthorizationRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NotificationHubAuthorizationRuleData>)Data).GetFormatFromOptions(options);
     }

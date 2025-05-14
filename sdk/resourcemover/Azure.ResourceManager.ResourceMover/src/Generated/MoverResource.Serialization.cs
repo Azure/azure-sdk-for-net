@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.ResourceMover
 
         MoverResourceData IJsonModel<MoverResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MoverResourceData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<MoverResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<MoverResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<MoverResourceData>(Data, options, AzureResourceManagerResourceMoverContext.Default);
 
-        MoverResourceData IPersistableModel<MoverResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MoverResourceData>(data, options);
+        MoverResourceData IPersistableModel<MoverResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MoverResourceData>(data, options, AzureResourceManagerResourceMoverContext.Default);
 
         string IPersistableModel<MoverResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MoverResourceData>)Data).GetFormatFromOptions(options);
     }

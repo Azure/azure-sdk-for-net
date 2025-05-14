@@ -15,6 +15,8 @@ namespace Encode.Duration._Property
 {
     public partial class ISO8601DurationProperty : IJsonModel<ISO8601DurationProperty>
     {
+        internal ISO8601DurationProperty() => throw null;
+
         void IJsonModel<ISO8601DurationProperty>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
