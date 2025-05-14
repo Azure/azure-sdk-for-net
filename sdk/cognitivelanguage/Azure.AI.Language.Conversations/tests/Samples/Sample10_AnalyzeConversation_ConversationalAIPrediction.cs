@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Azure.AI.Language.Conversations.Models;
 using Azure.Core.TestFramework;
+using Microsoft.VisualBasic;
 using NUnit.Framework;
 
 namespace Azure.AI.Language.Conversations.Tests.Samples
@@ -21,6 +22,9 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
 
             string projectName = TestEnvironment.ProjectName;
             string deploymentName = TestEnvironment.DeploymentName;
+            Console.WriteLine($"projectName xxxxxx " + projectName);
+            Console.WriteLine($"deploymentName  xxxxxxx" + deploymentName);
+            Console.WriteLine($"endpoint  xxxxxxx" + TestEnvironment.Endpoint);
             AnalyzeConversationInput data = new ConversationalAITask(
                 new ConversationalAIAnalysisInput(
                     conversations: new AIConversation[] {
