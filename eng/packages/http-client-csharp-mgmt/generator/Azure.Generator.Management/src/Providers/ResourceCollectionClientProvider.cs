@@ -246,21 +246,19 @@ namespace Azure.Generator.Management.Providers
             return base.BuildReturnStatements(responseVariable, signature);
         }
 
-        // TODO: make the commented implementation work - find a way to access the NoValueResponse<T> type
         private MethodBodyStatement BuildReturnStatementsForGetIfExists(ValueExpression responseVariable, MethodSignature signature)
         {
-            // List<MethodBodyStatement> statements =
-            // [
-            //     new IfStatement(responseVariable.Property("Value").Equal(Null))
-            //             {
-            //                 Return(New.Instance(new CSharpType(typeof(NoValueResponse<>), _resource.Type), responseVariable.Invoke("GetRawResponse")))
-            //             }
-            // ];
-            // var returnValueExpression =  New.Instance(ResourceClientCharpType, This.Property("Client"), responseVariable.Property("Value"));
-            // statements.Add(Return(Static(typeof(Response)).Invoke(nameof(Response.FromValue), returnValueExpression, responseVariable.Invoke("GetRawResponse"))));
+            List<MethodBodyStatement> statements =
+            [
+                new IfStatement(responseVariable.Property("Value").Equal(Null))
+                        {
+                            Return(New.Instance(new CSharpType(typeof(NoValueResponse<>), _resource.Type), responseVariable.Invoke("GetRawResponse")))
+                        }
+            ];
+            var returnValueExpression =  New.Instance(ResourceClientCharpType, This.Property("Client"), responseVariable.Property("Value"));
+            statements.Add(Return(Static(typeof(Response)).Invoke(nameof(Response.FromValue), returnValueExpression, responseVariable.Invoke("GetRawResponse"))));
 
-            // return statements;
-            return base.BuildReturnStatements(responseVariable, signature);
+            return statements;
         }
 
         private MethodBodyStatement BuildReturnStatementsForExists(ValueExpression responseVariable)
