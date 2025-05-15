@@ -4817,9 +4817,13 @@ namespace Azure.ResourceManager.Cdn.Models
     }
     public partial class RequestSchemeMatchCondition : Azure.ResourceManager.Cdn.Models.DeliveryRuleConditionProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.RequestSchemeMatchCondition>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.RequestSchemeMatchCondition>
     {
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public RequestSchemeMatchCondition(Azure.ResourceManager.Cdn.Models.RequestSchemeMatchConditionType type, Azure.ResourceManager.Cdn.Models.RequestSchemeOperator requestSchemeOperator) { }
         public RequestSchemeMatchCondition(Azure.ResourceManager.Cdn.Models.RequestSchemeOperator requestSchemeOperator) { }
         public System.Collections.Generic.IList<Azure.ResourceManager.Cdn.Models.RequestSchemeMatchValue> MatchValues { get { throw null; } }
         public bool? NegateCondition { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public Azure.ResourceManager.Cdn.Models.RequestSchemeMatchConditionType RequestSchemeMatchConditionType { get { throw null; } set { } }
         public Azure.ResourceManager.Cdn.Models.RequestSchemeOperator RequestSchemeOperator { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Cdn.Models.PreTransformCategory> Transforms { get { throw null; } }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -4828,6 +4832,23 @@ namespace Azure.ResourceManager.Cdn.Models
         Azure.ResourceManager.Cdn.Models.RequestSchemeMatchCondition System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.RequestSchemeMatchCondition>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.RequestSchemeMatchCondition>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.RequestSchemeMatchCondition>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct RequestSchemeMatchConditionType : System.IEquatable<Azure.ResourceManager.Cdn.Models.RequestSchemeMatchConditionType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public RequestSchemeMatchConditionType(string value) { throw null; }
+        public static Azure.ResourceManager.Cdn.Models.RequestSchemeMatchConditionType RequestSchemeCondition { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Cdn.Models.RequestSchemeMatchConditionType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Cdn.Models.RequestSchemeMatchConditionType left, Azure.ResourceManager.Cdn.Models.RequestSchemeMatchConditionType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Cdn.Models.RequestSchemeMatchConditionType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Cdn.Models.RequestSchemeMatchConditionType left, Azure.ResourceManager.Cdn.Models.RequestSchemeMatchConditionType right) { throw null; }
+        public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct RequestSchemeMatchValue : System.IEquatable<Azure.ResourceManager.Cdn.Models.RequestSchemeMatchValue>

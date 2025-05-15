@@ -357,6 +357,7 @@ rename-mapping:
   MigrateResult.id: ResourceId
   IsDeviceMatchValue: IsDeviceMatchConditionMatchValue
   KeyVaultSigningKeyParametersType: KeyVaultSigningKeyType
+  RequestMethodMatchValue: RequestMethodMatchConditionType
 
 directive:
   - from: swagger-document
