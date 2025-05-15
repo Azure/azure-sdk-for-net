@@ -150,7 +150,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             ShareFileClient symlinkClient = InstrumentClient(directory.GetFileClient("original-symlink"));
 
             // Create Symlink
-            await symlinkClient.CreateSymbolicLinkAsync(linkText: originalClient.Uri.ToString());
+            await symlinkClient.CreateSymbolicLinkAsync(linkText: originalClient.Uri.AbsolutePath);
 
             // Assert symlink was successfully created
             ShareFileProperties sourceProperties = await symlinkClient.GetPropertiesAsync();

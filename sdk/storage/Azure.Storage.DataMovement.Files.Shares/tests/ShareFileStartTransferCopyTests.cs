@@ -20,6 +20,7 @@ using BaseShares::Azure.Storage.Sas;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
 using DMShare::Azure.Storage.DataMovement.Files.Shares;
 using System.Text.RegularExpressions;
+using System.Security.AccessControl;
 
 namespace Azure.Storage.DataMovement.Files.Shares.Tests
 {
@@ -1125,36 +1126,16 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             await using IDisposingContainer<ShareClient> source = await SourceClientBuilder.GetTestShareSasNfsAsync();
             await using IDisposingContainer<ShareClient> destination = await DestinationClientBuilder.GetTestShareSasNfsAsync();
 
-            DateTimeOffset sourceFileCreatedOn = _defaultFileCreatedOn;
-            DateTimeOffset sourceFileLastWrittenOn = _defaultFileLastWrittenOn;
-            string sourceOwner = "345";
-            string sourceGroup = "123";
-            string sourceFileMode = "1777";
-            ShareFileCreateOptions sharefileCreateOptions = new ShareFileCreateOptions()
-            {
-                SmbProperties = new FileSmbProperties()
-                {
-                    FileCreatedOn = sourceFileCreatedOn,
-                    FileLastWrittenOn = sourceFileLastWrittenOn,
-                },
-                PosixProperties = new FilePosixProperties()
-                {
-                    Owner = sourceOwner,
-                    Group = sourceGroup,
-                    FileMode = NfsFileMode.ParseOctalFileMode(sourceFileMode),
-                }
-            };
-
             ShareDirectoryClient directory = source.Container.GetRootDirectoryClient();
             ShareFileClient originalClient = await CreateFileClientWithOptionsAsync(
                 container: source.Container,
                 objectLength: DataMovementTestConstants.KB,
                 createResource: true,
-                options: sharefileCreateOptions);
+                objectName: "original");
             ShareFileClient symlinkClient = InstrumentClient(directory.GetFileClient("original-symlink"));
 
             // Create Symlink
-            await symlinkClient.CreateSymbolicLinkAsync(linkText: originalClient.Uri.ToString());
+            await symlinkClient.CreateSymbolicLinkAsync(linkText: originalClient.Uri.AbsolutePath);
 
             // Assert symlink was successfully created
             ShareFileProperties sourceProperties = await symlinkClient.GetPropertiesAsync();
