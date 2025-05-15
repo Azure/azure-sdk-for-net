@@ -358,6 +358,7 @@ rename-mapping:
   IsDeviceMatchValue: IsDeviceMatchConditionMatchValue
   KeyVaultSigningKeyParametersType: KeyVaultSigningKeyType
   RequestMethodMatchValue: RequestMethodMatchConditionType
+  RequestSchemeMatchValue: RequestSchemeMatchConditionMatchValue
 
 directive:
   - from: swagger-document
