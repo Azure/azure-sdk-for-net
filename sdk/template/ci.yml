@@ -20,6 +20,7 @@ pr:
   branches:
     include:
     - main
+    - useAPIViewAPIControllers
     - feature/*
     - hotfix/*
     - release/*
