@@ -12,6 +12,7 @@ namespace Azure.AI.Projects.Tests
         public string DATASETNAME => GetRecordedVariable("DATASET_NAME");
         public string BINGCONNECTIONNAME => GetRecordedVariable("BING_CONNECTION_NAME");
         public string MODELDEPLOYMENTNAME => GetRecordedVariable("MODEL_DEPLOYMENT_NAME");
+        public string EMBEDDINGSMODELDEPLOYMENTNAME => GetRecordedVariable("EMBEDDINGS_MODEL_DEPLOYMENT_NAME");
         public string MODELPUBLISHER => GetRecordedVariable("MODEL_PUBLISHER");
         public string EMBEDDINGMODELDEPLOYMENTNAME => GetRecordedVariable("EMBEDDING_MODEL_DEPLOYMENT_NAME");
         public string STORAGE_QUEUE_URI => GetRecordedVariable("STORAGE_QUEUE_URI");
@@ -23,5 +24,6 @@ namespace Azure.AI.Projects.Tests
         public string AISEARCHCONNECTIONNAME => GetRecordedVariable("AI_SEARCH_CONNECTION_NAME");
         public string AISEARCHINDEXNAME => GetRecordedVariable("AI_SEARCH_INDEX_NAME");
         public string CONNECTIONNAME => GetRecordedVariable("CONNECTION_NAME");
+        public string TESTIMAGEPNGINPUTPATH => GetRecordedVariable("TEST_IMAGE_PNG_INPUT_PATH");
     }
 }

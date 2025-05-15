@@ -9,7 +9,7 @@ name: Azure.AI.Projects samples for .NET
 description: Samples for the Azure.AI.Projects client library.
 ---
 <!-- TODO: update the links once the samples are in main (currently linking to feature/azure-ai-projects-1dp branch) -->
-# Azure.AI.Projects Samples for Agents
+# Azure.AI.Projects Samples
 
 | Sample | Description |
 | ------ | ----------- |
@@ -20,9 +20,12 @@ description: Samples for the Azure.AI.Projects client library.
 | [Sample5_Evaluations](https://github.com/Azure/azure-sdk-for-net/blob/feature/azure-ai-projects-1dp/sdk/ai/Azure.AI.Projects/samples/Sample5_Evaluations.md) | Sample for evaluations functions. |
 | [Sample8_Telemetry](https://github.com/Azure/azure-sdk-for-net/blob/feature/azure-ai-projects-1dp/sdk/ai/Azure.AI.Projects/samples/Sample8_Telemetry.md) | Sample for telemetry functions. |
 
-# Azure.AI.Projects Samples for Agents and AzureOpenAI Extensions
+# Azure.AI.Projects Samples for Agents and Inference Extensions
 
 | Sample | Description |
 | ------ | ----------- |
 | [Sample6_Agents](https://github.com/Azure/azure-sdk-for-net/blob/feature/azure-ai-projects-1dp/sdk/ai/Azure.AI.Projects/samples/Sample6_Agents.md) | Sample for `Azure.AI.Agents.Persistent` extensions. |
 | [Sample7_AzureOpenAI](https://github.com/Azure/azure-sdk-for-net/blob/feature/azure-ai-projects-1dp/sdk/ai/Azure.AI.Projects/samples/Sample7_AzureOpenAI.md) | Sample for `Azure.AI.OpenAI` extensions. |
+| [Sample9_InferenceChatClient](https://github.com/Azure/azure-sdk-for-net/blob/feature/azure-ai-projects-1dp/sdk/ai/Azure.AI.Projects/samples/Sample9_InferenceChatClient.md) | Sample for `Azure.AI.Inference` Chat Client extensions. |
+| [Sample10_InferenceEmbedding](https://github.com/Azure/azure-sdk-for-net/blob/feature/azure-ai-projects-1dp/sdk/ai/Azure.AI.Projects/samples/Sample10_InferenceEmbedding.md) | Sample for `Azure.AI.Inference` Embeddings extensions. |
+| [Sample11_InferenceImageEmbedding](https://github.com/Azure/azure-sdk-for-net/blob/feature/azure-ai-projects-1dp/sdk/ai/Azure.AI.Projects/samples/Sample11_InferenceImageEmbedding.md) | Sample for `Azure.AI.Inference` Image Embeddings extensions. |
