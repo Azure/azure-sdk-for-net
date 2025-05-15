@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.AI.Inference;
 using Azure.Core.Pipeline;
+using Azure.Core.TestFramework;
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Caching.Memory;
 using NUnit.Framework;
@@ -18,7 +19,7 @@ namespace Microsoft.Extensions.AI;
 
 public class AzureAIInferenceImageEmbeddingGeneratorTests
 {
-    [Test]
+    [RecordedTest]
     public void AsIEmbeddingGenerator_InvalidArgs_Throws()
     {
         var ex = Assert.Throws<ArgumentNullException>(() => ((ImageEmbeddingsClient)null!).AsIEmbeddingGenerator());
@@ -31,7 +32,7 @@ public class AzureAIInferenceImageEmbeddingGeneratorTests
         client.AsIEmbeddingGenerator(null);
     }
 
-    [Test]
+    [RecordedTest]
     public void AsIEmbeddingGenerator_OpenAIClient_ProducesExpectedMetadata()
     {
         Uri endpoint = new("http://localhost/some/endpoint");
@@ -46,7 +47,7 @@ public class AzureAIInferenceImageEmbeddingGeneratorTests
         Assert.That(metadata?.DefaultModelId, Is.EqualTo(model));
     }
 
-    [Test]
+    [RecordedTest]
     public void GetService_SuccessfullyReturnsUnderlyingClient()
     {
         var client = new ImageEmbeddingsClient(new("http://somewhere"), new AzureKeyCredential("key"));
@@ -69,7 +70,7 @@ public class AzureAIInferenceImageEmbeddingGeneratorTests
         Assert.That(pipeline.GetService<IEmbeddingGenerator<DataContent, Embedding<float>>>(), Is.TypeOf<OpenTelemetryEmbeddingGenerator<DataContent, Embedding<float>>>());
     }
 
-    [Test]
+    [RecordedTest]
     public async Task GenerateAsync_ExpectedRequestResponse()
     {
         DataContent dotnetPng = new(GetImageDataUri());

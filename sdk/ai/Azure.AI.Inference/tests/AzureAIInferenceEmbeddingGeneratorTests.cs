@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.AI.Inference;
 using Azure.Core.Pipeline;
+using Azure.Core.TestFramework;
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Caching.Memory;
 using NUnit.Framework;
@@ -17,7 +18,7 @@ namespace Microsoft.Extensions.AI;
 
 public class AzureAIInferenceEmbeddingGeneratorTests
 {
-    [Test]
+    [RecordedTest]
     public void AsIEmbeddingGenerator_InvalidArgs_Throws()
     {
         var ex = Assert.Throws<ArgumentNullException>(() => ((EmbeddingsClient)null!).AsIEmbeddingGenerator());
@@ -30,7 +31,7 @@ public class AzureAIInferenceEmbeddingGeneratorTests
         client.AsIEmbeddingGenerator(null);
     }
 
-    [Test]
+    [RecordedTest]
     public void AsIEmbeddingGenerator_AzureAIClient_ProducesExpectedMetadata()
     {
         Uri endpoint = new("http://localhost/some/endpoint");
@@ -45,7 +46,7 @@ public class AzureAIInferenceEmbeddingGeneratorTests
         Assert.That(metadata?.DefaultModelId, Is.EqualTo(model));
     }
 
-    [Test]
+    [RecordedTest]
     public void GetService_SuccessfullyReturnsUnderlyingClient()
     {
         var client = new EmbeddingsClient(new("http://somewhere"), new AzureKeyCredential("key"));
@@ -68,7 +69,7 @@ public class AzureAIInferenceEmbeddingGeneratorTests
         Assert.That(pipeline.GetService<IEmbeddingGenerator<string, Embedding<float>>>(), Is.TypeOf<OpenTelemetryEmbeddingGenerator<string, Embedding<float>>>());
     }
 
-    [Test]
+    [RecordedTest]
     public async Task GenerateAsync_ExpectedRequestResponse()
     {
         const string Input = """

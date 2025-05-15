@@ -14,6 +14,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.AI.Inference;
 using Azure.Core.Pipeline;
+using Azure.Core.TestFramework;
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Caching.Memory;
 using NUnit.Framework;
@@ -23,7 +24,7 @@ namespace Microsoft.Extensions.AI;
 
 public class AzureAIInferenceChatClientTests
 {
-    [Test]
+    [RecordedTest]
     public void AsIChatClient_InvalidArgs_Throws()
     {
         var ex = Assert.Throws<ArgumentNullException>(() => ((ChatCompletionsClient)null!).AsIChatClient("model"));
@@ -34,7 +35,7 @@ public class AzureAIInferenceChatClientTests
         Assert.That(ex2!.ParamName, Is.EqualTo("defaultModelId"));
     }
 
-    [Test]
+    [RecordedTest]
     public void NullModel_Throws()
     {
         ChatCompletionsClient client = new(new("http://localhost/some/endpoint"), new AzureKeyCredential("key"));
@@ -47,7 +48,7 @@ public class AzureAIInferenceChatClientTests
         Assert.ThrowsAsync<InvalidOperationException>(() => chatClient.GetStreamingResponseAsync("hello", new ChatOptions { ModelId = null }).GetAsyncEnumerator().MoveNextAsync().AsTask());
     }
 
-    [Test]
+    [RecordedTest]
     public void AsIChatClient_ProducesExpectedMetadata()
     {
         Uri endpoint = new("http://localhost/some/endpoint");
@@ -62,7 +63,7 @@ public class AzureAIInferenceChatClientTests
         Assert.That(metadata?.DefaultModelId, Is.EqualTo(model));
     }
 
-    [Test]
+    [RecordedTest]
     public void GetService_SuccessfullyReturnsUnderlyingClient()
     {
         ChatCompletionsClient client = new(new("http://localhost"), new AzureKeyCredential("key"));
@@ -133,6 +134,7 @@ public class AzureAIInferenceChatClientTests
         }
         """;
 
+    [RecordedTest]
     [TestCase(false)]
     [TestCase(true)]
     public async Task BasicRequestResponse_NonStreaming(bool multiContent)
@@ -205,6 +207,7 @@ public class AzureAIInferenceChatClientTests
 
         """;
 
+    [RecordedTest]
     [TestCase(false)]
     [TestCase(true)]
     public async Task BasicRequestResponse_Streaming(bool multiContent)
@@ -243,7 +246,7 @@ public class AzureAIInferenceChatClientTests
         }
     }
 
-    [Test]
+    [RecordedTest]
     public async Task IChatClient_WithNullModel_ChatOptions_WithNotNullModel_NonStreaming()
     {
         using VerbatimHttpHandler handler = new(BasicInputNonStreaming, BasicOutputNonStreaming);
@@ -260,7 +263,7 @@ public class AzureAIInferenceChatClientTests
         Assert.That(response.Text, Is.EqualTo("Hello! How can I assist you today?"));
     }
 
-    [Test]
+    [RecordedTest]
     public async Task IChatClient_WithNullModel_ChatOptions_WithNotNullModel_Streaming()
     {
         using VerbatimHttpHandler handler = new(BasicInputStreaming, BasicOutputStreaming);
@@ -281,7 +284,7 @@ public class AzureAIInferenceChatClientTests
         Assert.That(responseText, Is.EqualTo("Hello! How can I assist you today?"));
     }
 
-    [Test]
+    [RecordedTest]
     public async Task ChatOptions_DoNotOverwrite_NotNullPropertiesInRawRepresentation_NonStreaming()
     {
         const string Input = """
@@ -369,7 +372,7 @@ public class AzureAIInferenceChatClientTests
         Assert.That(response.Text, Is.EqualTo("Hello! How can I assist you today?"));
     }
 
-    [Test]
+    [RecordedTest]
     public async Task ChatOptions_DoNotOverwrite_NotNullPropertiesInRawRepresentation_Streaming()
     {
         const string Input = """
@@ -457,7 +460,7 @@ public class AzureAIInferenceChatClientTests
         Assert.That(responseText, Is.EqualTo("Hello! How can I assist you today?"));
     }
 
-    [Test]
+    [RecordedTest]
     public async Task ChatOptions_Overwrite_NullPropertiesInRawRepresentation_NonStreaming()
     {
         const string Input = """
@@ -536,7 +539,7 @@ public class AzureAIInferenceChatClientTests
         Assert.That(response.Text, Is.EqualTo("Hello! How can I assist you today?"));
     }
 
-    [Test]
+    [RecordedTest]
     public async Task ChatOptions_Overwrite_NullPropertiesInRawRepresentation_Streaming()
     {
         const string Input = """
@@ -641,7 +644,7 @@ public class AzureAIInferenceChatClientTests
         public Dictionary<string, JsonElement> Properties { get; set; } = [];
     }
 
-    [Test]
+    [RecordedTest]
     public async Task AdditionalOptions_NonStreaming()
     {
         const string Input = """
@@ -700,7 +703,7 @@ public class AzureAIInferenceChatClientTests
         }), Is.Not.Null);
     }
 
-    [Test]
+    [RecordedTest]
     public async Task TopK_DoNotOverwrite_NonStreaming()
     {
         const string Input = """
@@ -760,7 +763,7 @@ public class AzureAIInferenceChatClientTests
         }), Is.Not.Null);
     }
 
-    [Test]
+    [RecordedTest]
     public async Task ResponseFormat_Text_NonStreaming()
     {
         const string Input = """
@@ -796,7 +799,7 @@ public class AzureAIInferenceChatClientTests
         }), Is.Not.Null);
     }
 
-    [Test]
+    [RecordedTest]
     public async Task ResponseFormat_Json_NonStreaming()
     {
         const string Input = """
@@ -832,7 +835,7 @@ public class AzureAIInferenceChatClientTests
         }), Is.Not.Null);
     }
 
-    [Test]
+    [RecordedTest]
     public async Task ResponseFormat_JsonSchema_NonStreaming()
     {
         const string Input = """
@@ -899,7 +902,7 @@ public class AzureAIInferenceChatClientTests
         }), Is.Not.Null);
     }
 
-    [Test]
+    [RecordedTest]
     public async Task MultipleMessages_NonStreaming()
     {
         const string Input = """
@@ -1015,7 +1018,7 @@ public class AzureAIInferenceChatClientTests
         Assert.That(response.Usage.TotalTokenCount, Is.EqualTo(57));
     }
 
-    [Test]
+    [RecordedTest]
     public async Task MultipleContent_NonStreaming()
     {
         const string Input = """
@@ -1070,7 +1073,7 @@ public class AzureAIInferenceChatClientTests
         ])]), Is.Not.Null);
     }
 
-    [Test]
+    [RecordedTest]
     public async Task NullAssistantText_ContentEmpty_NonStreaming()
     {
         const string Input = """
@@ -1157,6 +1160,7 @@ public class AzureAIInferenceChatClientTests
         yield return new object[] { ChatToolMode.RequireSpecific("GetPersonAge") };
     }
 
+    [RecordedTest]
     [TestCaseSource(nameof(FunctionCallContent_NonStreaming_MemberData))]
     public async Task FunctionCallContent_NonStreaming(ChatToolMode mode)
     {
@@ -1270,7 +1274,7 @@ public class AzureAIInferenceChatClientTests
         AssertExtensions.EqualFunctionCallParameters(new Dictionary<string, object?> { ["personName"] = "Alice" }, fcc.Arguments);
     }
 
-    [Test]
+    [RecordedTest]
     public async Task FunctionCallContent_Streaming()
     {
         const string Input = """
