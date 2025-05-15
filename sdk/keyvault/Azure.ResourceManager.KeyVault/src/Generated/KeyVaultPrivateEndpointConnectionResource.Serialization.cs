@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.KeyVault
 {
     public partial class KeyVaultPrivateEndpointConnectionResource : IJsonModel<KeyVaultPrivateEndpointConnectionData>
     {
+        private static KeyVaultPrivateEndpointConnectionData s_dataDeserializationInstance;
+        private static KeyVaultPrivateEndpointConnectionData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<KeyVaultPrivateEndpointConnectionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<KeyVaultPrivateEndpointConnectionData>)Data).Write(writer, options);
 
-        KeyVaultPrivateEndpointConnectionData IJsonModel<KeyVaultPrivateEndpointConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<KeyVaultPrivateEndpointConnectionData>)Data).Create(ref reader, options);
+        KeyVaultPrivateEndpointConnectionData IJsonModel<KeyVaultPrivateEndpointConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<KeyVaultPrivateEndpointConnectionData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<KeyVaultPrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<KeyVaultPrivateEndpointConnectionData>(Data, options, AzureResourceManagerKeyVaultContext.Default);
 
         KeyVaultPrivateEndpointConnectionData IPersistableModel<KeyVaultPrivateEndpointConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<KeyVaultPrivateEndpointConnectionData>(data, options, AzureResourceManagerKeyVaultContext.Default);
 
-        string IPersistableModel<KeyVaultPrivateEndpointConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<KeyVaultPrivateEndpointConnectionData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<KeyVaultPrivateEndpointConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<KeyVaultPrivateEndpointConnectionData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }
