@@ -13,8 +13,8 @@ parameters:
     default: all
   - name: CheckAOTCompat
     type: boolean
-    default: false
-  - name: AOTTestInputs
+    default: true
+  - name: ExpectedAOTWarnings
     type: object
     default: []
   - name: BuildSnippets
@@ -155,7 +155,7 @@ steps:
     - template: /eng/pipelines/templates/steps/aot-compatibility.yml
       parameters:
         ServiceDirectory: ${{ parameters.ServiceDirectory }}
-        AOTTestInputs: ${{ parameters.AOTTestInputs }}
+        ExpectedAOTWarnings: ${{ parameters.ExpectedAOTWarnings }}
         PackageInfoFolder: '$(Build.ArtifactStagingDirectory)/PackageInfo'
 
   - task: ms.vss-governance-buildtask.governance-build-task-component-detection.ComponentGovernanceComponentDetection@0

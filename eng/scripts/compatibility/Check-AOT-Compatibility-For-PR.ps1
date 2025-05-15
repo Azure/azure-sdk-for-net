@@ -35,13 +35,21 @@ $filteredPackages = Get-ChildItem -Path $PackageInfoFolder -Filter "*.json" -Fil
 
 $failedAotChecks = $false
 foreach ($package in $filteredPackages) {
-    if ($package.CIParameters.CheckAOTCompat -and $package.CIParameters.AOTTestInputs) {
+    if ($package.CIParameters.CheckAOTCompat) {
         Write-Host "Running Check-AOT-Compatibility.ps1 for Package: $($package.ArtifactName) Service $($package.ServiceDirectory)"
-        $aotDetails = $package.CIParameters.AOTTestInputs
+        
+        # Default expected warnings path to 'None' if ExpectedAOTWarnings is empty
+        $expectedWarningsPath = "None"
+        
+        # If ExpectedAOTWarnings is present and not empty, use its ExpectedWarningsFilePath
+        if ($package.CIParameters.ExpectedAOTWarnings -and $package.CIParameters.ExpectedAOTWarnings.PSObject.Properties.Name -contains "ExpectedWarningsFilePath") {
+            $expectedWarningsPath = $package.CIParameters.ExpectedAOTWarnings.ExpectedWarningsFilePath
+        }
+        
         & $PSScriptRoot/Check-AOT-Compatibility.ps1 `
             -PackageName $package.ArtifactName `
             -ServiceDirectory $package.ServiceDirectory `
-            -ExpectedWarningsFilePath $aotDetails.ExpectedWarningsFilePath
+            -ExpectedWarningsFilePath $expectedWarningsPath
 
         if ($LASTEXITCODE -ne 0) {
             $failedAotChecks = $true

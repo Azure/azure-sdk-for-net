@@ -19,8 +19,8 @@ parameters:
     default: true
   - name: CheckAOTCompat
     type: boolean
-    default: false
-  - name: AOTTestInputs
+    default: true
+  - name: ExpectedAOTWarnings
     type: object
     default: []
   - name: TestSetupSteps
@@ -79,7 +79,7 @@ extends:
               LimitForPullRequest: ${{ parameters.LimitForPullRequest }}
               BuildSnippets: ${{ parameters.BuildSnippets }}
               CheckAOTCompat: ${{ parameters.CheckAOTCompat }}
-              AOTTestInputs: ${{ parameters.AOTTestInputs }}
+              ExpectedAOTWarnings: ${{ parameters.ExpectedAOTWarnings }}
               TestSetupSteps: ${{ parameters.TestSetupSteps }}
               TestTimeoutInMinutes: ${{ parameters.TestTimeoutInMinutes }}
               MatrixConfigs:
