@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Cdn.Models
         {
             RequestSchemeOperator = requestSchemeOperator;
             Transforms = new ChangeTrackingList<PreTransformCategory>();
-            MatchValues = new ChangeTrackingList<RequestSchemeMatchValue>();
+            MatchValues = new ChangeTrackingList<RequestSchemeMatchConditionMatchValue>();
             TypeName = DeliveryRuleConditionParametersType.DeliveryRuleRequestSchemeConditionParameters;
         }
 
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// The match value for the condition of the delivery rule
         /// Serialized Name: RequestSchemeMatchConditionParameters.matchValues
         /// </param>
-        internal RequestSchemeMatchCondition(DeliveryRuleConditionParametersType typeName, IDictionary<string, BinaryData> serializedAdditionalRawData, RequestSchemeOperator requestSchemeOperator, bool? negateCondition, IList<PreTransformCategory> transforms, IList<RequestSchemeMatchValue> matchValues) : base(typeName, serializedAdditionalRawData)
+        internal RequestSchemeMatchCondition(DeliveryRuleConditionParametersType typeName, IDictionary<string, BinaryData> serializedAdditionalRawData, RequestSchemeOperator requestSchemeOperator, bool? negateCondition, IList<PreTransformCategory> transforms, IList<RequestSchemeMatchConditionMatchValue> matchValues) : base(typeName, serializedAdditionalRawData)
         {
             RequestSchemeOperator = requestSchemeOperator;
             NegateCondition = negateCondition;
@@ -81,6 +81,6 @@ namespace Azure.ResourceManager.Cdn.Models
         /// The match value for the condition of the delivery rule
         /// Serialized Name: RequestSchemeMatchConditionParameters.matchValues
         /// </summary>
-        public IList<RequestSchemeMatchValue> MatchValues { get; }
+        public IList<RequestSchemeMatchConditionMatchValue> MatchValues { get; }
     }
 }

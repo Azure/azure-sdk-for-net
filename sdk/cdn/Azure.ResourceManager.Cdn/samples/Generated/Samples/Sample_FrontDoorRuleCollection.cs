@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Cdn.Samples
                 Conditions = {new DeliveryRuleRequestMethodCondition(new RequestMethodMatchCondition(RequestMethodOperator.Equal)
 {
 NegateCondition = false,
-MatchValues = {RequestMethodMatchValue.Get},
+MatchValues = {RequestMethodMatchConditionType.Get},
 })},
                 Actions = {new DeliveryRuleResponseHeaderAction(new HeaderActionProperties(HeaderAction.Overwrite, "X-CDN")
 {

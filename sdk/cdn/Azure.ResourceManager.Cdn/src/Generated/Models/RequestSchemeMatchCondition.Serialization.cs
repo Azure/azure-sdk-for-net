@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Cdn.Models
             RequestSchemeOperator @operator = default;
             bool? negateCondition = default;
             IList<PreTransformCategory> transforms = default;
-            IList<RequestSchemeMatchValue> matchValues = default;
+            IList<RequestSchemeMatchConditionMatchValue> matchValues = default;
             DeliveryRuleConditionParametersType typeName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -127,10 +127,10 @@ namespace Azure.ResourceManager.Cdn.Models
                     {
                         continue;
                     }
-                    List<RequestSchemeMatchValue> array = new List<RequestSchemeMatchValue>();
+                    List<RequestSchemeMatchConditionMatchValue> array = new List<RequestSchemeMatchConditionMatchValue>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(new RequestSchemeMatchValue(item.GetString()));
+                        array.Add(new RequestSchemeMatchConditionMatchValue(item.GetString()));
                     }
                     matchValues = array;
                     continue;
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 @operator,
                 negateCondition,
                 transforms ?? new ChangeTrackingList<PreTransformCategory>(),
-                matchValues ?? new ChangeTrackingList<RequestSchemeMatchValue>());
+                matchValues ?? new ChangeTrackingList<RequestSchemeMatchConditionMatchValue>());
         }
 
         BinaryData IPersistableModel<RequestSchemeMatchCondition>.Write(ModelReaderWriterOptions options)
