@@ -9,6 +9,7 @@
 
 ### Bugs Fixed
 - Fixed bug where AccessTier for Premium Page Blobs were not being preserved.
+- Fixed some issues when transferring virtual directories with Blob Storage as the source.
 
 ### Other Changes
 

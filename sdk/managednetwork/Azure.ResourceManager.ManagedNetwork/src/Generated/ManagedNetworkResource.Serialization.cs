@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.ManagedNetwork
 
         ManagedNetworkData IJsonModel<ManagedNetworkData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ManagedNetworkData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ManagedNetworkData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<ManagedNetworkData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ManagedNetworkData>(Data, options, AzureResourceManagerManagedNetworkContext.Default);
 
-        ManagedNetworkData IPersistableModel<ManagedNetworkData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ManagedNetworkData>(data, options);
+        ManagedNetworkData IPersistableModel<ManagedNetworkData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ManagedNetworkData>(data, options, AzureResourceManagerManagedNetworkContext.Default);
 
         string IPersistableModel<ManagedNetworkData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ManagedNetworkData>)Data).GetFormatFromOptions(options);
     }

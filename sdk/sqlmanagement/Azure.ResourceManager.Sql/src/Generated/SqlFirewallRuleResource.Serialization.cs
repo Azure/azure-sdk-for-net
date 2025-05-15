@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Sql
 
         SqlFirewallRuleData IJsonModel<SqlFirewallRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SqlFirewallRuleData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SqlFirewallRuleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<SqlFirewallRuleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SqlFirewallRuleData>(Data, options, AzureResourceManagerSqlContext.Default);
 
-        SqlFirewallRuleData IPersistableModel<SqlFirewallRuleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SqlFirewallRuleData>(data, options);
+        SqlFirewallRuleData IPersistableModel<SqlFirewallRuleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SqlFirewallRuleData>(data, options, AzureResourceManagerSqlContext.Default);
 
         string IPersistableModel<SqlFirewallRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SqlFirewallRuleData>)Data).GetFormatFromOptions(options);
     }

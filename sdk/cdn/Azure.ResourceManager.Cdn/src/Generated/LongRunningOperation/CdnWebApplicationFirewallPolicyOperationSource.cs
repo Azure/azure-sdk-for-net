@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Cdn
 
         CdnWebApplicationFirewallPolicyResource IOperationSource<CdnWebApplicationFirewallPolicyResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<CdnWebApplicationFirewallPolicyData>(response.Content);
+            var data = ModelReaderWriter.Read<CdnWebApplicationFirewallPolicyData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerCdnContext.Default);
             return new CdnWebApplicationFirewallPolicyResource(_client, data);
         }
 
         async ValueTask<CdnWebApplicationFirewallPolicyResource> IOperationSource<CdnWebApplicationFirewallPolicyResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<CdnWebApplicationFirewallPolicyData>(response.Content);
+            var data = ModelReaderWriter.Read<CdnWebApplicationFirewallPolicyData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerCdnContext.Default);
             return await Task.FromResult(new CdnWebApplicationFirewallPolicyResource(_client, data)).ConfigureAwait(false);
         }
     }

@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.SecurityCenter
 
         SecurityCenterPricingData IJsonModel<SecurityCenterPricingData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SecurityCenterPricingData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SecurityCenterPricingData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<SecurityCenterPricingData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SecurityCenterPricingData>(Data, options, AzureResourceManagerSecurityCenterContext.Default);
 
-        SecurityCenterPricingData IPersistableModel<SecurityCenterPricingData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SecurityCenterPricingData>(data, options);
+        SecurityCenterPricingData IPersistableModel<SecurityCenterPricingData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SecurityCenterPricingData>(data, options, AzureResourceManagerSecurityCenterContext.Default);
 
         string IPersistableModel<SecurityCenterPricingData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SecurityCenterPricingData>)Data).GetFormatFromOptions(options);
     }

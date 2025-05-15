@@ -23,7 +23,6 @@
       management for transitive dependencies.
       -->
     <PackageReference Include="Newtonsoft.Json" />
-    <PackageReference Include="System.ClientModel" />
   </ItemGroup>
 
   <ItemGroup>

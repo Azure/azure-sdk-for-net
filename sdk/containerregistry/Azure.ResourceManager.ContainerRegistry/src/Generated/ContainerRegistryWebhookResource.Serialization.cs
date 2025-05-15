@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.ContainerRegistry
 
         ContainerRegistryWebhookData IJsonModel<ContainerRegistryWebhookData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ContainerRegistryWebhookData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ContainerRegistryWebhookData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<ContainerRegistryWebhookData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ContainerRegistryWebhookData>(Data, options, AzureResourceManagerContainerRegistryContext.Default);
 
-        ContainerRegistryWebhookData IPersistableModel<ContainerRegistryWebhookData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ContainerRegistryWebhookData>(data, options);
+        ContainerRegistryWebhookData IPersistableModel<ContainerRegistryWebhookData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ContainerRegistryWebhookData>(data, options, AzureResourceManagerContainerRegistryContext.Default);
 
         string IPersistableModel<ContainerRegistryWebhookData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ContainerRegistryWebhookData>)Data).GetFormatFromOptions(options);
     }

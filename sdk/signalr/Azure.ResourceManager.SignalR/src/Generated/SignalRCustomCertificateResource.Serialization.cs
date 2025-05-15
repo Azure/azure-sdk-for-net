@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.SignalR
 
         SignalRCustomCertificateData IJsonModel<SignalRCustomCertificateData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SignalRCustomCertificateData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SignalRCustomCertificateData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<SignalRCustomCertificateData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SignalRCustomCertificateData>(Data, options, AzureResourceManagerSignalRContext.Default);
 
-        SignalRCustomCertificateData IPersistableModel<SignalRCustomCertificateData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SignalRCustomCertificateData>(data, options);
+        SignalRCustomCertificateData IPersistableModel<SignalRCustomCertificateData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SignalRCustomCertificateData>(data, options, AzureResourceManagerSignalRContext.Default);
 
         string IPersistableModel<SignalRCustomCertificateData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SignalRCustomCertificateData>)Data).GetFormatFromOptions(options);
     }

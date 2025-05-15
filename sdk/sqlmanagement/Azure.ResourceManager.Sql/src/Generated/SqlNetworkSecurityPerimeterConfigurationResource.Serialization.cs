@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Sql
 
         SqlNetworkSecurityPerimeterConfigurationData IJsonModel<SqlNetworkSecurityPerimeterConfigurationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SqlNetworkSecurityPerimeterConfigurationData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SqlNetworkSecurityPerimeterConfigurationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<SqlNetworkSecurityPerimeterConfigurationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SqlNetworkSecurityPerimeterConfigurationData>(Data, options, AzureResourceManagerSqlContext.Default);
 
-        SqlNetworkSecurityPerimeterConfigurationData IPersistableModel<SqlNetworkSecurityPerimeterConfigurationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SqlNetworkSecurityPerimeterConfigurationData>(data, options);
+        SqlNetworkSecurityPerimeterConfigurationData IPersistableModel<SqlNetworkSecurityPerimeterConfigurationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SqlNetworkSecurityPerimeterConfigurationData>(data, options, AzureResourceManagerSqlContext.Default);
 
         string IPersistableModel<SqlNetworkSecurityPerimeterConfigurationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SqlNetworkSecurityPerimeterConfigurationData>)Data).GetFormatFromOptions(options);
     }
