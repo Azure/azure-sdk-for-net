@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.AI.Agents.Persistent
 {
-    /// <summary> The VectorStoreFileBatchObject. </summary>
+    /// <summary> The VectorStoreFileBatch_object. </summary>
     public readonly partial struct VectorStoreFileBatchObject : IEquatable<VectorStoreFileBatchObject>
     {
         private readonly string _value;

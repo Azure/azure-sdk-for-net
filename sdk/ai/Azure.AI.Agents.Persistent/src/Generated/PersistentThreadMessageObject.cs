@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.AI.Agents.Persistent
 {
-    /// <summary> The PersistentThreadMessageObject. </summary>
+    /// <summary> The PersistentThreadMessage_object. </summary>
     internal readonly partial struct PersistentThreadMessageObject : IEquatable<PersistentThreadMessageObject>
     {
         private readonly string _value;

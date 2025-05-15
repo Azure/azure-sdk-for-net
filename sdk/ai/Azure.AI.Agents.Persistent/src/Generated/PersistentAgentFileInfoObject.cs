@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.AI.Agents.Persistent
 {
-    /// <summary> The PersistentAgentFileInfoObject. </summary>
+    /// <summary> The PersistentAgentFileInfo_object. </summary>
     internal readonly partial struct PersistentAgentFileInfoObject : IEquatable<PersistentAgentFileInfoObject>
     {
         private readonly string _value;

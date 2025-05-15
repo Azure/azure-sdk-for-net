@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.AI.Projects
 {
-    /// <summary> The InternalAgentDeletionStatusObject. </summary>
+    /// <summary> The InternalAgentDeletionStatus_object. </summary>
     internal readonly partial struct InternalAgentDeletionStatusObject : IEquatable<InternalAgentDeletionStatusObject>
     {
         private readonly string _value;

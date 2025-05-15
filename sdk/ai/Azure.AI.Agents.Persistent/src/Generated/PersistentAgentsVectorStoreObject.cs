@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.AI.Agents.Persistent
 {
-    /// <summary> The PersistentAgentsVectorStoreObject. </summary>
+    /// <summary> The PersistentAgentsVectorStore_object. </summary>
     public readonly partial struct PersistentAgentsVectorStoreObject : IEquatable<PersistentAgentsVectorStoreObject>
     {
         private readonly string _value;

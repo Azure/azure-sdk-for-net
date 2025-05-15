@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.AI.Agents.Persistent
 {
-    /// <summary> The AzureFunctionBindingType. </summary>
+    /// <summary> The AzureFunctionBinding_type. </summary>
     public readonly partial struct AzureFunctionBindingType : IEquatable<AzureFunctionBindingType>
     {
         private readonly string _value;

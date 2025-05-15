@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.AI.Inference
 {
-    /// <summary> The ChatCompletionsToolDefinitionType. </summary>
+    /// <summary> The ChatCompletionsToolDefinition_type. </summary>
     public readonly partial struct ChatCompletionsToolDefinitionType : IEquatable<ChatCompletionsToolDefinitionType>
     {
         private readonly string _value;

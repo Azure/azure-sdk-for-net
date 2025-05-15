@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.AI.Agents.Persistent
 {
-    /// <summary> The InternalFileDeletionStatusObject. </summary>
+    /// <summary> The InternalFileDeletionStatus_object. </summary>
     internal readonly partial struct InternalFileDeletionStatusObject : IEquatable<InternalFileDeletionStatusObject>
     {
         private readonly string _value;

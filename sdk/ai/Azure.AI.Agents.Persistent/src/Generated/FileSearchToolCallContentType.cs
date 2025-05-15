@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.AI.Agents.Persistent
 {
-    /// <summary> The FileSearchToolCallContentType. </summary>
+    /// <summary> The FileSearchToolCallContent_type. </summary>
     public readonly partial struct FileSearchToolCallContentType : IEquatable<FileSearchToolCallContentType>
     {
         private readonly string _value;

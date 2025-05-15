@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.AI.Agents.Persistent
 {
-    /// <summary> The ResponseFormatJsonSchemaTypeType. </summary>
+    /// <summary> The ResponseFormatJsonSchemaType_type. </summary>
     public readonly partial struct ResponseFormatJsonSchemaTypeType : IEquatable<ResponseFormatJsonSchemaTypeType>
     {
         private readonly string _value;

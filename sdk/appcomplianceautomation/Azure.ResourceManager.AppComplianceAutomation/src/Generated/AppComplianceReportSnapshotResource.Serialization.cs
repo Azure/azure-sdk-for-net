@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.AppComplianceAutomation
 {
     public partial class AppComplianceReportSnapshotResource : IJsonModel<AppComplianceReportSnapshotData>
     {
+        private static AppComplianceReportSnapshotData s_dataDeserializationInstance;
+        private static AppComplianceReportSnapshotData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<AppComplianceReportSnapshotData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<AppComplianceReportSnapshotData>)Data).Write(writer, options);
 
-        AppComplianceReportSnapshotData IJsonModel<AppComplianceReportSnapshotData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AppComplianceReportSnapshotData>)Data).Create(ref reader, options);
+        AppComplianceReportSnapshotData IJsonModel<AppComplianceReportSnapshotData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AppComplianceReportSnapshotData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<AppComplianceReportSnapshotData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AppComplianceReportSnapshotData>(Data, options, AzureResourceManagerAppComplianceAutomationContext.Default);
 
         AppComplianceReportSnapshotData IPersistableModel<AppComplianceReportSnapshotData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AppComplianceReportSnapshotData>(data, options, AzureResourceManagerAppComplianceAutomationContext.Default);
 
-        string IPersistableModel<AppComplianceReportSnapshotData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AppComplianceReportSnapshotData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<AppComplianceReportSnapshotData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AppComplianceReportSnapshotData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }
