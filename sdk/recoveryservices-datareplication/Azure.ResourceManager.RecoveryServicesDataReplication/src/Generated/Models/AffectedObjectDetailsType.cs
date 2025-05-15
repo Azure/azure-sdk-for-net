@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 {
-    /// <summary> The JobModelCustomPropertiesAffectedObjectDetailsType. </summary>
+    /// <summary> The JobModelCustomPropertiesAffectedObjectDetails_type. </summary>
     public readonly partial struct AffectedObjectDetailsType : IEquatable<AffectedObjectDetailsType>
     {
         private readonly string _value;
