@@ -21,11 +21,11 @@ namespace Azure.Communication.CallAutomation
                 writer.WriteStringValue(CognitiveServicesEndpoint);
             }
             writer.WritePropertyName("transcription"u8);
-            writer.WriteObjectValue<TranscriptionSettings>(Transcription);
+            writer.WriteObjectValue(Transcription);
             if (Optional.IsDefined(Summarization))
             {
                 writer.WritePropertyName("summarization"u8);
-                writer.WriteObjectValue<SummarizationSettings>(Summarization);
+                writer.WriteObjectValue(Summarization);
             }
             writer.WriteEndObject();
         }
