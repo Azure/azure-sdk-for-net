@@ -18,7 +18,7 @@ namespace Azure.Communication.CallAutomation
         public PostProcessingOptions(
             TranscriptionSettings transcription,
             SummarizationSettings summarization = null,
-           string cognitiveServicesEndpoint = null)
+            string cognitiveServicesEndpoint = null)
         {
             this.CognitiveServicesEndpoint = cognitiveServicesEndpoint;
             this.SummarizationSettings = summarizationSettings;
