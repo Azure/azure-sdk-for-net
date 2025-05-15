@@ -101,6 +101,11 @@ public partial class SearchPrivateEndpointConnection : ProvisionableResource
     public static class ResourceVersions
     {
         /// <summary>
+        /// 2025-02-01-Preview.
+        /// </summary>
+        public static readonly string V2025_02_01_Preview = "2025-02-01-Preview";
+
+        /// <summary>
         /// 2024-06-01-Preview.
         /// </summary>
         public static readonly string V2024_06_01_Preview = "2024-06-01-Preview";
