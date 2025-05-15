@@ -85,14 +85,6 @@ namespace Azure.Communication.CallAutomation
             EventProcessor = new CallAutomationEventProcessor();
             Source = options.Source;
         }
-
-        private CallAutomationClient(
-            Uri pmaEndpoint,
-            Uri acsEndpoint,
-            CallAutomationClientOptions options,
-            TokenCredential tokenCredential)
-            : this(pmaEndpoint, options.CustomBuildHttpPipeline(acsEndpoint, tokenCredential), options)
-        { }
         #endregion
 
         /// <summary>Initializes a new instance of <see cref="CallAutomationClient"/> for mocking.</summary>
