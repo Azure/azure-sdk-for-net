@@ -23,8 +23,8 @@ steps:
       inputs:
         targetType: filepath
         filePath: $(Build.SourcesDirectory)/eng/scripts/compatibility/Check-AOT-Compatibility.ps1
-        arguments: >-          
+        arguments: >-
           -ServiceDirectory ${{ parameters.ServiceDirectory }}
           -PackageName ${{ artifact.name }}
-          -ExpectedWarningsFilePath ${{ coalesce(parameters.ExpectedAOTWarnings[?ArtifactName == artifact.name].ExpectedWarningsFilePath, 'None') }}
+          -ExpectedWarningsFilePath ${{ parameters.ExpectedAOTWarnings | map('match', 'ArtifactName', artifact.name, true) | map('get', 'ExpectedWarningsFilePath') | first('None') }}
         workingDirectory: $(Build.SourcesDirectory)/eng/scripts/compatibility
