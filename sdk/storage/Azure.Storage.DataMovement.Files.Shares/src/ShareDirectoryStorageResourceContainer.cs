@@ -184,6 +184,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
         {
             CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
 
+            // ShareDirectory to ShareDirectory Copy transfer
             if (sourceResource is ShareDirectoryStorageResourceContainer sourceShareDirectoryResource)
             {
                 // Ensure the transfer is supported (NFS -> NFS and SMB -> SMB)
@@ -201,16 +202,16 @@ namespace Azure.Storage.DataMovement.Files.Shares
                     "source",
                     sourceResource.Uri.AbsoluteUri,
                     cancellationToken).ConfigureAwait(false);
-            }
 
-            // Validate the destination protocol
-            await DataMovementSharesExtensions.ValidateProtocolAsync(
-                ShareDirectoryClient.GetParentShareClient(),
-                ResourceOptions,
-                transferId,
-                "destination",
-                Uri.AbsoluteUri,
-                cancellationToken).ConfigureAwait(false);
+                // Validate the destination protocol
+                await DataMovementSharesExtensions.ValidateProtocolAsync(
+                    ShareDirectoryClient.GetParentShareClient(),
+                    ResourceOptions,
+                    transferId,
+                    "destination",
+                    Uri.AbsoluteUri,
+                    cancellationToken).ConfigureAwait(false);
+            }
         }
     }
 }
