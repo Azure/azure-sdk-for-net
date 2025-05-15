@@ -4,10 +4,15 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using Azure.Core;
+using Azure.Core.Pipeline;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
+using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
+using Microsoft.TypeSpec.Generator.Snippets;
 using Microsoft.TypeSpec.Generator.Statements;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 
@@ -15,33 +20,40 @@ namespace Azure.Generator.Providers
 {
     internal class CollectionResultDefinition : TypeProvider
     {
+        private const string DefaultNextLinkPropertyName = "nextLink";
+
         private readonly ClientProvider _client;
         private readonly FieldProvider _clientField;
         private readonly InputOperation _operation;
         private readonly CSharpType _itemModelType;
+        private readonly CSharpType _responseType;
         private readonly bool _isAsync;
         private readonly InputPagingServiceMetadata _paging;
-        private readonly IReadOnlyList<ParameterProvider> _createRequestParameters;
-        private readonly int? _nextTokenParameterIndex;
-        private readonly FieldProvider? _contextField;
         private readonly IReadOnlyList<FieldProvider> _requestFields;
+        private readonly string _scopeName;
+        private readonly string _itemsPropertyName;
+        private readonly string _nextPagePropertyName;
+        private readonly InputResponseLocation? _nextPageLocation;
+
+        private readonly IReadOnlyList<ParameterProvider> _createRequestParameters;
+        private readonly FieldProvider? _contextField;
+        private readonly FieldProvider _clientDiagonosticsField;
 
         private static readonly ParameterProvider ContinuationTokenParameter =
-            new("continuationToken", $"The continuation token.", new CSharpType(typeof(string)))
-            {
-                DefaultValue = Null
-            };
+            new("continuationToken", $"The continuation token.", new CSharpType(typeof(string), isNullable: true));
 
         private static readonly ParameterProvider PageSizeHintParameter =
-            new("pageSizeHint", $"The page size hint.", new CSharpType(typeof(int?)))
-            {
-                DefaultValue = Null
-            };
+            new("pageSizeHint", $"The page size hint.", new CSharpType(typeof(int?)));
 
         public CollectionResultDefinition(ClientProvider client, InputPagingServiceMethod serviceMethod, CSharpType? itemModelType, bool isAsync)
         {
             _client = client;
             _paging = serviceMethod.PagingMetadata;
+
+            var nextPagePropertyName = _paging.NextLink != null
+                ? _paging.NextLink.ResponseSegments[0]
+                : _paging.ContinuationToken?.ResponseSegments[0];
+            _nextPageLocation = _paging.NextLink?.ResponseLocation ?? _paging.ContinuationToken?.ResponseLocation;
             _clientField = new FieldProvider(
                 FieldModifiers.Private | FieldModifiers.ReadOnly,
                 _client.Type,
@@ -55,10 +67,6 @@ namespace Azure.Generator.Providers
             for (int paramIndex = 0; paramIndex < _createRequestParameters.Count; paramIndex++)
             {
                 var parameter = _createRequestParameters[paramIndex];
-                if (parameter.Name == _paging.ContinuationToken?.Parameter.Name)
-                {
-                    _nextTokenParameterIndex = paramIndex;
-                }
                 var field = new FieldProvider(
                     FieldModifiers.Private | FieldModifiers.ReadOnly,
                     parameter.Type,
@@ -72,9 +80,44 @@ namespace Azure.Generator.Providers
             }
 
             _requestFields = fields;
+            _scopeName = $"{_client.Name}.{_operation.Name}"; // TODO - may need to expose ToCleanName for the operation
+            _clientDiagonosticsField = new FieldProvider(FieldModifiers.Private, typeof(ClientDiagnostics), $"_clientDiagnostics", this);
+
+            // TODO Nested models are not supported https://github.com/Azure/typespec-azure/issues/2287
+            var response = _operation.Responses.FirstOrDefault(r => !r.IsErrorResponse);
+            var responseModel = AzureClientGenerator.Instance.TypeFactory.CreateModel((InputModelType)response!.BodyType!)!;
+            _responseType = responseModel.Type;
+            var itemsPropertyName = _paging.ItemPropertySegments[0];
+            var itemsModelPropertyName = responseModel.CanonicalView.Properties
+                .FirstOrDefault(p => p.WireInfo?.SerializedName == itemsPropertyName)?.Name;
+            if (itemsModelPropertyName == null)
+            {
+                AzureClientGenerator.Instance.Emitter.ReportDiagnostic(
+                    "missing-items-property",
+                    $"Missing items property: {itemsPropertyName}",
+                    _operation.CrossLanguageDefinitionId);
+            }
+            _itemsPropertyName = itemsModelPropertyName ?? itemsPropertyName;
+
+            // Find the model property that has the serialized name matching the next link.
+            // Use the canonical view in case the property was customized.
+            if (_nextPageLocation == InputResponseLocation.Body)
+            {
+                _nextPagePropertyName =
+                    responseModel.CanonicalView.Properties.FirstOrDefault(
+                        p => p.WireInfo?.SerializedName == nextPagePropertyName)?.Name ?? DefaultNextLinkPropertyName;
+            }
+            else if (_nextPageLocation == InputResponseLocation.Header)
+            {
+                _nextPagePropertyName = nextPagePropertyName ?? DefaultNextLinkPropertyName;
+            }
+            else
+            {
+                _nextPagePropertyName = DefaultNextLinkPropertyName;
+            }
         }
 
-        protected override FieldProvider[] BuildFields() => [_clientField, .. _requestFields];
+        protected override FieldProvider[] BuildFields() => [_clientField, _clientDiagonosticsField, .. _requestFields];
 
         protected override string BuildRelativeFilePath() => Path.Combine("src", "Generated", $"{Name}.cs");
 
@@ -108,6 +151,97 @@ namespace Azure.Generator.Providers
                     this)
             };
         }
+
+        private MethodProvider BuildAsPagesMethod()
+        {
+            var signature = new MethodSignature(
+                "AsPages",
+                $"Gets the pages of {Name} as an enumerable collection.",
+                MethodSignatureModifiers.Public | MethodSignatureModifiers.Override,
+                _isAsync ?
+                    new CSharpType(typeof(IAsyncEnumerable<>), new CSharpType(typeof(Page<>), _itemModelType)) :
+                    new CSharpType(typeof(IEnumerable<>), new CSharpType(typeof(Page<>), _itemModelType)),
+                $"The pages of {Name} as an enumerable collection.",
+                [ContinuationTokenParameter, PageSizeHintParameter]);
+
+            var body = new MethodBodyStatement[]
+            {
+                Declare("nextLink", new CSharpType(typeof(string), isNullable: true), ContinuationTokenParameter, out var nextLinkVariable),
+                BuildDoWhileStatement(nextLinkVariable)
+            };
+
+            return new MethodProvider(signature, body, this);
+
+            DoWhileStatement BuildDoWhileStatement(VariableExpression nextLinkVariable)
+            {
+                var doWhileStatement = new DoWhileStatement(Not(Static<string>().Invoke("IsNullOrEmpty", [nextLinkVariable])));
+                doWhileStatement.Add(Declare("response", new CSharpType(typeof(Response), isNullable: true), This.Invoke(GetNextResponseMethodName, [PageSizeHintParameter, nextLinkVariable]), out var responseVariable));
+                doWhileStatement.Add(new IfStatement(responseVariable.NullConditional()) { new YieldBreakStatement() });
+                doWhileStatement.Add(Declare("items", new CSharpType(typeof(IList<>), _itemModelType), responseVariable.CastTo(_responseType), out var itemsVariable));
+                doWhileStatement.Add(new YieldReturnStatement(Static(new CSharpType(typeof(Page<>), [_itemModelType])).Invoke("FromValues", [itemsVariable.Property(_itemsPropertyName), itemsVariable.Property(_nextPagePropertyName), responseVariable])));
+                return doWhileStatement;
+            }
+        }
+
+        // TODO: implement async version
+        private const string GetNextResponseMethodName = "GetNextResponse";
+        private MethodProvider BuildGetNextResponseMethod()
+        {
+            var signature = new MethodSignature(
+                GetNextResponseMethodName,
+                $"Get response from next link",
+                MethodSignatureModifiers.Private,
+                new CSharpType(typeof(Response), isNullable: true),
+                null,
+                [PageSizeHintParameter, ContinuationTokenParameter]);
+
+            var body = new MethodBodyStatement[]
+            {
+                Declare("message", AzureClientGenerator.Instance.TypeFactory.HttpMessageApi.HttpMessageType, InvokeCreateRequestForNextLink(_requestFields[0].As<Uri>()), out var messageVariable),
+                UsingDeclare("scope", typeof(DiagnosticScope), _clientDiagonosticsField.Invoke(nameof(ClientDiagnostics.CreateScope), [Literal(_scopeName)]), out var scopeVariable),
+                scopeVariable.Invoke(nameof(DiagnosticScope.Start)).Terminate(),
+                new TryCatchFinallyStatement
+                    (BuildTryStatement(messageVariable), Catch(Declare<Exception>("e", out var exceptionVarialble), [scopeVariable.Invoke(nameof(DiagnosticScope.Failed), exceptionVarialble).Terminate(), Throw()]))
+            };
+
+            TryStatement BuildTryStatement(ValueExpression messageVariable)
+            {
+                var tryStatement = new TryStatement();
+                tryStatement.Add(_clientField.Property("Pipeline").Invoke("Send", [messageVariable, Default]).Terminate());
+                tryStatement.Add(Return(This.Invoke(GetResponseMethodName, [messageVariable])));
+                return tryStatement;
+            }
+            return new MethodProvider(signature, body, this);
+        }
+
+        private const string GetResponseMethodName = "GetResponse";
+        private MethodProvider BuildGetResponseMethod()
+        {
+            var messageParameter = new ParameterProvider("message", $"Http message", typeof(HttpMessage));
+            var signature = new MethodSignature(
+                GetResponseMethodName,
+                $"Get response from message",
+                MethodSignatureModifiers.Private,
+                typeof(Response),
+                null,
+                [messageParameter]);
+            var body = new MethodBodyStatement[]
+            {
+                new IfStatement(messageParameter.Property("Response").Property("IsError").AndExpr(_contextField!.Property("ErrorOptions")))
+                {
+                    Throw(New.Instance<RequestFailedException>(messageParameter.Property("Response")))
+                },
+                Return(messageParameter.Property("Response"))
+            };
+            return new MethodProvider(signature, body, this);
+        }
+
+        private ScopedApi<HttpMessage> InvokeCreateRequestForNextLink(ValueExpression nextPageUri) => _clientField.Invoke(
+            // TODO - may need to expose ToCleanName for the operation
+            $"Create{_operation.Name}Request",
+            // we replace the first argument (the initialUri) with the nextPageUri
+            [nextPageUri, .. _requestFields.Skip(1)])
+            .As<HttpMessage>();
 
         protected override ConstructorProvider[] BuildConstructors()
         {
