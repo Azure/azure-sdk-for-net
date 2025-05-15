@@ -5,23 +5,21 @@
 ### Features Added
 * `Deployments` methods to enumerate AI models deployed to your AI Foundry Project.
 * `Datasets` methods to upload documents and reference them. To be used with Evaluations.
-* `Indexes` methods to handle your Search Indexes.
+* `Indexes` methods to handle Search Indexes.
 
 ### Breaking Changes
 * Azure AI Foundry Project endpoint is now required to construct the `AIProjectClient`. It has the form
 `https://<your-ai-services-account-name>.services.ai.azure.com/api/projects/<your-project-name>`. Find it in your AI Foundry Project Overview page. 
 * Agents are now implemented in a separate package `Azure.AI.Agents.Persistent`. Continue using the `agents` operations on the
 `AIProjectsClient` to create, run and delete agents, as before. However there have been some breaking changes in these operations. See [Agents package document and samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/ai/Azure.AI.Agents.Persistent) for more details.
-* Several changes to the `Connections` methods, including the response object (now simply called `Connection`)
-* The method `.GetAzureOpenAIChatClient()` now supports returning an authenticated `AzureOpenAI` ChatClient to be used with
+* Several changes to the `Connections` methods, including the response object (now it is simply called `Connection`)
+* `GetAzureOpenAIChatClient` now supports returning an authenticated `AzureOpenAI` ChatClient to be used with
 AI models deployed to the Project's AI Services. 
 * The class `ConnectionProperties` was renamed to `Connection`, and its properties have changed.
 * The method `UploadFileRequest` on `AIProjectClient` had been removed, use `UploadFile` in `Datasets` instead.
 * Evaluator Ids are available using the class `EvaluatorIDs` and no longer require `Azure.AI.Evaluation` package to be installed.
-* Property `scope` on `AIProjectClient` is removed, use AI Foundry Project endpoint instead.
+* Property `scope` on `AIProjectClient` is removed.
 * Property `Id` on Evaluation is replaced with `name`.
-
-### Bugs Fixed
 
 ### Sample Updates
 * All samples have been updated. New ones have been added for Deployments, Datasets, and Indexes.
