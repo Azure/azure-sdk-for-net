@@ -12,6 +12,7 @@ namespace Azure.AI.Projects.Tests
         public string DATASETNAME => GetRecordedVariable("DATASET_NAME");
         public string BINGCONNECTIONNAME => GetRecordedVariable("BING_CONNECTION_NAME");
         public string MODELDEPLOYMENTNAME => GetRecordedVariable("MODEL_DEPLOYMENT_NAME");
+        public string EMBEDDINGSMODELDEPLOYMENTNAME => GetRecordedVariable("EMBEDDINGS_MODEL_DEPLOYMENT_NAME");
         public string MODELPUBLISHER => GetRecordedVariable("MODEL_PUBLISHER");
         public string EMBEDDINGMODELDEPLOYMENTNAME => GetRecordedVariable("EMBEDDING_MODEL_DEPLOYMENT_NAME");
         public string STORAGE_QUEUE_URI => GetRecordedVariable("STORAGE_QUEUE_URI");
