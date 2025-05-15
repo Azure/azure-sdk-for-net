@@ -5,8 +5,11 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure;
+using Azure.Core;
+using Azure.Core.Pipeline;
 
 namespace BasicTypeSpec
 {
@@ -28,6 +31,51 @@ namespace BasicTypeSpec
         /// <param name="continuationToken"> The continuation token. </param>
         /// <param name="pageSizeHint"> The page size hint. </param>
         /// <returns> The pages of BasicTypeSpecClientListWithPagingCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<ThingModel>> AsPages(string continuationToken = null, int? pageSizeHint = null) => throw null;
+        public override IEnumerable<Page<ThingModel>> AsPages(string continuationToken, int? pageSizeHint)
+        {
+            string nextLink = continuationToken;
+            do
+            {
+                Response response = GetNextResponse(pageSizeHint, nextLink);
+                if (response is null)
+                {
+                    yield break;
+                }
+                PageThingModel items = (PageThingModel)response;
+                yield return Page<ThingModel>.FromValues(items.Items.ToList(), null, response);
+            }
+            while (!string.IsNullOrEmpty(nextLink));
+        }
+
+        /// <summary> Get response from next link. </summary>
+        /// <param name="pageSizeHint"> The page size hint. </param>
+        /// <param name="continuationToken"> The continuation token. </param>
+        private Response GetNextResponse(int? pageSizeHint, string continuationToken)
+        {
+            HttpMessage message = _client.CreateListWithPagingRequest(_context);
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("BasicTypeSpecClient.ListWithPaging");
+            scope.Start();
+            try
+            {
+                _client.Pipeline.Send(message, default);
+                return GetResponse(message);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Get response from message. </summary>
+        /// <param name="message"> Http message. </param>
+        private Response GetResponse(HttpMessage message)
+        {
+            if (message.Response.IsError && _context.ErrorOptions != ErrorOptions.NoThrow)
+            {
+                throw new RequestFailedException(message.Response);
+            }
+            return message.Response;
+        }
     }
 }

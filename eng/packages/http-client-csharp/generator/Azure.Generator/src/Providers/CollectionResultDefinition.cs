@@ -2,11 +2,14 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Input;
@@ -20,8 +23,6 @@ namespace Azure.Generator.Providers
 {
     internal class CollectionResultDefinition : TypeProvider
     {
-        private const string DefaultNextLinkPropertyName = "nextLink";
-
         private readonly ClientProvider _client;
         private readonly FieldProvider _clientField;
         private readonly InputOperation _operation;
@@ -32,12 +33,12 @@ namespace Azure.Generator.Providers
         private readonly IReadOnlyList<FieldProvider> _requestFields;
         private readonly string _scopeName;
         private readonly string _itemsPropertyName;
-        private readonly string _nextPagePropertyName;
+        private readonly string? _nextLinkPropertyName;
         private readonly InputResponseLocation? _nextPageLocation;
+        private readonly string _getNextResponseMethodName;
 
         private readonly IReadOnlyList<ParameterProvider> _createRequestParameters;
         private readonly FieldProvider? _contextField;
-        private readonly FieldProvider _clientDiagonosticsField;
 
         private static readonly ParameterProvider ContinuationTokenParameter =
             new("continuationToken", $"The continuation token.", new CSharpType(typeof(string), isNullable: true));
@@ -49,6 +50,7 @@ namespace Azure.Generator.Providers
         {
             _client = client;
             _paging = serviceMethod.PagingMetadata;
+            _getNextResponseMethodName = _isAsync ? "GetNextResponseAsync" : "GetNextResponse";
 
             var nextPagePropertyName = _paging.NextLink != null
                 ? _paging.NextLink.ResponseSegments[0]
@@ -81,7 +83,6 @@ namespace Azure.Generator.Providers
 
             _requestFields = fields;
             _scopeName = $"{_client.Name}.{_operation.Name}"; // TODO - may need to expose ToCleanName for the operation
-            _clientDiagonosticsField = new FieldProvider(FieldModifiers.Private, typeof(ClientDiagnostics), $"_clientDiagnostics", this);
 
             // TODO Nested models are not supported https://github.com/Azure/typespec-azure/issues/2287
             var response = _operation.Responses.FirstOrDefault(r => !r.IsErrorResponse);
@@ -103,27 +104,25 @@ namespace Azure.Generator.Providers
             // Use the canonical view in case the property was customized.
             if (_nextPageLocation == InputResponseLocation.Body)
             {
-                _nextPagePropertyName =
+                _nextLinkPropertyName =
                     responseModel.CanonicalView.Properties.FirstOrDefault(
-                        p => p.WireInfo?.SerializedName == nextPagePropertyName)?.Name ?? DefaultNextLinkPropertyName;
+                        p => p.WireInfo?.SerializedName == nextPagePropertyName)?.Name;
             }
             else if (_nextPageLocation == InputResponseLocation.Header)
             {
-                _nextPagePropertyName = nextPagePropertyName ?? DefaultNextLinkPropertyName;
-            }
-            else
-            {
-                _nextPagePropertyName = DefaultNextLinkPropertyName;
+                _nextLinkPropertyName = nextPagePropertyName;
             }
         }
 
-        protected override FieldProvider[] BuildFields() => [_clientField, _clientDiagonosticsField, .. _requestFields];
+        protected override FieldProvider[] BuildFields() => [_clientField, .. _requestFields];
 
         protected override string BuildRelativeFilePath() => Path.Combine("src", "Generated", $"{Name}.cs");
 
         protected override string BuildName()
         // TODO - may need to expose ToCleanName for the operation
-            => $"{_client.Type.Name}{_operation.Name}{(_isAsync ? "Async" : "")}CollectionResult{(_itemModelType.Equals(typeof(BinaryData)) ? "" : "OfT")}";
+            => $"{_client.Type.Name}{_operation.Name}{(_isAsync ? "Async" : "")}CollectionResult{(IsBinaryData() ? "" : "OfT")}";
+
+        private bool IsBinaryData() => _itemModelType.Equals(typeof(BinaryData));
 
         protected override TypeSignatureModifiers BuildDeclarationModifiers()
             => TypeSignatureModifiers.Internal | TypeSignatureModifiers.Partial | TypeSignatureModifiers.Class;
@@ -133,38 +132,27 @@ namespace Azure.Generator.Providers
                 ? [new CSharpType(typeof(AsyncPageable<>), _itemModelType)]
                 : [new CSharpType(typeof(Pageable<>), _itemModelType)];
 
-        protected override MethodProvider[] BuildMethods()
-        {
-            return new[]
-            {
-                new MethodProvider(
-                    new MethodSignature(
-                    "AsPages",
-                    $"Gets the pages of {Name} as an enumerable collection.",
-                    MethodSignatureModifiers.Public | MethodSignatureModifiers.Override,
-                    _isAsync ?
-                        new CSharpType(typeof(IAsyncEnumerable<>), new CSharpType(typeof(Page<>), _itemModelType)) :
-                        new CSharpType(typeof(IEnumerable<>), new CSharpType(typeof(Page<>), _itemModelType)),
-                    $"The pages of {Name} as an enumerable collection.",
-                    [ContinuationTokenParameter, PageSizeHintParameter]),
-                    ThrowExpression(Null),
-                    this)
-            };
-        }
+        protected override MethodProvider[] BuildMethods() => [BuildAsPagesMethod(), BuildGetNextResponseMethod(), BuildGetResponseMethod()];
 
         private MethodProvider BuildAsPagesMethod()
         {
             var signature = new MethodSignature(
                 "AsPages",
                 $"Gets the pages of {Name} as an enumerable collection.",
-                MethodSignatureModifiers.Public | MethodSignatureModifiers.Override,
+                _isAsync
+                    ? MethodSignatureModifiers.Async | MethodSignatureModifiers.Public | MethodSignatureModifiers.Override
+                    : MethodSignatureModifiers.Public | MethodSignatureModifiers.Override,
                 _isAsync ?
                     new CSharpType(typeof(IAsyncEnumerable<>), new CSharpType(typeof(Page<>), _itemModelType)) :
                     new CSharpType(typeof(IEnumerable<>), new CSharpType(typeof(Page<>), _itemModelType)),
                 $"The pages of {Name} as an enumerable collection.",
                 [ContinuationTokenParameter, PageSizeHintParameter]);
 
-            var body = new MethodBodyStatement[]
+            var body = IsBinaryData()
+                ?
+                new MethodBodyStatement[] { Return(Null) } // TODO: handle binaryData
+                :
+                new MethodBodyStatement[]
             {
                 Declare("nextLink", new CSharpType(typeof(string), isNullable: true), ContinuationTokenParameter, out var nextLinkVariable),
                 BuildDoWhileStatement(nextLinkVariable)
@@ -175,30 +163,47 @@ namespace Azure.Generator.Providers
             DoWhileStatement BuildDoWhileStatement(VariableExpression nextLinkVariable)
             {
                 var doWhileStatement = new DoWhileStatement(Not(Static<string>().Invoke("IsNullOrEmpty", [nextLinkVariable])));
-                doWhileStatement.Add(Declare("response", new CSharpType(typeof(Response), isNullable: true), This.Invoke(GetNextResponseMethodName, [PageSizeHintParameter, nextLinkVariable]), out var responseVariable));
-                doWhileStatement.Add(new IfStatement(responseVariable.NullConditional()) { new YieldBreakStatement() });
-                doWhileStatement.Add(Declare("items", new CSharpType(typeof(IList<>), _itemModelType), responseVariable.CastTo(_responseType), out var itemsVariable));
-                doWhileStatement.Add(new YieldReturnStatement(Static(new CSharpType(typeof(Page<>), [_itemModelType])).Invoke("FromValues", [itemsVariable.Property(_itemsPropertyName), itemsVariable.Property(_nextPagePropertyName), responseVariable])));
+                doWhileStatement.Add(Declare("response", new CSharpType(typeof(Response), isNullable: true), This.Invoke(_getNextResponseMethodName, [PageSizeHintParameter, nextLinkVariable], _isAsync), out var responseVariable));
+                doWhileStatement.Add(new IfStatement(responseVariable.Is(Null)) { new YieldBreakStatement() });
+                doWhileStatement.Add(Declare("items", _responseType, responseVariable.CastTo(_responseType), out var itemsVariable));
+                doWhileStatement.Add(new YieldReturnStatement(Static(new CSharpType(typeof(Page<>), [_itemModelType])).Invoke("FromValues", [itemsVariable.Property(_itemsPropertyName).Invoke("ToList"), _nextLinkPropertyName is null ? Null : BuildGetNextLinkMethodBody(itemsVariable, responseVariable), responseVariable])));
                 return doWhileStatement;
             }
         }
 
+        private ValueExpression BuildGetNextLinkMethodBody(VariableExpression itemsVariable, VariableExpression responseVariable)
+        {
+            switch (_nextPageLocation)
+            {
+                case InputResponseLocation.Body:
+                    return itemsVariable.Property(_nextLinkPropertyName!);
+                case InputResponseLocation.Header:
+                    return new BinaryOperatorExpression(":",
+                            new BinaryOperatorExpression("?",
+                            responseVariable.Property("Headers").Invoke("TryGetValue", Literal(_nextLinkPropertyName!), new DeclarationExpression(typeof(string), "value", out var nextLinkHeader, isOut: true)).As<bool>(),
+                            nextLinkHeader),
+                            Null);
+                default:
+                    // Invalid location is logged by the emitter.
+                    return Null;
+            }
+        }
+
         // TODO: implement async version
-        private const string GetNextResponseMethodName = "GetNextResponse";
         private MethodProvider BuildGetNextResponseMethod()
         {
             var signature = new MethodSignature(
-                GetNextResponseMethodName,
+                _getNextResponseMethodName,
                 $"Get response from next link",
-                MethodSignatureModifiers.Private,
-                new CSharpType(typeof(Response), isNullable: true),
+                _isAsync ? MethodSignatureModifiers.Private | MethodSignatureModifiers.Async : MethodSignatureModifiers.Private,
+                _isAsync ? new CSharpType(typeof(ValueTask<>), new CSharpType(typeof(Response), isNullable: true)) : new CSharpType(typeof(Response), isNullable: true),
                 null,
                 [PageSizeHintParameter, ContinuationTokenParameter]);
 
             var body = new MethodBodyStatement[]
             {
                 Declare("message", AzureClientGenerator.Instance.TypeFactory.HttpMessageApi.HttpMessageType, InvokeCreateRequestForNextLink(_requestFields[0].As<Uri>()), out var messageVariable),
-                UsingDeclare("scope", typeof(DiagnosticScope), _clientDiagonosticsField.Invoke(nameof(ClientDiagnostics.CreateScope), [Literal(_scopeName)]), out var scopeVariable),
+                UsingDeclare("scope", typeof(DiagnosticScope), _clientField.Property("ClientDiagnostics").Invoke(nameof(ClientDiagnostics.CreateScope), [Literal(_scopeName)]), out var scopeVariable),
                 scopeVariable.Invoke(nameof(DiagnosticScope.Start)).Terminate(),
                 new TryCatchFinallyStatement
                     (BuildTryStatement(messageVariable), Catch(Declare<Exception>("e", out var exceptionVarialble), [scopeVariable.Invoke(nameof(DiagnosticScope.Failed), exceptionVarialble).Terminate(), Throw()]))
@@ -207,7 +212,7 @@ namespace Azure.Generator.Providers
             TryStatement BuildTryStatement(ValueExpression messageVariable)
             {
                 var tryStatement = new TryStatement();
-                tryStatement.Add(_clientField.Property("Pipeline").Invoke("Send", [messageVariable, Default]).Terminate());
+                tryStatement.Add(_clientField.Property("Pipeline").Invoke(_isAsync ? "SendAsync" : "Send", [messageVariable, Default], _isAsync).Terminate());
                 tryStatement.Add(Return(This.Invoke(GetResponseMethodName, [messageVariable])));
                 return tryStatement;
             }
@@ -227,7 +232,7 @@ namespace Azure.Generator.Providers
                 [messageParameter]);
             var body = new MethodBodyStatement[]
             {
-                new IfStatement(messageParameter.Property("Response").Property("IsError").AndExpr(_contextField!.Property("ErrorOptions")))
+                new IfStatement(new BinaryOperatorExpression("&&", messageParameter.Property("Response").Property("IsError"), _contextField!.Property("ErrorOptions").NotEqual(Static<ErrorOptions>().Property(nameof(ErrorOptions.NoThrow)))))
                 {
                     Throw(New.Instance<RequestFailedException>(messageParameter.Property("Response")))
                 },
@@ -268,7 +273,6 @@ namespace Azure.Generator.Providers
         private MethodBodyStatement[] BuildConstructorBody(ParameterProvider clientParameter)
         {
             var statements = new List<MethodBodyStatement>(_createRequestParameters.Count + 1);
-
             statements.Add(_clientField.Assign(clientParameter).Terminate());
 
             for (int parameterNumber = 0; parameterNumber < _createRequestParameters.Count; parameterNumber++)

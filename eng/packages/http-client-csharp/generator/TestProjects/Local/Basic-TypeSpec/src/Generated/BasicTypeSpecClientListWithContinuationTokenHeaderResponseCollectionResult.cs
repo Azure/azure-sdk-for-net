@@ -8,6 +8,8 @@
 using System;
 using System.Collections.Generic;
 using Azure;
+using Azure.Core;
+using Azure.Core.Pipeline;
 
 namespace BasicTypeSpec
 {
@@ -32,6 +34,40 @@ namespace BasicTypeSpec
         /// <param name="continuationToken"> The continuation token. </param>
         /// <param name="pageSizeHint"> The page size hint. </param>
         /// <returns> The pages of BasicTypeSpecClientListWithContinuationTokenHeaderResponseCollectionResult as an enumerable collection. </returns>
-        public override IEnumerable<Page<BinaryData>> AsPages(string continuationToken = null, int? pageSizeHint = null) => throw null;
+        public override IEnumerable<Page<BinaryData>> AsPages(string continuationToken, int? pageSizeHint)
+        {
+            return null;
+        }
+
+        /// <summary> Get response from next link. </summary>
+        /// <param name="pageSizeHint"> The page size hint. </param>
+        /// <param name="continuationToken"> The continuation token. </param>
+        private Response GetNextResponse(int? pageSizeHint, string continuationToken)
+        {
+            HttpMessage message = _client.CreateListWithContinuationTokenHeaderResponseRequest(_token, _context);
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("BasicTypeSpecClient.ListWithContinuationTokenHeaderResponse");
+            scope.Start();
+            try
+            {
+                _client.Pipeline.Send(message, default);
+                return GetResponse(message);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Get response from message. </summary>
+        /// <param name="message"> Http message. </param>
+        private Response GetResponse(HttpMessage message)
+        {
+            if (message.Response.IsError && _context.ErrorOptions != ErrorOptions.NoThrow)
+            {
+                throw new RequestFailedException(message.Response);
+            }
+            return message.Response;
+        }
     }
 }
