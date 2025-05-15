@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// Serialized Name: KeyVaultSigningKeyParameters.secretVersion
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/>, <paramref name="secretName"/> or <paramref name="secretVersion"/> is null. </exception>
-        public KeyVaultSigningKey(KeyVaultSigningKeyParametersType keyType, string subscriptionId, string resourceGroupName, string vaultName, string secretName, string secretVersion)
+        public KeyVaultSigningKey(KeyVaultSigningKeyType keyType, string subscriptionId, string resourceGroupName, string vaultName, string secretName, string secretVersion)
         {
             Argument.AssertNotNull(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(resourceGroupName, nameof(resourceGroupName));
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// Serialized Name: KeyVaultSigningKeyParameters.secretVersion
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal KeyVaultSigningKey(KeyVaultSigningKeyParametersType keyType, string subscriptionId, string resourceGroupName, string vaultName, string secretName, string secretVersion, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal KeyVaultSigningKey(KeyVaultSigningKeyType keyType, string subscriptionId, string resourceGroupName, string vaultName, string secretName, string secretVersion, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             KeyType = keyType;
             SubscriptionId = subscriptionId;
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Serialized Name: KeyVaultSigningKeyParameters.typeName. </summary>
-        public KeyVaultSigningKeyParametersType KeyType { get; set; }
+        public KeyVaultSigningKeyType KeyType { get; set; }
         /// <summary>
         /// Subscription Id of the user's Key Vault containing the secret
         /// Serialized Name: KeyVaultSigningKeyParameters.subscriptionId

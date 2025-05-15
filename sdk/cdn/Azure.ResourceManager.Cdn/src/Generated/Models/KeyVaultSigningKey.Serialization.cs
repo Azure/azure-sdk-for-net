@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            KeyVaultSigningKeyParametersType typeName = default;
+            KeyVaultSigningKeyType typeName = default;
             string subscriptionId = default;
             string resourceGroupName = default;
             string vaultName = default;
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 if (property.NameEquals("typeName"u8))
                 {
-                    typeName = new KeyVaultSigningKeyParametersType(property.Value.GetString());
+                    typeName = new KeyVaultSigningKeyType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("subscriptionId"u8))
