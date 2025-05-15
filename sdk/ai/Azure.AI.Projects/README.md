@@ -26,6 +26,13 @@ See [full set of Agents samples](https://github.com/Azure/azure-sdk-for-net/tree
 - [Key concepts](#key-concepts)
   - [Create and authenticate the client](#create-and-authenticate-the-client)
 - [Examples](#examples)
+  - [Performing Agent operations](#performing-agent-operations)
+  - [Get an authenticated AzureOpenAI client](#get-an-authenticated-azureopenai-client)
+  - [Get an authenticated ChatCompletionsClient](#get-an-authenticated-chatcompletionsclient)
+  - [Deployments operations](#deployments-operations)
+  - [Connections operations](#connections-operations)
+  - [Dataset operations](#dataset-operations)
+  - [Indexes operations](#indexes-operations)
 - [Troubleshooting](#troubleshooting)
 - [Next steps](#next-steps)
 - [Contributing](#contributing)
@@ -162,7 +169,7 @@ Console.WriteLine(result.Content[0].Text);
 
 ### Get an authenticated ChatCompletionsClient
 
-Your Azure AI Foundry project may have one or more AI models deployed that support chat completions. These could be OpenAI models, Microsoft models, or models from other providers. Use the code below to get an authenticated [ChatCompletionsClient](https://learn.microsoft.com/dotnet/api/azure.ai.inference.chatcompletionsclient?view=azure-dotnet-preview) from the `Azure.AI.Inference` package, and execute a chat completions call.
+Your Azure AI Foundry project may have one or more AI models deployed that support chat completions. Use the code below to get an authenticated [ChatCompletionsClient](https://learn.microsoft.com/dotnet/api/azure.ai.inference.chatcompletionsclient?view=azure-dotnet-preview) from the `Azure.AI.Inference` package, and execute a chat completions call.
 
 The code below assumes `ModelDeploymentName` (a string) is defined. It's the deployment name of an AI model in your Foundry Project, or a connected Azure OpenAI resource. As shown in the "Models + endpoints" tab, under the "Name" column.
 
