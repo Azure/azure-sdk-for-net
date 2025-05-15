@@ -198,6 +198,12 @@ namespace Azure.AI.Projects
         Custom = 3,
         None = 4,
     }
+    public partial class AzureAIProjectsContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureAIProjectsContext() { }
+        public static Azure.AI.Projects.AzureAIProjectsContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class AzureAISearchIndex : Azure.AI.Projects.Index, System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.AzureAISearchIndex>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.AzureAISearchIndex>
     {
         public AzureAISearchIndex(string connectionName, string indexName) { }
@@ -211,18 +217,7 @@ namespace Azure.AI.Projects
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.AzureAISearchIndex>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.AzureAISearchIndex>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-<<<<<<< HEAD
     public partial class AzureOpenAIModelConfiguration : Azure.AI.Projects.TargetConfig, System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.AzureOpenAIModelConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.AzureOpenAIModelConfiguration>
-=======
-    public partial class AzureAIProjectsContext : System.ClientModel.Primitives.ModelReaderWriterContext
-    {
-        internal AzureAIProjectsContext() { }
-        public static Azure.AI.Projects.AzureAIProjectsContext Default { get { throw null; } }
-        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct AzureAISearchQueryType : System.IEquatable<Azure.AI.Projects.AzureAISearchQueryType>
->>>>>>> e487452cda366705c61a9ba1e302b913b2715b05
     {
         public AzureOpenAIModelConfiguration(string modelDeploymentName) { }
         public string ModelDeploymentName { get { throw null; } set { } }
