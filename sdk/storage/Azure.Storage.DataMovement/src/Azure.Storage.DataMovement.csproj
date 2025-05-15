@@ -21,7 +21,8 @@
   <ItemGroup>
     <PackageReference Include="System.Threading.Channels" />
     <PackageReference Include="Azure.Core" />
-    <PackageReference Include="Azure.Storage.Common" />
+    <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\Azure.Storage.Common\src\Azure.Storage.Common.csproj" />
+    <!-- <PackageReference Include="Azure.Storage.Common" /> -->
   </ItemGroup>
   <ItemGroup>
     <Compile Include="$(AzureCoreSharedSources)AzureEventSource.cs" LinkBase="Shared\Core" />
