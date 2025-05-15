@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Communication.CallAutomation.Models.Events;
 
 namespace Azure.Communication.CallAutomation
 {
@@ -127,14 +126,23 @@ namespace Azure.Communication.CallAutomation
                 resultInformation);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.Events.StartRecordingFailedInternal"/>. </summary>
-        /// <param name="callConnectionId"> The call connection Id. </param>
-        /// <param name="correlationId"> Correlation Id for event to call correlation. </param>
+        /// <summary> Initializes a new instance of <see cref="CallAutomation.StartRecordingFailed"/>. </summary>
         /// <param name="recordingId"> The call recording Id. </param>
-        /// <returns> A new <see cref="Models.Events.StartRecordingFailedInternal"/> instance for mocking. </returns>
-        public static StartRecordingFailedInternal StartRecordingFailedInternal(string callConnectionId = null, string correlationId = null, string recordingId = null)
+        /// <param name="callConnectionId"> Call connection ID. </param>
+        /// <param name="serverCallId"> Server call ID. </param>
+        /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
+        /// <param name="operationContext"> Used by customers when calling mid-call actions to correlate the request to the response event. </param>
+        /// <param name="resultInformation"> Contains the resulting SIP code, sub-code and message. </param>
+        /// <returns> A new <see cref="CallAutomation.StartRecordingFailed"/> instance for mocking. </returns>
+        public static StartRecordingFailed StartRecordingFailed(string recordingId = null, string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, ResultInformation resultInformation = null)
         {
-            return new StartRecordingFailedInternal(callConnectionId, correlationId, recordingId);
+            return new StartRecordingFailed(
+                recordingId,
+                callConnectionId,
+                serverCallId,
+                correlationId,
+                operationContext,
+                resultInformation);
         }
 
         /// <summary> Initializes a new instance of <see cref="CallAutomation.TranscriptionFailed"/>. </summary>
