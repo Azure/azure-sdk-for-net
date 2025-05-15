@@ -94,7 +94,7 @@ public partial class ManagedInstanceServerTrustCertificate : ProvisionableResour
     /// </param>
     /// <param name="resourceVersion">Version of the ManagedInstanceServerTrustCertificate.</param>
     public ManagedInstanceServerTrustCertificate(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.Sql/managedInstances/serverTrustCertificates", resourceVersion ?? "2021-11-01")
+        : base(bicepIdentifier, "Microsoft.Sql/managedInstances/serverTrustCertificates", resourceVersion ?? "2023-08-01")
     {
     }
 
@@ -118,6 +118,11 @@ public partial class ManagedInstanceServerTrustCertificate : ProvisionableResour
     /// </summary>
     public static class ResourceVersions
     {
+        /// <summary>
+        /// 2023-08-01.
+        /// </summary>
+        public static readonly string V2023_08_01 = "2023-08-01";
+
         /// <summary>
         /// 2021-11-01.
         /// </summary>
