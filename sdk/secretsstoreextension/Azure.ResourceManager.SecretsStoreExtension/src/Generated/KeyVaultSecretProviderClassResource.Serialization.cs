@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.SecretsStoreExtension
 
         KeyVaultSecretProviderClassData IJsonModel<KeyVaultSecretProviderClassData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<KeyVaultSecretProviderClassData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<KeyVaultSecretProviderClassData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<KeyVaultSecretProviderClassData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<KeyVaultSecretProviderClassData>(Data, options, AzureResourceManagerSecretsStoreExtensionContext.Default);
 
-        KeyVaultSecretProviderClassData IPersistableModel<KeyVaultSecretProviderClassData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<KeyVaultSecretProviderClassData>(data, options);
+        KeyVaultSecretProviderClassData IPersistableModel<KeyVaultSecretProviderClassData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<KeyVaultSecretProviderClassData>(data, options, AzureResourceManagerSecretsStoreExtensionContext.Default);
 
         string IPersistableModel<KeyVaultSecretProviderClassData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<KeyVaultSecretProviderClassData>)Data).GetFormatFromOptions(options);
     }

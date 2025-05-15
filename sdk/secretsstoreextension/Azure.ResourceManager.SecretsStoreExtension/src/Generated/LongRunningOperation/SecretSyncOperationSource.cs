@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.SecretsStoreExtension
 
         SecretSyncResource IOperationSource<SecretSyncResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<SecretSyncData>(response.Content);
+            var data = ModelReaderWriter.Read<SecretSyncData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSecretsStoreExtensionContext.Default);
             return new SecretSyncResource(_client, data);
         }
 
         async ValueTask<SecretSyncResource> IOperationSource<SecretSyncResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<SecretSyncData>(response.Content);
+            var data = ModelReaderWriter.Read<SecretSyncData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSecretsStoreExtensionContext.Default);
             return await Task.FromResult(new SecretSyncResource(_client, data)).ConfigureAwait(false);
         }
     }

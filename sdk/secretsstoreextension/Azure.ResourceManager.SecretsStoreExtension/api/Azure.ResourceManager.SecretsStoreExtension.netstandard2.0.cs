@@ -1,5 +1,11 @@
 namespace Azure.ResourceManager.SecretsStoreExtension
 {
+    public partial class AzureResourceManagerSecretsStoreExtensionContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureResourceManagerSecretsStoreExtensionContext() { }
+        public static Azure.ResourceManager.SecretsStoreExtension.AzureResourceManagerSecretsStoreExtensionContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class KeyVaultSecretProviderClassCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.SecretsStoreExtension.KeyVaultSecretProviderClassResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecretsStoreExtension.KeyVaultSecretProviderClassResource>, System.Collections.IEnumerable
     {
         protected KeyVaultSecretProviderClassCollection() { }
@@ -156,7 +162,7 @@ namespace Azure.ResourceManager.SecretsStoreExtension.Models
     public static partial class ArmSecretsStoreExtensionModelFactory
     {
         public static Azure.ResourceManager.SecretsStoreExtension.KeyVaultSecretProviderClassData KeyVaultSecretProviderClassData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.SecretsStoreExtension.Models.KeyVaultSecretProviderClassProperties properties = null, Azure.ResourceManager.Resources.Models.ExtendedLocation extendedLocation = null) { throw null; }
-        public static Azure.ResourceManager.SecretsStoreExtension.Models.KeyVaultSecretProviderClassProperties KeyVaultSecretProviderClassProperties(string keyvaultName = null, string clientId = null, string tenantId = null, string objects = null, Azure.ResourceManager.SecretsStoreExtension.Models.SecretsStoreExtensionProvisioningState? provisioningState = default(Azure.ResourceManager.SecretsStoreExtension.Models.SecretsStoreExtensionProvisioningState?)) { throw null; }
+        public static Azure.ResourceManager.SecretsStoreExtension.Models.KeyVaultSecretProviderClassProperties KeyVaultSecretProviderClassProperties(string keyvaultName = null, System.Guid clientId = default(System.Guid), System.Guid tenantId = default(System.Guid), string objects = null, Azure.ResourceManager.SecretsStoreExtension.Models.SecretsStoreExtensionProvisioningState? provisioningState = default(Azure.ResourceManager.SecretsStoreExtension.Models.SecretsStoreExtensionProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.SecretsStoreExtension.Models.SecretSyncCondition SecretSyncCondition(System.DateTimeOffset? lastTransitionOn = default(System.DateTimeOffset?), string message = null, long? observedGeneration = default(long?), string reason = null, Azure.ResourceManager.SecretsStoreExtension.Models.SecretSyncConditionStatusType status = default(Azure.ResourceManager.SecretsStoreExtension.Models.SecretSyncConditionStatusType), string type = null) { throw null; }
         public static Azure.ResourceManager.SecretsStoreExtension.SecretSyncData SecretSyncData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.SecretsStoreExtension.Models.SecretSyncProperties properties = null, Azure.ResourceManager.Resources.Models.ExtendedLocation extendedLocation = null) { throw null; }
         public static Azure.ResourceManager.SecretsStoreExtension.Models.SecretSyncProperties SecretSyncProperties(string secretProviderClassName = null, string serviceAccountName = null, Azure.ResourceManager.SecretsStoreExtension.Models.KubernetesSecretType kubernetesSecretType = default(Azure.ResourceManager.SecretsStoreExtension.Models.KubernetesSecretType), string forceSynchronization = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecretsStoreExtension.Models.KubernetesSecretObjectMapping> objectSecretMapping = null, Azure.ResourceManager.SecretsStoreExtension.Models.SecretSyncStatus status = null, Azure.ResourceManager.SecretsStoreExtension.Models.SecretsStoreExtensionProvisioningState? provisioningState = default(Azure.ResourceManager.SecretsStoreExtension.Models.SecretsStoreExtensionProvisioningState?)) { throw null; }
@@ -165,10 +171,10 @@ namespace Azure.ResourceManager.SecretsStoreExtension.Models
     public partial class AzureKeyVaultSecretProviderClassUpdateProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecretsStoreExtension.Models.AzureKeyVaultSecretProviderClassUpdateProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecretsStoreExtension.Models.AzureKeyVaultSecretProviderClassUpdateProperties>
     {
         public AzureKeyVaultSecretProviderClassUpdateProperties() { }
-        public string ClientId { get { throw null; } set { } }
+        public System.Guid? ClientId { get { throw null; } set { } }
         public string KeyvaultName { get { throw null; } set { } }
         public string Objects { get { throw null; } set { } }
-        public string TenantId { get { throw null; } set { } }
+        public System.Guid? TenantId { get { throw null; } set { } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.SecretsStoreExtension.Models.AzureKeyVaultSecretProviderClassUpdateProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecretsStoreExtension.Models.AzureKeyVaultSecretProviderClassUpdateProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecretsStoreExtension.Models.AzureKeyVaultSecretProviderClassUpdateProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -190,12 +196,12 @@ namespace Azure.ResourceManager.SecretsStoreExtension.Models
     }
     public partial class KeyVaultSecretProviderClassProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecretsStoreExtension.Models.KeyVaultSecretProviderClassProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecretsStoreExtension.Models.KeyVaultSecretProviderClassProperties>
     {
-        public KeyVaultSecretProviderClassProperties(string keyvaultName, string clientId, string tenantId) { }
-        public string ClientId { get { throw null; } set { } }
+        public KeyVaultSecretProviderClassProperties(string keyvaultName, System.Guid clientId, System.Guid tenantId) { }
+        public System.Guid ClientId { get { throw null; } set { } }
         public string KeyvaultName { get { throw null; } set { } }
         public string Objects { get { throw null; } set { } }
         public Azure.ResourceManager.SecretsStoreExtension.Models.SecretsStoreExtensionProvisioningState? ProvisioningState { get { throw null; } }
-        public string TenantId { get { throw null; } set { } }
+        public System.Guid TenantId { get { throw null; } set { } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.SecretsStoreExtension.Models.KeyVaultSecretProviderClassProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecretsStoreExtension.Models.KeyVaultSecretProviderClassProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecretsStoreExtension.Models.KeyVaultSecretProviderClassProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }

@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.SecretsStoreExtension.Samples
             string azureKeyVaultSecretProviderClassName = "akvspc-ssc-example";
             KeyVaultSecretProviderClassData data = new KeyVaultSecretProviderClassData(new AzureLocation("eastus"))
             {
-                Properties = new KeyVaultSecretProviderClassProperties("example-ssc-key-vault", "00000000-0000-0000-0000-000000000000", "00000000-0000-0000-0000-000000000000")
+                Properties = new KeyVaultSecretProviderClassProperties("example-ssc-key-vault", Guid.Parse("00000000-0000-0000-0000-000000000000"), Guid.Parse("00000000-0000-0000-0000-000000000000"))
                 {
                     Objects = "array: |\n  - |\n    objectName: my-secret-object\n    objectType: secret\n    objectVersionHistory: 1",
                 },

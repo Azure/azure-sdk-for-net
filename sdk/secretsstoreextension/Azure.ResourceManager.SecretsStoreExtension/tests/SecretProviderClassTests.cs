@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.SecretsStoreExtension.Tests
                     Name = $"/subscriptions/{te.SpcSubscriptionId}/resourceGroups/{te.ClusterResourceGroup}/providers/microsoft.extendedlocation/customLocations/{CustomLocationName}",
                     ExtendedLocationType = new("CustomLocation")
                 },
-                Properties = new KeyVaultSecretProviderClassProperties(te.SpcKeyVaultName, te.SpcClientId, te.SpcTenantId)
+                Properties = new KeyVaultSecretProviderClassProperties(te.SpcKeyVaultName, Guid.Parse(te.SpcClientId), Guid.Parse(te.SpcTenantId))
                 {
                     Objects = CreateObjectString(RpSecretName1, RpSecretName2)
                 },

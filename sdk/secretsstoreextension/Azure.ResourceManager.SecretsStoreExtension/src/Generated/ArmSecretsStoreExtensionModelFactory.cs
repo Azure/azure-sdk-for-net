@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.SecretsStoreExtension.Models
         /// <param name="objects"> Objects defines the desired state of synced K8s secret objects. </param>
         /// <param name="provisioningState"> Provisioning state of the AzureKeyVaultSecretProviderClass instance. </param>
         /// <returns> A new <see cref="Models.KeyVaultSecretProviderClassProperties"/> instance for mocking. </returns>
-        public static KeyVaultSecretProviderClassProperties KeyVaultSecretProviderClassProperties(string keyvaultName = null, string clientId = null, string tenantId = null, string objects = null, SecretsStoreExtensionProvisioningState? provisioningState = null)
+        public static KeyVaultSecretProviderClassProperties KeyVaultSecretProviderClassProperties(string keyvaultName = null, Guid clientId = default, Guid tenantId = default, string objects = null, SecretsStoreExtensionProvisioningState? provisioningState = null)
         {
             return new KeyVaultSecretProviderClassProperties(
                 keyvaultName,

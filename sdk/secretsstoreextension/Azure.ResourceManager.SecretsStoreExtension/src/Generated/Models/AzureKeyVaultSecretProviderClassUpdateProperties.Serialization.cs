@@ -42,12 +42,12 @@ namespace Azure.ResourceManager.SecretsStoreExtension.Models
             if (Optional.IsDefined(ClientId))
             {
                 writer.WritePropertyName("clientId"u8);
-                writer.WriteStringValue(ClientId);
+                writer.WriteStringValue(ClientId.Value);
             }
             if (Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("tenantId"u8);
-                writer.WriteStringValue(TenantId);
+                writer.WriteStringValue(TenantId.Value);
             }
             if (Optional.IsDefined(Objects))
             {
@@ -92,8 +92,8 @@ namespace Azure.ResourceManager.SecretsStoreExtension.Models
                 return null;
             }
             string keyvaultName = default;
-            string clientId = default;
-            string tenantId = default;
+            Guid? clientId = default;
+            Guid? tenantId = default;
             string objects = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -106,12 +106,20 @@ namespace Azure.ResourceManager.SecretsStoreExtension.Models
                 }
                 if (property.NameEquals("clientId"u8))
                 {
-                    clientId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    clientId = property.Value.GetGuid();
                     continue;
                 }
                 if (property.NameEquals("tenantId"u8))
                 {
-                    tenantId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    tenantId = property.Value.GetGuid();
                     continue;
                 }
                 if (property.NameEquals("objects"u8))
@@ -135,7 +143,7 @@ namespace Azure.ResourceManager.SecretsStoreExtension.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSecretsStoreExtensionContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(AzureKeyVaultSecretProviderClassUpdateProperties)} does not support writing '{options.Format}' format.");
             }

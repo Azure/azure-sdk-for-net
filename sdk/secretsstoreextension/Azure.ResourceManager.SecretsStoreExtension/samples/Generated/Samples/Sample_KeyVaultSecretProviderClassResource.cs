@@ -102,8 +102,8 @@ namespace Azure.ResourceManager.SecretsStoreExtension.Samples
                 Properties = new AzureKeyVaultSecretProviderClassUpdateProperties
                 {
                     KeyvaultName = "example-ssc-key-vault",
-                    ClientId = "00000000-0000-0000-0000-000000000000",
-                    TenantId = "00000000-0000-0000-0000-000000000000",
+                    ClientId = Guid.Parse("00000000-0000-0000-0000-000000000000"),
+                    TenantId = Guid.Parse("00000000-0000-0000-0000-000000000000"),
                     Objects = "array: |\n  - |\n    objectName: my-secret-object\n    objectType: secret\n    objectVersionHistory: 1",
                 },
             };

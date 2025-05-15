@@ -88,8 +88,8 @@ namespace Azure.ResourceManager.SecretsStoreExtension.Models
                 return null;
             }
             string keyvaultName = default;
-            string clientId = default;
-            string tenantId = default;
+            Guid clientId = default;
+            Guid tenantId = default;
             string objects = default;
             SecretsStoreExtensionProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -103,12 +103,12 @@ namespace Azure.ResourceManager.SecretsStoreExtension.Models
                 }
                 if (property.NameEquals("clientId"u8))
                 {
-                    clientId = property.Value.GetString();
+                    clientId = property.Value.GetGuid();
                     continue;
                 }
                 if (property.NameEquals("tenantId"u8))
                 {
-                    tenantId = property.Value.GetString();
+                    tenantId = property.Value.GetGuid();
                     continue;
                 }
                 if (property.NameEquals("objects"u8))
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.SecretsStoreExtension.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSecretsStoreExtensionContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(KeyVaultSecretProviderClassProperties)} does not support writing '{options.Format}' format.");
             }

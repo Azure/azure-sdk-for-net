@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.SecretsStoreExtension
 
         KeyVaultSecretProviderClassResource IOperationSource<KeyVaultSecretProviderClassResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<KeyVaultSecretProviderClassData>(response.Content);
+            var data = ModelReaderWriter.Read<KeyVaultSecretProviderClassData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSecretsStoreExtensionContext.Default);
             return new KeyVaultSecretProviderClassResource(_client, data);
         }
 
         async ValueTask<KeyVaultSecretProviderClassResource> IOperationSource<KeyVaultSecretProviderClassResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<KeyVaultSecretProviderClassData>(response.Content);
+            var data = ModelReaderWriter.Read<KeyVaultSecretProviderClassData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSecretsStoreExtensionContext.Default);
             return await Task.FromResult(new KeyVaultSecretProviderClassResource(_client, data)).ConfigureAwait(false);
         }
     }

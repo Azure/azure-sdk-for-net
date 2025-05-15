@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.SecretsStoreExtension
 
         SecretSyncData IJsonModel<SecretSyncData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SecretSyncData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SecretSyncData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<SecretSyncData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SecretSyncData>(Data, options, AzureResourceManagerSecretsStoreExtensionContext.Default);
 
-        SecretSyncData IPersistableModel<SecretSyncData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SecretSyncData>(data, options);
+        SecretSyncData IPersistableModel<SecretSyncData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SecretSyncData>(data, options, AzureResourceManagerSecretsStoreExtensionContext.Default);
 
         string IPersistableModel<SecretSyncData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SecretSyncData>)Data).GetFormatFromOptions(options);
     }

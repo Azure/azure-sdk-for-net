@@ -49,12 +49,10 @@ namespace Azure.ResourceManager.SecretsStoreExtension.Models
         /// <param name="keyvaultName"> The name of the Azure Key Vault to sync secrets from. </param>
         /// <param name="clientId"> The user assigned managed identity client ID that should be used to access the Azure Key Vault. </param>
         /// <param name="tenantId"> The Azure Active Directory tenant ID that should be used for authenticating requests to the Azure Key Vault. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="keyvaultName"/>, <paramref name="clientId"/> or <paramref name="tenantId"/> is null. </exception>
-        public KeyVaultSecretProviderClassProperties(string keyvaultName, string clientId, string tenantId)
+        /// <exception cref="ArgumentNullException"> <paramref name="keyvaultName"/> is null. </exception>
+        public KeyVaultSecretProviderClassProperties(string keyvaultName, Guid clientId, Guid tenantId)
         {
             Argument.AssertNotNull(keyvaultName, nameof(keyvaultName));
-            Argument.AssertNotNull(clientId, nameof(clientId));
-            Argument.AssertNotNull(tenantId, nameof(tenantId));
 
             KeyvaultName = keyvaultName;
             ClientId = clientId;
@@ -68,7 +66,7 @@ namespace Azure.ResourceManager.SecretsStoreExtension.Models
         /// <param name="objects"> Objects defines the desired state of synced K8s secret objects. </param>
         /// <param name="provisioningState"> Provisioning state of the AzureKeyVaultSecretProviderClass instance. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal KeyVaultSecretProviderClassProperties(string keyvaultName, string clientId, string tenantId, string objects, SecretsStoreExtensionProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal KeyVaultSecretProviderClassProperties(string keyvaultName, Guid clientId, Guid tenantId, string objects, SecretsStoreExtensionProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             KeyvaultName = keyvaultName;
             ClientId = clientId;
@@ -86,9 +84,9 @@ namespace Azure.ResourceManager.SecretsStoreExtension.Models
         /// <summary> The name of the Azure Key Vault to sync secrets from. </summary>
         public string KeyvaultName { get; set; }
         /// <summary> The user assigned managed identity client ID that should be used to access the Azure Key Vault. </summary>
-        public string ClientId { get; set; }
+        public Guid ClientId { get; set; }
         /// <summary> The Azure Active Directory tenant ID that should be used for authenticating requests to the Azure Key Vault. </summary>
-        public string TenantId { get; set; }
+        public Guid TenantId { get; set; }
         /// <summary> Objects defines the desired state of synced K8s secret objects. </summary>
         public string Objects { get; set; }
         /// <summary> Provisioning state of the AzureKeyVaultSecretProviderClass instance. </summary>
