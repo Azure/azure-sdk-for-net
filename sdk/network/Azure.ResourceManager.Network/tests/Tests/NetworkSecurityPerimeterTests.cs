@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Network.Tests
         private async Task<NetworkSecurityPerimeterProfileResource> CreateRandomProfile(NetworkSecurityPerimeterResource nsp)
         {
             var profileName = Recording.GenerateAssetName(_nspNamePrefix);
-            var createProfileReqData = new NetworkSecurityPerimeterProfileData(TestEnvironment.Location);
+            var createProfileReqData = new NetworkSecurityPerimeterProfileData();
             return (await nsp.GetNetworkSecurityPerimeterProfiles().CreateOrUpdateAsync(WaitUntil.Completed, profileName, createProfileReqData)).Value;
         }
 
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Network.Tests
 
             // Crete NSP Profile
             var profileName = Recording.GenerateAssetName(_profileNamePrefix);
-            var createProfileReqData = new NetworkSecurityPerimeterProfileData(TestEnvironment.Location);
+            var createProfileReqData = new NetworkSecurityPerimeterProfileData();
             var createProfileResData = (await nsp.GetNetworkSecurityPerimeterProfiles().CreateOrUpdateAsync(WaitUntil.Completed, profileName, createProfileReqData)).Value;
 
             Assert.AreEqual(createProfileResData.Data.Name, profileName);
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Network.Tests
 
             // Create Ip Address Access Rule
             var ipRuleName = Recording.GenerateAssetName(_accessRuleNamePrefix);
-            var ipRuleReqData = new NetworkSecurityPerimeterAccessRuleData(default)
+            var ipRuleReqData = new NetworkSecurityPerimeterAccessRuleData()
             {
                 Direction = NetworkSecurityPerimeterAccessRuleDirection.Inbound,
                 AddressPrefixes = { "10.11.0.0/16", "10.10.1.0/24" },
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Network.Tests
 
             // Create FQDN Access Rule
             var fqdnRuleName = Recording.GenerateAssetName(_accessRuleNamePrefix);
-            var fqdnRuleReqData = new NetworkSecurityPerimeterAccessRuleData(default)
+            var fqdnRuleReqData = new NetworkSecurityPerimeterAccessRuleData()
             {
                 Direction = NetworkSecurityPerimeterAccessRuleDirection.Outbound,
                 FullyQualifiedDomainNames = { "www.contoso.com" },
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.AreEqual(ipRule.Data.Name, ipRuleName);
 
             // Update IP Address Access Rule
-            var ipRulePatchReqData = new NetworkSecurityPerimeterAccessRuleData(default)
+            var ipRulePatchReqData = new NetworkSecurityPerimeterAccessRuleData()
             {
                 Direction = NetworkSecurityPerimeterAccessRuleDirection.Inbound,
                 AddressPrefixes = { "198.168.1.1/32" },
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.Network.Tests
 
             // Create Association
             var associationName = Recording.GenerateAssetName(_associationNamePrefix);
-            var createAssociationReqData = new NetworkSecurityPerimeterAssociationData(default)
+            var createAssociationReqData = new NetworkSecurityPerimeterAssociationData()
             {
                 ProfileId = profile.Id,
                 PrivateLinkResourceId = storageAccountId
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.AreEqual(association.Data.ProfileId, createAssociationReqData.ProfileId);
 
             // Update Association
-            var partchAssociationReqData = new NetworkSecurityPerimeterAssociationData(default)
+            var partchAssociationReqData = new NetworkSecurityPerimeterAssociationData()
             {
                 ProfileId = profile.Id,
                 PrivateLinkResourceId = storageAccountId,
@@ -320,18 +320,15 @@ namespace Azure.ResourceManager.Network.Tests
             var logConfigName = "instance";
             var createLogConfigReqData = new NetworkSecurityPerimeterLoggingConfigurationData
             {
-                Properties = new NetworkSecurityPerimeterLoggingConfigurationProperties
-                {
-                    EnabledLogCategories = { "NspPublicInboundPerimeterRulesDenied", "NspPublicOutboundPerimeterRulesDenied" },
-                },
+                EnabledLogCategories = { "NspPublicInboundPerimeterRulesDenied", "NspPublicOutboundPerimeterRulesDenied" },
             };
             var createLogConfigResData = (await nsp.GetNetworkSecurityPerimeterLoggingConfigurations().CreateOrUpdateAsync(WaitUntil.Completed, logConfigName, createLogConfigReqData)).Value;
             Assert.AreEqual(createLogConfigResData.Data.Name, logConfigName);
-            CollectionAssert.AreEqual(createLogConfigResData.Data.Properties.EnabledLogCategories, createLogConfigReqData.Properties.EnabledLogCategories);
+            CollectionAssert.AreEqual(createLogConfigResData.Data.EnabledLogCategories, createLogConfigReqData.EnabledLogCategories);
 
             // Ge Logging configuration
             NetworkSecurityPerimeterLoggingConfigurationResource logConfig = await nsp.GetNetworkSecurityPerimeterLoggingConfigurationAsync(logConfigName);
-            CollectionAssert.AreEqual(logConfig.Data.Properties.EnabledLogCategories, createLogConfigReqData.Properties.EnabledLogCategories);
+            CollectionAssert.AreEqual(logConfig.Data.EnabledLogCategories, createLogConfigReqData.EnabledLogCategories);
 
             await logConfig.DeleteAsync(WaitUntil.Completed);
 
