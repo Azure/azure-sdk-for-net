@@ -5,15 +5,29 @@
 
 using System.ComponentModel;
 using Azure.Core;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
     public partial class MigrateResult
     {
-        /// <summary>
-        /// Initializes a Id
-        /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public string Id => ResourceId?.ToString();
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        internal MigrateResult
+            (
+                string id = null,
+                string migrateResultType = null,
+                ResourceIdentifier migratedProfileResourceIdId = null
+            ) :
+            this
+            (
+                new ResourceIdentifier(id),
+                migrateResultType,
+                migratedProfileResourceIdId != null ? new WritableSubResource { Id = migratedProfileResourceIdId } : null,
+                null
+            )
+        {
+        }
     }
 }

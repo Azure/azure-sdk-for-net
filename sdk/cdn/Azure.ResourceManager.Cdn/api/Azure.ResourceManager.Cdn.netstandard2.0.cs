@@ -1302,7 +1302,11 @@ namespace Azure.ResourceManager.Cdn.Models
     }
     public partial class CacheKeyQueryStringActionProperties : Azure.ResourceManager.Cdn.Models.DeliveryRuleActionProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.CacheKeyQueryStringActionProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.CacheKeyQueryStringActionProperties>
     {
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public CacheKeyQueryStringActionProperties(Azure.ResourceManager.Cdn.Models.CacheKeyQueryStringActionType actionType, Azure.ResourceManager.Cdn.Models.QueryStringBehavior queryStringBehavior) { }
         public CacheKeyQueryStringActionProperties(Azure.ResourceManager.Cdn.Models.QueryStringBehavior queryStringBehavior) { }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public Azure.ResourceManager.Cdn.Models.CacheKeyQueryStringActionType ActionType { get { throw null; } set { } }
         public string QueryParameters { get { throw null; } set { } }
         public Azure.ResourceManager.Cdn.Models.QueryStringBehavior QueryStringBehavior { get { throw null; } set { } }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -1311,6 +1315,23 @@ namespace Azure.ResourceManager.Cdn.Models
         Azure.ResourceManager.Cdn.Models.CacheKeyQueryStringActionProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.CacheKeyQueryStringActionProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.CacheKeyQueryStringActionProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.CacheKeyQueryStringActionProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct CacheKeyQueryStringActionType : System.IEquatable<Azure.ResourceManager.Cdn.Models.CacheKeyQueryStringActionType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public CacheKeyQueryStringActionType(string value) { throw null; }
+        public static Azure.ResourceManager.Cdn.Models.CacheKeyQueryStringActionType CacheKeyQueryStringBehaviorAction { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Cdn.Models.CacheKeyQueryStringActionType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Cdn.Models.CacheKeyQueryStringActionType left, Azure.ResourceManager.Cdn.Models.CacheKeyQueryStringActionType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Cdn.Models.CacheKeyQueryStringActionType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Cdn.Models.CacheKeyQueryStringActionType left, Azure.ResourceManager.Cdn.Models.CacheKeyQueryStringActionType right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class CanMigrateContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.CanMigrateContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.CanMigrateContent>
     {
@@ -1377,14 +1398,35 @@ namespace Azure.ResourceManager.Cdn.Models
     }
     public partial class CdnCertificateSource : Azure.ResourceManager.Cdn.Models.CertificateSourceParameters, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.CdnCertificateSource>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.CdnCertificateSource>
     {
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public CdnCertificateSource(Azure.ResourceManager.Cdn.Models.CdnCertificateSourceType sourceType, Azure.ResourceManager.Cdn.Models.CdnManagedCertificateType certificateType) { }
         public CdnCertificateSource(Azure.ResourceManager.Cdn.Models.CdnManagedCertificateType certificateType) { }
         public Azure.ResourceManager.Cdn.Models.CdnManagedCertificateType CertificateType { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public Azure.ResourceManager.Cdn.Models.CdnCertificateSourceType SourceType { get { throw null; } set { } }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Cdn.Models.CdnCertificateSource System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.CdnCertificateSource>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.CdnCertificateSource>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Cdn.Models.CdnCertificateSource System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.CdnCertificateSource>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.CdnCertificateSource>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.CdnCertificateSource>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct CdnCertificateSourceType : System.IEquatable<Azure.ResourceManager.Cdn.Models.CdnCertificateSourceType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public CdnCertificateSourceType(string value) { throw null; }
+        public static Azure.ResourceManager.Cdn.Models.CdnCertificateSourceType CdnCertificateSource { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Cdn.Models.CdnCertificateSourceType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Cdn.Models.CdnCertificateSourceType left, Azure.ResourceManager.Cdn.Models.CdnCertificateSourceType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Cdn.Models.CdnCertificateSourceType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Cdn.Models.CdnCertificateSourceType left, Azure.ResourceManager.Cdn.Models.CdnCertificateSourceType right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class CdnCustomDomainCreateOrUpdateContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.CdnCustomDomainCreateOrUpdateContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.CdnCustomDomainCreateOrUpdateContent>
     {
