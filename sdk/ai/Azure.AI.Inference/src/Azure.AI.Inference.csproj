@@ -18,6 +18,7 @@
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
     <PackageReference Include="System.ClientModel" />
+    <PackageReference Include="Microsoft.Extensions.AI.Abstractions"/>
   </ItemGroup>
 
 </Project>

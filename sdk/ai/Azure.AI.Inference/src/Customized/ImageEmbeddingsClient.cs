@@ -20,6 +20,8 @@ namespace Azure.AI.Inference
     [CodeGenSuppress("EmbedAsync", typeof(ImageEmbeddingsOptions), typeof(ExtraParameters?), typeof(CancellationToken))]
     public partial class ImageEmbeddingsClient
     {
+        internal Uri Endpoint => _endpoint;
+
         /// <summary> Initializes a new instance of ImageEmbeddingsClient. </summary>
         /// <param name="endpoint"> Service host. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>

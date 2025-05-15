@@ -23,6 +23,8 @@ namespace Azure.AI.Inference
     [CodeGenSuppress("CompleteAsync", typeof(ChatCompletionsOptions), typeof(ExtraParameters?), typeof(CancellationToken))]
     public partial class ChatCompletionsClient
     {
+        internal Uri Endpoint => _endpoint;
+
         /// <summary> Initializes a new instance of ChatCompletionsClient. </summary>
         /// <param name="endpoint"> The <see cref="Uri"/> to use. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>

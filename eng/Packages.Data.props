@@ -104,6 +104,7 @@
     <PackageReference Update="Microsoft.Bcl.AsyncInterfaces" Version="8.0.0" />
     <PackageReference Update="Microsoft.CSharp" Version="4.7.0" />
 		<PackageReference Update="Microsoft.Extensions.Logging.Abstractions" Version="8.0.3"/>
+    <PackageReference Update="Microsoft.Extensions.AI.Abstractions" Version="9.5.0-preview.1.25262.9"/>
 
     <!-- Azure SDK packages -->
     <PackageReference Update="Azure.AI.Inference" Version="1.0.0-beta.4" />
