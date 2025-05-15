@@ -87,6 +87,7 @@ namespace Azure.Generator.Primitives
         [
             "AsyncLockWithValue.cs",
             "FixedDelayWithNoJitterStrategy.cs",
+            "HttpPipelineExtensions.cs",
             "IOperationSource.cs",
             "NextLinkOperationImplementation.cs",
             "OperationFinalStateVia.cs",
@@ -94,6 +95,7 @@ namespace Azure.Generator.Primitives
             "OperationInternalBase.cs",
             "OperationInternalOfT.cs",
             "OperationPoller.cs",
+            "ProtocolOperation.cs",
             "ProtocolOperationHelpers.cs",
             "SequentialDelayStrategy.cs",
             "TaskExtensions.cs",

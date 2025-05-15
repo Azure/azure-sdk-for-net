@@ -36,7 +36,7 @@
       "executablePath": "dotnet"
     },
     "http-azure-core-lro-standard": {
-      "commandLineArgs": "$(SolutionDir)/../dist/generator/Microsoft.TypeSpec.Generator.dll $(SolutionDir)/TestProjects/Spector/http/azure/core/lro/standard -g AzureClientGenerator",
+      "commandLineArgs": "$(SolutionDir)/../dist/generator/Microsoft.TypeSpec.Generator.dll $(SolutionDir)/TestProjects/Spector/http/azure/core/lro/standard -g AzureStubGenerator",
       "commandName": "Executable",
       "executablePath": "dotnet"
     },
