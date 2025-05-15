@@ -6,7 +6,7 @@ parameters:
 
 steps:
   - pwsh: |
-      $apiChangeDetectRequestUrl = "https://apiviewstagingtest.com/api/PullRequests/CreateAPIRevisionIfAPIHasChanges"
+      $apiChangeDetectRequestUrl = "https://apiview.dev/PullRequest/DetectApiChanges"
       echo "##vso[task.setvariable variable=ApiChangeDetectRequestUrl]$apiChangeDetectRequestUrl"
     displayName: "Set API change detect request URL"
     condition: and(${{ parameters.Condition}}, eq(variables['ApiChangeDetectRequestUrl'], ''))

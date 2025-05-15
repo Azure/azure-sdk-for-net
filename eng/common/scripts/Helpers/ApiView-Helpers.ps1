@@ -241,7 +241,7 @@ function Set-ApiViewCommentForPR {
 # Helper function used to create API review requests for Spec generation SDKs pipelines
 function Create-API-Review {
   param (
-    [string]$apiviewEndpoint = "https://apiviewstagingtest.com/api/PullRequests/CreateAPIRevisionIfAPIHasChanges",
+    [string]$apiviewEndpoint = "https://apiview.dev/PullRequest/DetectAPIChanges",
     [string]$specGenSDKArtifactPath,
     [string]$apiviewArtifactName,
     [string]$buildId,
