@@ -256,7 +256,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 .Select(Path.GetFileName)
                 .ToList();
 
-            // Assert all files (including hardlink) was copied over to dest
+            // Assert all files (including hardlink) were copied over to dest
             Assert.AreEqual(sourceFileNames.Count, destFileNames.Count);
             Assert.That(sourceFileNames, Is.EquivalentTo(destFileNames));
         }
@@ -327,6 +327,8 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             // Ensure the Symlink file was skipped and not copied
             Assert.AreEqual(2, sourceFileNames.Count);
             Assert.AreEqual(1, destFileNames.Count);
+            Assert.Contains("item1-symlink", sourceFileNames);
+            Assert.False(destFileNames.Contains("item1-symlink"));
             Assert.AreEqual("item1", destFileNames[0]);
         }
     }

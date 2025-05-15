@@ -989,7 +989,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 options).ConfigureAwait(false);
 
             // Act
-            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(3000));
+            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
             await TestTransferWithTimeout.WaitForCompletionAsync(
                 transfer,
                 testEventsRaised,
@@ -1058,7 +1058,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 options).ConfigureAwait(false);
 
             // Act
-            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(3000));
+            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
             await TestTransferWithTimeout.WaitForCompletionAsync(
                 transfer,
                 testEventsRaised,
@@ -1070,7 +1070,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             Assert.IsTrue(transfer.HasCompleted);
             Assert.AreEqual(TransferState.Completed, transfer.Status.State);
 
-            // List all files in source blob folder path
+            // List all files in source folder path
             List<string> sourceFileNames = new List<string>();
             List<string> sourceDirectoryNames = new List<string>();
             ShareDirectoryClient sourceDirectory = source.Container.GetDirectoryClient(sourcePrefix);
@@ -1080,7 +1080,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 sourceDirectoryNames.AddRange(page.Values.Where((ShareFileItem item) => item.IsDirectory).Select((ShareFileItem item) => item.Name));
             }
 
-            // List all files in the destination blob folder path
+            // List all files in the destination folder path
             List<string> destinationFileNames = new List<string>();
             List<string> destinationDirectoryNames = new List<string>();
             ShareDirectoryClient destinationDirectory = destination.Container.GetDirectoryClient(destPrefix);
@@ -1096,6 +1096,8 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             // Ensure the Symlink file was skipped and not copied
             Assert.AreEqual(2, sourceFileNames.Count);
             Assert.AreEqual(1, destinationFileNames.Count);
+            Assert.Contains("item1-symlink", sourceFileNames);
+            Assert.False(destinationFileNames.Contains("item1-symlink"));
             Assert.AreEqual("item1", destinationFileNames[0]);
         }
     }
