@@ -7,7 +7,7 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
-using Azure.Search.Documents.Models;
+// using Azure.Search.Documents.Models;
 using NUnit.Framework;
 
 namespace Azure.AI.Projects.Tests

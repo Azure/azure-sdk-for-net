@@ -23,5 +23,6 @@ namespace Azure.AI.Projects.Tests
         public string AISEARCHCONNECTIONNAME => GetRecordedVariable("AI_SEARCH_CONNECTION_NAME");
         public string AISEARCHINDEXNAME => GetRecordedVariable("AI_SEARCH_INDEX_NAME");
         public string CONNECTIONNAME => GetRecordedVariable("CONNECTION_NAME");
+        public string TESTIMAGEPNGINPUTPATH => GetRecordedVariable("TEST_IMAGE_PNG_INPUT_PATH");
     }
 }
