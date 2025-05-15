@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ComputeFleet.Models
 {
-    /// <summary> The WindowsSetupAdditionalInformationPassName. </summary>
+    /// <summary> The WindowsSetupAdditionalInformation_passName. </summary>
     public readonly partial struct WindowsSetupAdditionalInformationPassName : IEquatable<WindowsSetupAdditionalInformationPassName>
     {
         private readonly string _value;
