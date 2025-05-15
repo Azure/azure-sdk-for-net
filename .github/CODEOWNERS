@@ -1056,7 +1056,7 @@
 /sdk/frontdoor/Azure.ResourceManager.*/                            @ArcturusZhang @ArthurMa1978 @Ptnan7
 
 # ServiceLabel:  %Network - Front Door %Mgmt
-# ServiceOwners:                                                  @Ptnan7
+# ServiceOwners:                                                   @Ptnan7
 
 # PRLabel: %Network - Mobile
 /sdk/mobilenetwork/Azure.ResourceManager.*/                        @ArcturusZhang @ArthurMa1978
