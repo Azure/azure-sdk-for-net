@@ -39,7 +39,7 @@ PersistentAgentThread thread = await agentsClient.Threads.CreateThreadAsync();
 4. Add a message to a thread.
 
 ```C# Snippet:ExtensionsAgentsOverviewCreateMessage
-ThreadMessage message = await agentsClient.Messages.CreateMessageAsync(
+PersistentThreadMessage message = await agentsClient.Messages.CreateMessageAsync(
     thread.Id,
     MessageRole.User,
     "I need to solve the equation `3x + 11 = 14`. Can you help me?");
@@ -73,11 +73,11 @@ Assert.AreEqual(
 7. List messages in chronological order.
 
 ```C# Snippet:ExtensionsAgentsOverviewListUpdatedMessages
-AsyncPageable<ThreadMessage> messages
+AsyncPageable<PersistentThreadMessage> messages
     = agentsClient.Messages.GetMessagesAsync(
         threadId: thread.Id, order: ListSortOrder.Ascending);
 
-await foreach (ThreadMessage threadMessage in messages)
+await foreach (PersistentThreadMessage threadMessage in messages)
 {
     Console.Write($"{threadMessage.CreatedAt:yyyy-MM-dd HH:mm:ss} - {threadMessage.Role,10}: ");
     foreach (MessageContent contentItem in threadMessage.ContentItems)
@@ -123,7 +123,7 @@ PersistentAgent agent = agentsClient.Administration.CreateAgent(
 PersistentAgentThread thread = agentsClient.Threads.CreateThread();
 
 // Step 3: Add a message to a thread
-ThreadMessage message = agentsClient.Messages.CreateMessage(
+PersistentThreadMessage message = agentsClient.Messages.CreateMessage(
     thread.Id,
     MessageRole.User,
     "I need to solve the equation `3x + 11 = 14`. Can you help me?");
@@ -131,7 +131,7 @@ ThreadMessage message = agentsClient.Messages.CreateMessage(
 // Intermission: message is now correlated with thread
 // Intermission: listing messages will retrieve the message just added
 
-List<ThreadMessage> messagesList = [.. agentsClient.Messages.GetMessages(thread.Id)];
+List<PersistentThreadMessage> messagesList = [.. agentsClient.Messages.GetMessages(thread.Id)];
 Assert.AreEqual(message.Id, messagesList[0].Id);
 
 // Step 4: Run the agent
@@ -151,11 +151,11 @@ Assert.AreEqual(
     run.Status,
     run.LastError?.Message);
 
-Pageable<ThreadMessage> messages
+Pageable<PersistentThreadMessage> messages
     = agentsClient.Messages.GetMessages(
         threadId: thread.Id, order: ListSortOrder.Ascending);
 
-foreach (ThreadMessage threadMessage in messages)
+foreach (PersistentThreadMessage threadMessage in messages)
 {
     Console.Write($"{threadMessage.CreatedAt:yyyy-MM-dd HH:mm:ss} - {threadMessage.Role,10}: ");
     foreach (MessageContent contentItem in threadMessage.ContentItems)

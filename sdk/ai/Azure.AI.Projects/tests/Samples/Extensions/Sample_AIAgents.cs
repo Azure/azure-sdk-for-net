@@ -42,7 +42,7 @@ public class Sample_AIAgents : SamplesBase<AIProjectsTestEnvironment>
         PersistentAgentThread thread = agentsClient.Threads.CreateThread();
 
         // Step 3: Add a message to a thread
-        ThreadMessage message = agentsClient.Messages.CreateMessage(
+        PersistentThreadMessage message = agentsClient.Messages.CreateMessage(
             thread.Id,
             MessageRole.User,
             "I need to solve the equation `3x + 11 = 14`. Can you help me?");
@@ -50,7 +50,7 @@ public class Sample_AIAgents : SamplesBase<AIProjectsTestEnvironment>
         // Intermission: message is now correlated with thread
         // Intermission: listing messages will retrieve the message just added
 
-        List<ThreadMessage> messagesList = [.. agentsClient.Messages.GetMessages(thread.Id)];
+        List<PersistentThreadMessage> messagesList = [.. agentsClient.Messages.GetMessages(thread.Id)];
         Assert.AreEqual(message.Id, messagesList[0].Id);
 
         // Step 4: Run the agent
@@ -70,11 +70,11 @@ public class Sample_AIAgents : SamplesBase<AIProjectsTestEnvironment>
             run.Status,
             run.LastError?.Message);
 
-        Pageable<ThreadMessage> messages
+        Pageable<PersistentThreadMessage> messages
             = agentsClient.Messages.GetMessages(
                 threadId: thread.Id, order: ListSortOrder.Ascending);
 
-        foreach (ThreadMessage threadMessage in messages)
+        foreach (PersistentThreadMessage threadMessage in messages)
         {
             Console.Write($"{threadMessage.CreatedAt:yyyy-MM-dd HH:mm:ss} - {threadMessage.Role,10}: ");
             foreach (MessageContent contentItem in threadMessage.ContentItems)
@@ -129,7 +129,7 @@ public class Sample_AIAgents : SamplesBase<AIProjectsTestEnvironment>
 
         // Step 3: Add a message to a thread
         #region Snippet:ExtensionsAgentsOverviewCreateMessage
-        ThreadMessage message = await agentsClient.Messages.CreateMessageAsync(
+        PersistentThreadMessage message = await agentsClient.Messages.CreateMessageAsync(
             thread.Id,
             MessageRole.User,
             "I need to solve the equation `3x + 11 = 14`. Can you help me?");
@@ -138,8 +138,8 @@ public class Sample_AIAgents : SamplesBase<AIProjectsTestEnvironment>
         // Intermission: message is now correlated with thread
         // Intermission: listing messages will retrieve the message just added
 
-        AsyncPageable<ThreadMessage> messagesList = agentsClient.Messages.GetMessagesAsync(thread.Id);
-        List<ThreadMessage> messagesOne = await messagesList.ToListAsync();
+        AsyncPageable<PersistentThreadMessage> messagesList = agentsClient.Messages.GetMessagesAsync(thread.Id);
+        List<PersistentThreadMessage> messagesOne = await messagesList.ToListAsync();
         Assert.AreEqual(message.Id, messagesOne[0].Id);
 
         // Step 4: Run the agent
@@ -165,11 +165,11 @@ public class Sample_AIAgents : SamplesBase<AIProjectsTestEnvironment>
         #endregion
 
         #region Snippet:ExtensionsAgentsOverviewListUpdatedMessages
-        AsyncPageable<ThreadMessage> messages
+        AsyncPageable<PersistentThreadMessage> messages
             = agentsClient.Messages.GetMessagesAsync(
                 threadId: thread.Id, order: ListSortOrder.Ascending);
 
-        await foreach (ThreadMessage threadMessage in messages)
+        await foreach (PersistentThreadMessage threadMessage in messages)
         {
             Console.Write($"{threadMessage.CreatedAt:yyyy-MM-dd HH:mm:ss} - {threadMessage.Role,10}: ");
             foreach (MessageContent contentItem in threadMessage.ContentItems)
