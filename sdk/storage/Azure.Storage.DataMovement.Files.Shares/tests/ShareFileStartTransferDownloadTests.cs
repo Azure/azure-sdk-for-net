@@ -98,7 +98,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             Assert.AreEqual(NfsFileType.Regular, sourceProperties.PosixProperties.FileType);
 
             // Use the hardlink to create the source file
-            StorageResource sourceResource = new ShareFileStorageResource(originalClient,
+            StorageResource sourceResource = new ShareFileStorageResource(hardlinkClient,
                 new ShareFileStorageResourceOptions() { ShareProtocol = ShareProtocols.Nfs });
 
             // Create destination local file
@@ -142,7 +142,11 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             using DisposingLocalDirectory destination = DisposingLocalDirectory.GetTestDirectory();
 
             ShareDirectoryClient directory = source.Container.GetRootDirectoryClient();
-            ShareFileClient originalClient = InstrumentClient(await directory.CreateFileAsync("original", maxSize: Constants.KB));
+            ShareFileClient originalClient = await GetObjectClientAsync(
+                container: source.Container,
+                objectLength: DataMovementTestConstants.KB,
+                objectName: "original",
+                createObject: true);
             ShareFileClient symlinkClient = InstrumentClient(directory.GetFileClient("original-symlink"));
 
             // Create Symlink

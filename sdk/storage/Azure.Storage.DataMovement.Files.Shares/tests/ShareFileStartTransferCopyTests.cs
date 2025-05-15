@@ -1126,7 +1126,10 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             await using IDisposingContainer<ShareClient> destination = await DestinationClientBuilder.GetTestShareSasNfsAsync();
 
             ShareDirectoryClient directory = source.Container.GetRootDirectoryClient();
-            ShareFileClient originalClient = InstrumentClient(await directory.CreateFileAsync("original", maxSize: Constants.KB));
+            ShareFileClient originalClient = await CreateFileClientWithOptionsAsync(
+                container: source.Container,
+                objectLength: DataMovementTestConstants.KB,
+                createResource: true);
             ShareFileClient symlinkClient = InstrumentClient(directory.GetFileClient("original-symlink"));
 
             // Create Symlink
