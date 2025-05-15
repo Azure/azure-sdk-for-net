@@ -165,7 +165,17 @@ internal sealed partial class ModelReaderWriterContextGenerator : IIncrementalGe
                 if (symbol is not ITypeSymbol typeSymbol || typeSymbol.DeclaredAccessibility == Accessibility.Private)
                     return null;
 
+                if (data.SymbolToKindCache.Get(typeSymbol) == TypeBuilderKind.Unknown)
+                    return null;
+
                 var type = data.SymbolToTypeRefCache.Get(typeSymbol, data.SymbolToKindCache);
+                if (type.ObsoleteLevel == ObsoleteLevel.Error)
+                {
+                    // if its marked as error obsolete we can't create a builder for it
+                    // you cannot suppress the reference to an obsolete type marked as error
+                    return null;
+                }
+
                 var itemType = type.GetInnerItemType();
 
                 if (!HasAccessibleParameterlessConstructor(typeSymbol, data.SymbolToKindCache) && itemType.IsSameAssembly(contextType))

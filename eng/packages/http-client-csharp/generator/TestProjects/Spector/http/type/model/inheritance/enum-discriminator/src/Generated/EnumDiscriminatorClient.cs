@@ -20,7 +20,7 @@ namespace _Type.Model.Inheritance.EnumDiscriminator
 
         public EnumDiscriminatorClient(Uri endpoint, EnumDiscriminatorClientOptions options) => throw null;
 
-        public HttpPipeline Pipeline => throw null;
+        public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response GetExtensibleModel(RequestContext context) => throw null;
 

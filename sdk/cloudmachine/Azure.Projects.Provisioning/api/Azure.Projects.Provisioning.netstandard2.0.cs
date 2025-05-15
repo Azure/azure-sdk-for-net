@@ -3,7 +3,15 @@ namespace Azure.Projects
     public partial class AppConfigurationFeature : Azure.Projects.Core.AzureProjectFeature
     {
         public AppConfigurationFeature() { }
+        public Azure.Projects.AppConfigurationFeature.SkuName Sku { get { throw null; } set { } }
         protected internal override void EmitConstructs(Azure.Projects.ProjectInfrastructure infrastructure) { }
+        public enum SkuName
+        {
+            Free = 0,
+            Developer = 1,
+            Standard = 2,
+            Premium = 3,
+        }
     }
     public partial class AppConfigurationSettingFeature : Azure.Projects.Core.AzureProjectFeature
     {
@@ -18,6 +26,11 @@ namespace Azure.Projects
         public AppServiceFeature() { }
         public Azure.Provisioning.AppService.AppServiceSkuDescription Sku { get { throw null; } set { } }
         protected internal override void EmitConstructs(Azure.Projects.ProjectInfrastructure infrastructure) { }
+    }
+    public static partial class Azd
+    {
+        public static void Init(Azure.Projects.ProjectInfrastructure infra, string? infraDirectory = null) { }
+        public static void InitDeployment(Azure.Projects.ProjectInfrastructure infra, string? webProjectName) { }
     }
     public static partial class AzureProjectsCommands
     {
@@ -93,6 +106,14 @@ namespace Azure.Projects
 }
 namespace Azure.Projects.Core
 {
+    public partial class AppConfigConnectionStore : Azure.Projects.Core.ConnectionStore
+    {
+        public AppConfigConnectionStore() { }
+        public AppConfigConnectionStore(Azure.Projects.AppConfigurationFeature appConfig) { }
+        public AppConfigConnectionStore(Azure.Projects.AppConfigurationFeature.SkuName sku) { }
+        public override void EmitConnection(Azure.Projects.ProjectInfrastructure infrastructure, string connectionId, string endpoint) { }
+        public override bool TryGetFeature(out Azure.Projects.Core.AzureProjectFeature? feature) { throw null; }
+    }
     public abstract partial class AzureProjectFeature
     {
         protected AzureProjectFeature() { }
@@ -133,13 +154,5 @@ namespace Azure.Projects.Ofx
         public OfxFeatures() { }
         protected internal override void EmitConstructs(Azure.Projects.ProjectInfrastructure infrastructure) { }
         protected internal override void EmitFeatures(Azure.Projects.ProjectInfrastructure infrastructure) { }
-    }
-}
-namespace Azure.Projects.Tooling
-{
-    public static partial class Azd
-    {
-        public static void Init(Azure.Projects.ProjectInfrastructure infra, string? infraDirectory = null) { }
-        public static void InitDeployment(Azure.Projects.ProjectInfrastructure infra, string? webProjectName) { }
     }
 }

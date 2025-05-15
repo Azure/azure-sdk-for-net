@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Cdn
 
         CdnOriginResource IOperationSource<CdnOriginResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<CdnOriginData>(response.Content);
+            var data = ModelReaderWriter.Read<CdnOriginData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerCdnContext.Default);
             return new CdnOriginResource(_client, data);
         }
 
         async ValueTask<CdnOriginResource> IOperationSource<CdnOriginResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<CdnOriginData>(response.Content);
+            var data = ModelReaderWriter.Read<CdnOriginData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerCdnContext.Default);
             return await Task.FromResult(new CdnOriginResource(_client, data)).ConfigureAwait(false);
         }
     }

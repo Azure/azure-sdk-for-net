@@ -211,7 +211,7 @@ namespace Azure.Identity.Tests
             Assert.AreEqual(request.Uri.Path, "/metadata/identity/oauth2/token");
             Assert.IsTrue(query.Contains("api-version=2018-02-01"));
             Assert.IsTrue(query.Contains($"resource={ScopeUtilities.ScopesToResource(MockScopes.Default)}"));
-            Assert.That(Uri.UnescapeDataString(query), Does.Contain($"{Constants.ManagedIdentityResourceId}={_expectedResourceId}"));
+            Assert.That(Uri.UnescapeDataString(query), Does.Contain($"_res_id={_expectedResourceId}"));
         }
 
         [NonParallelizable]
@@ -449,16 +449,11 @@ namespace Azure.Identity.Tests
             var options = new TokenCredentialOptions() { Transport = mockTransport, IsChainedCredential = true };
             var pipeline = CredentialPipeline.GetInstance(options);
 
-            ManagedIdentityCredential credential = InstrumentClient(new ManagedIdentityCredential("mock-client-id", pipeline, options));
-            if (content != null)
-            {
-                var ex = Assert.ThrowsAsync<CredentialUnavailableException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
-                Assert.That(ex.Message, Does.Contain(ImdsManagedIdentityProbeSource.IdentityUnavailableError));
-            }
-            else
-            {
-                var ex = Assert.ThrowsAsync<AuthenticationFailedException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
-            }
+            ManagedIdentityCredential credential = InstrumentClient(new ManagedIdentityCredential(
+                new ManagedIdentityClient(
+                    new ManagedIdentityClientOptions() { Pipeline = pipeline, ManagedIdentityId = ManagedIdentityId.FromUserAssignedClientId("mock-client-id"), IsForceRefreshEnabled = true, Options = options })));
+            var ex = Assert.ThrowsAsync<CredentialUnavailableException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
+            Assert.That(ex.Message, Does.Contain(ImdsManagedIdentityProbeSource.IdentityUnavailableError));
         }
 
         [NonParallelizable]
@@ -584,7 +579,7 @@ namespace Azure.Identity.Tests
 
             Assert.That(query, Does.Contain("api-version=2018-02-01"));
             Assert.That(query, Does.Contain($"resource={ScopeUtilities.ScopesToResource(MockScopes.Default)}"));
-            Assert.That(Uri.UnescapeDataString(query), Does.Contain($"{Constants.ManagedIdentityResourceId}={_expectedResourceId}"));
+            Assert.That(Uri.UnescapeDataString(query), Does.Contain($"_res_id={_expectedResourceId}"));
         }
 
         [NonParallelizable]
@@ -708,7 +703,7 @@ namespace Azure.Identity.Tests
 
             Assert.IsTrue(query.Contains("api-version=2019-08-01"));
             Assert.IsTrue(query.Contains($"resource={ScopeUtilities.ScopesToResource(MockScopes.Default)}"));
-            Assert.That(query, Does.Contain($"{Constants.ManagedIdentityResourceId}={resourceId}"));
+            Assert.That(query, Does.Contain($"_res_id={resourceId}"));
             Assert.IsTrue(request.Headers.TryGetValue("X-IDENTITY-HEADER", out string identityHeader));
             Assert.AreEqual(EnvironmentVariables.IdentityHeader, identityHeader);
         }

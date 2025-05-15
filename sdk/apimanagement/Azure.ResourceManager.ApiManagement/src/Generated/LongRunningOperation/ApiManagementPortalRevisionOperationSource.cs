@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.ApiManagement
 
         ApiManagementPortalRevisionResource IOperationSource<ApiManagementPortalRevisionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ApiManagementPortalRevisionData>(response.Content);
+            var data = ModelReaderWriter.Read<ApiManagementPortalRevisionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerApiManagementContext.Default);
             return new ApiManagementPortalRevisionResource(_client, data);
         }
 
         async ValueTask<ApiManagementPortalRevisionResource> IOperationSource<ApiManagementPortalRevisionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ApiManagementPortalRevisionData>(response.Content);
+            var data = ModelReaderWriter.Read<ApiManagementPortalRevisionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerApiManagementContext.Default);
             return await Task.FromResult(new ApiManagementPortalRevisionResource(_client, data)).ConfigureAwait(false);
         }
     }

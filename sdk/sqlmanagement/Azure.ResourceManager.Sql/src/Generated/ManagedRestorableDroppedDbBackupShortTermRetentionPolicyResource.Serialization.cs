@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Sql
 
         ManagedBackupShortTermRetentionPolicyData IJsonModel<ManagedBackupShortTermRetentionPolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ManagedBackupShortTermRetentionPolicyData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ManagedBackupShortTermRetentionPolicyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<ManagedBackupShortTermRetentionPolicyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ManagedBackupShortTermRetentionPolicyData>(Data, options, AzureResourceManagerSqlContext.Default);
 
-        ManagedBackupShortTermRetentionPolicyData IPersistableModel<ManagedBackupShortTermRetentionPolicyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ManagedBackupShortTermRetentionPolicyData>(data, options);
+        ManagedBackupShortTermRetentionPolicyData IPersistableModel<ManagedBackupShortTermRetentionPolicyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ManagedBackupShortTermRetentionPolicyData>(data, options, AzureResourceManagerSqlContext.Default);
 
         string IPersistableModel<ManagedBackupShortTermRetentionPolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ManagedBackupShortTermRetentionPolicyData>)Data).GetFormatFromOptions(options);
     }

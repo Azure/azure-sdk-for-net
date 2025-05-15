@@ -9,8 +9,9 @@ import { createTestHost, TestHost } from "@typespec/compiler/testing";
 import {
   CSharpEmitterContext,
   CSharpEmitterOptions,
+  createCSharpEmitterContext,
   Logger,
-  LoggerLevel
+  LoggerLevel,
 } from "@typespec/http-client-csharp";
 import { HttpTestLibrary } from "@typespec/http/testing";
 import { RestTestLibrary } from "@typespec/rest/testing";
@@ -62,7 +63,7 @@ export async function typeSpecCompile(
     ${"@useDependency(Azure.Core.Versions.v1_0_Preview_1)"}
     "2023-01-01-preview"
     }
-    
+
     `;
   const fileContent = `
     import "@typespec/rest";
@@ -71,13 +72,13 @@ export async function typeSpecCompile(
     ${needXml ? 'import  "@typespec/xml";' : ""}
     ${'import "@azure-tools/typespec-azure-core";'}
     ${needTCGC ? 'import "@azure-tools/typespec-client-generator-core";' : ""}
-    using TypeSpec.Rest; 
+    using TypeSpec.Rest;
     using TypeSpec.Http;
     using TypeSpec.Versioning;
     ${needXml ? "using TypeSpec.Xml;" : ""}
     ${"using Azure.Core;\nusing Azure.Core.Traits;"}
     ${needTCGC ? "using Azure.ClientGenerator.Core;" : ""}
-    
+
     ${needNamespaces ? namespace : ""}
     ${content}
     `;
@@ -119,27 +120,5 @@ export async function createCSharpSdkContext(
     "@typespec/http-client-csharp",
     sdkContextOptions
   );
-  return {
-    ...context,
-    logger: new Logger(program.program, LoggerLevel.INFO),
-    __typeCache: {
-      crossLanguageDefinitionIds: new Map(),
-      types: new Map(),
-      models: new Map(),
-      enums: new Map(),
-      clients: new Map(),
-      properties: new Map(),
-      responses: new Map(),
-      updateSdkClientReferences: (sdkClient, inputClient) => {
-      },
-      updateSdkPropertyReferences: (sdkProperty, inputProperty) => {
-      },
-      updateSdkResponseReferences: (sdkResponse, response) => {
-      },
-      updateSdkTypeReferences: (sdkType, inputType) => {
-      },
-      updateTypeCache: (typeName, type) => {
-      }
-    }
-  };
+  return createCSharpEmitterContext(context, new Logger(program.program, LoggerLevel.INFO));
 }

@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.CosmosDB
 
         CosmosDBSqlUserDefinedFunctionData IJsonModel<CosmosDBSqlUserDefinedFunctionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<CosmosDBSqlUserDefinedFunctionData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<CosmosDBSqlUserDefinedFunctionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<CosmosDBSqlUserDefinedFunctionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<CosmosDBSqlUserDefinedFunctionData>(Data, options, AzureResourceManagerCosmosDBContext.Default);
 
-        CosmosDBSqlUserDefinedFunctionData IPersistableModel<CosmosDBSqlUserDefinedFunctionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CosmosDBSqlUserDefinedFunctionData>(data, options);
+        CosmosDBSqlUserDefinedFunctionData IPersistableModel<CosmosDBSqlUserDefinedFunctionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CosmosDBSqlUserDefinedFunctionData>(data, options, AzureResourceManagerCosmosDBContext.Default);
 
         string IPersistableModel<CosmosDBSqlUserDefinedFunctionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<CosmosDBSqlUserDefinedFunctionData>)Data).GetFormatFromOptions(options);
     }

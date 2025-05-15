@@ -785,5 +785,268 @@ namespace TestProject
             }
             Assert.IsTrue(foundInitializer, "s_referenceContexts should be initialized with TestDependency.LocalContext.Default");
         }
+
+        [TestCase(true)]
+        [TestCase(false)]
+        public void BuilderForObsoletePersistableHasSuppression(bool isError)
+        {
+            string source =
+$$"""
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.Text.Json;
+
+namespace TestProject
+{
+    public partial class LocalContext : ModelReaderWriterContext { }
+
+    [Obsolete("This is obsolete", {{isError.ToString().ToCamelCase()}})]
+    public class JsonModel : IJsonModel<JsonModel>
+    {
+        JsonModel IJsonModel<JsonModel>.Create(ref System.Text.Json.Utf8JsonReader reader, ModelReaderWriterOptions options) => new JsonModel();
+        JsonModel IPersistableModel<JsonModel>.Create(BinaryData data, ModelReaderWriterOptions options) => new JsonModel();
+        string IPersistableModel<JsonModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        void IJsonModel<JsonModel>.Write(System.Text.Json.Utf8JsonWriter writer, ModelReaderWriterOptions options) { }
+        BinaryData IPersistableModel<JsonModel>.Write(ModelReaderWriterOptions options) => BinaryData.Empty;
+    }
+}
+""";
+
+            Compilation compilation = CompilationHelper.CreateCompilation(source);
+            var result = CompilationHelper.RunSourceGenerator(compilation, out var newCompilation);
+
+            Assert.IsNotNull(result.GenerationSpec);
+            Assert.AreEqual("LocalContext", result.GenerationSpec!.Type.Name);
+            Assert.AreEqual("TestProject", result.GenerationSpec.Type.Namespace);
+            Assert.AreEqual(0, result.Diagnostics.Length);
+            Assert.AreEqual("public", result.GenerationSpec!.Modifier);
+            Assert.AreEqual(isError ? 0 : 1, result.GenerationSpec.TypeBuilders.Count);
+            Assert.AreEqual(0, result.GenerationSpec.ReferencedContexts.Count);
+
+            if (!isError)
+            {
+                Assert.AreEqual("JsonModel", result.GenerationSpec.TypeBuilders[0].Type.Name);
+                Assert.AreEqual("internal", result.GenerationSpec.TypeBuilders[0].Modifier);
+                Assert.AreEqual(ObsoleteLevel.Warning, result.GenerationSpec.TypeBuilders[0].Type.ObsoleteLevel);
+            }
+        }
+
+        [TestCase(true, "JsonModel[]")]
+        [TestCase(false, "JsonModel[]")]
+        [TestCase(true, "List<JsonModel>")]
+        [TestCase(false, "List<JsonModel>")]
+        [TestCase(true, "Dictionary<string, JsonModel>")]
+        [TestCase(false, "Dictionary<string, JsonModel>")]
+        [TestCase(true, "ReadOnlyMemory<JsonModel>")]
+        [TestCase(false, "ReadOnlyMemory<JsonModel>")]
+        [TestCase(true, "JsonModel[][]")]
+        [TestCase(false, "JsonModel[][]")]
+        [TestCase(true, "JsonModel[,]")]
+        [TestCase(false, "JsonModel[,]")]
+        public void BuilderForObsoleteCollectionHasSuppression(bool isError, string collectionType)
+        {
+            string source =
+$$"""
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.Text.Json;
+
+namespace TestProject
+{
+    public partial class LocalContext : ModelReaderWriterContext { }
+
+    [Obsolete("This is obsolete", {{isError.ToString().ToCamelCase()}})]
+    public class JsonModel : IJsonModel<JsonModel>
+    {
+        JsonModel IJsonModel<JsonModel>.Create(ref System.Text.Json.Utf8JsonReader reader, ModelReaderWriterOptions options) => new JsonModel();
+        JsonModel IPersistableModel<JsonModel>.Create(BinaryData data, ModelReaderWriterOptions options) => new JsonModel();
+        string IPersistableModel<JsonModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        void IJsonModel<JsonModel>.Write(System.Text.Json.Utf8JsonWriter writer, ModelReaderWriterOptions options) { }
+        BinaryData IPersistableModel<JsonModel>.Write(ModelReaderWriterOptions options) => BinaryData.Empty;
+    }
+
+    public class Caller
+    {
+        public void Call()
+        {
+#pragma warning disable CS0618 // Type or member is obsolete
+            ModelReaderWriter.Read<{{collectionType}}>(BinaryData.Empty, ModelReaderWriterOptions.Json, LocalContext.Default);
+#pragma warning restore CS0618 // Type or member is obsolete
+        }
+    }
+}
+""";
+
+            Compilation compilation = CompilationHelper.CreateCompilation(
+                source,
+                additionalSuppress: isError ? ["CS0619"] : null);
+
+            var result = CompilationHelper.RunSourceGenerator(
+                compilation,
+                out var newCompilation,
+                additionalSuppress: isError ? ["CS0619"] : null);
+
+            Assert.IsNotNull(result.GenerationSpec);
+            Assert.AreEqual("LocalContext", result.GenerationSpec!.Type.Name);
+            Assert.AreEqual("TestProject", result.GenerationSpec.Type.Namespace);
+            Assert.AreEqual(0, result.Diagnostics.Length);
+            Assert.AreEqual("public", result.GenerationSpec!.Modifier);
+            Assert.AreEqual(isError ? 0 : collectionType == "JsonModel[][]" ? 3 : 2, result.GenerationSpec.TypeBuilders.Count);
+            Assert.AreEqual(0, result.GenerationSpec.ReferencedContexts.Count);
+
+            if (!isError)
+            {
+                Assert.AreEqual("JsonModel", result.GenerationSpec.TypeBuilders[0].Type.Name);
+                Assert.AreEqual("TestProject", result.GenerationSpec.TypeBuilders[0].Type.Namespace);
+                Assert.AreEqual("internal", result.GenerationSpec.TypeBuilders[0].Modifier);
+                Assert.AreEqual(ObsoleteLevel.Warning, result.GenerationSpec.TypeBuilders[0].Type.ObsoleteLevel);
+
+                Assert.AreEqual(collectionType, result.GenerationSpec.TypeBuilders[1].Type.Name);
+                if (collectionType == "JsonModel[]" || collectionType == "JsonModel[,]" || collectionType == "JsonModel[][]")
+                {
+                    Assert.AreEqual("TestProject", result.GenerationSpec.TypeBuilders[1].Type.Namespace);
+                }
+                else if (collectionType == "ReadOnlyMemory<JsonModel>")
+                {
+                    Assert.AreEqual("System", result.GenerationSpec.TypeBuilders[1].Type.Namespace);
+                }
+                else
+                {
+                    Assert.AreEqual("System.Collections.Generic", result.GenerationSpec.TypeBuilders[1].Type.Namespace);
+                }
+                Assert.AreEqual("internal", result.GenerationSpec.TypeBuilders[1].Modifier);
+                Assert.AreEqual(ObsoleteLevel.Warning, result.GenerationSpec.TypeBuilders[1].Type.ObsoleteLevel);
+                if (collectionType == "JsonModel[][]")
+                {
+                    Assert.AreEqual("JsonModel[]", result.GenerationSpec.TypeBuilders[1].Type.ItemType!.Name);
+                    Assert.AreEqual("TestProject", result.GenerationSpec.TypeBuilders[1].Type.ItemType!.Namespace);
+
+                    Assert.AreEqual("JsonModel[]", result.GenerationSpec.TypeBuilders[2].Type.Name);
+                    Assert.AreEqual("TestProject", result.GenerationSpec.TypeBuilders[2].Type.Namespace);
+                    Assert.AreEqual("internal", result.GenerationSpec.TypeBuilders[2].Modifier);
+                    Assert.AreEqual(ObsoleteLevel.Warning, result.GenerationSpec.TypeBuilders[2].Type.ObsoleteLevel);
+
+                    Assert.AreEqual("JsonModel", result.GenerationSpec.TypeBuilders[2].Type.ItemType!.Name);
+                    Assert.AreEqual("TestProject", result.GenerationSpec.TypeBuilders[2].Type.ItemType!.Namespace);
+                    Assert.AreEqual(ObsoleteLevel.Warning, result.GenerationSpec.TypeBuilders[2].Type.ItemType!.ObsoleteLevel);
+                }
+                else
+                {
+                    Assert.AreEqual("JsonModel", result.GenerationSpec.TypeBuilders[1].Type.ItemType!.Name);
+                    Assert.AreEqual("TestProject", result.GenerationSpec.TypeBuilders[1].Type.ItemType!.Namespace);
+                    Assert.AreEqual(ObsoleteLevel.Warning, result.GenerationSpec.TypeBuilders[1].Type.ItemType!.ObsoleteLevel);
+                }
+            }
+        }
+
+        [Test]
+        public void ClassesWithOnlyCasingDifference()
+        {
+            string source =
+$$"""
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.Text.Json;
+
+namespace TestProject
+{
+    public partial class LocalContext : ModelReaderWriterContext { }
+
+    public class JsonModel : IJsonModel<JsonModel>
+    {
+        JsonModel IJsonModel<JsonModel>.Create(ref System.Text.Json.Utf8JsonReader reader, ModelReaderWriterOptions options) => new JsonModel();
+        JsonModel IPersistableModel<JsonModel>.Create(BinaryData data, ModelReaderWriterOptions options) => new JsonModel();
+        string IPersistableModel<JsonModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        void IJsonModel<JsonModel>.Write(System.Text.Json.Utf8JsonWriter writer, ModelReaderWriterOptions options) { }
+        BinaryData IPersistableModel<JsonModel>.Write(ModelReaderWriterOptions options) => BinaryData.Empty;
+    }
+
+    public class Jsonmodel : IJsonModel<Jsonmodel>
+    {
+        Jsonmodel IJsonModel<Jsonmodel>.Create(ref System.Text.Json.Utf8JsonReader reader, ModelReaderWriterOptions options) => new Jsonmodel();
+        Jsonmodel IPersistableModel<Jsonmodel>.Create(BinaryData data, ModelReaderWriterOptions options) => new Jsonmodel();
+        string IPersistableModel<Jsonmodel>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        void IJsonModel<Jsonmodel>.Write(System.Text.Json.Utf8JsonWriter writer, ModelReaderWriterOptions options) { }
+        BinaryData IPersistableModel<Jsonmodel>.Write(ModelReaderWriterOptions options) => BinaryData.Empty;
+    }
+
+    public class JsonmodeL : IJsonModel<JsonmodeL>
+    {
+        JsonmodeL IJsonModel<JsonmodeL>.Create(ref System.Text.Json.Utf8JsonReader reader, ModelReaderWriterOptions options) => new JsonmodeL();
+        JsonmodeL IPersistableModel<JsonmodeL>.Create(BinaryData data, ModelReaderWriterOptions options) => new JsonmodeL();
+        string IPersistableModel<JsonmodeL>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        void IJsonModel<JsonmodeL>.Write(System.Text.Json.Utf8JsonWriter writer, ModelReaderWriterOptions options) { }
+        BinaryData IPersistableModel<JsonmodeL>.Write(ModelReaderWriterOptions options) => BinaryData.Empty;
+    }
+}
+""";
+
+            Compilation compilation = CompilationHelper.CreateCompilation(source);
+
+            var result = CompilationHelper.RunSourceGenerator(compilation, out var newCompilation, out var generatedSources);
+
+            Assert.IsNotNull(result.GenerationSpec);
+            Assert.AreEqual("LocalContext", result.GenerationSpec!.Type.Name);
+            Assert.AreEqual("TestProject", result.GenerationSpec.Type.Namespace);
+            Assert.AreEqual(0, result.Diagnostics.Length);
+            Assert.AreEqual("public", result.GenerationSpec!.Modifier);
+            Assert.AreEqual(3, result.GenerationSpec.TypeBuilders.Count);
+            Assert.AreEqual(0, result.GenerationSpec.ReferencedContexts.Count);
+            Assert.AreEqual("JsonModel", result.GenerationSpec.TypeBuilders[0].Type.Name);
+            Assert.AreEqual("TestProject", result.GenerationSpec.TypeBuilders[0].Type.Namespace);
+            Assert.AreEqual("Jsonmodel", result.GenerationSpec.TypeBuilders[1].Type.Name);
+            Assert.AreEqual("TestProject", result.GenerationSpec.TypeBuilders[1].Type.Namespace);
+            Assert.AreEqual("JsonmodeL", result.GenerationSpec.TypeBuilders[2].Type.Name);
+            Assert.AreEqual("TestProject", result.GenerationSpec.TypeBuilders[2].Type.Namespace);
+
+            Assert.AreEqual("TestProject_JsonModel_Builder.g.cs", generatedSources[1].HintName);
+            Assert.AreEqual("TestProject_Jsonmodel_Builder_1.g.cs", generatedSources[2].HintName);
+            Assert.AreEqual("TestProject_JsonmodeL_Builder_2.g.cs", generatedSources[3].HintName);
+        }
+
+        [Test]
+        public void ClassWithProblematicNameInCompilation()
+        {
+            string source =
+$$"""
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.Text.Json;
+
+namespace TestProject
+{
+    public partial class LocalContext : ModelReaderWriterContext { }
+
+    public class JsonModel : IJsonModel<JsonModel>
+    {
+        JsonModel IJsonModel<JsonModel>.Create(ref System.Text.Json.Utf8JsonReader reader, ModelReaderWriterOptions options) => new JsonModel();
+        JsonModel IPersistableModel<JsonModel>.Create(BinaryData data, ModelReaderWriterOptions options) => new JsonModel();
+        string IPersistableModel<JsonModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        void IJsonModel<JsonModel>.Write(System.Text.Json.Utf8JsonWriter writer, ModelReaderWriterOptions options) { }
+        BinaryData IPersistableModel<JsonModel>.Write(ModelReaderWriterOptions options) => BinaryData.Empty;
+    }
+
+    public readonly struct Type {}
+}
+""";
+
+            Compilation compilation = CompilationHelper.CreateCompilation(source);
+
+            var result = CompilationHelper.RunSourceGenerator(compilation, out var newCompilation);
+
+            Assert.IsNotNull(result.GenerationSpec);
+            Assert.AreEqual("LocalContext", result.GenerationSpec!.Type.Name);
+            Assert.AreEqual("TestProject", result.GenerationSpec.Type.Namespace);
+            Assert.AreEqual(0, result.Diagnostics.Length);
+            Assert.AreEqual("public", result.GenerationSpec!.Modifier);
+            Assert.AreEqual(1, result.GenerationSpec.TypeBuilders.Count);
+            Assert.AreEqual(0, result.GenerationSpec.ReferencedContexts.Count);
+            Assert.AreEqual("JsonModel", result.GenerationSpec.TypeBuilders[0].Type.Name);
+            Assert.AreEqual("TestProject", result.GenerationSpec.TypeBuilders[0].Type.Namespace);
+        }
     }
 }

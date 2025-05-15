@@ -189,10 +189,10 @@
 # ServiceLabel: %Bot Service
 # ServiceOwners:                                                   @sgellock
 
-# PRLabel: %Cloud Machine
+# PRLabel: %Azure Projects
 /sdk/cloudmachine/                                                 @christothes @KrzysztofCwalina
 
-# ServiceLabel: %Cloud Machine
+# ServiceLabel: %Azure Projects
 # AzureSdkOwners:                                                  @christothes @KrzysztofCwalina
 
 # PRLabel: %Cognitive - Language
@@ -369,10 +369,10 @@
 # ServiceOwners:                                                   @TravisCragg-MSFT @hilaryw29
 
 # PRLabel: %Confidential Ledger
-/sdk/confidentialledger/                                           @christothes @PallabPaul @amruthashree18
+/sdk/confidentialledger/                                           @christothes @PallabPaul @amruthashree18 @andpiccione @ivarprudnikov
 
 # ServiceLabel: %Confidential Ledger
-# ServiceOwners:                                                   @PallabPaul @amruthashree18
+# ServiceOwners:                                                   @PallabPaul @amruthashree18 @andpiccione @ivarprudnikov
 
 # ServiceLabel: %Consumption - Billing
 # ServiceOwners:                                                   @ccmbpxpcrew
@@ -753,6 +753,12 @@
 # ServiceLabel: %Notification Hub
 # ServiceOwners:                                                   @tjsomasundaram
 
+# PRLabel: %Online Experimentation
+/sdk/onlineexperimentation/                                        @Azure/azure-sdk-write-onlineexperimentation
+
+# ServiceLabel: %Online Experimentation
+# ServiceOwners:                                                   @Azure/azure-sdk-write-onlineexperimentation
+
 # PRLabel: %OpenAI
 /sdk/openai/                                                       @jpalvarezl @trrwilson @joseharriaga @m-nash @ralph-msft
 
@@ -884,6 +890,9 @@
 
 # ServiceLabel: %Storage
 # ServiceOwners:                                                   @seanmcc-msft @amnguye @jaschrep-msft @jalauzon-msft @nickliu-msft
+
+# PRLabel: %Storage
+/sdk/storagesync/                                                  @ankushbindlish2 @anpint @jlindamood
 
 # ServiceLabel: %Storsimple
 # ServiceOwners:                                                   @anoobbacker @ganzee @manuaery
@@ -1041,13 +1050,19 @@
 # ServiceOwners:                                                   @thomasp98296
 
 # PRLabel: %Neon Postgres
-/sdk/neonpostgres/Azure.ResourceManager.*/                         @ArcturusZhang @ArthurMa1978
+/sdk/neonpostgres/Azure.ResourceManager.*/                         @ArcturusZhang @ArthurMa1978 @alluri02
+
+# ServiceLabel: %Neon Postgres %Mgmt
+# ServiceOwners:                                                   @alluri02
 
 # PRLabel: %Network - CDN
 /sdk/cdn/Azure.ResourceManager.*/                                  @ArcturusZhang @ArthurMa1978
 
 # PRLabel: %Network - Front Door
-/sdk/frontdoor/Azure.ResourceManager.*/                            @ArcturusZhang @ArthurMa1978
+/sdk/frontdoor/Azure.ResourceManager.*/                            @ArcturusZhang @ArthurMa1978 @Ptnan7
+
+# ServiceLabel:  %Network - Front Door %Mgmt
+# ServiceOwners:                                                   @Ptnan7
 
 # PRLabel: %Network - Mobile
 /sdk/mobilenetwork/Azure.ResourceManager.*/                        @ArcturusZhang @ArthurMa1978
@@ -1142,7 +1157,7 @@
 /sdk/servicebus/tests.data.yml                                     @shankarsama @EldertGrootenboer
 
 # Add owners for package dependency changes
-/eng/Packages.Data.props                                           @JoshLove-msft @christothes @annelo-msft @KrzysztofCwalina @tg-msft @jsquire @m-nash @ArthurMa1978
+/eng/Packages.Data.props                                           @JoshLove-msft @christothes @annelo-msft @KrzysztofCwalina @tg-msft @jsquire @m-nash @ArthurMa1978 @jorgerangel-msft
 
 # Add owners for emitter version changes
 /eng/http-client-csharp-emitter-package.json                       @JoshLove-msft @m-nash @jorgerangel-msft @live1206 @ArcturusZhang @nisha-bhatia
