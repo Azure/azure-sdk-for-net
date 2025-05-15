@@ -15,6 +15,11 @@ namespace Azure.ResourceManager.Dynatrace
     /// <summary> A class representing the DynatraceMonitor data model. </summary>
     public partial class DynatraceMonitorData : TrackedResourceData
     {
+        // used for deserialization
+        internal DynatraceMonitorData()
+        {
+        }
+
         /// <summary>
         /// Keeps track of any properties unknown to the library.
         /// <para>
