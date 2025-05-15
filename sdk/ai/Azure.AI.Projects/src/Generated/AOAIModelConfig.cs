@@ -14,7 +14,7 @@ namespace Azure.AI.Projects
     public partial class AOAIModelConfig : TargetModelConfig
     {
         /// <summary> Initializes a new instance of <see cref="AOAIModelConfig"/>. </summary>
-        /// <param name="azureEndpoint"> Endpoint URL for AOAI model. </param>
+        /// <param name="azureEndpoint"> Endpoint targetURI for AOAI model. </param>
         /// <param name="apiKey"> API Key for AOAI model. </param>
         /// <param name="azureDeployment"> Deployment name for AOAI model. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="azureEndpoint"/>, <paramref name="apiKey"/> or <paramref name="azureDeployment"/> is null. </exception>
@@ -33,7 +33,7 @@ namespace Azure.AI.Projects
         /// <summary> Initializes a new instance of <see cref="AOAIModelConfig"/>. </summary>
         /// <param name="type"> Type of the model configuration. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="azureEndpoint"> Endpoint URL for AOAI model. </param>
+        /// <param name="azureEndpoint"> Endpoint targetURI for AOAI model. </param>
         /// <param name="apiKey"> API Key for AOAI model. </param>
         /// <param name="azureDeployment"> Deployment name for AOAI model. </param>
         internal AOAIModelConfig(string type, IDictionary<string, BinaryData> serializedAdditionalRawData, string azureEndpoint, string apiKey, string azureDeployment) : base(type, serializedAdditionalRawData)
@@ -48,7 +48,7 @@ namespace Azure.AI.Projects
         {
         }
 
-        /// <summary> Endpoint URL for AOAI model. </summary>
+        /// <summary> Endpoint targetURI for AOAI model. </summary>
         public string AzureEndpoint { get; set; }
         /// <summary> API Key for AOAI model. </summary>
         public string ApiKey { get; set; }

@@ -1,10 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Projects.AppConfiguration;
-using Azure.Projects.Core;
+using Azure.Storage.Blobs.Models;
 
-namespace Azure.Projects;
+namespace Azure.Projects.Core;
 
 public abstract class ConnectionStore
 {
@@ -17,9 +16,22 @@ public abstract class ConnectionStore
     public abstract void EmitConnection(ProjectInfrastructure infrastructure, string connectionId, string endpoint);
 }
 
-internal class AppConfigConnectionStore : ConnectionStore
+public class AppConfigConnectionStore : ConnectionStore
 {
-    private readonly AppConfigurationFeature _appConfig = new();
+    private readonly AppConfigurationFeature _appConfig;
+
+    public AppConfigConnectionStore() : this(AppConfigurationFeature.SkuName.Free)
+    {
+    }
+
+    public AppConfigConnectionStore(AppConfigurationFeature.SkuName sku)
+        : this(new AppConfigurationFeature { Sku = sku })
+    {
+    }
+    public AppConfigConnectionStore(AppConfigurationFeature appConfig)
+    {
+        _appConfig = appConfig;
+    }
 
     public override bool TryGetFeature(out AzureProjectFeature? feature)
     {

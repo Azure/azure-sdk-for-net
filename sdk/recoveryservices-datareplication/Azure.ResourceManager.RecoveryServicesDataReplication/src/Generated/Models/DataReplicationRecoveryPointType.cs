@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         private const string ApplicationConsistentValue = "ApplicationConsistent";
         private const string CrashConsistentValue = "CrashConsistent";
 
-        /// <summary> ApplicationConsistent. </summary>
+        /// <summary> Application consistent recovery point. </summary>
         public static DataReplicationRecoveryPointType ApplicationConsistent { get; } = new DataReplicationRecoveryPointType(ApplicationConsistentValue);
-        /// <summary> CrashConsistent. </summary>
+        /// <summary> Crash consistent recovery point. </summary>
         public static DataReplicationRecoveryPointType CrashConsistent { get; } = new DataReplicationRecoveryPointType(CrashConsistentValue);
         /// <summary> Determines if two <see cref="DataReplicationRecoveryPointType"/> values are the same. </summary>
         public static bool operator ==(DataReplicationRecoveryPointType left, DataReplicationRecoveryPointType right) => left.Equals(right);

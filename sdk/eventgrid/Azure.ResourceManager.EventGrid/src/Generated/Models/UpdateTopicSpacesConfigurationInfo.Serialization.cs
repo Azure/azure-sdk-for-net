@@ -49,11 +49,6 @@ namespace Azure.ResourceManager.EventGrid.Models
                 writer.WritePropertyName("routingEnrichments"u8);
                 writer.WriteObjectValue(RoutingEnrichments, options);
             }
-            if (Optional.IsDefined(ClientAuthentication))
-            {
-                writer.WritePropertyName("clientAuthentication"u8);
-                writer.WriteObjectValue(ClientAuthentication, options);
-            }
             if (Optional.IsDefined(MaximumSessionExpiryInHours))
             {
                 writer.WritePropertyName("maximumSessionExpiryInHours"u8);
@@ -119,7 +114,6 @@ namespace Azure.ResourceManager.EventGrid.Models
             TopicSpacesConfigurationState? state = default;
             string routeTopicResourceId = default;
             RoutingEnrichments routingEnrichments = default;
-            ClientAuthenticationSettings clientAuthentication = default;
             int? maximumSessionExpiryInHours = default;
             int? maximumClientSessionsPerAuthenticationName = default;
             RoutingIdentityInfo routingIdentityInfo = default;
@@ -149,15 +143,6 @@ namespace Azure.ResourceManager.EventGrid.Models
                         continue;
                     }
                     routingEnrichments = RoutingEnrichments.DeserializeRoutingEnrichments(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("clientAuthentication"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    clientAuthentication = ClientAuthenticationSettings.DeserializeClientAuthenticationSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("maximumSessionExpiryInHours"u8))
@@ -211,7 +196,6 @@ namespace Azure.ResourceManager.EventGrid.Models
                 state,
                 routeTopicResourceId,
                 routingEnrichments,
-                clientAuthentication,
                 maximumSessionExpiryInHours,
                 maximumClientSessionsPerAuthenticationName,
                 routingIdentityInfo,
@@ -226,7 +210,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerEventGridContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(UpdateTopicSpacesConfigurationInfo)} does not support writing '{options.Format}' format.");
             }

@@ -25,7 +25,7 @@ namespace Azure.Security.KeyVault.Administration.Models
         /// <param name="endTime"> The end time of the backup operation in UTC. </param>
         /// <param name="jobId"> Identifier for the full backup operation. </param>
         /// <param name="azureStorageBlobContainerUri"> The Azure blob storage container Uri which contains the full backup. </param>
-        internal FullBackupDetailsInternal(string status, string statusDetails, KeyVaultServiceError error, DateTimeOffset? startTime, DateTimeOffset? endTime, string jobId, string azureStorageBlobContainerUri)
+        internal FullBackupDetailsInternal(OperationStatus? status, string statusDetails, KeyVaultServiceError error, DateTimeOffset? startTime, DateTimeOffset? endTime, string jobId, string azureStorageBlobContainerUri)
         {
             Status = status;
             StatusDetails = statusDetails;
@@ -37,7 +37,7 @@ namespace Azure.Security.KeyVault.Administration.Models
         }
 
         /// <summary> Status of the backup operation. </summary>
-        public string Status { get; }
+        public OperationStatus? Status { get; }
         /// <summary> The status details of backup operation. </summary>
         public string StatusDetails { get; }
         /// <summary> Error encountered, if any, during the full backup operation. </summary>

@@ -5,13 +5,12 @@
 
 using System;
 using System.Threading;
+using Azure.AI.Models;
 using Azure.AI.OpenAI;
 using Azure.Data.AppConfiguration;
 using Azure.Messaging.ServiceBus;
-using Azure.Projects.KeyVault;
+using Azure.Projects.AI;
 using Azure.Projects.Ofx;
-using Azure.Projects.OpenAI;
-using Azure.Projects.Storage;
 using Azure.Security.KeyVault.Secrets;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
@@ -23,29 +22,45 @@ namespace Azure.Projects.Tests;
 
 public class E2ETests
 {
-    private static string projectId = "cm00000000000test";
+    private static string allProjectId = "cm00000000000test";
+    private static string oneProjectId = "cm00000000002test";
 
     [TestCase("-bicep")]
     //[TestCase("")]
     public void OpenAI(string arg)
     {
-        ProjectInfrastructure infra = new(projectId);
+        ProjectInfrastructure infra = new(allProjectId);
         infra.AddFeature(new OpenAIModelFeature("gpt-4o-mini", "2024-07-18"));
         if (infra.TryExecuteCommand([arg])) return;
 
-        ProjectClient project = new(projectId, default);
+        ProjectClient project = new(allProjectId, default);
         ChatClient chat = project.GetOpenAIChatClient();
+    }
+
+    [TestCase("-bicep")]
+    //[TestCase("")]
+    public void MaaS(string arg)
+    {
+        ProjectInfrastructure infra = new(oneProjectId);
+        infra.AddFeature(new AIModelsFeature("DeepSeek-V3", "1"));
+        if (infra.TryExecuteCommand([arg])) return;
+
+        ProjectClient project = new(oneProjectId, default);
+        ModelsClient maas = project.GetModelsClient();
+        ChatClient chat = maas.GetChatClient(oneProjectId + "_chat");
+        string text = chat.CompleteChat("list all noble gases").AsText();
+        Console.WriteLine(text);
     }
 
     [TestCase("-bicep")]
     //[TestCase("")]
     public void KeyVault(string arg)
     {
-        ProjectInfrastructure infra = new(projectId);
+        ProjectInfrastructure infra = new(allProjectId);
         infra.AddFeature(new KeyVaultFeature());
         if (infra.TryExecuteCommand([arg])) return;
 
-        ProjectClient project = new(projectId, default);
+        ProjectClient project = new(allProjectId, default);
         SecretClient secrets = project.GetSecretClient();
     }
 
@@ -53,13 +68,13 @@ public class E2ETests
     //[TestCase("")]
     public void All (string arg)
     {
-        ProjectInfrastructure infrastructure = new(projectId);
+        ProjectInfrastructure infrastructure = new(allProjectId);
         AddAllFeratures(infrastructure);
 
         if (infrastructure.TryExecuteCommand([arg]))
             return;
 
-        ProjectClient project = new(projectId, default);
+        ProjectClient project = new(allProjectId, default);
         SecretClient secrets = project.GetSecretClient();
         BlobContainerClient defaultContainer = project.GetBlobContainerClient();
         BlobContainerClient testContainer = project.GetBlobContainerClient("test");
@@ -87,13 +102,13 @@ public class E2ETests
     //[TestCase("")]
     public void Ofx(string arg)
     {
-        ProjectInfrastructure infrastructure = new(projectId);
-        infrastructure.AddFeature(new OfxProjectFeature());
+        ProjectInfrastructure infrastructure = new(allProjectId);
+        infrastructure.AddFeature(new OfxFeatures());
 
         if (infrastructure.TryExecuteCommand([arg]))
             return;
 
-        OfxProjectClient project = new(projectId, default);
+        OfxClient project = new(allProjectId, default);
         string? uploadedPath = null;
         long done = 0;
         try
@@ -118,7 +133,7 @@ public class E2ETests
 
     internal void AddAllFeratures(ProjectInfrastructure infrastructure)
     {
-        infrastructure.AddFeature(new OfxProjectFeature());
+        infrastructure.AddFeature(new OfxFeatures());
         infrastructure.AddFeature(new KeyVaultFeature());
         infrastructure.AddFeature(new OpenAIChatFeature("gpt-35-turbo", "0125"));
         infrastructure.AddFeature(new OpenAIEmbeddingFeature("text-embedding-ada-002", "2"));

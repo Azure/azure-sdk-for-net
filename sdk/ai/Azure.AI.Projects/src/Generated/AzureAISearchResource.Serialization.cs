@@ -81,7 +81,7 @@ namespace Azure.AI.Projects
             {
                 return null;
             }
-            IList<IndexResource> indexes = default;
+            IList<AISearchIndexResource> indexes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -92,10 +92,10 @@ namespace Azure.AI.Projects
                     {
                         continue;
                     }
-                    List<IndexResource> array = new List<IndexResource>();
+                    List<AISearchIndexResource> array = new List<AISearchIndexResource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IndexResource.DeserializeIndexResource(item, options));
+                        array.Add(AISearchIndexResource.DeserializeAISearchIndexResource(item, options));
                     }
                     indexes = array;
                     continue;
@@ -106,7 +106,7 @@ namespace Azure.AI.Projects
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new AzureAISearchResource(indexes ?? new ChangeTrackingList<IndexResource>(), serializedAdditionalRawData);
+            return new AzureAISearchResource(indexes ?? new ChangeTrackingList<AISearchIndexResource>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AzureAISearchResource>.Write(ModelReaderWriterOptions options)
@@ -116,7 +116,7 @@ namespace Azure.AI.Projects
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureAIProjectsContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(AzureAISearchResource)} does not support writing '{options.Format}' format.");
             }

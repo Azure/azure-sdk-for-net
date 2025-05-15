@@ -41,7 +41,7 @@ namespace Azure.AI.Projects
             writer.WritePropertyName("thread_id"u8);
             writer.WriteStringValue(ThreadId);
             writer.WritePropertyName("assistant_id"u8);
-            writer.WriteStringValue(AgentId);
+            writer.WriteStringValue(AssistantId);
             writer.WritePropertyName("status"u8);
             writer.WriteStringValue(Status.ToString());
             if (Optional.IsDefined(RequiredAction))
@@ -582,7 +582,7 @@ namespace Azure.AI.Projects
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureAIProjectsContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ThreadRun)} does not support writing '{options.Format}' format.");
             }

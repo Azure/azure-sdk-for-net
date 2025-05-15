@@ -37,7 +37,7 @@ namespace Azure.AI.Projects
             writer.WritePropertyName("authType"u8);
             writer.WriteStringValue(AuthType.ToSerialString());
             writer.WritePropertyName("category"u8);
-            writer.WriteStringValue(Category.ToSerialString());
+            writer.WriteStringValue(Category.ToString());
             writer.WritePropertyName("target"u8);
             writer.WriteStringValue(Target);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -98,7 +98,7 @@ namespace Azure.AI.Projects
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureAIProjectsContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ConnectionProperties)} does not support writing '{options.Format}' format.");
             }

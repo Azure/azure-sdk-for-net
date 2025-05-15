@@ -35,7 +35,7 @@ namespace Azure.AI.Projects
             }
 
             writer.WritePropertyName("assistant_id"u8);
-            writer.WriteStringValue(AgentId);
+            writer.WriteStringValue(AssistantId);
             if (Optional.IsDefined(OverrideModelName))
             {
                 if (OverrideModelName != null)
@@ -487,7 +487,7 @@ namespace Azure.AI.Projects
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureAIProjectsContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(CreateRunRequest)} does not support writing '{options.Format}' format.");
             }

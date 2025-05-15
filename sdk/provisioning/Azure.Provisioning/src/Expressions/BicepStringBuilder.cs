@@ -104,6 +104,10 @@ public ref struct BicepInterpolatedStringHandler(int literalLength, int formatte
             _expressions.Add(b.Compile());
             _isSecure = _isSecure || b.IsSecure;
         }
+        else if (t is BicepExpression exp)
+        {
+            _expressions.Add(exp);
+        }
         else
         {
             string? s = t?.ToString();

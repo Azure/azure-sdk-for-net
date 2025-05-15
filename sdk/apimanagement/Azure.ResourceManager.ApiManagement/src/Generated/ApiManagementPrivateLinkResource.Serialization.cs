@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.ApiManagement
 
         ApiManagementPrivateLinkResourceData IJsonModel<ApiManagementPrivateLinkResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ApiManagementPrivateLinkResourceData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ApiManagementPrivateLinkResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<ApiManagementPrivateLinkResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ApiManagementPrivateLinkResourceData>(Data, options, AzureResourceManagerApiManagementContext.Default);
 
-        ApiManagementPrivateLinkResourceData IPersistableModel<ApiManagementPrivateLinkResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ApiManagementPrivateLinkResourceData>(data, options);
+        ApiManagementPrivateLinkResourceData IPersistableModel<ApiManagementPrivateLinkResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ApiManagementPrivateLinkResourceData>(data, options, AzureResourceManagerApiManagementContext.Default);
 
         string IPersistableModel<ApiManagementPrivateLinkResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ApiManagementPrivateLinkResourceData>)Data).GetFormatFromOptions(options);
     }

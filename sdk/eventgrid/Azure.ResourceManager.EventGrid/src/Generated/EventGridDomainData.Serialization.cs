@@ -39,11 +39,6 @@ namespace Azure.ResourceManager.EventGrid
             }
 
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(Sku))
-            {
-                writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku, options);
-            }
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
@@ -154,7 +149,6 @@ namespace Azure.ResourceManager.EventGrid
             {
                 return null;
             }
-            ResourceSku sku = default;
             ManagedServiceIdentity identity = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
@@ -180,15 +174,6 @@ namespace Azure.ResourceManager.EventGrid
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("sku"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    sku = ResourceSku.DeserializeResourceSku(property.Value, options);
-                    continue;
-                }
                 if (property.NameEquals("identity"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -398,7 +383,6 @@ namespace Azure.ResourceManager.EventGrid
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                sku,
                 identity,
                 privateEndpointConnections ?? new ChangeTrackingList<EventGridPrivateEndpointConnectionData>(),
                 provisioningState,
@@ -497,24 +481,6 @@ namespace Azure.ResourceManager.EventGrid
                         }
                         builder.AppendLine("  }");
                     }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("SkuName", out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  sku: ");
-                builder.AppendLine("{");
-                builder.Append("    name: ");
-                builder.AppendLine(propertyOverride);
-                builder.AppendLine("  }");
-            }
-            else
-            {
-                if (Optional.IsDefined(Sku))
-                {
-                    builder.Append("  sku: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, Sku, options, 2, false, "  sku: ");
                 }
             }
 
@@ -814,7 +780,7 @@ namespace Azure.ResourceManager.EventGrid
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerEventGridContext.Default);
                 case "bicep":
                     return SerializeBicep(options);
                 default:

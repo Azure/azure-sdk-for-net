@@ -80,10 +80,10 @@ namespace Azure.AI.Projects
                 writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
-            if (AgentId != null)
+            if (AssistantId != null)
             {
                 writer.WritePropertyName("assistant_id"u8);
-                writer.WriteStringValue(AgentId);
+                writer.WriteStringValue(AssistantId);
             }
             else
             {
@@ -333,7 +333,7 @@ namespace Azure.AI.Projects
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureAIProjectsContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ThreadMessage)} does not support writing '{options.Format}' format.");
             }

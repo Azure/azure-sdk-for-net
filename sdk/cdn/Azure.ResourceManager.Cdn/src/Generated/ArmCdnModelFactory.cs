@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 profileName,
                 tlsSettings,
                 dnsZoneId != null ? ResourceManagerModelFactory.WritableSubResource(dnsZoneId) : null,
-                preValidatedCustomDomainResourceId != null ? new FrontDoorCustomDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId(preValidatedCustomDomainResourceId, serializedAdditionalRawData: null) : null,
+                preValidatedCustomDomainResourceId != null ? ResourceManagerModelFactory.WritableSubResource(preValidatedCustomDomainResourceId) : null,
                 provisioningState,
                 deploymentStatus,
                 domainValidationState,
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <returns> A new <see cref="Models.FrontDoorCustomDomainPatch"/> instance for mocking. </returns>
         public static FrontDoorCustomDomainPatch FrontDoorCustomDomainPatch(string profileName = null, FrontDoorCustomDomainHttpsContent tlsSettings = null, ResourceIdentifier dnsZoneId = null, ResourceIdentifier preValidatedCustomDomainResourceId = null)
         {
-            return new FrontDoorCustomDomainPatch(profileName, tlsSettings, dnsZoneId != null ? ResourceManagerModelFactory.WritableSubResource(dnsZoneId) : null, preValidatedCustomDomainResourceId != null ? new FrontDoorCustomDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId(preValidatedCustomDomainResourceId, serializedAdditionalRawData: null) : null, serializedAdditionalRawData: null);
+            return new FrontDoorCustomDomainPatch(profileName, tlsSettings, dnsZoneId != null ? ResourceManagerModelFactory.WritableSubResource(dnsZoneId) : null, preValidatedCustomDomainResourceId != null ? ResourceManagerModelFactory.WritableSubResource(preValidatedCustomDomainResourceId) : null, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Cdn.FrontDoorEndpointData"/>. </summary>
@@ -997,7 +997,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 optimizationType,
                 probePath,
                 geoFilters?.ToList(),
-                defaultOriginGroupId != null ? new EndpointPropertiesUpdateParametersDefaultOriginGroup(defaultOriginGroupId, serializedAdditionalRawData: null) : null,
+                defaultOriginGroupId != null ? ResourceManagerModelFactory.WritableSubResource(defaultOriginGroupId) : null,
                 uriSigningKeys?.ToList(),
                 deliveryPolicy,
                 webApplicationFirewallPolicyLinkId != null ? new EndpointPropertiesUpdateParametersWebApplicationFirewallPolicyLink(webApplicationFirewallPolicyLinkId, serializedAdditionalRawData: null) : null,

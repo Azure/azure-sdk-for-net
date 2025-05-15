@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
-    /// <summary>
-    /// Preemption capability.
-    /// Serialized Name: PreemptionCapability
-    /// </summary>
+    /// <summary> Preemption capability. </summary>
     public readonly partial struct MobileNetworkPreemptionCapability : IEquatable<MobileNetworkPreemptionCapability>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         private const string NotPreemptValue = "NotPreempt";
         private const string MayPreemptValue = "MayPreempt";
 
-        /// <summary>
-        /// Cannot preempt
-        /// Serialized Name: PreemptionCapability.NotPreempt
-        /// </summary>
+        /// <summary> Cannot preempt. </summary>
         public static MobileNetworkPreemptionCapability NotPreempt { get; } = new MobileNetworkPreemptionCapability(NotPreemptValue);
-        /// <summary>
-        /// May preempt
-        /// Serialized Name: PreemptionCapability.MayPreempt
-        /// </summary>
+        /// <summary> May preempt. </summary>
         public static MobileNetworkPreemptionCapability MayPreempt { get; } = new MobileNetworkPreemptionCapability(MayPreemptValue);
         /// <summary> Determines if two <see cref="MobileNetworkPreemptionCapability"/> values are the same. </summary>
         public static bool operator ==(MobileNetworkPreemptionCapability left, MobileNetworkPreemptionCapability right) => left.Equals(right);

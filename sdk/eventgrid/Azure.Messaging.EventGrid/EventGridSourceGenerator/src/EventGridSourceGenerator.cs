@@ -1,14 +1,12 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.Text;
 
-namespace EventGridSourceGenerator
+namespace Azure.EventGrid.Messaging.SourceGeneration
 {
     /// <summary>
     /// This class generates the SystemEventNames constant values as well as the SystemEventExtensions which contains a mapping
@@ -111,28 +109,21 @@ namespace Azure.Messaging.EventGrid
     {{
         public static object AsSystemEventData(string eventType, JsonElement data)
         {{
-            if (s_systemEventDeserializers.TryGetValue(eventType, out Func<JsonElement,{(_isSystemEventsLibrary ? " ModelReaderWriterOptions," : string.Empty)} object> systemDeserializationFunction))
-            {{
-                return systemDeserializationFunction(data{(_isSystemEventsLibrary ? ", null" : string.Empty)});
-            }}
-            else
-            {{
-                return null;
-            }}
-        }}
-
-        internal static readonly IReadOnlyDictionary<string, Func<JsonElement,{(_isSystemEventsLibrary ? " ModelReaderWriterOptions," : string.Empty)} object>> s_systemEventDeserializers = new Dictionary<string, Func<JsonElement,{(_isSystemEventsLibrary ? " ModelReaderWriterOptions," : string.Empty)} object>>(StringComparer.OrdinalIgnoreCase)
-        {{
+            var eventTypeSpan = eventType.AsSpan();
 ");
             foreach (SystemEventNode sysEvent in _visitor.SystemEvents)
             {
                 // Add each an entry for each system event to the dictionary containing a mapping from constant name to deserialization method.
                 sourceBuilder.AppendLine(
-                    $"{Indent}{Indent}{Indent}{{ SystemEventNames.{sysEvent.EventConstantName}, {sysEvent.EventName}.{sysEvent.DeserializeMethod} }},");
+                    $"{Indent}{Indent}{Indent}if (eventTypeSpan.Equals(SystemEventNames.{sysEvent.EventConstantName}.AsSpan(), StringComparison.OrdinalIgnoreCase))");
+                sourceBuilder.AppendLine(
+                    $"{Indent}{Indent}{Indent}{Indent}return {sysEvent.EventName}.{sysEvent.DeserializeMethod}(data{(_isSystemEventsLibrary ? ", null" : string.Empty)});");
             }
-            sourceBuilder.Append($@"{Indent}{Indent}}};
-{Indent}}}
-}}");
+            sourceBuilder.AppendLine($"{Indent}{Indent}{Indent}return null;");
+            sourceBuilder.AppendLine($"{Indent}{Indent}}}");
+            sourceBuilder.AppendLine($"{Indent}}}");
+            sourceBuilder.AppendLine("}");
+
             return sourceBuilder.ToString();
         }
     }

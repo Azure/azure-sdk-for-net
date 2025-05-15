@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.IotFirmwareDefense.Models
 {
-    /// <summary> The status of firmware scan. </summary>
+    /// <summary>
+    /// The status of a firmware analysis job.
+    /// Serialized Name: Status
+    /// </summary>
     public readonly partial struct FirmwareAnalysisStatus : IEquatable<FirmwareAnalysisStatus>
     {
         private readonly string _value;
@@ -28,15 +31,30 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         private const string ReadyValue = "Ready";
         private const string ErrorValue = "Error";
 
-        /// <summary> Pending. </summary>
+        /// <summary>
+        /// The analysis job is queued
+        /// Serialized Name: Status.Pending
+        /// </summary>
         public static FirmwareAnalysisStatus Pending { get; } = new FirmwareAnalysisStatus(PendingValue);
-        /// <summary> Extracting. </summary>
+        /// <summary>
+        /// The firmware is currently being extracted
+        /// Serialized Name: Status.Extracting
+        /// </summary>
         public static FirmwareAnalysisStatus Extracting { get; } = new FirmwareAnalysisStatus(ExtractingValue);
-        /// <summary> Analyzing. </summary>
+        /// <summary>
+        /// Analysis is being run on the firmware
+        /// Serialized Name: Status.Analyzing
+        /// </summary>
         public static FirmwareAnalysisStatus Analyzing { get; } = new FirmwareAnalysisStatus(AnalyzingValue);
-        /// <summary> Ready. </summary>
+        /// <summary>
+        /// Analysis job results are ready
+        /// Serialized Name: Status.Ready
+        /// </summary>
         public static FirmwareAnalysisStatus Ready { get; } = new FirmwareAnalysisStatus(ReadyValue);
-        /// <summary> Error. </summary>
+        /// <summary>
+        /// An error occurred while running firmware analysis
+        /// Serialized Name: Status.Error
+        /// </summary>
         public static FirmwareAnalysisStatus Error { get; } = new FirmwareAnalysisStatus(ErrorValue);
         /// <summary> Determines if two <see cref="FirmwareAnalysisStatus"/> values are the same. </summary>
         public static bool operator ==(FirmwareAnalysisStatus left, FirmwareAnalysisStatus right) => left.Equals(right);

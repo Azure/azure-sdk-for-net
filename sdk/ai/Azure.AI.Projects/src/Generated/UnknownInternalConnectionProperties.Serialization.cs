@@ -71,7 +71,7 @@ namespace Azure.AI.Projects
                 }
                 if (property.NameEquals("category"u8))
                 {
-                    category = property.Value.GetString().ToConnectionType();
+                    category = new ConnectionType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("target"u8))
@@ -95,7 +95,7 @@ namespace Azure.AI.Projects
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureAIProjectsContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ConnectionProperties)} does not support writing '{options.Format}' format.");
             }
