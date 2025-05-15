@@ -53,13 +53,13 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
         /// <summary> Initializes a new instance of <see cref="AvsVmVolumeUpdateProperties"/>. </summary>
         /// <param name="softDeletion"> Volume's soft-deletion state. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AvsVmVolumeUpdateProperties(SoftDeletion softDeletion, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AvsVmVolumeUpdateProperties(PureStorageSoftDeletionState softDeletion, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SoftDeletion = softDeletion;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Volume's soft-deletion state. </summary>
-        public SoftDeletion SoftDeletion { get; set; }
+        public PureStorageSoftDeletionState SoftDeletion { get; set; }
     }
 }

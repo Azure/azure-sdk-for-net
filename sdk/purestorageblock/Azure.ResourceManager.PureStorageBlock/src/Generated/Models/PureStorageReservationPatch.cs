@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
         /// <summary> The resource-specific properties for this resource. </summary>
         internal ReservationUpdateProperties Properties { get; set; }
         /// <summary> User details. </summary>
-        public UserDetails ReservationUpdateUser
+        public PureStorageUserDetails ReservationUpdateUser
         {
             get => Properties is null ? default : Properties.User;
             set

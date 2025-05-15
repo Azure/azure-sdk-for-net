@@ -124,16 +124,16 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
                 return null;
             }
             string storagePoolInternalId = default;
-            string storagePoolResourceId = default;
+            ResourceIdentifier storagePoolResourceId = default;
             string volumeInternalId = default;
             string displayName = default;
-            Space space = default;
-            SoftDeletion softDeletion = default;
+            PureStorageSpaceUsage space = default;
+            PureStorageSoftDeletionState softDeletion = default;
             string createdTimestamp = default;
             long? provisionedSize = default;
-            VolumeType? volumeType = default;
+            PureStorageAvsVmVolumeType? volumeType = default;
             PureStorageAvsDiskDetails avs = default;
-            ResourceProvisioningState? provisioningState = default;
+            PureStorageProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -145,7 +145,11 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
                 }
                 if (property.NameEquals("storagePoolResourceId"u8))
                 {
-                    storagePoolResourceId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    storagePoolResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("volumeInternalId"u8))
@@ -164,12 +168,12 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
                     {
                         continue;
                     }
-                    space = Space.DeserializeSpace(property.Value, options);
+                    space = PureStorageSpaceUsage.DeserializePureStorageSpaceUsage(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("softDeletion"u8))
                 {
-                    softDeletion = SoftDeletion.DeserializeSoftDeletion(property.Value, options);
+                    softDeletion = PureStorageSoftDeletionState.DeserializePureStorageSoftDeletionState(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("createdTimestamp"u8))
@@ -192,7 +196,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
                     {
                         continue;
                     }
-                    volumeType = new VolumeType(property.Value.GetString());
+                    volumeType = new PureStorageAvsVmVolumeType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("avs"u8))
@@ -210,7 +214,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
                     {
                         continue;
                     }
-                    provisioningState = new ResourceProvisioningState(property.Value.GetString());
+                    provisioningState = new PureStorageProvisioningState(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

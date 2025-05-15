@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
         /// <param name="vmType"> Type of the VMware VM using this set of volumes. </param>
         /// <param name="avsVmInternalId"> Pure Storage's internal ID for this AVS VM. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vmId"/>, <paramref name="vmName"/> or <paramref name="avsVmInternalId"/> is null. </exception>
-        internal PureStorageAvsVmDetails(string vmId, string vmName, VmType vmType, string avsVmInternalId)
+        internal PureStorageAvsVmDetails(string vmId, string vmName, PureStorageAvsVmType vmType, string avsVmInternalId)
         {
             Argument.AssertNotNull(vmId, nameof(vmId));
             Argument.AssertNotNull(vmName, nameof(vmName));
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
         /// <param name="vmType"> Type of the VMware VM using this set of volumes. </param>
         /// <param name="avsVmInternalId"> Pure Storage's internal ID for this AVS VM. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PureStorageAvsVmDetails(string vmId, string vmName, VmType vmType, string avsVmInternalId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PureStorageAvsVmDetails(string vmId, string vmName, PureStorageAvsVmType vmType, string avsVmInternalId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             VmId = vmId;
             VmName = vmName;
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
         /// <summary> Name of the VMware VM using this set of volumes. </summary>
         public string VmName { get; }
         /// <summary> Type of the VMware VM using this set of volumes. </summary>
-        public VmType VmType { get; }
+        public PureStorageAvsVmType VmType { get; }
         /// <summary> Pure Storage's internal ID for this AVS VM. </summary>
         public string AvsVmInternalId { get; }
     }

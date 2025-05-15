@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
             {
                 return null;
             }
-            SoftDeletion softDeletion = default;
+            PureStorageSoftDeletionState softDeletion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
                     {
                         continue;
                     }
-                    softDeletion = SoftDeletion.DeserializeSoftDeletion(property.Value, options);
+                    softDeletion = PureStorageSoftDeletionState.DeserializePureStorageSoftDeletionState(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

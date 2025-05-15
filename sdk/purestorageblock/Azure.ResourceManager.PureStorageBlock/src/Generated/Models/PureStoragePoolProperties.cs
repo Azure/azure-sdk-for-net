@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.PureStorageBlock.Models
 {
@@ -51,7 +52,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
         /// <param name="provisionedBandwidthMbPerSec"> Total bandwidth provisioned for the pool, in MB/s. </param>
         /// <param name="reservationResourceId"> Azure resource ID of the Pure Storage Cloud service (reservation resource) this storage pool belongs to. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="availabilityZone"/>, <paramref name="vnetInjection"/> or <paramref name="reservationResourceId"/> is null. </exception>
-        public PureStoragePoolProperties(string availabilityZone, VnetInjection vnetInjection, long provisionedBandwidthMbPerSec, string reservationResourceId)
+        public PureStoragePoolProperties(string availabilityZone, PureStoragePoolVnetInjection vnetInjection, long provisionedBandwidthMbPerSec, ResourceIdentifier reservationResourceId)
         {
             Argument.AssertNotNull(availabilityZone, nameof(availabilityZone));
             Argument.AssertNotNull(vnetInjection, nameof(vnetInjection));
@@ -74,7 +75,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="reservationResourceId"> Azure resource ID of the Pure Storage Cloud service (reservation resource) this storage pool belongs to. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PureStoragePoolProperties(string storagePoolInternalId, string availabilityZone, VnetInjection vnetInjection, long? dataRetentionPeriod, long provisionedBandwidthMbPerSec, long? provisionedIops, PureStorageAvs avs, ProvisioningState? provisioningState, string reservationResourceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PureStoragePoolProperties(string storagePoolInternalId, string availabilityZone, PureStoragePoolVnetInjection vnetInjection, long? dataRetentionPeriod, long provisionedBandwidthMbPerSec, long? provisionedIops, PureStorageAvs avs, PureStorageProvisioningState? provisioningState, ResourceIdentifier reservationResourceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             StoragePoolInternalId = storagePoolInternalId;
             AvailabilityZone = availabilityZone;
@@ -98,7 +99,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
         /// <summary> Azure Availability Zone the Pool is located in. </summary>
         public string AvailabilityZone { get; set; }
         /// <summary> Network properties of the storage pool. </summary>
-        public VnetInjection VnetInjection { get; set; }
+        public PureStoragePoolVnetInjection VnetInjection { get; set; }
         /// <summary> How long a destroyed object is kept before being eradicated, in seconds. </summary>
         public long? DataRetentionPeriod { get; }
         /// <summary> Total bandwidth provisioned for the pool, in MB/s. </summary>
@@ -108,8 +109,8 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
         /// <summary> AVS connection state summary. </summary>
         public PureStorageAvs Avs { get; }
         /// <summary> Provisioning state of the resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public PureStorageProvisioningState? ProvisioningState { get; }
         /// <summary> Azure resource ID of the Pure Storage Cloud service (reservation resource) this storage pool belongs to. </summary>
-        public string ReservationResourceId { get; set; }
+        public ResourceIdentifier ReservationResourceId { get; set; }
     }
 }

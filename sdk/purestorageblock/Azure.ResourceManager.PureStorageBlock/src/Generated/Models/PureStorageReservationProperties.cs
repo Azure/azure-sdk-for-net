@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
         /// <param name="marketplace"> Marketplace details. </param>
         /// <param name="user"> User details. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="marketplace"/> or <paramref name="user"/> is null. </exception>
-        public PureStorageReservationProperties(MarketplaceDetails marketplace, UserDetails user)
+        public PureStorageReservationProperties(PureStorageMarketplaceDetails marketplace, PureStorageUserDetails user)
         {
             Argument.AssertNotNull(marketplace, nameof(marketplace));
             Argument.AssertNotNull(user, nameof(user));
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
         /// <param name="user"> User details. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PureStorageReservationProperties(string reservationInternalId, MarketplaceDetails marketplace, UserDetails user, ProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PureStorageReservationProperties(string reservationInternalId, PureStorageMarketplaceDetails marketplace, PureStorageUserDetails user, PureStorageProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ReservationInternalId = reservationInternalId;
             Marketplace = marketplace;
@@ -81,10 +81,10 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
         /// <summary> Pure Storage's internal ID for the reservation. </summary>
         public string ReservationInternalId { get; }
         /// <summary> Marketplace details. </summary>
-        public MarketplaceDetails Marketplace { get; set; }
+        public PureStorageMarketplaceDetails Marketplace { get; set; }
         /// <summary> User details. </summary>
-        public UserDetails User { get; set; }
+        public PureStorageUserDetails User { get; set; }
         /// <summary> Provisioning state of the resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public PureStorageProvisioningState? ProvisioningState { get; }
     }
 }

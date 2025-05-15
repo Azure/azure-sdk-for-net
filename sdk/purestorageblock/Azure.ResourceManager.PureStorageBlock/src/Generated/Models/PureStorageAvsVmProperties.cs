@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
         /// <param name="space"> Contains properties related to used Flash space. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PureStorageAvsVmProperties(string storagePoolInternalId, ResourceIdentifier storagePoolResourceId, string displayName, DateTimeOffset? createdOn, SoftDeletion softDeletion, VolumeContainerType? volumeContainerType, PureStorageAvsVmDetails avs, Space space, ResourceProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PureStorageAvsVmProperties(string storagePoolInternalId, ResourceIdentifier storagePoolResourceId, string displayName, DateTimeOffset? createdOn, PureStorageSoftDeletionState softDeletion, PureStorageAvsVmVolumeContainerType? volumeContainerType, PureStorageAvsVmDetails avs, PureStorageSpaceUsage space, PureStorageProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             StoragePoolInternalId = storagePoolInternalId;
             StoragePoolResourceId = storagePoolResourceId;
@@ -85,14 +85,14 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
         /// <summary> Date at which the AVS VM was created, as an RFC 3339 timestamp. </summary>
         public DateTimeOffset? CreatedOn { get; }
         /// <summary> AVS VM's soft-deletion state. </summary>
-        public SoftDeletion SoftDeletion { get; }
+        public PureStorageSoftDeletionState SoftDeletion { get; }
         /// <summary> Specify which control plane handles the lifecycle of the volume container. </summary>
-        public VolumeContainerType? VolumeContainerType { get; }
+        public PureStorageAvsVmVolumeContainerType? VolumeContainerType { get; }
         /// <summary> AVS VM details. </summary>
         public PureStorageAvsVmDetails Avs { get; }
         /// <summary> Contains properties related to used Flash space. </summary>
-        public Space Space { get; }
+        public PureStorageSpaceUsage Space { get; }
         /// <summary> Provisioning state of the resource. </summary>
-        public ResourceProvisioningState? ProvisioningState { get; }
+        public PureStorageProvisioningState? ProvisioningState { get; }
     }
 }

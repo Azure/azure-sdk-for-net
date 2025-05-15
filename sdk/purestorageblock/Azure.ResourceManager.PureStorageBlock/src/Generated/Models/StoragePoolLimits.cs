@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
         /// <param name="provisionedIops"> Allowed provisioned IOPS range for a storage pool, as a number of operations. </param>
         /// <param name="physicalAvailabilityZones"> List of physical availability zones in the region in which storage pools can be deployed; some Azure regions do not support the necessary resources in all availability zones. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="provisionedBandwidthMbPerSec"/>, <paramref name="provisionedIops"/> or <paramref name="physicalAvailabilityZones"/> is null. </exception>
-        internal StoragePoolLimits(RangeLimits provisionedBandwidthMbPerSec, RangeLimits provisionedIops, IEnumerable<string> physicalAvailabilityZones)
+        internal StoragePoolLimits(PropertyValueRangeLimits provisionedBandwidthMbPerSec, PropertyValueRangeLimits provisionedIops, IEnumerable<string> physicalAvailabilityZones)
         {
             Argument.AssertNotNull(provisionedBandwidthMbPerSec, nameof(provisionedBandwidthMbPerSec));
             Argument.AssertNotNull(provisionedIops, nameof(provisionedIops));
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
         /// <param name="provisionedIops"> Allowed provisioned IOPS range for a storage pool, as a number of operations. </param>
         /// <param name="physicalAvailabilityZones"> List of physical availability zones in the region in which storage pools can be deployed; some Azure regions do not support the necessary resources in all availability zones. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StoragePoolLimits(RangeLimits provisionedBandwidthMbPerSec, RangeLimits provisionedIops, IReadOnlyList<string> physicalAvailabilityZones, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal StoragePoolLimits(PropertyValueRangeLimits provisionedBandwidthMbPerSec, PropertyValueRangeLimits provisionedIops, IReadOnlyList<string> physicalAvailabilityZones, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProvisionedBandwidthMbPerSec = provisionedBandwidthMbPerSec;
             ProvisionedIops = provisionedIops;
@@ -81,9 +81,9 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
         }
 
         /// <summary> Allowed provisioned bandwidth range for a storage pool, in MB/s. </summary>
-        public RangeLimits ProvisionedBandwidthMbPerSec { get; }
+        public PropertyValueRangeLimits ProvisionedBandwidthMbPerSec { get; }
         /// <summary> Allowed provisioned IOPS range for a storage pool, as a number of operations. </summary>
-        public RangeLimits ProvisionedIops { get; }
+        public PropertyValueRangeLimits ProvisionedIops { get; }
         /// <summary> List of physical availability zones in the region in which storage pools can be deployed; some Azure regions do not support the necessary resources in all availability zones. </summary>
         public IReadOnlyList<string> PhysicalAvailabilityZones { get; }
     }

@@ -75,20 +75,20 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
             {
                 return null;
             }
-            RangeLimits frequency = default;
-            RangeLimits retention = default;
+            PropertyValueRangeLimits frequency = default;
+            PropertyValueRangeLimits retention = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("frequency"u8))
                 {
-                    frequency = RangeLimits.DeserializeRangeLimits(property.Value, options);
+                    frequency = PropertyValueRangeLimits.DeserializePropertyValueRangeLimits(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("retention"u8))
                 {
-                    retention = RangeLimits.DeserializeRangeLimits(property.Value, options);
+                    retention = PropertyValueRangeLimits.DeserializePropertyValueRangeLimits(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

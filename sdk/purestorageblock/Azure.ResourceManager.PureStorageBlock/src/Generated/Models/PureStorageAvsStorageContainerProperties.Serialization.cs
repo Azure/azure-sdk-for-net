@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
             {
                 return null;
             }
-            Space space = default;
+            PureStorageSpaceUsage space = default;
             string resourceName = default;
             long? provisionedLimit = default;
             string datastore = default;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
                     {
                         continue;
                     }
-                    space = Space.DeserializeSpace(property.Value, options);
+                    space = PureStorageSpaceUsage.DeserializePureStorageSpaceUsage(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("resourceName"u8))

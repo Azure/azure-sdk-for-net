@@ -53,13 +53,13 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
         /// <summary> Initializes a new instance of <see cref="ReservationUpdateProperties"/>. </summary>
         /// <param name="user"> User details. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ReservationUpdateProperties(UserDetails user, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ReservationUpdateProperties(PureStorageUserDetails user, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             User = user;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> User details. </summary>
-        public UserDetails User { get; set; }
+        public PureStorageUserDetails User { get; set; }
     }
 }

@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
             }
             string vmId = default;
             string vmName = default;
-            VmType vmType = default;
+            PureStorageAvsVmType vmType = default;
             string avsVmInternalId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
                 }
                 if (property.NameEquals("vmType"u8))
                 {
-                    vmType = new VmType(property.Value.GetString());
+                    vmType = new PureStorageAvsVmType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("avsVmInternalId"u8))

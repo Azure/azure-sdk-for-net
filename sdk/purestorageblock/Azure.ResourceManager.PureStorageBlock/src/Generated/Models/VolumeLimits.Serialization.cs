@@ -73,14 +73,14 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
             {
                 return null;
             }
-            RangeLimits provisionedSize = default;
+            PropertyValueRangeLimits provisionedSize = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("provisionedSize"u8))
                 {
-                    provisionedSize = RangeLimits.DeserializeRangeLimits(property.Value, options);
+                    provisionedSize = PropertyValueRangeLimits.DeserializePropertyValueRangeLimits(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
         /// <param name="frequency"> internal. </param>
         /// <param name="retention"> internal. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="frequency"/> or <paramref name="retention"/> is null. </exception>
-        internal ProtectionPolicyLimits(RangeLimits frequency, RangeLimits retention)
+        internal ProtectionPolicyLimits(PropertyValueRangeLimits frequency, PropertyValueRangeLimits retention)
         {
             Argument.AssertNotNull(frequency, nameof(frequency));
             Argument.AssertNotNull(retention, nameof(retention));
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
         /// <param name="frequency"> internal. </param>
         /// <param name="retention"> internal. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ProtectionPolicyLimits(RangeLimits frequency, RangeLimits retention, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ProtectionPolicyLimits(PropertyValueRangeLimits frequency, PropertyValueRangeLimits retention, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Frequency = frequency;
             Retention = retention;
@@ -75,8 +75,8 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
         }
 
         /// <summary> internal. </summary>
-        public RangeLimits Frequency { get; }
+        public PropertyValueRangeLimits Frequency { get; }
         /// <summary> internal. </summary>
-        public RangeLimits Retention { get; }
+        public PropertyValueRangeLimits Retention { get; }
     }
 }

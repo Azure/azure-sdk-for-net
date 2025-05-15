@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
             {
                 return null;
             }
-            HealthDetails health = default;
+            PureStorageHealthDetails health = default;
             IReadOnlyList<PureStorageHealthAlert> alerts = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
             {
                 if (property.NameEquals("health"u8))
                 {
-                    health = HealthDetails.DeserializeHealthDetails(property.Value, options);
+                    health = PureStorageHealthDetails.DeserializePureStorageHealthDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("alerts"u8))

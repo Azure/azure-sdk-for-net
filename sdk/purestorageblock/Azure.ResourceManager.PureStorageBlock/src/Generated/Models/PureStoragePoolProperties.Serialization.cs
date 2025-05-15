@@ -106,13 +106,13 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
             }
             string storagePoolInternalId = default;
             string availabilityZone = default;
-            VnetInjection vnetInjection = default;
+            PureStoragePoolVnetInjection vnetInjection = default;
             long? dataRetentionPeriod = default;
             long provisionedBandwidthMbPerSec = default;
             long? provisionedIops = default;
             PureStorageAvs avs = default;
-            ProvisioningState? provisioningState = default;
-            string reservationResourceId = default;
+            PureStorageProvisioningState? provisioningState = default;
+            ResourceIdentifier reservationResourceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
                 }
                 if (property.NameEquals("vnetInjection"u8))
                 {
-                    vnetInjection = VnetInjection.DeserializeVnetInjection(property.Value, options);
+                    vnetInjection = PureStoragePoolVnetInjection.DeserializePureStoragePoolVnetInjection(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("dataRetentionPeriod"u8))
@@ -170,12 +170,12 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
                     {
                         continue;
                     }
-                    provisioningState = new ProvisioningState(property.Value.GetString());
+                    provisioningState = new PureStorageProvisioningState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("reservationResourceId"u8))
                 {
-                    reservationResourceId = property.Value.GetString();
+                    reservationResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

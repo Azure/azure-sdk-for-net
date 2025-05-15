@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
         /// <param name="billingUsageProperties"> A list of detailed billing usage properties. </param>
         /// <param name="overallStatusMessage"> Overall status message of the billing usage report. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="timestamp"/>, <paramref name="billingUsageProperties"/> or <paramref name="overallStatusMessage"/> is null. </exception>
-        internal ReservationBillingUsageReport(string timestamp, IEnumerable<BillingUsageProperty> billingUsageProperties, string overallStatusMessage)
+        internal ReservationBillingUsageReport(string timestamp, IEnumerable<PureStorageBillingUsageProperty> billingUsageProperties, string overallStatusMessage)
         {
             Argument.AssertNotNull(timestamp, nameof(timestamp));
             Argument.AssertNotNull(billingUsageProperties, nameof(billingUsageProperties));
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
         /// <param name="billingUsageProperties"> A list of detailed billing usage properties. </param>
         /// <param name="overallStatusMessage"> Overall status message of the billing usage report. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ReservationBillingUsageReport(string timestamp, IReadOnlyList<BillingUsageProperty> billingUsageProperties, string overallStatusMessage, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ReservationBillingUsageReport(string timestamp, IReadOnlyList<PureStorageBillingUsageProperty> billingUsageProperties, string overallStatusMessage, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Timestamp = timestamp;
             BillingUsageProperties = billingUsageProperties;
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
         /// <summary> Latest formatted billing report for this reservation. </summary>
         public string Timestamp { get; }
         /// <summary> A list of detailed billing usage properties. </summary>
-        public IReadOnlyList<BillingUsageProperty> BillingUsageProperties { get; }
+        public IReadOnlyList<PureStorageBillingUsageProperty> BillingUsageProperties { get; }
         /// <summary> Overall status message of the billing usage report. </summary>
         public string OverallStatusMessage { get; }
     }

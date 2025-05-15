@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
         /// <param name="iopsLimit"> internal. </param>
         /// <param name="bandwidthLimit"> internal. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="iopsLimit"/> or <paramref name="bandwidthLimit"/> is null. </exception>
-        internal PerformancePolicyLimits(RangeLimits iopsLimit, RangeLimits bandwidthLimit)
+        internal PerformancePolicyLimits(PropertyValueRangeLimits iopsLimit, PropertyValueRangeLimits bandwidthLimit)
         {
             Argument.AssertNotNull(iopsLimit, nameof(iopsLimit));
             Argument.AssertNotNull(bandwidthLimit, nameof(bandwidthLimit));
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
         /// <param name="iopsLimit"> internal. </param>
         /// <param name="bandwidthLimit"> internal. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PerformancePolicyLimits(RangeLimits iopsLimit, RangeLimits bandwidthLimit, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PerformancePolicyLimits(PropertyValueRangeLimits iopsLimit, PropertyValueRangeLimits bandwidthLimit, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IopsLimit = iopsLimit;
             BandwidthLimit = bandwidthLimit;
@@ -75,8 +75,8 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
         }
 
         /// <summary> internal. </summary>
-        public RangeLimits IopsLimit { get; }
+        public PropertyValueRangeLimits IopsLimit { get; }
         /// <summary> internal. </summary>
-        public RangeLimits BandwidthLimit { get; }
+        public PropertyValueRangeLimits BandwidthLimit { get; }
     }
 }

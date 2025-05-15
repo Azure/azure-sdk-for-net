@@ -218,8 +218,8 @@ namespace Azure.ResourceManager.PureStorageBlock.Samples
             PureStoragePoolResource pureStoragePool = client.GetPureStoragePoolResource(pureStoragePoolResourceId);
 
             // invoke the operation
-            StoragePoolEnableAvsConnectionPost properties = new StoragePoolEnableAvsConnectionPost("tghkgktlddwlszbeh");
-            await pureStoragePool.EnableAvsConnectionAsync(WaitUntil.Completed, properties);
+            StoragePoolEnableAvsConnectionContent content = new StoragePoolEnableAvsConnectionContent(new ResourceIdentifier("tghkgktlddwlszbeh"));
+            await pureStoragePool.EnableAvsConnectionAsync(WaitUntil.Completed, content);
 
             Console.WriteLine("Succeeded");
         }
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Samples
             PureStoragePoolResource pureStoragePool = client.GetPureStoragePoolResource(pureStoragePoolResourceId);
 
             // invoke the operation
-            StoragePoolFinalizeAvsConnectionPost properties = new StoragePoolFinalizeAvsConnectionPost
+            StoragePoolFinalizeAvsConnectionContent content = new StoragePoolFinalizeAvsConnectionContent
             {
                 ServiceInitializationDataEnc = "hlgzaxrohv",
                 ServiceInitializationData = new ServiceInitializationInfo
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Samples
                     VSphereCertificate = "s",
                 },
             };
-            await pureStoragePool.FinalizeAvsConnectionAsync(WaitUntil.Completed, properties);
+            await pureStoragePool.FinalizeAvsConnectionAsync(WaitUntil.Completed, content);
 
             Console.WriteLine("Succeeded");
         }

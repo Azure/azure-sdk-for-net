@@ -120,11 +120,11 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
             ResourceIdentifier storagePoolResourceId = default;
             string displayName = default;
             DateTimeOffset? createdTimestamp = default;
-            SoftDeletion softDeletion = default;
-            VolumeContainerType? volumeContainerType = default;
+            PureStorageSoftDeletionState softDeletion = default;
+            PureStorageAvsVmVolumeContainerType? volumeContainerType = default;
             PureStorageAvsVmDetails avs = default;
-            Space space = default;
-            ResourceProvisioningState? provisioningState = default;
+            PureStorageSpaceUsage space = default;
+            PureStorageProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
                     {
                         continue;
                     }
-                    softDeletion = SoftDeletion.DeserializeSoftDeletion(property.Value, options);
+                    softDeletion = PureStorageSoftDeletionState.DeserializePureStorageSoftDeletionState(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("volumeContainerType"u8))
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
                     {
                         continue;
                     }
-                    volumeContainerType = new VolumeContainerType(property.Value.GetString());
+                    volumeContainerType = new PureStorageAvsVmVolumeContainerType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("avs"u8))
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
                     {
                         continue;
                     }
-                    space = Space.DeserializeSpace(property.Value, options);
+                    space = PureStorageSpaceUsage.DeserializePureStorageSpaceUsage(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("provisioningState"u8))
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
                     {
                         continue;
                     }
-                    provisioningState = new ResourceProvisioningState(property.Value.GetString());
+                    provisioningState = new PureStorageProvisioningState(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

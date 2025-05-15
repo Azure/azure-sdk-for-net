@@ -846,7 +846,7 @@ namespace Azure.ResourceManager.PureStorageBlock
             }
         }
 
-        internal RequestUriBuilder CreateEnableAvsConnectionRequestUri(string subscriptionId, string resourceGroupName, string storagePoolName, StoragePoolEnableAvsConnectionPost properties)
+        internal RequestUriBuilder CreateEnableAvsConnectionRequestUri(string subscriptionId, string resourceGroupName, string storagePoolName, StoragePoolEnableAvsConnectionContent content)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -861,7 +861,7 @@ namespace Azure.ResourceManager.PureStorageBlock
             return uri;
         }
 
-        internal HttpMessage CreateEnableAvsConnectionRequest(string subscriptionId, string resourceGroupName, string storagePoolName, StoragePoolEnableAvsConnectionPost properties)
+        internal HttpMessage CreateEnableAvsConnectionRequest(string subscriptionId, string resourceGroupName, string storagePoolName, StoragePoolEnableAvsConnectionContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -879,9 +879,9 @@ namespace Azure.ResourceManager.PureStorageBlock
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(properties, ModelSerializationExtensions.WireOptions);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
@@ -890,18 +890,18 @@ namespace Azure.ResourceManager.PureStorageBlock
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="storagePoolName"> Name of the storage pool. </param>
-        /// <param name="properties"> Storage pool EnableAvsConnection properties. </param>
+        /// <param name="content"> Storage pool EnableAvsConnection properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="storagePoolName"/> or <paramref name="properties"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="storagePoolName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="storagePoolName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> EnableAvsConnectionAsync(string subscriptionId, string resourceGroupName, string storagePoolName, StoragePoolEnableAvsConnectionPost properties, CancellationToken cancellationToken = default)
+        public async Task<Response> EnableAvsConnectionAsync(string subscriptionId, string resourceGroupName, string storagePoolName, StoragePoolEnableAvsConnectionContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(storagePoolName, nameof(storagePoolName));
-            Argument.AssertNotNull(properties, nameof(properties));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateEnableAvsConnectionRequest(subscriptionId, resourceGroupName, storagePoolName, properties);
+            using var message = CreateEnableAvsConnectionRequest(subscriptionId, resourceGroupName, storagePoolName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -916,18 +916,18 @@ namespace Azure.ResourceManager.PureStorageBlock
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="storagePoolName"> Name of the storage pool. </param>
-        /// <param name="properties"> Storage pool EnableAvsConnection properties. </param>
+        /// <param name="content"> Storage pool EnableAvsConnection properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="storagePoolName"/> or <paramref name="properties"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="storagePoolName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="storagePoolName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response EnableAvsConnection(string subscriptionId, string resourceGroupName, string storagePoolName, StoragePoolEnableAvsConnectionPost properties, CancellationToken cancellationToken = default)
+        public Response EnableAvsConnection(string subscriptionId, string resourceGroupName, string storagePoolName, StoragePoolEnableAvsConnectionContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(storagePoolName, nameof(storagePoolName));
-            Argument.AssertNotNull(properties, nameof(properties));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateEnableAvsConnectionRequest(subscriptionId, resourceGroupName, storagePoolName, properties);
+            using var message = CreateEnableAvsConnectionRequest(subscriptionId, resourceGroupName, storagePoolName, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1022,7 +1022,7 @@ namespace Azure.ResourceManager.PureStorageBlock
             }
         }
 
-        internal RequestUriBuilder CreateFinalizeAvsConnectionRequestUri(string subscriptionId, string resourceGroupName, string storagePoolName, StoragePoolFinalizeAvsConnectionPost properties)
+        internal RequestUriBuilder CreateFinalizeAvsConnectionRequestUri(string subscriptionId, string resourceGroupName, string storagePoolName, StoragePoolFinalizeAvsConnectionContent content)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -1037,7 +1037,7 @@ namespace Azure.ResourceManager.PureStorageBlock
             return uri;
         }
 
-        internal HttpMessage CreateFinalizeAvsConnectionRequest(string subscriptionId, string resourceGroupName, string storagePoolName, StoragePoolFinalizeAvsConnectionPost properties)
+        internal HttpMessage CreateFinalizeAvsConnectionRequest(string subscriptionId, string resourceGroupName, string storagePoolName, StoragePoolFinalizeAvsConnectionContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1055,9 +1055,9 @@ namespace Azure.ResourceManager.PureStorageBlock
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(properties, ModelSerializationExtensions.WireOptions);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
@@ -1066,18 +1066,18 @@ namespace Azure.ResourceManager.PureStorageBlock
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="storagePoolName"> Name of the storage pool. </param>
-        /// <param name="properties"> Storage pool FinalizeAvsConnection properties. </param>
+        /// <param name="content"> Storage pool FinalizeAvsConnection properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="storagePoolName"/> or <paramref name="properties"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="storagePoolName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="storagePoolName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> FinalizeAvsConnectionAsync(string subscriptionId, string resourceGroupName, string storagePoolName, StoragePoolFinalizeAvsConnectionPost properties, CancellationToken cancellationToken = default)
+        public async Task<Response> FinalizeAvsConnectionAsync(string subscriptionId, string resourceGroupName, string storagePoolName, StoragePoolFinalizeAvsConnectionContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(storagePoolName, nameof(storagePoolName));
-            Argument.AssertNotNull(properties, nameof(properties));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateFinalizeAvsConnectionRequest(subscriptionId, resourceGroupName, storagePoolName, properties);
+            using var message = CreateFinalizeAvsConnectionRequest(subscriptionId, resourceGroupName, storagePoolName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1092,18 +1092,18 @@ namespace Azure.ResourceManager.PureStorageBlock
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="storagePoolName"> Name of the storage pool. </param>
-        /// <param name="properties"> Storage pool FinalizeAvsConnection properties. </param>
+        /// <param name="content"> Storage pool FinalizeAvsConnection properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="storagePoolName"/> or <paramref name="properties"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="storagePoolName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="storagePoolName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response FinalizeAvsConnection(string subscriptionId, string resourceGroupName, string storagePoolName, StoragePoolFinalizeAvsConnectionPost properties, CancellationToken cancellationToken = default)
+        public Response FinalizeAvsConnection(string subscriptionId, string resourceGroupName, string storagePoolName, StoragePoolFinalizeAvsConnectionContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(storagePoolName, nameof(storagePoolName));
-            Argument.AssertNotNull(properties, nameof(properties));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateFinalizeAvsConnectionRequest(subscriptionId, resourceGroupName, storagePoolName, properties);
+            using var message = CreateFinalizeAvsConnectionRequest(subscriptionId, resourceGroupName, storagePoolName, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.PureStorageBlock.Models
 {
@@ -54,7 +55,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
         /// <param name="clusterResourceId"> Azure resource ID of the AVS SDDC the pool is connecting to. </param>
         /// <param name="serviceAccountUsername"> Requested service account username. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ServiceInitializationHandle(string clusterResourceId, string serviceAccountUsername, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ServiceInitializationHandle(ResourceIdentifier clusterResourceId, string serviceAccountUsername, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ClusterResourceId = clusterResourceId;
             ServiceAccountUsername = serviceAccountUsername;
@@ -62,7 +63,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
         }
 
         /// <summary> Azure resource ID of the AVS SDDC the pool is connecting to. </summary>
-        public string ClusterResourceId { get; }
+        public ResourceIdentifier ClusterResourceId { get; }
         /// <summary> Requested service account username. </summary>
         public string ServiceAccountUsername { get; }
     }

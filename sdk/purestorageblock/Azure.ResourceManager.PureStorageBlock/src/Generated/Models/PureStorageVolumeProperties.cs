@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.PureStorageBlock.Models
 {
@@ -48,7 +49,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
         /// <summary> Initializes a new instance of <see cref="PureStorageVolumeProperties"/>. </summary>
         /// <param name="softDeletion"> Volume's soft-deletion state. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="softDeletion"/> is null. </exception>
-        internal PureStorageVolumeProperties(SoftDeletion softDeletion)
+        internal PureStorageVolumeProperties(PureStorageSoftDeletionState softDeletion)
         {
             Argument.AssertNotNull(softDeletion, nameof(softDeletion));
 
@@ -68,7 +69,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
         /// <param name="avs"> AVS-specific volume information. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PureStorageVolumeProperties(string storagePoolInternalId, string storagePoolResourceId, string volumeInternalId, string displayName, Space space, SoftDeletion softDeletion, string createdTimestamp, long? provisionedSize, VolumeType? volumeType, PureStorageAvsDiskDetails avs, ResourceProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PureStorageVolumeProperties(string storagePoolInternalId, ResourceIdentifier storagePoolResourceId, string volumeInternalId, string displayName, PureStorageSpaceUsage space, PureStorageSoftDeletionState softDeletion, string createdTimestamp, long? provisionedSize, PureStorageAvsVmVolumeType? volumeType, PureStorageAvsDiskDetails avs, PureStorageProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             StoragePoolInternalId = storagePoolInternalId;
             StoragePoolResourceId = storagePoolResourceId;
@@ -92,24 +93,24 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
         /// <summary> Pure Storage's internal ID for the storage pool containing the volume. </summary>
         public string StoragePoolInternalId { get; }
         /// <summary> Azure Resource ID of the storage pool containing this volume. </summary>
-        public string StoragePoolResourceId { get; }
+        public ResourceIdentifier StoragePoolResourceId { get; }
         /// <summary> Pure Storage's internal ID for the volume. </summary>
         public string VolumeInternalId { get; }
         /// <summary> Human-readable name of the volume. </summary>
         public string DisplayName { get; }
         /// <summary> Storage space usage. </summary>
-        public Space Space { get; }
+        public PureStorageSpaceUsage Space { get; }
         /// <summary> Volume's soft-deletion state. </summary>
-        public SoftDeletion SoftDeletion { get; }
+        public PureStorageSoftDeletionState SoftDeletion { get; }
         /// <summary> Volume creation date, as an RFC 3339 timestamp. </summary>
         public string CreatedTimestamp { get; }
         /// <summary> Currently provisioned size of the volume, in bytes. </summary>
         public long? ProvisionedSize { get; }
         /// <summary> Specify which control plane handles the lifecycle of the volume. </summary>
-        public VolumeType? VolumeType { get; }
+        public PureStorageAvsVmVolumeType? VolumeType { get; }
         /// <summary> AVS-specific volume information. </summary>
         public PureStorageAvsDiskDetails Avs { get; }
         /// <summary> Provisioning state of the resource. </summary>
-        public ResourceProvisioningState? ProvisioningState { get; }
+        public PureStorageProvisioningState? ProvisioningState { get; }
     }
 }

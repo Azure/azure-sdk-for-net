@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
                 return null;
             }
             string timestamp = default;
-            IReadOnlyList<BillingUsageProperty> billingUsageProperties = default;
+            IReadOnlyList<PureStorageBillingUsageProperty> billingUsageProperties = default;
             string overallStatusMessage = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -96,10 +96,10 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
                 }
                 if (property.NameEquals("billingUsageProperties"u8))
                 {
-                    List<BillingUsageProperty> array = new List<BillingUsageProperty>();
+                    List<PureStorageBillingUsageProperty> array = new List<PureStorageBillingUsageProperty>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BillingUsageProperty.DeserializeBillingUsageProperty(item, options));
+                        array.Add(PureStorageBillingUsageProperty.DeserializePureStorageBillingUsageProperty(item, options));
                     }
                     billingUsageProperties = array;
                     continue;

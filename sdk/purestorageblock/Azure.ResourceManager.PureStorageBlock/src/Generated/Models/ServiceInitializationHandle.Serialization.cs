@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
             {
                 return null;
             }
-            string sddcResourceId = default;
+            ResourceIdentifier sddcResourceId = default;
             string serviceAccountUsername = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -89,7 +89,11 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
             {
                 if (property.NameEquals("sddcResourceId"u8))
                 {
-                    sddcResourceId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    sddcResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("serviceAccountUsername"u8))

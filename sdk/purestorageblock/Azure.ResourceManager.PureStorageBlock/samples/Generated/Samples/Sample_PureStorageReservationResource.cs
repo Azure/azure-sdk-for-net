@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Samples
             PureStorageReservationResource pureStorageReservation = client.GetPureStorageReservationResource(pureStorageReservationResourceId);
 
             // invoke the operation
-            LimitDetails result = await pureStorageReservation.GetResourceLimitsAsync();
+            PureStorageResourceLimitDetails result = await pureStorageReservation.GetResourceLimitsAsync();
 
             Console.WriteLine($"Succeeded: {result}");
         }

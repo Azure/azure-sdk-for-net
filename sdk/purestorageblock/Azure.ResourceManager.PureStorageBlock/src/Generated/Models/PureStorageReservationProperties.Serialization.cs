@@ -86,9 +86,9 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
                 return null;
             }
             string reservationInternalId = default;
-            MarketplaceDetails marketplace = default;
-            UserDetails user = default;
-            ProvisioningState? provisioningState = default;
+            PureStorageMarketplaceDetails marketplace = default;
+            PureStorageUserDetails user = default;
+            PureStorageProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,12 +100,12 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
                 }
                 if (property.NameEquals("marketplace"u8))
                 {
-                    marketplace = MarketplaceDetails.DeserializeMarketplaceDetails(property.Value, options);
+                    marketplace = PureStorageMarketplaceDetails.DeserializePureStorageMarketplaceDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("user"u8))
                 {
-                    user = UserDetails.DeserializeUserDetails(property.Value, options);
+                    user = PureStorageUserDetails.DeserializePureStorageUserDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("provisioningState"u8))
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
                     {
                         continue;
                     }
-                    provisioningState = new ProvisioningState(property.Value.GetString());
+                    provisioningState = new PureStorageProvisioningState(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

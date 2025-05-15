@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Samples
             string storagePoolName = "storagePoolname";
             PureStoragePoolData data = new PureStoragePoolData(new AzureLocation("lonlc"))
             {
-                Properties = new PureStoragePoolProperties("vknyl", new VnetInjection("tnlctolrxdvnkjiphlrdxq", "zbumtytyqwewjcyckwqchiypshv"), 17L, "xiowoxnbtcotutcmmrofvgdi"),
+                Properties = new PureStoragePoolProperties("vknyl", new PureStoragePoolVnetInjection(new ResourceIdentifier("tnlctolrxdvnkjiphlrdxq"), new ResourceIdentifier("zbumtytyqwewjcyckwqchiypshv")), 17L, new ResourceIdentifier("xiowoxnbtcotutcmmrofvgdi")),
                 Identity = new ManagedServiceIdentity("None")
                 {
                     UserAssignedIdentities =

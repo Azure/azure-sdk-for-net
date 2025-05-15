@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
         /// <param name="datastore"> VMware datastore associated with this storage container (if any). </param>
         /// <param name="mounted"> Whether the datastore is mounted in VMware or not. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PureStorageAvsStorageContainerProperties(Space space, string resourceName, long? provisionedLimit, string datastore, bool? mounted, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PureStorageAvsStorageContainerProperties(PureStorageSpaceUsage space, string resourceName, long? provisionedLimit, string datastore, bool? mounted, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Space = space;
             ResourceName = resourceName;
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
         }
 
         /// <summary> Storage space usage. </summary>
-        public Space Space { get; }
+        public PureStorageSpaceUsage Space { get; }
         /// <summary> Name of the storage container. </summary>
         public string ResourceName { get; }
         /// <summary> Maximum amount of bytes that can be provisioned in this storage container; it must be a multiple of 512; each time a volume is provisioned in this container, its provisionedSize will be counted against the provisionLimit and the provisioning will fail if it goes over (minimum: 1048576 (1MiB), maximum: 4503599627370496 (4PiB)); by default it is unrestricted. </summary>

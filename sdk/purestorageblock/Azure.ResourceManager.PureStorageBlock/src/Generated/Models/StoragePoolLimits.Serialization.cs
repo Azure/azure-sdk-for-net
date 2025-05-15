@@ -82,8 +82,8 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
             {
                 return null;
             }
-            RangeLimits provisionedBandwidthMbPerSec = default;
-            RangeLimits provisionedIops = default;
+            PropertyValueRangeLimits provisionedBandwidthMbPerSec = default;
+            PropertyValueRangeLimits provisionedIops = default;
             IReadOnlyList<string> physicalAvailabilityZones = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -91,12 +91,12 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
             {
                 if (property.NameEquals("provisionedBandwidthMbPerSec"u8))
                 {
-                    provisionedBandwidthMbPerSec = RangeLimits.DeserializeRangeLimits(property.Value, options);
+                    provisionedBandwidthMbPerSec = PropertyValueRangeLimits.DeserializePropertyValueRangeLimits(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("provisionedIops"u8))
                 {
-                    provisionedIops = RangeLimits.DeserializeRangeLimits(property.Value, options);
+                    provisionedIops = PropertyValueRangeLimits.DeserializePropertyValueRangeLimits(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("physicalAvailabilityZones"u8))

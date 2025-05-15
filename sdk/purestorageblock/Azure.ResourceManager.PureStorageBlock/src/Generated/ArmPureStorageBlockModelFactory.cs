@@ -46,30 +46,30 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
         /// <param name="user"> User details. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <returns> A new <see cref="Models.PureStorageReservationProperties"/> instance for mocking. </returns>
-        public static PureStorageReservationProperties PureStorageReservationProperties(string reservationInternalId = null, MarketplaceDetails marketplace = null, UserDetails user = null, ProvisioningState? provisioningState = null)
+        public static PureStorageReservationProperties PureStorageReservationProperties(string reservationInternalId = null, PureStorageMarketplaceDetails marketplace = null, PureStorageUserDetails user = null, PureStorageProvisioningState? provisioningState = null)
         {
             return new PureStorageReservationProperties(reservationInternalId, marketplace, user, provisioningState, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.MarketplaceDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.PureStorageMarketplaceDetails"/>. </summary>
         /// <param name="subscriptionId"> Marketplace subscription ID. </param>
         /// <param name="subscriptionStatus"> Marketplace subscription status. </param>
         /// <param name="offerDetails"> Offer details of the marketplace subscription. </param>
-        /// <returns> A new <see cref="Models.MarketplaceDetails"/> instance for mocking. </returns>
-        public static MarketplaceDetails MarketplaceDetails(string subscriptionId = null, MarketplaceSubscriptionStatus? subscriptionStatus = null, OfferDetails offerDetails = null)
+        /// <returns> A new <see cref="Models.PureStorageMarketplaceDetails"/> instance for mocking. </returns>
+        public static PureStorageMarketplaceDetails PureStorageMarketplaceDetails(string subscriptionId = null, PureStorageMarketplaceSubscriptionStatus? subscriptionStatus = null, PureStorageOfferDetails offerDetails = null)
         {
-            return new MarketplaceDetails(subscriptionId, subscriptionStatus, offerDetails, serializedAdditionalRawData: null);
+            return new PureStorageMarketplaceDetails(subscriptionId, subscriptionStatus, offerDetails, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.LimitDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.PureStorageResourceLimitDetails"/>. </summary>
         /// <param name="storagePool"> Limits used for storage pool resources. </param>
         /// <param name="volumeProvisionedSize"> Limits used for volume resources. </param>
         /// <param name="protectionPolicy"> internal. </param>
         /// <param name="performancePolicy"> internal. </param>
-        /// <returns> A new <see cref="Models.LimitDetails"/> instance for mocking. </returns>
-        public static LimitDetails LimitDetails(StoragePoolLimits storagePool = null, RangeLimits volumeProvisionedSize = null, ProtectionPolicyLimits protectionPolicy = null, PerformancePolicyLimits performancePolicy = null)
+        /// <returns> A new <see cref="Models.PureStorageResourceLimitDetails"/> instance for mocking. </returns>
+        public static PureStorageResourceLimitDetails PureStorageResourceLimitDetails(StoragePoolLimits storagePool = null, PropertyValueRangeLimits volumeProvisionedSize = null, ProtectionPolicyLimits protectionPolicy = null, PerformancePolicyLimits performancePolicy = null)
         {
-            return new LimitDetails(storagePool, volumeProvisionedSize != null ? new VolumeLimits(volumeProvisionedSize, serializedAdditionalRawData: null) : null, protectionPolicy, performancePolicy, serializedAdditionalRawData: null);
+            return new PureStorageResourceLimitDetails(storagePool, volumeProvisionedSize != null ? new VolumeLimits(volumeProvisionedSize, serializedAdditionalRawData: null) : null, protectionPolicy, performancePolicy, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.StoragePoolLimits"/>. </summary>
@@ -77,27 +77,27 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
         /// <param name="provisionedIops"> Allowed provisioned IOPS range for a storage pool, as a number of operations. </param>
         /// <param name="physicalAvailabilityZones"> List of physical availability zones in the region in which storage pools can be deployed; some Azure regions do not support the necessary resources in all availability zones. </param>
         /// <returns> A new <see cref="Models.StoragePoolLimits"/> instance for mocking. </returns>
-        public static StoragePoolLimits StoragePoolLimits(RangeLimits provisionedBandwidthMbPerSec = null, RangeLimits provisionedIops = null, IEnumerable<string> physicalAvailabilityZones = null)
+        public static StoragePoolLimits StoragePoolLimits(PropertyValueRangeLimits provisionedBandwidthMbPerSec = null, PropertyValueRangeLimits provisionedIops = null, IEnumerable<string> physicalAvailabilityZones = null)
         {
             physicalAvailabilityZones ??= new List<string>();
 
             return new StoragePoolLimits(provisionedBandwidthMbPerSec, provisionedIops, physicalAvailabilityZones?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.RangeLimits"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.PropertyValueRangeLimits"/>. </summary>
         /// <param name="min"> Minimum value of the property. </param>
         /// <param name="max"> Maximum value of the property. </param>
-        /// <returns> A new <see cref="Models.RangeLimits"/> instance for mocking. </returns>
-        public static RangeLimits RangeLimits(long min = default, long max = default)
+        /// <returns> A new <see cref="Models.PropertyValueRangeLimits"/> instance for mocking. </returns>
+        public static PropertyValueRangeLimits PropertyValueRangeLimits(long min = default, long max = default)
         {
-            return new RangeLimits(min, max, serializedAdditionalRawData: null);
+            return new PropertyValueRangeLimits(min, max, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ProtectionPolicyLimits"/>. </summary>
         /// <param name="frequency"> internal. </param>
         /// <param name="retention"> internal. </param>
         /// <returns> A new <see cref="Models.ProtectionPolicyLimits"/> instance for mocking. </returns>
-        public static ProtectionPolicyLimits ProtectionPolicyLimits(RangeLimits frequency = null, RangeLimits retention = null)
+        public static ProtectionPolicyLimits ProtectionPolicyLimits(PropertyValueRangeLimits frequency = null, PropertyValueRangeLimits retention = null)
         {
             return new ProtectionPolicyLimits(frequency, retention, serializedAdditionalRawData: null);
         }
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
         /// <param name="iopsLimit"> internal. </param>
         /// <param name="bandwidthLimit"> internal. </param>
         /// <returns> A new <see cref="Models.PerformancePolicyLimits"/> instance for mocking. </returns>
-        public static PerformancePolicyLimits PerformancePolicyLimits(RangeLimits iopsLimit = null, RangeLimits bandwidthLimit = null)
+        public static PerformancePolicyLimits PerformancePolicyLimits(PropertyValueRangeLimits iopsLimit = null, PropertyValueRangeLimits bandwidthLimit = null)
         {
             return new PerformancePolicyLimits(iopsLimit, bandwidthLimit, serializedAdditionalRawData: null);
         }
@@ -152,14 +152,14 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
         /// <param name="billingUsageProperties"> A list of detailed billing usage properties. </param>
         /// <param name="overallStatusMessage"> Overall status message of the billing usage report. </param>
         /// <returns> A new <see cref="Models.ReservationBillingUsageReport"/> instance for mocking. </returns>
-        public static ReservationBillingUsageReport ReservationBillingUsageReport(string timestamp = null, IEnumerable<BillingUsageProperty> billingUsageProperties = null, string overallStatusMessage = null)
+        public static ReservationBillingUsageReport ReservationBillingUsageReport(string timestamp = null, IEnumerable<PureStorageBillingUsageProperty> billingUsageProperties = null, string overallStatusMessage = null)
         {
-            billingUsageProperties ??= new List<BillingUsageProperty>();
+            billingUsageProperties ??= new List<PureStorageBillingUsageProperty>();
 
             return new ReservationBillingUsageReport(timestamp, billingUsageProperties?.ToList(), overallStatusMessage, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.BillingUsageProperty"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.PureStorageBillingUsageProperty"/>. </summary>
         /// <param name="propertyId"> Unique identifier for the billing usage property. </param>
         /// <param name="propertyName"> Name of the billing usage property. </param>
         /// <param name="currentValue"> Current value of the billing usage property. </param>
@@ -167,12 +167,12 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
         /// <param name="severity"> Severity level of the usage. </param>
         /// <param name="statusMessage"> Status message for the billing usage against a property. </param>
         /// <param name="subProperties"> Optional list of sub-properties providing additional details. </param>
-        /// <returns> A new <see cref="Models.BillingUsageProperty"/> instance for mocking. </returns>
-        public static BillingUsageProperty BillingUsageProperty(string propertyId = null, string propertyName = null, string currentValue = null, string previousValue = null, UsageSeverity severity = default, string statusMessage = null, IEnumerable<BillingUsageProperty> subProperties = null)
+        /// <returns> A new <see cref="Models.PureStorageBillingUsageProperty"/> instance for mocking. </returns>
+        public static PureStorageBillingUsageProperty PureStorageBillingUsageProperty(string propertyId = null, string propertyName = null, string currentValue = null, string previousValue = null, PureStorageBillingUsageSeverity severity = default, string statusMessage = null, IEnumerable<PureStorageBillingUsageProperty> subProperties = null)
         {
-            subProperties ??= new List<BillingUsageProperty>();
+            subProperties ??= new List<PureStorageBillingUsageProperty>();
 
-            return new BillingUsageProperty(
+            return new PureStorageBillingUsageProperty(
                 propertyId,
                 propertyName,
                 currentValue,
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="reservationResourceId"> Azure resource ID of the Pure Storage Cloud service (reservation resource) this storage pool belongs to. </param>
         /// <returns> A new <see cref="Models.PureStoragePoolProperties"/> instance for mocking. </returns>
-        public static PureStoragePoolProperties PureStoragePoolProperties(string storagePoolInternalId = null, string availabilityZone = null, VnetInjection vnetInjection = null, long? dataRetentionPeriod = null, long provisionedBandwidthMbPerSec = default, long? provisionedIops = null, PureStorageAvs avs = null, ProvisioningState? provisioningState = null, string reservationResourceId = null)
+        public static PureStoragePoolProperties PureStoragePoolProperties(string storagePoolInternalId = null, string availabilityZone = null, PureStoragePoolVnetInjection vnetInjection = null, long? dataRetentionPeriod = null, long provisionedBandwidthMbPerSec = default, long? provisionedIops = null, PureStorageAvs avs = null, PureStorageProvisioningState? provisioningState = null, ResourceIdentifier reservationResourceId = null)
         {
             return new PureStoragePoolProperties(
                 storagePoolInternalId,
@@ -248,24 +248,24 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
         /// <param name="health"> Health metrics. </param>
         /// <param name="alerts"> List of health alerts. </param>
         /// <returns> A new <see cref="Models.StoragePoolHealthInfo"/> instance for mocking. </returns>
-        public static StoragePoolHealthInfo StoragePoolHealthInfo(HealthDetails health = null, IEnumerable<PureStorageHealthAlert> alerts = null)
+        public static StoragePoolHealthInfo StoragePoolHealthInfo(PureStorageHealthDetails health = null, IEnumerable<PureStorageHealthAlert> alerts = null)
         {
             alerts ??= new List<PureStorageHealthAlert>();
 
             return new StoragePoolHealthInfo(health, alerts?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.HealthDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.PureStorageHealthDetails"/>. </summary>
         /// <param name="usedCapacityPercentage"> How full the pool is right now, in %, compared to the maximum size it can grow to; estimated based on current usage and data reduction ratio. </param>
         /// <param name="bandwidthUsage"> Bandwidth usage metrics. </param>
         /// <param name="iopsUsage"> IOPS usage metrics. </param>
         /// <param name="space"> Storage space usage. </param>
         /// <param name="dataReductionRatio"> Data reduction ratio achieved on this pool. </param>
         /// <param name="estimatedMaxCapacity"> Estimated maximum capacity of the pool, in bytes, based on current usage and data reduction ratio. </param>
-        /// <returns> A new <see cref="Models.HealthDetails"/> instance for mocking. </returns>
-        public static HealthDetails HealthDetails(double usedCapacityPercentage = default, BandwidthUsage bandwidthUsage = null, IopsUsage iopsUsage = null, Space space = null, double dataReductionRatio = default, long estimatedMaxCapacity = default)
+        /// <returns> A new <see cref="Models.PureStorageHealthDetails"/> instance for mocking. </returns>
+        public static PureStorageHealthDetails PureStorageHealthDetails(double usedCapacityPercentage = default, PureStorageBandwidthUsage bandwidthUsage = null, PureStorageIopsUsage iopsUsage = null, PureStorageSpaceUsage space = null, double dataReductionRatio = default, long estimatedMaxCapacity = default)
         {
-            return new HealthDetails(
+            return new PureStorageHealthDetails(
                 usedCapacityPercentage,
                 bandwidthUsage,
                 iopsUsage,
@@ -275,35 +275,35 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.BandwidthUsage"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.PureStorageBandwidthUsage"/>. </summary>
         /// <param name="current"> Number of bytes written and read per second (maximum value over the last 10 minutes). </param>
         /// <param name="provisioned"> Bandwidth value currently provisioned for the storage pool, in MB/s. </param>
         /// <param name="max"> Maximum bandwidth value that can be provisioned for the storage pool. </param>
-        /// <returns> A new <see cref="Models.BandwidthUsage"/> instance for mocking. </returns>
-        public static BandwidthUsage BandwidthUsage(long current = default, long provisioned = default, long max = default)
+        /// <returns> A new <see cref="Models.PureStorageBandwidthUsage"/> instance for mocking. </returns>
+        public static PureStorageBandwidthUsage PureStorageBandwidthUsage(long current = default, long provisioned = default, long max = default)
         {
-            return new BandwidthUsage(current, provisioned, max, serializedAdditionalRawData: null);
+            return new PureStorageBandwidthUsage(current, provisioned, max, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.IopsUsage"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.PureStorageIopsUsage"/>. </summary>
         /// <param name="current"> Current number of IOPS (maximum value over the last 10 minutes). </param>
         /// <param name="provisioned"> IOPS value currently provisioned for the storage pool. </param>
         /// <param name="max"> Maximum IOPS value that can be provisioned for the storage pool. </param>
-        /// <returns> A new <see cref="Models.IopsUsage"/> instance for mocking. </returns>
-        public static IopsUsage IopsUsage(long current = default, long provisioned = default, long max = default)
+        /// <returns> A new <see cref="Models.PureStorageIopsUsage"/> instance for mocking. </returns>
+        public static PureStorageIopsUsage PureStorageIopsUsage(long current = default, long provisioned = default, long max = default)
         {
-            return new IopsUsage(current, provisioned, max, serializedAdditionalRawData: null);
+            return new PureStorageIopsUsage(current, provisioned, max, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.Space"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.PureStorageSpaceUsage"/>. </summary>
         /// <param name="totalUsed"> Total space occupied by customer data (i.e., being billed for), in bytes. </param>
         /// <param name="unique"> Unique space occupied by customer data, in bytes; for a volume, this is the amount of storage that would be freed by deleting the volume, since snapshot and shared data would be kept. </param>
         /// <param name="snapshots"> Space occupied by data unique to one or more snapshots, in bytes. </param>
         /// <param name="shared"> Space occupied by duplicated data, meaning data shared with other volumes and snapshots as a result of data deduplication, in bytes. </param>
-        /// <returns> A new <see cref="Models.Space"/> instance for mocking. </returns>
-        public static Space Space(long totalUsed = default, long unique = default, long snapshots = default, long shared = default)
+        /// <returns> A new <see cref="Models.PureStorageSpaceUsage"/> instance for mocking. </returns>
+        public static PureStorageSpaceUsage PureStorageSpaceUsage(long totalUsed = default, long unique = default, long snapshots = default, long shared = default)
         {
-            return new Space(totalUsed, unique, snapshots, shared, serializedAdditionalRawData: null);
+            return new PureStorageSpaceUsage(totalUsed, unique, snapshots, shared, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PureStorageHealthAlert"/>. </summary>
@@ -329,7 +329,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
         /// <param name="clusterResourceId"> Azure resource ID of the AVS SDDC the pool is connecting to. </param>
         /// <param name="serviceAccountUsername"> Requested service account username. </param>
         /// <returns> A new <see cref="Models.ServiceInitializationHandle"/> instance for mocking. </returns>
-        public static ServiceInitializationHandle ServiceInitializationHandle(string clusterResourceId = null, string serviceAccountUsername = null)
+        public static ServiceInitializationHandle ServiceInitializationHandle(ResourceIdentifier clusterResourceId = null, string serviceAccountUsername = null)
         {
             return new ServiceInitializationHandle(clusterResourceId, serviceAccountUsername, serializedAdditionalRawData: null);
         }
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
         /// <param name="datastore"> VMware datastore associated with this storage container (if any). </param>
         /// <param name="mounted"> Whether the datastore is mounted in VMware or not. </param>
         /// <returns> A new <see cref="Models.PureStorageAvsStorageContainerProperties"/> instance for mocking. </returns>
-        public static PureStorageAvsStorageContainerProperties PureStorageAvsStorageContainerProperties(Space space = null, string resourceName = null, long? provisionedLimit = null, string datastore = null, bool? mounted = null)
+        public static PureStorageAvsStorageContainerProperties PureStorageAvsStorageContainerProperties(PureStorageSpaceUsage space = null, string resourceName = null, long? provisionedLimit = null, string datastore = null, bool? mounted = null)
         {
             return new PureStorageAvsStorageContainerProperties(
                 space,
@@ -380,13 +380,13 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.SoftDeletion"/>. </summary>
-        /// <param name="destroyed"> If false, the resource is active; if true, the resource has been destroyed; resources can be soft-deleted by setting destroyed to true, and recovered by setting it to false. </param>
-        /// <param name="eradicationTimestamp"> Date at which the resource will be eradicated and impossible to recover, as an RFC 3339 timestamp; invalid if destroyed is false;. </param>
-        /// <returns> A new <see cref="Models.SoftDeletion"/> instance for mocking. </returns>
-        public static SoftDeletion SoftDeletion(bool destroyed = default, string eradicationTimestamp = null)
+        /// <summary> Initializes a new instance of <see cref="Models.PureStorageSoftDeletionState"/>. </summary>
+        /// <param name="isDestroyed"> If false, the resource is active; if true, the resource has been destroyed; resources can be soft-deleted by setting destroyed to true, and recovered by setting it to false. </param>
+        /// <param name="eradicatedOn"> Date at which the resource will be eradicated and impossible to recover, as an RFC 3339 timestamp; invalid if destroyed is false;. </param>
+        /// <returns> A new <see cref="Models.PureStorageSoftDeletionState"/> instance for mocking. </returns>
+        public static PureStorageSoftDeletionState PureStorageSoftDeletionState(bool isDestroyed = default, DateTimeOffset? eradicatedOn = null)
         {
-            return new SoftDeletion(destroyed, eradicationTimestamp, serializedAdditionalRawData: null);
+            return new PureStorageSoftDeletionState(isDestroyed, eradicatedOn, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="PureStorageBlock.PureStorageAvsStorageContainerVolumeData"/>. </summary>
@@ -420,7 +420,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
         /// <param name="avs"> AVS-specific volume information. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <returns> A new <see cref="Models.PureStorageVolumeProperties"/> instance for mocking. </returns>
-        public static PureStorageVolumeProperties PureStorageVolumeProperties(string storagePoolInternalId = null, string storagePoolResourceId = null, string volumeInternalId = null, string displayName = null, Space space = null, SoftDeletion softDeletion = null, string createdTimestamp = null, long? provisionedSize = null, VolumeType? volumeType = null, PureStorageAvsDiskDetails avs = null, ResourceProvisioningState? provisioningState = null)
+        public static PureStorageVolumeProperties PureStorageVolumeProperties(string storagePoolInternalId = null, ResourceIdentifier storagePoolResourceId = null, string volumeInternalId = null, string displayName = null, PureStorageSpaceUsage space = null, PureStorageSoftDeletionState softDeletion = null, string createdTimestamp = null, long? provisionedSize = null, PureStorageAvsVmVolumeType? volumeType = null, PureStorageAvsDiskDetails avs = null, PureStorageProvisioningState? provisioningState = null)
         {
             return new PureStorageVolumeProperties(
                 storagePoolInternalId,
@@ -488,7 +488,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
         /// <param name="space"> Contains properties related to used Flash space. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <returns> A new <see cref="Models.PureStorageAvsVmProperties"/> instance for mocking. </returns>
-        public static PureStorageAvsVmProperties PureStorageAvsVmProperties(string storagePoolInternalId = null, ResourceIdentifier storagePoolResourceId = null, string displayName = null, DateTimeOffset? createdOn = null, SoftDeletion softDeletion = null, VolumeContainerType? volumeContainerType = null, PureStorageAvsVmDetails avs = null, Space space = null, ResourceProvisioningState? provisioningState = null)
+        public static PureStorageAvsVmProperties PureStorageAvsVmProperties(string storagePoolInternalId = null, ResourceIdentifier storagePoolResourceId = null, string displayName = null, DateTimeOffset? createdOn = null, PureStorageSoftDeletionState softDeletion = null, PureStorageAvsVmVolumeContainerType? volumeContainerType = null, PureStorageAvsVmDetails avs = null, PureStorageSpaceUsage space = null, PureStorageProvisioningState? provisioningState = null)
         {
             return new PureStorageAvsVmProperties(
                 storagePoolInternalId,
@@ -509,7 +509,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
         /// <param name="vmType"> Type of the VMware VM using this set of volumes. </param>
         /// <param name="avsVmInternalId"> Pure Storage's internal ID for this AVS VM. </param>
         /// <returns> A new <see cref="Models.PureStorageAvsVmDetails"/> instance for mocking. </returns>
-        public static PureStorageAvsVmDetails PureStorageAvsVmDetails(string vmId = null, string vmName = null, VmType vmType = default, string avsVmInternalId = null)
+        public static PureStorageAvsVmDetails PureStorageAvsVmDetails(string vmId = null, string vmName = null, PureStorageAvsVmType vmType = default, string avsVmInternalId = null)
         {
             return new PureStorageAvsVmDetails(vmId, vmName, vmType, avsVmInternalId, serializedAdditionalRawData: null);
         }

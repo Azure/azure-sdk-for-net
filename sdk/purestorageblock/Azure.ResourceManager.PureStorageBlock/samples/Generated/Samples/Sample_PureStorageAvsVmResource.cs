@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Samples
             // invoke the operation
             PureStorageAvsVmPatch patch = new PureStorageAvsVmPatch
             {
-                AvsVmUpdateSoftDeletion = new SoftDeletion(true),
+                AvsVmUpdateSoftDeletion = new PureStorageSoftDeletionState(true),
             };
             ArmOperation<PureStorageAvsVmResource> lro = await pureStorageAvsVm.UpdateAsync(WaitUntil.Completed, patch);
             PureStorageAvsVmResource result = lro.Value;

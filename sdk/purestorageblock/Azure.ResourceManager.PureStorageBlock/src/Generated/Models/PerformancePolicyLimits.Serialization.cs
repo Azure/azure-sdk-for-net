@@ -75,20 +75,20 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
             {
                 return null;
             }
-            RangeLimits iopsLimit = default;
-            RangeLimits bandwidthLimit = default;
+            PropertyValueRangeLimits iopsLimit = default;
+            PropertyValueRangeLimits bandwidthLimit = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("iopsLimit"u8))
                 {
-                    iopsLimit = RangeLimits.DeserializeRangeLimits(property.Value, options);
+                    iopsLimit = PropertyValueRangeLimits.DeserializePropertyValueRangeLimits(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("bandwidthLimit"u8))
                 {
-                    bandwidthLimit = RangeLimits.DeserializeRangeLimits(property.Value, options);
+                    bandwidthLimit = PropertyValueRangeLimits.DeserializePropertyValueRangeLimits(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

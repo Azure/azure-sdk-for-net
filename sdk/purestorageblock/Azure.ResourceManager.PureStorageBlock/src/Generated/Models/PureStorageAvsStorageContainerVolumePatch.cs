@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
         /// <summary> The resource-specific properties for this resource. </summary>
         internal AvsStorageContainerVolumeUpdateProperties Properties { get; set; }
         /// <summary> Volume's soft-deletion state. </summary>
-        public SoftDeletion AvsStorageContainerVolumeUpdateSoftDeletion
+        public PureStorageSoftDeletionState AvsStorageContainerVolumeUpdateSoftDeletion
         {
             get => Properties is null ? default : Properties.SoftDeletion;
             set

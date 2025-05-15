@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
         /// <summary> Initializes a new instance of <see cref="VolumeLimits"/>. </summary>
         /// <param name="provisionedSize"> Provisioned size limits for a volume, in bytes. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="provisionedSize"/> is null. </exception>
-        internal VolumeLimits(RangeLimits provisionedSize)
+        internal VolumeLimits(PropertyValueRangeLimits provisionedSize)
         {
             Argument.AssertNotNull(provisionedSize, nameof(provisionedSize));
 
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
         /// <summary> Initializes a new instance of <see cref="VolumeLimits"/>. </summary>
         /// <param name="provisionedSize"> Provisioned size limits for a volume, in bytes. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal VolumeLimits(RangeLimits provisionedSize, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal VolumeLimits(PropertyValueRangeLimits provisionedSize, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProvisionedSize = provisionedSize;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -70,6 +70,6 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
         }
 
         /// <summary> Provisioned size limits for a volume, in bytes. </summary>
-        public RangeLimits ProvisionedSize { get; }
+        public PropertyValueRangeLimits ProvisionedSize { get; }
     }
 }

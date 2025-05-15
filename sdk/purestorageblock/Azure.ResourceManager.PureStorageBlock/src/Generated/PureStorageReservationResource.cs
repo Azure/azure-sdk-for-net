@@ -368,7 +368,7 @@ namespace Azure.ResourceManager.PureStorageBlock
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<LimitDetails>> GetResourceLimitsAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PureStorageResourceLimitDetails>> GetResourceLimitsAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _pureStorageReservationReservationsClientDiagnostics.CreateScope("PureStorageReservationResource.GetResourceLimits");
             scope.Start();
@@ -406,7 +406,7 @@ namespace Azure.ResourceManager.PureStorageBlock
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<LimitDetails> GetResourceLimits(CancellationToken cancellationToken = default)
+        public virtual Response<PureStorageResourceLimitDetails> GetResourceLimits(CancellationToken cancellationToken = default)
         {
             using var scope = _pureStorageReservationReservationsClientDiagnostics.CreateScope("PureStorageReservationResource.GetResourceLimits");
             scope.Start();
