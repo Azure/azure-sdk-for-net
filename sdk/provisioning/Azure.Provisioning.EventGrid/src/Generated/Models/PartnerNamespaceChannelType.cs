@@ -14,9 +14,4 @@ public enum PartnerNamespaceChannelType
     /// PartnerTopic.
     /// </summary>
     PartnerTopic,
-
-    /// <summary>
-    /// PartnerDestination.
-    /// </summary>
-    PartnerDestination,
 }

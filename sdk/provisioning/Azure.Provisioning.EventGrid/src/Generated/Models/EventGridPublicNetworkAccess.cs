@@ -23,9 +23,4 @@ public enum EventGridPublicNetworkAccess
     /// Disabled.
     /// </summary>
     Disabled,
-
-    /// <summary>
-    /// SecuredByPerimeter.
-    /// </summary>
-    SecuredByPerimeter,
 }
