@@ -1410,10 +1410,12 @@ namespace Azure.Communication.CallAutomation
     public partial class PostProcessingOptions
     {
         public PostProcessingOptions(Azure.Communication.CallAutomation.TranscriptionSettings transcription) { }
-        public PostProcessingOptions(Azure.Communication.CallAutomation.TranscriptionSettings transcription, Azure.Communication.CallAutomation.SummarizationSettings summarization = null, string cognitiveServicesEndpoint = null) { }
+        public PostProcessingOptions(Azure.Communication.CallAutomation.TranscriptionSettings transcriptionSettings, Azure.Communication.CallAutomation.SummarizationSettings summarizationSettings = null, string cognitiveServicesEndpoint = null) { }
         public string CognitiveServicesEndpoint { get { throw null; } set { } }
-        public Azure.Communication.CallAutomation.SummarizationSettings Summarization { get { throw null; } }
+        public Azure.Communication.CallAutomation.SummarizationSettings Summarization { get { throw null; } set { } }
+        public Azure.Communication.CallAutomation.SummarizationSettings SummarizationSettings { get { throw null; } set { } }
         public Azure.Communication.CallAutomation.TranscriptionSettings Transcription { get { throw null; } }
+        public Azure.Communication.CallAutomation.TranscriptionSettings TranscriptionSettings { get { throw null; } set { } }
         public void setSummarizationSettings(bool enableSummarization) { }
         public void setTranscriptionSettings(bool enableTranscription) { }
     }
