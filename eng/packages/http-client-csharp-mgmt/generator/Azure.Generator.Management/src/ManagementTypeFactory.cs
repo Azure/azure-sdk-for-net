@@ -3,7 +3,7 @@
 
 using Azure.Generator.Management.InputTransformation;
 using Azure.Generator.Management.Providers.Abstraction;
-using Azure.Generator.Mgmt.Primitives;
+using Azure.Generator.Management.Primitives;
 using Microsoft.TypeSpec.Generator;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 using Microsoft.TypeSpec.Generator.Expressions;

@@ -9,7 +9,7 @@ using NUnit.Framework;
 
 namespace Azure.Generator.Management.Tests.Providers
 {
-    internal class ManagementLongRunningOperationProviderTests
+    internal class MgmtLroProviderTests
     {
         [SetUp]
         public void SetUp()
