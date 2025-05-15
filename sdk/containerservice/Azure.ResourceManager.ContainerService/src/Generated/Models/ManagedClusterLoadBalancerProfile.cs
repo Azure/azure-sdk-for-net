@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="enableMultipleStandardLoadBalancers"> Enable multiple standard load balancers per AKS cluster or not. </param>
         /// <param name="backendPoolType"> The type of the managed inbound Load Balancer BackendPool. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedClusterLoadBalancerProfile(ManagedClusterLoadBalancerProfileManagedOutboundIPs managedOutboundIPs, ManagedClusterLoadBalancerProfileOutboundIPPrefixes outboundIPPrefixes, ManagedClusterLoadBalancerProfileOutboundIPs outboundIPs, IList<WritableSubResource> effectiveOutboundIPs, int? allocatedOutboundPorts, int? idleTimeoutInMinutes, bool? enableMultipleStandardLoadBalancers, ManagedClusterLoadBalancerBackendPoolType? backendPoolType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ManagedClusterLoadBalancerProfile(ManagedClusterLoadBalancerProfileManagedOutboundIPs managedOutboundIPs, ManagedClusterLoadBalancerProfileOutboundIPPrefixes outboundIPPrefixes, ManagedClusterLoadBalancerProfileOutboundIPs outboundIPs, IReadOnlyList<WritableSubResource> effectiveOutboundIPs, int? allocatedOutboundPorts, int? idleTimeoutInMinutes, bool? enableMultipleStandardLoadBalancers, ManagedClusterLoadBalancerBackendPoolType? backendPoolType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ManagedOutboundIPs = managedOutboundIPs;
             OutboundIPPrefixes = outboundIPPrefixes;
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> The effective outbound IP resources of the cluster load balancer. </summary>
         [WirePath("effectiveOutboundIPs")]
-        public IList<WritableSubResource> EffectiveOutboundIPs { get; }
+        public IReadOnlyList<WritableSubResource> EffectiveOutboundIPs { get; }
         /// <summary> The desired number of allocated SNAT ports per VM. Allowed values are in the range of 0 to 64000 (inclusive). The default value is 0 which results in Azure dynamically allocating ports. </summary>
         [WirePath("allocatedOutboundPorts")]
         public int? AllocatedOutboundPorts { get; set; }

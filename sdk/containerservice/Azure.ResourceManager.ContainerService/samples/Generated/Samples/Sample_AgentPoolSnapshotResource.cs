@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ContainerService.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetSnapshot()
         {
-            // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2023-10-01/examples/SnapshotsGet.json
+            // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2025-03-01/examples/SnapshotsGet.json
             // this example is just showing the usage of "Snapshots_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ContainerService.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteSnapshot()
         {
-            // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2023-10-01/examples/SnapshotsDelete.json
+            // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2025-03-01/examples/SnapshotsDelete.json
             // this example is just showing the usage of "Snapshots_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.ContainerService.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateSnapshotTags()
         {
-            // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2023-10-01/examples/SnapshotsUpdateTags.json
+            // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2025-03-01/examples/SnapshotsUpdateTags.json
             // this example is just showing the usage of "Snapshots_UpdateTags" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

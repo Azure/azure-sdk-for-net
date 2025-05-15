@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Azure.Core;
 using Azure.ResourceManager.ContainerService.Models;
 using Azure.ResourceManager.Models;
@@ -15,10 +14,10 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.ContainerService
 {
     /// <summary>
-    /// A class representing the OSOptionProfile data model.
-    /// The OS option profile.
+    /// A class representing the Machine data model.
+    /// A machine. Contains details about the underlying virtual machine. A machine may be visible here but not in kubectl get nodes; if so it may be because the machine has not been registered with the Kubernetes API Server yet.
     /// </summary>
-    public partial class OSOptionProfileData : ResourceData
+    public partial class MachineData : ResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -52,36 +51,26 @@ namespace Azure.ResourceManager.ContainerService
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="OSOptionProfileData"/>. </summary>
-        /// <param name="osOptionPropertyList"> The list of OS options. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="osOptionPropertyList"/> is null. </exception>
-        internal OSOptionProfileData(IEnumerable<ContainerServiceOSOptionProperty> osOptionPropertyList)
+        /// <summary> Initializes a new instance of <see cref="MachineData"/>. </summary>
+        public MachineData()
         {
-            Argument.AssertNotNull(osOptionPropertyList, nameof(osOptionPropertyList));
-
-            OSOptionPropertyList = osOptionPropertyList.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="OSOptionProfileData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="osOptionPropertyList"> The list of OS options. </param>
+        /// <param name="properties"> The properties of the machine. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal OSOptionProfileData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IReadOnlyList<ContainerServiceOSOptionProperty> osOptionPropertyList, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal MachineData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, MachineProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
-            OSOptionPropertyList = osOptionPropertyList;
+            Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="OSOptionProfileData"/> for deserialization. </summary>
-        internal OSOptionProfileData()
-        {
-        }
-
-        /// <summary> The list of OS options. </summary>
-        [WirePath("properties.osOptionPropertyList")]
-        public IReadOnlyList<ContainerServiceOSOptionProperty> OSOptionPropertyList { get; }
+        /// <summary> The properties of the machine. </summary>
+        [WirePath("properties")]
+        public MachineProperties Properties { get; }
     }
 }

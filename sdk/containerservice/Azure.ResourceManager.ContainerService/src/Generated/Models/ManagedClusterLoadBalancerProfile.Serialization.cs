@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WritePropertyName("outboundIPs"u8);
                 writer.WriteObjectValue(OutboundIPs, options);
             }
-            if (Optional.IsCollectionDefined(EffectiveOutboundIPs))
+            if (options.Format != "W" && Optional.IsCollectionDefined(EffectiveOutboundIPs))
             {
                 writer.WritePropertyName("effectiveOutboundIPs"u8);
                 writer.WriteStartArray();
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             ManagedClusterLoadBalancerProfileManagedOutboundIPs managedOutboundIPs = default;
             ManagedClusterLoadBalancerProfileOutboundIPPrefixes outboundIPPrefixes = default;
             ManagedClusterLoadBalancerProfileOutboundIPs outboundIPs = default;
-            IList<WritableSubResource> effectiveOutboundIPs = default;
+            IReadOnlyList<WritableSubResource> effectiveOutboundIPs = default;
             int? allocatedOutboundPorts = default;
             int? idleTimeoutInMinutes = default;
             bool? enableMultipleStandardLoadBalancers = default;

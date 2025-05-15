@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary> OS option property. </summary>
-    public partial class ContainerServiceOSOptionProperty
+    /// <summary> The security settings of an agent pool. </summary>
+    public partial class AgentPoolSecurityProfile
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,39 +45,27 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ContainerServiceOSOptionProperty"/>. </summary>
-        /// <param name="osType"> The OS type. </param>
-        /// <param name="enableFipsImage"> Whether the image is FIPS-enabled. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="osType"/> is null. </exception>
-        internal ContainerServiceOSOptionProperty(string osType, bool enableFipsImage)
+        /// <summary> Initializes a new instance of <see cref="AgentPoolSecurityProfile"/>. </summary>
+        public AgentPoolSecurityProfile()
         {
-            Argument.AssertNotNull(osType, nameof(osType));
-
-            OSType = osType;
-            EnableFipsImage = enableFipsImage;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ContainerServiceOSOptionProperty"/>. </summary>
-        /// <param name="osType"> The OS type. </param>
-        /// <param name="enableFipsImage"> Whether the image is FIPS-enabled. </param>
+        /// <summary> Initializes a new instance of <see cref="AgentPoolSecurityProfile"/>. </summary>
+        /// <param name="enableVtpm"> vTPM is a Trusted Launch feature for configuring a dedicated secure vault for keys and measurements held locally on the node. For more details, see aka.ms/aks/trustedlaunch. If not specified, the default is false. </param>
+        /// <param name="enableSecureBoot"> Secure Boot is a feature of Trusted Launch which ensures that only signed operating systems and drivers can boot. For more details, see aka.ms/aks/trustedlaunch.  If not specified, the default is false. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerServiceOSOptionProperty(string osType, bool enableFipsImage, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AgentPoolSecurityProfile(bool? enableVtpm, bool? enableSecureBoot, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            OSType = osType;
-            EnableFipsImage = enableFipsImage;
+            EnableVtpm = enableVtpm;
+            EnableSecureBoot = enableSecureBoot;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ContainerServiceOSOptionProperty"/> for deserialization. </summary>
-        internal ContainerServiceOSOptionProperty()
-        {
-        }
-
-        /// <summary> The OS type. </summary>
-        [WirePath("os-type")]
-        public string OSType { get; }
-        /// <summary> Whether the image is FIPS-enabled. </summary>
-        [WirePath("enable-fips-image")]
-        public bool EnableFipsImage { get; }
+        /// <summary> vTPM is a Trusted Launch feature for configuring a dedicated secure vault for keys and measurements held locally on the node. For more details, see aka.ms/aks/trustedlaunch. If not specified, the default is false. </summary>
+        [WirePath("enableVTPM")]
+        public bool? EnableVtpm { get; set; }
+        /// <summary> Secure Boot is a feature of Trusted Launch which ensures that only signed operating systems and drivers can boot. For more details, see aka.ms/aks/trustedlaunch.  If not specified, the default is false. </summary>
+        [WirePath("enableSecureBoot")]
+        public bool? EnableSecureBoot { get; set; }
     }
 }

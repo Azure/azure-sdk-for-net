@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
@@ -57,14 +58,18 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="privateDnsZone"> The default is System. For more details see [configure private DNS zone](https://docs.microsoft.com/azure/aks/private-clusters#configure-private-dns-zone). Allowed values are 'system' and 'none'. </param>
         /// <param name="enablePrivateClusterPublicFqdn"> Whether to create additional public FQDN for private cluster or not. </param>
         /// <param name="disableRunCommand"> Whether to disable run command for the cluster or not. </param>
+        /// <param name="enableVnetIntegration"> Whether to enable apiserver vnet integration for the cluster or not. See aka.ms/AksVnetIntegration for more details. </param>
+        /// <param name="subnetId"> It is required when creating a new cluster with BYO Vnet, or when updating an existing cluster to enable apiserver vnet integration. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedClusterApiServerAccessProfile(IList<string> authorizedIPRanges, bool? enablePrivateCluster, string privateDnsZone, bool? enablePrivateClusterPublicFqdn, bool? disableRunCommand, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ManagedClusterApiServerAccessProfile(IList<string> authorizedIPRanges, bool? enablePrivateCluster, string privateDnsZone, bool? enablePrivateClusterPublicFqdn, bool? disableRunCommand, bool? enableVnetIntegration, ResourceIdentifier subnetId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AuthorizedIPRanges = authorizedIPRanges;
             EnablePrivateCluster = enablePrivateCluster;
             PrivateDnsZone = privateDnsZone;
             EnablePrivateClusterPublicFqdn = enablePrivateClusterPublicFqdn;
             DisableRunCommand = disableRunCommand;
+            EnableVnetIntegration = enableVnetIntegration;
+            SubnetId = subnetId;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -83,5 +88,11 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <summary> Whether to disable run command for the cluster or not. </summary>
         [WirePath("disableRunCommand")]
         public bool? DisableRunCommand { get; set; }
+        /// <summary> Whether to enable apiserver vnet integration for the cluster or not. See aka.ms/AksVnetIntegration for more details. </summary>
+        [WirePath("enableVnetIntegration")]
+        public bool? EnableVnetIntegration { get; set; }
+        /// <summary> It is required when creating a new cluster with BYO Vnet, or when updating an existing cluster to enable apiserver vnet integration. </summary>
+        [WirePath("subnetId")]
+        public ResourceIdentifier SubnetId { get; set; }
     }
 }

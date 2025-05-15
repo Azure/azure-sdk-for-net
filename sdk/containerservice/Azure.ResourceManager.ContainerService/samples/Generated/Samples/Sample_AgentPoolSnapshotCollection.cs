@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ContainerService.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateUpdateSnapshot()
         {
-            // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2023-10-01/examples/SnapshotsCreate.json
+            // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2025-03-01/examples/SnapshotsCreate.json
             // this example is just showing the usage of "Snapshots_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.ContainerService.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetSnapshot()
         {
-            // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2023-10-01/examples/SnapshotsGet.json
+            // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2025-03-01/examples/SnapshotsGet.json
             // this example is just showing the usage of "Snapshots_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.ContainerService.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListSnapshotsByResourceGroup()
         {
-            // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2023-10-01/examples/SnapshotsListByResourceGroup.json
+            // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2025-03-01/examples/SnapshotsListByResourceGroup.json
             // this example is just showing the usage of "Snapshots_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.ContainerService.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetSnapshot()
         {
-            // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2023-10-01/examples/SnapshotsGet.json
+            // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2025-03-01/examples/SnapshotsGet.json
             // this example is just showing the usage of "Snapshots_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.ContainerService.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetSnapshot()
         {
-            // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2023-10-01/examples/SnapshotsGet.json
+            // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2025-03-01/examples/SnapshotsGet.json
             // this example is just showing the usage of "Snapshots_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

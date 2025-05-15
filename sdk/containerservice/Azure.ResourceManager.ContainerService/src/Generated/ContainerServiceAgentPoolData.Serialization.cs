@@ -41,6 +41,11 @@ namespace Azure.ResourceManager.ContainerService
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(ETag))
+            {
+                writer.WritePropertyName("eTag"u8);
+                writer.WriteStringValue(ETag.Value.ToString());
+            }
             if (Optional.IsDefined(Count))
             {
                 writer.WritePropertyName("count"u8);
@@ -70,6 +75,11 @@ namespace Azure.ResourceManager.ContainerService
             {
                 writer.WritePropertyName("workloadRuntime"u8);
                 writer.WriteStringValue(WorkloadRuntime.Value.ToString());
+            }
+            if (Optional.IsDefined(MessageOfTheDay))
+            {
+                writer.WritePropertyName("messageOfTheDay"u8);
+                writer.WriteStringValue(MessageOfTheDay);
             }
             if (Optional.IsDefined(VnetSubnetId))
             {
@@ -278,6 +288,21 @@ namespace Azure.ResourceManager.ContainerService
                 writer.WritePropertyName("networkProfile"u8);
                 writer.WriteObjectValue(NetworkProfile, options);
             }
+            if (Optional.IsDefined(WindowsProfile))
+            {
+                writer.WritePropertyName("windowsProfile"u8);
+                writer.WriteObjectValue(WindowsProfile, options);
+            }
+            if (Optional.IsDefined(SecurityProfile))
+            {
+                writer.WritePropertyName("securityProfile"u8);
+                writer.WriteObjectValue(SecurityProfile, options);
+            }
+            if (Optional.IsDefined(GpuProfile))
+            {
+                writer.WritePropertyName("gpuProfile"u8);
+                writer.WriteObjectValue(GpuProfile, options);
+            }
             writer.WriteEndObject();
         }
 
@@ -305,12 +330,14 @@ namespace Azure.ResourceManager.ContainerService
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
+            ETag? etag = default;
             int? count = default;
             string vmSize = default;
             int? osDiskSizeGB = default;
             ContainerServiceOSDiskType? osDiskType = default;
             KubeletDiskType? kubeletDiskType = default;
             WorkloadRuntime? workloadRuntime = default;
+            string messageOfTheDay = default;
             ResourceIdentifier vnetSubnetId = default;
             ResourceIdentifier podSubnetId = default;
             int? maxPods = default;
@@ -348,6 +375,9 @@ namespace Azure.ResourceManager.ContainerService
             ResourceIdentifier capacityReservationGroupId = default;
             ResourceIdentifier hostGroupId = default;
             AgentPoolNetworkProfile networkProfile = default;
+            AgentPoolWindowsProfile windowsProfile = default;
+            AgentPoolSecurityProfile securityProfile = default;
+            GpuProfile gpuProfile = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -385,6 +415,15 @@ namespace Azure.ResourceManager.ContainerService
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
+                        if (property0.NameEquals("eTag"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            etag = new ETag(property0.Value.GetString());
+                            continue;
+                        }
                         if (property0.NameEquals("count"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -433,6 +472,11 @@ namespace Azure.ResourceManager.ContainerService
                                 continue;
                             }
                             workloadRuntime = new WorkloadRuntime(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("messageOfTheDay"u8))
+                        {
+                            messageOfTheDay = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("vnetSubnetID"u8))
@@ -772,6 +816,33 @@ namespace Azure.ResourceManager.ContainerService
                             networkProfile = AgentPoolNetworkProfile.DeserializeAgentPoolNetworkProfile(property0.Value, options);
                             continue;
                         }
+                        if (property0.NameEquals("windowsProfile"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            windowsProfile = AgentPoolWindowsProfile.DeserializeAgentPoolWindowsProfile(property0.Value, options);
+                            continue;
+                        }
+                        if (property0.NameEquals("securityProfile"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            securityProfile = AgentPoolSecurityProfile.DeserializeAgentPoolSecurityProfile(property0.Value, options);
+                            continue;
+                        }
+                        if (property0.NameEquals("gpuProfile"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            gpuProfile = GpuProfile.DeserializeGpuProfile(property0.Value, options);
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -786,12 +857,14 @@ namespace Azure.ResourceManager.ContainerService
                 name,
                 type,
                 systemData,
+                etag,
                 count,
                 vmSize,
                 osDiskSizeGB,
                 osDiskType,
                 kubeletDiskType,
                 workloadRuntime,
+                messageOfTheDay,
                 vnetSubnetId,
                 podSubnetId,
                 maxPods,
@@ -829,6 +902,9 @@ namespace Azure.ResourceManager.ContainerService
                 capacityReservationGroupId,
                 hostGroupId,
                 networkProfile,
+                windowsProfile,
+                securityProfile,
+                gpuProfile,
                 serializedAdditionalRawData);
         }
 
@@ -898,6 +974,21 @@ namespace Azure.ResourceManager.ContainerService
 
             builder.Append("  properties:");
             builder.AppendLine(" {");
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ETag), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    eTag: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ETag))
+                {
+                    builder.Append("    eTag: ");
+                    builder.AppendLine($"'{ETag.Value.ToString()}'");
+                }
+            }
+
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Count), out propertyOverride);
             if (hasPropertyOverride)
             {
@@ -993,6 +1084,29 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     builder.Append("    workloadRuntime: ");
                     builder.AppendLine($"'{WorkloadRuntime.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MessageOfTheDay), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    messageOfTheDay: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MessageOfTheDay))
+                {
+                    builder.Append("    messageOfTheDay: ");
+                    if (MessageOfTheDay.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{MessageOfTheDay}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{MessageOfTheDay}'");
+                    }
                 }
             }
 
@@ -1681,6 +1795,61 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     builder.Append("    networkProfile: ");
                     BicepSerializationHelpers.AppendChildObject(builder, NetworkProfile, options, 4, false, "    networkProfile: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("DisableOutboundNat", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    windowsProfile: ");
+                builder.AppendLine("{");
+                builder.AppendLine("      windowsProfile: {");
+                builder.Append("        disableOutboundNat: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("      }");
+                builder.AppendLine("    }");
+            }
+            else
+            {
+                if (Optional.IsDefined(WindowsProfile))
+                {
+                    builder.Append("    windowsProfile: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, WindowsProfile, options, 4, false, "    windowsProfile: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SecurityProfile), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    securityProfile: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SecurityProfile))
+                {
+                    builder.Append("    securityProfile: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, SecurityProfile, options, 4, false, "    securityProfile: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("GpuDriver", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    gpuProfile: ");
+                builder.AppendLine("{");
+                builder.AppendLine("      gpuProfile: {");
+                builder.Append("        driver: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("      }");
+                builder.AppendLine("    }");
+            }
+            else
+            {
+                if (Optional.IsDefined(GpuProfile))
+                {
+                    builder.Append("    gpuProfile: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, GpuProfile, options, 4, false, "    gpuProfile: ");
                 }
             }
 
