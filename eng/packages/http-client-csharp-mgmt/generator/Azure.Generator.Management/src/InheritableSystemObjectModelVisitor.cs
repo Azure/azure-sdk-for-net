@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 using Azure.Generator.Management.Providers;
-using Azure.Generator.Mgmt.Primitives;
+using Azure.Generator.Management.Primitives;
 using Microsoft.TypeSpec.Generator.ClientModel;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 using Microsoft.TypeSpec.Generator.Expressions;

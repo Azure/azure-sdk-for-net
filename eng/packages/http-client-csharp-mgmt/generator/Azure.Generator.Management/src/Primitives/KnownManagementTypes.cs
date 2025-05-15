@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
-namespace Azure.Generator.Mgmt.Primitives
+namespace Azure.Generator.Management.Primitives
 {
     internal class KnownManagementTypes
     {
