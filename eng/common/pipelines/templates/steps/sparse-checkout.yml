@@ -140,7 +140,7 @@ steps:
       pwsh: true
       workingDirectory: $(System.DefaultWorkingDirectory)
 
-  - ${{ if and(ne(parameters.TokenToUseForAuth, ''), ne(parameters.PreserveAuthToken, true)) }}:
+  - ${{ if and(ne(parameters.TokenToUseForAuth, ''), not(parameters.PreserveAuthToken)) }}:
     - pwsh: |
         git config unset --global "http.extraheader"
       displayName: Removing git config auth header
