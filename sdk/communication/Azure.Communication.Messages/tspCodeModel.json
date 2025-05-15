@@ -1258,9 +1258,7 @@
        "doc": "Message notification type is text.",
        "type": {
         "$id": "139",
-        "kind": "enumvalue",
-        "name": "text",
-        "value": "text",
+        "kind": "constant",
         "valueType": {
          "$id": "140",
          "kind": "string",
@@ -1268,10 +1266,7 @@
          "crossLanguageDefinitionId": "TypeSpec.string",
          "decorators": []
         },
-        "enumType": {
-         "$ref": "2"
-        },
-        "doc": "Text message type.",
+        "value": "text",
         "decorators": []
        },
        "optional": false,
@@ -1340,9 +1335,7 @@
        "doc": "Message notification type is image.",
        "type": {
         "$id": "149",
-        "kind": "enumvalue",
-        "name": "image_v0",
-        "value": "image_v0",
+        "kind": "constant",
         "valueType": {
          "$id": "150",
          "kind": "string",
@@ -1350,10 +1343,7 @@
          "crossLanguageDefinitionId": "TypeSpec.string",
          "decorators": []
         },
-        "enumType": {
-         "$ref": "2"
-        },
-        "doc": "Image message type. Legacy image type for `MediaNotificationContent` which is being deprecated",
+        "value": "image_v0",
         "decorators": []
        },
        "optional": false,
@@ -1448,9 +1438,7 @@
        "doc": "Message notification type is image.",
        "type": {
         "$id": "163",
-        "kind": "enumvalue",
-        "name": "image",
-        "value": "image",
+        "kind": "constant",
         "valueType": {
          "$id": "164",
          "kind": "string",
@@ -1458,10 +1446,7 @@
          "crossLanguageDefinitionId": "TypeSpec.string",
          "decorators": []
         },
-        "enumType": {
-         "$ref": "2"
-        },
-        "doc": "Image message type.",
+        "value": "image",
         "decorators": []
        },
        "optional": false,
@@ -1556,9 +1541,7 @@
        "doc": "Message notification type is document.",
        "type": {
         "$id": "177",
-        "kind": "enumvalue",
-        "name": "document",
-        "value": "document",
+        "kind": "constant",
         "valueType": {
          "$id": "178",
          "kind": "string",
@@ -1566,10 +1549,7 @@
          "crossLanguageDefinitionId": "TypeSpec.string",
          "decorators": []
         },
-        "enumType": {
-         "$ref": "2"
-        },
-        "doc": "Document message type.",
+        "value": "document",
         "decorators": []
        },
        "optional": false,
@@ -1691,9 +1671,7 @@
        "doc": "Message notification type is video.",
        "type": {
         "$id": "195",
-        "kind": "enumvalue",
-        "name": "video",
-        "value": "video",
+        "kind": "constant",
         "valueType": {
          "$id": "196",
          "kind": "string",
@@ -1701,10 +1679,7 @@
          "crossLanguageDefinitionId": "TypeSpec.string",
          "decorators": []
         },
-        "enumType": {
-         "$ref": "2"
-        },
-        "doc": "Video message type.",
+        "value": "video",
         "decorators": []
        },
        "optional": false,
@@ -1799,9 +1774,7 @@
        "doc": "Message notification type is audio.",
        "type": {
         "$id": "209",
-        "kind": "enumvalue",
-        "name": "audio",
-        "value": "audio",
+        "kind": "constant",
         "valueType": {
          "$id": "210",
          "kind": "string",
@@ -1809,10 +1782,7 @@
          "crossLanguageDefinitionId": "TypeSpec.string",
          "decorators": []
         },
-        "enumType": {
-         "$ref": "2"
-        },
-        "doc": "Audio message type.",
+        "value": "audio",
         "decorators": []
        },
        "optional": false,
@@ -1880,9 +1850,7 @@
        "doc": "Message notification type is reaction.",
        "type": {
         "$id": "219",
-        "kind": "enumvalue",
-        "name": "reaction",
-        "value": "reaction",
+        "kind": "constant",
         "valueType": {
          "$id": "220",
          "kind": "string",
@@ -1890,10 +1858,7 @@
          "crossLanguageDefinitionId": "TypeSpec.string",
          "decorators": []
         },
-        "enumType": {
-         "$ref": "2"
-        },
-        "doc": "Reaction message type.",
+        "value": "reaction",
         "decorators": []
        },
        "optional": false,
@@ -1988,9 +1953,7 @@
        "doc": "Message notification type is sticker.",
        "type": {
         "$id": "233",
-        "kind": "enumvalue",
-        "name": "sticker",
-        "value": "sticker",
+        "kind": "constant",
         "valueType": {
          "$id": "234",
          "kind": "string",
@@ -1998,10 +1961,7 @@
          "crossLanguageDefinitionId": "TypeSpec.string",
          "decorators": []
         },
-        "enumType": {
-         "$ref": "2"
-        },
-        "doc": "Sticker message type.",
+        "value": "sticker",
         "decorators": []
        },
        "optional": false,
@@ -2069,9 +2029,7 @@
        "doc": "Message notification type is Interactive.",
        "type": {
         "$id": "243",
-        "kind": "enumvalue",
-        "name": "interactive",
-        "value": "interactive",
+        "kind": "constant",
         "valueType": {
          "$id": "244",
          "kind": "string",
@@ -2079,10 +2037,7 @@
          "crossLanguageDefinitionId": "TypeSpec.string",
          "decorators": []
         },
-        "enumType": {
-         "$ref": "2"
-        },
-        "doc": "Interactive Actionable message type.",
+        "value": "interactive",
         "decorators": []
        },
        "optional": false,
@@ -2182,9 +2137,7 @@
                "doc": "Message content kind is text.",
                "type": {
                 "$id": "257",
-                "kind": "enumvalue",
-                "name": "text",
-                "value": "text",
+                "kind": "constant",
                 "valueType": {
                  "$id": "258",
                  "kind": "string",
@@ -2192,10 +2145,7 @@
                  "crossLanguageDefinitionId": "TypeSpec.string",
                  "decorators": []
                 },
-                "enumType": {
-                 "$ref": "24"
-                },
-                "doc": "The text content type.",
+                "value": "text",
                 "decorators": []
                },
                "optional": false,
@@ -2263,9 +2213,7 @@
                "doc": "Message content kind is document.",
                "type": {
                 "$id": "267",
-                "kind": "enumvalue",
-                "name": "document",
-                "value": "document",
+                "kind": "constant",
                 "valueType": {
                  "$id": "268",
                  "kind": "string",
@@ -2273,10 +2221,7 @@
                  "crossLanguageDefinitionId": "TypeSpec.string",
                  "decorators": []
                 },
-                "enumType": {
-                 "$ref": "24"
-                },
-                "doc": "The document content type.",
+                "value": "document",
                 "decorators": []
                },
                "optional": false,
@@ -2344,9 +2289,7 @@
                "doc": "Message content kind is image.",
                "type": {
                 "$id": "277",
-                "kind": "enumvalue",
-                "name": "image",
-                "value": "image",
+                "kind": "constant",
                 "valueType": {
                  "$id": "278",
                  "kind": "string",
@@ -2354,10 +2297,7 @@
                  "crossLanguageDefinitionId": "TypeSpec.string",
                  "decorators": []
                 },
-                "enumType": {
-                 "$ref": "24"
-                },
-                "doc": "The image content type.",
+                "value": "image",
                 "decorators": []
                },
                "optional": false,
@@ -2425,9 +2365,7 @@
                "doc": "Message content kind is video.",
                "type": {
                 "$id": "287",
-                "kind": "enumvalue",
-                "name": "video",
-                "value": "video",
+                "kind": "constant",
                 "valueType": {
                  "$id": "288",
                  "kind": "string",
@@ -2435,10 +2373,7 @@
                  "crossLanguageDefinitionId": "TypeSpec.string",
                  "decorators": []
                 },
-                "enumType": {
-                 "$ref": "24"
-                },
-                "doc": "The video content type.",
+                "value": "video",
                 "decorators": []
                },
                "optional": false,
@@ -2506,9 +2441,7 @@
                "doc": "Message content kind is Button.",
                "type": {
                 "$id": "297",
-                "kind": "enumvalue",
-                "name": "buttonSet",
-                "value": "buttonSet",
+                "kind": "constant",
                 "valueType": {
                  "$id": "298",
                  "kind": "string",
@@ -2516,10 +2449,7 @@
                  "crossLanguageDefinitionId": "TypeSpec.string",
                  "decorators": []
                 },
-                "enumType": {
-                 "$ref": "24"
-                },
-                "doc": "The ButtonSet content type.",
+                "value": "buttonSet",
                 "decorators": []
                },
                "optional": false,
@@ -2653,9 +2583,7 @@
                "doc": "Message content kind is url.",
                "type": {
                 "$id": "316",
-                "kind": "enumvalue",
-                "name": "url",
-                "value": "url",
+                "kind": "constant",
                 "valueType": {
                  "$id": "317",
                  "kind": "string",
@@ -2663,10 +2591,7 @@
                  "crossLanguageDefinitionId": "TypeSpec.string",
                  "decorators": []
                 },
-                "enumType": {
-                 "$ref": "24"
-                },
-                "doc": "The Url content type.",
+                "value": "url",
                 "decorators": []
                },
                "optional": false,
@@ -2761,9 +2686,7 @@
                "doc": "Message content kind is actionGroup.",
                "type": {
                 "$id": "330",
-                "kind": "enumvalue",
-                "name": "group",
-                "value": "group",
+                "kind": "constant",
                 "valueType": {
                  "$id": "331",
                  "kind": "string",
@@ -2771,10 +2694,7 @@
                  "crossLanguageDefinitionId": "TypeSpec.string",
                  "decorators": []
                 },
-                "enumType": {
-                 "$ref": "24"
-                },
-                "doc": "The ActionSet content type.",
+                "value": "group",
                 "decorators": []
                },
                "optional": false,
@@ -3135,9 +3055,7 @@
                "doc": "Message action binding type is WhatsAppListAction.",
                "type": {
                 "$id": "380",
-                "kind": "enumvalue",
-                "name": "whatsAppListAction",
-                "value": "whatsAppListAction",
+                "kind": "constant",
                 "valueType": {
                  "$id": "381",
                  "kind": "string",
@@ -3145,10 +3063,7 @@
                  "crossLanguageDefinitionId": "TypeSpec.string",
                  "decorators": []
                 },
-                "enumType": {
-                 "$ref": "40"
-                },
-                "doc": "The WhatsApp List action binding kind.",
+                "value": "whatsAppListAction",
                 "decorators": []
                },
                "optional": false,
@@ -3212,9 +3127,7 @@
                "doc": "Message action binding type is WhatsAppButtonAction.",
                "type": {
                 "$id": "389",
-                "kind": "enumvalue",
-                "name": "whatsAppButtonAction",
-                "value": "whatsAppButtonAction",
+                "kind": "constant",
                 "valueType": {
                  "$id": "390",
                  "kind": "string",
@@ -3222,10 +3135,7 @@
                  "crossLanguageDefinitionId": "TypeSpec.string",
                  "decorators": []
                 },
-                "enumType": {
-                 "$ref": "40"
-                },
-                "doc": "The WhatsApp Button action binding kind.",
+                "value": "whatsAppButtonAction",
                 "decorators": []
                },
                "optional": false,
@@ -3289,9 +3199,7 @@
                "doc": "Message action binding type is WhatsAppUrlAction.",
                "type": {
                 "$id": "398",
-                "kind": "enumvalue",
-                "name": "whatsAppUrlAction",
-                "value": "whatsAppUrlAction",
+                "kind": "constant",
                 "valueType": {
                  "$id": "399",
                  "kind": "string",
@@ -3299,10 +3207,7 @@
                  "crossLanguageDefinitionId": "TypeSpec.string",
                  "decorators": []
                 },
-                "enumType": {
-                 "$ref": "40"
-                },
-                "doc": "The WhatsApp Url action binding kind.",
+                "value": "whatsAppUrlAction",
                 "decorators": []
                },
                "optional": false,
@@ -3400,9 +3305,7 @@
        "doc": "Message notification type is template.",
        "type": {
         "$id": "411",
-        "kind": "enumvalue",
-        "name": "template",
-        "value": "template",
+        "kind": "constant",
         "valueType": {
          "$id": "412",
          "kind": "string",
@@ -3410,10 +3313,7 @@
          "crossLanguageDefinitionId": "TypeSpec.string",
          "decorators": []
         },
-        "enumType": {
-         "$ref": "2"
-        },
-        "doc": "Template message type.",
+        "value": "template",
         "decorators": []
        },
        "optional": false,
@@ -3598,9 +3498,7 @@
                 "doc": "Message parameter type is text.",
                 "type": {
                  "$id": "438",
-                 "kind": "enumvalue",
-                 "name": "text",
-                 "value": "text",
+                 "kind": "constant",
                  "valueType": {
                   "$id": "439",
                   "kind": "string",
@@ -3608,10 +3506,7 @@
                   "crossLanguageDefinitionId": "TypeSpec.string",
                   "decorators": []
                  },
-                 "enumType": {
-                  "$ref": "48"
-                 },
-                 "doc": "The text template parameter type.",
+                 "value": "text",
                  "decorators": []
                 },
                 "optional": false,
@@ -3679,9 +3574,7 @@
                 "doc": "Message parameter type is image.",
                 "type": {
                  "$id": "448",
-                 "kind": "enumvalue",
-                 "name": "image",
-                 "value": "image",
+                 "kind": "constant",
                  "valueType": {
                   "$id": "449",
                   "kind": "string",
@@ -3689,10 +3582,7 @@
                   "crossLanguageDefinitionId": "TypeSpec.string",
                   "decorators": []
                  },
-                 "enumType": {
-                  "$ref": "48"
-                 },
-                 "doc": "The image template parameter type.",
+                 "value": "image",
                  "decorators": []
                 },
                 "optional": false,
@@ -3814,9 +3704,7 @@
                 "doc": "Message parameter type is document.",
                 "type": {
                  "$id": "466",
-                 "kind": "enumvalue",
-                 "name": "document",
-                 "value": "document",
+                 "kind": "constant",
                  "valueType": {
                   "$id": "467",
                   "kind": "string",
@@ -3824,10 +3712,7 @@
                   "crossLanguageDefinitionId": "TypeSpec.string",
                   "decorators": []
                  },
-                 "enumType": {
-                  "$ref": "48"
-                 },
-                 "doc": "The document template parameter type.",
+                 "value": "document",
                  "decorators": []
                 },
                 "optional": false,
@@ -3949,9 +3834,7 @@
                 "doc": "Message parameter type is video.",
                 "type": {
                  "$id": "484",
-                 "kind": "enumvalue",
-                 "name": "video",
-                 "value": "video",
+                 "kind": "constant",
                  "valueType": {
                   "$id": "485",
                   "kind": "string",
@@ -3959,10 +3842,7 @@
                   "crossLanguageDefinitionId": "TypeSpec.string",
                   "decorators": []
                  },
-                 "enumType": {
-                  "$ref": "48"
-                 },
-                 "doc": "The video template parameter type.",
+                 "value": "video",
                  "decorators": []
                 },
                 "optional": false,
@@ -4084,9 +3964,7 @@
                 "doc": "Message parameter type is location.",
                 "type": {
                  "$id": "502",
-                 "kind": "enumvalue",
-                 "name": "location",
-                 "value": "location",
+                 "kind": "constant",
                  "valueType": {
                   "$id": "503",
                   "kind": "string",
@@ -4094,10 +3972,7 @@
                   "crossLanguageDefinitionId": "TypeSpec.string",
                   "decorators": []
                  },
-                 "enumType": {
-                  "$ref": "48"
-                 },
-                 "doc": "The location template parameter type.",
+                 "value": "location",
                  "decorators": []
                 },
                 "optional": false,
@@ -4246,9 +4121,7 @@
                 "doc": "Message parameter type is quick action.",
                 "type": {
                  "$id": "524",
-                 "kind": "enumvalue",
-                 "name": "quickAction",
-                 "value": "quickAction",
+                 "kind": "constant",
                  "valueType": {
                   "$id": "525",
                   "kind": "string",
@@ -4256,10 +4129,7 @@
                   "crossLanguageDefinitionId": "TypeSpec.string",
                   "decorators": []
                  },
-                 "enumType": {
-                  "$ref": "48"
-                 },
-                 "doc": "The quick action template parameter type.",
+                 "value": "quickAction",
                  "decorators": []
                 },
                 "optional": false,
@@ -4418,9 +4288,7 @@
                "doc": "MessageTemplateBindings is whatsApp",
                "type": {
                 "$id": "546",
-                "kind": "enumvalue",
-                "name": "whatsApp",
-                "value": "whatsApp",
+                "kind": "constant",
                 "valueType": {
                  "$id": "547",
                  "kind": "string",
@@ -4428,10 +4296,7 @@
                  "crossLanguageDefinitionId": "TypeSpec.string",
                  "decorators": []
                 },
-                "enumType": {
-                 "$ref": "62"
-                },
-                "doc": "The WhatsApp template type.",
+                "value": "whatsApp",
                 "decorators": []
                },
                "optional": false,
@@ -5088,9 +4953,7 @@
        "doc": "Message template response type is whatsApp.",
        "type": {
         "$id": "619",
-        "kind": "enumvalue",
-        "name": "whatsApp",
-        "value": "whatsApp",
+        "kind": "constant",
         "valueType": {
          "$id": "620",
          "kind": "string",
@@ -5098,10 +4961,7 @@
          "crossLanguageDefinitionId": "TypeSpec.string",
          "decorators": []
         },
-        "enumType": {
-         "$ref": "92"
-        },
-        "doc": "The WhatsApp communication messages channel type.",
+        "value": "whatsApp",
         "decorators": []
        },
        "optional": false,
@@ -5371,9 +5231,7 @@
            "doc": "Participant type is internal.",
            "type": {
             "$id": "657",
-            "kind": "enumvalue",
-            "name": "internal",
-            "value": "internal",
+            "kind": "constant",
             "valueType": {
              "$id": "658",
              "kind": "string",
@@ -5381,10 +5239,7 @@
              "crossLanguageDefinitionId": "TypeSpec.string",
              "decorators": []
             },
-            "enumType": {
-             "$ref": "102"
-            },
-            "doc": "A participant internal to Azure Communication Services.",
+            "value": "internal",
             "decorators": []
            },
            "optional": false,
@@ -5495,9 +5350,7 @@
                 "doc": "Contact type is communication.",
                 "type": {
                  "$id": "673",
-                 "kind": "enumvalue",
-                 "name": "communication",
-                 "value": "communication",
+                 "kind": "constant",
                  "valueType": {
                   "$id": "674",
                   "kind": "string",
@@ -5505,10 +5358,7 @@
                   "crossLanguageDefinitionId": "TypeSpec.string",
                   "decorators": []
                  },
-                 "enumType": {
-                  "$ref": "108"
-                 },
-                 "doc": "Azure Communication platform.",
+                 "value": "communication",
                  "decorators": []
                 },
                 "optional": false,
@@ -5549,9 +5399,7 @@
                 "doc": "Contact type is bot.",
                 "type": {
                  "$id": "679",
-                 "kind": "enumvalue",
-                 "name": "bot",
-                 "value": "bot",
+                 "kind": "constant",
                  "valueType": {
                   "$id": "680",
                   "kind": "string",
@@ -5559,10 +5407,7 @@
                   "crossLanguageDefinitionId": "TypeSpec.string",
                   "decorators": []
                  },
-                 "enumType": {
-                  "$ref": "108"
-                 },
-                 "doc": "Bot platform.",
+                 "value": "bot",
                  "decorators": []
                 },
                 "optional": false,
@@ -5630,9 +5475,7 @@
                 "doc": "Contact type is whatsApp.",
                 "type": {
                  "$id": "689",
-                 "kind": "enumvalue",
-                 "name": "whatsApp",
-                 "value": "whatsApp",
+                 "kind": "constant",
                  "valueType": {
                   "$id": "690",
                   "kind": "string",
@@ -5640,10 +5483,7 @@
                   "crossLanguageDefinitionId": "TypeSpec.string",
                   "decorators": []
                  },
-                 "enumType": {
-                  "$ref": "108"
-                 },
-                 "doc": "WhatsApp platform.",
+                 "value": "whatsApp",
                  "decorators": []
                 },
                 "optional": false,
@@ -5702,9 +5542,7 @@
            "doc": "Participant type is external.",
            "type": {
             "$id": "697",
-            "kind": "enumvalue",
-            "name": "external",
-            "value": "external",
+            "kind": "constant",
             "valueType": {
              "$id": "698",
              "kind": "string",
@@ -5712,10 +5550,7 @@
              "crossLanguageDefinitionId": "TypeSpec.string",
              "decorators": []
             },
-            "enumType": {
-             "$ref": "102"
-            },
-            "doc": "A participant on other platforms",
+            "value": "external",
             "decorators": []
            },
            "optional": false,
@@ -7674,9 +7509,6 @@
         "type": {
          "$id": "941",
          "kind": "constant",
-         "name": "sendContentType",
-         "namespace": "",
-         "usage": "None",
          "valueType": {
           "$id": "942",
           "kind": "string",
@@ -7704,9 +7536,6 @@
         "type": {
          "$id": "944",
          "kind": "constant",
-         "name": "sendContentType1",
-         "namespace": "",
-         "usage": "None",
          "valueType": {
           "$id": "945",
           "kind": "string",
@@ -8060,9 +7889,6 @@
         "type": {
          "$id": "976",
          "kind": "constant",
-         "name": "downloadMediaContentType",
-         "namespace": "",
-         "usage": "None",
          "valueType": {
           "$id": "977",
           "kind": "string",
@@ -8126,9 +7952,6 @@
           "type": {
            "$id": "984",
            "kind": "constant",
-           "name": "MessageDataStreamContentType",
-           "namespace": "",
-           "usage": "None",
            "valueType": {
             "$id": "985",
             "kind": "string",
@@ -8469,9 +8292,6 @@
         "type": {
          "$id": "1018",
          "kind": "constant",
-         "name": "listTemplatesContentType",
-         "namespace": "",
-         "usage": "None",
          "valueType": {
           "$id": "1019",
           "kind": "string",
@@ -8766,9 +8586,6 @@
         "type": {
          "$id": "1047",
          "kind": "constant",
-         "name": "createConversationContentType",
-         "namespace": "",
-         "usage": "None",
          "valueType": {
           "$id": "1048",
           "kind": "string",
@@ -8796,9 +8613,6 @@
         "type": {
          "$id": "1050",
          "kind": "constant",
-         "name": "createConversationContentType1",
-         "namespace": "",
-         "usage": "None",
          "valueType": {
           "$id": "1051",
           "kind": "string",
@@ -9055,9 +8869,6 @@
         "type": {
          "$id": "1071",
          "kind": "constant",
-         "name": "getConversationContentType",
-         "namespace": "",
-         "usage": "None",
          "valueType": {
           "$id": "1072",
           "kind": "string",
@@ -9364,9 +9175,6 @@
         "type": {
          "$id": "1101",
          "kind": "constant",
-         "name": "deleteConversationContentType",
-         "namespace": "",
-         "usage": "None",
          "valueType": {
           "$id": "1102",
           "kind": "string",
@@ -9725,9 +9533,6 @@
         "type": {
          "$id": "1137",
          "kind": "constant",
-         "name": "terminateConversationContentType",
-         "namespace": "",
-         "usage": "None",
          "valueType": {
           "$id": "1138",
           "kind": "string",
@@ -10085,9 +9890,6 @@
         "type": {
          "$id": "1173",
          "kind": "constant",
-         "name": "listConversationsContentType",
-         "namespace": "",
-         "usage": "None",
          "valueType": {
           "$id": "1174",
           "kind": "string",
@@ -10971,9 +10773,6 @@
         "type": {
          "$id": "1283",
          "kind": "constant",
-         "name": "listMessagesContentType",
-         "namespace": "",
-         "usage": "None",
          "valueType": {
           "$id": "1284",
           "kind": "string",
@@ -11567,9 +11366,6 @@
         "type": {
          "$id": "1351",
          "kind": "constant",
-         "name": "addParticipantsContentType",
-         "namespace": "",
-         "usage": "None",
          "valueType": {
           "$id": "1352",
           "kind": "string",
@@ -11597,9 +11393,6 @@
         "type": {
          "$id": "1354",
          "kind": "constant",
-         "name": "addParticipantsContentType1",
-         "namespace": "",
-         "usage": "None",
          "valueType": {
           "$id": "1355",
           "kind": "string",
@@ -12229,9 +12022,6 @@
         "type": {
          "$id": "1423",
          "kind": "constant",
-         "name": "removeParticipantsContentType",
-         "namespace": "",
-         "usage": "None",
          "valueType": {
           "$id": "1424",
           "kind": "string",
@@ -12259,9 +12049,6 @@
         "type": {
          "$id": "1426",
          "kind": "constant",
-         "name": "removeParticipantsContentType1",
-         "namespace": "",
-         "usage": "None",
          "valueType": {
           "$id": "1427",
           "kind": "string",
@@ -12785,9 +12572,6 @@
         "type": {
          "$id": "1479",
          "kind": "constant",
-         "name": "analyzeConversationContentType",
-         "namespace": "",
-         "usage": "None",
          "valueType": {
           "$id": "1480",
           "kind": "string",
@@ -13257,9 +13041,6 @@
         "type": {
          "$id": "1527",
          "kind": "constant",
-         "name": "addParticipantsContentType2",
-         "namespace": "",
-         "usage": "None",
          "valueType": {
           "$id": "1528",
           "kind": "string",
@@ -13287,9 +13068,6 @@
         "type": {
          "$id": "1530",
          "kind": "constant",
-         "name": "addParticipantsContentType3",
-         "namespace": "",
-         "usage": "None",
          "valueType": {
           "$id": "1531",
           "kind": "string",
@@ -13715,9 +13493,6 @@
         "type": {
          "$id": "1569",
          "kind": "constant",
-         "name": "removeParticipantsContentType2",
-         "namespace": "",
-         "usage": "None",
          "valueType": {
           "$id": "1570",
           "kind": "string",
@@ -13745,9 +13520,6 @@
         "type": {
          "$id": "1572",
          "kind": "constant",
-         "name": "removeParticipantsContentType3",
-         "namespace": "",
-         "usage": "None",
          "valueType": {
           "$id": "1573",
           "kind": "string",
@@ -14171,9 +13943,6 @@
         "type": {
          "$id": "1611",
          "kind": "constant",
-         "name": "listConversationsContentType1",
-         "namespace": "",
-         "usage": "None",
          "valueType": {
           "$id": "1612",
           "kind": "string",
@@ -14546,9 +14315,6 @@
         "type": {
          "$id": "1648",
          "kind": "constant",
-         "name": "listMessagesContentType1",
-         "namespace": "",
-         "usage": "None",
          "valueType": {
           "$id": "1649",
           "kind": "string",
@@ -14923,9 +14689,6 @@
         "type": {
          "$id": "1685",
          "kind": "constant",
-         "name": "sendMessageContentType",
-         "namespace": "",
-         "usage": "None",
          "valueType": {
           "$id": "1686",
           "kind": "string",
@@ -14953,9 +14716,6 @@
         "type": {
          "$id": "1688",
          "kind": "constant",
-         "name": "sendMessageContentType1",
-         "namespace": "",
-         "usage": "None",
          "valueType": {
           "$id": "1689",
           "kind": "string",
@@ -15380,9 +15140,6 @@
         "type": {
          "$id": "1727",
          "kind": "constant",
-         "name": "analyzeConversationContentType1",
-         "namespace": "",
-         "usage": "None",
          "valueType": {
           "$id": "1728",
           "kind": "string",
