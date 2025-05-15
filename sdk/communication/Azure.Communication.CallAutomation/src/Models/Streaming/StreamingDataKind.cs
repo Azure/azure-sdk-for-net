@@ -31,5 +31,9 @@ namespace Azure.Communication.CallAutomation
         /// Dtmf data type
         /// </summary>
         DtmfData,
+        /// <summary>
+        /// Dtmf metadata type
+        /// </summary>
+        DtmfMetadata,
     }
 }

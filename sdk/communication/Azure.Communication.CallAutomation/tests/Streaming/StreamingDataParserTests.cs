@@ -46,22 +46,6 @@ namespace Azure.Communication.CallAutomation.Tests.MediaStreaming
             ValidateAudioData(streamingAudio);
         }
 
-        [Test]
-        public void ParseDtmfData_Test()
-        {
-            string dtmfJson = "{"
-                + "\"kind\": \"DtmfData\","
-                + "\"dtmfData\": {"
-                + "\"data\": \"5\","
-                + "\"timestamp\": \"2022-08-23T11:48:05Z\","
-                + "\"participantRawID\": \"participantId\""
-                + "}"
-                + "}";
-
-            DtmfData streamingDtmf = (DtmfData)StreamingData.Parse(dtmfJson);
-            ValidateDtmfData(streamingDtmf);
-        }
-
         private static void ValidateAudioMetadata(AudioMetadata streamingAudioMetadata)
         {
             Assert.IsNotNull(streamingAudioMetadata);
@@ -81,6 +65,48 @@ namespace Azure.Communication.CallAutomation.Tests.MediaStreaming
             Assert.AreEqual("participantId", streamingAudio.Participant.RawId);
             Assert.IsFalse(streamingAudio.IsSilent);
         }
+        #endregion
+
+        #region DTMF
+        [Test]
+        public void ParseDtmfMetadata_Test()
+        {
+            string metadataJson = "{"
+                + "\"kind\": \"DtmfMetadata\","
+                + "\"dtmfMetadata\": {"
+                + "\"data\": \"5\","
+                + "\"timestamp\": \"2022-08-23T11:48:05Z\","
+                + "\"participantRawID\": \"participantId\""
+                + "}"
+                + "}";
+
+            DtmfMetaData metadata = (DtmfMetaData)StreamingData.Parse(metadataJson);
+            ValidateDtmfMetadata(metadata);
+        }
+        [Test]
+        public void ParseDtmfData_Test()
+        {
+            string dtmfJson = "{"
+                + "\"kind\": \"DtmfData\","
+                + "\"dtmfData\": {"
+                + "\"data\": \"5\","
+                + "\"timestamp\": \"2022-08-23T11:48:05Z\","
+                + "\"participantRawID\": \"participantId\""
+                + "}"
+                + "}";
+
+            DtmfData streamingDtmf = (DtmfData)StreamingData.Parse(dtmfJson);
+            ValidateDtmfData(streamingDtmf);
+        }
+
+        private static void ValidateDtmfMetadata(DtmfMetaData streamingDtmf)
+        {
+            Assert.IsNotNull(streamingDtmf);
+            Assert.AreEqual("5", streamingDtmf.Data);
+            Assert.AreEqual(2022, streamingDtmf.Timestamp.Year);
+            Assert.IsTrue(streamingDtmf.Participant is CommunicationIdentifier);
+            Assert.AreEqual("participantId", streamingDtmf.Participant.RawId);
+        }
 
         private static void ValidateDtmfData(DtmfData streamingDtmf)
         {
@@ -89,14 +115,6 @@ namespace Azure.Communication.CallAutomation.Tests.MediaStreaming
             Assert.AreEqual(2022, streamingDtmf.Timestamp.Year);
             Assert.IsTrue(streamingDtmf.Participant is CommunicationIdentifier);
             Assert.AreEqual("participantId", streamingDtmf.Participant.RawId);
-        }
-        private static void ValidateAudioDataNoParticipant(AudioData streamingAudio)
-        {
-            Assert.IsNotNull(streamingAudio);
-            Assert.AreEqual(Convert.FromBase64String("AQIDBAU="), streamingAudio.Data);
-            Assert.AreEqual(2022, streamingAudio.Timestamp.Year);
-            Assert.IsNull(streamingAudio.Participant);
-            Assert.IsFalse(streamingAudio.IsSilent);
         }
         #endregion
 
@@ -113,7 +131,8 @@ namespace Azure.Communication.CallAutomation.Tests.MediaStreaming
                     "\"subscriptionId\":\"subscriptionId\"," +
                     "\"locale\":\"en-US\"," +
                     "\"callConnectionId\":\"callConnectionId\"," +
-                    "\"correlationId\":\"correlationId\"" +
+                    "\"correlationId\":\"correlationId\"," +
+                    "\"speechRecognitionModelEndpointId\":\"speechRecognitionModelEndpointId\"" +
                 "}" +
             "}";
 
@@ -179,6 +198,7 @@ namespace Azure.Communication.CallAutomation.Tests.MediaStreaming
             Assert.AreEqual("en-US", transcriptionMetadata.Locale);
             Assert.AreEqual("callConnectionId", transcriptionMetadata.CallConnectionId);
             Assert.AreEqual("correlationId", transcriptionMetadata.CorrelationId);
+            Assert.AreEqual("speechRecognitionModelEndpointId", transcriptionMetadata.SpeechRecognitionModelEndpointId);
         }
 
         private static void ValidateTranscriptionDataWithWordsNull(TranscriptionData transcription)

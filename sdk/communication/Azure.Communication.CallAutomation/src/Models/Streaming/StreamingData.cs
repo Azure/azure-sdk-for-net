@@ -65,6 +65,10 @@ namespace Azure.Communication.CallAutomation
                 #endregion
 
                 #region Dtmf
+                case "DtmfMetadata":
+                    var dtmfMetadataInternal = JsonSerializer.Deserialize<DtmfMetaDataInternal>(streamingData.GetProperty("dtmfMetadata").ToString());
+                    return new DtmfMetaData(dtmfMetadataInternal);
+
                 case "DtmfData":
                     DtmfDataInternal dtmfInternal = JsonSerializer.Deserialize<DtmfDataInternal>(streamingData.GetProperty("dtmfData").ToString());
                     return new DtmfData(dtmfInternal.Data, dtmfInternal.Timestamp, dtmfInternal.ParticipantRawId);
@@ -72,7 +76,8 @@ namespace Azure.Communication.CallAutomation
 
                 #region Transcription
                 case "TranscriptionMetadata":
-                    return JsonSerializer.Deserialize<TranscriptionMetadata>(streamingData.GetProperty("transcriptionMetadata").ToString());
+                    TranscriptionMetaDataInternal transcriptionMetadata = JsonSerializer.Deserialize<TranscriptionMetaDataInternal>(streamingData.GetProperty("transcriptionMetadata").ToString());
+                    return new TranscriptionMetadata(transcriptionMetadata);
 
                 case "TranscriptionData":
                     TranscriptionDataInternal transcriptionDataInternal = JsonSerializer.Deserialize<TranscriptionDataInternal>(
