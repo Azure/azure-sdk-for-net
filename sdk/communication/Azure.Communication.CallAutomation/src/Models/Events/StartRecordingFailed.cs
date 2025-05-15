@@ -2,31 +2,16 @@
 // Licensed under the MIT License.
 
 using System.Text.Json;
+using Azure.Core;
 
-namespace Azure.Communication.CallAutomation.Models.Events
+namespace Azure.Communication.CallAutomation
 {
     /// <summary>
     /// The start recording failed event.
     /// </summary>
-    public class StartRecordingFailed : CallAutomationEventBase
+    [CodeGenModel("StartRecordingFailed", Usage = new string[] { "output" }, Formats = new string[] { "json" })]
+    public partial class StartRecordingFailed : CallAutomationEventBase
     {
-        /// <summary> Initializes a new instance of StartRecordingFailedEvent. </summary>
-        internal StartRecordingFailed()
-        {
-        }
-
-        /// <summary> Initializes a new instance of StartRecordingFailed. </summary>
-        /// <param name="internalEvent">Internal Representation of the StartRecordingFailed. </param>
-        internal StartRecordingFailed(StartRecordingFailedInternal internalEvent)
-        {
-            CallConnectionId = internalEvent.CallConnectionId;
-            CorrelationId = internalEvent.CorrelationId;
-            RecordingId = internalEvent.RecordingId;
-        }
-
-        /// <summary> The call recording Id. </summary>
-        public string RecordingId { get; }
-
         /// <summary>
         /// Deserialize <see cref="StartRecordingFailed"/> event.
         /// </summary>
@@ -37,8 +22,7 @@ namespace Azure.Communication.CallAutomation.Models.Events
             using var document = JsonDocument.Parse(content);
             JsonElement element = document.RootElement;
 
-            var internalEvent = StartRecordingFailedInternal.DeserializeStartRecordingFailedInternal(element);
-            return new StartRecordingFailed(internalEvent);
+            return DeserializeStartRecordingFailed(element);
         }
     }
 }

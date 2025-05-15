@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using Azure.Communication.CallAutomation.Models.Events;
 using Azure.Messaging;
 
 namespace Azure.Communication.CallAutomation
