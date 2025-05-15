@@ -19,7 +19,7 @@ internal partial class UploadFileRequest : IUtf8JsonSerializable
     internal virtual MultipartFormDataRequestContent ToMultipartRequestContent()
     {
         MultipartFormDataRequestContent content = new();
-        content.Add(Data.Contents, "file", Filename);
+        content.Add(Data, "file", Filename);
         content.Add(Purpose.ToString(), "purpose");
         return content;
     }

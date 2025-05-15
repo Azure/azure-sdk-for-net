@@ -262,7 +262,7 @@ namespace Azure.AI.Agents.Persistent
             string model = default;
             string instructions = default;
             IReadOnlyList<ToolDefinition> tools = default;
-            UpdateToolResourcesOptions toolResources = default;
+            ToolResources toolResources = default;
             bool? stream = default;
             float? temperature = default;
             float? topP = default;
@@ -332,7 +332,7 @@ namespace Azure.AI.Agents.Persistent
                         toolResources = null;
                         continue;
                     }
-                    toolResources = UpdateToolResourcesOptions.DeserializeUpdateToolResourcesOptions(property.Value, options);
+                    toolResources = ToolResources.DeserializeToolResources(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("stream"u8))

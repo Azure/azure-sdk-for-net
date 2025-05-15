@@ -29,7 +29,7 @@ public partial class Sample_PersistentAgents_Azure_AI_Search_Streaming : Samples
 #endif
         #endregion
         #region Snippet:AgentsAzureAISearchStreamingExample_CreateTool_Async
-        AzureAISearchResource searchResource = new(
+        AzureAISearchToolResource searchResource = new(
             connectionID,
             "sample_index",
             5,
@@ -107,7 +107,7 @@ public partial class Sample_PersistentAgents_Azure_AI_Search_Streaming : Samples
         var connectionID = TestEnvironment.AI_SEARCH_CONNECTION_ID;
 #endif
         #region Snippet:AgentsAzureAISearchStreamingExample_CreateTool
-        AzureAISearchResource searchResource = new(
+        AzureAISearchToolResource searchResource = new(
             connectionID,
             "sample_index",
             5,

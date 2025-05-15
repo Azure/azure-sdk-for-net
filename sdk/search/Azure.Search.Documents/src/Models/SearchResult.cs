@@ -114,6 +114,11 @@ namespace Azure.Search.Documents.Models
                 {
                     result.SemanticSearch.RerankerScore = prop.Value.GetDouble();
                 }
+                else if (prop.NameEquals(Constants.SearchRerankerBoostedScoreKeyJson.EncodedUtf8Bytes) &&
+                    prop.Value.ValueKind != JsonValueKind.Null)
+                {
+                    result.SemanticSearch.RerankerBoostedScore = prop.Value.GetDouble();
+                }
                 else if (prop.NameEquals(Constants.SearchCaptionsKeyJson.EncodedUtf8Bytes) &&
                     prop.Value.ValueKind != JsonValueKind.Null)
                 {
@@ -170,6 +175,13 @@ namespace Azure.Search.Documents.Models
         /// <see cref="RerankerScore"/> is only returned for queries of type <see cref="SearchQueryType.Semantic"/>.</para>
         /// </summary>
         public double? RerankerScore { get; internal set; }
+
+        /// <summary>
+        /// The relevance score computed by boosting the Reranker Score. Search results are sorted by the
+        /// RerankerScore/RerankerBoostedScore based on useScoringProfileBoostedRanking in the Semantic Config.
+        /// RerankerBoostedScore is only returned for queries of type 'semantic'.
+        /// </summary>
+        public double? RerankerBoostedScore { get; internal set; }
 
         /// <summary>
         /// Captions are the most representative passages from the document relatively to the search query.
@@ -273,16 +285,33 @@ namespace Azure.Search.Documents.Models
                 DocumentDebugInfo = documentDebugInfo
             };
 
-        /// <summary> Initializes a new instance of <see cref="SemanticSearchResult"/>. </summary>
+        /// <summary> Initializes a new instance of SemanticSearchResult. </summary>
         /// <param name="rerankerScore"> The relevance score computed by the semantic ranker for the top search results. </param>
         /// <param name="captions"> Captions are the most representative passages from the document relatively to the search query. </param>
         /// <returns> A new <see cref="Models.SemanticSearchResult"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static SemanticSearchResult SemanticSearchResult(
             double? rerankerScore,
             IReadOnlyList<QueryCaptionResult> captions) =>
           new SemanticSearchResult()
           {
               RerankerScore = rerankerScore,
+              Captions = captions
+          };
+
+        /// <summary> Initializes a new instance of SemanticSearchResult. </summary>
+        /// <param name="rerankerScore"> The relevance score computed by the semantic ranker for the top search results. </param>
+        /// <param name="rerankerBoostedScore"> The relevance score computed by boosting the Reranker Score. Search results are sorted by the RerankerScore/RerankerBoostedScore based on useScoringProfileBoostedRanking in the Semantic Config.</param>
+        /// <param name="captions"> Captions are the most representative passages from the document relatively to the search query. </param>
+        /// <returns> A new <see cref="Models.SemanticSearchResult"/> instance for mocking. </returns>
+        public static SemanticSearchResult SemanticSearchResult(
+            double? rerankerScore,
+            double? rerankerBoostedScore,
+            IReadOnlyList<QueryCaptionResult> captions) =>
+          new SemanticSearchResult()
+          {
+              RerankerScore = rerankerScore,
+              RerankerBoostedScore = rerankerBoostedScore,
               Captions = captions
           };
     }

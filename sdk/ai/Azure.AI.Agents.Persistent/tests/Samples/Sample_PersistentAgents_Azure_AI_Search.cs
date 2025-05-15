@@ -30,7 +30,7 @@ public partial class Sample_PersistentAgents_Azure_AI_Search : SamplesBase<AIAge
 #endif
         #endregion
         #region Snippet:AgentsCreateAgentWithAzureAISearchTool
-        AzureAISearchResource searchResource = new(
+        AzureAISearchToolResource searchResource = new(
             connectionID,
             "sample_index",
             5,
@@ -138,7 +138,7 @@ public partial class Sample_PersistentAgents_Azure_AI_Search : SamplesBase<AIAge
         var connectionID = TestEnvironment.AI_SEARCH_CONNECTION_ID;
 #endif
         #region Snippet:AgentsCreateAgentWithAzureAISearchTool_Sync
-        AzureAISearchResource searchResource = new(
+        AzureAISearchToolResource searchResource = new(
             connectionID,
             "sample_index",
             5,
