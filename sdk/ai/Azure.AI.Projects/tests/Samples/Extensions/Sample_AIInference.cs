@@ -10,6 +10,7 @@ using Azure.AI.Inference;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 using Azure.Core.Diagnostics;
+using System.Diagnostics.Tracing;
 
 namespace Azure.AI.Projects.Tests;
 
@@ -83,7 +84,7 @@ public class Sample_AIInference : SamplesBase<AIProjectsTestEnvironment>
         var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
 #else
         var endpoint = TestEnvironment.PROJECTENDPOINT;
-        var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
+        var modelDeploymentName = TestEnvironment.EMBEDDINGSMODELDEPLOYMENTNAME;
 #endif
         AIProjectClient client = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
         EmbeddingsClient embeddingsClient = client.GetEmbeddingsClient();
@@ -113,7 +114,7 @@ public class Sample_AIInference : SamplesBase<AIProjectsTestEnvironment>
         var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
 #else
         var endpoint = TestEnvironment.PROJECTENDPOINT;
-        var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
+        var modelDeploymentName = TestEnvironment.EMBEDDINGSMODELDEPLOYMENTNAME;
 #endif
         AIProjectClient client = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
         EmbeddingsClient embeddingsClient = client.GetEmbeddingsClient();
@@ -143,41 +144,94 @@ public class Sample_AIInference : SamplesBase<AIProjectsTestEnvironment>
         var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
 #else
         var endpoint = TestEnvironment.PROJECTENDPOINT;
-        var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
+        var modelDeploymentName = TestEnvironment.EMBEDDINGSMODELDEPLOYMENTNAME;
 #endif
         AIProjectClient client = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
         ImageEmbeddingsClient imageEmbeddingsClient = client.GetImageEmbeddingsClient();
 
         List<ImageEmbeddingInput> input = new List<ImageEmbeddingInput>
-            {
+        {
 #if SNIPPET
-                ImageEmbeddingInput.Load(imageFilePath:"sampleImage.png", imageFormat:"png")
+            ImageEmbeddingInput.Load(imageFilePath:"sampleImage.png", imageFormat:"png")
 #else
-                ImageEmbeddingInput.Load(TestEnvironment.TESTIMAGEPNGINPUTPATH, "png"),
+            ImageEmbeddingInput.Load(TestEnvironment.TESTIMAGEPNGINPUTPATH, "png"),
 #endif
-            };
+        };
 
-            var requestOptions = new ImageEmbeddingsOptions(input);
+        var requestOptions = new ImageEmbeddingsOptions(input)
+        {
+            Model = modelDeploymentName
+        };
 
-            Response<EmbeddingsResult> response = imageEmbeddingsClient.Embed(requestOptions);
-            foreach (EmbeddingItem item in response.Value.Data)
-            {
-                List<float> embedding = item.Embedding.ToObjectFromJson<List<float>>();
-                Console.WriteLine($"Index: {item.Index}, Embedding: <{string.Join(", ", embedding)}>");
-            }
+        Response<EmbeddingsResult> response = imageEmbeddingsClient.Embed(requestOptions);
+        foreach (EmbeddingItem item in response.Value.Data)
+        {
+            List<float> embedding = item.Embedding.ToObjectFromJson<List<float>>();
+            Console.WriteLine($"Index: {item.Index}, Embedding: <{string.Join(", ", embedding)}>");
+        }
 #endregion
 
-            Assert.That(response, Is.Not.Null);
-            Assert.That(response.Value, Is.InstanceOf<EmbeddingsResult>());
-            Assert.That(response.Value.Id, Is.Not.Null.Or.Empty);
-            Assert.AreEqual(response.Value.Data.Count, input.Count);
-            for (int i = 0; i < input.Count; i++)
-            {
-                Assert.AreEqual(response.Value.Data[i].Index, i);
-                Assert.That(response.Value.Data[i].Embedding, Is.Not.Null.Or.Empty);
-                var embedding = response.Value.Data[i].Embedding.ToObjectFromJson<List<float>>();
-                Assert.That(embedding.Count, Is.GreaterThan(0));
-            }
+        Assert.That(response, Is.Not.Null);
+        Assert.That(response.Value, Is.InstanceOf<EmbeddingsResult>());
+        Assert.That(response.Value.Id, Is.Not.Null.Or.Empty);
+        Assert.AreEqual(response.Value.Data.Count, input.Count);
+        for (int i = 0; i < input.Count; i++)
+        {
+            Assert.AreEqual(response.Value.Data[i].Index, i);
+            Assert.That(response.Value.Data[i].Embedding, Is.Not.Null.Or.Empty);
+            var embedding = response.Value.Data[i].Embedding.ToObjectFromJson<List<float>>();
+            Assert.That(embedding.Count, Is.GreaterThan(0));
+        }
+    }
+
+    [Test]
+    [AsyncOnly]
+    public async Task InferenceImageEmbeddingAsync()
+    {
+        #region Snippet:ExtensionsImageEmbeddingSync
+#if SNIPPET
+        var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
+        var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
+#else
+        var endpoint = TestEnvironment.PROJECTENDPOINT;
+        var modelDeploymentName = TestEnvironment.EMBEDDINGSMODELDEPLOYMENTNAME;
+#endif
+        AIProjectClient client = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
+        ImageEmbeddingsClient imageEmbeddingsClient = client.GetImageEmbeddingsClient();
+
+        List<ImageEmbeddingInput> input = new List<ImageEmbeddingInput>
+        {
+#if SNIPPET
+            ImageEmbeddingInput.Load(imageFilePath:"sampleImage.png", imageFormat:"png")
+#else
+            ImageEmbeddingInput.Load(TestEnvironment.TESTIMAGEPNGINPUTPATH, "png"),
+#endif
+        };
+
+        var requestOptions = new ImageEmbeddingsOptions(input)
+        {
+            Model = modelDeploymentName
+        };
+
+        Response<EmbeddingsResult> response = await imageEmbeddingsClient.EmbedAsync(requestOptions);
+        foreach (EmbeddingItem item in response.Value.Data)
+        {
+            List<float> embedding = item.Embedding.ToObjectFromJson<List<float>>();
+            Console.WriteLine($"Index: {item.Index}, Embedding: <{string.Join(", ", embedding)}>");
+        }
+        #endregion
+
+        Assert.That(response, Is.Not.Null);
+        Assert.That(response.Value, Is.InstanceOf<EmbeddingsResult>());
+        Assert.That(response.Value.Id, Is.Not.Null.Or.Empty);
+        Assert.AreEqual(response.Value.Data.Count, input.Count);
+        for (int i = 0; i < input.Count; i++)
+        {
+            Assert.AreEqual(response.Value.Data[i].Index, i);
+            Assert.That(response.Value.Data[i].Embedding, Is.Not.Null.Or.Empty);
+            var embedding = response.Value.Data[i].Embedding.ToObjectFromJson<List<float>>();
+            Assert.That(embedding.Count, Is.GreaterThan(0));
+        }
     }
 
     // [Test]
