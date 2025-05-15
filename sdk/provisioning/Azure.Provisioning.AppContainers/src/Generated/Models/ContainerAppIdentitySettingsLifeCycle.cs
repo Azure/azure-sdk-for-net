@@ -6,27 +6,28 @@
 namespace Azure.Provisioning.AppContainers;
 
 /// <summary>
-/// Storage type for the volume. If not provided, use EmptyDir.
+/// Use to select the lifecycle stages of a Container App during which the
+/// Managed Identity should be available.
 /// </summary>
-public enum ContainerAppStorageType
+public enum ContainerAppIdentitySettingsLifeCycle
 {
     /// <summary>
-    /// AzureFile.
+    /// Init.
     /// </summary>
-    AzureFile,
+    Init,
 
     /// <summary>
-    /// EmptyDir.
+    /// Main.
     /// </summary>
-    EmptyDir,
+    Main,
 
     /// <summary>
-    /// Secret.
+    /// None.
     /// </summary>
-    Secret,
+    None,
 
     /// <summary>
-    /// NfsAzureFile.
+    /// All.
     /// </summary>
-    NfsAzureFile,
+    All,
 }

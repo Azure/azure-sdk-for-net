@@ -6,27 +6,32 @@
 namespace Azure.Provisioning.AppContainers;
 
 /// <summary>
-/// Storage type for the volume. If not provided, use EmptyDir.
+/// Provisioning state of the Java Component.
 /// </summary>
-public enum ContainerAppStorageType
+public enum JavaComponentProvisioningState
 {
     /// <summary>
-    /// AzureFile.
+    /// Succeeded.
     /// </summary>
-    AzureFile,
+    Succeeded,
 
     /// <summary>
-    /// EmptyDir.
+    /// Failed.
     /// </summary>
-    EmptyDir,
+    Failed,
 
     /// <summary>
-    /// Secret.
+    /// Canceled.
     /// </summary>
-    Secret,
+    Canceled,
 
     /// <summary>
-    /// NfsAzureFile.
+    /// Deleting.
     /// </summary>
-    NfsAzureFile,
+    Deleting,
+
+    /// <summary>
+    /// InProgress.
+    /// </summary>
+    InProgress,
 }

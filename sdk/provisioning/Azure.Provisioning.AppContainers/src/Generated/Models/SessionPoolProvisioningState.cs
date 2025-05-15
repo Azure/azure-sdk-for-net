@@ -6,27 +6,32 @@
 namespace Azure.Provisioning.AppContainers;
 
 /// <summary>
-/// Storage type for the volume. If not provided, use EmptyDir.
+/// Provisioning state of the session pool.
 /// </summary>
-public enum ContainerAppStorageType
+public enum SessionPoolProvisioningState
 {
     /// <summary>
-    /// AzureFile.
+    /// InProgress.
     /// </summary>
-    AzureFile,
+    InProgress,
 
     /// <summary>
-    /// EmptyDir.
+    /// Succeeded.
     /// </summary>
-    EmptyDir,
+    Succeeded,
 
     /// <summary>
-    /// Secret.
+    /// Failed.
     /// </summary>
-    Secret,
+    Failed,
 
     /// <summary>
-    /// NfsAzureFile.
+    /// Canceled.
     /// </summary>
-    NfsAzureFile,
+    Canceled,
+
+    /// <summary>
+    /// Deleting.
+    /// </summary>
+    Deleting,
 }
