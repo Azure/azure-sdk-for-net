@@ -11,7 +11,7 @@ using System.Globalization;
 
 namespace BasicTypeSpec
 {
-    /// <summary> The ThingModel_optionalLiteralInt. </summary>
+    /// <summary> The ThingModelOptionalLiteralInt. </summary>
     public readonly partial struct ThingModelOptionalLiteralInt : IEquatable<ThingModelOptionalLiteralInt>
     {
         private readonly int _value;

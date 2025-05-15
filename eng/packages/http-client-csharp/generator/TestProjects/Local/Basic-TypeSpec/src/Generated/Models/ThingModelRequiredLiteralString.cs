@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace BasicTypeSpec
 {
-    /// <summary> The ThingModel_requiredLiteralString. </summary>
+    /// <summary> The ThingModelRequiredLiteralString. </summary>
     public readonly partial struct ThingModelRequiredLiteralString : IEquatable<ThingModelRequiredLiteralString>
     {
         private readonly string _value;
