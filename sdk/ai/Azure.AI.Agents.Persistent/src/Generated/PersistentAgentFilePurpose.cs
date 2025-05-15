@@ -22,26 +22,14 @@ namespace Azure.AI.Agents.Persistent
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string FineTuneValue = "fine-tune";
-        private const string FineTuneResultsValue = "fine-tune-results";
         private const string AgentsValue = "assistants";
         private const string AgentsOutputValue = "assistants_output";
-        private const string BatchValue = "batch";
-        private const string BatchOutputValue = "batch_output";
         private const string VisionValue = "vision";
 
-        /// <summary> Indicates a file is used for fine tuning input. </summary>
-        public static PersistentAgentFilePurpose FineTune { get; } = new PersistentAgentFilePurpose(FineTuneValue);
-        /// <summary> Indicates a file is used for fine tuning results. </summary>
-        public static PersistentAgentFilePurpose FineTuneResults { get; } = new PersistentAgentFilePurpose(FineTuneResultsValue);
         /// <summary> Indicates a file is used as input to agents. </summary>
         public static PersistentAgentFilePurpose Agents { get; } = new PersistentAgentFilePurpose(AgentsValue);
         /// <summary> Indicates a file is used as output by agents. </summary>
         public static PersistentAgentFilePurpose AgentsOutput { get; } = new PersistentAgentFilePurpose(AgentsOutputValue);
-        /// <summary> Indicates a file is used as input to . </summary>
-        public static PersistentAgentFilePurpose Batch { get; } = new PersistentAgentFilePurpose(BatchValue);
-        /// <summary> Indicates a file is used as output by a vector store batch operation. </summary>
-        public static PersistentAgentFilePurpose BatchOutput { get; } = new PersistentAgentFilePurpose(BatchOutputValue);
         /// <summary> Indicates a file is used as input to a vision operation. </summary>
         public static PersistentAgentFilePurpose Vision { get; } = new PersistentAgentFilePurpose(VisionValue);
         /// <summary> Determines if two <see cref="PersistentAgentFilePurpose"/> values are the same. </summary>

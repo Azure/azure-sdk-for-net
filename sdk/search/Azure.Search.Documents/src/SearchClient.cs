@@ -434,8 +434,8 @@ namespace Azure.Search.Documents
         /// Thrown when a failure is returned by the Search Service.
         /// </exception>
         /// <remarks>
-        /// The generic overloads of the <see cref="GetDocument"/> and
-        /// <see cref="GetDocumentAsync"/> methods support mapping of Azure
+        /// The generic overloads of the <see cref="GetDocument{T}(string, GetDocumentOptions, CancellationToken)"/> and
+        /// <see cref="GetDocumentAsync{T}(string, GetDocumentOptions, CancellationToken)"/> methods support mapping of Azure
         /// Search field types to .NET types via the type parameter
         /// <typeparamref name="T"/>.  Note that all search field types except
         /// collections are nullable, so we recommend using nullable types for
@@ -449,6 +449,7 @@ namespace Azure.Search.Documents
             CancellationToken cancellationToken = default) =>
             GetDocumentInternal<T>(
                 key,
+                null,
                 options,
                 async: false,
                 cancellationToken)
@@ -487,7 +488,7 @@ namespace Azure.Search.Documents
         /// Thrown when a failure is returned by the Search Service.
         /// </exception>
         /// <remarks>
-        /// The <see cref="GetDocument"/> and <see cref="GetDocumentAsync"/>
+        /// The <see cref="GetDocument{T}(string, GetDocumentOptions, CancellationToken)"/> and <see cref="GetDocumentAsync{T}(string, GetDocumentOptions, CancellationToken)"/>
         /// methods support mapping of Azure Search field types to .NET types
         /// via the type parameter <typeparamref name="T"/>.  Note that all
         /// search field types except collections are nullable, so we recommend
@@ -663,6 +664,284 @@ namespace Azure.Search.Documents
             CancellationToken cancellationToken = default) =>
             await GetDocumentInternal<T>(
                 key,
+                null,
+                options,
+                async: true,
+                cancellationToken)
+                .ConfigureAwait(false);
+
+        /// <summary>
+        /// Retrieves a document from Azure Cognitive Search.  This is useful
+        /// when a user clicks on a specific search result, and you want to
+        /// look up specific details about that document. You can only get one
+        /// document at a time.  Use Search to get multiple documents in a
+        /// single request.
+        /// <see href="https://docs.microsoft.com/rest/api/searchservice/lookup-document">Lookup Document</see>
+        /// </summary>
+        /// <typeparam name="T">
+        /// The .NET type that maps to the index schema. Instances of this type
+        /// can be retrieved as documents from the index.
+        /// </typeparam>
+        /// <param name="key">
+        /// Required.  An string value that uniquely identifies each document
+        /// in the index.  The key is sometimes referred to as a document ID.
+        /// See
+        /// <see href="https://docs.microsoft.com/rest/api/searchservice/naming-rules">Naming rules</see>
+        /// for the rules for constructing valid document keys.
+        /// </param>
+        /// <param name="querySourceAuthorization"> Token identifying the user for which the query is being executed.
+        /// This token is used to enforce security restrictions on documents.
+        /// </param>
+        /// <param name="options">
+        /// Options to customize the operation's behavior.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate notifications
+        /// that the operation should be canceled.
+        /// </param>
+        /// <returns>
+        /// The document corresponding to the <paramref name="key"/>.
+        /// </returns>
+        /// <exception cref="RequestFailedException">
+        /// Thrown when a failure is returned by the Search Service.
+        /// </exception>
+        /// <remarks>
+        /// The generic overloads of the <see cref="GetDocument{T}(string, string, GetDocumentOptions, CancellationToken)"/> and
+        /// <see cref="GetDocumentAsync{T}(string, string, GetDocumentOptions, CancellationToken)"/> methods support mapping of Azure
+        /// Search field types to .NET types via the type parameter
+        /// <typeparamref name="T"/>. Note that all search field types except
+        /// collections are nullable, so we recommend using nullable types for
+        /// the properties of <typeparamref name="T"/>. See
+        /// <see cref="GetDocumentAsync{T}(string, string, GetDocumentOptions, CancellationToken)"/>
+        /// for more information.
+        /// </remarks>
+        public virtual Response<T> GetDocument<T>(
+            string key,
+            string querySourceAuthorization,
+            GetDocumentOptions options = null,
+            CancellationToken cancellationToken = default) =>
+            GetDocumentInternal<T>(
+                key,
+                querySourceAuthorization,
+                options,
+                async: false,
+                cancellationToken)
+                .EnsureCompleted();
+
+        /// <summary>
+        /// Retrieves a document from Azure Cognitive Search.  This is useful
+        /// when a user clicks on a specific search result, and you want to
+        /// look up specific details about that document. You can only get one
+        /// document at a time.  Use Search to get multiple documents in a
+        /// single request.
+        /// <see href="https://docs.microsoft.com/rest/api/searchservice/lookup-document">Lookup Document</see>
+        /// </summary>
+        /// <typeparam name="T">
+        /// The .NET type that maps to the index schema. Instances of this type
+        /// can be retrieved as documents from the index.
+        /// </typeparam>
+        /// <param name="key">
+        /// Required.  An string value that uniquely identifies each document
+        /// in the index.  The key is sometimes referred to as a document ID.
+        /// See
+        /// <see href="https://docs.microsoft.com/rest/api/searchservice/naming-rules">Naming rules</see>
+        /// for the rules for constructing valid document keys.
+        /// </param>
+        /// <param name="querySourceAuthorization"> Token identifying the user for which the query is being executed.
+        /// This token is used to enforce security restrictions on documents.
+        /// </param>
+        /// <param name="options">
+        /// Options to customize the operation's behavior.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate notifications
+        /// that the operation should be canceled.
+        /// </param>
+        /// <returns>
+        /// The document corresponding to the <paramref name="key"/>.
+        /// </returns>
+        /// <exception cref="RequestFailedException">
+        /// Thrown when a failure is returned by the Search Service.
+        /// </exception>
+        /// <remarks>
+        /// The <see cref="GetDocument{T}(string, string, GetDocumentOptions, CancellationToken)"/> and <see cref="GetDocumentAsync{T}(string, string, GetDocumentOptions, CancellationToken)"/>
+        /// methods support mapping of Azure Search field types to .NET types
+        /// via the type parameter <typeparamref name="T"/>.  Note that all
+        /// search field types except collections are nullable, so we recommend
+        /// using nullable types for the properties of <typeparamref name="T"/>.
+        /// The type mapping is as follows:
+        /// <list type="table">
+        /// <listheader>
+        /// <term>Search field type</term>
+        /// <description>.NET type</description>
+        /// </listheader>
+        /// <item>
+        /// <term>Edm.String</term>
+        /// <description><see cref="String"/> (string in C# and F#)</description>
+        /// </item>
+        /// <item>
+        /// <term>Edm.Boolean</term>
+        /// <description><see cref="Nullable{Boolean}"/> (bool? in C#,\
+        /// Nullable&lt;bool&gt; in F#)</description>
+        /// </item>
+        /// <item>
+        /// <term>Edm.Double</term>
+        /// <description><see cref="Nullable{Double}"/> (double? in C#,
+        /// Nullable&lt;float&gt; in F#)</description>
+        /// </item>
+        /// <item>
+        /// <term>Edm.Int32</term>
+        /// <description><see cref="Nullable{Int32}"/> (int? in C#,
+        /// Nullable&lt;int&gt; in F#)</description>
+        /// </item>
+        /// <item>
+        /// <term>Edm.Int64</term>
+        /// <description><see cref="Nullable{Int64}"/> (long? in C#,
+        /// Nullable&lt;int64&gt; in F#)</description>
+        /// </item>
+        /// <item>
+        /// <term>Edm.DateTimeOffset</term>
+        /// <description>
+        /// <see cref="Nullable{DateTimeOffset}"/> (DateTimeOffset? in
+        /// C#, Nullable&lt;DateTimeOffset&gt; in F#) or
+        /// System.Nullable&lt;System.DateTime&gt; (DateTime? in C#,
+        /// Nullable&lt;DateTime&gt; in F#). Both types work, although we
+        /// recommend using DateTimeOffset.  When retrieving documents,
+        /// DateTime values will always be in UTC. When indexing documents,
+        /// DateTime values are interpreted as follows:
+        /// <list type="table">
+        /// <item>
+        /// <term>UTC DateTime</term>
+        /// <description>Sent as-is to the index.</description>
+        /// </item>
+        /// <item>
+        /// <term>Local DateTime</term>
+        /// <description>Converted to UTC before being sent to the index.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <term>DateTime with unspecified time zone</term>
+        /// <description>Assumed to be UTC and sent as-is to the index.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <term>Edm.GeographyPoint</term>
+        /// <description> Azure.Core.GeoJson.GeoPoint
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <term>Edm.ComplexType</term>
+        /// <description>
+        /// Any type that can be deserialized from the JSON objects in the
+        /// complex field.  This can be a value type or a reference type, but
+        /// we recommend using a reference type since complex fields are
+        /// nullable in Azure Cognitive Search.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <term>Collection(Edm.String)</term>
+        /// <description><see cref="IEnumerable{String}"/> (seq&lt;string&gt;
+        /// in F#)</description>
+        /// </item>
+        /// <item>
+        /// <term>Collection(Edm.Boolean)</term>
+        /// <description><see cref="IEnumerable{Boolean}"/> (seq&lt;bool&gt; in
+        /// F#)</description>
+        /// </item>
+        /// <item>
+        /// <term>Collection(Edm.Double)</term>
+        /// <description><see cref="IEnumerable{Double}"/> (seq&lt;float&gt; in
+        /// F#)</description>
+        /// </item>
+        /// <item>
+        /// <term>Collection(Edm.Int32)</term>
+        /// <description><see cref="IEnumerable{Int32}"/> (seq&lt;int&gt; in
+        /// F#)</description>
+        /// </item>
+        /// <item>
+        /// <term>Collection(Edm.Int64)</term>
+        /// <description><see cref="IEnumerable{Int64}"/> (seq&lt;int64&gt; in
+        /// F#)</description>
+        /// </item>
+        /// <item>
+        /// <term>Collection(Edm.DateTimeOffset)</term>
+        /// <description>
+        /// <see cref="IEnumerable{DateTimeOffset}"/> or
+        /// <see cref="IEnumerable{DateTime}"/> (seq&lt;DateTimeOffset&gt; or
+        /// seq&lt;DateTime&gt; in F#). Both types work, although we recommend
+        /// using <see cref="IEnumerable{DateTimeOffset}"/>.  See the notes
+        /// above on Edm.DateTimeOffset for details.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <term>Collection(Edm.GeographyPoint)</term>
+        /// <description>sequence of Azure.Core.GeoJson.GeoPoint
+        /// (seq&lt;GeoPoint&gt; in F#)</description>
+        /// </item>
+        /// <item>
+        /// <term>Collection(Edm.ComplexType)</term>
+        /// <description>
+        /// <see cref="IEnumerable{T}"/> (seq&lt;T&gt; in F#) where T is any
+        /// type that can be deserialized from the JSON objects in the complex
+        /// collection field. This can be a value type or a reference type.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// You can also use the dynamic <see cref="SearchDocument"/> as your
+        /// <typeparamref name="T"/> and we will attempt to map JSON types in
+        /// the response payload to .NET types. This mapping does not
+        /// have the benefit of precise type information from the index, so the
+        /// mapping is not always correct. In particular, be aware of the
+        /// following cases:
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// Any numeric value without a decimal point will be deserialized to
+        /// a <see cref="Int32"/> (int in C#, int32 in F#) if it can be
+        /// converted or a <see cref="Int64"/> (long in C#, int64 in F#)
+        /// otherwise.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Special double-precision floating point values such as NaN and
+        /// Infinity will be deserialized as type <see cref="String"/> rather
+        /// than <see cref="Double"/>, even if they are in arrays with regular
+        /// floating point values.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Any Edm.DateTimeOffset field will be deserialized as a
+        /// <see cref="DateTimeOffset"/>, not <see cref="DateTime"/>.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Any empty JSON array will be deserialized as an array of
+        /// <see cref="Object"/> (object[] in C#, obj[] in F#).
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Complex fields will be recursively deserialized into instances of
+        /// type <see cref="SearchDocument"/>.  Similarly, complex collection
+        /// fields will be deserialized into arrays of such instances.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </remarks>
+        public virtual async Task<Response<T>> GetDocumentAsync<T>(
+            string key,
+            string querySourceAuthorization,
+            GetDocumentOptions options = null,
+            CancellationToken cancellationToken = default) =>
+            await GetDocumentInternal<T>(
+                key,
+                querySourceAuthorization,
                 options,
                 async: true,
                 cancellationToken)
@@ -670,6 +949,7 @@ namespace Azure.Search.Documents
 
         private async Task<Response<T>> GetDocumentInternal<T>(
             string key,
+            string querySourceAuthorization,
             GetDocumentOptions options,
             bool async,
             CancellationToken cancellationToken)
@@ -680,7 +960,7 @@ namespace Azure.Search.Documents
             scope.Start();
             try
             {
-                using HttpMessage message = Protocol.CreateGetRequest(key, options?.SelectedFieldsOrNull);
+                using HttpMessage message = Protocol.CreateGetRequest(key, options?.SelectedFieldsOrNull, querySourceAuthorization);
                 if (async)
                 {
                     await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -765,6 +1045,7 @@ namespace Azure.Search.Documents
             CancellationToken cancellationToken = default) =>
             SearchInternal<T>(
                 searchText,
+                null,
                 options,
                 async: false,
                 cancellationToken)
@@ -822,6 +1103,133 @@ namespace Azure.Search.Documents
             CancellationToken cancellationToken = default) =>
             await SearchInternal<T>(
                 searchText,
+                null,
+                options,
+                async: true,
+                cancellationToken)
+                .ConfigureAwait(false);
+
+        /// <summary>
+        /// Searches for documents in the search index.
+        /// <see href="https://docs.microsoft.com/rest/api/searchservice/search-documents">Search Documents</see>
+        /// </summary>
+        /// <typeparam name="T">
+        /// The .NET type that maps to the index schema. Instances of this type
+        /// can be retrieved as documents from the index.
+        /// </typeparam>
+        /// <param name="searchText">
+        /// A full-text search query expression;  Use "*" or omit this
+        /// parameter to match all documents.  See
+        /// <see href="https://docs.microsoft.com/azure/search/query-simple-syntax">Simple query syntax in Azure Cognitive Search</see>
+        /// for more information about search query syntax.
+        /// </param>
+        /// <param name="querySourceAuthorization">
+        /// Token identifying the user for which the query is being executed.
+        /// This token is used to enforce security restrictions on documents.
+        /// </param>
+        /// <param name="options">
+        /// Options that allow specifying filtering, sorting, faceting, paging,
+        /// and other search query behaviors.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate notifications
+        /// that the operation should be canceled.
+        /// </param>
+        /// <returns>
+        /// Response containing the documents matching the query.
+        /// </returns>
+        /// <exception cref="RequestFailedException">
+        /// Thrown when a failure is returned by the Search Service.
+        /// </exception>
+        /// <remarks>
+        /// <para>
+        /// Search and SearchAsync methods support mapping of search field
+        /// types to .NET types via the type parameter T.  You can provide your
+        /// own type <typeparamref name="T"/> or use the dynamic
+        /// <see cref="SearchDocument"/>. See
+        /// <see cref="GetDocumentAsync{T}(string, GetDocumentOptions, CancellationToken)"/>
+        /// for more details on the type mapping.
+        /// </para>
+        /// <para>
+        /// Azure Cognitive Search might not be able to include all results in
+        /// a single response in which case <see cref="SearchResults{T}.GetResults"/>
+        /// will automatically continue making additional requests as you
+        /// enumerate through the results.  You can also process the results a
+        /// page at a time with the <see cref="Pageable{T}.AsPages(string, int?)"/>
+        /// method.
+        /// </para>
+        /// </remarks>
+        public virtual Response<SearchResults<T>> Search<T>(
+            string searchText,
+            string querySourceAuthorization,
+            SearchOptions options = null,
+            CancellationToken cancellationToken = default) =>
+            SearchInternal<T>(
+                searchText,
+                querySourceAuthorization,
+                options,
+                async: false,
+                cancellationToken)
+                .EnsureCompleted();
+
+        /// <summary>
+        /// Searches for documents in the search index.
+        /// <see href="https://docs.microsoft.com/rest/api/searchservice/search-documents">Search Documents</see>
+        /// </summary>
+        /// <typeparam name="T">
+        /// The .NET type that maps to the index schema. Instances of this type
+        /// can be retrieved as documents from the index.
+        /// </typeparam>
+        /// <param name="searchText">
+        /// A full-text search query expression;  Use "*" or omit this
+        /// parameter to match all documents.  See
+        /// <see href="https://docs.microsoft.com/azure/search/query-simple-syntax">Simple query syntax in Azure Cognitive Search</see>
+        /// for more information about search query syntax.
+        /// </param>
+        /// <param name="querySourceAuthorization">
+        /// Token identifying the user for which the query is being executed.
+        /// This token is used to enforce security restrictions on documents.
+        /// </param>
+        /// <param name="options">
+        /// Options that allow specifying filtering, sorting, faceting, paging,
+        /// and other search query behaviors.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate notifications
+        /// that the operation should be canceled.
+        /// </param>
+        /// <returns>
+        /// Response containing the documents matching the query.
+        /// </returns>
+        /// <exception cref="RequestFailedException">
+        /// Thrown when a failure is returned by the Search Service.
+        /// </exception>
+        /// <remarks>
+        /// <para>
+        /// Search and SearchAsync methods support mapping of search field
+        /// types to .NET types via the type parameter T.  You can provide your
+        /// own type <typeparamref name="T"/> or use the dynamic
+        /// <see cref="SearchDocument"/>. See
+        /// <see cref="GetDocumentAsync{T}(string, GetDocumentOptions, CancellationToken)"/>
+        /// for more details on the type mapping.
+        /// </para>
+        /// <para>
+        /// Azure Cognitive Search might not be able to include all results in
+        /// a single response in which case
+        /// <see cref="SearchResults{T}.GetResultsAsync"/> will automatically
+        /// continue making additional requests as you enumerate through the
+        /// results.  You can also process the results a page at a time with
+        /// the <see cref="AsyncPageable{T}.AsPages(string, int?)"/> method.
+        /// </para>
+        /// </remarks>
+        public async virtual Task<Response<SearchResults<T>>> SearchAsync<T>(
+            string searchText,
+            string querySourceAuthorization,
+            SearchOptions options = null,
+            CancellationToken cancellationToken = default) =>
+            await SearchInternal<T>(
+                searchText,
+                querySourceAuthorization,
                 options,
                 async: true,
                 cancellationToken)
@@ -874,6 +1282,7 @@ namespace Azure.Search.Documents
             Argument.AssertNotNull(options, nameof(options));
 
             return SearchInternal<T>(
+                null,
                 null,
                 options,
                 async: false,
@@ -929,6 +1338,7 @@ namespace Azure.Search.Documents
 
             return await SearchInternal<T>(
                 null,
+                null,
                 options,
                 async: true,
                 cancellationToken)
@@ -937,6 +1347,7 @@ namespace Azure.Search.Documents
 
         private async Task<Response<SearchResults<T>>> SearchInternal<T>(
             string searchText,
+            string querySourceAuthorization,
             SearchOptions options,
             bool async,
             CancellationToken cancellationToken = default)
@@ -951,6 +1362,7 @@ namespace Azure.Search.Documents
                 options = new SearchOptions() { SearchText = searchText };
             }
             return await SearchInternal<T>(
+                querySourceAuthorization,
                 options,
                 $"{nameof(SearchClient)}.{nameof(Search)}",
                 async,
@@ -959,6 +1371,7 @@ namespace Azure.Search.Documents
         }
 
         private async Task<Response<SearchResults<T>>> SearchInternal<T>(
+            string querySourceAuthorization,
             SearchOptions options,
             string operationName,
             bool async,
@@ -969,7 +1382,7 @@ namespace Azure.Search.Documents
             scope.Start();
             try
             {
-                using HttpMessage message = Protocol.CreateSearchPostRequest(options);
+                using HttpMessage message = Protocol.CreateSearchPostRequest(options, querySourceAuthorization);
                 if (async)
                 {
                     await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);

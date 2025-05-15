@@ -13,10 +13,11 @@ PersistentAgentsClient agentClient = new(projectEndpoint, new DefaultAzureCreden
 2. We will use the Bing connection ID to initialize the `BingGroundingToolDefinition`.
 
 ```C# Snippet:AgentsBingGrounding_GetConnection
-BingGroundingSearchConfigurationList configurationList = new(
-    [new BingGroundingSearchConfiguration(connectionId)]
+BingGroundingToolDefinition bingGroundingTool = new(
+    new BingGroundingSearchToolParameters(
+        [new BingGroundingSearchConfiguration(connectionId)]
+    )
 );
-BingGroundingToolDefinition bingGroundingTool = new(configurationList);
 ```
 
 3. We will use the `BingGroundingToolDefinition` during the agent initialization.

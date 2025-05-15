@@ -283,14 +283,14 @@ function ParseLinks([string]$baseUri, [string]$htmlContent)
   $hrefRegex = "<a[^>]+href\s*=\s*[""']?(?<href>[^""']*)[""']?"
   $regexOptions = [System.Text.RegularExpressions.RegexOptions]"Singleline, IgnoreCase";
 
-  $hrefs = [RegEx]::Matches($htmlContent, $hrefRegex, $regexOptions);
+  $matches = [RegEx]::Matches($htmlContent, $hrefRegex, $regexOptions);
 
-  #$hrefs | Foreach-Object { Write-Host $_ }
+  Write-Verbose "Found $($matches.Count) raw href's in page $baseUri";
 
-  Write-Verbose "Found $($hrefs.Count) raw href's in page $baseUri";
-  [string[]] $links = $hrefs | ForEach-Object { ResolveUri $baseUri $_.Groups["href"].Value }
+  # Html encoded urls in anchor hrefs need to be decoded
+  $urls = $matches | ForEach-Object { [System.Web.HttpUtility]::HtmlDecode($_.Groups["href"].Value) }
 
-  #$links | Foreach-Object { Write-Host $_ }
+  [string[]] $links = $urls | ForEach-Object { ResolveUri $baseUri $_ }
 
   if ($null -eq $links) {
     $links = @()
