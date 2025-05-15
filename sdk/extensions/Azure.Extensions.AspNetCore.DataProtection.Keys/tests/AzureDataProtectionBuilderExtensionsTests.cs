@@ -2,25 +2,22 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Threading.Tasks;
 using Azure.Identity;
+using Azure.Security.KeyVault.Keys.Cryptography;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.DataProtection.KeyManagement;
-using Azure.Security.KeyVault.Keys;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using NUnit.Framework;
-using Azure.Core.TestFramework;
 
 namespace Azure.Extensions.AspNetCore.DataProtection.Keys.Tests
 {
     public class AzureDataProtectionBuilderExtensionsTests
     {
         [Test]
-        public void ProtectKeysWithAzureKeyVault_UsesAzureKeyVaultXmlEncryptor()
+        public void ProtectKeysWithAzureKeyVault_With_Uri_And_Credential_Uses_AzureKeyVaultXmlEncryptor()
         {
             // Arrange
-            var client = new KeyClient(new Uri("http://www.example.com/dummyKey"),new MockCredential());
             var serviceCollection = new ServiceCollection();
             var builder = serviceCollection.AddDataProtection();
 
@@ -34,15 +31,14 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Keys.Tests
         }
 
         [Test]
-        public void ProtectKeysWithAzureKeyVault_WithServiceProviderFunc_UsesAzureKeyVaultXmlEncryptor()
+        public void ProtectKeysWithAzureKeyVault_With_String_And_CredentialFunc_Uses_AzureKeyVaultXmlEncryptor()
         {
             // Arrange
-            var client = new KeyClient(new Uri("http://www.example.com/dummyKey"), new MockCredential());
             var serviceCollection = new ServiceCollection();
             var builder = serviceCollection.AddDataProtection();
 
             // Act
-            builder.ProtectKeysWithAzureKeyVault("http://www.example.com/dummyKey", sp => new DefaultAzureCredential());
+            builder.ProtectKeysWithAzureKeyVault("http://www.example.com/dummyKey", _ => new DefaultAzureCredential());
             var services = serviceCollection.BuildServiceProvider();
 
             // Assert
@@ -51,15 +47,110 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Keys.Tests
         }
 
         [Test]
-        public void ProtectKeysWithAzureKeyVault_WithServiceProviderAndUriFuncs_UsesAzureKeyVaultXmlEncryptor()
+        public void ProtectKeysWithAzureKeyVault_With_Uri_And_KeyResolver_Uses_AzureKeyVaultXmlEncryptor()
         {
             // Arrange
-            var client = new KeyClient(new Uri("http://www.example.com/dummyKey"), new MockCredential());
             var serviceCollection = new ServiceCollection();
             var builder = serviceCollection.AddDataProtection();
 
             // Act
-            builder.ProtectKeysWithAzureKeyVault(sp => "http://www.example.com/dummyKey", sp => new DefaultAzureCredential());
+            builder.ProtectKeysWithAzureKeyVault(new Uri("http://www.example.com/dummyKey"), new KeyResolver(new DefaultAzureCredential()));
+            var services = serviceCollection.BuildServiceProvider();
+
+            // Assert
+            var options = services.GetRequiredService<IOptions<KeyManagementOptions>>();
+            Assert.IsInstanceOf<AzureKeyVaultXmlEncryptor>(options.Value.XmlEncryptor);
+        }
+
+        [Test]
+        public void ProtectKeysWithAzureKeyVault_With_String_And_KeyResolver_Uses_AzureKeyVaultXmlEncryptor()
+        {
+            // Arrange
+            var serviceCollection = new ServiceCollection();
+            var builder = serviceCollection.AddDataProtection();
+
+            // Act
+            builder.ProtectKeysWithAzureKeyVault("http://www.example.com/dummyKey", new KeyResolver(new DefaultAzureCredential()));
+            var services = serviceCollection.BuildServiceProvider();
+
+            // Assert
+            var options = services.GetRequiredService<IOptions<KeyManagementOptions>>();
+            Assert.IsInstanceOf<AzureKeyVaultXmlEncryptor>(options.Value.XmlEncryptor);
+        }
+
+        [Test]
+        public void ProtectKeysWithAzureKeyVault_With_Uri_And_CredentialFunc_Uses_AzureKeyVaultXmlEncryptor()
+        {
+            // Arrange
+            var serviceCollection = new ServiceCollection();
+            var builder = serviceCollection.AddDataProtection();
+
+            // Act
+            builder.ProtectKeysWithAzureKeyVault(new Uri("http://www.example.com/dummyKey"), _ => new DefaultAzureCredential());
+            var services = serviceCollection.BuildServiceProvider();
+
+            // Assert
+            var options = services.GetRequiredService<IOptions<KeyManagementOptions>>();
+            Assert.IsInstanceOf<AzureKeyVaultXmlEncryptor>(options.Value.XmlEncryptor);
+        }
+
+        [Test]
+        public void ProtectKeysWithAzureKeyVault_With_FuncString_And_CredentialFunc_Uses_AzureKeyVaultXmlEncryptor()
+        {
+            // Arrange
+            var serviceCollection = new ServiceCollection();
+            var builder = serviceCollection.AddDataProtection();
+
+            // Act
+            builder.ProtectKeysWithAzureKeyVault(_ => "http://www.example.com/dummyKey", _ => new DefaultAzureCredential());
+            var services = serviceCollection.BuildServiceProvider();
+
+            // Assert
+            var options = services.GetRequiredService<IOptions<KeyManagementOptions>>();
+            Assert.IsInstanceOf<AzureKeyVaultXmlEncryptor>(options.Value.XmlEncryptor);
+        }
+
+        [Test]
+        public void ProtectKeysWithAzureKeyVault_With_FuncUri_And_CredentialFunc_Uses_AzureKeyVaultXmlEncryptor()
+        {
+            // Arrange
+            var serviceCollection = new ServiceCollection();
+            var builder = serviceCollection.AddDataProtection();
+
+            // Act
+            builder.ProtectKeysWithAzureKeyVault(_ => new Uri("http://www.example.com/dummyKey"), _ => new DefaultAzureCredential());
+            var services = serviceCollection.BuildServiceProvider();
+
+            // Assert
+            var options = services.GetRequiredService<IOptions<KeyManagementOptions>>();
+            Assert.IsInstanceOf<AzureKeyVaultXmlEncryptor>(options.Value.XmlEncryptor);
+        }
+
+        [Test]
+        public void ProtectKeysWithAzureKeyVault_With_String_And_KeyResolverFunc_Uses_AzureKeyVaultXmlEncryptor2()
+        {
+            // Arrange
+            var serviceCollection = new ServiceCollection();
+            var builder = serviceCollection.AddDataProtection();
+
+            // Act
+            builder.ProtectKeysWithAzureKeyVault("http://www.example.com/dummyKey", _ => new KeyResolver(new DefaultAzureCredential()));
+            var services = serviceCollection.BuildServiceProvider();
+
+            // Assert
+            var options = services.GetRequiredService<IOptions<KeyManagementOptions>>();
+            Assert.IsInstanceOf<AzureKeyVaultXmlEncryptor>(options.Value.XmlEncryptor);
+        }
+
+        [Test]
+        public void ProtectKeysWithAzureKeyVault_With_Uri_And_KeyResolverFunc_Uses_AzureKeyVaultXmlEncryptor2()
+        {
+            // Arrange
+            var serviceCollection = new ServiceCollection();
+            var builder = serviceCollection.AddDataProtection();
+
+            // Act
+            builder.ProtectKeysWithAzureKeyVault(new Uri("http://www.example.com/dummyKey"), _ => new KeyResolver(new DefaultAzureCredential()));
             var services = serviceCollection.BuildServiceProvider();
 
             // Assert
