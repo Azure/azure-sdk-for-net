@@ -1022,7 +1022,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             {
                 new Func<CallMedia, Response>?[]
                 {
-                   callMedia => callMedia.UpdateTranscription("locale")
+                   callMedia => callMedia.UpdateTranscription(new UpdateTranscriptionOptions("locale"))
                 }
             };
         }

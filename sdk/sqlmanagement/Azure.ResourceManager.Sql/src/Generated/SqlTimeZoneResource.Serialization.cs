@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Sql
 
         SqlTimeZoneData IJsonModel<SqlTimeZoneData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SqlTimeZoneData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SqlTimeZoneData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<SqlTimeZoneData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SqlTimeZoneData>(Data, options, AzureResourceManagerSqlContext.Default);
 
-        SqlTimeZoneData IPersistableModel<SqlTimeZoneData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SqlTimeZoneData>(data, options);
+        SqlTimeZoneData IPersistableModel<SqlTimeZoneData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SqlTimeZoneData>(data, options, AzureResourceManagerSqlContext.Default);
 
         string IPersistableModel<SqlTimeZoneData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SqlTimeZoneData>)Data).GetFormatFromOptions(options);
     }

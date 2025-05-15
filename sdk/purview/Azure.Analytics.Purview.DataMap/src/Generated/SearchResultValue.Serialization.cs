@@ -84,10 +84,15 @@ namespace Azure.Analytics.Purview.DataMap
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(Endorsement))
+            if (Optional.IsCollectionDefined(Endorsement))
             {
                 writer.WritePropertyName("endorsement"u8);
-                writer.WriteStringValue(Endorsement);
+                writer.WriteStartArray();
+                foreach (var item in Endorsement)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
             }
             if (Optional.IsDefined(Owner))
             {
@@ -221,7 +226,7 @@ namespace Azure.Analytics.Purview.DataMap
             string qualifiedName = default;
             string entityType = default;
             string description = default;
-            string endorsement = default;
+            IReadOnlyList<string> endorsement = default;
             string owner = default;
             IReadOnlyList<string> classification = default;
             IReadOnlyList<string> label = default;
@@ -305,7 +310,16 @@ namespace Azure.Analytics.Purview.DataMap
                 }
                 if (property.NameEquals("endorsement"u8))
                 {
-                    endorsement = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    endorsement = array;
                     continue;
                 }
                 if (property.NameEquals("owner"u8))
@@ -434,7 +448,7 @@ namespace Azure.Analytics.Purview.DataMap
                 qualifiedName,
                 entityType,
                 description,
-                endorsement,
+                endorsement ?? new ChangeTrackingList<string>(),
                 owner,
                 classification ?? new ChangeTrackingList<string>(),
                 label ?? new ChangeTrackingList<string>(),
@@ -456,7 +470,7 @@ namespace Azure.Analytics.Purview.DataMap
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureAnalyticsPurviewDataMapContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(SearchResultValue)} does not support writing '{options.Format}' format.");
             }

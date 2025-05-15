@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateNatGateway()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-05-01/examples/NatGatewayCreateOrUpdate.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-07-01/examples/NatGatewayCreateOrUpdate.json
             // this example is just showing the usage of "NatGateways_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -67,9 +67,89 @@ Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/M
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task CreateOrUpdate_CreateNatGatewayWithStandardV2Sku()
+        {
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-07-01/examples/NatGatewayCreateOrUpdateStandardV2Sku.json
+            // this example is just showing the usage of "NatGateways_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "subid";
+            string resourceGroupName = "rg1";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // get the collection of this NatGatewayResource
+            NatGatewayCollection collection = resourceGroupResource.GetNatGateways();
+
+            // invoke the operation
+            string natGatewayName = "test-natgateway";
+            NatGatewayData data = new NatGatewayData
+            {
+                SkuName = NatGatewaySkuName.StandardV2,
+                PublicIPAddresses = {new WritableSubResource
+{
+Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/publicIPAddresses/PublicIpAddress1"),
+}},
+                PublicIPPrefixes = {new WritableSubResource
+{
+Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/publicIPPrefixes/PublicIpPrefix1"),
+}},
+                Location = new AzureLocation("westus"),
+            };
+            ArmOperation<NatGatewayResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, natGatewayName, data);
+            NatGatewayResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            NatGatewayData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetNatGateway()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-05-01/examples/NatGatewayGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-07-01/examples/NatGatewayGet.json
+            // this example is just showing the usage of "NatGateways_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "subid";
+            string resourceGroupName = "rg1";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // get the collection of this NatGatewayResource
+            NatGatewayCollection collection = resourceGroupResource.GetNatGateways();
+
+            // invoke the operation
+            string natGatewayName = "test-natGateway";
+            NatGatewayResource result = await collection.GetAsync(natGatewayName);
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            NatGatewayData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Get_GetNatGatewayWithStandardV2Sku()
+        {
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-07-01/examples/NatGatewayGetStandardV2Sku.json
             // this example is just showing the usage of "NatGateways_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -102,7 +182,7 @@ Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/M
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListNatGatewaysInResourceGroup()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-05-01/examples/NatGatewayList.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-07-01/examples/NatGatewayList.json
             // this example is just showing the usage of "NatGateways_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -137,7 +217,36 @@ Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/M
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetNatGateway()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-05-01/examples/NatGatewayGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-07-01/examples/NatGatewayGet.json
+            // this example is just showing the usage of "NatGateways_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "subid";
+            string resourceGroupName = "rg1";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // get the collection of this NatGatewayResource
+            NatGatewayCollection collection = resourceGroupResource.GetNatGateways();
+
+            // invoke the operation
+            string natGatewayName = "test-natGateway";
+            bool result = await collection.ExistsAsync(natGatewayName);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Exists_GetNatGatewayWithStandardV2Sku()
+        {
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-07-01/examples/NatGatewayGetStandardV2Sku.json
             // this example is just showing the usage of "NatGateways_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -166,7 +275,48 @@ Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/M
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetNatGateway()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-05-01/examples/NatGatewayGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-07-01/examples/NatGatewayGet.json
+            // this example is just showing the usage of "NatGateways_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "subid";
+            string resourceGroupName = "rg1";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // get the collection of this NatGatewayResource
+            NatGatewayCollection collection = resourceGroupResource.GetNatGateways();
+
+            // invoke the operation
+            string natGatewayName = "test-natGateway";
+            NullableResponse<NatGatewayResource> response = await collection.GetIfExistsAsync(natGatewayName);
+            NatGatewayResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine("Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                NatGatewayData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetIfExists_GetNatGatewayWithStandardV2Sku()
+        {
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-07-01/examples/NatGatewayGetStandardV2Sku.json
             // this example is just showing the usage of "NatGateways_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

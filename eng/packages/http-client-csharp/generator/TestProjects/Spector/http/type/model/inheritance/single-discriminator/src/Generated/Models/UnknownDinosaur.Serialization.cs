@@ -9,10 +9,12 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 
-namespace _Type.Model.Inheritance.SingleDiscriminator.Models
+namespace _Type.Model.Inheritance.SingleDiscriminator
 {
     internal partial class UnknownDinosaur : IJsonModel<Dinosaur>
     {
+        internal UnknownDinosaur() => throw null;
+
         void IJsonModel<Dinosaur>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;

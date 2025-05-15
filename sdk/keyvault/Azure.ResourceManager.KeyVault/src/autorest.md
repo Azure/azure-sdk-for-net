@@ -7,12 +7,12 @@ azure-arm: true
 csharp: true
 library-name: KeyVault
 namespace: Azure.ResourceManager.KeyVault
-require: https://github.com/Azure/azure-rest-api-specs/blob/d1296700aa6cd650970e9891dd58eef5698327fd/specification/keyvault/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/b92fe44fbb8e415302342ecd6c2c5bb764da7949/specification/keyvault/resource-manager/readme.md
 #tag: package-2023-07
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
-  output-folder: $(this-folder)/../samples/Generated
+  output-folder: $(this-folder)/../tests/Generated
   clear-output-folder: true
 skip-csproj: true
 modelerfour:

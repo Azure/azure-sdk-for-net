@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
 
         ConnectedClusterStorageClassData IJsonModel<ConnectedClusterStorageClassData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ConnectedClusterStorageClassData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ConnectedClusterStorageClassData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<ConnectedClusterStorageClassData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ConnectedClusterStorageClassData>(Data, options, AzureResourceManagerContainerOrchestratorRuntimeContext.Default);
 
-        ConnectedClusterStorageClassData IPersistableModel<ConnectedClusterStorageClassData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ConnectedClusterStorageClassData>(data, options);
+        ConnectedClusterStorageClassData IPersistableModel<ConnectedClusterStorageClassData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ConnectedClusterStorageClassData>(data, options, AzureResourceManagerContainerOrchestratorRuntimeContext.Default);
 
         string IPersistableModel<ConnectedClusterStorageClassData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ConnectedClusterStorageClassData>)Data).GetFormatFromOptions(options);
     }

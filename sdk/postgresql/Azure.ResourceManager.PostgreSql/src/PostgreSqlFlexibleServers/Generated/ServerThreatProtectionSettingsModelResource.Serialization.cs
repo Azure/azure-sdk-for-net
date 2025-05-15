@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
 
         ServerThreatProtectionSettingsModelData IJsonModel<ServerThreatProtectionSettingsModelData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ServerThreatProtectionSettingsModelData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ServerThreatProtectionSettingsModelData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<ServerThreatProtectionSettingsModelData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ServerThreatProtectionSettingsModelData>(Data, options, AzureResourceManagerPostgreSqlContext.Default);
 
-        ServerThreatProtectionSettingsModelData IPersistableModel<ServerThreatProtectionSettingsModelData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ServerThreatProtectionSettingsModelData>(data, options);
+        ServerThreatProtectionSettingsModelData IPersistableModel<ServerThreatProtectionSettingsModelData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ServerThreatProtectionSettingsModelData>(data, options, AzureResourceManagerPostgreSqlContext.Default);
 
         string IPersistableModel<ServerThreatProtectionSettingsModelData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ServerThreatProtectionSettingsModelData>)Data).GetFormatFromOptions(options);
     }

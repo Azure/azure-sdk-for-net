@@ -16,16 +16,13 @@ public static class ServiceBusExtensions
     /// <summary>
     /// Creates a <see cref="ServiceBusClient"/> instance using the connection string from the project client.
     /// </summary>
-    /// <param name="project"></param>
+    /// <param name="provider"></param>
     /// <param name="namespaceName"></param>
     /// <returns></returns>
-    public static  ServiceBusClient GetServiceBusClient(this ProjectClient project, string namespaceName = default)
+    public static  ServiceBusClient GetServiceBusClient(this ClientConnectionProvider provider, string namespaceName = default)
     {
-        if (namespaceName == null)
-        {
-            namespaceName = project.ProjectId;
-        }
-        ServiceBusClient client = project.Subclients.GetClient(() => CreateClient(project, namespaceName), namespaceName);
+        ServiceBusClientKey serviceBusClientKey = new(namespaceName);
+        ServiceBusClient client = provider.Subclients.GetClient(serviceBusClientKey, () => CreateClient(provider, namespaceName));
         return client;
     }
 
@@ -36,9 +33,10 @@ public static class ServiceBusExtensions
     /// <param name="namespaceName"></param>
     /// <param name="topicName"></param>
     /// <returns></returns>
-    public static ServiceBusSender GetServiceBusSender(this ProjectClient project, string namespaceName, string topicName)
+    public static ServiceBusSender GetServiceBusSender(this ClientConnectionProvider project, string namespaceName, string topicName)
     {
-        ServiceBusSender sender = project.Subclients.GetClient(() => CreateSender(project, namespaceName, topicName), null);
+        ServiceBusSenderKey serviceBusSenderKey = new(namespaceName, topicName);
+        ServiceBusSender sender = project.Subclients.GetClient(serviceBusSenderKey, () => CreateSender(project, namespaceName, topicName));
         return sender;
     }
 
@@ -49,22 +47,22 @@ public static class ServiceBusExtensions
     /// <param name="namespaceName"></param>
     /// <param name="subscriptionName"></param>
     /// <returns></returns>
-    public static ServiceBusProcessor GetServiceBusProcessor(this ProjectClient project, string namespaceName, string subscriptionName)
+    public static ServiceBusProcessor GetServiceBusProcessor(this ClientConnectionProvider project, string namespaceName, string subscriptionName)
     {
-        ServiceBusProcessor processor = project.Subclients.GetClient(() =>
-            CreateProcessor(project, namespaceName, subscriptionName),
-            subscriptionName
+        ServiceBusProcessorKey serviceBusProcessorKey = new(namespaceName, subscriptionName);
+        ServiceBusProcessor processor = project.Subclients.GetClient(serviceBusProcessorKey, () =>
+            CreateProcessor(project, namespaceName, subscriptionName)
         );
         return processor;
     }
 
-    private static ServiceBusSender CreateSender(ProjectClient project, string namespaceName, string topicName)
+    private static ServiceBusSender CreateSender(ClientConnectionProvider project, string namespaceName, string topicName)
     {
         ServiceBusClient client = project.GetServiceBusClient(namespaceName);
         ServiceBusSender sender = client.CreateSender(topicName);
         return sender;
     }
-    private static ServiceBusClient CreateClient(ProjectClient project, string namespaceName)
+    private static ServiceBusClient CreateClient(ClientConnectionProvider project, string namespaceName)
     {
         ClientConnection connection = project.GetConnection(typeof(ServiceBusClient).FullName);
 
@@ -76,7 +74,7 @@ public static class ServiceBusExtensions
         ServiceBusClient client = new(uri.AbsoluteUri, (TokenCredential)connection.Credential);
         return client;
     }
-    private static ServiceBusProcessor CreateProcessor(ProjectClient project, string namespaceName, string subscriptionName)
+    private static ServiceBusProcessor CreateProcessor(ClientConnectionProvider project, string namespaceName, string subscriptionName)
     {
         ServiceBusClient client = project.GetServiceBusClient(namespaceName);
 
@@ -86,4 +84,10 @@ public static class ServiceBusExtensions
         processor.ProcessErrorAsync += (args) => throw new Exception("error processing event", args.Exception);
         return processor;
     }
+
+    private record ServiceBusClientKey(string NamespaceName);
+
+    private record ServiceBusSenderKey(string NamespaceName, string TopicName);
+
+    private record ServiceBusProcessorKey(string NamespaceName, string SubscriptionName);
 }

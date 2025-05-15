@@ -10,7 +10,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core.Pipeline;
-using Client.Structure.Service.Models;
 
 namespace Client.Structure.Service
 {
@@ -22,7 +21,7 @@ namespace Client.Structure.Service
 
         public ServiceClient(Uri endpoint, ClientType client, ServiceClientOptions options) => throw null;
 
-        public HttpPipeline Pipeline => throw null;
+        public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response One(RequestContext context) => throw null;
 

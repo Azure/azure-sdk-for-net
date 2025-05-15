@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.HybridNetwork
 
         NetworkFunctionDefinitionGroupData IJsonModel<NetworkFunctionDefinitionGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetworkFunctionDefinitionGroupData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<NetworkFunctionDefinitionGroupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<NetworkFunctionDefinitionGroupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<NetworkFunctionDefinitionGroupData>(Data, options, AzureResourceManagerHybridNetworkContext.Default);
 
-        NetworkFunctionDefinitionGroupData IPersistableModel<NetworkFunctionDefinitionGroupData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetworkFunctionDefinitionGroupData>(data, options);
+        NetworkFunctionDefinitionGroupData IPersistableModel<NetworkFunctionDefinitionGroupData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetworkFunctionDefinitionGroupData>(data, options, AzureResourceManagerHybridNetworkContext.Default);
 
         string IPersistableModel<NetworkFunctionDefinitionGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetworkFunctionDefinitionGroupData>)Data).GetFormatFromOptions(options);
     }

@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-10-01</description>
+        /// <description>2025-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-10-01</description>
+        /// <description>2025-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-10-01</description>
+        /// <description>2025-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-10-01</description>
+        /// <description>2025-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-10-01</description>
+        /// <description>2025-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -311,7 +311,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-10-01</description>
+        /// <description>2025-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-10-01</description>
+        /// <description>2025-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -395,7 +395,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-10-01</description>
+        /// <description>2025-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -433,7 +433,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-10-01</description>
+        /// <description>2025-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -471,7 +471,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-10-01</description>
+        /// <description>2025-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

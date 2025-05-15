@@ -33,7 +33,8 @@ namespace Azure.Generator.Tests.TestHelpers
             Func<IReadOnlyList<InputClient>>? clients = null,
             ClientResponseApi? clientResponseApi = null,
             ClientPipelineApi? clientPipelineApi = null,
-            HttpMessageApi? httpMessageApi = null)
+            HttpMessageApi? httpMessageApi = null,
+            string? configurationJson = null)
         {
             IReadOnlyList<string> inputNsApiVersions = apiVersions?.Invoke() ?? [];
             IReadOnlyList<InputEnumType> inputNsEnums = inputEnums?.Invoke() ?? [];
@@ -46,8 +47,7 @@ namespace Azure.Generator.Tests.TestHelpers
                 inputNsEnums,
                 inputNsModels,
                 inputNsClients,
-                inputNsAuth,
-                null);
+                inputNsAuth);
             var mockInputLibrary = new Mock<InputLibrary>(_configFilePath);
             mockInputLibrary.Setup(p => p.InputNamespace).Returns(mockInputNs.Object);
 
@@ -64,7 +64,7 @@ namespace Azure.Generator.Tests.TestHelpers
             var azureInstance = typeof(AzureClientGenerator).GetField("_instance", BindingFlags.Static | BindingFlags.NonPublic);
             // invoke the load method with the config file path
             var loadMethod = typeof(Configuration).GetMethod("Load", BindingFlags.Static | BindingFlags.NonPublic);
-            object?[] parameters = [_configFilePath, null];
+            object?[] parameters = [_configFilePath, configurationJson];
             var config = loadMethod?.Invoke(null, parameters);
             var mockGeneratorContext = new Mock<GeneratorContext>(config!);
             var mockPluginInstance = new Mock<AzureClientGenerator>(mockGeneratorContext.Object) { CallBase = true };
@@ -80,7 +80,11 @@ namespace Azure.Generator.Tests.TestHelpers
 
             var sourceInputModel = new Mock<SourceInputModel>(() => new SourceInputModel(null)) { CallBase = true };
             mockPluginInstance.Setup(p => p.SourceInputModel).Returns(sourceInputModel.Object);
-            mockPluginInstance.Object.Configure();
+            var configureMethod = typeof(CodeModelGenerator).GetMethod(
+                "Configure",
+                BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.InvokeMethod
+            );
+            configureMethod!.Invoke(mockPluginInstance.Object, null);
             return mockPluginInstance;
         }
     }

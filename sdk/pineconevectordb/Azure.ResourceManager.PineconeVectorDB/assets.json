@@ -1,0 +1,7 @@
+
+{
+  "AssetsRepo": "Azure/azure-sdk-assets",
+  "AssetsRepoPrefixPath": "net",
+  "TagPrefix": "net/pineconevectordb/Azure.ResourceManager.PineconeVectorDB",
+  "Tag": ""
+}

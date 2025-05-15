@@ -11,10 +11,12 @@ using System.Text.Json;
 using Azure;
 using Azure.Core;
 
-namespace _Type.Model.Inheritance.SingleDiscriminator.Models
+namespace _Type.Model.Inheritance.SingleDiscriminator
 {
     public partial class Eagle : IJsonModel<Eagle>
     {
+        internal Eagle() => throw null;
+
         void IJsonModel<Eagle>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;

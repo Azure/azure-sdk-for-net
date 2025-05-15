@@ -39,10 +39,10 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(DeploymentPreflightResourceType))
+            if (Optional.IsDefined(Type))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(DeploymentPreflightResourceType.Value);
+                writer.WriteStringValue(Type.Value);
             }
             if (Optional.IsDefined(Location))
             {
@@ -53,6 +53,18 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             {
                 writer.WritePropertyName("apiVersion"u8);
                 writer.WriteStringValue(ApiVersion);
+            }
+            if (Optional.IsDefined(Properties))
+            {
+                writer.WritePropertyName("properties"u8);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Properties);
+#else
+                using (JsonDocument document = JsonDocument.Parse(Properties, ModelSerializationExtensions.JsonDocumentOptions))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -95,6 +107,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             ResourceType? type = default;
             AzureLocation? location = default;
             string apiVersion = default;
+            BinaryData properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -127,13 +140,28 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                     apiVersion = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("properties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    properties = BinaryData.FromString(property.Value.GetRawText());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new DeploymentPreflightResourceInfo(name, type, location, apiVersion, serializedAdditionalRawData);
+            return new DeploymentPreflightResourceInfo(
+                name,
+                type,
+                location,
+                apiVersion,
+                properties,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DeploymentPreflightResourceInfo>.Write(ModelReaderWriterOptions options)
@@ -143,7 +171,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesDataReplicationContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(DeploymentPreflightResourceInfo)} does not support writing '{options.Format}' format.");
             }
