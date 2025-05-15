@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_ConfidentialLedgerCreate()
         {
-            // Generated from example definition: specification/confidentialledger/resource-manager/Microsoft.ConfidentialLedger/preview/2023-06-28-preview/examples/ConfidentialLedger_Create.json
+            // Generated from example definition: specification/confidentialledger/resource-manager/Microsoft.ConfidentialLedger/preview/2024-09-19-preview/examples/ConfidentialLedger_Create.json
             // this example is just showing the usage of "Ledger_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -58,6 +58,12 @@ LedgerRoleName = ConfidentialLedgerRoleName.Administrator,
 Cert = "-----BEGIN CERTIFICATE-----MIIBsjCCATigAwIBAgIUZWIbyG79TniQLd2UxJuU74tqrKcwCgYIKoZIzj0EAwMwEDEOMAwGA1UEAwwFdXNlcjAwHhcNMjEwMzE2MTgwNjExWhcNMjIwMzE2MTgwNjExWjAQMQ4wDAYDVQQDDAV1c2VyMDB2MBAGByqGSM49AgEGBSuBBAAiA2IABBiWSo/j8EFit7aUMm5lF+lUmCu+IgfnpFD+7QMgLKtxRJ3aGSqgS/GpqcYVGddnODtSarNE/HyGKUFUolLPQ5ybHcouUk0kyfA7XMeSoUA4lBz63Wha8wmXo+NdBRo39qNTMFEwHQYDVR0OBBYEFPtuhrwgGjDFHeUUT4nGsXaZn69KMB8GA1UdIwQYMBaAFPtuhrwgGjDFHeUUT4nGsXaZn69KMA8GA1UdEwEB/wQFMAMBAf8wCgYIKoZIzj0EAwMDaAAwZQIxAOnozm2CyqRwSSQLls5r+mUHRGRyXHXwYtM4Dcst/VEZdmS9fqvHRCHbjUlO/+HNfgIwMWZ4FmsjD3wnPxONOm9YdVn/PRD7SsPRPbOjwBiE4EBGaHDsLjYAGDSGi7NJnSkA-----END CERTIFICATE-----",
 LedgerRoleName = ConfidentialLedgerRoleName.Reader,
 }},
+                    HostLevel = "Info",
+                    MaxBodySizeInMb = 1,
+                    SubjectName = "CN=CCF Node",
+                    NodeCount = 3,
+                    WriteLBAddressPrefix = "write",
+                    WorkerThreads = 0,
                 },
                 Tags =
 {
@@ -78,7 +84,7 @@ LedgerRoleName = ConfidentialLedgerRoleName.Reader,
         [Ignore("Only validating compilation of examples")]
         public async Task Get_ConfidentialLedgerGet()
         {
-            // Generated from example definition: specification/confidentialledger/resource-manager/Microsoft.ConfidentialLedger/preview/2023-06-28-preview/examples/ConfidentialLedger_Get.json
+            // Generated from example definition: specification/confidentialledger/resource-manager/Microsoft.ConfidentialLedger/preview/2024-09-19-preview/examples/ConfidentialLedger_Get.json
             // this example is just showing the usage of "Ledger_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -111,7 +117,7 @@ LedgerRoleName = ConfidentialLedgerRoleName.Reader,
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ConfidentialLedgerList()
         {
-            // Generated from example definition: specification/confidentialledger/resource-manager/Microsoft.ConfidentialLedger/preview/2023-06-28-preview/examples/ConfidentialLedger_List.json
+            // Generated from example definition: specification/confidentialledger/resource-manager/Microsoft.ConfidentialLedger/preview/2024-09-19-preview/examples/ConfidentialLedger_List.json
             // this example is just showing the usage of "Ledger_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -146,7 +152,7 @@ LedgerRoleName = ConfidentialLedgerRoleName.Reader,
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_ConfidentialLedgerGet()
         {
-            // Generated from example definition: specification/confidentialledger/resource-manager/Microsoft.ConfidentialLedger/preview/2023-06-28-preview/examples/ConfidentialLedger_Get.json
+            // Generated from example definition: specification/confidentialledger/resource-manager/Microsoft.ConfidentialLedger/preview/2024-09-19-preview/examples/ConfidentialLedger_Get.json
             // this example is just showing the usage of "Ledger_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -175,7 +181,7 @@ LedgerRoleName = ConfidentialLedgerRoleName.Reader,
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_ConfidentialLedgerGet()
         {
-            // Generated from example definition: specification/confidentialledger/resource-manager/Microsoft.ConfidentialLedger/preview/2023-06-28-preview/examples/ConfidentialLedger_Get.json
+            // Generated from example definition: specification/confidentialledger/resource-manager/Microsoft.ConfidentialLedger/preview/2024-09-19-preview/examples/ConfidentialLedger_Get.json
             // this example is just showing the usage of "Ledger_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

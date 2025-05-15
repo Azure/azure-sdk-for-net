@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.AI.Projects
 {
-    /// <summary> The SasCredential_type. </summary>
+    /// <summary> The SasCredentialType. </summary>
     public readonly partial struct SasCredentialType : IEquatable<SasCredentialType>
     {
         private readonly string _value;

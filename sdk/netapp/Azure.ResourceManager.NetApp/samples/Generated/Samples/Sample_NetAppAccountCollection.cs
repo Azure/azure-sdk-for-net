@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.NetApp.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_AccountsCreateOrUpdate()
         {
-            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2024-09-01/examples/Accounts_CreateOrUpdate.json
+            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2025-01-01/examples/Accounts_CreateOrUpdate.json
             // this example is just showing the usage of "Accounts_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.NetApp.Samples
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "D633CC2E-722B-4AE1-B636-BBD9E4C60ED9";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myRG";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.NetApp.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_AccountsCreateOrUpdateWithActiveDirectory()
         {
-            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2024-09-01/examples/Accounts_CreateOrUpdateAD.json
+            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2025-01-01/examples/Accounts_CreateOrUpdateAD.json
             // this example is just showing the usage of "Accounts_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.NetApp.Samples
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "D633CC2E-722B-4AE1-B636-BBD9E4C60ED9";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myRG";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -106,7 +106,7 @@ IsLdapOverTlsEnabled = false,
         [Ignore("Only validating compilation of examples")]
         public async Task Get_AccountsGet()
         {
-            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2024-09-01/examples/Accounts_Get.json
+            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2025-01-01/examples/Accounts_Get.json
             // this example is just showing the usage of "Accounts_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -116,7 +116,7 @@ IsLdapOverTlsEnabled = false,
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "D633CC2E-722B-4AE1-B636-BBD9E4C60ED9";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myRG";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -139,7 +139,7 @@ IsLdapOverTlsEnabled = false,
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_AccountsList()
         {
-            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2024-09-01/examples/Accounts_List.json
+            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2025-01-01/examples/Accounts_List.json
             // this example is just showing the usage of "Accounts_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -149,7 +149,7 @@ IsLdapOverTlsEnabled = false,
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "D633CC2E-722B-4AE1-B636-BBD9E4C60ED9";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myRG";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -174,7 +174,7 @@ IsLdapOverTlsEnabled = false,
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_AccountsGet()
         {
-            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2024-09-01/examples/Accounts_Get.json
+            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2025-01-01/examples/Accounts_Get.json
             // this example is just showing the usage of "Accounts_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -184,7 +184,7 @@ IsLdapOverTlsEnabled = false,
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "D633CC2E-722B-4AE1-B636-BBD9E4C60ED9";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myRG";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -203,7 +203,7 @@ IsLdapOverTlsEnabled = false,
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_AccountsGet()
         {
-            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2024-09-01/examples/Accounts_Get.json
+            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2025-01-01/examples/Accounts_Get.json
             // this example is just showing the usage of "Accounts_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -213,7 +213,7 @@ IsLdapOverTlsEnabled = false,
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "D633CC2E-722B-4AE1-B636-BBD9E4C60ED9";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myRG";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);

@@ -16,7 +16,7 @@ namespace Client.Structure.Service
     {
         protected Qux() => throw null;
 
-        public HttpPipeline Pipeline => throw null;
+        public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response Eight(RequestContext context) => throw null;
 

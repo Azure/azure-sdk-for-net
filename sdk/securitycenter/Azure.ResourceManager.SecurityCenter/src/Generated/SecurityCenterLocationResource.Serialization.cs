@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.SecurityCenter
 
         SecurityCenterLocationData IJsonModel<SecurityCenterLocationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SecurityCenterLocationData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SecurityCenterLocationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<SecurityCenterLocationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SecurityCenterLocationData>(Data, options, AzureResourceManagerSecurityCenterContext.Default);
 
-        SecurityCenterLocationData IPersistableModel<SecurityCenterLocationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SecurityCenterLocationData>(data, options);
+        SecurityCenterLocationData IPersistableModel<SecurityCenterLocationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SecurityCenterLocationData>(data, options, AzureResourceManagerSecurityCenterContext.Default);
 
         string IPersistableModel<SecurityCenterLocationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SecurityCenterLocationData>)Data).GetFormatFromOptions(options);
     }

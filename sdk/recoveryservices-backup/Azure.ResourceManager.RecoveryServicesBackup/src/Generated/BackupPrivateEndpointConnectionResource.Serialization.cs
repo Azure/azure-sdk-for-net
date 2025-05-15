@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
 
         BackupPrivateEndpointConnectionData IJsonModel<BackupPrivateEndpointConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<BackupPrivateEndpointConnectionData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<BackupPrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<BackupPrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<BackupPrivateEndpointConnectionData>(Data, options, AzureResourceManagerRecoveryServicesBackupContext.Default);
 
-        BackupPrivateEndpointConnectionData IPersistableModel<BackupPrivateEndpointConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<BackupPrivateEndpointConnectionData>(data, options);
+        BackupPrivateEndpointConnectionData IPersistableModel<BackupPrivateEndpointConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<BackupPrivateEndpointConnectionData>(data, options, AzureResourceManagerRecoveryServicesBackupContext.Default);
 
         string IPersistableModel<BackupPrivateEndpointConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<BackupPrivateEndpointConnectionData>)Data).GetFormatFromOptions(options);
     }

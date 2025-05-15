@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerContext.Default);
                 case "bicep":
                     return SerializeBicep(options);
                 default:
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Models
         private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
         {
             string indent = new string(' ', spaces);
-            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            BinaryData data = ModelReaderWriter.Write(childObject, options, AzureResourceManagerContext.Default);
             string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
             bool inMultilineString = false;
             for (int i = 0; i < lines.Length; i++)
