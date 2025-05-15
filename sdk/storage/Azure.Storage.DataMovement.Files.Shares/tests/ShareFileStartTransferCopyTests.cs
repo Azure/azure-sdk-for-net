@@ -1125,11 +1125,32 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             await using IDisposingContainer<ShareClient> source = await SourceClientBuilder.GetTestShareSasNfsAsync();
             await using IDisposingContainer<ShareClient> destination = await DestinationClientBuilder.GetTestShareSasNfsAsync();
 
+            DateTimeOffset sourceFileCreatedOn = _defaultFileCreatedOn;
+            DateTimeOffset sourceFileLastWrittenOn = _defaultFileLastWrittenOn;
+            string sourceOwner = "345";
+            string sourceGroup = "123";
+            string sourceFileMode = "1777";
+            ShareFileCreateOptions sharefileCreateOptions = new ShareFileCreateOptions()
+            {
+                SmbProperties = new FileSmbProperties()
+                {
+                    FileCreatedOn = sourceFileCreatedOn,
+                    FileLastWrittenOn = sourceFileLastWrittenOn,
+                },
+                PosixProperties = new FilePosixProperties()
+                {
+                    Owner = sourceOwner,
+                    Group = sourceGroup,
+                    FileMode = NfsFileMode.ParseOctalFileMode(sourceFileMode),
+                }
+            };
+
             ShareDirectoryClient directory = source.Container.GetRootDirectoryClient();
             ShareFileClient originalClient = await CreateFileClientWithOptionsAsync(
                 container: source.Container,
                 objectLength: DataMovementTestConstants.KB,
-                createResource: true);
+                createResource: true,
+                options: sharefileCreateOptions);
             ShareFileClient symlinkClient = InstrumentClient(directory.GetFileClient("original-symlink"));
 
             // Create Symlink
