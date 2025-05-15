@@ -5,6 +5,7 @@ using System;
 using System.Buffers;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
@@ -354,53 +355,23 @@ namespace Azure.Storage
 
             await _initializeDestinationInternal(args, async, cancellationToken).ConfigureAwait(false);
 
+            using DisposableBucket bucket = new();
+
             // some strategies are unavailable if we don't know the stream length, and some can still work
             // we may introduce separately provided stream lengths in the future for unseekable streams with
             // an expected length
             long? length = expectedContentLength ?? content.GetLengthOrDefault();
 
-            // If we know the length and it's small enough
+            // If we know the length and it's small enough, oneshot it
             if (length < _singleUploadThreshold)
             {
-                using var bucket = new DisposableBucket();
-                UploadTransferValidationOptions oneshotValidationOptions = ValidationOptions;
-                oneshotValidationOptions.PrecalculatedChecksum = _masterCrcSupplier?.Invoke() ?? default;
-
-                // If not seekable, buffer and checksum if necessary.
-                if (!content.CanSeek)
-                {
-                    Stream bufferedContent;
-                    if (UseMasterCrc && _masterCrcSupplier != default)
-                    {
-                        bufferedContent = new PooledMemoryStream(_arrayPool, Constants.MB);
-                        await content.CopyToInternal(bufferedContent, async, cancellationToken).ConfigureAwait(false);
-                        bufferedContent.Position = 0;
-                    }
-                    else
-                    {
-                        (bufferedContent, oneshotValidationOptions) = await BufferAndOptionalChecksumStreamInternal(
-                            content, length.Value, oneshotValidationOptions, async, cancellationToken)
-                            .ConfigureAwait(false);
-                    }
-                    bucket.Add(bufferedContent);
-                    content = bufferedContent;
-                }
-
-                // Upload it in a single request
-                var result = await _singleUploadStreamingInternal(
-                    content,
-                    args,
-                    progressHandler,
-                    oneshotValidationOptions,
-                    _operationName,
-                    async,
-                    cancellationToken)
-                    .ConfigureAwait(false);
-
-                return result;
+                return await OneshotStreamInternal(content, args, progressHandler, async, cancellationToken).ConfigureAwait(false);
             }
 
-            // configure content stream to calculate master crc as it is read
+            long actualBlockSize = GetActualBlockSize(_blockSize, length);
+
+            // configure content stream to calculate master crc as it is
+            // this is AFTER oneshotting a stream of known length; from this point on, this class is responsible for reading the stream
             if (UseMasterCrc && _masterCrcSupplier == default)
             {
                 var masterCrc = new NonCryptographicHashAlgorithmHasher(StorageCrc64HashAlgorithm.Create());
@@ -412,9 +383,55 @@ namespace Azure.Storage
             GetNextStreamPartition partitionGetter = content.CanSeek && _maxWorkerCount == 1
                 ? (GetNextStreamPartition)GetStreamedPartitionInternal
                 : /*   redundant cast   */GetBufferedPartitionInternal;
+            IAsyncEnumerable<ContentPartition<Stream>> partitionsEnumerable = GetStreamPartitionsAsync(
+                content, length, actualBlockSize, partitionGetter, async, cancellationToken);
 
+            // If we don't know the length, we are buffering blocks anyway. Upfront buffer first two blocks.
+            // If there is only one total block, oneshot it. Otherwise proceed as normal.
+            if (!length.HasValue)
+            {
+                IAsyncEnumerator<ContentPartition<Stream>> partitionsEnumerator = partitionsEnumerable.GetAsyncEnumerator(cancellationToken);
+                if (!(await partitionsEnumerator.MoveNextInternal(async).ConfigureAwait(false)))
+                {
+                    // no content at all. oneshot zero-length data just to do something.
+                    using MemoryStream emptyStream = new();
+                    return await OneshotStreamInternal(
+                        emptyStream,
+                        args,
+                        progressHandler,
+                        async,
+                        cancellationToken)
+                        .ConfigureAwait(false);
+                }
+                ContentPartition<Stream> firstPartition = partitionsEnumerator.Current;
+                ContentPartition<Stream>? secondPartition = default;
+                if (await partitionsEnumerator.MoveNextInternal(async).ConfigureAwait(false))
+                {
+                    secondPartition = partitionsEnumerator.Current;
+                }
+
+                // if no second block; oneshot the first
+                if (!secondPartition.HasValue || secondPartition.Value.Length == 0L)
+                {
+                    using Stream oneshotContent = firstPartition.Content;
+                    return await OneshotStreamInternal(
+                        oneshotContent,
+                        args,
+                        progressHandler,
+                        async,
+                        cancellationToken)
+                        .ConfigureAwait(false);
+                }
+                else
+                {
+                    // multiblock scenario, restitch the enumerable of blocks to be handled by partitioned upload
+                    partitionsEnumerable = new List<ContentPartition<Stream>>() { firstPartition, secondPartition.Value }
+                        .AsAsyncEnumerable()
+                        .Concat(partitionsEnumerator.EnumerableWrap());
+                }
+            }
             return await UploadPartitionsInternal(
-                GetStreamPartitionsAsync(content, length, GetActualBlockSize(_blockSize, length), partitionGetter, async, cancellationToken),
+                partitionsEnumerable,
                 args,
                 progressHandler,
                 StageStreamPartitionInternal,
@@ -483,30 +500,75 @@ namespace Azure.Storage
                     .SetupChecksumCalculatingReadStream(source, validationOptions.ChecksumAlgorithm);
             }
 
-            Stream bufferedContent = new PooledMemoryStream(_arrayPool, Constants.MB);
-            if (count.HasValue)
+            PooledMemoryStream bufferedContent = new(_arrayPool, Constants.MB);
+            try
             {
-                await source.CopyToExactInternal(bufferedContent, count.Value, async, cancellationToken).ConfigureAwait(false);
-            }
-            else
-            {
-                await source.CopyToInternal(bufferedContent, async, cancellationToken).ConfigureAwait(false);
-            }
-            bufferedContent.Position = 0;
-
-            if (usingChecksumStream)
-            {
-                var checksum = new Memory<byte>(new byte[checksumSize]);
-                checksumCallback(checksum.Span);
-                validationOptions = new UploadTransferValidationOptions
+                if (count.HasValue)
                 {
-                    ChecksumAlgorithm = validationOptions.ChecksumAlgorithm,
-                    PrecalculatedChecksum = checksum,
-                };
+                    await source.CopyToExactInternal(bufferedContent, count.Value, async, cancellationToken).ConfigureAwait(false);
+                }
+                else
+                {
+                    await source.CopyToInternal(bufferedContent, async, cancellationToken).ConfigureAwait(false);
+                }
+                bufferedContent.Position = 0;
+
+                if (usingChecksumStream)
+                {
+                    var checksum = new Memory<byte>(new byte[checksumSize]);
+                    checksumCallback(checksum.Span);
+                    validationOptions = new UploadTransferValidationOptions
+                    {
+                        ChecksumAlgorithm = validationOptions.ChecksumAlgorithm,
+                        PrecalculatedChecksum = checksum,
+                    };
+                }
+
+                hashCalculatorDisposable?.Dispose();
+                return (bufferedContent, validationOptions);
+            }
+            catch (Exception)
+            {
+                // if operation a failure, return any rented memory of this stream
+                bufferedContent.Dispose();
+                throw;
+            }
+        }
+
+        private async ValueTask<Response<TCompleteUploadReturn>> OneshotStreamInternal(
+            Stream content,
+            TServiceSpecificData args,
+            IProgress<long> progressHandler,
+            bool async,
+            CancellationToken cancellationToken)
+        {
+            UploadTransferValidationOptions oneshotValidationOptions = ValidationOptions;
+            oneshotValidationOptions.PrecalculatedChecksum = _masterCrcSupplier?.Invoke() ?? default;
+
+            using DisposableBucket bucket = new();
+
+            // If not seekable, buffer; checksum if necessary.
+            if (!content.CanSeek)
+            {
+                // must buffer via stream; _singleUplaodThreshold can be > max int
+                (Stream bufferedContent, oneshotValidationOptions) = await BufferAndOptionalChecksumStreamInternal(
+                    content, count: default, oneshotValidationOptions, async, cancellationToken)
+                    .ConfigureAwait(false);
+                bucket.Add(bufferedContent);
+                bufferedContent.Position = 0;
+                content = bufferedContent;
             }
 
-            hashCalculatorDisposable?.Dispose();
-            return (bufferedContent, validationOptions);
+            // Upload it in a single request
+            return await _singleUploadStreamingInternal(
+                content,
+                args,
+                progressHandler,
+                oneshotValidationOptions,
+                _operationName,
+                async,
+                cancellationToken)
+                .ConfigureAwait(false);
         }
 
         private async Task<Response<TCompleteUploadReturn>> UploadPartitionsInternal<TContent>(
