@@ -235,7 +235,7 @@ namespace Azure.Communication.CallAutomation
         public static Azure.Communication.CallAutomation.SendDtmfTonesFailed SendDtmfTonesFailed(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, Azure.Communication.CallAutomation.ResultInformation resultInformation = null) { throw null; }
         public static Azure.Communication.CallAutomation.SendDtmfTonesResult SendDtmfTonesResult(string operationContext = null) { throw null; }
         public static Azure.Communication.CallAutomation.SpeechResult SpeechResult(string speech = null) { throw null; }
-        public static Azure.Communication.CallAutomation.Models.Events.StartRecordingFailedInternal StartRecordingFailedInternal(string callConnectionId = null, string correlationId = null, string recordingId = null) { throw null; }
+        public static Azure.Communication.CallAutomation.StartRecordingFailed StartRecordingFailed(string recordingId = null, string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, Azure.Communication.CallAutomation.ResultInformation resultInformation = null) { throw null; }
         public static Azure.Communication.CallAutomation.TranscriptionFailed TranscriptionFailed(Azure.Communication.CallAutomation.TranscriptionUpdate transcriptionUpdate = null, string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, Azure.Communication.CallAutomation.ResultInformation resultInformation = null) { throw null; }
         public static Azure.Communication.CallAutomation.TranscriptionStarted TranscriptionStarted(Azure.Communication.CallAutomation.TranscriptionUpdate transcriptionUpdate = null, string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, Azure.Communication.CallAutomation.ResultInformation resultInformation = null) { throw null; }
         public static Azure.Communication.CallAutomation.TranscriptionStopped TranscriptionStopped(Azure.Communication.CallAutomation.TranscriptionUpdate transcriptionUpdate = null, string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, Azure.Communication.CallAutomation.ResultInformation resultInformation = null) { throw null; }
@@ -1428,6 +1428,12 @@ namespace Azure.Communication.CallAutomation
         public bool IsSuccess { get { throw null; } }
         public Azure.Communication.CallAutomation.RecognizeCompleted SuccessResult { get { throw null; } }
     }
+    public partial class StartRecordingFailed : Azure.Communication.CallAutomation.CallAutomationEventBase
+    {
+        internal StartRecordingFailed() { }
+        public string RecordingId { get { throw null; } }
+        public static Azure.Communication.CallAutomation.StartRecordingFailed Deserialize(string content) { throw null; }
+    }
     public partial class StartRecordingOptions
     {
         public StartRecordingOptions(Azure.Communication.CallAutomation.CallLocator callLocator) { }
@@ -1739,21 +1745,5 @@ namespace Azure.Communication.CallAutomation
         public System.TimeSpan Offset { get { throw null; } set { } }
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("text")]
         public string Text { get { throw null; } set { } }
-    }
-}
-namespace Azure.Communication.CallAutomation.Models.Events
-{
-    public partial class StartRecordingFailed : Azure.Communication.CallAutomation.CallAutomationEventBase
-    {
-        internal StartRecordingFailed() { }
-        public string RecordingId { get { throw null; } }
-        public static Azure.Communication.CallAutomation.Models.Events.StartRecordingFailed Deserialize(string content) { throw null; }
-    }
-    public partial class StartRecordingFailedInternal
-    {
-        internal StartRecordingFailedInternal() { }
-        public string CallConnectionId { get { throw null; } }
-        public string CorrelationId { get { throw null; } }
-        public string RecordingId { get { throw null; } }
     }
 }

@@ -452,6 +452,32 @@ namespace Azure.Communication.CallAutomation.Tests.Events
         }
 
         [Test]
+        public void StartRecordingFailedEventParsed_Test()
+        {
+            StartRecordingFailed @event = CallAutomationModelFactory.StartRecordingFailed(
+                recordingId: "recordingId",
+                callConnectionId: "callConnectionId",
+                serverCallId: "serverCallId",
+                correlationId: "correlationId",
+                operationContext: "context",
+                resultInformation: new ResultInformation(403, 30, "result info message"));
+            JsonSerializerOptions jsonOptions = new() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
+            string jsonEvent = JsonSerializer.Serialize(@event, jsonOptions);
+            var parsedEvent = CallAutomationEventParser.Parse(jsonEvent, "Microsoft.Communication.StartRecordingFailed");
+            if (parsedEvent is StartRecordingFailed recordingEvent)
+            {
+                Assert.AreEqual("recordingId", recordingEvent.RecordingId);
+                Assert.AreEqual("serverCallId", recordingEvent.ServerCallId);
+                Assert.AreEqual("context", recordingEvent.OperationContext);
+                Assert.AreEqual(403, recordingEvent.ResultInformation?.Code);
+            }
+            else
+            {
+                Assert.Fail("Event parsed wrongfully");
+            }
+        }
+
+        [Test]
         public void PlayCompletedEventParsed_Test()
         {
             PlayCompleted @event = CallAutomationModelFactory.PlayCompleted(
