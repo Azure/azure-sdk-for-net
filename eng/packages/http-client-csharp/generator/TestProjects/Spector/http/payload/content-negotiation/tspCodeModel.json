@@ -2,11 +2,14 @@
  "$id": "1",
  "name": "Payload.ContentNegotiation",
  "apiVersions": [],
- "enums": [
+ "enums": [],
+ "constants": [
   {
    "$id": "2",
-   "kind": "enum",
-   "name": "PngImageAsJson_content-type",
+   "kind": "constant",
+   "name": "PngImageAsJsonContentType",
+   "namespace": "Payload.ContentNegotiation.DifferentBody",
+   "usage": "Output,Json",
    "valueType": {
     "$id": "3",
     "kind": "string",
@@ -14,33 +17,205 @@
     "crossLanguageDefinitionId": "TypeSpec.string",
     "decorators": []
    },
-   "values": [
-    {
-     "$id": "4",
-     "kind": "enumvalue",
-     "name": "application/json",
-     "value": "application/json",
-     "doc": "application/json",
-     "valueType": {
-      "$ref": "3"
-     },
-     "enumType": {
-      "$ref": "2"
-     }
-    }
-   ],
-   "crossLanguageDefinitionId": "",
-   "namespace": "Payload.ContentNegotiation.DifferentBody",
-   "doc": "The PngImageAsJson_content-type",
-   "isFixed": false,
-   "isFlags": false,
-   "usage": "Output,Json",
+   "value": "application/json",
+   "decorators": []
+  },
+  {
+   "$id": "4",
+   "kind": "constant",
+   "name": "PngImageContentType",
+   "namespace": "",
+   "usage": "None",
+   "valueType": {
+    "$id": "5",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "value": "image/png",
+   "decorators": []
+  },
+  {
+   "$id": "6",
+   "kind": "constant",
+   "name": "PngImageContentType1",
+   "namespace": "",
+   "usage": "None",
+   "valueType": {
+    "$id": "7",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "value": "image/png",
+   "decorators": []
+  },
+  {
+   "$id": "8",
+   "kind": "constant",
+   "name": "PngImageContentType2",
+   "namespace": "",
+   "usage": "None",
+   "valueType": {
+    "$id": "9",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "value": "image/png",
+   "decorators": []
+  },
+  {
+   "$id": "10",
+   "kind": "constant",
+   "name": "JpegImageContentType",
+   "namespace": "",
+   "usage": "None",
+   "valueType": {
+    "$id": "11",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "value": "image/jpeg",
+   "decorators": []
+  },
+  {
+   "$id": "12",
+   "kind": "constant",
+   "name": "JpegImageContentType1",
+   "namespace": "",
+   "usage": "None",
+   "valueType": {
+    "$id": "13",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "value": "image/jpeg",
+   "decorators": []
+  },
+  {
+   "$id": "14",
+   "kind": "constant",
+   "name": "JpegImageContentType2",
+   "namespace": "",
+   "usage": "None",
+   "valueType": {
+    "$id": "15",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "value": "image/jpeg",
+   "decorators": []
+  },
+  {
+   "$id": "16",
+   "kind": "constant",
+   "name": "PngImageContentType3",
+   "namespace": "",
+   "usage": "None",
+   "valueType": {
+    "$id": "17",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "value": "image/png",
+   "decorators": []
+  },
+  {
+   "$id": "18",
+   "kind": "constant",
+   "name": "PngImageContentType4",
+   "namespace": "",
+   "usage": "None",
+   "valueType": {
+    "$id": "19",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "value": "image/png",
+   "decorators": []
+  },
+  {
+   "$id": "20",
+   "kind": "constant",
+   "name": "PngImageContentType5",
+   "namespace": "",
+   "usage": "None",
+   "valueType": {
+    "$id": "21",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "value": "image/png",
+   "decorators": []
+  },
+  {
+   "$id": "22",
+   "kind": "constant",
+   "name": "PngImageAsJsonContentType1",
+   "namespace": "",
+   "usage": "None",
+   "valueType": {
+    "$id": "23",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "value": "application/json",
+   "decorators": []
+  },
+  {
+   "$id": "24",
+   "kind": "constant",
+   "name": "PngImageAsJsonContentType2",
+   "namespace": "",
+   "usage": "None",
+   "valueType": {
+    "$id": "25",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "value": "application/json",
+   "decorators": []
+  },
+  {
+   "$id": "26",
+   "kind": "constant",
+   "name": "PngImageAsJsonContentType3",
+   "namespace": "",
+   "usage": "None",
+   "valueType": {
+    "$id": "27",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "value": "application/json",
    "decorators": []
   }
  ],
  "models": [
   {
-   "$id": "5",
+   "$id": "28",
    "kind": "model",
    "name": "PngImageAsJson",
    "namespace": "Payload.ContentNegotiation.DifferentBody",
@@ -49,18 +224,12 @@
    "decorators": [],
    "properties": [
     {
-     "$id": "6",
+     "$id": "29",
      "kind": "header",
      "name": "contentType",
      "serializedName": "content-type",
      "type": {
-      "$id": "7",
-      "kind": "constant",
-      "valueType": {
-       "$ref": "2"
-      },
-      "value": "application/json",
-      "decorators": []
+      "$ref": "2"
      },
      "optional": false,
      "readOnly": false,
@@ -70,12 +239,12 @@
      "flatten": false
     },
     {
-     "$id": "8",
+     "$id": "30",
      "kind": "property",
      "name": "content",
      "serializedName": "content",
      "type": {
-      "$id": "9",
+      "$id": "31",
       "kind": "bytes",
       "name": "bytes",
       "encode": "base64",
@@ -89,9 +258,9 @@
      "decorators": [],
      "crossLanguageDefinitionId": "Payload.ContentNegotiation.DifferentBody.PngImageAsJson.content",
      "serializationOptions": {
-      "$id": "10",
+      "$id": "32",
       "json": {
-       "$id": "11",
+       "$id": "33",
        "name": "content"
       }
      }
@@ -101,7 +270,7 @@
  ],
  "clients": [
   {
-   "$id": "12",
+   "$id": "34",
    "kind": "client",
    "name": "ContentNegotiationClient",
    "namespace": "Payload.ContentNegotiation",
@@ -109,12 +278,12 @@
    "methods": [],
    "parameters": [
     {
-     "$id": "13",
+     "$id": "35",
      "name": "endpoint",
      "nameInRequest": "endpoint",
      "doc": "Service host",
      "type": {
-      "$id": "14",
+      "$id": "36",
       "kind": "url",
       "name": "url",
       "crossLanguageDefinitionId": "TypeSpec.url"
@@ -128,9 +297,9 @@
      "explode": false,
      "kind": "Client",
      "defaultValue": {
-      "$id": "15",
+      "$id": "37",
       "type": {
-       "$id": "16",
+       "$id": "38",
        "kind": "string",
        "name": "string",
        "crossLanguageDefinitionId": "TypeSpec.string"
@@ -144,39 +313,29 @@
    "apiVersions": [],
    "children": [
     {
-     "$id": "17",
+     "$id": "39",
      "kind": "client",
      "name": "SameBody",
      "namespace": "Payload.ContentNegotiation.SameBody",
      "methods": [
       {
-       "$id": "18",
+       "$id": "40",
        "kind": "basic",
        "name": "getAvatarAsPng",
        "accessibility": "public",
        "apiVersions": [],
        "operation": {
-        "$id": "19",
+        "$id": "41",
         "name": "getAvatarAsPng",
         "resourceName": "SameBody",
         "accessibility": "public",
         "parameters": [
          {
-          "$id": "20",
+          "$id": "42",
           "name": "accept",
           "nameInRequest": "Accept",
           "type": {
-           "$id": "21",
-           "kind": "constant",
-           "valueType": {
-            "$id": "22",
-            "kind": "string",
-            "name": "string",
-            "crossLanguageDefinitionId": "TypeSpec.string",
-            "decorators": []
-           },
-           "value": "image/png",
-           "decorators": []
+           "$ref": "4"
           },
           "location": "Header",
           "isApiVersion": false,
@@ -191,12 +350,12 @@
         ],
         "responses": [
          {
-          "$id": "23",
+          "$id": "43",
           "statusCodes": [
            200
           ],
           "bodyType": {
-           "$id": "24",
+           "$id": "44",
            "kind": "bytes",
            "name": "bytes",
            "crossLanguageDefinitionId": "TypeSpec.bytes",
@@ -204,21 +363,11 @@
           },
           "headers": [
            {
-            "$id": "25",
+            "$id": "45",
             "name": "contentType",
             "nameInResponse": "content-type",
             "type": {
-             "$id": "26",
-             "kind": "constant",
-             "valueType": {
-              "$id": "27",
-              "kind": "string",
-              "name": "string",
-              "crossLanguageDefinitionId": "TypeSpec.string",
-              "decorators": []
-             },
-             "value": "image/png",
-             "decorators": []
+             "$ref": "6"
             }
            }
           ],
@@ -239,21 +388,11 @@
        },
        "parameters": [
         {
-         "$id": "28",
+         "$id": "46",
          "name": "accept",
          "nameInRequest": "accept",
          "type": {
-          "$id": "29",
-          "kind": "constant",
-          "valueType": {
-           "$id": "30",
-           "kind": "string",
-           "name": "string",
-           "crossLanguageDefinitionId": "TypeSpec.string",
-           "decorators": []
-          },
-          "value": "image/png",
-          "decorators": []
+          "$ref": "8"
          },
          "location": "Header",
          "isApiVersion": false,
@@ -267,9 +406,9 @@
         }
        ],
        "response": {
-        "$id": "31",
+        "$id": "47",
         "type": {
-         "$ref": "24"
+         "$ref": "44"
         }
        },
        "isOverride": false,
@@ -278,33 +417,23 @@
        "crossLanguageDefinitionId": "Payload.ContentNegotiation.SameBody.getAvatarAsPng"
       },
       {
-       "$id": "32",
+       "$id": "48",
        "kind": "basic",
        "name": "getAvatarAsJpeg",
        "accessibility": "public",
        "apiVersions": [],
        "operation": {
-        "$id": "33",
+        "$id": "49",
         "name": "getAvatarAsJpeg",
         "resourceName": "SameBody",
         "accessibility": "public",
         "parameters": [
          {
-          "$id": "34",
+          "$id": "50",
           "name": "accept",
           "nameInRequest": "Accept",
           "type": {
-           "$id": "35",
-           "kind": "constant",
-           "valueType": {
-            "$id": "36",
-            "kind": "string",
-            "name": "string",
-            "crossLanguageDefinitionId": "TypeSpec.string",
-            "decorators": []
-           },
-           "value": "image/jpeg",
-           "decorators": []
+           "$ref": "10"
           },
           "location": "Header",
           "isApiVersion": false,
@@ -319,12 +448,12 @@
         ],
         "responses": [
          {
-          "$id": "37",
+          "$id": "51",
           "statusCodes": [
            200
           ],
           "bodyType": {
-           "$id": "38",
+           "$id": "52",
            "kind": "bytes",
            "name": "bytes",
            "crossLanguageDefinitionId": "TypeSpec.bytes",
@@ -332,21 +461,11 @@
           },
           "headers": [
            {
-            "$id": "39",
+            "$id": "53",
             "name": "contentType",
             "nameInResponse": "content-type",
             "type": {
-             "$id": "40",
-             "kind": "constant",
-             "valueType": {
-              "$id": "41",
-              "kind": "string",
-              "name": "string",
-              "crossLanguageDefinitionId": "TypeSpec.string",
-              "decorators": []
-             },
-             "value": "image/jpeg",
-             "decorators": []
+             "$ref": "12"
             }
            }
           ],
@@ -367,21 +486,11 @@
        },
        "parameters": [
         {
-         "$id": "42",
+         "$id": "54",
          "name": "accept",
          "nameInRequest": "accept",
          "type": {
-          "$id": "43",
-          "kind": "constant",
-          "valueType": {
-           "$id": "44",
-           "kind": "string",
-           "name": "string",
-           "crossLanguageDefinitionId": "TypeSpec.string",
-           "decorators": []
-          },
-          "value": "image/jpeg",
-          "decorators": []
+          "$ref": "14"
          },
          "location": "Header",
          "isApiVersion": false,
@@ -395,9 +504,9 @@
         }
        ],
        "response": {
-        "$id": "45",
+        "$id": "55",
         "type": {
-         "$ref": "38"
+         "$ref": "52"
         }
        },
        "isOverride": false,
@@ -408,12 +517,12 @@
      ],
      "parameters": [
       {
-       "$id": "46",
+       "$id": "56",
        "name": "endpoint",
        "nameInRequest": "endpoint",
        "doc": "Service host",
        "type": {
-        "$id": "47",
+        "$id": "57",
         "kind": "url",
         "name": "url",
         "crossLanguageDefinitionId": "TypeSpec.url"
@@ -427,9 +536,9 @@
        "explode": false,
        "kind": "Client",
        "defaultValue": {
-        "$id": "48",
+        "$id": "58",
         "type": {
-         "$id": "49",
+         "$id": "59",
          "kind": "string",
          "name": "string",
          "crossLanguageDefinitionId": "TypeSpec.string"
@@ -442,43 +551,33 @@
      "crossLanguageDefinitionId": "Payload.ContentNegotiation.SameBody",
      "apiVersions": [],
      "parent": {
-      "$ref": "12"
+      "$ref": "34"
      }
     },
     {
-     "$id": "50",
+     "$id": "60",
      "kind": "client",
      "name": "DifferentBody",
      "namespace": "Payload.ContentNegotiation.DifferentBody",
      "methods": [
       {
-       "$id": "51",
+       "$id": "61",
        "kind": "basic",
        "name": "getAvatarAsPng",
        "accessibility": "public",
        "apiVersions": [],
        "operation": {
-        "$id": "52",
+        "$id": "62",
         "name": "getAvatarAsPng",
         "resourceName": "DifferentBody",
         "accessibility": "public",
         "parameters": [
          {
-          "$id": "53",
+          "$id": "63",
           "name": "accept",
           "nameInRequest": "Accept",
           "type": {
-           "$id": "54",
-           "kind": "constant",
-           "valueType": {
-            "$id": "55",
-            "kind": "string",
-            "name": "string",
-            "crossLanguageDefinitionId": "TypeSpec.string",
-            "decorators": []
-           },
-           "value": "image/png",
-           "decorators": []
+           "$ref": "16"
           },
           "location": "Header",
           "isApiVersion": false,
@@ -493,12 +592,12 @@
         ],
         "responses": [
          {
-          "$id": "56",
+          "$id": "64",
           "statusCodes": [
            200
           ],
           "bodyType": {
-           "$id": "57",
+           "$id": "65",
            "kind": "bytes",
            "name": "bytes",
            "crossLanguageDefinitionId": "TypeSpec.bytes",
@@ -506,21 +605,11 @@
           },
           "headers": [
            {
-            "$id": "58",
+            "$id": "66",
             "name": "contentType",
             "nameInResponse": "content-type",
             "type": {
-             "$id": "59",
-             "kind": "constant",
-             "valueType": {
-              "$id": "60",
-              "kind": "string",
-              "name": "string",
-              "crossLanguageDefinitionId": "TypeSpec.string",
-              "decorators": []
-             },
-             "value": "image/png",
-             "decorators": []
+             "$ref": "18"
             }
            }
           ],
@@ -541,21 +630,11 @@
        },
        "parameters": [
         {
-         "$id": "61",
+         "$id": "67",
          "name": "accept",
          "nameInRequest": "accept",
          "type": {
-          "$id": "62",
-          "kind": "constant",
-          "valueType": {
-           "$id": "63",
-           "kind": "string",
-           "name": "string",
-           "crossLanguageDefinitionId": "TypeSpec.string",
-           "decorators": []
-          },
-          "value": "image/png",
-          "decorators": []
+          "$ref": "20"
          },
          "location": "Header",
          "isApiVersion": false,
@@ -569,9 +648,9 @@
         }
        ],
        "response": {
-        "$id": "64",
+        "$id": "68",
         "type": {
-         "$ref": "57"
+         "$ref": "65"
         }
        },
        "isOverride": false,
@@ -580,33 +659,23 @@
        "crossLanguageDefinitionId": "Payload.ContentNegotiation.DifferentBody.getAvatarAsPng"
       },
       {
-       "$id": "65",
+       "$id": "69",
        "kind": "basic",
        "name": "getAvatarAsJson",
        "accessibility": "public",
        "apiVersions": [],
        "operation": {
-        "$id": "66",
+        "$id": "70",
         "name": "getAvatarAsJson",
         "resourceName": "DifferentBody",
         "accessibility": "public",
         "parameters": [
          {
-          "$id": "67",
+          "$id": "71",
           "name": "accept",
           "nameInRequest": "Accept",
           "type": {
-           "$id": "68",
-           "kind": "constant",
-           "valueType": {
-            "$id": "69",
-            "kind": "string",
-            "name": "string",
-            "crossLanguageDefinitionId": "TypeSpec.string",
-            "decorators": []
-           },
-           "value": "application/json",
-           "decorators": []
+           "$ref": "22"
           },
           "location": "Header",
           "isApiVersion": false,
@@ -621,30 +690,20 @@
         ],
         "responses": [
          {
-          "$id": "70",
+          "$id": "72",
           "statusCodes": [
            200
           ],
           "bodyType": {
-           "$ref": "5"
+           "$ref": "28"
           },
           "headers": [
            {
-            "$id": "71",
+            "$id": "73",
             "name": "contentType",
             "nameInResponse": "content-type",
             "type": {
-             "$id": "72",
-             "kind": "constant",
-             "valueType": {
-              "$id": "73",
-              "kind": "string",
-              "name": "string",
-              "crossLanguageDefinitionId": "TypeSpec.string",
-              "decorators": []
-             },
-             "value": "application/json",
-             "decorators": []
+             "$ref": "24"
             }
            }
           ],
@@ -669,17 +728,7 @@
          "name": "accept",
          "nameInRequest": "accept",
          "type": {
-          "$id": "75",
-          "kind": "constant",
-          "valueType": {
-           "$id": "76",
-           "kind": "string",
-           "name": "string",
-           "crossLanguageDefinitionId": "TypeSpec.string",
-           "decorators": []
-          },
-          "value": "application/json",
-          "decorators": []
+          "$ref": "26"
          },
          "location": "Header",
          "isApiVersion": false,
@@ -693,9 +742,9 @@
         }
        ],
        "response": {
-        "$id": "77",
+        "$id": "75",
         "type": {
-         "$ref": "5"
+         "$ref": "28"
         }
        },
        "isOverride": false,
@@ -706,12 +755,12 @@
      ],
      "parameters": [
       {
-       "$id": "78",
+       "$id": "76",
        "name": "endpoint",
        "nameInRequest": "endpoint",
        "doc": "Service host",
        "type": {
-        "$id": "79",
+        "$id": "77",
         "kind": "url",
         "name": "url",
         "crossLanguageDefinitionId": "TypeSpec.url"
@@ -725,9 +774,9 @@
        "explode": false,
        "kind": "Client",
        "defaultValue": {
-        "$id": "80",
+        "$id": "78",
         "type": {
-         "$id": "81",
+         "$id": "79",
          "kind": "string",
          "name": "string",
          "crossLanguageDefinitionId": "TypeSpec.string"
@@ -740,7 +789,7 @@
      "crossLanguageDefinitionId": "Payload.ContentNegotiation.DifferentBody",
      "apiVersions": [],
      "parent": {
-      "$ref": "12"
+      "$ref": "34"
      }
     }
    ]
