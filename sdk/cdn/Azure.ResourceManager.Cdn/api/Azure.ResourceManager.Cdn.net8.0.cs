@@ -1750,8 +1750,12 @@ namespace Azure.ResourceManager.Cdn.Models
     }
     public partial class ClientPortMatchCondition : Azure.ResourceManager.Cdn.Models.DeliveryRuleConditionProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.ClientPortMatchCondition>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.ClientPortMatchCondition>
     {
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public ClientPortMatchCondition(Azure.ResourceManager.Cdn.Models.ClientPortMatchConditionType conditionType, Azure.ResourceManager.Cdn.Models.ClientPortOperator clientPortOperator) { }
         public ClientPortMatchCondition(Azure.ResourceManager.Cdn.Models.ClientPortOperator clientPortOperator) { }
         public Azure.ResourceManager.Cdn.Models.ClientPortOperator ClientPortOperator { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public Azure.ResourceManager.Cdn.Models.ClientPortMatchConditionType ConditionType { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> MatchValues { get { throw null; } }
         public bool? NegateCondition { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Cdn.Models.PreTransformCategory> Transforms { get { throw null; } }
@@ -1761,6 +1765,23 @@ namespace Azure.ResourceManager.Cdn.Models
         Azure.ResourceManager.Cdn.Models.ClientPortMatchCondition System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.ClientPortMatchCondition>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.ClientPortMatchCondition>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.ClientPortMatchCondition>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ClientPortMatchConditionType : System.IEquatable<Azure.ResourceManager.Cdn.Models.ClientPortMatchConditionType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ClientPortMatchConditionType(string value) { throw null; }
+        public static Azure.ResourceManager.Cdn.Models.ClientPortMatchConditionType ClientPortCondition { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Cdn.Models.ClientPortMatchConditionType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Cdn.Models.ClientPortMatchConditionType left, Azure.ResourceManager.Cdn.Models.ClientPortMatchConditionType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Cdn.Models.ClientPortMatchConditionType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Cdn.Models.ClientPortMatchConditionType left, Azure.ResourceManager.Cdn.Models.ClientPortMatchConditionType right) { throw null; }
+        public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ClientPortOperator : System.IEquatable<Azure.ResourceManager.Cdn.Models.ClientPortOperator>
