@@ -92,6 +92,9 @@
     <Compile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\..\sdk\core\Azure.Core\src\Shared\RequestHeaderExtensions.cs" LinkBase="Shared/Core">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
+	<Compile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\..\sdk\core\Azure.Core\src\Shared\NoValueResponseOfT.cs" LinkBase="Shared/Core">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
 	</ItemGroup>
 
 </Project>

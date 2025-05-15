@@ -109,5 +109,45 @@ namespace Azure.Generator.Management.Tests.Providers
             var exptected = Helpers.GetExpectedFromFile();
             Assert.AreEqual(exptected, bodyStatements);
         }
+
+        [TestCase]
+        public void Verify_GetIfExistsOperationMethod()
+        {
+            MethodProvider getMethod = GetResourceCollectionClientProviderMethodByName("GetIfExists");
+
+            // verify the method signature
+            var signature = getMethod.Signature;
+            Assert.IsTrue(signature.Modifiers.Equals(MethodSignatureModifiers.Public | MethodSignatureModifiers.Virtual));
+            Assert.IsTrue(signature.Parameters.Count == 2);
+            Assert.IsTrue(signature.Parameters[0].Type.FrameworkType.Equals(typeof(string)));
+            Assert.IsTrue(signature.Parameters[1].Type.FrameworkType.Equals(typeof(CancellationToken)));
+            Assert.AreEqual(signature.ReturnType?.FrameworkType, typeof(NullableResponse<>));
+
+            // verify the method body
+            var bodyStatements = getMethod.BodyStatements?.ToDisplayString();
+            Assert.NotNull(bodyStatements);
+            var exptected = Helpers.GetExpectedFromFile();
+            Assert.AreEqual(exptected, bodyStatements);
+        }
+
+        [TestCase]
+        public void Verify_GetIfExistsAsyncOperationMethod()
+        {
+            MethodProvider getMethod = GetResourceCollectionClientProviderMethodByName("GetIfExistsAsync");
+
+            // verify the method signature
+            var signature = getMethod.Signature;
+            Assert.IsTrue(signature.Modifiers.Equals(MethodSignatureModifiers.Public | MethodSignatureModifiers.Virtual | MethodSignatureModifiers.Async));
+            Assert.IsTrue(signature.Parameters.Count == 2);
+            Assert.IsTrue(signature.Parameters[0].Type.FrameworkType.Equals(typeof(string)));
+            Assert.IsTrue(signature.Parameters[1].Type.FrameworkType.Equals(typeof(CancellationToken)));
+            Assert.AreEqual(signature.ReturnType?.FrameworkType, typeof(Task<>));
+
+            // verify the method body
+            var bodyStatements = getMethod.BodyStatements?.ToDisplayString();
+            Assert.NotNull(bodyStatements);
+            var exptected = Helpers.GetExpectedFromFile();
+            Assert.AreEqual(exptected, bodyStatements);
+        }
     }
 }
