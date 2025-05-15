@@ -241,7 +241,7 @@ function Set-ApiViewCommentForPR {
 # Helper function used to create API review requests for Spec generation SDKs pipelines
 function Create-API-Review {
   param (
-    [string]$apiviewEndpoint = "https://apiview.dev/api/PullRequests/CreateAPIRevisionIfAPIHasChanges",
+    [string]$apiviewEndpoint = "https://apiviewstagingtest.com/api/PullRequests/CreateAPIRevisionIfAPIHasChanges",
     [string]$specGenSDKArtifactPath,
     [string]$apiviewArtifactName,
     [string]$buildId,
@@ -278,10 +278,12 @@ function Create-API-Review {
     {
       $response = Invoke-WebRequest -Method 'GET' -Uri $requestUri.Uri -Headers $headers -MaximumRetryCount 3
       if ($response.StatusCode -eq 201) {
-        LogSuccess "Status Code: $($response.StatusCode)`nAPI review request created successfully.`n$($response.Content)"
+        $responseContent = $Response.Content | ConvertFrom-Json | ConvertTo-Json -Depth 10
+        LogSuccess "Status Code: $($response.StatusCode)`nAPI review request created successfully.`n$($responseContent)"
       }
       elseif ($response.StatusCode -eq 208) {
-        LogSuccess "Status Code: $($response.StatusCode)`nThere is no API change compared with the previous version.`n$($response.Content)"
+        $responseContent = $Response.Content | ConvertFrom-Json | ConvertTo-Json -Depth 10
+        LogSuccess "Status Code: $($response.StatusCode)`nThere is no API change compared with the previous version.`n$($responseContent)"
       }
       else {
         LogError "Failed to create API review request. $($response)"

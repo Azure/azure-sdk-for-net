@@ -67,7 +67,8 @@ function Submit-Request($filePath, $packageName)
     {
         $Response = Invoke-WebRequest -Method 'GET' -Uri $uri.Uri -Headers $headers -MaximumRetryCount 3
         $StatusCode = $Response.StatusCode
-        LogSuccess $Response.Content
+        $responseContent = $Response.Content | ConvertFrom-Json | ConvertTo-Json -Depth 10
+        LogSuccess $responseContent
     }
     catch
     {
