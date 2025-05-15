@@ -10,17 +10,16 @@ using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 using Azure.Provisioning.Resources;
 using System;
-using System.ComponentModel;
 
 namespace Azure.Provisioning.ContainerRegistry;
 
 /// <summary>
-/// ScopeMap.
+/// ContainerRegistryCredentialSet.
 /// </summary>
-public partial class ScopeMap : ProvisionableResource
+public partial class ContainerRegistryCredentialSet : ProvisionableResource
 {
     /// <summary>
-    /// The name of the scope map.
+    /// The name of the credential set.
     /// </summary>
     public BicepValue<string> Name 
     {
@@ -30,29 +29,40 @@ public partial class ScopeMap : ProvisionableResource
     private BicepValue<string>? _name;
 
     /// <summary>
-    /// The list of scoped permissions for registry artifacts.             E.g.
-    /// repositories/repository-name/content/read,
-    /// repositories/repository-name/metadata/write
+    /// List of authentication credentials stored for an upstream.
+    /// Usually consists of a primary and an optional secondary
+    /// credential.
     /// </summary>
-    public BicepList<string> Actions 
+    public BicepList<ContainerRegistryAuthCredential> AuthCredentials 
     {
-        get { Initialize(); return _actions!; }
-        set { Initialize(); _actions!.Assign(value); }
+        get { Initialize(); return _authCredentials!; }
+        set { Initialize(); _authCredentials!.Assign(value); }
     }
-    private BicepList<string>? _actions;
+    private BicepList<ContainerRegistryAuthCredential>? _authCredentials;
 
     /// <summary>
-    /// The user friendly description of the scope map.
+    /// Identities associated with the resource. This is used to access the
+    /// KeyVault secrets.
     /// </summary>
-    public BicepValue<string> Description 
+    public ManagedServiceIdentity Identity 
     {
-        get { Initialize(); return _description!; }
-        set { Initialize(); _description!.Assign(value); }
+        get { Initialize(); return _identity!; }
+        set { Initialize(); AssignOrReplace(ref _identity, value); }
     }
-    private BicepValue<string>? _description;
+    private ManagedServiceIdentity? _identity;
 
     /// <summary>
-    /// The creation date of scope map.
+    /// The credentials are stored for this upstream or login server.
+    /// </summary>
+    public BicepValue<string> LoginServer 
+    {
+        get { Initialize(); return _loginServer!; }
+        set { Initialize(); _loginServer!.Assign(value); }
+    }
+    private BicepValue<string>? _loginServer;
+
+    /// <summary>
+    /// The creation date of credential store resource.
     /// </summary>
     public BicepValue<DateTimeOffset> CreatedOn 
     {
@@ -79,15 +89,6 @@ public partial class ScopeMap : ProvisionableResource
     private BicepValue<ContainerRegistryProvisioningState>? _provisioningState;
 
     /// <summary>
-    /// The type of the scope map. E.g. BuildIn scope map.
-    /// </summary>
-    public BicepValue<string> ScopeMapType 
-    {
-        get { Initialize(); return _scopeMapType!; }
-    }
-    private BicepValue<string>? _scopeMapType;
-
-    /// <summary>
     /// Gets the SystemData.
     /// </summary>
     public SystemData SystemData 
@@ -107,38 +108,39 @@ public partial class ScopeMap : ProvisionableResource
     private ResourceReference<ContainerRegistryService>? _parent;
 
     /// <summary>
-    /// Creates a new ScopeMap.
+    /// Creates a new ContainerRegistryCredentialSet.
     /// </summary>
     /// <param name="bicepIdentifier">
-    /// The the Bicep identifier name of the ScopeMap resource.  This can be
-    /// used to refer to the resource in expressions, but is not the Azure
-    /// name of the resource.  This value can contain letters, numbers, and
-    /// underscores.
+    /// The the Bicep identifier name of the ContainerRegistryCredentialSet
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
     /// </param>
-    /// <param name="resourceVersion">Version of the ScopeMap.</param>
-    public ScopeMap(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.ContainerRegistry/registries/scopeMaps", resourceVersion ?? "2025-04-01")
+    /// <param name="resourceVersion">Version of the ContainerRegistryCredentialSet.</param>
+    public ContainerRegistryCredentialSet(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.ContainerRegistry/registries/credentialSets", resourceVersion ?? "2025-04-01")
     {
     }
 
     /// <summary>
-    /// Define all the provisionable properties of ScopeMap.
+    /// Define all the provisionable properties of
+    /// ContainerRegistryCredentialSet.
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
-        _actions = DefineListProperty<string>("Actions", ["properties", "actions"]);
-        _description = DefineProperty<string>("Description", ["properties", "description"]);
+        _authCredentials = DefineListProperty<ContainerRegistryAuthCredential>("AuthCredentials", ["properties", "authCredentials"]);
+        _identity = DefineModelProperty<ManagedServiceIdentity>("Identity", ["identity"]);
+        _loginServer = DefineProperty<string>("LoginServer", ["properties", "loginServer"]);
         _createdOn = DefineProperty<DateTimeOffset>("CreatedOn", ["properties", "creationDate"], isOutput: true);
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
         _provisioningState = DefineProperty<ContainerRegistryProvisioningState>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
-        _scopeMapType = DefineProperty<string>("ScopeMapType", ["properties", "type"], isOutput: true);
         _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
         _parent = DefineResource<ContainerRegistryService>("Parent", ["parent"], isRequired: true);
     }
 
     /// <summary>
-    /// Supported ScopeMap resource versions.
+    /// Supported ContainerRegistryCredentialSet resource versions.
     /// </summary>
     public static class ResourceVersions
     {
@@ -151,32 +153,19 @@ public partial class ScopeMap : ProvisionableResource
         /// 2023-07-01.
         /// </summary>
         public static readonly string V2023_07_01 = "2023-07-01";
-
-        /// <summary>
-        /// 2022-12-01.
-        /// </summary>
-        public static readonly string V2022_12_01 = "2022-12-01";
     }
 
     /// <summary>
-    /// Creates a reference to an existing ScopeMap.
+    /// Creates a reference to an existing ContainerRegistryCredentialSet.
     /// </summary>
     /// <param name="bicepIdentifier">
-    /// The the Bicep identifier name of the ScopeMap resource.  This can be
-    /// used to refer to the resource in expressions, but is not the Azure
-    /// name of the resource.  This value can contain letters, numbers, and
-    /// underscores.
+    /// The the Bicep identifier name of the ContainerRegistryCredentialSet
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
     /// </param>
-    /// <param name="resourceVersion">Version of the ScopeMap.</param>
-    /// <returns>The existing ScopeMap resource.</returns>
-    public static ScopeMap FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+    /// <param name="resourceVersion">Version of the ContainerRegistryCredentialSet.</param>
+    /// <returns>The existing ContainerRegistryCredentialSet resource.</returns>
+    public static ContainerRegistryCredentialSet FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
         new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
-
-    /// <summary>
-    /// Get the requirements for naming this ScopeMap resource.
-    /// </summary>
-    /// <returns>Naming requirements.</returns>
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    public override ResourceNameRequirements GetResourceNameRequirements() =>
-        new(minLength: 5, maxLength: 50, validCharacters: ResourceNameCharacters.LowercaseLetters | ResourceNameCharacters.UppercaseLetters | ResourceNameCharacters.Numbers | ResourceNameCharacters.Hyphen | ResourceNameCharacters.Underscore);
 }
