@@ -60,7 +60,7 @@ internal sealed partial class AzureAIInferenceChatClient : IChatClient
     /// <inheritdoc />
     object? IChatClient.GetService(Type serviceType, object? serviceKey)
     {
-        Argument.AssertNotNull(serviceKey, nameof(serviceKey));
+        Argument.AssertNotNull(serviceType, nameof(serviceType));
 
         return
             serviceKey is not null ? null :
