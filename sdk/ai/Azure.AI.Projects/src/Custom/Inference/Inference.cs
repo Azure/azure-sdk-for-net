@@ -192,6 +192,8 @@ namespace Azure.AI.Projects
             OverrideApiVersionPolicyPipeline overrideApiVersionPolicy = new OverrideApiVersionPolicyPipeline(apiVersion ?? "2024-05-01-preview");
             options.AddPolicy(overrideApiVersionPolicy, PipelinePosition.PerTry);
 
+            options.Audience = new AzureOpenAIAudience(AuthorizationScopes[0]);
+
             return connection.CredentialKind switch
             {
                 CredentialKind.ApiKeyString => new AzureOpenAIClient(uri, new ApiKeyCredential((string)connection.Credential!)),
