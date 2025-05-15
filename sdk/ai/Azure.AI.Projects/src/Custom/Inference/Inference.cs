@@ -189,8 +189,12 @@ namespace Azure.AI.Projects
             uri = new Uri($"https://{uri.Host}");
 
             AzureOpenAIClientOptions options = new AzureOpenAIClientOptions();
-            OverrideApiVersionPolicyPipeline overrideApiVersionPolicy = new OverrideApiVersionPolicyPipeline(apiVersion ?? "2024-05-01-preview");
-            options.AddPolicy(overrideApiVersionPolicy, PipelinePosition.PerTry);
+
+            if (apiVersion != null)
+            {
+                OverrideApiVersionPolicyPipeline overrideApiVersionPolicy = new OverrideApiVersionPolicyPipeline(apiVersion);
+                options.AddPolicy(overrideApiVersionPolicy, PipelinePosition.PerTry);
+            }
 
             options.Audience = new AzureOpenAIAudience(AuthorizationScopes[0]);
 
