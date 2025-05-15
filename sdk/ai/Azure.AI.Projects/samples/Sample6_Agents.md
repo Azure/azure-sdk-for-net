@@ -22,7 +22,7 @@ PersistentAgentsClient agentsClient = projectClient.GetPersistentAgentsClient();
 
 1. Create an agent.
 
-```C# Snippet:AgentsOverviewCreateAgent
+```C# Snippet:ExtensionsAgentsOverviewCreateAgent
 PersistentAgent agent = await agentsClient.Administration.CreateAgentAsync(
     model: modelDeploymentName,
     name: "Math Tutor",
@@ -32,13 +32,13 @@ PersistentAgent agent = await agentsClient.Administration.CreateAgentAsync(
 
 3. Create a thread.
 
-```C# Snippet:AgentsOverviewCreateThread
+```C# Snippet:ExtensionsAgentsOverviewCreateThread
 PersistentAgentThread thread = await agentsClient.Threads.CreateThreadAsync();
 ```
 
 4. Add a message to a thread.
 
-```C# Snippet:AgentsOverviewCreateMessage
+```C# Snippet:ExtensionsAgentsOverviewCreateMessage
 ThreadMessage message = await agentsClient.Messages.CreateMessageAsync(
     thread.Id,
     MessageRole.User,
@@ -47,7 +47,7 @@ ThreadMessage message = await agentsClient.Messages.CreateMessageAsync(
 
 5. Run the agent.
 
-```C# Snippet:AgentsOverviewCreateRun
+```C# Snippet:ExtensionsAgentsOverviewCreateRun
 ThreadRun run = await agentsClient.Runs.CreateRunAsync(
     thread.Id,
     agent.Id,
@@ -56,7 +56,7 @@ ThreadRun run = await agentsClient.Runs.CreateRunAsync(
 
 6 . Whait while run complete.
 
-```C# Snippet:AgentsOverviewWaitForRun
+```C# Snippet:ExtensionsAgentsOverviewWaitForRun
 do
 {
     await Task.Delay(TimeSpan.FromMilliseconds(500));
@@ -72,7 +72,7 @@ Assert.AreEqual(
 
 7. List messages in chronological order.
 
-```C# Snippet:AgentsOverviewListUpdatedMessages
+```C# Snippet:ExtensionsAgentsOverviewListUpdatedMessages
 AsyncPageable<ThreadMessage> messages
     = agentsClient.Messages.GetMessagesAsync(
         threadId: thread.Id, order: ListSortOrder.Ascending);
@@ -97,7 +97,7 @@ await foreach (ThreadMessage threadMessage in messages)
 
 8. Clean up the resources.
 
-```C# Snippet:AgentsOverviewCleanup
+```C# Snippet:ExtensionsAgentsOverviewCleanup
 await agentsClient.Threads.DeleteThreadAsync(threadId: thread.Id);
 
 await agentsClient.Administration.DeleteAgentAsync(agentId: agent.Id);
@@ -175,11 +175,6 @@ foreach (ThreadMessage threadMessage in messages)
 agentsClient.Threads.DeleteThread(threadId: thread.Id);
 agentsClient.Administration.DeleteAgent(agentId: agent.Id);
 ```
-
-## Asynchronous Sample
-```C# Snippet:ExtensionsAgentsBasicsAsync
-var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
-var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
-AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
-PersistentAgentsClient agentsClient = projectClient.GetPersistentAgentsClient();
+tsClient agentsClient = projectClient.GetPersistentAgentsClient();
 ```
+

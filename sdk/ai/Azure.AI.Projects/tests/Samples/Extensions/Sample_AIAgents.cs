@@ -114,7 +114,7 @@ public class Sample_AIAgents : SamplesBase<AIProjectsTestEnvironment>
         #endregion
 
         // Step 1: Create an agent
-        #region Snippet:AgentsOverviewCreateAgent
+        #region Snippet:ExtensionsAgentsOverviewCreateAgent
         PersistentAgent agent = await agentsClient.Administration.CreateAgentAsync(
             model: modelDeploymentName,
             name: "Math Tutor",
@@ -123,12 +123,12 @@ public class Sample_AIAgents : SamplesBase<AIProjectsTestEnvironment>
         #endregion
 
         //// Step 2: Create a thread
-        #region Snippet:AgentsOverviewCreateThread
+        #region Snippet:ExtensionsAgentsOverviewCreateThread
         PersistentAgentThread thread = await agentsClient.Threads.CreateThreadAsync();
         #endregion
 
         // Step 3: Add a message to a thread
-        #region Snippet:AgentsOverviewCreateMessage
+        #region Snippet:ExtensionsAgentsOverviewCreateMessage
         ThreadMessage message = await agentsClient.Messages.CreateMessageAsync(
             thread.Id,
             MessageRole.User,
@@ -143,14 +143,14 @@ public class Sample_AIAgents : SamplesBase<AIProjectsTestEnvironment>
         Assert.AreEqual(message.Id, messagesOne[0].Id);
 
         // Step 4: Run the agent
-        #region Snippet:AgentsOverviewCreateRun
+        #region Snippet:ExtensionsAgentsOverviewCreateRun
         ThreadRun run = await agentsClient.Runs.CreateRunAsync(
             thread.Id,
             agent.Id,
             additionalInstructions: "Please address the user as Jane Doe. The user has a premium account.");
         #endregion
 
-        #region Snippet:AgentsOverviewWaitForRun
+        #region Snippet:ExtensionsAgentsOverviewWaitForRun
         do
         {
             await Task.Delay(TimeSpan.FromMilliseconds(500));
@@ -164,7 +164,7 @@ public class Sample_AIAgents : SamplesBase<AIProjectsTestEnvironment>
             run.LastError?.Message);
         #endregion
 
-        #region Snippet:AgentsOverviewListUpdatedMessages
+        #region Snippet:ExtensionsAgentsOverviewListUpdatedMessages
         AsyncPageable<ThreadMessage> messages
             = agentsClient.Messages.GetMessagesAsync(
                 threadId: thread.Id, order: ListSortOrder.Ascending);
@@ -186,7 +186,7 @@ public class Sample_AIAgents : SamplesBase<AIProjectsTestEnvironment>
             }
         }
         #endregion
-        #region Snippet:AgentsOverviewCleanup
+        #region Snippet:ExtensionsAgentsOverviewCleanup
         await agentsClient.Threads.DeleteThreadAsync(threadId: thread.Id);
 
         await agentsClient.Administration.DeleteAgentAsync(agentId: agent.Id);
