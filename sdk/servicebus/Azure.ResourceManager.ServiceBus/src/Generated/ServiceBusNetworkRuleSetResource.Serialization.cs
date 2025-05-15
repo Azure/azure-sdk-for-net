@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.ServiceBus
 {
     public partial class ServiceBusNetworkRuleSetResource : IJsonModel<ServiceBusNetworkRuleSetData>
     {
+        private static ServiceBusNetworkRuleSetData s_dataDeserializationInstance;
+        private static ServiceBusNetworkRuleSetData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<ServiceBusNetworkRuleSetData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ServiceBusNetworkRuleSetData>)Data).Write(writer, options);
 
-        ServiceBusNetworkRuleSetData IJsonModel<ServiceBusNetworkRuleSetData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ServiceBusNetworkRuleSetData>)Data).Create(ref reader, options);
+        ServiceBusNetworkRuleSetData IJsonModel<ServiceBusNetworkRuleSetData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ServiceBusNetworkRuleSetData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<ServiceBusNetworkRuleSetData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ServiceBusNetworkRuleSetData>(Data, options, AzureResourceManagerServiceBusContext.Default);
 
         ServiceBusNetworkRuleSetData IPersistableModel<ServiceBusNetworkRuleSetData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ServiceBusNetworkRuleSetData>(data, options, AzureResourceManagerServiceBusContext.Default);
 
-        string IPersistableModel<ServiceBusNetworkRuleSetData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ServiceBusNetworkRuleSetData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<ServiceBusNetworkRuleSetData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ServiceBusNetworkRuleSetData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

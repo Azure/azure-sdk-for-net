@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.SecurityCenter
 {
     public partial class AdaptiveApplicationControlGroupResource : IJsonModel<AdaptiveApplicationControlGroupData>
     {
+        private static AdaptiveApplicationControlGroupData s_dataDeserializationInstance;
+        private static AdaptiveApplicationControlGroupData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<AdaptiveApplicationControlGroupData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<AdaptiveApplicationControlGroupData>)Data).Write(writer, options);
 
-        AdaptiveApplicationControlGroupData IJsonModel<AdaptiveApplicationControlGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AdaptiveApplicationControlGroupData>)Data).Create(ref reader, options);
+        AdaptiveApplicationControlGroupData IJsonModel<AdaptiveApplicationControlGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AdaptiveApplicationControlGroupData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<AdaptiveApplicationControlGroupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AdaptiveApplicationControlGroupData>(Data, options, AzureResourceManagerSecurityCenterContext.Default);
 
         AdaptiveApplicationControlGroupData IPersistableModel<AdaptiveApplicationControlGroupData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AdaptiveApplicationControlGroupData>(data, options, AzureResourceManagerSecurityCenterContext.Default);
 
-        string IPersistableModel<AdaptiveApplicationControlGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AdaptiveApplicationControlGroupData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<AdaptiveApplicationControlGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AdaptiveApplicationControlGroupData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

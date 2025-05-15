@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.SecurityInsights
 {
     public partial class SecurityInsightsSentinelOnboardingStateResource : IJsonModel<SecurityInsightsSentinelOnboardingStateData>
     {
+        private static SecurityInsightsSentinelOnboardingStateData s_dataDeserializationInstance;
+        private static SecurityInsightsSentinelOnboardingStateData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<SecurityInsightsSentinelOnboardingStateData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SecurityInsightsSentinelOnboardingStateData>)Data).Write(writer, options);
 
-        SecurityInsightsSentinelOnboardingStateData IJsonModel<SecurityInsightsSentinelOnboardingStateData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SecurityInsightsSentinelOnboardingStateData>)Data).Create(ref reader, options);
+        SecurityInsightsSentinelOnboardingStateData IJsonModel<SecurityInsightsSentinelOnboardingStateData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SecurityInsightsSentinelOnboardingStateData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<SecurityInsightsSentinelOnboardingStateData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SecurityInsightsSentinelOnboardingStateData>(Data, options, AzureResourceManagerSecurityInsightsContext.Default);
 
         SecurityInsightsSentinelOnboardingStateData IPersistableModel<SecurityInsightsSentinelOnboardingStateData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SecurityInsightsSentinelOnboardingStateData>(data, options, AzureResourceManagerSecurityInsightsContext.Default);
 
-        string IPersistableModel<SecurityInsightsSentinelOnboardingStateData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SecurityInsightsSentinelOnboardingStateData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<SecurityInsightsSentinelOnboardingStateData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SecurityInsightsSentinelOnboardingStateData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }
