@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Avs
 
         WorkloadNetworkPortMirroringProfileData IJsonModel<WorkloadNetworkPortMirroringProfileData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<WorkloadNetworkPortMirroringProfileData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<WorkloadNetworkPortMirroringProfileData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<WorkloadNetworkPortMirroringProfileData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<WorkloadNetworkPortMirroringProfileData>(Data, options, AzureResourceManagerAvsContext.Default);
 
-        WorkloadNetworkPortMirroringProfileData IPersistableModel<WorkloadNetworkPortMirroringProfileData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<WorkloadNetworkPortMirroringProfileData>(data, options);
+        WorkloadNetworkPortMirroringProfileData IPersistableModel<WorkloadNetworkPortMirroringProfileData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<WorkloadNetworkPortMirroringProfileData>(data, options, AzureResourceManagerAvsContext.Default);
 
         string IPersistableModel<WorkloadNetworkPortMirroringProfileData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<WorkloadNetworkPortMirroringProfileData>)Data).GetFormatFromOptions(options);
     }

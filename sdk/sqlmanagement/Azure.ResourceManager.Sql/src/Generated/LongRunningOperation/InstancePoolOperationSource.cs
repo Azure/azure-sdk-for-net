@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Sql
 
         InstancePoolResource IOperationSource<InstancePoolResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<InstancePoolData>(response.Content);
+            var data = ModelReaderWriter.Read<InstancePoolData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSqlContext.Default);
             return new InstancePoolResource(_client, data);
         }
 
         async ValueTask<InstancePoolResource> IOperationSource<InstancePoolResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<InstancePoolData>(response.Content);
+            var data = ModelReaderWriter.Read<InstancePoolData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSqlContext.Default);
             return await Task.FromResult(new InstancePoolResource(_client, data)).ConfigureAwait(false);
         }
     }

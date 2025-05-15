@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.MixedReality
 
         SpatialAnchorsAccountData IJsonModel<SpatialAnchorsAccountData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SpatialAnchorsAccountData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SpatialAnchorsAccountData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<SpatialAnchorsAccountData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SpatialAnchorsAccountData>(Data, options, AzureResourceManagerMixedRealityContext.Default);
 
-        SpatialAnchorsAccountData IPersistableModel<SpatialAnchorsAccountData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SpatialAnchorsAccountData>(data, options);
+        SpatialAnchorsAccountData IPersistableModel<SpatialAnchorsAccountData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SpatialAnchorsAccountData>(data, options, AzureResourceManagerMixedRealityContext.Default);
 
         string IPersistableModel<SpatialAnchorsAccountData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SpatialAnchorsAccountData>)Data).GetFormatFromOptions(options);
     }

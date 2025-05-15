@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
 
         FederatedIdentityCredentialData IJsonModel<FederatedIdentityCredentialData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<FederatedIdentityCredentialData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<FederatedIdentityCredentialData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<FederatedIdentityCredentialData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<FederatedIdentityCredentialData>(Data, options, AzureResourceManagerManagedServiceIdentitiesContext.Default);
 
-        FederatedIdentityCredentialData IPersistableModel<FederatedIdentityCredentialData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<FederatedIdentityCredentialData>(data, options);
+        FederatedIdentityCredentialData IPersistableModel<FederatedIdentityCredentialData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<FederatedIdentityCredentialData>(data, options, AzureResourceManagerManagedServiceIdentitiesContext.Default);
 
         string IPersistableModel<FederatedIdentityCredentialData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<FederatedIdentityCredentialData>)Data).GetFormatFromOptions(options);
     }

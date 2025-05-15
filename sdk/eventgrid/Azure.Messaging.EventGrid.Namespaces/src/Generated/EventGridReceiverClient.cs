@@ -10,83 +10,41 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
 namespace Azure.Messaging.EventGrid.Namespaces
 {
-    // Data plane generated client.
-    /// <summary> The EventGridReceiver service client. </summary>
+    /// <summary></summary>
     public partial class EventGridReceiverClient
     {
-        private const string AuthorizationHeader = "Authorization";
-        private readonly AzureKeyCredential _keyCredential;
-        private const string AuthorizationApiKeyPrefix = "SharedAccessKey";
-        private static readonly string[] AuthorizationScopes = new string[] { "https://eventgrid.azure.net/.default" };
-        private readonly TokenCredential _tokenCredential;
-        private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
+        /// <summary> A credential used to authenticate to the service. </summary>
+        private readonly AzureKeyCredential _keyCredential;
+        private const string AuthorizationHeader = "Authorization";
+        private const string AuthorizationApiKeyPrefix = "SharedAccessKey";
+        /// <summary> A credential used to authenticate to the service. </summary>
+        private readonly TokenCredential _tokenCredential;
+        private static readonly string[] AuthorizationScopes = new string[] { "https://eventgrid.azure.net/.default" };
         private readonly string _apiVersion;
-
-        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
-        internal ClientDiagnostics ClientDiagnostics { get; }
-
-        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
-        public virtual HttpPipeline Pipeline => _pipeline;
 
         /// <summary> Initializes a new instance of EventGridReceiverClient for mocking. </summary>
         protected EventGridReceiverClient()
         {
         }
 
-        /// <summary> Receive a batch of Cloud Events from a subscription. </summary>
-        /// <param name="topicName"> Topic Name. </param>
-        /// <param name="eventSubscriptionName"> Event Subscription Name. </param>
-        /// <param name="maxEvents"> Max Events count to be received. Minimum value is 1, while maximum value is 100 events. If not specified, the default value is 1. </param>
-        /// <param name="maxWaitTime"> Max wait time value for receive operation in Seconds. It is the time in seconds that the server approximately waits for the availability of an event and responds to the request. If an event is available, the broker responds immediately to the client. Minimum value is 10 seconds, while maximum value is 120 seconds. If not specified, the default value is 60 seconds. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="topicName"/> or <paramref name="eventSubscriptionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="topicName"/> or <paramref name="eventSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
-        internal virtual async Task<Response<ReceiveResult>> ReceiveAsync(string topicName, string eventSubscriptionName, int? maxEvents = null, TimeSpan? maxWaitTime = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(topicName, nameof(topicName));
-            Argument.AssertNotNullOrEmpty(eventSubscriptionName, nameof(eventSubscriptionName));
+        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
+        public virtual HttpPipeline Pipeline { get; }
 
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await ReceiveAsync(topicName, eventSubscriptionName, maxEvents, maxWaitTime, context).ConfigureAwait(false);
-            return Response.FromValue(ReceiveResult.FromResponse(response), response);
-        }
-
-        /// <summary> Receive a batch of Cloud Events from a subscription. </summary>
-        /// <param name="topicName"> Topic Name. </param>
-        /// <param name="eventSubscriptionName"> Event Subscription Name. </param>
-        /// <param name="maxEvents"> Max Events count to be received. Minimum value is 1, while maximum value is 100 events. If not specified, the default value is 1. </param>
-        /// <param name="maxWaitTime"> Max wait time value for receive operation in Seconds. It is the time in seconds that the server approximately waits for the availability of an event and responds to the request. If an event is available, the broker responds immediately to the client. Minimum value is 10 seconds, while maximum value is 120 seconds. If not specified, the default value is 60 seconds. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="topicName"/> or <paramref name="eventSubscriptionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="topicName"/> or <paramref name="eventSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
-        internal virtual Response<ReceiveResult> Receive(string topicName, string eventSubscriptionName, int? maxEvents = null, TimeSpan? maxWaitTime = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(topicName, nameof(topicName));
-            Argument.AssertNotNullOrEmpty(eventSubscriptionName, nameof(eventSubscriptionName));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = Receive(topicName, eventSubscriptionName, maxEvents, maxWaitTime, context);
-            return Response.FromValue(ReceiveResult.FromResponse(response), response);
-        }
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
 
         /// <summary>
         /// [Protocol Method] Receive a batch of Cloud Events from a subscription.
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="ReceiveAsync(string,string,int?,TimeSpan?,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -94,65 +52,17 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <param name="eventSubscriptionName"> Event Subscription Name. </param>
         /// <param name="maxEvents"> Max Events count to be received. Minimum value is 1, while maximum value is 100 events. If not specified, the default value is 1. </param>
         /// <param name="maxWaitTime"> Max wait time value for receive operation in Seconds. It is the time in seconds that the server approximately waits for the availability of an event and responds to the request. If an event is available, the broker responds immediately to the client. Minimum value is 10 seconds, while maximum value is 120 seconds. If not specified, the default value is 60 seconds. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="topicName"/> or <paramref name="eventSubscriptionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="topicName"/> or <paramref name="eventSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> ReceiveAsync(string topicName, string eventSubscriptionName, int? maxEvents, TimeSpan? maxWaitTime, RequestContext context)
-        {
-            Argument.AssertNotNullOrEmpty(topicName, nameof(topicName));
-            Argument.AssertNotNullOrEmpty(eventSubscriptionName, nameof(eventSubscriptionName));
-
-            using var scope = ClientDiagnostics.CreateScope("EventGridReceiverClient.Receive");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateReceiveRequest(topicName, eventSubscriptionName, maxEvents, maxWaitTime, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Receive a batch of Cloud Events from a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="Receive(string,string,int?,TimeSpan?,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="topicName"> Topic Name. </param>
-        /// <param name="eventSubscriptionName"> Event Subscription Name. </param>
-        /// <param name="maxEvents"> Max Events count to be received. Minimum value is 1, while maximum value is 100 events. If not specified, the default value is 1. </param>
-        /// <param name="maxWaitTime"> Max wait time value for receive operation in Seconds. It is the time in seconds that the server approximately waits for the availability of an event and responds to the request. If an event is available, the broker responds immediately to the client. Minimum value is 10 seconds, while maximum value is 120 seconds. If not specified, the default value is 60 seconds. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="topicName"/> or <paramref name="eventSubscriptionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="topicName"/> or <paramref name="eventSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         internal virtual Response Receive(string topicName, string eventSubscriptionName, int? maxEvents, TimeSpan? maxWaitTime, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(topicName, nameof(topicName));
-            Argument.AssertNotNullOrEmpty(eventSubscriptionName, nameof(eventSubscriptionName));
-
-            using var scope = ClientDiagnostics.CreateScope("EventGridReceiverClient.Receive");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("EventGridReceiverClient.Receive");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateReceiveRequest(topicName, eventSubscriptionName, maxEvents, maxWaitTime, context);
-                return _pipeline.ProcessMessage(message, context);
+                return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -161,79 +71,29 @@ namespace Azure.Messaging.EventGrid.Namespaces
             }
         }
 
-        /// <summary> Acknowledge a batch of Cloud Events. The response will include the set of successfully acknowledged lock tokens, along with other failed lock tokens with their corresponding error information. Successfully acknowledged events will no longer be available to be received by any consumer. </summary>
-        /// <param name="topicName"> Topic Name. </param>
-        /// <param name="eventSubscriptionName"> Event Subscription Name. </param>
-        /// <param name="lockTokens"> Array of lock tokens. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="topicName"/>, <paramref name="eventSubscriptionName"/> or <paramref name="lockTokens"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="topicName"/> or <paramref name="eventSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
-        internal virtual async Task<Response<AcknowledgeResult>> AcknowledgeAsync(string topicName, string eventSubscriptionName, IEnumerable<string> lockTokens, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(topicName, nameof(topicName));
-            Argument.AssertNotNullOrEmpty(eventSubscriptionName, nameof(eventSubscriptionName));
-            Argument.AssertNotNull(lockTokens, nameof(lockTokens));
-
-            AcknowledgeRequest acknowledgeRequest = new AcknowledgeRequest(lockTokens.ToList(), null);
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await AcknowledgeAsync(topicName, eventSubscriptionName, acknowledgeRequest.ToRequestContent(), context).ConfigureAwait(false);
-            return Response.FromValue(AcknowledgeResult.FromResponse(response), response);
-        }
-
-        /// <summary> Acknowledge a batch of Cloud Events. The response will include the set of successfully acknowledged lock tokens, along with other failed lock tokens with their corresponding error information. Successfully acknowledged events will no longer be available to be received by any consumer. </summary>
-        /// <param name="topicName"> Topic Name. </param>
-        /// <param name="eventSubscriptionName"> Event Subscription Name. </param>
-        /// <param name="lockTokens"> Array of lock tokens. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="topicName"/>, <paramref name="eventSubscriptionName"/> or <paramref name="lockTokens"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="topicName"/> or <paramref name="eventSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
-        internal virtual Response<AcknowledgeResult> Acknowledge(string topicName, string eventSubscriptionName, IEnumerable<string> lockTokens, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(topicName, nameof(topicName));
-            Argument.AssertNotNullOrEmpty(eventSubscriptionName, nameof(eventSubscriptionName));
-            Argument.AssertNotNull(lockTokens, nameof(lockTokens));
-
-            AcknowledgeRequest acknowledgeRequest = new AcknowledgeRequest(lockTokens.ToList(), null);
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = Acknowledge(topicName, eventSubscriptionName, acknowledgeRequest.ToRequestContent(), context);
-            return Response.FromValue(AcknowledgeResult.FromResponse(response), response);
-        }
-
         /// <summary>
-        /// [Protocol Method] Acknowledge a batch of Cloud Events. The response will include the set of successfully acknowledged lock tokens, along with other failed lock tokens with their corresponding error information. Successfully acknowledged events will no longer be available to be received by any consumer.
+        /// [Protocol Method] Receive a batch of Cloud Events from a subscription.
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="AcknowledgeAsync(string,string,IEnumerable{string},CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="topicName"> Topic Name. </param>
         /// <param name="eventSubscriptionName"> Event Subscription Name. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="topicName"/>, <paramref name="eventSubscriptionName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="topicName"/> or <paramref name="eventSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <param name="maxEvents"> Max Events count to be received. Minimum value is 1, while maximum value is 100 events. If not specified, the default value is 1. </param>
+        /// <param name="maxWaitTime"> Max wait time value for receive operation in Seconds. It is the time in seconds that the server approximately waits for the availability of an event and responds to the request. If an event is available, the broker responds immediately to the client. Minimum value is 10 seconds, while maximum value is 120 seconds. If not specified, the default value is 60 seconds. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> AcknowledgeAsync(string topicName, string eventSubscriptionName, RequestContent content, RequestContext context = null)
+        internal virtual async Task<Response> ReceiveAsync(string topicName, string eventSubscriptionName, int? maxEvents, TimeSpan? maxWaitTime, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(topicName, nameof(topicName));
-            Argument.AssertNotNullOrEmpty(eventSubscriptionName, nameof(eventSubscriptionName));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("EventGridReceiverClient.Acknowledge");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("EventGridReceiverClient.Receive");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateAcknowledgeRequest(topicName, eventSubscriptionName, content, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                using HttpMessage message = CreateReceiveRequest(topicName, eventSubscriptionName, maxEvents, maxWaitTime, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -242,41 +102,172 @@ namespace Azure.Messaging.EventGrid.Namespaces
             }
         }
 
+        /// <summary> Receive a batch of Cloud Events from a subscription. </summary>
+        /// <param name="topicName"> Topic Name. </param>
+        /// <param name="eventSubscriptionName"> Event Subscription Name. </param>
+        /// <param name="maxEvents"> Max Events count to be received. Minimum value is 1, while maximum value is 100 events. If not specified, the default value is 1. </param>
+        /// <param name="maxWaitTime"> Max wait time value for receive operation in Seconds. It is the time in seconds that the server approximately waits for the availability of an event and responds to the request. If an event is available, the broker responds immediately to the client. Minimum value is 10 seconds, while maximum value is 120 seconds. If not specified, the default value is 60 seconds. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual Response<ReceiveResult> Receive(string topicName, string eventSubscriptionName, int? maxEvents = default, TimeSpan? maxWaitTime = default, CancellationToken cancellationToken = default)
+        {
+            Response result = Receive(topicName, eventSubscriptionName, maxEvents, maxWaitTime, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            return Response.FromValue((ReceiveResult)result, result);
+        }
+
+        /// <summary> Receive a batch of Cloud Events from a subscription. </summary>
+        /// <param name="topicName"> Topic Name. </param>
+        /// <param name="eventSubscriptionName"> Event Subscription Name. </param>
+        /// <param name="maxEvents"> Max Events count to be received. Minimum value is 1, while maximum value is 100 events. If not specified, the default value is 1. </param>
+        /// <param name="maxWaitTime"> Max wait time value for receive operation in Seconds. It is the time in seconds that the server approximately waits for the availability of an event and responds to the request. If an event is available, the broker responds immediately to the client. Minimum value is 10 seconds, while maximum value is 120 seconds. If not specified, the default value is 60 seconds. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual async Task<Response<ReceiveResult>> ReceiveAsync(string topicName, string eventSubscriptionName, int? maxEvents = default, TimeSpan? maxWaitTime = default, CancellationToken cancellationToken = default)
+        {
+            Response result = await ReceiveAsync(topicName, eventSubscriptionName, maxEvents, maxWaitTime, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            return Response.FromValue((ReceiveResult)result, result);
+        }
+
         /// <summary>
         /// [Protocol Method] Acknowledge a batch of Cloud Events. The response will include the set of successfully acknowledged lock tokens, along with other failed lock tokens with their corresponding error information. Successfully acknowledged events will no longer be available to be received by any consumer.
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="Acknowledge(string,string,IEnumerable{string},CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="topicName"> Topic Name. </param>
         /// <param name="eventSubscriptionName"> Event Subscription Name. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="topicName"/>, <paramref name="eventSubscriptionName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="topicName"/> or <paramref name="eventSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         internal virtual Response Acknowledge(string topicName, string eventSubscriptionName, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(topicName, nameof(topicName));
-            Argument.AssertNotNullOrEmpty(eventSubscriptionName, nameof(eventSubscriptionName));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("EventGridReceiverClient.Acknowledge");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("EventGridReceiverClient.Acknowledge");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateAcknowledgeRequest(topicName, eventSubscriptionName, content, context);
-                return _pipeline.ProcessMessage(message, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Acknowledge a batch of Cloud Events. The response will include the set of successfully acknowledged lock tokens, along with other failed lock tokens with their corresponding error information. Successfully acknowledged events will no longer be available to be received by any consumer.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="topicName"> Topic Name. </param>
+        /// <param name="eventSubscriptionName"> Event Subscription Name. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual async Task<Response> AcknowledgeAsync(string topicName, string eventSubscriptionName, RequestContent content, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("EventGridReceiverClient.Acknowledge");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateAcknowledgeRequest(topicName, eventSubscriptionName, content, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Acknowledge a batch of Cloud Events. The response will include the set of successfully acknowledged lock tokens, along with other failed lock tokens with their corresponding error information. Successfully acknowledged events will no longer be available to be received by any consumer. </summary>
+        /// <param name="topicName"> Topic Name. </param>
+        /// <param name="eventSubscriptionName"> Event Subscription Name. </param>
+        /// <param name="lockTokens"> Array of lock tokens. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual Response<AcknowledgeResult> Acknowledge(string topicName, string eventSubscriptionName, IEnumerable<string> lockTokens, CancellationToken cancellationToken = default)
+        {
+            AcknowledgeRequest spreadModel = new AcknowledgeRequest(lockTokens?.ToList() as IList<string> ?? new ChangeTrackingList<string>(), null);
+            Response result = Acknowledge(topicName, eventSubscriptionName, spreadModel, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            return Response.FromValue((AcknowledgeResult)result, result);
+        }
+
+        /// <summary> Acknowledge a batch of Cloud Events. The response will include the set of successfully acknowledged lock tokens, along with other failed lock tokens with their corresponding error information. Successfully acknowledged events will no longer be available to be received by any consumer. </summary>
+        /// <param name="topicName"> Topic Name. </param>
+        /// <param name="eventSubscriptionName"> Event Subscription Name. </param>
+        /// <param name="lockTokens"> Array of lock tokens. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual async Task<Response<AcknowledgeResult>> AcknowledgeAsync(string topicName, string eventSubscriptionName, IEnumerable<string> lockTokens, CancellationToken cancellationToken = default)
+        {
+            AcknowledgeRequest spreadModel = new AcknowledgeRequest(lockTokens?.ToList() as IList<string> ?? new ChangeTrackingList<string>(), null);
+            Response result = await AcknowledgeAsync(topicName, eventSubscriptionName, spreadModel, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            return Response.FromValue((AcknowledgeResult)result, result);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Release a batch of Cloud Events. The response will include the set of successfully released lock tokens, along with other failed lock tokens with their corresponding error information. Successfully released events can be received by consumers.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="topicName"> Topic Name. </param>
+        /// <param name="eventSubscriptionName"> Event Subscription Name. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="releaseDelayInSeconds"> Release cloud events with the specified delay in seconds. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual Response Release(string topicName, string eventSubscriptionName, RequestContent content, string releaseDelayInSeconds = default, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("EventGridReceiverClient.Release");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateReleaseRequest(topicName, eventSubscriptionName, content, releaseDelayInSeconds, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Release a batch of Cloud Events. The response will include the set of successfully released lock tokens, along with other failed lock tokens with their corresponding error information. Successfully released events can be received by consumers.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="topicName"> Topic Name. </param>
+        /// <param name="eventSubscriptionName"> Event Subscription Name. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="releaseDelayInSeconds"> Release cloud events with the specified delay in seconds. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual async Task<Response> ReleaseAsync(string topicName, string eventSubscriptionName, RequestContent content, string releaseDelayInSeconds = default, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("EventGridReceiverClient.Release");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateReleaseRequest(topicName, eventSubscriptionName, content, releaseDelayInSeconds, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -290,19 +281,13 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <param name="eventSubscriptionName"> Event Subscription Name. </param>
         /// <param name="lockTokens"> Array of lock tokens. </param>
         /// <param name="releaseDelayInSeconds"> Release cloud events with the specified delay in seconds. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="topicName"/>, <paramref name="eventSubscriptionName"/> or <paramref name="lockTokens"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="topicName"/> or <paramref name="eventSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
-        internal virtual async Task<Response<ReleaseResult>> ReleaseAsync(string topicName, string eventSubscriptionName, IEnumerable<string> lockTokens, ReleaseDelay? releaseDelayInSeconds = null, CancellationToken cancellationToken = default)
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual Response<ReleaseResult> Release(string topicName, string eventSubscriptionName, IEnumerable<string> lockTokens, ReleaseDelay? releaseDelayInSeconds = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(topicName, nameof(topicName));
-            Argument.AssertNotNullOrEmpty(eventSubscriptionName, nameof(eventSubscriptionName));
-            Argument.AssertNotNull(lockTokens, nameof(lockTokens));
-
-            ReleaseRequest releaseRequest = new ReleaseRequest(lockTokens.ToList(), null);
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await ReleaseAsync(topicName, eventSubscriptionName, releaseRequest.ToRequestContent(), releaseDelayInSeconds?.ToString(), context).ConfigureAwait(false);
-            return Response.FromValue(ReleaseResult.FromResponse(response), response);
+            ReleaseRequest spreadModel = new ReleaseRequest(lockTokens?.ToList() as IList<string> ?? new ChangeTrackingList<string>(), null);
+            Response result = Release(topicName, eventSubscriptionName, spreadModel, releaseDelayInSeconds?.ToString(), cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            return Response.FromValue((ReleaseResult)result, result);
         }
 
         /// <summary> Release a batch of Cloud Events. The response will include the set of successfully released lock tokens, along with other failed lock tokens with their corresponding error information. Successfully released events can be received by consumers. </summary>
@@ -310,225 +295,37 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <param name="eventSubscriptionName"> Event Subscription Name. </param>
         /// <param name="lockTokens"> Array of lock tokens. </param>
         /// <param name="releaseDelayInSeconds"> Release cloud events with the specified delay in seconds. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="topicName"/>, <paramref name="eventSubscriptionName"/> or <paramref name="lockTokens"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="topicName"/> or <paramref name="eventSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
-        internal virtual Response<ReleaseResult> Release(string topicName, string eventSubscriptionName, IEnumerable<string> lockTokens, ReleaseDelay? releaseDelayInSeconds = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(topicName, nameof(topicName));
-            Argument.AssertNotNullOrEmpty(eventSubscriptionName, nameof(eventSubscriptionName));
-            Argument.AssertNotNull(lockTokens, nameof(lockTokens));
-
-            ReleaseRequest releaseRequest = new ReleaseRequest(lockTokens.ToList(), null);
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = Release(topicName, eventSubscriptionName, releaseRequest.ToRequestContent(), releaseDelayInSeconds?.ToString(), context);
-            return Response.FromValue(ReleaseResult.FromResponse(response), response);
-        }
-
-        /// <summary>
-        /// [Protocol Method] Release a batch of Cloud Events. The response will include the set of successfully released lock tokens, along with other failed lock tokens with their corresponding error information. Successfully released events can be received by consumers.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="ReleaseAsync(string,string,IEnumerable{string},ReleaseDelay?,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="topicName"> Topic Name. </param>
-        /// <param name="eventSubscriptionName"> Event Subscription Name. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="releaseDelayInSeconds"> Release cloud events with the specified delay in seconds. Allowed values: "0" | "10" | "60" | "600" | "3600". </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="topicName"/>, <paramref name="eventSubscriptionName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="topicName"/> or <paramref name="eventSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> ReleaseAsync(string topicName, string eventSubscriptionName, RequestContent content, string releaseDelayInSeconds = null, RequestContext context = null)
+        internal virtual async Task<Response<ReleaseResult>> ReleaseAsync(string topicName, string eventSubscriptionName, IEnumerable<string> lockTokens, ReleaseDelay? releaseDelayInSeconds = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(topicName, nameof(topicName));
-            Argument.AssertNotNullOrEmpty(eventSubscriptionName, nameof(eventSubscriptionName));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("EventGridReceiverClient.Release");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateReleaseRequest(topicName, eventSubscriptionName, content, releaseDelayInSeconds, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Release a batch of Cloud Events. The response will include the set of successfully released lock tokens, along with other failed lock tokens with their corresponding error information. Successfully released events can be received by consumers.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="Release(string,string,IEnumerable{string},ReleaseDelay?,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="topicName"> Topic Name. </param>
-        /// <param name="eventSubscriptionName"> Event Subscription Name. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="releaseDelayInSeconds"> Release cloud events with the specified delay in seconds. Allowed values: "0" | "10" | "60" | "600" | "3600". </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="topicName"/>, <paramref name="eventSubscriptionName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="topicName"/> or <paramref name="eventSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        internal virtual Response Release(string topicName, string eventSubscriptionName, RequestContent content, string releaseDelayInSeconds = null, RequestContext context = null)
-        {
-            Argument.AssertNotNullOrEmpty(topicName, nameof(topicName));
-            Argument.AssertNotNullOrEmpty(eventSubscriptionName, nameof(eventSubscriptionName));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("EventGridReceiverClient.Release");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateReleaseRequest(topicName, eventSubscriptionName, content, releaseDelayInSeconds, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Reject a batch of Cloud Events. The response will include the set of successfully rejected lock tokens, along with other failed lock tokens with their corresponding error information. Successfully rejected events will be dead-lettered and can no longer be received by a consumer. </summary>
-        /// <param name="topicName"> Topic Name. </param>
-        /// <param name="eventSubscriptionName"> Event Subscription Name. </param>
-        /// <param name="lockTokens"> Array of lock tokens. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="topicName"/>, <paramref name="eventSubscriptionName"/> or <paramref name="lockTokens"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="topicName"/> or <paramref name="eventSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
-        internal virtual async Task<Response<RejectResult>> RejectAsync(string topicName, string eventSubscriptionName, IEnumerable<string> lockTokens, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(topicName, nameof(topicName));
-            Argument.AssertNotNullOrEmpty(eventSubscriptionName, nameof(eventSubscriptionName));
-            Argument.AssertNotNull(lockTokens, nameof(lockTokens));
-
-            RejectRequest rejectRequest = new RejectRequest(lockTokens.ToList(), null);
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await RejectAsync(topicName, eventSubscriptionName, rejectRequest.ToRequestContent(), context).ConfigureAwait(false);
-            return Response.FromValue(RejectResult.FromResponse(response), response);
-        }
-
-        /// <summary> Reject a batch of Cloud Events. The response will include the set of successfully rejected lock tokens, along with other failed lock tokens with their corresponding error information. Successfully rejected events will be dead-lettered and can no longer be received by a consumer. </summary>
-        /// <param name="topicName"> Topic Name. </param>
-        /// <param name="eventSubscriptionName"> Event Subscription Name. </param>
-        /// <param name="lockTokens"> Array of lock tokens. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="topicName"/>, <paramref name="eventSubscriptionName"/> or <paramref name="lockTokens"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="topicName"/> or <paramref name="eventSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
-        internal virtual Response<RejectResult> Reject(string topicName, string eventSubscriptionName, IEnumerable<string> lockTokens, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(topicName, nameof(topicName));
-            Argument.AssertNotNullOrEmpty(eventSubscriptionName, nameof(eventSubscriptionName));
-            Argument.AssertNotNull(lockTokens, nameof(lockTokens));
-
-            RejectRequest rejectRequest = new RejectRequest(lockTokens.ToList(), null);
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = Reject(topicName, eventSubscriptionName, rejectRequest.ToRequestContent(), context);
-            return Response.FromValue(RejectResult.FromResponse(response), response);
+            ReleaseRequest spreadModel = new ReleaseRequest(lockTokens?.ToList() as IList<string> ?? new ChangeTrackingList<string>(), null);
+            Response result = await ReleaseAsync(topicName, eventSubscriptionName, spreadModel, releaseDelayInSeconds?.ToString(), cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            return Response.FromValue((ReleaseResult)result, result);
         }
 
         /// <summary>
         /// [Protocol Method] Reject a batch of Cloud Events. The response will include the set of successfully rejected lock tokens, along with other failed lock tokens with their corresponding error information. Successfully rejected events will be dead-lettered and can no longer be received by a consumer.
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="RejectAsync(string,string,IEnumerable{string},CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="topicName"> Topic Name. </param>
         /// <param name="eventSubscriptionName"> Event Subscription Name. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="topicName"/>, <paramref name="eventSubscriptionName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="topicName"/> or <paramref name="eventSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> RejectAsync(string topicName, string eventSubscriptionName, RequestContent content, RequestContext context = null)
-        {
-            Argument.AssertNotNullOrEmpty(topicName, nameof(topicName));
-            Argument.AssertNotNullOrEmpty(eventSubscriptionName, nameof(eventSubscriptionName));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("EventGridReceiverClient.Reject");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateRejectRequest(topicName, eventSubscriptionName, content, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Reject a batch of Cloud Events. The response will include the set of successfully rejected lock tokens, along with other failed lock tokens with their corresponding error information. Successfully rejected events will be dead-lettered and can no longer be received by a consumer.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="Reject(string,string,IEnumerable{string},CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="topicName"> Topic Name. </param>
-        /// <param name="eventSubscriptionName"> Event Subscription Name. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="topicName"/>, <paramref name="eventSubscriptionName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="topicName"/> or <paramref name="eventSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         internal virtual Response Reject(string topicName, string eventSubscriptionName, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(topicName, nameof(topicName));
-            Argument.AssertNotNullOrEmpty(eventSubscriptionName, nameof(eventSubscriptionName));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("EventGridReceiverClient.Reject");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("EventGridReceiverClient.Reject");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateRejectRequest(topicName, eventSubscriptionName, content, context);
-                return _pipeline.ProcessMessage(message, context);
+                return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -537,79 +334,28 @@ namespace Azure.Messaging.EventGrid.Namespaces
             }
         }
 
-        /// <summary> Renew locks for a batch of Cloud Events. The response will include the set of successfully renewed lock tokens, along with other failed lock tokens with their corresponding error information. Successfully renewed locks will ensure that the associated event is only available to the consumer that holds the renewed lock. </summary>
-        /// <param name="topicName"> Topic Name. </param>
-        /// <param name="eventSubscriptionName"> Event Subscription Name. </param>
-        /// <param name="lockTokens"> Array of lock tokens. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="topicName"/>, <paramref name="eventSubscriptionName"/> or <paramref name="lockTokens"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="topicName"/> or <paramref name="eventSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
-        internal virtual async Task<Response<RenewLocksResult>> RenewLocksAsync(string topicName, string eventSubscriptionName, IEnumerable<string> lockTokens, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(topicName, nameof(topicName));
-            Argument.AssertNotNullOrEmpty(eventSubscriptionName, nameof(eventSubscriptionName));
-            Argument.AssertNotNull(lockTokens, nameof(lockTokens));
-
-            RenewLocksRequest renewLocksRequest = new RenewLocksRequest(lockTokens.ToList(), null);
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await RenewLocksAsync(topicName, eventSubscriptionName, renewLocksRequest.ToRequestContent(), context).ConfigureAwait(false);
-            return Response.FromValue(RenewLocksResult.FromResponse(response), response);
-        }
-
-        /// <summary> Renew locks for a batch of Cloud Events. The response will include the set of successfully renewed lock tokens, along with other failed lock tokens with their corresponding error information. Successfully renewed locks will ensure that the associated event is only available to the consumer that holds the renewed lock. </summary>
-        /// <param name="topicName"> Topic Name. </param>
-        /// <param name="eventSubscriptionName"> Event Subscription Name. </param>
-        /// <param name="lockTokens"> Array of lock tokens. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="topicName"/>, <paramref name="eventSubscriptionName"/> or <paramref name="lockTokens"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="topicName"/> or <paramref name="eventSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
-        internal virtual Response<RenewLocksResult> RenewLocks(string topicName, string eventSubscriptionName, IEnumerable<string> lockTokens, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(topicName, nameof(topicName));
-            Argument.AssertNotNullOrEmpty(eventSubscriptionName, nameof(eventSubscriptionName));
-            Argument.AssertNotNull(lockTokens, nameof(lockTokens));
-
-            RenewLocksRequest renewLocksRequest = new RenewLocksRequest(lockTokens.ToList(), null);
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = RenewLocks(topicName, eventSubscriptionName, renewLocksRequest.ToRequestContent(), context);
-            return Response.FromValue(RenewLocksResult.FromResponse(response), response);
-        }
-
         /// <summary>
-        /// [Protocol Method] Renew locks for a batch of Cloud Events. The response will include the set of successfully renewed lock tokens, along with other failed lock tokens with their corresponding error information. Successfully renewed locks will ensure that the associated event is only available to the consumer that holds the renewed lock.
+        /// [Protocol Method] Reject a batch of Cloud Events. The response will include the set of successfully rejected lock tokens, along with other failed lock tokens with their corresponding error information. Successfully rejected events will be dead-lettered and can no longer be received by a consumer.
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="RenewLocksAsync(string,string,IEnumerable{string},CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="topicName"> Topic Name. </param>
         /// <param name="eventSubscriptionName"> Event Subscription Name. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="topicName"/>, <paramref name="eventSubscriptionName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="topicName"/> or <paramref name="eventSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> RenewLocksAsync(string topicName, string eventSubscriptionName, RequestContent content, RequestContext context = null)
+        internal virtual async Task<Response> RejectAsync(string topicName, string eventSubscriptionName, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(topicName, nameof(topicName));
-            Argument.AssertNotNullOrEmpty(eventSubscriptionName, nameof(eventSubscriptionName));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("EventGridReceiverClient.RenewLocks");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("EventGridReceiverClient.Reject");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateRenewLocksRequest(topicName, eventSubscriptionName, content, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                using HttpMessage message = CreateRejectRequest(topicName, eventSubscriptionName, content, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -618,41 +364,54 @@ namespace Azure.Messaging.EventGrid.Namespaces
             }
         }
 
+        /// <summary> Reject a batch of Cloud Events. The response will include the set of successfully rejected lock tokens, along with other failed lock tokens with their corresponding error information. Successfully rejected events will be dead-lettered and can no longer be received by a consumer. </summary>
+        /// <param name="topicName"> Topic Name. </param>
+        /// <param name="eventSubscriptionName"> Event Subscription Name. </param>
+        /// <param name="lockTokens"> Array of lock tokens. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual Response<RejectResult> Reject(string topicName, string eventSubscriptionName, IEnumerable<string> lockTokens, CancellationToken cancellationToken = default)
+        {
+            RejectRequest spreadModel = new RejectRequest(lockTokens?.ToList() as IList<string> ?? new ChangeTrackingList<string>(), null);
+            Response result = Reject(topicName, eventSubscriptionName, spreadModel, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            return Response.FromValue((RejectResult)result, result);
+        }
+
+        /// <summary> Reject a batch of Cloud Events. The response will include the set of successfully rejected lock tokens, along with other failed lock tokens with their corresponding error information. Successfully rejected events will be dead-lettered and can no longer be received by a consumer. </summary>
+        /// <param name="topicName"> Topic Name. </param>
+        /// <param name="eventSubscriptionName"> Event Subscription Name. </param>
+        /// <param name="lockTokens"> Array of lock tokens. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual async Task<Response<RejectResult>> RejectAsync(string topicName, string eventSubscriptionName, IEnumerable<string> lockTokens, CancellationToken cancellationToken = default)
+        {
+            RejectRequest spreadModel = new RejectRequest(lockTokens?.ToList() as IList<string> ?? new ChangeTrackingList<string>(), null);
+            Response result = await RejectAsync(topicName, eventSubscriptionName, spreadModel, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            return Response.FromValue((RejectResult)result, result);
+        }
+
         /// <summary>
         /// [Protocol Method] Renew locks for a batch of Cloud Events. The response will include the set of successfully renewed lock tokens, along with other failed lock tokens with their corresponding error information. Successfully renewed locks will ensure that the associated event is only available to the consumer that holds the renewed lock.
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="RenewLocks(string,string,IEnumerable{string},CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="topicName"> Topic Name. </param>
         /// <param name="eventSubscriptionName"> Event Subscription Name. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="topicName"/>, <paramref name="eventSubscriptionName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="topicName"/> or <paramref name="eventSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         internal virtual Response RenewLocks(string topicName, string eventSubscriptionName, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(topicName, nameof(topicName));
-            Argument.AssertNotNullOrEmpty(eventSubscriptionName, nameof(eventSubscriptionName));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("EventGridReceiverClient.RenewLocks");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("EventGridReceiverClient.RenewLocks");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateRenewLocksRequest(topicName, eventSubscriptionName, content, context);
-                return _pipeline.ProcessMessage(message, context);
+                return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -661,128 +420,60 @@ namespace Azure.Messaging.EventGrid.Namespaces
             }
         }
 
-        internal HttpMessage CreateReceiveRequest(string topicName, string eventSubscriptionName, int? maxEvents, TimeSpan? maxWaitTime, RequestContext context)
+        /// <summary>
+        /// [Protocol Method] Renew locks for a batch of Cloud Events. The response will include the set of successfully renewed lock tokens, along with other failed lock tokens with their corresponding error information. Successfully renewed locks will ensure that the associated event is only available to the consumer that holds the renewed lock.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="topicName"> Topic Name. </param>
+        /// <param name="eventSubscriptionName"> Event Subscription Name. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual async Task<Response> RenewLocksAsync(string topicName, string eventSubscriptionName, RequestContent content, RequestContext context = null)
         {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/topics/", false);
-            uri.AppendPath(topicName, true);
-            uri.AppendPath("/eventsubscriptions/", false);
-            uri.AppendPath(eventSubscriptionName, true);
-            uri.AppendPath(":receive", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (maxEvents != null)
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("EventGridReceiverClient.RenewLocks");
+            scope.Start();
+            try
             {
-                uri.AppendQuery("maxEvents", maxEvents.Value, true);
+                using HttpMessage message = CreateRenewLocksRequest(topicName, eventSubscriptionName, content, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
-            if (maxWaitTime != null)
+            catch (Exception e)
             {
-                uri.AppendQuery("maxWaitTime", maxWaitTime.Value, "%s", true);
+                scope.Failed(e);
+                throw;
             }
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
         }
 
-        internal HttpMessage CreateAcknowledgeRequest(string topicName, string eventSubscriptionName, RequestContent content, RequestContext context)
+        /// <summary> Renew locks for a batch of Cloud Events. The response will include the set of successfully renewed lock tokens, along with other failed lock tokens with their corresponding error information. Successfully renewed locks will ensure that the associated event is only available to the consumer that holds the renewed lock. </summary>
+        /// <param name="topicName"> Topic Name. </param>
+        /// <param name="eventSubscriptionName"> Event Subscription Name. </param>
+        /// <param name="lockTokens"> Array of lock tokens. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual Response<RenewLocksResult> RenewLocks(string topicName, string eventSubscriptionName, IEnumerable<string> lockTokens, CancellationToken cancellationToken = default)
         {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/topics/", false);
-            uri.AppendPath(topicName, true);
-            uri.AppendPath("/eventsubscriptions/", false);
-            uri.AppendPath(eventSubscriptionName, true);
-            uri.AppendPath(":acknowledge", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            request.Content = content;
-            return message;
+            RenewLocksRequest spreadModel = new RenewLocksRequest(lockTokens?.ToList() as IList<string> ?? new ChangeTrackingList<string>(), null);
+            Response result = RenewLocks(topicName, eventSubscriptionName, spreadModel, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            return Response.FromValue((RenewLocksResult)result, result);
         }
 
-        internal HttpMessage CreateReleaseRequest(string topicName, string eventSubscriptionName, RequestContent content, string releaseDelayInSeconds, RequestContext context)
+        /// <summary> Renew locks for a batch of Cloud Events. The response will include the set of successfully renewed lock tokens, along with other failed lock tokens with their corresponding error information. Successfully renewed locks will ensure that the associated event is only available to the consumer that holds the renewed lock. </summary>
+        /// <param name="topicName"> Topic Name. </param>
+        /// <param name="eventSubscriptionName"> Event Subscription Name. </param>
+        /// <param name="lockTokens"> Array of lock tokens. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual async Task<Response<RenewLocksResult>> RenewLocksAsync(string topicName, string eventSubscriptionName, IEnumerable<string> lockTokens, CancellationToken cancellationToken = default)
         {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/topics/", false);
-            uri.AppendPath(topicName, true);
-            uri.AppendPath("/eventsubscriptions/", false);
-            uri.AppendPath(eventSubscriptionName, true);
-            uri.AppendPath(":release", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (releaseDelayInSeconds != null)
-            {
-                uri.AppendQuery("releaseDelayInSeconds", releaseDelayInSeconds, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            request.Content = content;
-            return message;
+            RenewLocksRequest spreadModel = new RenewLocksRequest(lockTokens?.ToList() as IList<string> ?? new ChangeTrackingList<string>(), null);
+            Response result = await RenewLocksAsync(topicName, eventSubscriptionName, spreadModel, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            return Response.FromValue((RenewLocksResult)result, result);
         }
-
-        internal HttpMessage CreateRejectRequest(string topicName, string eventSubscriptionName, RequestContent content, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/topics/", false);
-            uri.AppendPath(topicName, true);
-            uri.AppendPath("/eventsubscriptions/", false);
-            uri.AppendPath(eventSubscriptionName, true);
-            uri.AppendPath(":reject", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            request.Content = content;
-            return message;
-        }
-
-        internal HttpMessage CreateRenewLocksRequest(string topicName, string eventSubscriptionName, RequestContent content, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/topics/", false);
-            uri.AppendPath(topicName, true);
-            uri.AppendPath("/eventsubscriptions/", false);
-            uri.AppendPath(eventSubscriptionName, true);
-            uri.AppendPath(":renewLock", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            request.Content = content;
-            return message;
-        }
-
-        private static RequestContext DefaultRequestContext = new RequestContext();
-        internal static RequestContext FromCancellationToken(CancellationToken cancellationToken = default)
-        {
-            if (!cancellationToken.CanBeCanceled)
-            {
-                return DefaultRequestContext;
-            }
-
-            return new RequestContext() { CancellationToken = cancellationToken };
-        }
-
-        private static ResponseClassifier _responseClassifier200;
-        private static ResponseClassifier ResponseClassifier200 => _responseClassifier200 ??= new StatusCodeClassifier(stackalloc ushort[] { 200 });
     }
 }

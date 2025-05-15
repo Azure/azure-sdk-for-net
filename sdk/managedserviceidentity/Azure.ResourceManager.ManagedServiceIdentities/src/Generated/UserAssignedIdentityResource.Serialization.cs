@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
 
         UserAssignedIdentityData IJsonModel<UserAssignedIdentityData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<UserAssignedIdentityData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<UserAssignedIdentityData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<UserAssignedIdentityData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<UserAssignedIdentityData>(Data, options, AzureResourceManagerManagedServiceIdentitiesContext.Default);
 
-        UserAssignedIdentityData IPersistableModel<UserAssignedIdentityData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<UserAssignedIdentityData>(data, options);
+        UserAssignedIdentityData IPersistableModel<UserAssignedIdentityData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<UserAssignedIdentityData>(data, options, AzureResourceManagerManagedServiceIdentitiesContext.Default);
 
         string IPersistableModel<UserAssignedIdentityData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<UserAssignedIdentityData>)Data).GetFormatFromOptions(options);
     }

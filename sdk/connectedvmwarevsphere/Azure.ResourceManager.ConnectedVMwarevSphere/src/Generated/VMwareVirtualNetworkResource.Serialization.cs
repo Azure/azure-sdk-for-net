@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
 
         VMwareVirtualNetworkData IJsonModel<VMwareVirtualNetworkData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<VMwareVirtualNetworkData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<VMwareVirtualNetworkData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<VMwareVirtualNetworkData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<VMwareVirtualNetworkData>(Data, options, AzureResourceManagerConnectedVMwarevSphereContext.Default);
 
-        VMwareVirtualNetworkData IPersistableModel<VMwareVirtualNetworkData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<VMwareVirtualNetworkData>(data, options);
+        VMwareVirtualNetworkData IPersistableModel<VMwareVirtualNetworkData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<VMwareVirtualNetworkData>(data, options, AzureResourceManagerConnectedVMwarevSphereContext.Default);
 
         string IPersistableModel<VMwareVirtualNetworkData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<VMwareVirtualNetworkData>)Data).GetFormatFromOptions(options);
     }

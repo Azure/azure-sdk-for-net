@@ -13,6 +13,10 @@ namespace MgmtTypeSpec
 {
     internal partial class listAsyncCollectionResultOfT : AsyncPageable<FooData>
     {
+        /// <summary> Gets the pages of listAsyncCollectionResultOfT as an enumerable collection. </summary>
+        /// <param name="continuationToken"> The continuation token. </param>
+        /// <param name="pageSizeHint"> The page size hint. </param>
+        /// <returns> The pages of listAsyncCollectionResultOfT as an enumerable collection. </returns>
         public override IAsyncEnumerable<Page<FooData>> AsPages(string continuationToken = null, int? pageSizeHint = null) => throw null;
     }
 }

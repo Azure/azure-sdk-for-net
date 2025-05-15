@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Sql
 
         LongTermRetentionPolicyData IJsonModel<LongTermRetentionPolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<LongTermRetentionPolicyData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<LongTermRetentionPolicyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<LongTermRetentionPolicyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<LongTermRetentionPolicyData>(Data, options, AzureResourceManagerSqlContext.Default);
 
-        LongTermRetentionPolicyData IPersistableModel<LongTermRetentionPolicyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<LongTermRetentionPolicyData>(data, options);
+        LongTermRetentionPolicyData IPersistableModel<LongTermRetentionPolicyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<LongTermRetentionPolicyData>(data, options, AzureResourceManagerSqlContext.Default);
 
         string IPersistableModel<LongTermRetentionPolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<LongTermRetentionPolicyData>)Data).GetFormatFromOptions(options);
     }

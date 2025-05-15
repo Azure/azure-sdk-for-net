@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.DatabaseWatcher
 
         DatabaseWatcherSharedPrivateLinkResource IOperationSource<DatabaseWatcherSharedPrivateLinkResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DatabaseWatcherSharedPrivateLinkResourceData>(response.Content);
+            var data = ModelReaderWriter.Read<DatabaseWatcherSharedPrivateLinkResourceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDatabaseWatcherContext.Default);
             return new DatabaseWatcherSharedPrivateLinkResource(_client, data);
         }
 
         async ValueTask<DatabaseWatcherSharedPrivateLinkResource> IOperationSource<DatabaseWatcherSharedPrivateLinkResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DatabaseWatcherSharedPrivateLinkResourceData>(response.Content);
+            var data = ModelReaderWriter.Read<DatabaseWatcherSharedPrivateLinkResourceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDatabaseWatcherContext.Default);
             return await Task.FromResult(new DatabaseWatcherSharedPrivateLinkResource(_client, data)).ConfigureAwait(false);
         }
     }

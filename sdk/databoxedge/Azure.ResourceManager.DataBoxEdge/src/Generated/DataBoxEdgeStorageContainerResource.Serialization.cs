@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.DataBoxEdge
 
         DataBoxEdgeStorageContainerData IJsonModel<DataBoxEdgeStorageContainerData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DataBoxEdgeStorageContainerData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<DataBoxEdgeStorageContainerData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<DataBoxEdgeStorageContainerData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DataBoxEdgeStorageContainerData>(Data, options, AzureResourceManagerDataBoxEdgeContext.Default);
 
-        DataBoxEdgeStorageContainerData IPersistableModel<DataBoxEdgeStorageContainerData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DataBoxEdgeStorageContainerData>(data, options);
+        DataBoxEdgeStorageContainerData IPersistableModel<DataBoxEdgeStorageContainerData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DataBoxEdgeStorageContainerData>(data, options, AzureResourceManagerDataBoxEdgeContext.Default);
 
         string IPersistableModel<DataBoxEdgeStorageContainerData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DataBoxEdgeStorageContainerData>)Data).GetFormatFromOptions(options);
     }

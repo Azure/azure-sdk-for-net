@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.StorageSync
 
         StorageSyncPrivateEndpointConnectionResource IOperationSource<StorageSyncPrivateEndpointConnectionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<StorageSyncPrivateEndpointConnectionData>(response.Content);
+            var data = ModelReaderWriter.Read<StorageSyncPrivateEndpointConnectionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerStorageSyncContext.Default);
             return new StorageSyncPrivateEndpointConnectionResource(_client, data);
         }
 
         async ValueTask<StorageSyncPrivateEndpointConnectionResource> IOperationSource<StorageSyncPrivateEndpointConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<StorageSyncPrivateEndpointConnectionData>(response.Content);
+            var data = ModelReaderWriter.Read<StorageSyncPrivateEndpointConnectionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerStorageSyncContext.Default);
             return await Task.FromResult(new StorageSyncPrivateEndpointConnectionResource(_client, data)).ConfigureAwait(false);
         }
     }

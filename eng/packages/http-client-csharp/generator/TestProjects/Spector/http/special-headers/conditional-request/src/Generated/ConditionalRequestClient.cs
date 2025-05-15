@@ -19,7 +19,7 @@ namespace SpecialHeaders.ConditionalRequest
 
         public ConditionalRequestClient(Uri endpoint, ConditionalRequestClientOptions options) => throw null;
 
-        public HttpPipeline Pipeline => throw null;
+        public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response PostIfMatch(string ifMatch, RequestContext context) => throw null;
 

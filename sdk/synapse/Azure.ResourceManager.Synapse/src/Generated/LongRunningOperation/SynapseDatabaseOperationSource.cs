@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Synapse
 
         SynapseDatabaseResource IOperationSource<SynapseDatabaseResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<SynapseDatabaseData>(response.Content);
+            var data = ModelReaderWriter.Read<SynapseDatabaseData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSynapseContext.Default);
             return new SynapseDatabaseResource(_client, data);
         }
 
         async ValueTask<SynapseDatabaseResource> IOperationSource<SynapseDatabaseResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<SynapseDatabaseData>(response.Content);
+            var data = ModelReaderWriter.Read<SynapseDatabaseData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSynapseContext.Default);
             return await Task.FromResult(new SynapseDatabaseResource(_client, data)).ConfigureAwait(false);
         }
     }

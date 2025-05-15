@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.DeviceUpdate
 
         DeviceUpdateAccountData IJsonModel<DeviceUpdateAccountData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DeviceUpdateAccountData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<DeviceUpdateAccountData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<DeviceUpdateAccountData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DeviceUpdateAccountData>(Data, options, AzureResourceManagerDeviceUpdateContext.Default);
 
-        DeviceUpdateAccountData IPersistableModel<DeviceUpdateAccountData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DeviceUpdateAccountData>(data, options);
+        DeviceUpdateAccountData IPersistableModel<DeviceUpdateAccountData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DeviceUpdateAccountData>(data, options, AzureResourceManagerDeviceUpdateContext.Default);
 
         string IPersistableModel<DeviceUpdateAccountData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DeviceUpdateAccountData>)Data).GetFormatFromOptions(options);
     }

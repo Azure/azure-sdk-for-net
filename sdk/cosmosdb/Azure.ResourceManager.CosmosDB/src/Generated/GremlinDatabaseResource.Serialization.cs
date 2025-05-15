@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.CosmosDB
 
         GremlinDatabaseData IJsonModel<GremlinDatabaseData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<GremlinDatabaseData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<GremlinDatabaseData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<GremlinDatabaseData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<GremlinDatabaseData>(Data, options, AzureResourceManagerCosmosDBContext.Default);
 
-        GremlinDatabaseData IPersistableModel<GremlinDatabaseData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<GremlinDatabaseData>(data, options);
+        GremlinDatabaseData IPersistableModel<GremlinDatabaseData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<GremlinDatabaseData>(data, options, AzureResourceManagerCosmosDBContext.Default);
 
         string IPersistableModel<GremlinDatabaseData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<GremlinDatabaseData>)Data).GetFormatFromOptions(options);
     }

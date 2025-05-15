@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.ContainerRegistry
 
         ContainerRegistryCredentialSetData IJsonModel<ContainerRegistryCredentialSetData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ContainerRegistryCredentialSetData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ContainerRegistryCredentialSetData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<ContainerRegistryCredentialSetData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ContainerRegistryCredentialSetData>(Data, options, AzureResourceManagerContainerRegistryContext.Default);
 
-        ContainerRegistryCredentialSetData IPersistableModel<ContainerRegistryCredentialSetData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ContainerRegistryCredentialSetData>(data, options);
+        ContainerRegistryCredentialSetData IPersistableModel<ContainerRegistryCredentialSetData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ContainerRegistryCredentialSetData>(data, options, AzureResourceManagerContainerRegistryContext.Default);
 
         string IPersistableModel<ContainerRegistryCredentialSetData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ContainerRegistryCredentialSetData>)Data).GetFormatFromOptions(options);
     }

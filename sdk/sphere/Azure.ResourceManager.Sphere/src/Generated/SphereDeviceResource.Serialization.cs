@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Sphere
 
         SphereDeviceData IJsonModel<SphereDeviceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SphereDeviceData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SphereDeviceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<SphereDeviceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SphereDeviceData>(Data, options, AzureResourceManagerSphereContext.Default);
 
-        SphereDeviceData IPersistableModel<SphereDeviceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SphereDeviceData>(data, options);
+        SphereDeviceData IPersistableModel<SphereDeviceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SphereDeviceData>(data, options, AzureResourceManagerSphereContext.Default);
 
         string IPersistableModel<SphereDeviceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SphereDeviceData>)Data).GetFormatFromOptions(options);
     }

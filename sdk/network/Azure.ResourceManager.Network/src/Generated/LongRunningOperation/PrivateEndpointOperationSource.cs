@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Network
 
         PrivateEndpointResource IOperationSource<PrivateEndpointResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<PrivateEndpointData>(response.Content);
+            var data = ModelReaderWriter.Read<PrivateEndpointData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkContext.Default);
             return new PrivateEndpointResource(_client, data);
         }
 
         async ValueTask<PrivateEndpointResource> IOperationSource<PrivateEndpointResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<PrivateEndpointData>(response.Content);
+            var data = ModelReaderWriter.Read<PrivateEndpointData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkContext.Default);
             return await Task.FromResult(new PrivateEndpointResource(_client, data)).ConfigureAwait(false);
         }
     }

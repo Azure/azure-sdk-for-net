@@ -15,6 +15,8 @@ namespace _Type.Union
 {
     public partial class StringAndArrayCases : IJsonModel<StringAndArrayCases>
     {
+        internal StringAndArrayCases() => throw null;
+
         void IJsonModel<StringAndArrayCases>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;

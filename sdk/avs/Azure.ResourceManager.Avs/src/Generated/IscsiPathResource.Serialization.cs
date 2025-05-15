@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Avs
 
         IscsiPathData IJsonModel<IscsiPathData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<IscsiPathData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<IscsiPathData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<IscsiPathData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<IscsiPathData>(Data, options, AzureResourceManagerAvsContext.Default);
 
-        IscsiPathData IPersistableModel<IscsiPathData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<IscsiPathData>(data, options);
+        IscsiPathData IPersistableModel<IscsiPathData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<IscsiPathData>(data, options, AzureResourceManagerAvsContext.Default);
 
         string IPersistableModel<IscsiPathData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<IscsiPathData>)Data).GetFormatFromOptions(options);
     }

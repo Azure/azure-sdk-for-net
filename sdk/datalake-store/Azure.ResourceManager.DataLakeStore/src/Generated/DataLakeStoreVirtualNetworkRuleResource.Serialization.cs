@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.DataLakeStore
 
         DataLakeStoreVirtualNetworkRuleData IJsonModel<DataLakeStoreVirtualNetworkRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DataLakeStoreVirtualNetworkRuleData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<DataLakeStoreVirtualNetworkRuleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<DataLakeStoreVirtualNetworkRuleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DataLakeStoreVirtualNetworkRuleData>(Data, options, AzureResourceManagerDataLakeStoreContext.Default);
 
-        DataLakeStoreVirtualNetworkRuleData IPersistableModel<DataLakeStoreVirtualNetworkRuleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DataLakeStoreVirtualNetworkRuleData>(data, options);
+        DataLakeStoreVirtualNetworkRuleData IPersistableModel<DataLakeStoreVirtualNetworkRuleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DataLakeStoreVirtualNetworkRuleData>(data, options, AzureResourceManagerDataLakeStoreContext.Default);
 
         string IPersistableModel<DataLakeStoreVirtualNetworkRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DataLakeStoreVirtualNetworkRuleData>)Data).GetFormatFromOptions(options);
     }

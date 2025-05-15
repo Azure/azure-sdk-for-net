@@ -22,7 +22,7 @@ namespace Authentication.OAuth2
 
         public OAuth2Client(Uri endpoint, TokenCredential tokenCredential, OAuth2ClientOptions options) => throw null;
 
-        public HttpPipeline Pipeline => throw null;
+        public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response Valid(RequestContext context) => throw null;
 

@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
 
         ConnectedClusterStorageClassResource IOperationSource<ConnectedClusterStorageClassResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ConnectedClusterStorageClassData>(response.Content);
+            var data = ModelReaderWriter.Read<ConnectedClusterStorageClassData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerContainerOrchestratorRuntimeContext.Default);
             return new ConnectedClusterStorageClassResource(_client, data);
         }
 
         async ValueTask<ConnectedClusterStorageClassResource> IOperationSource<ConnectedClusterStorageClassResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ConnectedClusterStorageClassData>(response.Content);
+            var data = ModelReaderWriter.Read<ConnectedClusterStorageClassData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerContainerOrchestratorRuntimeContext.Default);
             return await Task.FromResult(new ConnectedClusterStorageClassResource(_client, data)).ConfigureAwait(false);
         }
     }

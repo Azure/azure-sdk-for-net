@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.CognitiveServices
 
         CognitiveServicesEncryptionScopeData IJsonModel<CognitiveServicesEncryptionScopeData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<CognitiveServicesEncryptionScopeData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<CognitiveServicesEncryptionScopeData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<CognitiveServicesEncryptionScopeData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<CognitiveServicesEncryptionScopeData>(Data, options, AzureResourceManagerCognitiveServicesContext.Default);
 
-        CognitiveServicesEncryptionScopeData IPersistableModel<CognitiveServicesEncryptionScopeData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CognitiveServicesEncryptionScopeData>(data, options);
+        CognitiveServicesEncryptionScopeData IPersistableModel<CognitiveServicesEncryptionScopeData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CognitiveServicesEncryptionScopeData>(data, options, AzureResourceManagerCognitiveServicesContext.Default);
 
         string IPersistableModel<CognitiveServicesEncryptionScopeData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<CognitiveServicesEncryptionScopeData>)Data).GetFormatFromOptions(options);
     }

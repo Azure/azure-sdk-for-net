@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.DataProtectionBackup
 
         ResourceGuardData IJsonModel<ResourceGuardData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ResourceGuardData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ResourceGuardData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<ResourceGuardData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ResourceGuardData>(Data, options, AzureResourceManagerDataProtectionBackupContext.Default);
 
-        ResourceGuardData IPersistableModel<ResourceGuardData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ResourceGuardData>(data, options);
+        ResourceGuardData IPersistableModel<ResourceGuardData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ResourceGuardData>(data, options, AzureResourceManagerDataProtectionBackupContext.Default);
 
         string IPersistableModel<ResourceGuardData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ResourceGuardData>)Data).GetFormatFromOptions(options);
     }

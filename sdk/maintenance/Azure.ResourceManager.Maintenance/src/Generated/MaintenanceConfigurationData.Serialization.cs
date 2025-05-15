@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.Maintenance
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMaintenanceContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(MaintenanceConfigurationData)} does not support writing '{options.Format}' format.");
             }

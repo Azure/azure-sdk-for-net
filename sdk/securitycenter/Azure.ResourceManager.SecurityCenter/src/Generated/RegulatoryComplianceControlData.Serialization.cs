@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.SecurityCenter
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSecurityCenterContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(RegulatoryComplianceControlData)} does not support writing '{options.Format}' format.");
             }

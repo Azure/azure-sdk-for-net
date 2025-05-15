@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.EnergyServices
 
         EnergyServiceData IJsonModel<EnergyServiceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<EnergyServiceData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<EnergyServiceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<EnergyServiceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<EnergyServiceData>(Data, options, AzureResourceManagerEnergyServicesContext.Default);
 
-        EnergyServiceData IPersistableModel<EnergyServiceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<EnergyServiceData>(data, options);
+        EnergyServiceData IPersistableModel<EnergyServiceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<EnergyServiceData>(data, options, AzureResourceManagerEnergyServicesContext.Default);
 
         string IPersistableModel<EnergyServiceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<EnergyServiceData>)Data).GetFormatFromOptions(options);
     }

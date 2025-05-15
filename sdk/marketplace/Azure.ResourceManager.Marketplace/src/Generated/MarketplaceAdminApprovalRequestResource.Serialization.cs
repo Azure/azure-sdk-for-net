@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Marketplace
 
         MarketplaceAdminApprovalRequestData IJsonModel<MarketplaceAdminApprovalRequestData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MarketplaceAdminApprovalRequestData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<MarketplaceAdminApprovalRequestData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<MarketplaceAdminApprovalRequestData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<MarketplaceAdminApprovalRequestData>(Data, options, AzureResourceManagerMarketplaceContext.Default);
 
-        MarketplaceAdminApprovalRequestData IPersistableModel<MarketplaceAdminApprovalRequestData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MarketplaceAdminApprovalRequestData>(data, options);
+        MarketplaceAdminApprovalRequestData IPersistableModel<MarketplaceAdminApprovalRequestData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MarketplaceAdminApprovalRequestData>(data, options, AzureResourceManagerMarketplaceContext.Default);
 
         string IPersistableModel<MarketplaceAdminApprovalRequestData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MarketplaceAdminApprovalRequestData>)Data).GetFormatFromOptions(options);
     }

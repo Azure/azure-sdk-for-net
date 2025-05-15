@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Avs
 
         WorkloadNetworkPublicIPData IJsonModel<WorkloadNetworkPublicIPData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<WorkloadNetworkPublicIPData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<WorkloadNetworkPublicIPData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<WorkloadNetworkPublicIPData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<WorkloadNetworkPublicIPData>(Data, options, AzureResourceManagerAvsContext.Default);
 
-        WorkloadNetworkPublicIPData IPersistableModel<WorkloadNetworkPublicIPData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<WorkloadNetworkPublicIPData>(data, options);
+        WorkloadNetworkPublicIPData IPersistableModel<WorkloadNetworkPublicIPData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<WorkloadNetworkPublicIPData>(data, options, AzureResourceManagerAvsContext.Default);
 
         string IPersistableModel<WorkloadNetworkPublicIPData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<WorkloadNetworkPublicIPData>)Data).GetFormatFromOptions(options);
     }

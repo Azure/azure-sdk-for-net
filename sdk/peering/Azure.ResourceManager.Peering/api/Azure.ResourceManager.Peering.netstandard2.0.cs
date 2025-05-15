@@ -1,5 +1,11 @@
 namespace Azure.ResourceManager.Peering
 {
+    public partial class AzureResourceManagerPeeringContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureResourceManagerPeeringContext() { }
+        public static Azure.ResourceManager.Peering.AzureResourceManagerPeeringContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class ConnectionMonitorTestCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Peering.ConnectionMonitorTestResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Peering.ConnectionMonitorTestResource>, System.Collections.IEnumerable
     {
         protected ConnectionMonitorTestCollection() { }

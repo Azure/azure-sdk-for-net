@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Peering
 
         ConnectionMonitorTestData IJsonModel<ConnectionMonitorTestData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ConnectionMonitorTestData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ConnectionMonitorTestData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<ConnectionMonitorTestData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ConnectionMonitorTestData>(Data, options, AzureResourceManagerPeeringContext.Default);
 
-        ConnectionMonitorTestData IPersistableModel<ConnectionMonitorTestData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ConnectionMonitorTestData>(data, options);
+        ConnectionMonitorTestData IPersistableModel<ConnectionMonitorTestData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ConnectionMonitorTestData>(data, options, AzureResourceManagerPeeringContext.Default);
 
         string IPersistableModel<ConnectionMonitorTestData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ConnectionMonitorTestData>)Data).GetFormatFromOptions(options);
     }

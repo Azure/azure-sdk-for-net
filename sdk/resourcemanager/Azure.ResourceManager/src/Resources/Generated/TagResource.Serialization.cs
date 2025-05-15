@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Resources
 
         TagResourceData IJsonModel<TagResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<TagResourceData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<TagResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<TagResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<TagResourceData>(Data, options, AzureResourceManagerContext.Default);
 
-        TagResourceData IPersistableModel<TagResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<TagResourceData>(data, options);
+        TagResourceData IPersistableModel<TagResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<TagResourceData>(data, options, AzureResourceManagerContext.Default);
 
         string IPersistableModel<TagResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<TagResourceData>)Data).GetFormatFromOptions(options);
     }

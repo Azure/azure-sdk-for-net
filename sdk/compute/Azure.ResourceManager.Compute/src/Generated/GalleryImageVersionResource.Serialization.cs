@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Compute
 
         GalleryImageVersionData IJsonModel<GalleryImageVersionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<GalleryImageVersionData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<GalleryImageVersionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<GalleryImageVersionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<GalleryImageVersionData>(Data, options, AzureResourceManagerComputeContext.Default);
 
-        GalleryImageVersionData IPersistableModel<GalleryImageVersionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<GalleryImageVersionData>(data, options);
+        GalleryImageVersionData IPersistableModel<GalleryImageVersionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<GalleryImageVersionData>(data, options, AzureResourceManagerComputeContext.Default);
 
         string IPersistableModel<GalleryImageVersionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<GalleryImageVersionData>)Data).GetFormatFromOptions(options);
     }

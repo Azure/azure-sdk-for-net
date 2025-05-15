@@ -15,6 +15,8 @@ namespace _Type.Property.AdditionalProperties
 {
     public partial class SpreadFloatRecord : IJsonModel<SpreadFloatRecord>
     {
+        internal SpreadFloatRecord() => throw null;
+
         void IJsonModel<SpreadFloatRecord>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;

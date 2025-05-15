@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.ContainerServiceFleet
 
         ContainerServiceFleetMemberResource IOperationSource<ContainerServiceFleetMemberResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ContainerServiceFleetMemberData>(response.Content);
+            var data = ModelReaderWriter.Read<ContainerServiceFleetMemberData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerContainerServiceFleetContext.Default);
             return new ContainerServiceFleetMemberResource(_client, data);
         }
 
         async ValueTask<ContainerServiceFleetMemberResource> IOperationSource<ContainerServiceFleetMemberResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ContainerServiceFleetMemberData>(response.Content);
+            var data = ModelReaderWriter.Read<ContainerServiceFleetMemberData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerContainerServiceFleetContext.Default);
             return await Task.FromResult(new ContainerServiceFleetMemberResource(_client, data)).ConfigureAwait(false);
         }
     }

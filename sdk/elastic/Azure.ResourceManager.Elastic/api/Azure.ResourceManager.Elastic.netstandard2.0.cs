@@ -1,5 +1,11 @@
 namespace Azure.ResourceManager.Elastic
 {
+    public partial class AzureResourceManagerElasticContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureResourceManagerElasticContext() { }
+        public static Azure.ResourceManager.Elastic.AzureResourceManagerElasticContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public static partial class ElasticExtensions
     {
         public static Azure.Response<Azure.ResourceManager.Elastic.Models.ElasticUserApiKeyResult> GetApiKey(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.Elastic.Models.ElasticUserEmailId body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }

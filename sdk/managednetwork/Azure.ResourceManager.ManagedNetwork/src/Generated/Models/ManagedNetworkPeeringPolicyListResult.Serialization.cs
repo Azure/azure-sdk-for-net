@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerManagedNetworkContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ManagedNetworkPeeringPolicyListResult)} does not support writing '{options.Format}' format.");
             }

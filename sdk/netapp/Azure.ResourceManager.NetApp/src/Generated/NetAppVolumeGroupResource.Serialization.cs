@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.NetApp
 
         NetAppVolumeGroupData IJsonModel<NetAppVolumeGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetAppVolumeGroupData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<NetAppVolumeGroupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<NetAppVolumeGroupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<NetAppVolumeGroupData>(Data, options, AzureResourceManagerNetAppContext.Default);
 
-        NetAppVolumeGroupData IPersistableModel<NetAppVolumeGroupData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetAppVolumeGroupData>(data, options);
+        NetAppVolumeGroupData IPersistableModel<NetAppVolumeGroupData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetAppVolumeGroupData>(data, options, AzureResourceManagerNetAppContext.Default);
 
         string IPersistableModel<NetAppVolumeGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetAppVolumeGroupData>)Data).GetFormatFromOptions(options);
     }

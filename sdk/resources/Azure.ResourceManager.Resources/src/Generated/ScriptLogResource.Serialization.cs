@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Resources
 
         ScriptLogData IJsonModel<ScriptLogData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ScriptLogData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ScriptLogData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<ScriptLogData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ScriptLogData>(Data, options, AzureResourceManagerResourcesContext.Default);
 
-        ScriptLogData IPersistableModel<ScriptLogData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ScriptLogData>(data, options);
+        ScriptLogData IPersistableModel<ScriptLogData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ScriptLogData>(data, options, AzureResourceManagerResourcesContext.Default);
 
         string IPersistableModel<ScriptLogData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ScriptLogData>)Data).GetFormatFromOptions(options);
     }

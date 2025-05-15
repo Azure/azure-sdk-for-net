@@ -1,5 +1,11 @@
 namespace Azure.ResourceManager.PortalServicesCopilot
 {
+    public partial class AzureResourceManagerPortalServicesCopilotContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureResourceManagerPortalServicesCopilotContext() { }
+        public static Azure.ResourceManager.PortalServicesCopilot.AzureResourceManagerPortalServicesCopilotContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public static partial class PortalServicesCopilotExtensions
     {
         public static Azure.ResourceManager.PortalServicesCopilot.PortalServicesCopilotSettingResource GetPortalServicesCopilotSetting(this Azure.ResourceManager.Resources.TenantResource tenantResource) { throw null; }

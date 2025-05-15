@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Dns.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDnsContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(DnsRecordListResult)} does not support writing '{options.Format}' format.");
             }

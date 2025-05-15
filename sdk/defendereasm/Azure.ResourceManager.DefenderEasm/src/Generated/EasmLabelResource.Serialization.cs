@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.DefenderEasm
 
         EasmLabelData IJsonModel<EasmLabelData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<EasmLabelData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<EasmLabelData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<EasmLabelData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<EasmLabelData>(Data, options, AzureResourceManagerDefenderEasmContext.Default);
 
-        EasmLabelData IPersistableModel<EasmLabelData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<EasmLabelData>(data, options);
+        EasmLabelData IPersistableModel<EasmLabelData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<EasmLabelData>(data, options, AzureResourceManagerDefenderEasmContext.Default);
 
         string IPersistableModel<EasmLabelData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<EasmLabelData>)Data).GetFormatFromOptions(options);
     }

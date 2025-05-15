@@ -1,5 +1,11 @@
 namespace Azure.Messaging.EventGrid
 {
+    public partial class AzureMessagingEventGridContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureMessagingEventGridContext() { }
+        public static Azure.Messaging.EventGrid.AzureMessagingEventGridContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class EventGridEvent
     {
         public EventGridEvent(string subject, string eventType, string dataVersion, System.BinaryData data) { }

@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
 
         BackupResourceEncryptionConfigExtendedData IJsonModel<BackupResourceEncryptionConfigExtendedData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<BackupResourceEncryptionConfigExtendedData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<BackupResourceEncryptionConfigExtendedData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<BackupResourceEncryptionConfigExtendedData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<BackupResourceEncryptionConfigExtendedData>(Data, options, AzureResourceManagerRecoveryServicesBackupContext.Default);
 
-        BackupResourceEncryptionConfigExtendedData IPersistableModel<BackupResourceEncryptionConfigExtendedData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<BackupResourceEncryptionConfigExtendedData>(data, options);
+        BackupResourceEncryptionConfigExtendedData IPersistableModel<BackupResourceEncryptionConfigExtendedData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<BackupResourceEncryptionConfigExtendedData>(data, options, AzureResourceManagerRecoveryServicesBackupContext.Default);
 
         string IPersistableModel<BackupResourceEncryptionConfigExtendedData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<BackupResourceEncryptionConfigExtendedData>)Data).GetFormatFromOptions(options);
     }

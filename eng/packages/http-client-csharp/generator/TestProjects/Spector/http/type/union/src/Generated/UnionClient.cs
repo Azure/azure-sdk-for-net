@@ -16,7 +16,7 @@ namespace _Type.Union
 
         public UnionClient(Uri endpoint, UnionClientOptions options) => throw null;
 
-        public HttpPipeline Pipeline => throw null;
+        public virtual HttpPipeline Pipeline => throw null;
 
         public virtual StringsOnly GetStringsOnlyClient() => throw null;
 

@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.DatabaseWatcher
 
         DatabaseWatcherAlertRuleData IJsonModel<DatabaseWatcherAlertRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DatabaseWatcherAlertRuleData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<DatabaseWatcherAlertRuleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<DatabaseWatcherAlertRuleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DatabaseWatcherAlertRuleData>(Data, options, AzureResourceManagerDatabaseWatcherContext.Default);
 
-        DatabaseWatcherAlertRuleData IPersistableModel<DatabaseWatcherAlertRuleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DatabaseWatcherAlertRuleData>(data, options);
+        DatabaseWatcherAlertRuleData IPersistableModel<DatabaseWatcherAlertRuleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DatabaseWatcherAlertRuleData>(data, options, AzureResourceManagerDatabaseWatcherContext.Default);
 
         string IPersistableModel<DatabaseWatcherAlertRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DatabaseWatcherAlertRuleData>)Data).GetFormatFromOptions(options);
     }

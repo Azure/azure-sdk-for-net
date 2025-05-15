@@ -15,6 +15,8 @@ namespace SpecialWords._Models
 {
     public partial class Lambda : IJsonModel<Lambda>
     {
+        internal Lambda() => throw null;
+
         void IJsonModel<Lambda>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;

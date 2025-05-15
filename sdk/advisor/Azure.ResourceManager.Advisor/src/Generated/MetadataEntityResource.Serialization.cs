@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Advisor
 
         MetadataEntityData IJsonModel<MetadataEntityData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MetadataEntityData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<MetadataEntityData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<MetadataEntityData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<MetadataEntityData>(Data, options, AzureResourceManagerAdvisorContext.Default);
 
-        MetadataEntityData IPersistableModel<MetadataEntityData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MetadataEntityData>(data, options);
+        MetadataEntityData IPersistableModel<MetadataEntityData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MetadataEntityData>(data, options, AzureResourceManagerAdvisorContext.Default);
 
         string IPersistableModel<MetadataEntityData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MetadataEntityData>)Data).GetFormatFromOptions(options);
     }

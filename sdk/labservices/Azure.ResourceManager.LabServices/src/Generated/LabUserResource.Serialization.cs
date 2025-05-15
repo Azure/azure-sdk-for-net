@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.LabServices
 
         LabUserData IJsonModel<LabUserData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<LabUserData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<LabUserData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<LabUserData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<LabUserData>(Data, options, AzureResourceManagerLabServicesContext.Default);
 
-        LabUserData IPersistableModel<LabUserData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<LabUserData>(data, options);
+        LabUserData IPersistableModel<LabUserData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<LabUserData>(data, options, AzureResourceManagerLabServicesContext.Default);
 
         string IPersistableModel<LabUserData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<LabUserData>)Data).GetFormatFromOptions(options);
     }

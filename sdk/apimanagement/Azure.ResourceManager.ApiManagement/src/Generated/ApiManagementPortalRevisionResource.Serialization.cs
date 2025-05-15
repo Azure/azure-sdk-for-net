@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.ApiManagement
 
         ApiManagementPortalRevisionData IJsonModel<ApiManagementPortalRevisionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ApiManagementPortalRevisionData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ApiManagementPortalRevisionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<ApiManagementPortalRevisionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ApiManagementPortalRevisionData>(Data, options, AzureResourceManagerApiManagementContext.Default);
 
-        ApiManagementPortalRevisionData IPersistableModel<ApiManagementPortalRevisionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ApiManagementPortalRevisionData>(data, options);
+        ApiManagementPortalRevisionData IPersistableModel<ApiManagementPortalRevisionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ApiManagementPortalRevisionData>(data, options, AzureResourceManagerApiManagementContext.Default);
 
         string IPersistableModel<ApiManagementPortalRevisionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ApiManagementPortalRevisionData>)Data).GetFormatFromOptions(options);
     }

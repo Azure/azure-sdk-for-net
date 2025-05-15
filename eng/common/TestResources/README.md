@@ -1,7 +1,7 @@
 # Live Test Resource Management
 
 Running and recording live tests often requires first creating some resources
-in Azure. Service directories that include a `test-resources.json` or `test-resources.bicep` 
+in Azure. Service directories that include a `test-resources.json` or `test-resources.bicep`
 file require running [New-TestResources.ps1][] to create these resources and output
 environment variables you must set.
 
@@ -19,8 +19,8 @@ scenarios as well as on hosted agents for continuous integration testing.
 ## On the Desktop
 
 To set up your Azure account to run live tests, you'll need to log into Azure,
-and create the resources defined in your `test-resources.json` or `test-resources.bicep` 
-template as shown in the following example using Azure Key Vault. The script will create 
+and create the resources defined in your `test-resources.json` or `test-resources.bicep`
+template as shown in the following example using Azure Key Vault. The script will create
 a service principal automatically, or you may create a service principal that can be reused
 subsequently.
 
@@ -34,11 +34,15 @@ Connect-AzAccount -Subscription 'YOUR SUBSCRIPTION ID'
 eng\common\TestResources\New-TestResources.ps1 keyvault
 ```
 
-The `OutFile` switch will be set by default if you are running this for a .NET project on Windows. 
-This will save test environment settings into a `test-resources.json.env` file next to `test-resources.json` 
+The `OutFile` switch will be set by default if you are running this for a .NET project on Windows.
+This will save test environment settings into a `test-resources.json.env` file next to `test-resources.json`
 or a `test-resources.bicep.env` file next to `test-resources.bicep`. The file is protected via DPAPI.
 The environment file would be scoped to the current repository directory and avoids the need to
 set environment variables or restart your IDE to recognize them.
+
+It will also be set by default for other repositories and on other platforms if your `assets.json`
+file contains `"Dotenv": true`. It must be in your `.gitignore` file;
+otherwise, an error is returned and no file is generated.
 
 Along with some log messages, this will output environment variables based on
 your current shell like in the following example:

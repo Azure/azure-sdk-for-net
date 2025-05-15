@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Network
 
         NetworkProfileData IJsonModel<NetworkProfileData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetworkProfileData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<NetworkProfileData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<NetworkProfileData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<NetworkProfileData>(Data, options, AzureResourceManagerNetworkContext.Default);
 
-        NetworkProfileData IPersistableModel<NetworkProfileData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetworkProfileData>(data, options);
+        NetworkProfileData IPersistableModel<NetworkProfileData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetworkProfileData>(data, options, AzureResourceManagerNetworkContext.Default);
 
         string IPersistableModel<NetworkProfileData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetworkProfileData>)Data).GetFormatFromOptions(options);
     }

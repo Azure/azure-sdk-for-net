@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerIotOperationsContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(DataflowBuiltInTransformationFilter)} does not support writing '{options.Format}' format.");
             }

@@ -1,5 +1,11 @@
 namespace Azure.ResourceManager.Synapse
 {
+    public partial class AzureResourceManagerSynapseContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureResourceManagerSynapseContext() { }
+        public static Azure.ResourceManager.Synapse.AzureResourceManagerSynapseContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class SynapseAadOnlyAuthenticationCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Synapse.SynapseAadOnlyAuthenticationResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Synapse.SynapseAadOnlyAuthenticationResource>, System.Collections.IEnumerable
     {
         protected SynapseAadOnlyAuthenticationCollection() { }

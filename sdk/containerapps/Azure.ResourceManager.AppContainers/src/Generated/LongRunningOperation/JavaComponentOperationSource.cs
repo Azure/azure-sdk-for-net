@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.AppContainers
 
         JavaComponentResource IOperationSource<JavaComponentResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<JavaComponentData>(response.Content);
+            var data = ModelReaderWriter.Read<JavaComponentData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerAppContainersContext.Default);
             return new JavaComponentResource(_client, data);
         }
 
         async ValueTask<JavaComponentResource> IOperationSource<JavaComponentResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<JavaComponentData>(response.Content);
+            var data = ModelReaderWriter.Read<JavaComponentData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerAppContainersContext.Default);
             return await Task.FromResult(new JavaComponentResource(_client, data)).ConfigureAwait(false);
         }
     }

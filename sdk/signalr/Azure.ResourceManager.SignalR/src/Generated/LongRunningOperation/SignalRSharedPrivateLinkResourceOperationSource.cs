@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.SignalR
 
         SignalRSharedPrivateLinkResource IOperationSource<SignalRSharedPrivateLinkResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<SignalRSharedPrivateLinkResourceData>(response.Content);
+            var data = ModelReaderWriter.Read<SignalRSharedPrivateLinkResourceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSignalRContext.Default);
             return new SignalRSharedPrivateLinkResource(_client, data);
         }
 
         async ValueTask<SignalRSharedPrivateLinkResource> IOperationSource<SignalRSharedPrivateLinkResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<SignalRSharedPrivateLinkResourceData>(response.Content);
+            var data = ModelReaderWriter.Read<SignalRSharedPrivateLinkResourceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSignalRContext.Default);
             return await Task.FromResult(new SignalRSharedPrivateLinkResource(_client, data)).ConfigureAwait(false);
         }
     }

@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.HealthBot.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHealthBotContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(BotResponseList)} does not support writing '{options.Format}' format.");
             }

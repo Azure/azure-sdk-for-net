@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Sql
 
         EncryptionProtectorResource IOperationSource<EncryptionProtectorResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<EncryptionProtectorData>(response.Content);
+            var data = ModelReaderWriter.Read<EncryptionProtectorData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSqlContext.Default);
             return new EncryptionProtectorResource(_client, data);
         }
 
         async ValueTask<EncryptionProtectorResource> IOperationSource<EncryptionProtectorResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<EncryptionProtectorData>(response.Content);
+            var data = ModelReaderWriter.Read<EncryptionProtectorData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSqlContext.Default);
             return await Task.FromResult(new EncryptionProtectorResource(_client, data)).ConfigureAwait(false);
         }
     }

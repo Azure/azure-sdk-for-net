@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Network
 
         VirtualNetworkTapResource IOperationSource<VirtualNetworkTapResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<VirtualNetworkTapData>(response.Content);
+            var data = ModelReaderWriter.Read<VirtualNetworkTapData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkContext.Default);
             return new VirtualNetworkTapResource(_client, data);
         }
 
         async ValueTask<VirtualNetworkTapResource> IOperationSource<VirtualNetworkTapResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<VirtualNetworkTapData>(response.Content);
+            var data = ModelReaderWriter.Read<VirtualNetworkTapData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkContext.Default);
             return await Task.FromResult(new VirtualNetworkTapResource(_client, data)).ConfigureAwait(false);
         }
     }

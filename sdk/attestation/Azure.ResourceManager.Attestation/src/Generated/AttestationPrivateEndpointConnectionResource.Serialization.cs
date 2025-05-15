@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Attestation
 
         AttestationPrivateEndpointConnectionData IJsonModel<AttestationPrivateEndpointConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AttestationPrivateEndpointConnectionData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<AttestationPrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<AttestationPrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AttestationPrivateEndpointConnectionData>(Data, options, AzureResourceManagerAttestationContext.Default);
 
-        AttestationPrivateEndpointConnectionData IPersistableModel<AttestationPrivateEndpointConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AttestationPrivateEndpointConnectionData>(data, options);
+        AttestationPrivateEndpointConnectionData IPersistableModel<AttestationPrivateEndpointConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AttestationPrivateEndpointConnectionData>(data, options, AzureResourceManagerAttestationContext.Default);
 
         string IPersistableModel<AttestationPrivateEndpointConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AttestationPrivateEndpointConnectionData>)Data).GetFormatFromOptions(options);
     }

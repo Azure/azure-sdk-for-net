@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.IotOperations
 
         IotOperationsBrokerAuthorizationData IJsonModel<IotOperationsBrokerAuthorizationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<IotOperationsBrokerAuthorizationData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<IotOperationsBrokerAuthorizationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<IotOperationsBrokerAuthorizationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<IotOperationsBrokerAuthorizationData>(Data, options, AzureResourceManagerIotOperationsContext.Default);
 
-        IotOperationsBrokerAuthorizationData IPersistableModel<IotOperationsBrokerAuthorizationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<IotOperationsBrokerAuthorizationData>(data, options);
+        IotOperationsBrokerAuthorizationData IPersistableModel<IotOperationsBrokerAuthorizationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<IotOperationsBrokerAuthorizationData>(data, options, AzureResourceManagerIotOperationsContext.Default);
 
         string IPersistableModel<IotOperationsBrokerAuthorizationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<IotOperationsBrokerAuthorizationData>)Data).GetFormatFromOptions(options);
     }

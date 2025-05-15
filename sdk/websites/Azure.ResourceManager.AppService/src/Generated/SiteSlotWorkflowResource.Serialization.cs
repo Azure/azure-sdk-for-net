@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.AppService
 
         WorkflowEnvelopeData IJsonModel<WorkflowEnvelopeData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<WorkflowEnvelopeData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<WorkflowEnvelopeData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<WorkflowEnvelopeData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<WorkflowEnvelopeData>(Data, options, AzureResourceManagerAppServiceContext.Default);
 
-        WorkflowEnvelopeData IPersistableModel<WorkflowEnvelopeData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<WorkflowEnvelopeData>(data, options);
+        WorkflowEnvelopeData IPersistableModel<WorkflowEnvelopeData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<WorkflowEnvelopeData>(data, options, AzureResourceManagerAppServiceContext.Default);
 
         string IPersistableModel<WorkflowEnvelopeData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<WorkflowEnvelopeData>)Data).GetFormatFromOptions(options);
     }

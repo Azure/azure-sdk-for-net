@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.DatabaseWatcher
 
         DatabaseWatcherHealthValidationData IJsonModel<DatabaseWatcherHealthValidationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DatabaseWatcherHealthValidationData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<DatabaseWatcherHealthValidationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<DatabaseWatcherHealthValidationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DatabaseWatcherHealthValidationData>(Data, options, AzureResourceManagerDatabaseWatcherContext.Default);
 
-        DatabaseWatcherHealthValidationData IPersistableModel<DatabaseWatcherHealthValidationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DatabaseWatcherHealthValidationData>(data, options);
+        DatabaseWatcherHealthValidationData IPersistableModel<DatabaseWatcherHealthValidationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DatabaseWatcherHealthValidationData>(data, options, AzureResourceManagerDatabaseWatcherContext.Default);
 
         string IPersistableModel<DatabaseWatcherHealthValidationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DatabaseWatcherHealthValidationData>)Data).GetFormatFromOptions(options);
     }

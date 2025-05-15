@@ -15,6 +15,8 @@ namespace Parameters.Basic.Models
 {
     public partial class User : IJsonModel<User>
     {
+        internal User() => throw null;
+
         void IJsonModel<User>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;

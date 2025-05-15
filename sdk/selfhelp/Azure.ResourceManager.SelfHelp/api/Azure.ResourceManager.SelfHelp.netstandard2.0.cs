@@ -1,5 +1,11 @@
 namespace Azure.ResourceManager.SelfHelp
 {
+    public partial class AzureResourceManagerSelfHelpContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureResourceManagerSelfHelpContext() { }
+        public static Azure.ResourceManager.SelfHelp.AzureResourceManagerSelfHelpContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class SelfHelpDiagnosticCollection : Azure.ResourceManager.ArmCollection
     {
         protected SelfHelpDiagnosticCollection() { }

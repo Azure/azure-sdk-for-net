@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Relay.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRelayContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(RelayRegenerateAccessKeyContent)} does not support writing '{options.Format}' format.");
             }

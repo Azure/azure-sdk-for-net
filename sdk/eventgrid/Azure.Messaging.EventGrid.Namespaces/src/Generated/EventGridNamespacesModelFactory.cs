@@ -7,95 +7,100 @@
 
 using System.Collections.Generic;
 using System.Linq;
+using Azure;
+using Azure.Messaging;
 
 namespace Azure.Messaging.EventGrid.Namespaces
 {
-    /// <summary> Model factory for models. </summary>
+    /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class EventGridNamespacesModelFactory
     {
-        /// <summary> Initializes a new instance of <see cref="Namespaces.ReceiveResult"/>. </summary>
+        /// <summary> Details of the Receive operation response. </summary>
         /// <param name="details"> Array of receive responses, one per cloud event. </param>
         /// <returns> A new <see cref="Namespaces.ReceiveResult"/> instance for mocking. </returns>
-        public static ReceiveResult ReceiveResult(IEnumerable<ReceiveDetails> details = null)
+        public static ReceiveResult ReceiveResult(IEnumerable<ReceiveDetails> details = default)
         {
-            details ??= new List<ReceiveDetails>();
+            details ??= new ChangeTrackingList<ReceiveDetails>();
 
-            return new ReceiveResult(details?.ToList(), serializedAdditionalRawData: null);
+            return new ReceiveResult(details?.ToList(), additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Namespaces.ReceiveDetails"/>. </summary>
+        /// <summary> Receive operation details per Cloud Event. </summary>
         /// <param name="brokerProperties"> The Event Broker details. </param>
         /// <param name="event"> Cloud Event details. </param>
         /// <returns> A new <see cref="Namespaces.ReceiveDetails"/> instance for mocking. </returns>
-        public static ReceiveDetails ReceiveDetails(BrokerProperties brokerProperties = null, CloudEvent @event = null)
+        public static ReceiveDetails ReceiveDetails(BrokerProperties brokerProperties = default, CloudEvent @event = default)
         {
-            return new ReceiveDetails(brokerProperties, @event, serializedAdditionalRawData: null);
+
+            return new ReceiveDetails(brokerProperties, @event, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Namespaces.BrokerProperties"/>. </summary>
+        /// <summary> Properties of the Event Broker operation. </summary>
         /// <param name="lockToken"> The token of the lock on the event. </param>
         /// <param name="deliveryCount"> The attempt count for delivering the event. </param>
         /// <returns> A new <see cref="Namespaces.BrokerProperties"/> instance for mocking. </returns>
-        public static BrokerProperties BrokerProperties(string lockToken = null, int deliveryCount = default)
+        public static BrokerProperties BrokerProperties(string lockToken = default, int deliveryCount = default)
         {
-            return new BrokerProperties(lockToken, deliveryCount, serializedAdditionalRawData: null);
+
+            return new BrokerProperties(lockToken, deliveryCount, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Namespaces.AcknowledgeResult"/>. </summary>
+        /// <summary> The result of the Acknowledge operation. </summary>
         /// <param name="failedLockTokens"> Array of FailedLockToken for failed cloud events. Each FailedLockToken includes the lock token along with the related error information (namely, the error code and description). </param>
         /// <param name="succeededLockTokens"> Array of lock tokens for the successfully acknowledged cloud events. </param>
         /// <returns> A new <see cref="Namespaces.AcknowledgeResult"/> instance for mocking. </returns>
-        public static AcknowledgeResult AcknowledgeResult(IEnumerable<FailedLockToken> failedLockTokens = null, IEnumerable<string> succeededLockTokens = null)
+        public static AcknowledgeResult AcknowledgeResult(IEnumerable<FailedLockToken> failedLockTokens = default, IEnumerable<string> succeededLockTokens = default)
         {
-            failedLockTokens ??= new List<FailedLockToken>();
-            succeededLockTokens ??= new List<string>();
+            failedLockTokens ??= new ChangeTrackingList<FailedLockToken>();
+            succeededLockTokens ??= new ChangeTrackingList<string>();
 
-            return new AcknowledgeResult(failedLockTokens?.ToList(), succeededLockTokens?.ToList(), serializedAdditionalRawData: null);
+            return new AcknowledgeResult(failedLockTokens?.ToList(), succeededLockTokens?.ToList(), additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Namespaces.FailedLockToken"/>. </summary>
+        /// <summary> Failed LockToken information. </summary>
         /// <param name="lockToken"> The lock token of an entry in the request. </param>
         /// <param name="error"> Error information of the failed operation result for the lock token in the request. </param>
         /// <returns> A new <see cref="Namespaces.FailedLockToken"/> instance for mocking. </returns>
-        public static FailedLockToken FailedLockToken(string lockToken = null, ResponseError error = null)
+        public static FailedLockToken FailedLockToken(string lockToken = default, ResponseError error = default)
         {
-            return new FailedLockToken(lockToken, error, serializedAdditionalRawData: null);
+
+            return new FailedLockToken(lockToken, error, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Namespaces.ReleaseResult"/>. </summary>
+        /// <summary> The result of the Release operation. </summary>
         /// <param name="failedLockTokens"> Array of FailedLockToken for failed cloud events. Each FailedLockToken includes the lock token along with the related error information (namely, the error code and description). </param>
         /// <param name="succeededLockTokens"> Array of lock tokens for the successfully released cloud events. </param>
         /// <returns> A new <see cref="Namespaces.ReleaseResult"/> instance for mocking. </returns>
-        public static ReleaseResult ReleaseResult(IEnumerable<FailedLockToken> failedLockTokens = null, IEnumerable<string> succeededLockTokens = null)
+        public static ReleaseResult ReleaseResult(IEnumerable<FailedLockToken> failedLockTokens = default, IEnumerable<string> succeededLockTokens = default)
         {
-            failedLockTokens ??= new List<FailedLockToken>();
-            succeededLockTokens ??= new List<string>();
+            failedLockTokens ??= new ChangeTrackingList<FailedLockToken>();
+            succeededLockTokens ??= new ChangeTrackingList<string>();
 
-            return new ReleaseResult(failedLockTokens?.ToList(), succeededLockTokens?.ToList(), serializedAdditionalRawData: null);
+            return new ReleaseResult(failedLockTokens?.ToList(), succeededLockTokens?.ToList(), additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Namespaces.RejectResult"/>. </summary>
+        /// <summary> The result of the Reject operation. </summary>
         /// <param name="failedLockTokens"> Array of FailedLockToken for failed cloud events. Each FailedLockToken includes the lock token along with the related error information (namely, the error code and description). </param>
         /// <param name="succeededLockTokens"> Array of lock tokens for the successfully rejected cloud events. </param>
         /// <returns> A new <see cref="Namespaces.RejectResult"/> instance for mocking. </returns>
-        public static RejectResult RejectResult(IEnumerable<FailedLockToken> failedLockTokens = null, IEnumerable<string> succeededLockTokens = null)
+        public static RejectResult RejectResult(IEnumerable<FailedLockToken> failedLockTokens = default, IEnumerable<string> succeededLockTokens = default)
         {
-            failedLockTokens ??= new List<FailedLockToken>();
-            succeededLockTokens ??= new List<string>();
+            failedLockTokens ??= new ChangeTrackingList<FailedLockToken>();
+            succeededLockTokens ??= new ChangeTrackingList<string>();
 
-            return new RejectResult(failedLockTokens?.ToList(), succeededLockTokens?.ToList(), serializedAdditionalRawData: null);
+            return new RejectResult(failedLockTokens?.ToList(), succeededLockTokens?.ToList(), additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Namespaces.RenewLocksResult"/>. </summary>
+        /// <summary> The result of the RenewLock operation. </summary>
         /// <param name="failedLockTokens"> Array of FailedLockToken for failed cloud events. Each FailedLockToken includes the lock token along with the related error information (namely, the error code and description). </param>
         /// <param name="succeededLockTokens"> Array of lock tokens for the successfully renewed locks. </param>
         /// <returns> A new <see cref="Namespaces.RenewLocksResult"/> instance for mocking. </returns>
-        public static RenewLocksResult RenewLocksResult(IEnumerable<FailedLockToken> failedLockTokens = null, IEnumerable<string> succeededLockTokens = null)
+        public static RenewLocksResult RenewLocksResult(IEnumerable<FailedLockToken> failedLockTokens = default, IEnumerable<string> succeededLockTokens = default)
         {
-            failedLockTokens ??= new List<FailedLockToken>();
-            succeededLockTokens ??= new List<string>();
+            failedLockTokens ??= new ChangeTrackingList<FailedLockToken>();
+            succeededLockTokens ??= new ChangeTrackingList<string>();
 
-            return new RenewLocksResult(failedLockTokens?.ToList(), succeededLockTokens?.ToList(), serializedAdditionalRawData: null);
+            return new RenewLocksResult(failedLockTokens?.ToList(), succeededLockTokens?.ToList(), additionalBinaryDataProperties: null);
         }
     }
 }

@@ -4,7 +4,7 @@
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <IsTestProject>true</IsTestProject>
+    <IsTestSupportProject>true</IsTestSupportProject>
     <!-- Don't warn for missing XML comments for test project. -->
     <NoWarn>$(NoWarn);1591</NoWarn>
   </PropertyGroup>

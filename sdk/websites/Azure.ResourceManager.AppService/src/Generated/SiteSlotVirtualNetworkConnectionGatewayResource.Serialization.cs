@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.AppService
 
         AppServiceVirtualNetworkGatewayData IJsonModel<AppServiceVirtualNetworkGatewayData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AppServiceVirtualNetworkGatewayData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<AppServiceVirtualNetworkGatewayData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<AppServiceVirtualNetworkGatewayData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AppServiceVirtualNetworkGatewayData>(Data, options, AzureResourceManagerAppServiceContext.Default);
 
-        AppServiceVirtualNetworkGatewayData IPersistableModel<AppServiceVirtualNetworkGatewayData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AppServiceVirtualNetworkGatewayData>(data, options);
+        AppServiceVirtualNetworkGatewayData IPersistableModel<AppServiceVirtualNetworkGatewayData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AppServiceVirtualNetworkGatewayData>(data, options, AzureResourceManagerAppServiceContext.Default);
 
         string IPersistableModel<AppServiceVirtualNetworkGatewayData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AppServiceVirtualNetworkGatewayData>)Data).GetFormatFromOptions(options);
     }

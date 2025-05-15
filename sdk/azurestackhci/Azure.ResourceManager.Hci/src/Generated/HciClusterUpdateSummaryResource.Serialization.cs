@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Hci
 
         HciClusterUpdateSummaryData IJsonModel<HciClusterUpdateSummaryData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<HciClusterUpdateSummaryData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<HciClusterUpdateSummaryData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<HciClusterUpdateSummaryData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<HciClusterUpdateSummaryData>(Data, options, AzureResourceManagerHciContext.Default);
 
-        HciClusterUpdateSummaryData IPersistableModel<HciClusterUpdateSummaryData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<HciClusterUpdateSummaryData>(data, options);
+        HciClusterUpdateSummaryData IPersistableModel<HciClusterUpdateSummaryData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<HciClusterUpdateSummaryData>(data, options, AzureResourceManagerHciContext.Default);
 
         string IPersistableModel<HciClusterUpdateSummaryData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<HciClusterUpdateSummaryData>)Data).GetFormatFromOptions(options);
     }

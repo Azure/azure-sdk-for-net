@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.DatabaseWatcher
 
         DatabaseWatcherResource IOperationSource<DatabaseWatcherResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DatabaseWatcherData>(response.Content);
+            var data = ModelReaderWriter.Read<DatabaseWatcherData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDatabaseWatcherContext.Default);
             return new DatabaseWatcherResource(_client, data);
         }
 
         async ValueTask<DatabaseWatcherResource> IOperationSource<DatabaseWatcherResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DatabaseWatcherData>(response.Content);
+            var data = ModelReaderWriter.Read<DatabaseWatcherData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDatabaseWatcherContext.Default);
             return await Task.FromResult(new DatabaseWatcherResource(_client, data)).ConfigureAwait(false);
         }
     }

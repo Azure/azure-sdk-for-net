@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Hci
 
         HciEdgeDeviceResource IOperationSource<HciEdgeDeviceResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<HciEdgeDeviceData>(response.Content);
+            var data = ModelReaderWriter.Read<HciEdgeDeviceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerHciContext.Default);
             return new HciEdgeDeviceResource(_client, data);
         }
 
         async ValueTask<HciEdgeDeviceResource> IOperationSource<HciEdgeDeviceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<HciEdgeDeviceData>(response.Content);
+            var data = ModelReaderWriter.Read<HciEdgeDeviceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerHciContext.Default);
             return await Task.FromResult(new HciEdgeDeviceResource(_client, data)).ConfigureAwait(false);
         }
     }

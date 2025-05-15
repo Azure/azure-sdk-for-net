@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMarketplaceContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(CollectionOffersByContext)} does not support writing '{options.Format}' format.");
             }

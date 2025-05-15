@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Sql
 
         RecoverableDatabaseData IJsonModel<RecoverableDatabaseData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<RecoverableDatabaseData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<RecoverableDatabaseData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<RecoverableDatabaseData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<RecoverableDatabaseData>(Data, options, AzureResourceManagerSqlContext.Default);
 
-        RecoverableDatabaseData IPersistableModel<RecoverableDatabaseData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<RecoverableDatabaseData>(data, options);
+        RecoverableDatabaseData IPersistableModel<RecoverableDatabaseData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<RecoverableDatabaseData>(data, options, AzureResourceManagerSqlContext.Default);
 
         string IPersistableModel<RecoverableDatabaseData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<RecoverableDatabaseData>)Data).GetFormatFromOptions(options);
     }

@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Hci
 
         HciClusterResource IOperationSource<HciClusterResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<HciClusterData>(response.Content);
+            var data = ModelReaderWriter.Read<HciClusterData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerHciContext.Default);
             return new HciClusterResource(_client, data);
         }
 
         async ValueTask<HciClusterResource> IOperationSource<HciClusterResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<HciClusterData>(response.Content);
+            var data = ModelReaderWriter.Read<HciClusterData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerHciContext.Default);
             return await Task.FromResult(new HciClusterResource(_client, data)).ConfigureAwait(false);
         }
     }

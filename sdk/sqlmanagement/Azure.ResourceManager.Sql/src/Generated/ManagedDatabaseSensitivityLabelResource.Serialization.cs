@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Sql
 
         SensitivityLabelData IJsonModel<SensitivityLabelData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SensitivityLabelData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SensitivityLabelData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<SensitivityLabelData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SensitivityLabelData>(Data, options, AzureResourceManagerSqlContext.Default);
 
-        SensitivityLabelData IPersistableModel<SensitivityLabelData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SensitivityLabelData>(data, options);
+        SensitivityLabelData IPersistableModel<SensitivityLabelData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SensitivityLabelData>(data, options, AzureResourceManagerSqlContext.Default);
 
         string IPersistableModel<SensitivityLabelData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SensitivityLabelData>)Data).GetFormatFromOptions(options);
     }

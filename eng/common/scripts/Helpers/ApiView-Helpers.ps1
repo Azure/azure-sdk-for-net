@@ -197,7 +197,7 @@ function Set-ApiViewCommentForPR {
       }
     }
   } catch{
-    LogError "Failed to get API View information for PR: $PrNumber in repo: $repoFullName with commitSHA: $Commitish. Error: $_"
+    LogError "Failed to get API View information for PR: $PrNumber in repo: $repoFullName with commitSHA: $HeadCommitish. Error: $_"
     exit 1
   }
 

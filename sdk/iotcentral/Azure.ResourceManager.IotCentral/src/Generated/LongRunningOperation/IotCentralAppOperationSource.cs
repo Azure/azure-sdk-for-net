@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.IotCentral
 
         IotCentralAppResource IOperationSource<IotCentralAppResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<IotCentralAppData>(response.Content);
+            var data = ModelReaderWriter.Read<IotCentralAppData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerIotCentralContext.Default);
             return new IotCentralAppResource(_client, data);
         }
 
         async ValueTask<IotCentralAppResource> IOperationSource<IotCentralAppResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<IotCentralAppData>(response.Content);
+            var data = ModelReaderWriter.Read<IotCentralAppData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerIotCentralContext.Default);
             return await Task.FromResult(new IotCentralAppResource(_client, data)).ConfigureAwait(false);
         }
     }

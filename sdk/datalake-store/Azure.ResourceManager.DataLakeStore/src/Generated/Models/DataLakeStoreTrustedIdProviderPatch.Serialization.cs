@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataLakeStoreContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(DataLakeStoreTrustedIdProviderPatch)} does not support writing '{options.Format}' format.");
             }

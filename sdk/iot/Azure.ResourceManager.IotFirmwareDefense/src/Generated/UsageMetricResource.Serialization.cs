@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.IotFirmwareDefense
 
         UsageMetricData IJsonModel<UsageMetricData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<UsageMetricData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<UsageMetricData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<UsageMetricData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<UsageMetricData>(Data, options, AzureResourceManagerIotFirmwareDefenseContext.Default);
 
-        UsageMetricData IPersistableModel<UsageMetricData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<UsageMetricData>(data, options);
+        UsageMetricData IPersistableModel<UsageMetricData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<UsageMetricData>(data, options, AzureResourceManagerIotFirmwareDefenseContext.Default);
 
         string IPersistableModel<UsageMetricData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<UsageMetricData>)Data).GetFormatFromOptions(options);
     }

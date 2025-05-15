@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.NeonPostgres
 
         NeonOrganizationData IJsonModel<NeonOrganizationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NeonOrganizationData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<NeonOrganizationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<NeonOrganizationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<NeonOrganizationData>(Data, options, AzureResourceManagerNeonPostgresContext.Default);
 
-        NeonOrganizationData IPersistableModel<NeonOrganizationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NeonOrganizationData>(data, options);
+        NeonOrganizationData IPersistableModel<NeonOrganizationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NeonOrganizationData>(data, options, AzureResourceManagerNeonPostgresContext.Default);
 
         string IPersistableModel<NeonOrganizationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NeonOrganizationData>)Data).GetFormatFromOptions(options);
     }

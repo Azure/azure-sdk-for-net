@@ -45,5 +45,29 @@ namespace Azure.ResourceManager.NeonPostgres.Mocking
             NeonOrganizationResource.ValidateResourceId(id);
             return new NeonOrganizationResource(Client, id);
         }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="NeonProjectResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NeonProjectResource.CreateResourceIdentifier" /> to create a <see cref="NeonProjectResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="NeonProjectResource"/> object. </returns>
+        public virtual NeonProjectResource GetNeonProjectResource(ResourceIdentifier id)
+        {
+            NeonProjectResource.ValidateResourceId(id);
+            return new NeonProjectResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="NeonBranchResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NeonBranchResource.CreateResourceIdentifier" /> to create a <see cref="NeonBranchResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="NeonBranchResource"/> object. </returns>
+        public virtual NeonBranchResource GetNeonBranchResource(ResourceIdentifier id)
+        {
+            NeonBranchResource.ValidateResourceId(id);
+            return new NeonBranchResource(Client, id);
+        }
     }
 }

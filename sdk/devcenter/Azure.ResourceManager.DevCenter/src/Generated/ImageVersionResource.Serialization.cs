@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.DevCenter
 
         ImageVersionData IJsonModel<ImageVersionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ImageVersionData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ImageVersionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<ImageVersionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ImageVersionData>(Data, options, AzureResourceManagerDevCenterContext.Default);
 
-        ImageVersionData IPersistableModel<ImageVersionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ImageVersionData>(data, options);
+        ImageVersionData IPersistableModel<ImageVersionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ImageVersionData>(data, options, AzureResourceManagerDevCenterContext.Default);
 
         string IPersistableModel<ImageVersionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ImageVersionData>)Data).GetFormatFromOptions(options);
     }

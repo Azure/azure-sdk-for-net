@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Search
 
         SharedSearchServicePrivateLinkResource IOperationSource<SharedSearchServicePrivateLinkResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<SharedSearchServicePrivateLinkResourceData>(response.Content);
+            var data = ModelReaderWriter.Read<SharedSearchServicePrivateLinkResourceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSearchContext.Default);
             return new SharedSearchServicePrivateLinkResource(_client, data);
         }
 
         async ValueTask<SharedSearchServicePrivateLinkResource> IOperationSource<SharedSearchServicePrivateLinkResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<SharedSearchServicePrivateLinkResourceData>(response.Content);
+            var data = ModelReaderWriter.Read<SharedSearchServicePrivateLinkResourceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSearchContext.Default);
             return await Task.FromResult(new SharedSearchServicePrivateLinkResource(_client, data)).ConfigureAwait(false);
         }
     }

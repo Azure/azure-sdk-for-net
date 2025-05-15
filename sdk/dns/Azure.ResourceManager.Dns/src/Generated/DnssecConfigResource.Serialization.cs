@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Dns
 
         DnssecConfigData IJsonModel<DnssecConfigData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DnssecConfigData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<DnssecConfigData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<DnssecConfigData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DnssecConfigData>(Data, options, AzureResourceManagerDnsContext.Default);
 
-        DnssecConfigData IPersistableModel<DnssecConfigData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DnssecConfigData>(data, options);
+        DnssecConfigData IPersistableModel<DnssecConfigData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DnssecConfigData>(data, options, AzureResourceManagerDnsContext.Default);
 
         string IPersistableModel<DnssecConfigData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DnssecConfigData>)Data).GetFormatFromOptions(options);
     }

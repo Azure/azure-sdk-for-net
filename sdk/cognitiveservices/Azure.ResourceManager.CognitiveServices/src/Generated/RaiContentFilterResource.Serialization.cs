@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.CognitiveServices
 
         RaiContentFilterData IJsonModel<RaiContentFilterData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<RaiContentFilterData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<RaiContentFilterData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<RaiContentFilterData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<RaiContentFilterData>(Data, options, AzureResourceManagerCognitiveServicesContext.Default);
 
-        RaiContentFilterData IPersistableModel<RaiContentFilterData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<RaiContentFilterData>(data, options);
+        RaiContentFilterData IPersistableModel<RaiContentFilterData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<RaiContentFilterData>(data, options, AzureResourceManagerCognitiveServicesContext.Default);
 
         string IPersistableModel<RaiContentFilterData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<RaiContentFilterData>)Data).GetFormatFromOptions(options);
     }

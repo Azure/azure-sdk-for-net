@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Cdn
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCdnContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(FrontDoorRuleSetData)} does not support writing '{options.Format}' format.");
             }

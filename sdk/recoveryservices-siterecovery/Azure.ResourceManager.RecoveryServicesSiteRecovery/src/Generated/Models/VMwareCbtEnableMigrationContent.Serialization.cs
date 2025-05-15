@@ -54,6 +54,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WritePropertyName("sqlServerLicenseType"u8);
                 writer.WriteStringValue(SqlServerLicenseType.Value.ToString());
             }
+            if (Optional.IsDefined(LinuxLicenseType))
+            {
+                writer.WritePropertyName("linuxLicenseType"u8);
+                writer.WriteStringValue(LinuxLicenseType.Value.ToString());
+            }
             if (Optional.IsDefined(PerformSqlBulkRegistration))
             {
                 writer.WritePropertyName("performSqlBulkRegistration"u8);
@@ -171,6 +176,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndObject();
             }
+            if (Optional.IsDefined(UserSelectedOSName))
+            {
+                writer.WritePropertyName("userSelectedOSName"u8);
+                writer.WriteStringValue(UserSelectedOSName);
+            }
         }
 
         VMwareCbtEnableMigrationContent IJsonModel<VMwareCbtEnableMigrationContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -197,6 +207,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             IList<VMwareCbtDiskContent> disksToInclude = default;
             SiteRecoveryLicenseType? licenseType = default;
             SiteRecoverySqlServerLicenseType? sqlServerLicenseType = default;
+            RecoveryServicesSiteRecoveryLinuxLicenseType? linuxLicenseType = default;
             string performSqlBulkRegistration = default;
             ResourceIdentifier dataMoverRunAsAccountId = default;
             ResourceIdentifier snapshotRunAsAccountId = default;
@@ -218,6 +229,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             IDictionary<string, string> seedDiskTags = default;
             IDictionary<string, string> targetDiskTags = default;
             IDictionary<string, string> targetNicTags = default;
+            string userSelectedOSName = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -254,6 +266,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         continue;
                     }
                     sqlServerLicenseType = new SiteRecoverySqlServerLicenseType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("linuxLicenseType"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    linuxLicenseType = new RecoveryServicesSiteRecoveryLinuxLicenseType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("performSqlBulkRegistration"u8))
@@ -421,6 +442,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     targetNicTags = dictionary;
                     continue;
                 }
+                if (property.NameEquals("userSelectedOSName"u8))
+                {
+                    userSelectedOSName = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("instanceType"u8))
                 {
                     instanceType = property.Value.GetString();
@@ -439,6 +465,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 disksToInclude,
                 licenseType,
                 sqlServerLicenseType,
+                linuxLicenseType,
                 performSqlBulkRegistration,
                 dataMoverRunAsAccountId,
                 snapshotRunAsAccountId,
@@ -459,7 +486,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 targetVmTags ?? new ChangeTrackingDictionary<string, string>(),
                 seedDiskTags ?? new ChangeTrackingDictionary<string, string>(),
                 targetDiskTags ?? new ChangeTrackingDictionary<string, string>(),
-                targetNicTags ?? new ChangeTrackingDictionary<string, string>());
+                targetNicTags ?? new ChangeTrackingDictionary<string, string>(),
+                userSelectedOSName);
         }
 
         BinaryData IPersistableModel<VMwareCbtEnableMigrationContent>.Write(ModelReaderWriterOptions options)
@@ -469,7 +497,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(VMwareCbtEnableMigrationContent)} does not support writing '{options.Format}' format.");
             }

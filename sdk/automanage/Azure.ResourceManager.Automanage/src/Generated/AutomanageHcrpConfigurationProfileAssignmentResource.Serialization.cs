@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Automanage
 
         AutomanageConfigurationProfileAssignmentData IJsonModel<AutomanageConfigurationProfileAssignmentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AutomanageConfigurationProfileAssignmentData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<AutomanageConfigurationProfileAssignmentData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<AutomanageConfigurationProfileAssignmentData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AutomanageConfigurationProfileAssignmentData>(Data, options, AzureResourceManagerAutomanageContext.Default);
 
-        AutomanageConfigurationProfileAssignmentData IPersistableModel<AutomanageConfigurationProfileAssignmentData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AutomanageConfigurationProfileAssignmentData>(data, options);
+        AutomanageConfigurationProfileAssignmentData IPersistableModel<AutomanageConfigurationProfileAssignmentData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AutomanageConfigurationProfileAssignmentData>(data, options, AzureResourceManagerAutomanageContext.Default);
 
         string IPersistableModel<AutomanageConfigurationProfileAssignmentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AutomanageConfigurationProfileAssignmentData>)Data).GetFormatFromOptions(options);
     }

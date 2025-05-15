@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerApplicationInsightsContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ApplicationInsightsComponentExportContent)} does not support writing '{options.Format}' format.");
             }

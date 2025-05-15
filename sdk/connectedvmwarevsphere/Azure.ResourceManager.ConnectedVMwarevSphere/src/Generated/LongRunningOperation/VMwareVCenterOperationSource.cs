@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
 
         VMwareVCenterResource IOperationSource<VMwareVCenterResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<VMwareVCenterData>(response.Content);
+            var data = ModelReaderWriter.Read<VMwareVCenterData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerConnectedVMwarevSphereContext.Default);
             return new VMwareVCenterResource(_client, data);
         }
 
         async ValueTask<VMwareVCenterResource> IOperationSource<VMwareVCenterResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<VMwareVCenterData>(response.Content);
+            var data = ModelReaderWriter.Read<VMwareVCenterData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerConnectedVMwarevSphereContext.Default);
             return await Task.FromResult(new VMwareVCenterResource(_client, data)).ConfigureAwait(false);
         }
     }

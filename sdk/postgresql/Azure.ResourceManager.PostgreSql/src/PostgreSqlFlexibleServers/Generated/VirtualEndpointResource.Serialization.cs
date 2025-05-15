@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
 
         VirtualEndpointResourceData IJsonModel<VirtualEndpointResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<VirtualEndpointResourceData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<VirtualEndpointResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<VirtualEndpointResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<VirtualEndpointResourceData>(Data, options, AzureResourceManagerPostgreSqlContext.Default);
 
-        VirtualEndpointResourceData IPersistableModel<VirtualEndpointResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<VirtualEndpointResourceData>(data, options);
+        VirtualEndpointResourceData IPersistableModel<VirtualEndpointResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<VirtualEndpointResourceData>(data, options, AzureResourceManagerPostgreSqlContext.Default);
 
         string IPersistableModel<VirtualEndpointResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<VirtualEndpointResourceData>)Data).GetFormatFromOptions(options);
     }

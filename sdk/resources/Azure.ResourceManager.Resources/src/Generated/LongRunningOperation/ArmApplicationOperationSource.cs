@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Resources
 
         ArmApplicationResource IOperationSource<ArmApplicationResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ArmApplicationData>(response.Content);
+            var data = ModelReaderWriter.Read<ArmApplicationData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerResourcesContext.Default);
             return new ArmApplicationResource(_client, data);
         }
 
         async ValueTask<ArmApplicationResource> IOperationSource<ArmApplicationResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ArmApplicationData>(response.Content);
+            var data = ModelReaderWriter.Read<ArmApplicationData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerResourcesContext.Default);
             return await Task.FromResult(new ArmApplicationResource(_client, data)).ConfigureAwait(false);
         }
     }

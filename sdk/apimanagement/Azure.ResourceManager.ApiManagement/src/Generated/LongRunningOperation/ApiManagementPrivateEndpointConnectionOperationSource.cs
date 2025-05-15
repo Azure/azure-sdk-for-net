@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.ApiManagement
 
         ApiManagementPrivateEndpointConnectionResource IOperationSource<ApiManagementPrivateEndpointConnectionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ApiManagementPrivateEndpointConnectionData>(response.Content);
+            var data = ModelReaderWriter.Read<ApiManagementPrivateEndpointConnectionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerApiManagementContext.Default);
             return new ApiManagementPrivateEndpointConnectionResource(_client, data);
         }
 
         async ValueTask<ApiManagementPrivateEndpointConnectionResource> IOperationSource<ApiManagementPrivateEndpointConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ApiManagementPrivateEndpointConnectionData>(response.Content);
+            var data = ModelReaderWriter.Read<ApiManagementPrivateEndpointConnectionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerApiManagementContext.Default);
             return await Task.FromResult(new ApiManagementPrivateEndpointConnectionResource(_client, data)).ConfigureAwait(false);
         }
     }

@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.DataProtectionBackup
 
         DeletedDataProtectionBackupInstanceData IJsonModel<DeletedDataProtectionBackupInstanceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DeletedDataProtectionBackupInstanceData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<DeletedDataProtectionBackupInstanceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<DeletedDataProtectionBackupInstanceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DeletedDataProtectionBackupInstanceData>(Data, options, AzureResourceManagerDataProtectionBackupContext.Default);
 
-        DeletedDataProtectionBackupInstanceData IPersistableModel<DeletedDataProtectionBackupInstanceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DeletedDataProtectionBackupInstanceData>(data, options);
+        DeletedDataProtectionBackupInstanceData IPersistableModel<DeletedDataProtectionBackupInstanceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DeletedDataProtectionBackupInstanceData>(data, options, AzureResourceManagerDataProtectionBackupContext.Default);
 
         string IPersistableModel<DeletedDataProtectionBackupInstanceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DeletedDataProtectionBackupInstanceData>)Data).GetFormatFromOptions(options);
     }

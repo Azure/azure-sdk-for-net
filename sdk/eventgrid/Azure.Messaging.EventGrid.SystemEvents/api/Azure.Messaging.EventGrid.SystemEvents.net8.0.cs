@@ -1845,6 +1845,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         string System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.AvsScriptExecutionStartedEventData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.SystemEvents.AvsScriptExecutionStartedEventData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class AzureMessagingEventGridSystemEventsContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureMessagingEventGridSystemEventsContext() { }
+        public static Azure.Messaging.EventGrid.SystemEvents.AzureMessagingEventGridSystemEventsContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct CommunicationCloudEnvironmentModel : System.IEquatable<Azure.Messaging.EventGrid.SystemEvents.CommunicationCloudEnvironmentModel>
     {

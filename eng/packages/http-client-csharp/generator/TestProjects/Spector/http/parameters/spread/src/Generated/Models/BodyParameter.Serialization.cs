@@ -15,6 +15,8 @@ namespace Parameters.Spread.Models
 {
     public partial class BodyParameter : IJsonModel<BodyParameter>
     {
+        internal BodyParameter() => throw null;
+
         void IJsonModel<BodyParameter>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;

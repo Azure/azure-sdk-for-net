@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Kusto
 
         SandboxCustomImageData IJsonModel<SandboxCustomImageData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SandboxCustomImageData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SandboxCustomImageData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<SandboxCustomImageData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SandboxCustomImageData>(Data, options, AzureResourceManagerKustoContext.Default);
 
-        SandboxCustomImageData IPersistableModel<SandboxCustomImageData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SandboxCustomImageData>(data, options);
+        SandboxCustomImageData IPersistableModel<SandboxCustomImageData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SandboxCustomImageData>(data, options, AzureResourceManagerKustoContext.Default);
 
         string IPersistableModel<SandboxCustomImageData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SandboxCustomImageData>)Data).GetFormatFromOptions(options);
     }

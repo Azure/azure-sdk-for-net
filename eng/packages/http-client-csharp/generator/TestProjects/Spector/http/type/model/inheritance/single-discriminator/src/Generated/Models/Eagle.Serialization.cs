@@ -15,6 +15,8 @@ namespace _Type.Model.Inheritance.SingleDiscriminator
 {
     public partial class Eagle : IJsonModel<Eagle>
     {
+        internal Eagle() => throw null;
+
         void IJsonModel<Eagle>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;

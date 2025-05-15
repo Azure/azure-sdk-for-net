@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.NetApp
 
         NetAppVolumeQuotaRuleResource IOperationSource<NetAppVolumeQuotaRuleResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<NetAppVolumeQuotaRuleData>(response.Content);
+            var data = ModelReaderWriter.Read<NetAppVolumeQuotaRuleData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetAppContext.Default);
             return new NetAppVolumeQuotaRuleResource(_client, data);
         }
 
         async ValueTask<NetAppVolumeQuotaRuleResource> IOperationSource<NetAppVolumeQuotaRuleResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<NetAppVolumeQuotaRuleData>(response.Content);
+            var data = ModelReaderWriter.Read<NetAppVolumeQuotaRuleData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetAppContext.Default);
             return await Task.FromResult(new NetAppVolumeQuotaRuleResource(_client, data)).ConfigureAwait(false);
         }
     }

@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.PostgreSql
 
         PostgreSqlServerData IJsonModel<PostgreSqlServerData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PostgreSqlServerData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<PostgreSqlServerData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<PostgreSqlServerData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<PostgreSqlServerData>(Data, options, AzureResourceManagerPostgreSqlContext.Default);
 
-        PostgreSqlServerData IPersistableModel<PostgreSqlServerData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PostgreSqlServerData>(data, options);
+        PostgreSqlServerData IPersistableModel<PostgreSqlServerData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PostgreSqlServerData>(data, options, AzureResourceManagerPostgreSqlContext.Default);
 
         string IPersistableModel<PostgreSqlServerData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PostgreSqlServerData>)Data).GetFormatFromOptions(options);
     }

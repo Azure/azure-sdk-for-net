@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.ManagementGroups
 
         ManagementGroupResource IOperationSource<ManagementGroupResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ManagementGroupData>(response.Content);
+            var data = ModelReaderWriter.Read<ManagementGroupData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerContext.Default);
             return new ManagementGroupResource(_client, data);
         }
 
         async ValueTask<ManagementGroupResource> IOperationSource<ManagementGroupResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ManagementGroupData>(response.Content);
+            var data = ModelReaderWriter.Read<ManagementGroupData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerContext.Default);
             return await Task.FromResult(new ManagementGroupResource(_client, data)).ConfigureAwait(false);
         }
     }

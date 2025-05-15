@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Grafana
 
         GrafanaPrivateLinkResourceData IJsonModel<GrafanaPrivateLinkResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<GrafanaPrivateLinkResourceData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<GrafanaPrivateLinkResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<GrafanaPrivateLinkResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<GrafanaPrivateLinkResourceData>(Data, options, AzureResourceManagerGrafanaContext.Default);
 
-        GrafanaPrivateLinkResourceData IPersistableModel<GrafanaPrivateLinkResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<GrafanaPrivateLinkResourceData>(data, options);
+        GrafanaPrivateLinkResourceData IPersistableModel<GrafanaPrivateLinkResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<GrafanaPrivateLinkResourceData>(data, options, AzureResourceManagerGrafanaContext.Default);
 
         string IPersistableModel<GrafanaPrivateLinkResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<GrafanaPrivateLinkResourceData>)Data).GetFormatFromOptions(options);
     }

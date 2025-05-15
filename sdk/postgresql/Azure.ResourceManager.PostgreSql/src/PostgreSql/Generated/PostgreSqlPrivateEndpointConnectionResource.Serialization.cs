@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.PostgreSql
 
         PostgreSqlPrivateEndpointConnectionData IJsonModel<PostgreSqlPrivateEndpointConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PostgreSqlPrivateEndpointConnectionData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<PostgreSqlPrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<PostgreSqlPrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<PostgreSqlPrivateEndpointConnectionData>(Data, options, AzureResourceManagerPostgreSqlContext.Default);
 
-        PostgreSqlPrivateEndpointConnectionData IPersistableModel<PostgreSqlPrivateEndpointConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PostgreSqlPrivateEndpointConnectionData>(data, options);
+        PostgreSqlPrivateEndpointConnectionData IPersistableModel<PostgreSqlPrivateEndpointConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PostgreSqlPrivateEndpointConnectionData>(data, options, AzureResourceManagerPostgreSqlContext.Default);
 
         string IPersistableModel<PostgreSqlPrivateEndpointConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PostgreSqlPrivateEndpointConnectionData>)Data).GetFormatFromOptions(options);
     }

@@ -94,17 +94,6 @@ namespace Azure.Generator
         }
 
         /// <inheritdoc/>
-        protected override IReadOnlyList<TypeProvider> CreateSerializationsCore(InputType inputType, TypeProvider typeProvider)
-        {
-            if (KnownAzureTypes.IsModelTypeWithoutSerialization(typeProvider.Type))
-            {
-                return [];
-            }
-
-            return base.CreateSerializationsCore(inputType, typeProvider);
-        }
-
-        /// <inheritdoc/>
 #pragma warning disable AZC0014 // Avoid using banned types in public API
         public override ValueExpression DeserializeJsonValue(Type valueType, ScopedApi<JsonElement> element, SerializationFormat format)
 #pragma warning restore AZC0014 // Avoid using banned types in public API

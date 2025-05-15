@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.StreamAnalytics
 
         StreamingJobInputData IJsonModel<StreamingJobInputData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<StreamingJobInputData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<StreamingJobInputData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<StreamingJobInputData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<StreamingJobInputData>(Data, options, AzureResourceManagerStreamAnalyticsContext.Default);
 
-        StreamingJobInputData IPersistableModel<StreamingJobInputData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<StreamingJobInputData>(data, options);
+        StreamingJobInputData IPersistableModel<StreamingJobInputData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<StreamingJobInputData>(data, options, AzureResourceManagerStreamAnalyticsContext.Default);
 
         string IPersistableModel<StreamingJobInputData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<StreamingJobInputData>)Data).GetFormatFromOptions(options);
     }

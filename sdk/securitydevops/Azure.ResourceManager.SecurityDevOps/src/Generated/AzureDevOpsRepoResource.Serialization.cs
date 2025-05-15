@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.SecurityDevOps
 
         AzureDevOpsRepoData IJsonModel<AzureDevOpsRepoData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AzureDevOpsRepoData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<AzureDevOpsRepoData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<AzureDevOpsRepoData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AzureDevOpsRepoData>(Data, options, AzureResourceManagerSecurityDevOpsContext.Default);
 
-        AzureDevOpsRepoData IPersistableModel<AzureDevOpsRepoData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AzureDevOpsRepoData>(data, options);
+        AzureDevOpsRepoData IPersistableModel<AzureDevOpsRepoData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AzureDevOpsRepoData>(data, options, AzureResourceManagerSecurityDevOpsContext.Default);
 
         string IPersistableModel<AzureDevOpsRepoData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AzureDevOpsRepoData>)Data).GetFormatFromOptions(options);
     }

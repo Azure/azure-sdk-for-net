@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
 
         DataReplicationRecoveryPointData IJsonModel<DataReplicationRecoveryPointData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DataReplicationRecoveryPointData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<DataReplicationRecoveryPointData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<DataReplicationRecoveryPointData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DataReplicationRecoveryPointData>(Data, options, AzureResourceManagerRecoveryServicesDataReplicationContext.Default);
 
-        DataReplicationRecoveryPointData IPersistableModel<DataReplicationRecoveryPointData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DataReplicationRecoveryPointData>(data, options);
+        DataReplicationRecoveryPointData IPersistableModel<DataReplicationRecoveryPointData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DataReplicationRecoveryPointData>(data, options, AzureResourceManagerRecoveryServicesDataReplicationContext.Default);
 
         string IPersistableModel<DataReplicationRecoveryPointData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DataReplicationRecoveryPointData>)Data).GetFormatFromOptions(options);
     }

@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.Automation
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAutomationContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(DscNodeData)} does not support writing '{options.Format}' format.");
             }

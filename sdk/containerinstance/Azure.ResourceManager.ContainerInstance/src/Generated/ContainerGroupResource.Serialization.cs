@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.ContainerInstance
 
         ContainerGroupData IJsonModel<ContainerGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ContainerGroupData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ContainerGroupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<ContainerGroupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ContainerGroupData>(Data, options, AzureResourceManagerContainerInstanceContext.Default);
 
-        ContainerGroupData IPersistableModel<ContainerGroupData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ContainerGroupData>(data, options);
+        ContainerGroupData IPersistableModel<ContainerGroupData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ContainerGroupData>(data, options, AzureResourceManagerContainerInstanceContext.Default);
 
         string IPersistableModel<ContainerGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ContainerGroupData>)Data).GetFormatFromOptions(options);
     }

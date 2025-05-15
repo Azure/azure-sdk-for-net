@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Storage
 
         ObjectReplicationPolicyData IJsonModel<ObjectReplicationPolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ObjectReplicationPolicyData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ObjectReplicationPolicyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<ObjectReplicationPolicyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ObjectReplicationPolicyData>(Data, options, AzureResourceManagerStorageContext.Default);
 
-        ObjectReplicationPolicyData IPersistableModel<ObjectReplicationPolicyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ObjectReplicationPolicyData>(data, options);
+        ObjectReplicationPolicyData IPersistableModel<ObjectReplicationPolicyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ObjectReplicationPolicyData>(data, options, AzureResourceManagerStorageContext.Default);
 
         string IPersistableModel<ObjectReplicationPolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ObjectReplicationPolicyData>)Data).GetFormatFromOptions(options);
     }

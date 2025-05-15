@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.EventGrid
 
         PartnerRegistrationResource IOperationSource<PartnerRegistrationResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<PartnerRegistrationData>(response.Content);
+            var data = ModelReaderWriter.Read<PartnerRegistrationData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerEventGridContext.Default);
             return new PartnerRegistrationResource(_client, data);
         }
 
         async ValueTask<PartnerRegistrationResource> IOperationSource<PartnerRegistrationResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<PartnerRegistrationData>(response.Content);
+            var data = ModelReaderWriter.Read<PartnerRegistrationData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerEventGridContext.Default);
             return await Task.FromResult(new PartnerRegistrationResource(_client, data)).ConfigureAwait(false);
         }
     }

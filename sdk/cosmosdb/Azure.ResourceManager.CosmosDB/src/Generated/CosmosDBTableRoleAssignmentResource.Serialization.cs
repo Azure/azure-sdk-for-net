@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.CosmosDB
 
         CosmosDBTableRoleAssignmentData IJsonModel<CosmosDBTableRoleAssignmentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<CosmosDBTableRoleAssignmentData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<CosmosDBTableRoleAssignmentData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<CosmosDBTableRoleAssignmentData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<CosmosDBTableRoleAssignmentData>(Data, options, AzureResourceManagerCosmosDBContext.Default);
 
-        CosmosDBTableRoleAssignmentData IPersistableModel<CosmosDBTableRoleAssignmentData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CosmosDBTableRoleAssignmentData>(data, options);
+        CosmosDBTableRoleAssignmentData IPersistableModel<CosmosDBTableRoleAssignmentData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CosmosDBTableRoleAssignmentData>(data, options, AzureResourceManagerCosmosDBContext.Default);
 
         string IPersistableModel<CosmosDBTableRoleAssignmentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<CosmosDBTableRoleAssignmentData>)Data).GetFormatFromOptions(options);
     }

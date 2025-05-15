@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSecurityCenterContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ExecuteRuleStatus)} does not support '{options.Format}' format.");
             }

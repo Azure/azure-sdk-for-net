@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.ConfidentialLedger
 
         ManagedCcfResource IOperationSource<ManagedCcfResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ManagedCcfData>(response.Content);
+            var data = ModelReaderWriter.Read<ManagedCcfData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerConfidentialLedgerContext.Default);
             return new ManagedCcfResource(_client, data);
         }
 
         async ValueTask<ManagedCcfResource> IOperationSource<ManagedCcfResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ManagedCcfData>(response.Content);
+            var data = ModelReaderWriter.Read<ManagedCcfData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerConfidentialLedgerContext.Default);
             return await Task.FromResult(new ManagedCcfResource(_client, data)).ConfigureAwait(false);
         }
     }

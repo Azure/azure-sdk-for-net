@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.DeviceUpdate
 
         DeviceUpdatePrivateEndpointConnectionProxyData IJsonModel<DeviceUpdatePrivateEndpointConnectionProxyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DeviceUpdatePrivateEndpointConnectionProxyData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<DeviceUpdatePrivateEndpointConnectionProxyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<DeviceUpdatePrivateEndpointConnectionProxyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DeviceUpdatePrivateEndpointConnectionProxyData>(Data, options, AzureResourceManagerDeviceUpdateContext.Default);
 
-        DeviceUpdatePrivateEndpointConnectionProxyData IPersistableModel<DeviceUpdatePrivateEndpointConnectionProxyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DeviceUpdatePrivateEndpointConnectionProxyData>(data, options);
+        DeviceUpdatePrivateEndpointConnectionProxyData IPersistableModel<DeviceUpdatePrivateEndpointConnectionProxyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DeviceUpdatePrivateEndpointConnectionProxyData>(data, options, AzureResourceManagerDeviceUpdateContext.Default);
 
         string IPersistableModel<DeviceUpdatePrivateEndpointConnectionProxyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DeviceUpdatePrivateEndpointConnectionProxyData>)Data).GetFormatFromOptions(options);
     }

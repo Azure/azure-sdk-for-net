@@ -9,7 +9,7 @@ using System;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    /// <summary> Specifies an Azure Machine Learning endpoint deployed via the Azure AI Studio Model Catalog for generating the vector embedding of a query string. </summary>
+    /// <summary> Specifies an Azure Machine Learning endpoint deployed via the Azure AI Foundry Model Catalog for generating the vector embedding of a query string. </summary>
     public partial class AzureMachineLearningVectorizer : VectorSearchVectorizer
     {
         /// <summary> Initializes a new instance of <see cref="AzureMachineLearningVectorizer"/>. </summary>

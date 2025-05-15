@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.NetworkCloud
 
         NetworkCloudL2NetworkResource IOperationSource<NetworkCloudL2NetworkResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<NetworkCloudL2NetworkData>(response.Content);
+            var data = ModelReaderWriter.Read<NetworkCloudL2NetworkData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkCloudContext.Default);
             return new NetworkCloudL2NetworkResource(_client, data);
         }
 
         async ValueTask<NetworkCloudL2NetworkResource> IOperationSource<NetworkCloudL2NetworkResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<NetworkCloudL2NetworkData>(response.Content);
+            var data = ModelReaderWriter.Read<NetworkCloudL2NetworkData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkCloudContext.Default);
             return await Task.FromResult(new NetworkCloudL2NetworkResource(_client, data)).ConfigureAwait(false);
         }
     }

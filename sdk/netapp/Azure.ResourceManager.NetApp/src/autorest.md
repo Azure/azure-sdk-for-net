@@ -8,8 +8,8 @@ azure-arm: true
 csharp: true
 library-name: NetApp
 namespace: Azure.ResourceManager.NetApp
-require: https://github.com/Azure/azure-rest-api-specs/blob/dc6126aca1852126259a71852672555a6e69dbc2/specification/netapp/resource-manager/readme.md
-tag: package-2024-09-01
+require: https://github.com/Azure/azure-rest-api-specs/blob/d7a38bf0c0b5fbd9e893e05ad0a7dbee18ac3a8d/specification/netapp/resource-manager/readme.md
+tag: package-2025-01-01
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -256,6 +256,8 @@ rename-mapping:
   ListQuotaReportResponse: NetAppVolumeQuotaReportListResult
   QuotaReport: NetAppVolumeQuotaReport
   GetKeyVaultStatusResponse: NetAppKeyVaultStatusResult
+  UsageResult : NetAppUsageResult
+  UsageName: NetAppUsageName
 
 models-to-treat-empty-string-as-null:
 - VolumeSnapshotProperties

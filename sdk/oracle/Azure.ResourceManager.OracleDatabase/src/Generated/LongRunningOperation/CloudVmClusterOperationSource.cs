@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.OracleDatabase
 
         CloudVmClusterResource IOperationSource<CloudVmClusterResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<CloudVmClusterData>(response.Content);
+            var data = ModelReaderWriter.Read<CloudVmClusterData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerOracleDatabaseContext.Default);
             return new CloudVmClusterResource(_client, data);
         }
 
         async ValueTask<CloudVmClusterResource> IOperationSource<CloudVmClusterResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<CloudVmClusterData>(response.Content);
+            var data = ModelReaderWriter.Read<CloudVmClusterData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerOracleDatabaseContext.Default);
             return await Task.FromResult(new CloudVmClusterResource(_client, data)).ConfigureAwait(false);
         }
     }

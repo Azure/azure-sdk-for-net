@@ -15,6 +15,8 @@ namespace _Type.Property.AdditionalProperties
 {
     public partial class ExtendsUnknownAdditionalPropertiesDiscriminatedDerived : IJsonModel<ExtendsUnknownAdditionalPropertiesDiscriminatedDerived>
     {
+        internal ExtendsUnknownAdditionalPropertiesDiscriminatedDerived() => throw null;
+
         void IJsonModel<ExtendsUnknownAdditionalPropertiesDiscriminatedDerived>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;

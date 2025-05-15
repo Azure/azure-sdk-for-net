@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.StorageCache
 
         StorageTargetData IJsonModel<StorageTargetData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<StorageTargetData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<StorageTargetData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<StorageTargetData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<StorageTargetData>(Data, options, AzureResourceManagerStorageCacheContext.Default);
 
-        StorageTargetData IPersistableModel<StorageTargetData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<StorageTargetData>(data, options);
+        StorageTargetData IPersistableModel<StorageTargetData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<StorageTargetData>(data, options, AzureResourceManagerStorageCacheContext.Default);
 
         string IPersistableModel<StorageTargetData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<StorageTargetData>)Data).GetFormatFromOptions(options);
     }

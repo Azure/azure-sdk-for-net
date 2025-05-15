@@ -1,5 +1,11 @@
 namespace Azure.ResourceManager.Kubernetes
 {
+    public partial class AzureResourceManagerKubernetesContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureResourceManagerKubernetesContext() { }
+        public static Azure.ResourceManager.Kubernetes.AzureResourceManagerKubernetesContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class ConnectedClusterCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Kubernetes.ConnectedClusterResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Kubernetes.ConnectedClusterResource>, System.Collections.IEnumerable
     {
         protected ConnectedClusterCollection() { }

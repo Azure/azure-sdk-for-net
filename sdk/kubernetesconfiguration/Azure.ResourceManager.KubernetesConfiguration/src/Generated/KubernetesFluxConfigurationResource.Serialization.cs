@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.KubernetesConfiguration
 
         KubernetesFluxConfigurationData IJsonModel<KubernetesFluxConfigurationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<KubernetesFluxConfigurationData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<KubernetesFluxConfigurationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<KubernetesFluxConfigurationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<KubernetesFluxConfigurationData>(Data, options, AzureResourceManagerKubernetesConfigurationContext.Default);
 
-        KubernetesFluxConfigurationData IPersistableModel<KubernetesFluxConfigurationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<KubernetesFluxConfigurationData>(data, options);
+        KubernetesFluxConfigurationData IPersistableModel<KubernetesFluxConfigurationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<KubernetesFluxConfigurationData>(data, options, AzureResourceManagerKubernetesConfigurationContext.Default);
 
         string IPersistableModel<KubernetesFluxConfigurationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<KubernetesFluxConfigurationData>)Data).GetFormatFromOptions(options);
     }

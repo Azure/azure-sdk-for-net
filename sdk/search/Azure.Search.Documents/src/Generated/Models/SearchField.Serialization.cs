@@ -55,6 +55,18 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WritePropertyName("facetable"u8);
                 writer.WriteBooleanValue(IsFacetable.Value);
             }
+            if (Optional.IsDefined(PermissionFilter))
+            {
+                if (PermissionFilter != null)
+                {
+                    writer.WritePropertyName("permissionFilter"u8);
+                    writer.WriteStringValue(PermissionFilter.Value.ToString());
+                }
+                else
+                {
+                    writer.WriteNull("permissionFilter");
+                }
+            }
             if (Optional.IsDefined(AnalyzerName))
             {
                 if (AnalyzerName != null)
@@ -177,6 +189,7 @@ namespace Azure.Search.Documents.Indexes.Models
             bool? filterable = default;
             bool? sortable = default;
             bool? facetable = default;
+            PermissionFilter? permissionFilter = default;
             LexicalAnalyzerName? analyzer = default;
             LexicalAnalyzerName? searchAnalyzer = default;
             LexicalAnalyzerName? indexAnalyzer = default;
@@ -259,6 +272,16 @@ namespace Azure.Search.Documents.Indexes.Models
                         continue;
                     }
                     facetable = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("permissionFilter"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        permissionFilter = null;
+                        continue;
+                    }
+                    permissionFilter = new PermissionFilter(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("analyzer"u8))
@@ -370,6 +393,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 filterable,
                 sortable,
                 facetable,
+                permissionFilter,
                 analyzer,
                 searchAnalyzer,
                 indexAnalyzer,

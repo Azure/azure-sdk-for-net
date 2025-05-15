@@ -1,5 +1,11 @@
 namespace Azure.ResourceManager.PineconeVectorDB
 {
+    public partial class AzureResourceManagerPineconeVectorDBContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureResourceManagerPineconeVectorDBContext() { }
+        public static Azure.ResourceManager.PineconeVectorDB.AzureResourceManagerPineconeVectorDBContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public static partial class PineconeVectorDBExtensions
     {
         public static Azure.Response<Azure.ResourceManager.PineconeVectorDB.PineconeVectorDBOrganizationResource> GetPineconeVectorDBOrganization(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string organizationname, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }

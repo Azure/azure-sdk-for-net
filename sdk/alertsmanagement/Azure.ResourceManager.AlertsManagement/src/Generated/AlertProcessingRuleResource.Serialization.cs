@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.AlertsManagement
 
         AlertProcessingRuleData IJsonModel<AlertProcessingRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AlertProcessingRuleData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<AlertProcessingRuleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<AlertProcessingRuleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AlertProcessingRuleData>(Data, options, AzureResourceManagerAlertsManagementContext.Default);
 
-        AlertProcessingRuleData IPersistableModel<AlertProcessingRuleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AlertProcessingRuleData>(data, options);
+        AlertProcessingRuleData IPersistableModel<AlertProcessingRuleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AlertProcessingRuleData>(data, options, AzureResourceManagerAlertsManagementContext.Default);
 
         string IPersistableModel<AlertProcessingRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AlertProcessingRuleData>)Data).GetFormatFromOptions(options);
     }

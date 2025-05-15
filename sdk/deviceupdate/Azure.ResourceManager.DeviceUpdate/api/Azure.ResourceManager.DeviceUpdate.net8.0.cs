@@ -1,5 +1,11 @@
 namespace Azure.ResourceManager.DeviceUpdate
 {
+    public partial class AzureResourceManagerDeviceUpdateContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureResourceManagerDeviceUpdateContext() { }
+        public static Azure.ResourceManager.DeviceUpdate.AzureResourceManagerDeviceUpdateContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class DeviceUpdateAccountCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.DeviceUpdate.DeviceUpdateAccountResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DeviceUpdate.DeviceUpdateAccountResource>, System.Collections.IEnumerable
     {
         protected DeviceUpdateAccountCollection() { }

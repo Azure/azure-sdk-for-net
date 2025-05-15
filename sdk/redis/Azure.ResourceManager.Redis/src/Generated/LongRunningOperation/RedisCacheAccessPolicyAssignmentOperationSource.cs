@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Redis
 
         RedisCacheAccessPolicyAssignmentResource IOperationSource<RedisCacheAccessPolicyAssignmentResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<RedisCacheAccessPolicyAssignmentData>(response.Content);
+            var data = ModelReaderWriter.Read<RedisCacheAccessPolicyAssignmentData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerRedisContext.Default);
             return new RedisCacheAccessPolicyAssignmentResource(_client, data);
         }
 
         async ValueTask<RedisCacheAccessPolicyAssignmentResource> IOperationSource<RedisCacheAccessPolicyAssignmentResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<RedisCacheAccessPolicyAssignmentData>(response.Content);
+            var data = ModelReaderWriter.Read<RedisCacheAccessPolicyAssignmentData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerRedisContext.Default);
             return await Task.FromResult(new RedisCacheAccessPolicyAssignmentResource(_client, data)).ConfigureAwait(false);
         }
     }

@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Qumulo.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerQumuloContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(QumuloFileSystemResourcePatch)} does not support writing '{options.Format}' format.");
             }

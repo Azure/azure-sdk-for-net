@@ -13,7 +13,7 @@ namespace Client.Structure.Service
     {
         protected Baz() => throw null;
 
-        public HttpPipeline Pipeline => throw null;
+        public virtual HttpPipeline Pipeline => throw null;
 
         public virtual BazFoo GetBazFooClient() => throw null;
     }

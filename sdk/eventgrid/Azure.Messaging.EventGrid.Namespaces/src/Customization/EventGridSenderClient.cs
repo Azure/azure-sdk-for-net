@@ -13,8 +13,8 @@ namespace Azure.Messaging.EventGrid.Namespaces
 {
     [CodeGenSuppress("EventGridSenderClient", typeof(Uri), typeof(AzureKeyCredential))]
     [CodeGenSuppress("EventGridSenderClient", typeof(Uri), typeof(TokenCredential))]
-    [CodeGenSuppress("EventGridSenderClient", typeof(Uri), typeof(AzureKeyCredential), typeof(AzureMessagingEventGridNamespacesClientOptions))]
-    [CodeGenSuppress("EventGridSenderClient", typeof(Uri), typeof(TokenCredential), typeof(AzureMessagingEventGridNamespacesClientOptions))]
+    [CodeGenSuppress("EventGridSenderClient", typeof(Uri), typeof(AzureKeyCredential), typeof(EventGridSenderClientOptions))]
+    [CodeGenSuppress("EventGridSenderClient", typeof(Uri), typeof(TokenCredential), typeof(EventGridSenderClientOptions))]
     public partial class EventGridSenderClient
     {
         private readonly string _topicName;
@@ -63,7 +63,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
 
             ClientDiagnostics = new ClientDiagnostics(options, true);
             _keyCredential = credential;
-            _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new AzureKeyCredentialPolicy(_keyCredential, AuthorizationHeader, AuthorizationApiKeyPrefix) }, new ResponseClassifier());
+            Pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new AzureKeyCredentialPolicy(_keyCredential, AuthorizationHeader, AuthorizationApiKeyPrefix) }, new ResponseClassifier());
             _endpoint = endpoint;
             _apiVersion = options.Version;
             _topicName = topicName;
@@ -91,7 +91,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
 
             ClientDiagnostics = new ClientDiagnostics(options, true);
             _tokenCredential = credential;
-            _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) }, new ResponseClassifier());
+            Pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) }, new ResponseClassifier());
             _endpoint = endpoint;
             _apiVersion = options.Version;
             _topicName = topicName;
@@ -300,6 +300,17 @@ namespace Azure.Messaging.EventGrid.Namespaces
         public virtual Response SendEvents(RequestContent content, RequestContext context = null)
         {
             return SendEvents(_topicName, content, context);
+        }
+
+        private static RequestContext DefaultRequestContext = new RequestContext();
+        internal static RequestContext FromCancellationToken(CancellationToken cancellationToken = default)
+        {
+            if (!cancellationToken.CanBeCanceled)
+            {
+                return DefaultRequestContext;
+            }
+
+            return new RequestContext() { CancellationToken = cancellationToken };
         }
     }
 }

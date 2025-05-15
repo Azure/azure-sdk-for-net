@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.DataProtectionBackup
 
         DataProtectionBackupRecoveryPointData IJsonModel<DataProtectionBackupRecoveryPointData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DataProtectionBackupRecoveryPointData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<DataProtectionBackupRecoveryPointData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<DataProtectionBackupRecoveryPointData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DataProtectionBackupRecoveryPointData>(Data, options, AzureResourceManagerDataProtectionBackupContext.Default);
 
-        DataProtectionBackupRecoveryPointData IPersistableModel<DataProtectionBackupRecoveryPointData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DataProtectionBackupRecoveryPointData>(data, options);
+        DataProtectionBackupRecoveryPointData IPersistableModel<DataProtectionBackupRecoveryPointData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DataProtectionBackupRecoveryPointData>(data, options, AzureResourceManagerDataProtectionBackupContext.Default);
 
         string IPersistableModel<DataProtectionBackupRecoveryPointData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DataProtectionBackupRecoveryPointData>)Data).GetFormatFromOptions(options);
     }

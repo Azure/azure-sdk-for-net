@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.EnergyServices
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerEnergyServicesContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(EnergyServiceData)} does not support writing '{options.Format}' format.");
             }

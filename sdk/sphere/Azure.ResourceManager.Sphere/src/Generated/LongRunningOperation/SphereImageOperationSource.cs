@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Sphere
 
         SphereImageResource IOperationSource<SphereImageResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<SphereImageData>(response.Content);
+            var data = ModelReaderWriter.Read<SphereImageData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSphereContext.Default);
             return new SphereImageResource(_client, data);
         }
 
         async ValueTask<SphereImageResource> IOperationSource<SphereImageResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<SphereImageData>(response.Content);
+            var data = ModelReaderWriter.Read<SphereImageData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSphereContext.Default);
             return await Task.FromResult(new SphereImageResource(_client, data)).ConfigureAwait(false);
         }
     }

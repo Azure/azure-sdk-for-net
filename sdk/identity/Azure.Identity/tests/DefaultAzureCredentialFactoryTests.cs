@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
@@ -331,9 +332,9 @@ namespace Azure.Identity.Tests
 
         public static IEnumerable<object[]> ExcludeCredOptions()
         {
+            yield return new object[] { true, false, false, false, false, false, false, false, false, false };
             yield return new object[] { false, true, false, false, false, false, false, false, false, false };
             yield return new object[] { false, false, true, false, false, false, false, false, false, false };
-            yield return new object[] { true, false, false, false, false, false, false, false, false, false };
             yield return new object[] { false, false, false, true, false, false, false, false, false, false };
             yield return new object[] { false, false, false, false, true, false, false, false, false, false };
             yield return new object[] { false, false, false, false, false, true, false, false, false, false };
@@ -375,6 +376,216 @@ namespace Azure.Identity.Tests
                 expCredentialTypes.ConditionalAdd(!excludeAzurePowerShellCredential, typeof(AzurePowerShellCredential));
                 expCredentialTypes.ConditionalAdd(!excludeDeveloperCliCredential, typeof(AzureDeveloperCliCredential));
                 expCredentialTypes.ConditionalAdd(!excludeInteractiveBrowserCredential, typeof(InteractiveBrowserCredential));
+
+                var options = new DefaultAzureCredentialOptions
+                {
+                    ExcludeEnvironmentCredential = excludeEnvironmentCredential,
+                    ExcludeWorkloadIdentityCredential = excludeWorkloadIdentityCredential,
+                    ExcludeManagedIdentityCredential = excludeManagedIdentityCredential,
+                    ExcludeAzureDeveloperCliCredential = excludeDeveloperCliCredential,
+                    ExcludeSharedTokenCacheCredential = excludeSharedTokenCacheCredential,
+                    ExcludeAzureCliCredential = excludeCliCredential,
+                    ExcludeInteractiveBrowserCredential = excludeInteractiveBrowserCredential,
+                    ExcludeVisualStudioCredential = excludeVisualStudioCredential,
+                    ExcludeVisualStudioCodeCredential = excludeVisualStudioCodeCredential,
+                    ExcludeAzurePowerShellCredential = excludeAzurePowerShellCredential
+                };
+
+                var factory = new DefaultAzureCredentialFactory(options);
+
+                if (expCredentialTypes.Count == 0)
+                {
+                    Assert.Throws<ArgumentException>(() => factory.CreateCredentialChain());
+
+                    Assert.Pass();
+                }
+
+                TokenCredential[] chain = factory.CreateCredentialChain();
+
+                for (int i = 0; i < expCredentialTypes.Count; i++)
+                {
+                    Assert.IsInstanceOf(expCredentialTypes[i], chain[i]);
+                }
+
+                for (int i = expCredentialTypes.Count; i < chain.Length; i++)
+                {
+                    Assert.IsNull(chain[i]);
+                }
+            }
+        }
+
+        [Test]
+        public void ValidateDefaultAzureCredentialAZURE_TOKEN_CREDENTIALS_Honored([Values(null, "dev", "prod")] string setDisableDevTools)
+        {
+            using (new TestEnvVar(new Dictionary<string, string>
+            {
+                { "AZURE_CLIENT_ID", null },
+                { "AZURE_USERNAME", null },
+                { "AZURE_TENANT_ID", null },
+                { "AZURE_TOKEN_CREDENTIALS", setDisableDevTools }
+            }))
+            {
+                DefaultAzureCredentialOptions options = new DefaultAzureCredentialOptions();
+                var factory = new DefaultAzureCredentialFactory(options);
+                var chain = factory.CreateCredentialChain();
+
+                if (setDisableDevTools == "dev")
+                {
+                    //check the factory created the credentials
+                    Assert.IsFalse(chain.Any(cred => cred is EnvironmentCredential));
+                    Assert.IsFalse(chain.Any(cred => cred is WorkloadIdentityCredential));
+                    Assert.IsFalse(chain.Any(cred => cred is ManagedIdentityCredential));
+                    Assert.IsFalse(chain.Any(cred => cred is SharedTokenCacheCredential));
+                    Assert.IsTrue(chain.Any(cred => cred is AzureCliCredential));
+                    Assert.IsTrue(chain.Any(cred => cred is AzurePowerShellCredential));
+                    Assert.IsTrue(chain.Any(cred => cred is VisualStudioCredential));
+                    Assert.IsTrue(chain.Any(cred => cred is AzureDeveloperCliCredential));
+                    // VS Code is always excluded.
+                    Assert.IsFalse(chain.Any(cred => cred is VisualStudioCodeCredential));
+                    Assert.IsFalse(chain.Any(cred => cred is InteractiveBrowserCredential));
+                }
+                else if (setDisableDevTools == "prod")
+                {
+                    //check the factory created the credentials
+                    Assert.IsTrue(chain.Any(cred => cred is EnvironmentCredential));
+                    Assert.IsTrue(chain.Any(cred => cred is WorkloadIdentityCredential));
+                    Assert.IsTrue(chain.Any(cred => cred is ManagedIdentityCredential));
+                    Assert.IsFalse(chain.Any(cred => cred is SharedTokenCacheCredential));
+                    Assert.IsFalse(chain.Any(cred => cred is AzureCliCredential));
+                    Assert.IsFalse(chain.Any(cred => cred is AzurePowerShellCredential));
+                    Assert.IsFalse(chain.Any(cred => cred is VisualStudioCredential));
+                    Assert.IsFalse(chain.Any(cred => cred is AzureDeveloperCliCredential));
+                    // VS Code is always excluded.
+                    Assert.IsFalse(chain.Any(cred => cred is VisualStudioCodeCredential));
+                }
+                else
+                {
+                    //check the factory created the credentials
+                    Assert.IsTrue(chain.Any(cred => cred is EnvironmentCredential));
+                    Assert.IsTrue(chain.Any(cred => cred is WorkloadIdentityCredential));
+                    Assert.IsTrue(chain.Any(cred => cred is ManagedIdentityCredential));
+                    Assert.IsFalse(chain.Any(cred => cred is SharedTokenCacheCredential));
+                    Assert.IsTrue(chain.Any(cred => cred is AzureCliCredential));
+                    Assert.IsTrue(chain.Any(cred => cred is AzurePowerShellCredential));
+                    Assert.IsTrue(chain.Any(cred => cred is VisualStudioCredential));
+                    Assert.IsTrue(chain.Any(cred => cred is AzureDeveloperCliCredential));
+                    // VS Code is always excluded.
+                    Assert.IsFalse(chain.Any(cred => cred is VisualStudioCodeCredential));
+                }
+            }
+        }
+
+        [Test]
+        public void InvalidAZURE_TOKEN_CREDENTIALS_Throws()
+        {
+            using (new TestEnvVar(new Dictionary<string, string>
+            {
+                { "AZURE_CLIENT_ID", null },
+                { "AZURE_USERNAME", null },
+                { "AZURE_TENANT_ID", null },
+                { "AZURE_TOKEN_CREDENTIALS", "bogus" }
+            }))
+            {
+                DefaultAzureCredentialOptions options = new DefaultAzureCredentialOptions();
+                var factory = new DefaultAzureCredentialFactory(options);
+                Assert.Throws<InvalidOperationException>(() => factory.CreateCredentialChain());
+            }
+        }
+
+        [Test]
+        [TestCaseSource(nameof(ExcludeCredOptions))]
+        public void ValidateExcludeOptionsHonoredWithAZURE_TOKEN_CREDENTIALS_DevMode(
+            bool excludeEnvironmentCredential,
+            bool excludeWorkloadIdentityCredential,
+            bool excludeManagedIdentityCredential,
+            bool excludeDeveloperCliCredential,
+            bool excludeSharedTokenCacheCredential,
+            bool excludeVisualStudioCredential,
+            bool excludeVisualStudioCodeCredential,
+            bool excludeCliCredential,
+            bool excludeAzurePowerShellCredential,
+            bool excludeInteractiveBrowserCredential)
+        {
+            using (new TestEnvVar(new Dictionary<string, string>
+            {
+                { "AZURE_CLIENT_ID", null },
+                { "AZURE_USERNAME", null },
+                { "AZURE_TENANT_ID", null },
+                { "AZURE_TOKEN_CREDENTIALS", "dev" }
+            }))
+            {
+                var expCredentialTypes = new List<Type>();
+                expCredentialTypes.ConditionalAdd(!excludeSharedTokenCacheCredential, typeof(SharedTokenCacheCredential));
+                expCredentialTypes.ConditionalAdd(!excludeVisualStudioCredential, typeof(VisualStudioCredential));
+                expCredentialTypes.ConditionalAdd(!excludeVisualStudioCodeCredential, typeof(VisualStudioCodeCredential));
+                expCredentialTypes.ConditionalAdd(!excludeCliCredential, typeof(AzureCliCredential));
+                expCredentialTypes.ConditionalAdd(!excludeAzurePowerShellCredential, typeof(AzurePowerShellCredential));
+                expCredentialTypes.ConditionalAdd(!excludeDeveloperCliCredential, typeof(AzureDeveloperCliCredential));
+                expCredentialTypes.ConditionalAdd(!excludeInteractiveBrowserCredential, typeof(InteractiveBrowserCredential));
+
+                var options = new DefaultAzureCredentialOptions
+                {
+                    ExcludeEnvironmentCredential = excludeEnvironmentCredential,
+                    ExcludeWorkloadIdentityCredential = excludeWorkloadIdentityCredential,
+                    ExcludeManagedIdentityCredential = excludeManagedIdentityCredential,
+                    ExcludeAzureDeveloperCliCredential = excludeDeveloperCliCredential,
+                    ExcludeSharedTokenCacheCredential = excludeSharedTokenCacheCredential,
+                    ExcludeAzureCliCredential = excludeCliCredential,
+                    ExcludeInteractiveBrowserCredential = excludeInteractiveBrowserCredential,
+                    ExcludeVisualStudioCredential = excludeVisualStudioCredential,
+                    ExcludeVisualStudioCodeCredential = excludeVisualStudioCodeCredential,
+                    ExcludeAzurePowerShellCredential = excludeAzurePowerShellCredential
+                };
+
+                var factory = new DefaultAzureCredentialFactory(options);
+
+                if (expCredentialTypes.Count == 0)
+                {
+                    Assert.Throws<ArgumentException>(() => factory.CreateCredentialChain());
+
+                    Assert.Pass();
+                }
+
+                TokenCredential[] chain = factory.CreateCredentialChain();
+
+                for (int i = 0; i < expCredentialTypes.Count; i++)
+                {
+                    Assert.IsInstanceOf(expCredentialTypes[i], chain[i]);
+                }
+
+                for (int i = expCredentialTypes.Count; i < chain.Length; i++)
+                {
+                    Assert.IsNull(chain[i]);
+                }
+            }
+        }
+
+        [Test]
+        [TestCaseSource(nameof(ExcludeCredOptions))]
+        public void ValidateExcludeOptionsHonoredWithAZURE_TOKEN_CREDENTIALS_ProdMode(
+            bool excludeEnvironmentCredential,
+            bool excludeWorkloadIdentityCredential,
+            bool excludeManagedIdentityCredential,
+            bool excludeDeveloperCliCredential,
+            bool excludeSharedTokenCacheCredential,
+            bool excludeVisualStudioCredential,
+            bool excludeVisualStudioCodeCredential,
+            bool excludeCliCredential,
+            bool excludeAzurePowerShellCredential,
+            bool excludeInteractiveBrowserCredential)
+        {
+            using (new TestEnvVar(new Dictionary<string, string>
+            {
+                { "AZURE_CLIENT_ID", null },
+                { "AZURE_USERNAME", null },
+                { "AZURE_TENANT_ID", null },
+                { "AZURE_TOKEN_CREDENTIALS", "prod" }
+            }))
+            {
+                var expCredentialTypes = new List<Type>();
+                expCredentialTypes.ConditionalAdd(!excludeEnvironmentCredential, typeof(EnvironmentCredential));
+                expCredentialTypes.ConditionalAdd(!excludeWorkloadIdentityCredential, typeof(WorkloadIdentityCredential));
+                expCredentialTypes.ConditionalAdd(!excludeManagedIdentityCredential, typeof(ManagedIdentityCredential));
 
                 var options = new DefaultAzureCredentialOptions
                 {

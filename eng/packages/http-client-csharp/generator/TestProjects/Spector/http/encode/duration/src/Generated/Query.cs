@@ -18,7 +18,7 @@ namespace Encode.Duration
     {
         protected Query() => throw null;
 
-        public HttpPipeline Pipeline => throw null;
+        public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response Default(TimeSpan input, RequestContext context) => throw null;
 

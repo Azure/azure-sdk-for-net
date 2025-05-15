@@ -1,5 +1,11 @@
 namespace Azure.ResourceManager.MarketplaceOrdering
 {
+    public partial class AzureResourceManagerMarketplaceOrderingContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureResourceManagerMarketplaceOrderingContext() { }
+        public static Azure.ResourceManager.MarketplaceOrdering.AzureResourceManagerMarketplaceOrderingContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class MarketplaceAgreementCollection : Azure.ResourceManager.ArmCollection
     {
         protected MarketplaceAgreementCollection() { }

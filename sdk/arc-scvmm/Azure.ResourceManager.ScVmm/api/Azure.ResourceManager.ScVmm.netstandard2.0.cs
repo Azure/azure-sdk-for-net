@@ -1,5 +1,11 @@
 namespace Azure.ResourceManager.ScVmm
 {
+    public partial class AzureResourceManagerScVmmContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureResourceManagerScVmmContext() { }
+        public static Azure.ResourceManager.ScVmm.AzureResourceManagerScVmmContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class ScVmmAvailabilitySetCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.ScVmm.ScVmmAvailabilitySetResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ScVmm.ScVmmAvailabilitySetResource>, System.Collections.IEnumerable
     {
         protected ScVmmAvailabilitySetCollection() { }

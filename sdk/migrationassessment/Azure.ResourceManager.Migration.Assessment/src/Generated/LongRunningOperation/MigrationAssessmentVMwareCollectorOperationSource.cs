@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Migration.Assessment
 
         MigrationAssessmentVMwareCollectorResource IOperationSource<MigrationAssessmentVMwareCollectorResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<MigrationAssessmentVMwareCollectorData>(response.Content);
+            var data = ModelReaderWriter.Read<MigrationAssessmentVMwareCollectorData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerMigrationAssessmentContext.Default);
             return new MigrationAssessmentVMwareCollectorResource(_client, data);
         }
 
         async ValueTask<MigrationAssessmentVMwareCollectorResource> IOperationSource<MigrationAssessmentVMwareCollectorResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<MigrationAssessmentVMwareCollectorData>(response.Content);
+            var data = ModelReaderWriter.Read<MigrationAssessmentVMwareCollectorData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerMigrationAssessmentContext.Default);
             return await Task.FromResult(new MigrationAssessmentVMwareCollectorResource(_client, data)).ConfigureAwait(false);
         }
     }

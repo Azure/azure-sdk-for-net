@@ -1,5 +1,11 @@
 namespace Azure.ResourceManager.EdgeOrder
 {
+    public partial class AzureResourceManagerEdgeOrderContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureResourceManagerEdgeOrderContext() { }
+        public static Azure.ResourceManager.EdgeOrder.AzureResourceManagerEdgeOrderContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class EdgeOrderAddressCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.EdgeOrder.EdgeOrderAddressResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.EdgeOrder.EdgeOrderAddressResource>, System.Collections.IEnumerable
     {
         protected EdgeOrderAddressCollection() { }

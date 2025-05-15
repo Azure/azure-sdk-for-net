@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Synapse
 
         SynapseManagedIdentitySqlControlSettingResource IOperationSource<SynapseManagedIdentitySqlControlSettingResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<SynapseManagedIdentitySqlControlSettingData>(response.Content);
+            var data = ModelReaderWriter.Read<SynapseManagedIdentitySqlControlSettingData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSynapseContext.Default);
             return new SynapseManagedIdentitySqlControlSettingResource(_client, data);
         }
 
         async ValueTask<SynapseManagedIdentitySqlControlSettingResource> IOperationSource<SynapseManagedIdentitySqlControlSettingResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<SynapseManagedIdentitySqlControlSettingData>(response.Content);
+            var data = ModelReaderWriter.Read<SynapseManagedIdentitySqlControlSettingData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSynapseContext.Default);
             return await Task.FromResult(new SynapseManagedIdentitySqlControlSettingResource(_client, data)).ConfigureAwait(false);
         }
     }

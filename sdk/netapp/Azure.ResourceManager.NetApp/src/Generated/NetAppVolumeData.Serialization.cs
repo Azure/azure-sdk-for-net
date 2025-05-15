@@ -52,6 +52,11 @@ namespace Azure.ResourceManager.NetApp
                 }
                 writer.WriteEndArray();
             }
+            if (options.Format != "W" && Optional.IsDefined(IsRestoring))
+            {
+                writer.WritePropertyName("isRestoring"u8);
+                writer.WriteBooleanValue(IsRestoring.Value);
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (options.Format != "W" && Optional.IsDefined(FileSystemId))
@@ -163,11 +168,6 @@ namespace Azure.ResourceManager.NetApp
             {
                 writer.WritePropertyName("dataProtection"u8);
                 writer.WriteObjectValue(DataProtection, options);
-            }
-            if (Optional.IsDefined(IsRestoring))
-            {
-                writer.WritePropertyName("isRestoring"u8);
-                writer.WriteBooleanValue(IsRestoring.Value);
             }
             if (Optional.IsDefined(IsSnapshotDirectoryVisible))
             {
@@ -431,6 +431,7 @@ namespace Azure.ResourceManager.NetApp
             }
             ETag? etag = default;
             IList<string> zones = default;
+            bool? isRestoring = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -456,7 +457,6 @@ namespace Azure.ResourceManager.NetApp
             IReadOnlyList<NetAppVolumeMountTarget> mountTargets = default;
             string volumeType = default;
             NetAppVolumeDataProtection dataProtection = default;
-            bool? isRestoring = default;
             bool? snapshotDirectoryVisible = default;
             bool? kerberosEnabled = default;
             NetAppVolumeSecurityStyle? securityStyle = default;
@@ -518,6 +518,15 @@ namespace Azure.ResourceManager.NetApp
                         array.Add(item.GetString());
                     }
                     zones = array;
+                    continue;
+                }
+                if (property.NameEquals("isRestoring"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    isRestoring = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -729,15 +738,6 @@ namespace Azure.ResourceManager.NetApp
                                 continue;
                             }
                             dataProtection = NetAppVolumeDataProtection.DeserializeNetAppVolumeDataProtection(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("isRestoring"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            isRestoring = property0.Value.GetBoolean();
                             continue;
                         }
                         if (property0.NameEquals("snapshotDirectoryVisible"u8))
@@ -1159,7 +1159,7 @@ namespace Azure.ResourceManager.NetApp
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetAppContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(NetAppVolumeData)} does not support writing '{options.Format}' format.");
             }

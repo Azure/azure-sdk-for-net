@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Sql
 
         ManagedServerDnsAliasData IJsonModel<ManagedServerDnsAliasData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ManagedServerDnsAliasData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ManagedServerDnsAliasData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<ManagedServerDnsAliasData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ManagedServerDnsAliasData>(Data, options, AzureResourceManagerSqlContext.Default);
 
-        ManagedServerDnsAliasData IPersistableModel<ManagedServerDnsAliasData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ManagedServerDnsAliasData>(data, options);
+        ManagedServerDnsAliasData IPersistableModel<ManagedServerDnsAliasData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ManagedServerDnsAliasData>(data, options, AzureResourceManagerSqlContext.Default);
 
         string IPersistableModel<ManagedServerDnsAliasData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ManagedServerDnsAliasData>)Data).GetFormatFromOptions(options);
     }

@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Network
 
         DscpConfigurationData IJsonModel<DscpConfigurationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DscpConfigurationData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<DscpConfigurationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<DscpConfigurationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DscpConfigurationData>(Data, options, AzureResourceManagerNetworkContext.Default);
 
-        DscpConfigurationData IPersistableModel<DscpConfigurationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DscpConfigurationData>(data, options);
+        DscpConfigurationData IPersistableModel<DscpConfigurationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DscpConfigurationData>(data, options, AzureResourceManagerNetworkContext.Default);
 
         string IPersistableModel<DscpConfigurationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DscpConfigurationData>)Data).GetFormatFromOptions(options);
     }

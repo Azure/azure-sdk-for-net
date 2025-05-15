@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.PrivateDns
 
         PrivateDnsZoneResource IOperationSource<PrivateDnsZoneResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<PrivateDnsZoneData>(response.Content);
+            var data = ModelReaderWriter.Read<PrivateDnsZoneData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerPrivateDnsContext.Default);
             return new PrivateDnsZoneResource(_client, data);
         }
 
         async ValueTask<PrivateDnsZoneResource> IOperationSource<PrivateDnsZoneResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<PrivateDnsZoneData>(response.Content);
+            var data = ModelReaderWriter.Read<PrivateDnsZoneData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerPrivateDnsContext.Default);
             return await Task.FromResult(new PrivateDnsZoneResource(_client, data)).ConfigureAwait(false);
         }
     }

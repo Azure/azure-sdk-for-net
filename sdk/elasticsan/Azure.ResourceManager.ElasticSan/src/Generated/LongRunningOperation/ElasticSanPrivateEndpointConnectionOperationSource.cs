@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.ElasticSan
 
         ElasticSanPrivateEndpointConnectionResource IOperationSource<ElasticSanPrivateEndpointConnectionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ElasticSanPrivateEndpointConnectionData>(response.Content);
+            var data = ModelReaderWriter.Read<ElasticSanPrivateEndpointConnectionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerElasticSanContext.Default);
             return new ElasticSanPrivateEndpointConnectionResource(_client, data);
         }
 
         async ValueTask<ElasticSanPrivateEndpointConnectionResource> IOperationSource<ElasticSanPrivateEndpointConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ElasticSanPrivateEndpointConnectionData>(response.Content);
+            var data = ModelReaderWriter.Read<ElasticSanPrivateEndpointConnectionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerElasticSanContext.Default);
             return await Task.FromResult(new ElasticSanPrivateEndpointConnectionResource(_client, data)).ConfigureAwait(false);
         }
     }

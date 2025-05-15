@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Logic
 
         IntegrationAccountAgreementData IJsonModel<IntegrationAccountAgreementData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<IntegrationAccountAgreementData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<IntegrationAccountAgreementData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<IntegrationAccountAgreementData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<IntegrationAccountAgreementData>(Data, options, AzureResourceManagerLogicContext.Default);
 
-        IntegrationAccountAgreementData IPersistableModel<IntegrationAccountAgreementData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<IntegrationAccountAgreementData>(data, options);
+        IntegrationAccountAgreementData IPersistableModel<IntegrationAccountAgreementData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<IntegrationAccountAgreementData>(data, options, AzureResourceManagerLogicContext.Default);
 
         string IPersistableModel<IntegrationAccountAgreementData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<IntegrationAccountAgreementData>)Data).GetFormatFromOptions(options);
     }

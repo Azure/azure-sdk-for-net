@@ -142,6 +142,13 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 return null;
             }
+            if (element.TryGetProperty("@odata.type", out JsonElement discriminator))
+            {
+                switch (discriminator.GetString())
+                {
+                    case "#Microsoft.Skills.Custom.ChatCompletionSkill": return ChatCompletionSkill.DeserializeChatCompletionSkill(element);
+                }
+            }
             string uri = default;
             IDictionary<string, string> httpHeaders = default;
             string httpMethod = default;
@@ -150,7 +157,7 @@ namespace Azure.Search.Documents.Indexes.Models
             int? degreeOfParallelism = default;
             ResourceIdentifier authResourceId = default;
             SearchIndexerDataIdentity authIdentity = default;
-            string odataType = default;
+            string odataType = "#Microsoft.Skills.Custom.WebApiSkill";
             string name = default;
             string description = default;
             string context = default;

@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.SecurityCenter
 
         DeviceSecurityGroupData IJsonModel<DeviceSecurityGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DeviceSecurityGroupData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<DeviceSecurityGroupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<DeviceSecurityGroupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DeviceSecurityGroupData>(Data, options, AzureResourceManagerSecurityCenterContext.Default);
 
-        DeviceSecurityGroupData IPersistableModel<DeviceSecurityGroupData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DeviceSecurityGroupData>(data, options);
+        DeviceSecurityGroupData IPersistableModel<DeviceSecurityGroupData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DeviceSecurityGroupData>(data, options, AzureResourceManagerSecurityCenterContext.Default);
 
         string IPersistableModel<DeviceSecurityGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DeviceSecurityGroupData>)Data).GetFormatFromOptions(options);
     }

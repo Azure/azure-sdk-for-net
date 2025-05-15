@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Sql
 
         ManagedDatabaseData IJsonModel<ManagedDatabaseData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ManagedDatabaseData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ManagedDatabaseData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<ManagedDatabaseData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ManagedDatabaseData>(Data, options, AzureResourceManagerSqlContext.Default);
 
-        ManagedDatabaseData IPersistableModel<ManagedDatabaseData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ManagedDatabaseData>(data, options);
+        ManagedDatabaseData IPersistableModel<ManagedDatabaseData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ManagedDatabaseData>(data, options, AzureResourceManagerSqlContext.Default);
 
         string IPersistableModel<ManagedDatabaseData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ManagedDatabaseData>)Data).GetFormatFromOptions(options);
     }

@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.PostgreSql
 
         PostgreSqlFirewallRuleData IJsonModel<PostgreSqlFirewallRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PostgreSqlFirewallRuleData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<PostgreSqlFirewallRuleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<PostgreSqlFirewallRuleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<PostgreSqlFirewallRuleData>(Data, options, AzureResourceManagerPostgreSqlContext.Default);
 
-        PostgreSqlFirewallRuleData IPersistableModel<PostgreSqlFirewallRuleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PostgreSqlFirewallRuleData>(data, options);
+        PostgreSqlFirewallRuleData IPersistableModel<PostgreSqlFirewallRuleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PostgreSqlFirewallRuleData>(data, options, AzureResourceManagerPostgreSqlContext.Default);
 
         string IPersistableModel<PostgreSqlFirewallRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PostgreSqlFirewallRuleData>)Data).GetFormatFromOptions(options);
     }

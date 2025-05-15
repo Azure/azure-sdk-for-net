@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.FluidRelay
 
         FluidRelayServerData IJsonModel<FluidRelayServerData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<FluidRelayServerData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<FluidRelayServerData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<FluidRelayServerData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<FluidRelayServerData>(Data, options, AzureResourceManagerFluidRelayContext.Default);
 
-        FluidRelayServerData IPersistableModel<FluidRelayServerData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<FluidRelayServerData>(data, options);
+        FluidRelayServerData IPersistableModel<FluidRelayServerData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<FluidRelayServerData>(data, options, AzureResourceManagerFluidRelayContext.Default);
 
         string IPersistableModel<FluidRelayServerData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<FluidRelayServerData>)Data).GetFormatFromOptions(options);
     }

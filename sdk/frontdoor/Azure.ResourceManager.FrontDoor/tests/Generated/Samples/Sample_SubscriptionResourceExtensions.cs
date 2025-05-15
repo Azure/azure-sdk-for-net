@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.FrontDoor.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetFrontDoorWebApplicationFirewallPoliciesByFrontDoorWebApplicationFirewallPolicy_GetAllPoliciesInAResourceGroup()
         {
-            // Generated from example definition: specification/frontdoor/resource-manager/Microsoft.Network/stable/2024-02-01/examples/WafListPoliciesUnderSubscription.json
+            // Generated from example definition: specification/frontdoor/resource-manager/Microsoft.Network/stable/2025-03-01/examples/WafListPoliciesUnderSubscription.json
             // this example is just showing the usage of "Policies_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.FrontDoor.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetManagedRuleSets_ListPoliciesManagedRuleSetsInAResourceGroup()
         {
-            // Generated from example definition: specification/frontdoor/resource-manager/Microsoft.Network/stable/2024-02-01/examples/WafListManagedRuleSets.json
+            // Generated from example definition: specification/frontdoor/resource-manager/Microsoft.Network/stable/2025-03-01/examples/WafListManagedRuleSets.json
             // this example is just showing the usage of "ManagedRuleSets_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

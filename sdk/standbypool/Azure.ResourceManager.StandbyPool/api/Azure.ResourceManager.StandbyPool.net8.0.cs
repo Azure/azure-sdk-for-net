@@ -1,5 +1,11 @@
 namespace Azure.ResourceManager.StandbyPool
 {
+    public partial class AzureResourceManagerStandbyPoolContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureResourceManagerStandbyPoolContext() { }
+        public static Azure.ResourceManager.StandbyPool.AzureResourceManagerStandbyPoolContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class StandbyContainerGroupPoolCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.StandbyPool.StandbyContainerGroupPoolResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.StandbyPool.StandbyContainerGroupPoolResource>, System.Collections.IEnumerable
     {
         protected StandbyContainerGroupPoolCollection() { }

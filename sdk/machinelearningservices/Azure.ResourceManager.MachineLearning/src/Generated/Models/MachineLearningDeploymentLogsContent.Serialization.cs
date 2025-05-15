@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMachineLearningContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(MachineLearningDeploymentLogsContent)} does not support writing '{options.Format}' format.");
             }

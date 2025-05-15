@@ -1024,7 +1024,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDesktopVirtualizationContext.Default);
                 case "bicep":
                     return SerializeBicep(options);
                 default:

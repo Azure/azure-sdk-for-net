@@ -33,7 +33,7 @@ namespace Azure.Search.Documents
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/>, <paramref name="endpoint"/> or <paramref name="apiVersion"/> is null. </exception>
-        public IndexersRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, Guid? xMsClientRequestId = null, string apiVersion = "2025-03-01-preview")
+        public IndexersRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, Guid? xMsClientRequestId = null, string apiVersion = "2025-05-01-preview")
         {
             ClientDiagnostics = clientDiagnostics ?? throw new ArgumentNullException(nameof(clientDiagnostics));
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
@@ -167,6 +167,80 @@ namespace Azure.Search.Documents
             }
 
             using var message = CreateResetDocsRequest(indexerName, overwrite, keysOrIds);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 204:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateResyncRequest(string indexerName, IndexerResyncBody indexerResync)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/indexers('", false);
+            uri.AppendPath(indexerName, true);
+            uri.AppendPath("')/search.resync", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json; odata.metadata=minimal");
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(indexerResync);
+            request.Content = content;
+            return message;
+        }
+
+        /// <summary> Resync selective options from the datasource to be re-ingested by the indexer. </summary>
+        /// <param name="indexerName"> The name of the indexer to resync for. </param>
+        /// <param name="indexerResync"> The <see cref="IndexerResyncBody"/> to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="indexerName"/> or <paramref name="indexerResync"/> is null. </exception>
+        public async Task<Response> ResyncAsync(string indexerName, IndexerResyncBody indexerResync, CancellationToken cancellationToken = default)
+        {
+            if (indexerName == null)
+            {
+                throw new ArgumentNullException(nameof(indexerName));
+            }
+            if (indexerResync == null)
+            {
+                throw new ArgumentNullException(nameof(indexerResync));
+            }
+
+            using var message = CreateResyncRequest(indexerName, indexerResync);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 204:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Resync selective options from the datasource to be re-ingested by the indexer. </summary>
+        /// <param name="indexerName"> The name of the indexer to resync for. </param>
+        /// <param name="indexerResync"> The <see cref="IndexerResyncBody"/> to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="indexerName"/> or <paramref name="indexerResync"/> is null. </exception>
+        public Response Resync(string indexerName, IndexerResyncBody indexerResync, CancellationToken cancellationToken = default)
+        {
+            if (indexerName == null)
+            {
+                throw new ArgumentNullException(nameof(indexerName));
+            }
+            if (indexerResync == null)
+            {
+                throw new ArgumentNullException(nameof(indexerResync));
+            }
+
+            using var message = CreateResyncRequest(indexerName, indexerResync);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

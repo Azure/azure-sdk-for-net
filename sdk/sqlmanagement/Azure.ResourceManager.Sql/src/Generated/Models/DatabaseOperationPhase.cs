@@ -22,19 +22,13 @@ namespace Azure.ResourceManager.Sql.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string LogTransitionInProgressValue = "LogTransitionInProgress";
         private const string CopyingValue = "Copying";
-        private const string BuildingHyperscaleComponentsValue = "BuildingHyperscaleComponents";
         private const string CatchupValue = "Catchup";
         private const string WaitingForCutoverValue = "WaitingForCutover";
         private const string CutoverInProgressValue = "CutoverInProgress";
 
-        /// <summary> LogTransitionInProgress. </summary>
-        public static DatabaseOperationPhase LogTransitionInProgress { get; } = new DatabaseOperationPhase(LogTransitionInProgressValue);
         /// <summary> Copying. </summary>
         public static DatabaseOperationPhase Copying { get; } = new DatabaseOperationPhase(CopyingValue);
-        /// <summary> BuildingHyperscaleComponents. </summary>
-        public static DatabaseOperationPhase BuildingHyperscaleComponents { get; } = new DatabaseOperationPhase(BuildingHyperscaleComponentsValue);
         /// <summary> Catchup. </summary>
         public static DatabaseOperationPhase Catchup { get; } = new DatabaseOperationPhase(CatchupValue);
         /// <summary> WaitingForCutover. </summary>

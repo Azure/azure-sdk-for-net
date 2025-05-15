@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Kusto.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerKustoContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(SandboxCustomImagesCheckNameContent)} does not support writing '{options.Format}' format.");
             }

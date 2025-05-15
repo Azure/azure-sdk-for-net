@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Sql
 
         SqlServerAzureADAdministratorResource IOperationSource<SqlServerAzureADAdministratorResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<SqlServerAzureADAdministratorData>(response.Content);
+            var data = ModelReaderWriter.Read<SqlServerAzureADAdministratorData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSqlContext.Default);
             return new SqlServerAzureADAdministratorResource(_client, data);
         }
 
         async ValueTask<SqlServerAzureADAdministratorResource> IOperationSource<SqlServerAzureADAdministratorResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<SqlServerAzureADAdministratorData>(response.Content);
+            var data = ModelReaderWriter.Read<SqlServerAzureADAdministratorData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSqlContext.Default);
             return await Task.FromResult(new SqlServerAzureADAdministratorResource(_client, data)).ConfigureAwait(false);
         }
     }

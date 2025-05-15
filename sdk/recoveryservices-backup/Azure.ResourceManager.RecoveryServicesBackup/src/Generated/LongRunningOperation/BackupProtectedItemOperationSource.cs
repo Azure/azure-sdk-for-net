@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
 
         BackupProtectedItemResource IOperationSource<BackupProtectedItemResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<BackupProtectedItemData>(response.Content);
+            var data = ModelReaderWriter.Read<BackupProtectedItemData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerRecoveryServicesBackupContext.Default);
             return new BackupProtectedItemResource(_client, data);
         }
 
         async ValueTask<BackupProtectedItemResource> IOperationSource<BackupProtectedItemResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<BackupProtectedItemData>(response.Content);
+            var data = ModelReaderWriter.Read<BackupProtectedItemData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerRecoveryServicesBackupContext.Default);
             return await Task.FromResult(new BackupProtectedItemResource(_client, data)).ConfigureAwait(false);
         }
     }

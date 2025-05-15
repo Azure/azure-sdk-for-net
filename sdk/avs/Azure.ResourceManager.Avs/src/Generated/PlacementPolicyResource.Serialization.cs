@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Avs
 
         PlacementPolicyData IJsonModel<PlacementPolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PlacementPolicyData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<PlacementPolicyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<PlacementPolicyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<PlacementPolicyData>(Data, options, AzureResourceManagerAvsContext.Default);
 
-        PlacementPolicyData IPersistableModel<PlacementPolicyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PlacementPolicyData>(data, options);
+        PlacementPolicyData IPersistableModel<PlacementPolicyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PlacementPolicyData>(data, options, AzureResourceManagerAvsContext.Default);
 
         string IPersistableModel<PlacementPolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PlacementPolicyData>)Data).GetFormatFromOptions(options);
     }

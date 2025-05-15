@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
 
         CosmosDBForPostgreSqlRoleData IJsonModel<CosmosDBForPostgreSqlRoleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<CosmosDBForPostgreSqlRoleData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<CosmosDBForPostgreSqlRoleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<CosmosDBForPostgreSqlRoleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<CosmosDBForPostgreSqlRoleData>(Data, options, AzureResourceManagerCosmosDBForPostgreSqlContext.Default);
 
-        CosmosDBForPostgreSqlRoleData IPersistableModel<CosmosDBForPostgreSqlRoleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CosmosDBForPostgreSqlRoleData>(data, options);
+        CosmosDBForPostgreSqlRoleData IPersistableModel<CosmosDBForPostgreSqlRoleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CosmosDBForPostgreSqlRoleData>(data, options, AzureResourceManagerCosmosDBForPostgreSqlContext.Default);
 
         string IPersistableModel<CosmosDBForPostgreSqlRoleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<CosmosDBForPostgreSqlRoleData>)Data).GetFormatFromOptions(options);
     }

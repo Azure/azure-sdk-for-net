@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Monitor
 
         VmInsightsOnboardingStatusData IJsonModel<VmInsightsOnboardingStatusData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<VmInsightsOnboardingStatusData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<VmInsightsOnboardingStatusData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<VmInsightsOnboardingStatusData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<VmInsightsOnboardingStatusData>(Data, options, AzureResourceManagerMonitorContext.Default);
 
-        VmInsightsOnboardingStatusData IPersistableModel<VmInsightsOnboardingStatusData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<VmInsightsOnboardingStatusData>(data, options);
+        VmInsightsOnboardingStatusData IPersistableModel<VmInsightsOnboardingStatusData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<VmInsightsOnboardingStatusData>(data, options, AzureResourceManagerMonitorContext.Default);
 
         string IPersistableModel<VmInsightsOnboardingStatusData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<VmInsightsOnboardingStatusData>)Data).GetFormatFromOptions(options);
     }

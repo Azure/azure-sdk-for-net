@@ -1,5 +1,11 @@
 namespace Azure.ResourceManager.MobileNetwork
 {
+    public partial class AzureResourceManagerMobileNetworkContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureResourceManagerMobileNetworkContext() { }
+        public static Azure.ResourceManager.MobileNetwork.AzureResourceManagerMobileNetworkContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class ExtendedUEInfoCollection : Azure.ResourceManager.ArmCollection
     {
         protected ExtendedUEInfoCollection() { }

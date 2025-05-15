@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Support
 
         SupportTicketCommunicationData IJsonModel<SupportTicketCommunicationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SupportTicketCommunicationData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SupportTicketCommunicationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<SupportTicketCommunicationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SupportTicketCommunicationData>(Data, options, AzureResourceManagerSupportContext.Default);
 
-        SupportTicketCommunicationData IPersistableModel<SupportTicketCommunicationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SupportTicketCommunicationData>(data, options);
+        SupportTicketCommunicationData IPersistableModel<SupportTicketCommunicationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SupportTicketCommunicationData>(data, options, AzureResourceManagerSupportContext.Default);
 
         string IPersistableModel<SupportTicketCommunicationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SupportTicketCommunicationData>)Data).GetFormatFromOptions(options);
     }

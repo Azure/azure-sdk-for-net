@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.SecurityCenter
 
         SecurityConnectorGitLabGroupData IJsonModel<SecurityConnectorGitLabGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SecurityConnectorGitLabGroupData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SecurityConnectorGitLabGroupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<SecurityConnectorGitLabGroupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SecurityConnectorGitLabGroupData>(Data, options, AzureResourceManagerSecurityCenterContext.Default);
 
-        SecurityConnectorGitLabGroupData IPersistableModel<SecurityConnectorGitLabGroupData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SecurityConnectorGitLabGroupData>(data, options);
+        SecurityConnectorGitLabGroupData IPersistableModel<SecurityConnectorGitLabGroupData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SecurityConnectorGitLabGroupData>(data, options, AzureResourceManagerSecurityCenterContext.Default);
 
         string IPersistableModel<SecurityConnectorGitLabGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SecurityConnectorGitLabGroupData>)Data).GetFormatFromOptions(options);
     }

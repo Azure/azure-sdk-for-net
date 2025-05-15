@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
 
         GlobalRulestackCertificateObjectResource IOperationSource<GlobalRulestackCertificateObjectResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<GlobalRulestackCertificateObjectData>(response.Content);
+            var data = ModelReaderWriter.Read<GlobalRulestackCertificateObjectData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerPaloAltoNetworksNgfwContext.Default);
             return new GlobalRulestackCertificateObjectResource(_client, data);
         }
 
         async ValueTask<GlobalRulestackCertificateObjectResource> IOperationSource<GlobalRulestackCertificateObjectResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<GlobalRulestackCertificateObjectData>(response.Content);
+            var data = ModelReaderWriter.Read<GlobalRulestackCertificateObjectData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerPaloAltoNetworksNgfwContext.Default);
             return await Task.FromResult(new GlobalRulestackCertificateObjectResource(_client, data)).ConfigureAwait(false);
         }
     }

@@ -16,7 +16,7 @@ namespace Client.Structure.Service
     {
         protected QuxBar() => throw null;
 
-        public HttpPipeline Pipeline => throw null;
+        public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response Nine(RequestContext context) => throw null;
 

@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.DataBoxEdge
 
         DataBoxEdgeStorageAccountCredentialData IJsonModel<DataBoxEdgeStorageAccountCredentialData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DataBoxEdgeStorageAccountCredentialData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<DataBoxEdgeStorageAccountCredentialData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<DataBoxEdgeStorageAccountCredentialData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DataBoxEdgeStorageAccountCredentialData>(Data, options, AzureResourceManagerDataBoxEdgeContext.Default);
 
-        DataBoxEdgeStorageAccountCredentialData IPersistableModel<DataBoxEdgeStorageAccountCredentialData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DataBoxEdgeStorageAccountCredentialData>(data, options);
+        DataBoxEdgeStorageAccountCredentialData IPersistableModel<DataBoxEdgeStorageAccountCredentialData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DataBoxEdgeStorageAccountCredentialData>(data, options, AzureResourceManagerDataBoxEdgeContext.Default);
 
         string IPersistableModel<DataBoxEdgeStorageAccountCredentialData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DataBoxEdgeStorageAccountCredentialData>)Data).GetFormatFromOptions(options);
     }

@@ -20,7 +20,7 @@ namespace Payload.JsonMergePatch
 
         public JsonMergePatchClient(Uri endpoint, JsonMergePatchClientOptions options) => throw null;
 
-        public HttpPipeline Pipeline => throw null;
+        public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response CreateResource(RequestContent content, RequestContext context = null) => throw null;
 

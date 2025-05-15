@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.SecurityCenter
 
         GovernanceRuleData IJsonModel<GovernanceRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<GovernanceRuleData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<GovernanceRuleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<GovernanceRuleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<GovernanceRuleData>(Data, options, AzureResourceManagerSecurityCenterContext.Default);
 
-        GovernanceRuleData IPersistableModel<GovernanceRuleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<GovernanceRuleData>(data, options);
+        GovernanceRuleData IPersistableModel<GovernanceRuleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<GovernanceRuleData>(data, options, AzureResourceManagerSecurityCenterContext.Default);
 
         string IPersistableModel<GovernanceRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<GovernanceRuleData>)Data).GetFormatFromOptions(options);
     }

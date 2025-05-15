@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Network
 
         ApplicationGatewayWafDynamicManifestData IJsonModel<ApplicationGatewayWafDynamicManifestData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ApplicationGatewayWafDynamicManifestData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ApplicationGatewayWafDynamicManifestData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<ApplicationGatewayWafDynamicManifestData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ApplicationGatewayWafDynamicManifestData>(Data, options, AzureResourceManagerNetworkContext.Default);
 
-        ApplicationGatewayWafDynamicManifestData IPersistableModel<ApplicationGatewayWafDynamicManifestData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ApplicationGatewayWafDynamicManifestData>(data, options);
+        ApplicationGatewayWafDynamicManifestData IPersistableModel<ApplicationGatewayWafDynamicManifestData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ApplicationGatewayWafDynamicManifestData>(data, options, AzureResourceManagerNetworkContext.Default);
 
         string IPersistableModel<ApplicationGatewayWafDynamicManifestData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ApplicationGatewayWafDynamicManifestData>)Data).GetFormatFromOptions(options);
     }

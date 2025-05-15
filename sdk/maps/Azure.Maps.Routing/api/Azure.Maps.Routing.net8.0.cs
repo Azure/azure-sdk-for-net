@@ -18,6 +18,12 @@ namespace Azure.Maps.Routing
         public static bool operator !=(Azure.Maps.Routing.AlternativeRouteType left, Azure.Maps.Routing.AlternativeRouteType right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class AzureMapsRoutingContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureMapsRoutingContext() { }
+        public static Azure.Maps.Routing.AzureMapsRoutingContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct InclineLevel : System.IEquatable<Azure.Maps.Routing.InclineLevel>
     {

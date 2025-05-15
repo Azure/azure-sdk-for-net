@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.HybridNetwork
 
         NetworkServiceDesignVersionData IJsonModel<NetworkServiceDesignVersionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetworkServiceDesignVersionData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<NetworkServiceDesignVersionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<NetworkServiceDesignVersionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<NetworkServiceDesignVersionData>(Data, options, AzureResourceManagerHybridNetworkContext.Default);
 
-        NetworkServiceDesignVersionData IPersistableModel<NetworkServiceDesignVersionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetworkServiceDesignVersionData>(data, options);
+        NetworkServiceDesignVersionData IPersistableModel<NetworkServiceDesignVersionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetworkServiceDesignVersionData>(data, options, AzureResourceManagerHybridNetworkContext.Default);
 
         string IPersistableModel<NetworkServiceDesignVersionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetworkServiceDesignVersionData>)Data).GetFormatFromOptions(options);
     }

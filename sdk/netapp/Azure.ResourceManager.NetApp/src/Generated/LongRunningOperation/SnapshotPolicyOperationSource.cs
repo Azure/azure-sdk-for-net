@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.NetApp
 
         SnapshotPolicyResource IOperationSource<SnapshotPolicyResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<SnapshotPolicyData>(response.Content);
+            var data = ModelReaderWriter.Read<SnapshotPolicyData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetAppContext.Default);
             return new SnapshotPolicyResource(_client, data);
         }
 
         async ValueTask<SnapshotPolicyResource> IOperationSource<SnapshotPolicyResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<SnapshotPolicyData>(response.Content);
+            var data = ModelReaderWriter.Read<SnapshotPolicyData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetAppContext.Default);
             return await Task.FromResult(new SnapshotPolicyResource(_client, data)).ConfigureAwait(false);
         }
     }

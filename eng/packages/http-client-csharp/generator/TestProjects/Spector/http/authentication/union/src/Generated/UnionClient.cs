@@ -26,7 +26,7 @@ namespace Authentication.Union
 
         public UnionClient(Uri endpoint, TokenCredential tokenCredential, UnionClientOptions options) => throw null;
 
-        public HttpPipeline Pipeline => throw null;
+        public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response ValidKey(RequestContext context) => throw null;
 

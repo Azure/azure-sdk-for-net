@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.RecoveryServices
 
         RecoveryServicesVaultData IJsonModel<RecoveryServicesVaultData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<RecoveryServicesVaultData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<RecoveryServicesVaultData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<RecoveryServicesVaultData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<RecoveryServicesVaultData>(Data, options, AzureResourceManagerRecoveryServicesContext.Default);
 
-        RecoveryServicesVaultData IPersistableModel<RecoveryServicesVaultData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<RecoveryServicesVaultData>(data, options);
+        RecoveryServicesVaultData IPersistableModel<RecoveryServicesVaultData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<RecoveryServicesVaultData>(data, options, AzureResourceManagerRecoveryServicesContext.Default);
 
         string IPersistableModel<RecoveryServicesVaultData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<RecoveryServicesVaultData>)Data).GetFormatFromOptions(options);
     }

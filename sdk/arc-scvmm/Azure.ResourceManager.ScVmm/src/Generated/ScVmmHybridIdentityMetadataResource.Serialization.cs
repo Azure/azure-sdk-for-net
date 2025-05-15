@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.ScVmm
 
         ScVmmHybridIdentityMetadataData IJsonModel<ScVmmHybridIdentityMetadataData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ScVmmHybridIdentityMetadataData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ScVmmHybridIdentityMetadataData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<ScVmmHybridIdentityMetadataData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ScVmmHybridIdentityMetadataData>(Data, options, AzureResourceManagerScVmmContext.Default);
 
-        ScVmmHybridIdentityMetadataData IPersistableModel<ScVmmHybridIdentityMetadataData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ScVmmHybridIdentityMetadataData>(data, options);
+        ScVmmHybridIdentityMetadataData IPersistableModel<ScVmmHybridIdentityMetadataData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ScVmmHybridIdentityMetadataData>(data, options, AzureResourceManagerScVmmContext.Default);
 
         string IPersistableModel<ScVmmHybridIdentityMetadataData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ScVmmHybridIdentityMetadataData>)Data).GetFormatFromOptions(options);
     }

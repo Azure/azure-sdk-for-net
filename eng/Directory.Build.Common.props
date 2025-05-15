@@ -121,6 +121,7 @@
       CA1812;  <!-- Avoid uninstantiated internal classes. (Result from below including the Azure.Core source) -->
       AZC0012; <!-- Single word class names -->
       AZC0008;
+      SCM0005; <!-- Resources currently do not have a parameterless ctor so builders cannot be created for them -->
     </NoWarn>
   </PropertyGroup>
 

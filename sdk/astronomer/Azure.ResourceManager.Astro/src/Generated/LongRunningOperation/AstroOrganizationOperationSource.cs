@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Astro
 
         AstroOrganizationResource IOperationSource<AstroOrganizationResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<AstroOrganizationData>(response.Content);
+            var data = ModelReaderWriter.Read<AstroOrganizationData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerAstroContext.Default);
             return new AstroOrganizationResource(_client, data);
         }
 
         async ValueTask<AstroOrganizationResource> IOperationSource<AstroOrganizationResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<AstroOrganizationData>(response.Content);
+            var data = ModelReaderWriter.Read<AstroOrganizationData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerAstroContext.Default);
             return await Task.FromResult(new AstroOrganizationResource(_client, data)).ConfigureAwait(false);
         }
     }

@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Network
 
         VirtualNetworkTapData IJsonModel<VirtualNetworkTapData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<VirtualNetworkTapData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<VirtualNetworkTapData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<VirtualNetworkTapData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<VirtualNetworkTapData>(Data, options, AzureResourceManagerNetworkContext.Default);
 
-        VirtualNetworkTapData IPersistableModel<VirtualNetworkTapData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<VirtualNetworkTapData>(data, options);
+        VirtualNetworkTapData IPersistableModel<VirtualNetworkTapData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<VirtualNetworkTapData>(data, options, AzureResourceManagerNetworkContext.Default);
 
         string IPersistableModel<VirtualNetworkTapData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<VirtualNetworkTapData>)Data).GetFormatFromOptions(options);
     }

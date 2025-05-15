@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMongoClusterContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(BackupProperties)} does not support writing '{options.Format}' format.");
             }

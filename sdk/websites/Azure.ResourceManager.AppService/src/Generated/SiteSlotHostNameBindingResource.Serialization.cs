@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.AppService
 
         HostNameBindingData IJsonModel<HostNameBindingData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<HostNameBindingData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<HostNameBindingData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<HostNameBindingData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<HostNameBindingData>(Data, options, AzureResourceManagerAppServiceContext.Default);
 
-        HostNameBindingData IPersistableModel<HostNameBindingData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<HostNameBindingData>(data, options);
+        HostNameBindingData IPersistableModel<HostNameBindingData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<HostNameBindingData>(data, options, AzureResourceManagerAppServiceContext.Default);
 
         string IPersistableModel<HostNameBindingData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<HostNameBindingData>)Data).GetFormatFromOptions(options);
     }

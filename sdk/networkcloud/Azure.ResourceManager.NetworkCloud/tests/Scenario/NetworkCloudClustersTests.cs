@@ -11,6 +11,7 @@ using Azure.ResourceManager.NetworkCloud.Models;
 using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
@@ -217,7 +218,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
             }
 
             // Delete
-            var deleteResult = await clusterResource.DeleteAsync(WaitUntil.Completed);
+            var deleteResult = await clusterResource.DeleteAsync(WaitUntil.Completed, CancellationToken.None);
             Assert.IsTrue(deleteResult.HasCompleted);
         }
     }

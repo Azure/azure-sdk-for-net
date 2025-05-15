@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.HybridConnectivity
 
         HybridConnectivityEndpointData IJsonModel<HybridConnectivityEndpointData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<HybridConnectivityEndpointData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<HybridConnectivityEndpointData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<HybridConnectivityEndpointData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<HybridConnectivityEndpointData>(Data, options, AzureResourceManagerHybridConnectivityContext.Default);
 
-        HybridConnectivityEndpointData IPersistableModel<HybridConnectivityEndpointData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<HybridConnectivityEndpointData>(data, options);
+        HybridConnectivityEndpointData IPersistableModel<HybridConnectivityEndpointData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<HybridConnectivityEndpointData>(data, options, AzureResourceManagerHybridConnectivityContext.Default);
 
         string IPersistableModel<HybridConnectivityEndpointData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<HybridConnectivityEndpointData>)Data).GetFormatFromOptions(options);
     }

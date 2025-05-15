@@ -1,5 +1,11 @@
 namespace Azure.ResourceManager.DigitalTwins
 {
+    public partial class AzureResourceManagerDigitalTwinsContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureResourceManagerDigitalTwinsContext() { }
+        public static Azure.ResourceManager.DigitalTwins.AzureResourceManagerDigitalTwinsContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class DigitalTwinsDescriptionCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.DigitalTwins.DigitalTwinsDescriptionResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DigitalTwins.DigitalTwinsDescriptionResource>, System.Collections.IEnumerable
     {
         protected DigitalTwinsDescriptionCollection() { }

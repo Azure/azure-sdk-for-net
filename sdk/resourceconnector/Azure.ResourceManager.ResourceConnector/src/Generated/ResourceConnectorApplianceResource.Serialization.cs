@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.ResourceConnector
 
         ResourceConnectorApplianceData IJsonModel<ResourceConnectorApplianceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ResourceConnectorApplianceData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ResourceConnectorApplianceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<ResourceConnectorApplianceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ResourceConnectorApplianceData>(Data, options, AzureResourceManagerResourceConnectorContext.Default);
 
-        ResourceConnectorApplianceData IPersistableModel<ResourceConnectorApplianceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ResourceConnectorApplianceData>(data, options);
+        ResourceConnectorApplianceData IPersistableModel<ResourceConnectorApplianceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ResourceConnectorApplianceData>(data, options, AzureResourceManagerResourceConnectorContext.Default);
 
         string IPersistableModel<ResourceConnectorApplianceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ResourceConnectorApplianceData>)Data).GetFormatFromOptions(options);
     }

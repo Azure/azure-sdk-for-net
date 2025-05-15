@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Automanage
 
         AutomanageBestPracticeData IJsonModel<AutomanageBestPracticeData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AutomanageBestPracticeData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<AutomanageBestPracticeData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<AutomanageBestPracticeData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AutomanageBestPracticeData>(Data, options, AzureResourceManagerAutomanageContext.Default);
 
-        AutomanageBestPracticeData IPersistableModel<AutomanageBestPracticeData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AutomanageBestPracticeData>(data, options);
+        AutomanageBestPracticeData IPersistableModel<AutomanageBestPracticeData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AutomanageBestPracticeData>(data, options, AzureResourceManagerAutomanageContext.Default);
 
         string IPersistableModel<AutomanageBestPracticeData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AutomanageBestPracticeData>)Data).GetFormatFromOptions(options);
     }

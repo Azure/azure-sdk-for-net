@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Network
 
         BgpConnectionResource IOperationSource<BgpConnectionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<BgpConnectionData>(response.Content);
+            var data = ModelReaderWriter.Read<BgpConnectionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkContext.Default);
             return new BgpConnectionResource(_client, data);
         }
 
         async ValueTask<BgpConnectionResource> IOperationSource<BgpConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<BgpConnectionData>(response.Content);
+            var data = ModelReaderWriter.Read<BgpConnectionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkContext.Default);
             return await Task.FromResult(new BgpConnectionResource(_client, data)).ConfigureAwait(false);
         }
     }

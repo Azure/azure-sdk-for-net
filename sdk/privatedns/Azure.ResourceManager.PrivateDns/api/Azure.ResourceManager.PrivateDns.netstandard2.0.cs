@@ -1,5 +1,11 @@
 namespace Azure.ResourceManager.PrivateDns
 {
+    public partial class AzureResourceManagerPrivateDnsContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureResourceManagerPrivateDnsContext() { }
+        public static Azure.ResourceManager.PrivateDns.AzureResourceManagerPrivateDnsContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class PrivateDnsAaaaRecordCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.PrivateDns.PrivateDnsAaaaRecordResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.PrivateDns.PrivateDnsAaaaRecordResource>, System.Collections.IEnumerable
     {
         protected PrivateDnsAaaaRecordCollection() { }

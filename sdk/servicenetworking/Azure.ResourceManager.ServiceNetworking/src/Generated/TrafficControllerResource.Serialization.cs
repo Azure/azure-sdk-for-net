@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.ServiceNetworking
 
         TrafficControllerData IJsonModel<TrafficControllerData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<TrafficControllerData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<TrafficControllerData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<TrafficControllerData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<TrafficControllerData>(Data, options, AzureResourceManagerServiceNetworkingContext.Default);
 
-        TrafficControllerData IPersistableModel<TrafficControllerData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<TrafficControllerData>(data, options);
+        TrafficControllerData IPersistableModel<TrafficControllerData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<TrafficControllerData>(data, options, AzureResourceManagerServiceNetworkingContext.Default);
 
         string IPersistableModel<TrafficControllerData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<TrafficControllerData>)Data).GetFormatFromOptions(options);
     }

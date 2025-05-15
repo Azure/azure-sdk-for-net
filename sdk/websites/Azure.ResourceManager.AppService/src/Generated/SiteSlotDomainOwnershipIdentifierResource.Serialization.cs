@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.AppService
 
         AppServiceIdentifierData IJsonModel<AppServiceIdentifierData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AppServiceIdentifierData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<AppServiceIdentifierData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<AppServiceIdentifierData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AppServiceIdentifierData>(Data, options, AzureResourceManagerAppServiceContext.Default);
 
-        AppServiceIdentifierData IPersistableModel<AppServiceIdentifierData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AppServiceIdentifierData>(data, options);
+        AppServiceIdentifierData IPersistableModel<AppServiceIdentifierData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AppServiceIdentifierData>(data, options, AzureResourceManagerAppServiceContext.Default);
 
         string IPersistableModel<AppServiceIdentifierData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AppServiceIdentifierData>)Data).GetFormatFromOptions(options);
     }

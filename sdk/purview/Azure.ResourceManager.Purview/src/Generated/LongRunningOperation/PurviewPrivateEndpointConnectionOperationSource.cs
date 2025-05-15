@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Purview
 
         PurviewPrivateEndpointConnectionResource IOperationSource<PurviewPrivateEndpointConnectionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<PurviewPrivateEndpointConnectionData>(response.Content);
+            var data = ModelReaderWriter.Read<PurviewPrivateEndpointConnectionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerPurviewContext.Default);
             return new PurviewPrivateEndpointConnectionResource(_client, data);
         }
 
         async ValueTask<PurviewPrivateEndpointConnectionResource> IOperationSource<PurviewPrivateEndpointConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<PurviewPrivateEndpointConnectionData>(response.Content);
+            var data = ModelReaderWriter.Read<PurviewPrivateEndpointConnectionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerPurviewContext.Default);
             return await Task.FromResult(new PurviewPrivateEndpointConnectionResource(_client, data)).ConfigureAwait(false);
         }
     }

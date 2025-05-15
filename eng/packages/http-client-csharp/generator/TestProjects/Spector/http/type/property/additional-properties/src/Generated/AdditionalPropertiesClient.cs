@@ -16,7 +16,7 @@ namespace _Type.Property.AdditionalProperties
 
         public AdditionalPropertiesClient(Uri endpoint, AdditionalPropertiesClientOptions options) => throw null;
 
-        public HttpPipeline Pipeline => throw null;
+        public virtual HttpPipeline Pipeline => throw null;
 
         public virtual ExtendsUnknown GetExtendsUnknownClient() => throw null;
 

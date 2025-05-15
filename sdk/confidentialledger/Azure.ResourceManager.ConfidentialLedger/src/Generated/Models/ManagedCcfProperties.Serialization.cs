@@ -79,6 +79,11 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
                 writer.WritePropertyName("nodeCount"u8);
                 writer.WriteNumberValue(NodeCount.Value);
             }
+            if (Optional.IsDefined(EnclavePlatform))
+            {
+                writer.WritePropertyName("enclavePlatform"u8);
+                writer.WriteStringValue(EnclavePlatform.Value.ToString());
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -124,6 +129,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
             ConfidentialLedgerRunningState? runningState = default;
             ConfidentialLedgerProvisioningState? provisioningState = default;
             int? nodeCount = default;
+            ConfidentialLedgerEnclavePlatform? enclavePlatform = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -201,6 +207,15 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
                     nodeCount = property.Value.GetInt32();
                     continue;
                 }
+                if (property.NameEquals("enclavePlatform"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    enclavePlatform = new ConfidentialLedgerEnclavePlatform(property.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -216,6 +231,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
                 runningState,
                 provisioningState,
                 nodeCount,
+                enclavePlatform,
                 serializedAdditionalRawData);
         }
 
@@ -226,7 +242,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerConfidentialLedgerContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ManagedCcfProperties)} does not support writing '{options.Format}' format.");
             }

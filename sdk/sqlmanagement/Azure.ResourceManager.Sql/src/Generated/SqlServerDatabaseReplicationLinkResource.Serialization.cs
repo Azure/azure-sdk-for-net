@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Sql
 
         SqlServerDatabaseReplicationLinkData IJsonModel<SqlServerDatabaseReplicationLinkData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SqlServerDatabaseReplicationLinkData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SqlServerDatabaseReplicationLinkData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<SqlServerDatabaseReplicationLinkData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SqlServerDatabaseReplicationLinkData>(Data, options, AzureResourceManagerSqlContext.Default);
 
-        SqlServerDatabaseReplicationLinkData IPersistableModel<SqlServerDatabaseReplicationLinkData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SqlServerDatabaseReplicationLinkData>(data, options);
+        SqlServerDatabaseReplicationLinkData IPersistableModel<SqlServerDatabaseReplicationLinkData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SqlServerDatabaseReplicationLinkData>(data, options, AzureResourceManagerSqlContext.Default);
 
         string IPersistableModel<SqlServerDatabaseReplicationLinkData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SqlServerDatabaseReplicationLinkData>)Data).GetFormatFromOptions(options);
     }

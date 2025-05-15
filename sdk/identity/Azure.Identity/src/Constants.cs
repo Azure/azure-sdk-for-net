@@ -37,5 +37,9 @@ namespace Azure.Identity
         public const string ManagedIdentityResourceId = "mi_res_id";
         public const string MiSourceNoUserAssignedIdentityMessage = "User-assigned managed identity is not supported by the detected managed identity environment.";
         public const string MiSeviceFabricNoUserAssignedIdentityMessage = "Specifying a clientId or resourceId is not supported by the Service Fabric managed identity environment. The managed identity configuration is determined by the Service Fabric cluster resource configuration. See https://aka.ms/servicefabricmi for more information.";
+
+        // Credential selection options
+        public const string DevCredentials = "dev";
+        public const string ProdCredentials = "prod";
     }
 }

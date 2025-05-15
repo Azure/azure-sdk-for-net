@@ -1,5 +1,11 @@
 namespace Azure.ResourceManager.ManagedServices
 {
+    public partial class AzureResourceManagerManagedServicesContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureResourceManagerManagedServicesContext() { }
+        public static Azure.ResourceManager.ManagedServices.AzureResourceManagerManagedServicesContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public static partial class ManagedServicesExtensions
     {
         public static Azure.Response<Azure.ResourceManager.ManagedServices.ManagedServicesMarketplaceRegistrationResource> GetManagedServicesMarketplaceRegistration(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string marketplaceIdentifier, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }

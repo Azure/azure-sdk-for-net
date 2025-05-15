@@ -122,6 +122,12 @@ namespace Azure.AI.AnomalyDetector
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.AnomalyDetector.AnomalyValue>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.AnomalyDetector.AnomalyValue>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class AzureAIAnomalyDetectorContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureAIAnomalyDetectorContext() { }
+        public static Azure.AI.AnomalyDetector.AzureAIAnomalyDetectorContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class CorrelationChanges : System.ClientModel.Primitives.IJsonModel<Azure.AI.AnomalyDetector.CorrelationChanges>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.AnomalyDetector.CorrelationChanges>
     {
         internal CorrelationChanges() { }

@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.LabServices
 
         LabVirtualMachineData IJsonModel<LabVirtualMachineData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<LabVirtualMachineData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<LabVirtualMachineData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<LabVirtualMachineData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<LabVirtualMachineData>(Data, options, AzureResourceManagerLabServicesContext.Default);
 
-        LabVirtualMachineData IPersistableModel<LabVirtualMachineData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<LabVirtualMachineData>(data, options);
+        LabVirtualMachineData IPersistableModel<LabVirtualMachineData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<LabVirtualMachineData>(data, options, AzureResourceManagerLabServicesContext.Default);
 
         string IPersistableModel<LabVirtualMachineData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<LabVirtualMachineData>)Data).GetFormatFromOptions(options);
     }

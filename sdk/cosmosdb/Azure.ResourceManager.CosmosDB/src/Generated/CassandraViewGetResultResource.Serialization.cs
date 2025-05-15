@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.CosmosDB
 
         CassandraViewGetResultData IJsonModel<CassandraViewGetResultData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<CassandraViewGetResultData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<CassandraViewGetResultData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<CassandraViewGetResultData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<CassandraViewGetResultData>(Data, options, AzureResourceManagerCosmosDBContext.Default);
 
-        CassandraViewGetResultData IPersistableModel<CassandraViewGetResultData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CassandraViewGetResultData>(data, options);
+        CassandraViewGetResultData IPersistableModel<CassandraViewGetResultData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CassandraViewGetResultData>(data, options, AzureResourceManagerCosmosDBContext.Default);
 
         string IPersistableModel<CassandraViewGetResultData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<CassandraViewGetResultData>)Data).GetFormatFromOptions(options);
     }

@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Compute
 
         DiskEncryptionSetData IJsonModel<DiskEncryptionSetData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DiskEncryptionSetData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<DiskEncryptionSetData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<DiskEncryptionSetData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DiskEncryptionSetData>(Data, options, AzureResourceManagerComputeContext.Default);
 
-        DiskEncryptionSetData IPersistableModel<DiskEncryptionSetData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DiskEncryptionSetData>(data, options);
+        DiskEncryptionSetData IPersistableModel<DiskEncryptionSetData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DiskEncryptionSetData>(data, options, AzureResourceManagerComputeContext.Default);
 
         string IPersistableModel<DiskEncryptionSetData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DiskEncryptionSetData>)Data).GetFormatFromOptions(options);
     }

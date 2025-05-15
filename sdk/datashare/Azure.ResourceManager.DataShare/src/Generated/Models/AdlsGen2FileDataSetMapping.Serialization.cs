@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.DataShare.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataShareContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(AdlsGen2FileDataSetMapping)} does not support writing '{options.Format}' format.");
             }

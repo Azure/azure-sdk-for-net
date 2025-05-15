@@ -15,6 +15,8 @@ namespace SpecialWords._Models
 {
     public partial class Continue : IJsonModel<Continue>
     {
+        internal Continue() => throw null;
+
         void IJsonModel<Continue>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;

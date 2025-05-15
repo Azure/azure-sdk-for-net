@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.TrustedSigning
 
         TrustedSigningAccountData IJsonModel<TrustedSigningAccountData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<TrustedSigningAccountData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<TrustedSigningAccountData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<TrustedSigningAccountData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<TrustedSigningAccountData>(Data, options, AzureResourceManagerTrustedSigningContext.Default);
 
-        TrustedSigningAccountData IPersistableModel<TrustedSigningAccountData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<TrustedSigningAccountData>(data, options);
+        TrustedSigningAccountData IPersistableModel<TrustedSigningAccountData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<TrustedSigningAccountData>(data, options, AzureResourceManagerTrustedSigningContext.Default);
 
         string IPersistableModel<TrustedSigningAccountData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<TrustedSigningAccountData>)Data).GetFormatFromOptions(options);
     }

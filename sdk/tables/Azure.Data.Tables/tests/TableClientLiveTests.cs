@@ -937,6 +937,29 @@ namespace Azure.Data.Tables.Tests
             Assert.That(updatedEntity[propertyName], Is.EqualTo(updatedValue), $"The property value should be {updatedValue}");
         }
 
+        [RecordedTest]
+        public async Task TimespanPropertyInCustomEntityCanBeUpsertedAndRead()
+        {
+            const string rowKeyValue = "1";
+            DateTime date1 = new DateTime(2010, 1, 1, 8, 0, 15);
+            DateTime date2 = new DateTime(2010, 8, 18, 13, 30, 30);
+            TimeSpan interval = date2 - date1;
+            var entity = new TimeSpanTestEntity { PartitionKey = PartitionKeyValue, RowKey = rowKeyValue, TimespanProperty = interval, };
+
+            // Create the new entity.
+            await client.UpsertEntityAsync(entity, TableUpdateMode.Replace).ConfigureAwait(false);
+
+            // Fetch the created entity from the service.
+            var retrievedEntity = (await client.QueryAsync<TimeSpanTestEntity>($"PartitionKey eq '{PartitionKeyValue}' and RowKey eq '{rowKeyValue}'")
+                .ToEnumerableAsync()
+                .ConfigureAwait(false)).Single();
+
+            Assert.IsNotNull(retrievedEntity, "The entity should not be null");
+            Assert.IsTrue(TimeSpan.Compare(
+                retrievedEntity!.TimespanProperty.Value, interval) == 0,
+                "The property value should be equal to the original value");
+        }
+
         /// <summary>
         /// Validates the functionality of the TableClient.
         /// </summary>

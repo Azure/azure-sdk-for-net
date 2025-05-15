@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.ServiceBus
 
         ServiceBusAuthorizationRuleData IJsonModel<ServiceBusAuthorizationRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ServiceBusAuthorizationRuleData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ServiceBusAuthorizationRuleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<ServiceBusAuthorizationRuleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ServiceBusAuthorizationRuleData>(Data, options, AzureResourceManagerServiceBusContext.Default);
 
-        ServiceBusAuthorizationRuleData IPersistableModel<ServiceBusAuthorizationRuleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ServiceBusAuthorizationRuleData>(data, options);
+        ServiceBusAuthorizationRuleData IPersistableModel<ServiceBusAuthorizationRuleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ServiceBusAuthorizationRuleData>(data, options, AzureResourceManagerServiceBusContext.Default);
 
         string IPersistableModel<ServiceBusAuthorizationRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ServiceBusAuthorizationRuleData>)Data).GetFormatFromOptions(options);
     }

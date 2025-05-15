@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.PineconeVectorDB
 
         PineconeVectorDBOrganizationData IJsonModel<PineconeVectorDBOrganizationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PineconeVectorDBOrganizationData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<PineconeVectorDBOrganizationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<PineconeVectorDBOrganizationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<PineconeVectorDBOrganizationData>(Data, options, AzureResourceManagerPineconeVectorDBContext.Default);
 
-        PineconeVectorDBOrganizationData IPersistableModel<PineconeVectorDBOrganizationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PineconeVectorDBOrganizationData>(data, options);
+        PineconeVectorDBOrganizationData IPersistableModel<PineconeVectorDBOrganizationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PineconeVectorDBOrganizationData>(data, options, AzureResourceManagerPineconeVectorDBContext.Default);
 
         string IPersistableModel<PineconeVectorDBOrganizationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PineconeVectorDBOrganizationData>)Data).GetFormatFromOptions(options);
     }

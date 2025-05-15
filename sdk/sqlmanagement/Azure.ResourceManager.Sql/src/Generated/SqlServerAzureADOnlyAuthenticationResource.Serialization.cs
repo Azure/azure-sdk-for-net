@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Sql
 
         SqlServerAzureADOnlyAuthenticationData IJsonModel<SqlServerAzureADOnlyAuthenticationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SqlServerAzureADOnlyAuthenticationData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SqlServerAzureADOnlyAuthenticationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<SqlServerAzureADOnlyAuthenticationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SqlServerAzureADOnlyAuthenticationData>(Data, options, AzureResourceManagerSqlContext.Default);
 
-        SqlServerAzureADOnlyAuthenticationData IPersistableModel<SqlServerAzureADOnlyAuthenticationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SqlServerAzureADOnlyAuthenticationData>(data, options);
+        SqlServerAzureADOnlyAuthenticationData IPersistableModel<SqlServerAzureADOnlyAuthenticationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SqlServerAzureADOnlyAuthenticationData>(data, options, AzureResourceManagerSqlContext.Default);
 
         string IPersistableModel<SqlServerAzureADOnlyAuthenticationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SqlServerAzureADOnlyAuthenticationData>)Data).GetFormatFromOptions(options);
     }

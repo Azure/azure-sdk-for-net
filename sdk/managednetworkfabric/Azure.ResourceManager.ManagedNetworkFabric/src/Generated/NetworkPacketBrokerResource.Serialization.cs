@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
 
         NetworkPacketBrokerData IJsonModel<NetworkPacketBrokerData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetworkPacketBrokerData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<NetworkPacketBrokerData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<NetworkPacketBrokerData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<NetworkPacketBrokerData>(Data, options, AzureResourceManagerManagedNetworkFabricContext.Default);
 
-        NetworkPacketBrokerData IPersistableModel<NetworkPacketBrokerData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetworkPacketBrokerData>(data, options);
+        NetworkPacketBrokerData IPersistableModel<NetworkPacketBrokerData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetworkPacketBrokerData>(data, options, AzureResourceManagerManagedNetworkFabricContext.Default);
 
         string IPersistableModel<NetworkPacketBrokerData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetworkPacketBrokerData>)Data).GetFormatFromOptions(options);
     }

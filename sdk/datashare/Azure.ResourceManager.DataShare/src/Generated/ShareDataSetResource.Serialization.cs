@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.DataShare
 
         ShareDataSetData IJsonModel<ShareDataSetData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ShareDataSetData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ShareDataSetData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<ShareDataSetData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ShareDataSetData>(Data, options, AzureResourceManagerDataShareContext.Default);
 
-        ShareDataSetData IPersistableModel<ShareDataSetData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ShareDataSetData>(data, options);
+        ShareDataSetData IPersistableModel<ShareDataSetData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ShareDataSetData>(data, options, AzureResourceManagerDataShareContext.Default);
 
         string IPersistableModel<ShareDataSetData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ShareDataSetData>)Data).GetFormatFromOptions(options);
     }

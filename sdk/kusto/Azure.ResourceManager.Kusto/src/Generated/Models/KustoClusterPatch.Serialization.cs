@@ -691,7 +691,7 @@ namespace Azure.ResourceManager.Kusto.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerKustoContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(KustoClusterPatch)} does not support writing '{options.Format}' format.");
             }

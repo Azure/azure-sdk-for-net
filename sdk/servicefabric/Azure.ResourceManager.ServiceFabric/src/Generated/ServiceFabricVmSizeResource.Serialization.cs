@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.ServiceFabric
 
         ServiceFabricVmSizeResourceData IJsonModel<ServiceFabricVmSizeResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ServiceFabricVmSizeResourceData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ServiceFabricVmSizeResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<ServiceFabricVmSizeResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ServiceFabricVmSizeResourceData>(Data, options, AzureResourceManagerServiceFabricContext.Default);
 
-        ServiceFabricVmSizeResourceData IPersistableModel<ServiceFabricVmSizeResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ServiceFabricVmSizeResourceData>(data, options);
+        ServiceFabricVmSizeResourceData IPersistableModel<ServiceFabricVmSizeResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ServiceFabricVmSizeResourceData>(data, options, AzureResourceManagerServiceFabricContext.Default);
 
         string IPersistableModel<ServiceFabricVmSizeResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ServiceFabricVmSizeResourceData>)Data).GetFormatFromOptions(options);
     }

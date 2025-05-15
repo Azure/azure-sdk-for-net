@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Automation
 
         HybridRunbookWorkerGroupData IJsonModel<HybridRunbookWorkerGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<HybridRunbookWorkerGroupData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<HybridRunbookWorkerGroupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<HybridRunbookWorkerGroupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<HybridRunbookWorkerGroupData>(Data, options, AzureResourceManagerAutomationContext.Default);
 
-        HybridRunbookWorkerGroupData IPersistableModel<HybridRunbookWorkerGroupData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<HybridRunbookWorkerGroupData>(data, options);
+        HybridRunbookWorkerGroupData IPersistableModel<HybridRunbookWorkerGroupData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<HybridRunbookWorkerGroupData>(data, options, AzureResourceManagerAutomationContext.Default);
 
         string IPersistableModel<HybridRunbookWorkerGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<HybridRunbookWorkerGroupData>)Data).GetFormatFromOptions(options);
     }

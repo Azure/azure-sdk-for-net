@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Synapse
 
         SynapseGeoBackupPolicyData IJsonModel<SynapseGeoBackupPolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SynapseGeoBackupPolicyData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SynapseGeoBackupPolicyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<SynapseGeoBackupPolicyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SynapseGeoBackupPolicyData>(Data, options, AzureResourceManagerSynapseContext.Default);
 
-        SynapseGeoBackupPolicyData IPersistableModel<SynapseGeoBackupPolicyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SynapseGeoBackupPolicyData>(data, options);
+        SynapseGeoBackupPolicyData IPersistableModel<SynapseGeoBackupPolicyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SynapseGeoBackupPolicyData>(data, options, AzureResourceManagerSynapseContext.Default);
 
         string IPersistableModel<SynapseGeoBackupPolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SynapseGeoBackupPolicyData>)Data).GetFormatFromOptions(options);
     }

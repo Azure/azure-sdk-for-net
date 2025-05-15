@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Sql
 
         EncryptionProtectorData IJsonModel<EncryptionProtectorData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<EncryptionProtectorData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<EncryptionProtectorData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<EncryptionProtectorData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<EncryptionProtectorData>(Data, options, AzureResourceManagerSqlContext.Default);
 
-        EncryptionProtectorData IPersistableModel<EncryptionProtectorData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<EncryptionProtectorData>(data, options);
+        EncryptionProtectorData IPersistableModel<EncryptionProtectorData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<EncryptionProtectorData>(data, options, AzureResourceManagerSqlContext.Default);
 
         string IPersistableModel<EncryptionProtectorData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<EncryptionProtectorData>)Data).GetFormatFromOptions(options);
     }

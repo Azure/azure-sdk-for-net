@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.CognitiveServices
 
         RaiBlocklistData IJsonModel<RaiBlocklistData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<RaiBlocklistData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<RaiBlocklistData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<RaiBlocklistData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<RaiBlocklistData>(Data, options, AzureResourceManagerCognitiveServicesContext.Default);
 
-        RaiBlocklistData IPersistableModel<RaiBlocklistData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<RaiBlocklistData>(data, options);
+        RaiBlocklistData IPersistableModel<RaiBlocklistData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<RaiBlocklistData>(data, options, AzureResourceManagerCognitiveServicesContext.Default);
 
         string IPersistableModel<RaiBlocklistData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<RaiBlocklistData>)Data).GetFormatFromOptions(options);
     }

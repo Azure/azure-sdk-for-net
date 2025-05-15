@@ -1,5 +1,11 @@
 namespace Azure.ResourceManager.Redis
 {
+    public partial class AzureResourceManagerRedisContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureResourceManagerRedisContext() { }
+        public static Azure.ResourceManager.Redis.AzureResourceManagerRedisContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class RedisCacheAccessPolicyAssignmentCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Redis.RedisCacheAccessPolicyAssignmentResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Redis.RedisCacheAccessPolicyAssignmentResource>, System.Collections.IEnumerable
     {
         protected RedisCacheAccessPolicyAssignmentCollection() { }

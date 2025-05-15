@@ -15,6 +15,8 @@ namespace _Type.Property.AdditionalProperties
 {
     public partial class ExtendsModelArrayAdditionalProperties : IJsonModel<ExtendsModelArrayAdditionalProperties>
     {
+        internal ExtendsModelArrayAdditionalProperties() => throw null;
+
         void IJsonModel<ExtendsModelArrayAdditionalProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;

@@ -588,16 +588,18 @@ Accept wildcard characters: False
 
 ### -OutFile
 Save test environment settings into a .env file next to test resources template.
-The contents of the file are protected via the .NET Data Protection API (DPAPI).
-This is supported only on Windows.
-The environment file is scoped to the current
-service directory.
 
+On Windows in the Azure/azure-sdk-for-net repository,
+the contents of the file are protected via the .NET Data Protection API (DPAPI).
+The environment file is scoped to the current service directory.
 The environment file will be named for the test resources template that it was
-generated for.
-For ARM templates, it will be test-resources.json.env.
-For
+generated for. For ARM templates, it will be test-resources.json.env. For
 Bicep templates, test-resources.bicep.env.
+
+If `$SupportsTestResourcesDotenv=$true` in language repos' `LanguageSettings.ps1`,
+and if `.env` files are gitignore'd, and if a service directory's `test-resources.bicep`
+file does not expose secrets based on `bicep lint`, a `.env` file is written next to
+`test-resources.bicep` that can be loaded by a test harness to be used for recording tests.
 
 ```yaml
 Type: SwitchParameter

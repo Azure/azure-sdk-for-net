@@ -37,6 +37,7 @@ trigger:
     - sdk/billingbenefits/Azure.ResourceManager.BillingBenefits
     - sdk/blueprint/Azure.ResourceManager.Blueprint
     - sdk/botservice/Azure.ResourceManager.BotService
+    - sdk/carbon/Azure.ResourceManager.CarbonOptimization
     - sdk/cdn/Azure.ResourceManager.Cdn
     - sdk/changeanalysis/Azure.ResourceManager.ChangeAnalysis
     - sdk/chaos/Azure.ResourceManager.Chaos
@@ -69,6 +70,7 @@ trigger:
     - sdk/dataprotection/Azure.ResourceManager.DataProtectionBackup
     - sdk/datashare/Azure.ResourceManager.DataShare
     - sdk/defendereasm/Azure.ResourceManager.DefenderEasm
+    - sdk/dependencymap/Azure.ResourceManager.DependencyMap
     - sdk/desktopvirtualization/Azure.ResourceManager.DesktopVirtualization
     - sdk/devcenter/Azure.ResourceManager.DevCenter
     - sdk/deviceprovisioningservices/Azure.ResourceManager.DeviceProvisioningServices
@@ -253,6 +255,7 @@ pr:
     - sdk/billingbenefits/Azure.ResourceManager.BillingBenefits
     - sdk/blueprint/Azure.ResourceManager.Blueprint
     - sdk/botservice/Azure.ResourceManager.BotService
+    - sdk/carbon/Azure.ResourceManager.CarbonOptimization
     - sdk/cdn/Azure.ResourceManager.Cdn
     - sdk/changeanalysis/Azure.ResourceManager.ChangeAnalysis
     - sdk/chaos/Azure.ResourceManager.Chaos
@@ -285,6 +288,7 @@ pr:
     - sdk/dataprotection/Azure.ResourceManager.DataProtectionBackup
     - sdk/datashare/Azure.ResourceManager.DataShare
     - sdk/defendereasm/Azure.ResourceManager.DefenderEasm
+    - sdk/dependencymap/Azure.ResourceManager.DependencyMap
     - sdk/desktopvirtualization/Azure.ResourceManager.DesktopVirtualization
     - sdk/devcenter/Azure.ResourceManager.DevCenter
     - sdk/deviceprovisioningservices/Azure.ResourceManager.DeviceProvisioningServices

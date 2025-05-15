@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHardwareSecurityModulesContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(CloudHsmClusterPatch)} does not support writing '{options.Format}' format.");
             }

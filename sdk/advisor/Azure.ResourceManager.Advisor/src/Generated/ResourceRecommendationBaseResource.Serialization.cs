@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Advisor
 
         ResourceRecommendationBaseData IJsonModel<ResourceRecommendationBaseData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ResourceRecommendationBaseData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ResourceRecommendationBaseData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<ResourceRecommendationBaseData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ResourceRecommendationBaseData>(Data, options, AzureResourceManagerAdvisorContext.Default);
 
-        ResourceRecommendationBaseData IPersistableModel<ResourceRecommendationBaseData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ResourceRecommendationBaseData>(data, options);
+        ResourceRecommendationBaseData IPersistableModel<ResourceRecommendationBaseData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ResourceRecommendationBaseData>(data, options, AzureResourceManagerAdvisorContext.Default);
 
         string IPersistableModel<ResourceRecommendationBaseData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ResourceRecommendationBaseData>)Data).GetFormatFromOptions(options);
     }

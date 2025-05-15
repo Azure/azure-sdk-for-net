@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.DataLakeAnalytics
 
         DataLakeAnalyticsFirewallRuleData IJsonModel<DataLakeAnalyticsFirewallRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DataLakeAnalyticsFirewallRuleData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<DataLakeAnalyticsFirewallRuleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<DataLakeAnalyticsFirewallRuleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DataLakeAnalyticsFirewallRuleData>(Data, options, AzureResourceManagerDataLakeAnalyticsContext.Default);
 
-        DataLakeAnalyticsFirewallRuleData IPersistableModel<DataLakeAnalyticsFirewallRuleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DataLakeAnalyticsFirewallRuleData>(data, options);
+        DataLakeAnalyticsFirewallRuleData IPersistableModel<DataLakeAnalyticsFirewallRuleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DataLakeAnalyticsFirewallRuleData>(data, options, AzureResourceManagerDataLakeAnalyticsContext.Default);
 
         string IPersistableModel<DataLakeAnalyticsFirewallRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DataLakeAnalyticsFirewallRuleData>)Data).GetFormatFromOptions(options);
     }

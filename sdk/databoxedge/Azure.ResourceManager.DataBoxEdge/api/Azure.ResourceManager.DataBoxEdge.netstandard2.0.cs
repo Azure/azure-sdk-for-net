@@ -1,5 +1,11 @@
 namespace Azure.ResourceManager.DataBoxEdge
 {
+    public partial class AzureResourceManagerDataBoxEdgeContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureResourceManagerDataBoxEdgeContext() { }
+        public static Azure.ResourceManager.DataBoxEdge.AzureResourceManagerDataBoxEdgeContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class BandwidthScheduleCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.DataBoxEdge.BandwidthScheduleResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBoxEdge.BandwidthScheduleResource>, System.Collections.IEnumerable
     {
         protected BandwidthScheduleCollection() { }

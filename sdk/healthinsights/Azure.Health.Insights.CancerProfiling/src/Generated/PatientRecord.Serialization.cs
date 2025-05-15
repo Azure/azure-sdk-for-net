@@ -139,7 +139,7 @@ namespace Azure.Health.Insights.CancerProfiling
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureHealthInsightsCancerProfilingContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(PatientRecord)} does not support writing '{options.Format}' format.");
             }

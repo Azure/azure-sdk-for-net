@@ -11,4 +11,5 @@ internal enum TypeBuilderKind
     Array,
     MultiDimensionalArray,
     ReadOnlyMemory,
+    Unknown,
 }

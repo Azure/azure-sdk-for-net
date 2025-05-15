@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.PrivateDns
 
         VirtualNetworkLinkResource IOperationSource<VirtualNetworkLinkResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<VirtualNetworkLinkData>(response.Content);
+            var data = ModelReaderWriter.Read<VirtualNetworkLinkData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerPrivateDnsContext.Default);
             return new VirtualNetworkLinkResource(_client, data);
         }
 
         async ValueTask<VirtualNetworkLinkResource> IOperationSource<VirtualNetworkLinkResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<VirtualNetworkLinkData>(response.Content);
+            var data = ModelReaderWriter.Read<VirtualNetworkLinkData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerPrivateDnsContext.Default);
             return await Task.FromResult(new VirtualNetworkLinkResource(_client, data)).ConfigureAwait(false);
         }
     }

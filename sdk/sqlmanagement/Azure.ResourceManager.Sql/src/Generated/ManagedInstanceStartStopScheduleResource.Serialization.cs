@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Sql
 
         ManagedInstanceStartStopScheduleData IJsonModel<ManagedInstanceStartStopScheduleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ManagedInstanceStartStopScheduleData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ManagedInstanceStartStopScheduleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<ManagedInstanceStartStopScheduleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ManagedInstanceStartStopScheduleData>(Data, options, AzureResourceManagerSqlContext.Default);
 
-        ManagedInstanceStartStopScheduleData IPersistableModel<ManagedInstanceStartStopScheduleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ManagedInstanceStartStopScheduleData>(data, options);
+        ManagedInstanceStartStopScheduleData IPersistableModel<ManagedInstanceStartStopScheduleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ManagedInstanceStartStopScheduleData>(data, options, AzureResourceManagerSqlContext.Default);
 
         string IPersistableModel<ManagedInstanceStartStopScheduleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ManagedInstanceStartStopScheduleData>)Data).GetFormatFromOptions(options);
     }

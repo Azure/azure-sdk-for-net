@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.MySql
 
         MySqlRecommendationActionData IJsonModel<MySqlRecommendationActionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MySqlRecommendationActionData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<MySqlRecommendationActionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<MySqlRecommendationActionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<MySqlRecommendationActionData>(Data, options, AzureResourceManagerMySqlContext.Default);
 
-        MySqlRecommendationActionData IPersistableModel<MySqlRecommendationActionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MySqlRecommendationActionData>(data, options);
+        MySqlRecommendationActionData IPersistableModel<MySqlRecommendationActionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MySqlRecommendationActionData>(data, options, AzureResourceManagerMySqlContext.Default);
 
         string IPersistableModel<MySqlRecommendationActionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MySqlRecommendationActionData>)Data).GetFormatFromOptions(options);
     }

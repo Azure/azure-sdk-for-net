@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.ScVmm.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerScVmmContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ScVmmVirtualMachineInstancePatch)} does not support writing '{options.Format}' format.");
             }

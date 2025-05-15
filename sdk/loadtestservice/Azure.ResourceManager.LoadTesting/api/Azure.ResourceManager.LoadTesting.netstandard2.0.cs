@@ -1,5 +1,11 @@
 namespace Azure.ResourceManager.LoadTesting
 {
+    public partial class AzureResourceManagerLoadTestingContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureResourceManagerLoadTestingContext() { }
+        public static Azure.ResourceManager.LoadTesting.AzureResourceManagerLoadTestingContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public static partial class LoadTestingExtensions
     {
         public static Azure.ResourceManager.LoadTesting.LoadTestingQuotaCollection GetAllLoadTestingQuota(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location) { throw null; }

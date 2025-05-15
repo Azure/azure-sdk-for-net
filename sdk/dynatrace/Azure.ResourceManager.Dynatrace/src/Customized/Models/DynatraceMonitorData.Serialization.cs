@@ -302,7 +302,7 @@ namespace Azure.ResourceManager.Dynatrace
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDynatraceContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(DynatraceMonitorData)} does not support '{options.Format}' format.");
             }

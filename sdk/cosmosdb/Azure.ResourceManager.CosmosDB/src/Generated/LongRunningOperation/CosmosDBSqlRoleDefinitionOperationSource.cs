@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.CosmosDB
 
         CosmosDBSqlRoleDefinitionResource IOperationSource<CosmosDBSqlRoleDefinitionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<CosmosDBSqlRoleDefinitionData>(response.Content);
+            var data = ModelReaderWriter.Read<CosmosDBSqlRoleDefinitionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerCosmosDBContext.Default);
             return new CosmosDBSqlRoleDefinitionResource(_client, data);
         }
 
         async ValueTask<CosmosDBSqlRoleDefinitionResource> IOperationSource<CosmosDBSqlRoleDefinitionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<CosmosDBSqlRoleDefinitionData>(response.Content);
+            var data = ModelReaderWriter.Read<CosmosDBSqlRoleDefinitionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerCosmosDBContext.Default);
             return await Task.FromResult(new CosmosDBSqlRoleDefinitionResource(_client, data)).ConfigureAwait(false);
         }
     }

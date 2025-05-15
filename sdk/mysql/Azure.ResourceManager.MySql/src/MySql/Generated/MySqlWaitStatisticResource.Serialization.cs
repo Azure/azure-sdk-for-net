@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.MySql
 
         MySqlWaitStatisticData IJsonModel<MySqlWaitStatisticData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MySqlWaitStatisticData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<MySqlWaitStatisticData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<MySqlWaitStatisticData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<MySqlWaitStatisticData>(Data, options, AzureResourceManagerMySqlContext.Default);
 
-        MySqlWaitStatisticData IPersistableModel<MySqlWaitStatisticData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MySqlWaitStatisticData>(data, options);
+        MySqlWaitStatisticData IPersistableModel<MySqlWaitStatisticData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MySqlWaitStatisticData>(data, options, AzureResourceManagerMySqlContext.Default);
 
         string IPersistableModel<MySqlWaitStatisticData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MySqlWaitStatisticData>)Data).GetFormatFromOptions(options);
     }

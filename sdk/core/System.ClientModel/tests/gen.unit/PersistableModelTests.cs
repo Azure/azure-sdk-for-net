@@ -257,5 +257,73 @@ namespace TestProject
 
             Assert.AreEqual(0, result.GenerationSpec.TypeBuilders.Count);
         }
+
+        [Test]
+        public void PersistableInheritsFromDependencyIEnumerableTest()
+        {
+            var depSource =
+$$"""
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Runtime.CompilerServices;
+[assembly: InternalsVisibleTo("TestAssembly")]
+
+namespace TestDependency
+{
+    public class Model { }
+    public partial class CustomCollection : ReadOnlyCollection<Model>
+    {
+        internal CustomCollection() : base(new List<Model>()) { }
+    }
+}
+""";
+
+            Compilation depCompilation = CompilationHelper.CreateCompilation(depSource, assemblyName: "TestDependency");
+            var depResult = CompilationHelper.RunSourceGenerator(depCompilation, out var newDepCompilation);
+
+            Assert.IsNull(depResult.GenerationSpec);
+
+            var source =
+$$"""
+using System;
+using System.ClientModel.Primitives;
+using TestDependency;
+
+namespace TestProject
+{
+    public partial class LocalContext : ModelReaderWriterContext { }
+
+    public class MyCollection : CustomCollection, IJsonModel<MyCollection>
+    {
+        internal MyCollection() { }
+        public MyCollection Create(ref System.Text.Json.Utf8JsonReader reader, ModelReaderWriterOptions options) => new MyCollection();
+        public MyCollection Create(BinaryData data, ModelReaderWriterOptions options) => new MyCollection();
+        public string GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        public void Write(System.Text.Json.Utf8JsonWriter writer, ModelReaderWriterOptions options) { }
+        public BinaryData Write(ModelReaderWriterOptions options) => BinaryData.Empty;
+    }
+}
+""";
+
+            Compilation compilation = CompilationHelper.CreateCompilation(source, additionalReferences: [newDepCompilation.ToMetadataReference()]);
+            var result = CompilationHelper.RunSourceGenerator(compilation);
+
+            Assert.IsNotNull(result.GenerationSpec);
+            Assert.AreEqual("LocalContext", result.GenerationSpec!.Type.Name);
+            Assert.AreEqual("TestProject", result.GenerationSpec.Type.Namespace);
+            Assert.AreEqual(0, result.Diagnostics.Length);
+            Assert.AreEqual("public", result.GenerationSpec!.Modifier);
+            Assert.AreEqual(1, result.GenerationSpec.TypeBuilders.Count);
+            Assert.AreEqual(0, result.GenerationSpec.ReferencedContexts.Count);
+
+            var myCollection = result.GenerationSpec.TypeBuilders[0];
+            Assert.AreEqual("internal", myCollection.Modifier);
+            Assert.AreEqual("MyCollection", myCollection.Type.Name);
+            Assert.AreEqual("TestProject", myCollection.Type.Namespace);
+            Assert.AreEqual(TypeBuilderKind.IPersistableModel, myCollection.Kind);
+            Assert.AreEqual("LocalContext", myCollection.ContextType.Name);
+            Assert.AreEqual("TestProject", myCollection.ContextType.Namespace);
+            Assert.IsNull(myCollection.PersistableModelProxy);
+        }
     }
 }

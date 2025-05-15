@@ -1,5 +1,11 @@
 namespace Azure.ResourceManager.Search
 {
+    public partial class AzureResourceManagerSearchContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureResourceManagerSearchContext() { }
+        public static Azure.ResourceManager.Search.AzureResourceManagerSearchContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class NetworkSecurityPerimeterConfigurationCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Search.NetworkSecurityPerimeterConfigurationResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Search.NetworkSecurityPerimeterConfigurationResource>, System.Collections.IEnumerable
     {
         protected NetworkSecurityPerimeterConfigurationCollection() { }

@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.DataLakeStore
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataLakeStoreContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(DataLakeStoreVirtualNetworkRuleData)} does not support writing '{options.Format}' format.");
             }

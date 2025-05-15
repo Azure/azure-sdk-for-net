@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.MachineLearning
 
         MachineLearningOutboundRuleBasicData IJsonModel<MachineLearningOutboundRuleBasicData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MachineLearningOutboundRuleBasicData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<MachineLearningOutboundRuleBasicData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<MachineLearningOutboundRuleBasicData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<MachineLearningOutboundRuleBasicData>(Data, options, AzureResourceManagerMachineLearningContext.Default);
 
-        MachineLearningOutboundRuleBasicData IPersistableModel<MachineLearningOutboundRuleBasicData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MachineLearningOutboundRuleBasicData>(data, options);
+        MachineLearningOutboundRuleBasicData IPersistableModel<MachineLearningOutboundRuleBasicData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MachineLearningOutboundRuleBasicData>(data, options, AzureResourceManagerMachineLearningContext.Default);
 
         string IPersistableModel<MachineLearningOutboundRuleBasicData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MachineLearningOutboundRuleBasicData>)Data).GetFormatFromOptions(options);
     }

@@ -1,15 +1,19 @@
 # Release History
 
-## 12.24.0-beta.1 (Unreleased)
+## 12.24.0-beta.2 (Unreleased)
 
 ### Features Added
-- `StorageBearerTokenChallengeAuthorizationPolicy` now will attempt to handle Continuous Access Evaluation (CAE) challenges, if present, by default.
 
 ### Breaking Changes
 
 ### Bugs Fixed
 
 ### Other Changes
+
+## 12.24.0-beta.1 (2025-05-06)
+
+### Features Added
+- `StorageBearerTokenChallengeAuthorizationPolicy` now will attempt to handle Continuous Access Evaluation (CAE) challenges, if present, by default.
 
 ## 12.23.0 (2025-03-11)
 

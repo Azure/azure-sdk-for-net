@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Maps
 
         MapsCreatorData IJsonModel<MapsCreatorData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MapsCreatorData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<MapsCreatorData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<MapsCreatorData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<MapsCreatorData>(Data, options, AzureResourceManagerMapsContext.Default);
 
-        MapsCreatorData IPersistableModel<MapsCreatorData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MapsCreatorData>(data, options);
+        MapsCreatorData IPersistableModel<MapsCreatorData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MapsCreatorData>(data, options, AzureResourceManagerMapsContext.Default);
 
         string IPersistableModel<MapsCreatorData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MapsCreatorData>)Data).GetFormatFromOptions(options);
     }

@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.SecurityInsights
 
         WorkspaceManagerGroupData IJsonModel<WorkspaceManagerGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<WorkspaceManagerGroupData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<WorkspaceManagerGroupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<WorkspaceManagerGroupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<WorkspaceManagerGroupData>(Data, options, AzureResourceManagerSecurityInsightsContext.Default);
 
-        WorkspaceManagerGroupData IPersistableModel<WorkspaceManagerGroupData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<WorkspaceManagerGroupData>(data, options);
+        WorkspaceManagerGroupData IPersistableModel<WorkspaceManagerGroupData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<WorkspaceManagerGroupData>(data, options, AzureResourceManagerSecurityInsightsContext.Default);
 
         string IPersistableModel<WorkspaceManagerGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<WorkspaceManagerGroupData>)Data).GetFormatFromOptions(options);
     }

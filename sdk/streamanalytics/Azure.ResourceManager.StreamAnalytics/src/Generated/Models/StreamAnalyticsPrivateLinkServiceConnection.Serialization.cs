@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerStreamAnalyticsContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(StreamAnalyticsPrivateLinkServiceConnection)} does not support writing '{options.Format}' format.");
             }

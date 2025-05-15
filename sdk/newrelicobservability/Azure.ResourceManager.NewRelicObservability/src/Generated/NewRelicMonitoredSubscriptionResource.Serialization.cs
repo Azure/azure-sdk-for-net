@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.NewRelicObservability
 
         NewRelicMonitoredSubscriptionData IJsonModel<NewRelicMonitoredSubscriptionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NewRelicMonitoredSubscriptionData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<NewRelicMonitoredSubscriptionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<NewRelicMonitoredSubscriptionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<NewRelicMonitoredSubscriptionData>(Data, options, AzureResourceManagerNewRelicObservabilityContext.Default);
 
-        NewRelicMonitoredSubscriptionData IPersistableModel<NewRelicMonitoredSubscriptionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NewRelicMonitoredSubscriptionData>(data, options);
+        NewRelicMonitoredSubscriptionData IPersistableModel<NewRelicMonitoredSubscriptionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NewRelicMonitoredSubscriptionData>(data, options, AzureResourceManagerNewRelicObservabilityContext.Default);
 
         string IPersistableModel<NewRelicMonitoredSubscriptionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NewRelicMonitoredSubscriptionData>)Data).GetFormatFromOptions(options);
     }

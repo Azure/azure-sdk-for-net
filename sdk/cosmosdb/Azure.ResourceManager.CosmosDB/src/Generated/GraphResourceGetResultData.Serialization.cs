@@ -373,7 +373,7 @@ namespace Azure.ResourceManager.CosmosDB
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCosmosDBContext.Default);
                 case "bicep":
                     return SerializeBicep(options);
                 default:

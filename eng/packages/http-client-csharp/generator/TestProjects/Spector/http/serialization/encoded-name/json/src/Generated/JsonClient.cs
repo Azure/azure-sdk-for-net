@@ -16,7 +16,7 @@ namespace Serialization.EncodedName.Json
 
         public JsonClient(Uri endpoint, JsonClientOptions options) => throw null;
 
-        public HttpPipeline Pipeline => throw null;
+        public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Property GetPropertyClient() => throw null;
     }

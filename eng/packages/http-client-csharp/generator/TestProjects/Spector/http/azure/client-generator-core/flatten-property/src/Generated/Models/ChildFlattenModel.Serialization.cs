@@ -15,6 +15,8 @@ namespace _Specs_.Azure.ClientGenerator.Core.FlattenProperty
 {
     public partial class ChildFlattenModel : IJsonModel<ChildFlattenModel>
     {
+        internal ChildFlattenModel() => throw null;
+
         void IJsonModel<ChildFlattenModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;

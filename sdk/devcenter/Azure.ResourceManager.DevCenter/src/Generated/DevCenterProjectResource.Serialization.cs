@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.DevCenter
 
         DevCenterProjectData IJsonModel<DevCenterProjectData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DevCenterProjectData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<DevCenterProjectData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<DevCenterProjectData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DevCenterProjectData>(Data, options, AzureResourceManagerDevCenterContext.Default);
 
-        DevCenterProjectData IPersistableModel<DevCenterProjectData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DevCenterProjectData>(data, options);
+        DevCenterProjectData IPersistableModel<DevCenterProjectData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DevCenterProjectData>(data, options, AzureResourceManagerDevCenterContext.Default);
 
         string IPersistableModel<DevCenterProjectData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DevCenterProjectData>)Data).GetFormatFromOptions(options);
     }

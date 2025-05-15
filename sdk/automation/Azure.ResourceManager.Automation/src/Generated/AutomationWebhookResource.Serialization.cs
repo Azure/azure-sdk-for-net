@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Automation
 
         AutomationWebhookData IJsonModel<AutomationWebhookData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AutomationWebhookData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<AutomationWebhookData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<AutomationWebhookData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AutomationWebhookData>(Data, options, AzureResourceManagerAutomationContext.Default);
 
-        AutomationWebhookData IPersistableModel<AutomationWebhookData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AutomationWebhookData>(data, options);
+        AutomationWebhookData IPersistableModel<AutomationWebhookData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AutomationWebhookData>(data, options, AzureResourceManagerAutomationContext.Default);
 
         string IPersistableModel<AutomationWebhookData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AutomationWebhookData>)Data).GetFormatFromOptions(options);
     }

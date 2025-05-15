@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Cdn
 
         CdnEndpointData IJsonModel<CdnEndpointData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<CdnEndpointData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<CdnEndpointData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<CdnEndpointData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<CdnEndpointData>(Data, options, AzureResourceManagerCdnContext.Default);
 
-        CdnEndpointData IPersistableModel<CdnEndpointData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CdnEndpointData>(data, options);
+        CdnEndpointData IPersistableModel<CdnEndpointData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CdnEndpointData>(data, options, AzureResourceManagerCdnContext.Default);
 
         string IPersistableModel<CdnEndpointData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<CdnEndpointData>)Data).GetFormatFromOptions(options);
     }

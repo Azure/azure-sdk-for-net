@@ -1,5 +1,11 @@
 namespace Azure.ResourceManager.Support
 {
+    public partial class AzureResourceManagerSupportContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureResourceManagerSupportContext() { }
+        public static Azure.ResourceManager.Support.AzureResourceManagerSupportContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class ChatTranscriptDetailData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Support.ChatTranscriptDetailData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Support.ChatTranscriptDetailData>
     {
         public ChatTranscriptDetailData() { }

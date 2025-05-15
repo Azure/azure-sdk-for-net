@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Qumulo
 
         QumuloFileSystemResourceData IJsonModel<QumuloFileSystemResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<QumuloFileSystemResourceData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<QumuloFileSystemResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<QumuloFileSystemResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<QumuloFileSystemResourceData>(Data, options, AzureResourceManagerQumuloContext.Default);
 
-        QumuloFileSystemResourceData IPersistableModel<QumuloFileSystemResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<QumuloFileSystemResourceData>(data, options);
+        QumuloFileSystemResourceData IPersistableModel<QumuloFileSystemResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<QumuloFileSystemResourceData>(data, options, AzureResourceManagerQumuloContext.Default);
 
         string IPersistableModel<QumuloFileSystemResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<QumuloFileSystemResourceData>)Data).GetFormatFromOptions(options);
     }

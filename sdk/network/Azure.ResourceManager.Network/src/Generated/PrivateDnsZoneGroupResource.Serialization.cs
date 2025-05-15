@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Network
 
         PrivateDnsZoneGroupData IJsonModel<PrivateDnsZoneGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PrivateDnsZoneGroupData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<PrivateDnsZoneGroupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<PrivateDnsZoneGroupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<PrivateDnsZoneGroupData>(Data, options, AzureResourceManagerNetworkContext.Default);
 
-        PrivateDnsZoneGroupData IPersistableModel<PrivateDnsZoneGroupData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PrivateDnsZoneGroupData>(data, options);
+        PrivateDnsZoneGroupData IPersistableModel<PrivateDnsZoneGroupData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PrivateDnsZoneGroupData>(data, options, AzureResourceManagerNetworkContext.Default);
 
         string IPersistableModel<PrivateDnsZoneGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PrivateDnsZoneGroupData>)Data).GetFormatFromOptions(options);
     }

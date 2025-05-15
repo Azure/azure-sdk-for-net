@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Sql
 
         SqlServerTrustGroupData IJsonModel<SqlServerTrustGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SqlServerTrustGroupData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SqlServerTrustGroupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<SqlServerTrustGroupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SqlServerTrustGroupData>(Data, options, AzureResourceManagerSqlContext.Default);
 
-        SqlServerTrustGroupData IPersistableModel<SqlServerTrustGroupData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SqlServerTrustGroupData>(data, options);
+        SqlServerTrustGroupData IPersistableModel<SqlServerTrustGroupData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SqlServerTrustGroupData>(data, options, AzureResourceManagerSqlContext.Default);
 
         string IPersistableModel<SqlServerTrustGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SqlServerTrustGroupData>)Data).GetFormatFromOptions(options);
     }

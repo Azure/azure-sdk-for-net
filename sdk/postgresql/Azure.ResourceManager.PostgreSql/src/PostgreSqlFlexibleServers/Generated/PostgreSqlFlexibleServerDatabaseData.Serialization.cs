@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerPostgreSqlContext.Default);
                 case "bicep":
                     return SerializeBicep(options);
                 default:

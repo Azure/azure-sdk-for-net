@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Sql
 
         ManagedInstanceAdministratorResource IOperationSource<ManagedInstanceAdministratorResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ManagedInstanceAdministratorData>(response.Content);
+            var data = ModelReaderWriter.Read<ManagedInstanceAdministratorData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSqlContext.Default);
             return new ManagedInstanceAdministratorResource(_client, data);
         }
 
         async ValueTask<ManagedInstanceAdministratorResource> IOperationSource<ManagedInstanceAdministratorResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ManagedInstanceAdministratorData>(response.Content);
+            var data = ModelReaderWriter.Read<ManagedInstanceAdministratorData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSqlContext.Default);
             return await Task.FromResult(new ManagedInstanceAdministratorResource(_client, data)).ConfigureAwait(false);
         }
     }

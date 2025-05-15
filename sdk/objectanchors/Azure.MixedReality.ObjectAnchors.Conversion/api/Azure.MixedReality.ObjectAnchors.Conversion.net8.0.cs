@@ -112,6 +112,12 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
         internal AssetUploadUriResult() { }
         public System.Uri UploadUri { get { throw null; } }
     }
+    public partial class AzureMixedRealityObjectAnchorsConversionContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureMixedRealityObjectAnchorsConversionContext() { }
+        public static Azure.MixedReality.ObjectAnchors.Conversion.AzureMixedRealityObjectAnchorsConversionContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ConversionErrorCode : System.IEquatable<Azure.MixedReality.ObjectAnchors.Conversion.ConversionErrorCode>
     {

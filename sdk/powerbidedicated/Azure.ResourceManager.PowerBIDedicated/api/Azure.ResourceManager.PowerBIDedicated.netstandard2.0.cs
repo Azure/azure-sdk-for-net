@@ -56,6 +56,12 @@ namespace Azure.ResourceManager.PowerBIDedicated
         public virtual Azure.Response<Azure.ResourceManager.PowerBIDedicated.AutoScaleVCoreResource> Update(Azure.ResourceManager.PowerBIDedicated.Models.AutoScaleVCorePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.PowerBIDedicated.AutoScaleVCoreResource>> UpdateAsync(Azure.ResourceManager.PowerBIDedicated.Models.AutoScaleVCorePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
+    public partial class AzureResourceManagerPowerBIDedicatedContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureResourceManagerPowerBIDedicatedContext() { }
+        public static Azure.ResourceManager.PowerBIDedicated.AzureResourceManagerPowerBIDedicatedContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class DedicatedCapacityCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.PowerBIDedicated.DedicatedCapacityResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.PowerBIDedicated.DedicatedCapacityResource>, System.Collections.IEnumerable
     {
         protected DedicatedCapacityCollection() { }

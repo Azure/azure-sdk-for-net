@@ -127,7 +127,7 @@ namespace Azure.Health.Insights.RadiologyInsights
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureHealthInsightsRadiologyInsightsContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(DocumentAdministrativeMetadata)} does not support writing '{options.Format}' format.");
             }

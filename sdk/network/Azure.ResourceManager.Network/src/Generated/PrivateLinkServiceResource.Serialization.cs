@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Network
 
         PrivateLinkServiceData IJsonModel<PrivateLinkServiceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PrivateLinkServiceData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<PrivateLinkServiceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<PrivateLinkServiceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<PrivateLinkServiceData>(Data, options, AzureResourceManagerNetworkContext.Default);
 
-        PrivateLinkServiceData IPersistableModel<PrivateLinkServiceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PrivateLinkServiceData>(data, options);
+        PrivateLinkServiceData IPersistableModel<PrivateLinkServiceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PrivateLinkServiceData>(data, options, AzureResourceManagerNetworkContext.Default);
 
         string IPersistableModel<PrivateLinkServiceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PrivateLinkServiceData>)Data).GetFormatFromOptions(options);
     }

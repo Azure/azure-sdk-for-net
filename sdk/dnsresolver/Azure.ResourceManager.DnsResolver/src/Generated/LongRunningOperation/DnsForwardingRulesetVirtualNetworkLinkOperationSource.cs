@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.DnsResolver
 
         DnsForwardingRulesetVirtualNetworkLinkResource IOperationSource<DnsForwardingRulesetVirtualNetworkLinkResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DnsForwardingRulesetVirtualNetworkLinkData>(response.Content);
+            var data = ModelReaderWriter.Read<DnsForwardingRulesetVirtualNetworkLinkData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDnsResolverContext.Default);
             return new DnsForwardingRulesetVirtualNetworkLinkResource(_client, data);
         }
 
         async ValueTask<DnsForwardingRulesetVirtualNetworkLinkResource> IOperationSource<DnsForwardingRulesetVirtualNetworkLinkResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DnsForwardingRulesetVirtualNetworkLinkData>(response.Content);
+            var data = ModelReaderWriter.Read<DnsForwardingRulesetVirtualNetworkLinkData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDnsResolverContext.Default);
             return await Task.FromResult(new DnsForwardingRulesetVirtualNetworkLinkResource(_client, data)).ConfigureAwait(false);
         }
     }

@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.DataMigration
 
         ProjectTaskData IJsonModel<ProjectTaskData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ProjectTaskData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ProjectTaskData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<ProjectTaskData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ProjectTaskData>(Data, options, AzureResourceManagerDataMigrationContext.Default);
 
-        ProjectTaskData IPersistableModel<ProjectTaskData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ProjectTaskData>(data, options);
+        ProjectTaskData IPersistableModel<ProjectTaskData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ProjectTaskData>(data, options, AzureResourceManagerDataMigrationContext.Default);
 
         string IPersistableModel<ProjectTaskData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ProjectTaskData>)Data).GetFormatFromOptions(options);
     }

@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.PostgreSql
 
         PostgreSqlPrivateLinkResourceData IJsonModel<PostgreSqlPrivateLinkResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PostgreSqlPrivateLinkResourceData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<PostgreSqlPrivateLinkResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<PostgreSqlPrivateLinkResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<PostgreSqlPrivateLinkResourceData>(Data, options, AzureResourceManagerPostgreSqlContext.Default);
 
-        PostgreSqlPrivateLinkResourceData IPersistableModel<PostgreSqlPrivateLinkResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PostgreSqlPrivateLinkResourceData>(data, options);
+        PostgreSqlPrivateLinkResourceData IPersistableModel<PostgreSqlPrivateLinkResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PostgreSqlPrivateLinkResourceData>(data, options, AzureResourceManagerPostgreSqlContext.Default);
 
         string IPersistableModel<PostgreSqlPrivateLinkResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PostgreSqlPrivateLinkResourceData>)Data).GetFormatFromOptions(options);
     }

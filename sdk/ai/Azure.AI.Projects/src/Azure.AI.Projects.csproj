@@ -14,11 +14,8 @@
 
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
+    <PackageReference Include="System.ClientModel" />
     <PackageReference Include="Azure.Identity" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\core\System.ClientModel\src\System.ClientModel.csproj" />
   </ItemGroup>
 
   <!-- Shared source from Azure.Core -->

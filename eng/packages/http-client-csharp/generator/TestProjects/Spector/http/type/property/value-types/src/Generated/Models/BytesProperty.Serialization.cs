@@ -15,6 +15,8 @@ namespace _Type.Property.ValueTypes
 {
     public partial class BytesProperty : IJsonModel<BytesProperty>
     {
+        internal BytesProperty() => throw null;
+
         void IJsonModel<BytesProperty>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;

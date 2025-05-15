@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.SecurityCenter
 
         SecurityCenterApiCollectionData IJsonModel<SecurityCenterApiCollectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SecurityCenterApiCollectionData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SecurityCenterApiCollectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<SecurityCenterApiCollectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SecurityCenterApiCollectionData>(Data, options, AzureResourceManagerSecurityCenterContext.Default);
 
-        SecurityCenterApiCollectionData IPersistableModel<SecurityCenterApiCollectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SecurityCenterApiCollectionData>(data, options);
+        SecurityCenterApiCollectionData IPersistableModel<SecurityCenterApiCollectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SecurityCenterApiCollectionData>(data, options, AzureResourceManagerSecurityCenterContext.Default);
 
         string IPersistableModel<SecurityCenterApiCollectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SecurityCenterApiCollectionData>)Data).GetFormatFromOptions(options);
     }

@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.AppService
 
         AseV3NetworkingConfigurationData IJsonModel<AseV3NetworkingConfigurationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AseV3NetworkingConfigurationData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<AseV3NetworkingConfigurationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<AseV3NetworkingConfigurationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AseV3NetworkingConfigurationData>(Data, options, AzureResourceManagerAppServiceContext.Default);
 
-        AseV3NetworkingConfigurationData IPersistableModel<AseV3NetworkingConfigurationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AseV3NetworkingConfigurationData>(data, options);
+        AseV3NetworkingConfigurationData IPersistableModel<AseV3NetworkingConfigurationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AseV3NetworkingConfigurationData>(data, options, AzureResourceManagerAppServiceContext.Default);
 
         string IPersistableModel<AseV3NetworkingConfigurationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AseV3NetworkingConfigurationData>)Data).GetFormatFromOptions(options);
     }

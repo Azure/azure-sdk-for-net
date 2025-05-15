@@ -3,8 +3,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using System.Threading;
 using Azure.Storage.Files.Shares.Models;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
+using Azure.Storage.Files.Shares;
 
 namespace Azure.Storage.DataMovement.Files.Shares
 {
@@ -678,6 +681,38 @@ namespace Azure.Storage.DataMovement.Files.Shares
             else
             {
                 throw Storage.Errors.UnexpectedPropertyType(contentPropertyName, DataMovementConstants.StringTypeStr, DataMovementConstants.StringArrayTypeStr);
+            }
+        }
+
+        public static async Task ValidateProtocolAsync(
+            ShareClient parentShareClient,
+            ShareFileStorageResourceOptions options,
+            string transferId,
+            string endpoint,
+            string resourceUri,
+            CancellationToken cancellationToken)
+        {
+            if (!options?.SkipProtocolValidation ?? true)
+            {
+                try
+                {
+                    ShareProperties properties = await parentShareClient.GetPropertiesAsync(cancellationToken).ConfigureAwait(false);
+                    ShareProtocols expectedProtocol = options.IsNfs ? ShareProtocols.Nfs : ShareProtocols.Smb;
+                    ShareProtocols actualProtocol = properties.Protocols ?? ShareProtocols.Smb;
+
+                    if (actualProtocol != expectedProtocol)
+                    {
+                        throw Errors.ProtocolSetMismatch(endpoint, expectedProtocol, actualProtocol);
+                    }
+                }
+                catch (RequestFailedException ex) when (ex.Status == 403)
+                {
+                    throw Errors.ProtocolValidationAuthorizationFailure(ex, endpoint);
+                }
+            }
+            else
+            {
+                DataMovementFileShareEventSource.Singleton.ProtocolValidationSkipped(transferId, endpoint, resourceUri);
             }
         }
     }

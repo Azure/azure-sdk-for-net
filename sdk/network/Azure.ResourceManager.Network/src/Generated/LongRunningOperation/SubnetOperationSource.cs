@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Network
 
         SubnetResource IOperationSource<SubnetResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<SubnetData>(response.Content);
+            var data = ModelReaderWriter.Read<SubnetData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkContext.Default);
             return new SubnetResource(_client, data);
         }
 
         async ValueTask<SubnetResource> IOperationSource<SubnetResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<SubnetData>(response.Content);
+            var data = ModelReaderWriter.Read<SubnetData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkContext.Default);
             return await Task.FromResult(new SubnetResource(_client, data)).ConfigureAwait(false);
         }
     }

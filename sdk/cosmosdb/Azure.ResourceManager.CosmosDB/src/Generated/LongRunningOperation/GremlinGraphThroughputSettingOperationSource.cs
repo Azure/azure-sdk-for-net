@@ -32,13 +32,13 @@ namespace Azure.ResourceManager.CosmosDB
 
         GremlinGraphThroughputSettingResource IOperationSource<GremlinGraphThroughputSettingResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ScrubId(ModelReaderWriter.Read<ThroughputSettingData>(response.Content));
+            var data = ScrubId(ModelReaderWriter.Read<ThroughputSettingData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerCosmosDBContext.Default));
             return new GremlinGraphThroughputSettingResource(_client, data);
         }
 
         async ValueTask<GremlinGraphThroughputSettingResource> IOperationSource<GremlinGraphThroughputSettingResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ScrubId(ModelReaderWriter.Read<ThroughputSettingData>(response.Content));
+            var data = ScrubId(ModelReaderWriter.Read<ThroughputSettingData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerCosmosDBContext.Default));
             return await Task.FromResult(new GremlinGraphThroughputSettingResource(_client, data)).ConfigureAwait(false);
         }
 

@@ -199,7 +199,21 @@ namespace Azure.Search.Documents.Models
             IndexerExecutionResult lastResult,
             IReadOnlyList<IndexerExecutionResult> executionHistory,
             SearchIndexerLimits limits) =>
-            new SearchIndexerStatus(status, lastResult, executionHistory, limits);
+            new SearchIndexerStatus(status, lastResult, executionHistory, limits, default);
+
+        /// <summary> Initializes a new instance of <see cref="Indexes.Models.SearchIndexerStatus"/>. </summary>
+        /// <param name="status"> Overall indexer status. </param>
+        /// <param name="lastResult"> The result of the most recent or an in-progress indexer execution. </param>
+        /// <param name="executionHistory"> History of the recent indexer executions, sorted in reverse chronological order. </param>
+        /// <param name="limits"> The execution limits for the indexer. </param>
+        /// <returns> A new <see cref="Indexes.Models.SearchIndexerStatus"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static SearchIndexerStatus SearchIndexerStatus(IndexerStatus status = default, IndexerExecutionResult lastResult = null, IEnumerable<IndexerExecutionResult> executionHistory = null, SearchIndexerLimits limits = null)
+        {
+            executionHistory ??= new List<IndexerExecutionResult>();
+
+            return new SearchIndexerStatus(status, lastResult, executionHistory?.ToList(), limits, default);
+        }
 
         /// <summary> Initializes a new instance of SearchIndexerWarning. </summary>
         /// <param name="key"> The key of the item which generated a warning. </param>

@@ -63,6 +63,12 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval
         public virtual Azure.Response<Azure.ResourceManager.ArizeAIObservabilityEval.ArizeAIObservabilityEvalOrganizationResource> Update(Azure.ResourceManager.ArizeAIObservabilityEval.Models.ArizeAIObservabilityEvalOrganizationPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ArizeAIObservabilityEval.ArizeAIObservabilityEvalOrganizationResource>> UpdateAsync(Azure.ResourceManager.ArizeAIObservabilityEval.Models.ArizeAIObservabilityEvalOrganizationPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
+    public partial class AzureResourceManagerArizeAIObservabilityEvalContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureResourceManagerArizeAIObservabilityEvalContext() { }
+        public static Azure.ResourceManager.ArizeAIObservabilityEval.AzureResourceManagerArizeAIObservabilityEvalContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
 }
 namespace Azure.ResourceManager.ArizeAIObservabilityEval.Mocking
 {

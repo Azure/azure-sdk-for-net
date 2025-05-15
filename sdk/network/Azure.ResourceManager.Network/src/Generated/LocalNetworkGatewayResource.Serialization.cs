@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Network
 
         LocalNetworkGatewayData IJsonModel<LocalNetworkGatewayData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<LocalNetworkGatewayData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<LocalNetworkGatewayData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<LocalNetworkGatewayData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<LocalNetworkGatewayData>(Data, options, AzureResourceManagerNetworkContext.Default);
 
-        LocalNetworkGatewayData IPersistableModel<LocalNetworkGatewayData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<LocalNetworkGatewayData>(data, options);
+        LocalNetworkGatewayData IPersistableModel<LocalNetworkGatewayData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<LocalNetworkGatewayData>(data, options, AzureResourceManagerNetworkContext.Default);
 
         string IPersistableModel<LocalNetworkGatewayData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<LocalNetworkGatewayData>)Data).GetFormatFromOptions(options);
     }

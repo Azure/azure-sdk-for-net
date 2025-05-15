@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.LoadTesting
 
         LoadTestingQuotaData IJsonModel<LoadTestingQuotaData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<LoadTestingQuotaData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<LoadTestingQuotaData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<LoadTestingQuotaData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<LoadTestingQuotaData>(Data, options, AzureResourceManagerLoadTestingContext.Default);
 
-        LoadTestingQuotaData IPersistableModel<LoadTestingQuotaData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<LoadTestingQuotaData>(data, options);
+        LoadTestingQuotaData IPersistableModel<LoadTestingQuotaData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<LoadTestingQuotaData>(data, options, AzureResourceManagerLoadTestingContext.Default);
 
         string IPersistableModel<LoadTestingQuotaData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<LoadTestingQuotaData>)Data).GetFormatFromOptions(options);
     }

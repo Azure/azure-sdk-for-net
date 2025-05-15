@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.CosmosDB
 
         CassandraViewGetResultResource IOperationSource<CassandraViewGetResultResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<CassandraViewGetResultData>(response.Content);
+            var data = ModelReaderWriter.Read<CassandraViewGetResultData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerCosmosDBContext.Default);
             return new CassandraViewGetResultResource(_client, data);
         }
 
         async ValueTask<CassandraViewGetResultResource> IOperationSource<CassandraViewGetResultResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<CassandraViewGetResultData>(response.Content);
+            var data = ModelReaderWriter.Read<CassandraViewGetResultData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerCosmosDBContext.Default);
             return await Task.FromResult(new CassandraViewGetResultResource(_client, data)).ConfigureAwait(false);
         }
     }

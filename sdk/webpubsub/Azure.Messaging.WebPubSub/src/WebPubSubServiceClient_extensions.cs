@@ -4,6 +4,9 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+
+using Autorest.CSharp.Core;
+
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -616,6 +619,46 @@ namespace Azure.Messaging.WebPubSub
             Argument.AssertNotNull(groups, nameof(groups));
 
             return await RemoveConnectionsFromGroupsAsync(RequestContent.Create(new { filter = filter, groups = groups }), context).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// List all the connections in a group.
+        /// </summary>
+        /// <param name="group"> Target group name, whose length should be greater than 0 and less than 1025. </param>
+        /// <param name="maxpagesize"> The maximum number of connections to include in a single response. It should be between 1 and 200. </param>
+        /// <param name="maxCount"> The maximum number of connections to return. If the value is not set, then all the connections in a group are returned. </param>
+        /// <param name="continuationToken"> A token that allows the client to retrieve the next page of results. This parameter is provided by the service in the response of a previous request when there are additional results to be fetched. Clients should include the continuationToken in the next request to receive the subsequent page of data. If this parameter is omitted, the server will return the first page of results. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="group"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="group"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="Pageable{GroupMember}"/> from the service. </returns>
+        public virtual Pageable<WebPubSubGroupMember> ListConnectionsInGroup(string group, int? maxpagesize = null, int? maxCount = null, string continuationToken = null)
+        {
+            Argument.AssertNotNullOrEmpty(group, nameof(group));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetConnectionsInGroupsRequest(group, pageSizeHint, maxCount, continuationToken, null);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetConnectionsInGroupsNextPageRequest(nextLink, group, pageSizeHint, maxCount, continuationToken, null);
+
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, WebPubSubGroupMember.ParseFromJson, ClientDiagnostics, _pipeline, "WebPubSubServiceClient.ListConnectionsInGroup", "value", "nextLink", maxpagesize, null);
+        }
+
+        /// <summary>
+        /// List all the connections in a group.
+        /// </summary>
+        /// <param name="group"> Target group name, whose length should be greater than 0 and less than 1025. </param>
+        /// <param name="maxpagesize"> The maximum number of connections to include in a single response. It should be between 1 and 200. </param>
+        /// <param name="maxCount"> The maximum number of connections to return. If the value is not set, then all the connections in a group are returned. </param>
+        /// <param name="continuationToken"> A token that allows the client to retrieve the next page of results. This parameter is provided by the service in the response of a previous request when there are additional results to be fetched. Clients should include the continuationToken in the next request to receive the subsequent page of data. If this parameter is omitted, the server will return the first page of results. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="group"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="group"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="AsyncPageable{GroupMember}"/> from the service. </returns>
+        public virtual AsyncPageable<WebPubSubGroupMember> ListConnectionsInGroupAsync(string group, int? maxpagesize = null, int? maxCount = null, string continuationToken = null)
+        {
+            Argument.AssertNotNullOrEmpty(group, nameof(group));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetConnectionsInGroupsRequest(group, pageSizeHint, maxCount, continuationToken, null);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetConnectionsInGroupsNextPageRequest(nextLink, group, pageSizeHint, maxCount, continuationToken, null);
+
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, WebPubSubGroupMember.ParseFromJson, ClientDiagnostics, _pipeline, "WebPubSubServiceClient.ListConnectionsInGroup", "value", "nextLink", maxpagesize, null);
         }
     }
 }

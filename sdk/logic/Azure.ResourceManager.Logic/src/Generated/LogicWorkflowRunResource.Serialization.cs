@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Logic
 
         LogicWorkflowRunData IJsonModel<LogicWorkflowRunData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<LogicWorkflowRunData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<LogicWorkflowRunData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<LogicWorkflowRunData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<LogicWorkflowRunData>(Data, options, AzureResourceManagerLogicContext.Default);
 
-        LogicWorkflowRunData IPersistableModel<LogicWorkflowRunData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<LogicWorkflowRunData>(data, options);
+        LogicWorkflowRunData IPersistableModel<LogicWorkflowRunData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<LogicWorkflowRunData>(data, options, AzureResourceManagerLogicContext.Default);
 
         string IPersistableModel<LogicWorkflowRunData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<LogicWorkflowRunData>)Data).GetFormatFromOptions(options);
     }

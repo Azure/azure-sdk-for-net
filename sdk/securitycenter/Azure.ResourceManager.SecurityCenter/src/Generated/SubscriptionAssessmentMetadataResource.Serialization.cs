@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.SecurityCenter
 
         SecurityAssessmentMetadataData IJsonModel<SecurityAssessmentMetadataData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SecurityAssessmentMetadataData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SecurityAssessmentMetadataData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<SecurityAssessmentMetadataData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SecurityAssessmentMetadataData>(Data, options, AzureResourceManagerSecurityCenterContext.Default);
 
-        SecurityAssessmentMetadataData IPersistableModel<SecurityAssessmentMetadataData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SecurityAssessmentMetadataData>(data, options);
+        SecurityAssessmentMetadataData IPersistableModel<SecurityAssessmentMetadataData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SecurityAssessmentMetadataData>(data, options, AzureResourceManagerSecurityCenterContext.Default);
 
         string IPersistableModel<SecurityAssessmentMetadataData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SecurityAssessmentMetadataData>)Data).GetFormatFromOptions(options);
     }

@@ -15,6 +15,8 @@ namespace SpecialWords._Models
 {
     public partial class Break : IJsonModel<Break>
     {
+        internal Break() => throw null;
+
         void IJsonModel<Break>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;

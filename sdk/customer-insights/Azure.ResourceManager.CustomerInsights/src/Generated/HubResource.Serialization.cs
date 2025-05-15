@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.CustomerInsights
 
         HubData IJsonModel<HubData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<HubData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<HubData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<HubData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<HubData>(Data, options, AzureResourceManagerCustomerInsightsContext.Default);
 
-        HubData IPersistableModel<HubData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<HubData>(data, options);
+        HubData IPersistableModel<HubData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<HubData>(data, options, AzureResourceManagerCustomerInsightsContext.Default);
 
         string IPersistableModel<HubData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<HubData>)Data).GetFormatFromOptions(options);
     }

@@ -32,13 +32,13 @@ namespace Azure.ResourceManager.Cdn
 
         CdnCustomDomainResource IOperationSource<CdnCustomDomainResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ScrubId(ModelReaderWriter.Read<CdnCustomDomainData>(response.Content));
+            var data = ScrubId(ModelReaderWriter.Read<CdnCustomDomainData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerCdnContext.Default));
             return new CdnCustomDomainResource(_client, data);
         }
 
         async ValueTask<CdnCustomDomainResource> IOperationSource<CdnCustomDomainResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ScrubId(ModelReaderWriter.Read<CdnCustomDomainData>(response.Content));
+            var data = ScrubId(ModelReaderWriter.Read<CdnCustomDomainData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerCdnContext.Default));
             return await Task.FromResult(new CdnCustomDomainResource(_client, data)).ConfigureAwait(false);
         }
 

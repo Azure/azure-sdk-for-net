@@ -15,6 +15,8 @@ namespace _Type.Property.ValueTypes
 {
     public partial class UnionStringLiteralProperty : IJsonModel<UnionStringLiteralProperty>
     {
+        internal UnionStringLiteralProperty() => throw null;
+
         void IJsonModel<UnionStringLiteralProperty>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;

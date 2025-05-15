@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.SignalR
 
         SignalRData IJsonModel<SignalRData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SignalRData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SignalRData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<SignalRData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SignalRData>(Data, options, AzureResourceManagerSignalRContext.Default);
 
-        SignalRData IPersistableModel<SignalRData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SignalRData>(data, options);
+        SignalRData IPersistableModel<SignalRData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SignalRData>(data, options, AzureResourceManagerSignalRContext.Default);
 
         string IPersistableModel<SignalRData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SignalRData>)Data).GetFormatFromOptions(options);
     }

@@ -1,5 +1,11 @@
 namespace Azure.Health.Deidentification
 {
+    public partial class AzureHealthDeidentificationContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureHealthDeidentificationContext() { }
+        public static Azure.Health.Deidentification.AzureHealthDeidentificationContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class DeidentificationClient
     {
         protected DeidentificationClient() { }

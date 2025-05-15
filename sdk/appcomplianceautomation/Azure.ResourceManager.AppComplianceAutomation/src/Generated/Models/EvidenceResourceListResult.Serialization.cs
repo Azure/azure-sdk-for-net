@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAppComplianceAutomationContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(EvidenceResourceListResult)} does not support writing '{options.Format}' format.");
             }

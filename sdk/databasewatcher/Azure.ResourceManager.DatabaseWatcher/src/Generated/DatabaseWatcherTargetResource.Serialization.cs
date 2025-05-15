@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.DatabaseWatcher
 
         DatabaseWatcherTargetData IJsonModel<DatabaseWatcherTargetData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DatabaseWatcherTargetData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<DatabaseWatcherTargetData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<DatabaseWatcherTargetData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DatabaseWatcherTargetData>(Data, options, AzureResourceManagerDatabaseWatcherContext.Default);
 
-        DatabaseWatcherTargetData IPersistableModel<DatabaseWatcherTargetData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DatabaseWatcherTargetData>(data, options);
+        DatabaseWatcherTargetData IPersistableModel<DatabaseWatcherTargetData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DatabaseWatcherTargetData>(data, options, AzureResourceManagerDatabaseWatcherContext.Default);
 
         string IPersistableModel<DatabaseWatcherTargetData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DatabaseWatcherTargetData>)Data).GetFormatFromOptions(options);
     }

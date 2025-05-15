@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.SecurityInsights
 
         SecurityInsightsSourceControlData IJsonModel<SecurityInsightsSourceControlData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SecurityInsightsSourceControlData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SecurityInsightsSourceControlData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<SecurityInsightsSourceControlData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SecurityInsightsSourceControlData>(Data, options, AzureResourceManagerSecurityInsightsContext.Default);
 
-        SecurityInsightsSourceControlData IPersistableModel<SecurityInsightsSourceControlData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SecurityInsightsSourceControlData>(data, options);
+        SecurityInsightsSourceControlData IPersistableModel<SecurityInsightsSourceControlData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SecurityInsightsSourceControlData>(data, options, AzureResourceManagerSecurityInsightsContext.Default);
 
         string IPersistableModel<SecurityInsightsSourceControlData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SecurityInsightsSourceControlData>)Data).GetFormatFromOptions(options);
     }

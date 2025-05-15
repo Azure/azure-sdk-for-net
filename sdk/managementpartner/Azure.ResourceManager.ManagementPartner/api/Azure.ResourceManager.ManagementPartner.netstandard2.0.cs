@@ -1,5 +1,11 @@
 namespace Azure.ResourceManager.ManagementPartner
 {
+    public partial class AzureResourceManagerManagementPartnerContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureResourceManagerManagementPartnerContext() { }
+        public static Azure.ResourceManager.ManagementPartner.AzureResourceManagerManagementPartnerContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public static partial class ManagementPartnerExtensions
     {
         public static Azure.Pageable<Azure.ResourceManager.ManagementPartner.Models.OperationResponse> GetOperations(this Azure.ResourceManager.Resources.TenantResource tenantResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }

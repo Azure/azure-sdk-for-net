@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.AppService
 
         StaticSiteBasicAuthPropertyData IJsonModel<StaticSiteBasicAuthPropertyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<StaticSiteBasicAuthPropertyData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<StaticSiteBasicAuthPropertyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<StaticSiteBasicAuthPropertyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<StaticSiteBasicAuthPropertyData>(Data, options, AzureResourceManagerAppServiceContext.Default);
 
-        StaticSiteBasicAuthPropertyData IPersistableModel<StaticSiteBasicAuthPropertyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<StaticSiteBasicAuthPropertyData>(data, options);
+        StaticSiteBasicAuthPropertyData IPersistableModel<StaticSiteBasicAuthPropertyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<StaticSiteBasicAuthPropertyData>(data, options, AzureResourceManagerAppServiceContext.Default);
 
         string IPersistableModel<StaticSiteBasicAuthPropertyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<StaticSiteBasicAuthPropertyData>)Data).GetFormatFromOptions(options);
     }

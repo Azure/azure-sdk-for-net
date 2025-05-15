@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.CosmosDB
 
         MongoDBUserDefinitionData IJsonModel<MongoDBUserDefinitionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MongoDBUserDefinitionData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<MongoDBUserDefinitionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<MongoDBUserDefinitionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<MongoDBUserDefinitionData>(Data, options, AzureResourceManagerCosmosDBContext.Default);
 
-        MongoDBUserDefinitionData IPersistableModel<MongoDBUserDefinitionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MongoDBUserDefinitionData>(data, options);
+        MongoDBUserDefinitionData IPersistableModel<MongoDBUserDefinitionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MongoDBUserDefinitionData>(data, options, AzureResourceManagerCosmosDBContext.Default);
 
         string IPersistableModel<MongoDBUserDefinitionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MongoDBUserDefinitionData>)Data).GetFormatFromOptions(options);
     }

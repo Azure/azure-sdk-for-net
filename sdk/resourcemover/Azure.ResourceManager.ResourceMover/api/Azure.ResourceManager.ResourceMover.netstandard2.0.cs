@@ -1,5 +1,11 @@
 namespace Azure.ResourceManager.ResourceMover
 {
+    public partial class AzureResourceManagerResourceMoverContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureResourceManagerResourceMoverContext() { }
+        public static Azure.ResourceManager.ResourceMover.AzureResourceManagerResourceMoverContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class MoverResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResourceMover.MoverResourceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResourceMover.MoverResourceData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;

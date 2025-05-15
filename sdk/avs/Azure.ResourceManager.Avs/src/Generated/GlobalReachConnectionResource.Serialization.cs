@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Avs
 
         GlobalReachConnectionData IJsonModel<GlobalReachConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<GlobalReachConnectionData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<GlobalReachConnectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<GlobalReachConnectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<GlobalReachConnectionData>(Data, options, AzureResourceManagerAvsContext.Default);
 
-        GlobalReachConnectionData IPersistableModel<GlobalReachConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<GlobalReachConnectionData>(data, options);
+        GlobalReachConnectionData IPersistableModel<GlobalReachConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<GlobalReachConnectionData>(data, options, AzureResourceManagerAvsContext.Default);
 
         string IPersistableModel<GlobalReachConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<GlobalReachConnectionData>)Data).GetFormatFromOptions(options);
     }

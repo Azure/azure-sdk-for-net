@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.MarketplaceOrdering
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMarketplaceOrderingContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(MarketplaceAgreementTermData)} does not support writing '{options.Format}' format.");
             }

@@ -43,6 +43,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WritePropertyName("diskEncryptionSetId"u8);
                 writer.WriteStringValue(DiskEncryptionSetId);
             }
+            if (Optional.IsDefined(SectorSizeInBytes))
+            {
+                writer.WritePropertyName("sectorSizeInBytes"u8);
+                writer.WriteNumberValue(SectorSizeInBytes.Value);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -83,6 +88,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             ResourceIdentifier logStorageAccountId = default;
             SiteRecoveryDiskAccountType diskType = default;
             ResourceIdentifier diskEncryptionSetId = default;
+            int? sectorSizeInBytes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -106,13 +112,22 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     diskEncryptionSetId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("sectorSizeInBytes"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    sectorSizeInBytes = property.Value.GetInt32();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new InMageRcmDisksDefaultContent(logStorageAccountId, diskType, diskEncryptionSetId, serializedAdditionalRawData);
+            return new InMageRcmDisksDefaultContent(logStorageAccountId, diskType, diskEncryptionSetId, sectorSizeInBytes, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<InMageRcmDisksDefaultContent>.Write(ModelReaderWriterOptions options)
@@ -122,7 +137,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(InMageRcmDisksDefaultContent)} does not support writing '{options.Format}' format.");
             }

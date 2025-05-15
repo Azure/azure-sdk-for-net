@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Automation
 
         SoftwareUpdateConfigurationData IJsonModel<SoftwareUpdateConfigurationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SoftwareUpdateConfigurationData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SoftwareUpdateConfigurationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<SoftwareUpdateConfigurationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SoftwareUpdateConfigurationData>(Data, options, AzureResourceManagerAutomationContext.Default);
 
-        SoftwareUpdateConfigurationData IPersistableModel<SoftwareUpdateConfigurationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SoftwareUpdateConfigurationData>(data, options);
+        SoftwareUpdateConfigurationData IPersistableModel<SoftwareUpdateConfigurationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SoftwareUpdateConfigurationData>(data, options, AzureResourceManagerAutomationContext.Default);
 
         string IPersistableModel<SoftwareUpdateConfigurationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SoftwareUpdateConfigurationData>)Data).GetFormatFromOptions(options);
     }

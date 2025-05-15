@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerApiManagementContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(UserTokenContent)} does not support writing '{options.Format}' format.");
             }

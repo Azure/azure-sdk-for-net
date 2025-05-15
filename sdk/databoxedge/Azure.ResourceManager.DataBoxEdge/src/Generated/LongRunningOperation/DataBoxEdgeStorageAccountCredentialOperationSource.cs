@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.DataBoxEdge
 
         DataBoxEdgeStorageAccountCredentialResource IOperationSource<DataBoxEdgeStorageAccountCredentialResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DataBoxEdgeStorageAccountCredentialData>(response.Content);
+            var data = ModelReaderWriter.Read<DataBoxEdgeStorageAccountCredentialData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDataBoxEdgeContext.Default);
             return new DataBoxEdgeStorageAccountCredentialResource(_client, data);
         }
 
         async ValueTask<DataBoxEdgeStorageAccountCredentialResource> IOperationSource<DataBoxEdgeStorageAccountCredentialResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DataBoxEdgeStorageAccountCredentialData>(response.Content);
+            var data = ModelReaderWriter.Read<DataBoxEdgeStorageAccountCredentialData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDataBoxEdgeContext.Default);
             return await Task.FromResult(new DataBoxEdgeStorageAccountCredentialResource(_client, data)).ConfigureAwait(false);
         }
     }

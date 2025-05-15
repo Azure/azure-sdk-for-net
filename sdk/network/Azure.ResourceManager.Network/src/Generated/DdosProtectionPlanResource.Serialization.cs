@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Network
 
         DdosProtectionPlanData IJsonModel<DdosProtectionPlanData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DdosProtectionPlanData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<DdosProtectionPlanData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<DdosProtectionPlanData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DdosProtectionPlanData>(Data, options, AzureResourceManagerNetworkContext.Default);
 
-        DdosProtectionPlanData IPersistableModel<DdosProtectionPlanData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DdosProtectionPlanData>(data, options);
+        DdosProtectionPlanData IPersistableModel<DdosProtectionPlanData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DdosProtectionPlanData>(data, options, AzureResourceManagerNetworkContext.Default);
 
         string IPersistableModel<DdosProtectionPlanData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DdosProtectionPlanData>)Data).GetFormatFromOptions(options);
     }

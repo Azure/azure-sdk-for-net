@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.MachineLearningCompute
 
         OperationalizationClusterData IJsonModel<OperationalizationClusterData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<OperationalizationClusterData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<OperationalizationClusterData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<OperationalizationClusterData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<OperationalizationClusterData>(Data, options, AzureResourceManagerMachineLearningComputeContext.Default);
 
-        OperationalizationClusterData IPersistableModel<OperationalizationClusterData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<OperationalizationClusterData>(data, options);
+        OperationalizationClusterData IPersistableModel<OperationalizationClusterData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<OperationalizationClusterData>(data, options, AzureResourceManagerMachineLearningComputeContext.Default);
 
         string IPersistableModel<OperationalizationClusterData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<OperationalizationClusterData>)Data).GetFormatFromOptions(options);
     }

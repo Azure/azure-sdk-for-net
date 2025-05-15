@@ -1,5 +1,11 @@
 namespace Azure.ResourceManager.StorageSync
 {
+    public partial class AzureResourceManagerStorageSyncContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureResourceManagerStorageSyncContext() { }
+        public static Azure.ResourceManager.StorageSync.AzureResourceManagerStorageSyncContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class CloudEndpointCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.StorageSync.CloudEndpointResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.StorageSync.CloudEndpointResource>, System.Collections.IEnumerable
     {
         protected CloudEndpointCollection() { }

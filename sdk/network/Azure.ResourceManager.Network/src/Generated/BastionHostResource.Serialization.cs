@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Network
 
         BastionHostData IJsonModel<BastionHostData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<BastionHostData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<BastionHostData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<BastionHostData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<BastionHostData>(Data, options, AzureResourceManagerNetworkContext.Default);
 
-        BastionHostData IPersistableModel<BastionHostData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<BastionHostData>(data, options);
+        BastionHostData IPersistableModel<BastionHostData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<BastionHostData>(data, options, AzureResourceManagerNetworkContext.Default);
 
         string IPersistableModel<BastionHostData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<BastionHostData>)Data).GetFormatFromOptions(options);
     }

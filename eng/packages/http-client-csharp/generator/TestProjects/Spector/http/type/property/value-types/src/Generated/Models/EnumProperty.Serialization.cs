@@ -15,6 +15,8 @@ namespace _Type.Property.ValueTypes
 {
     public partial class EnumProperty : IJsonModel<EnumProperty>
     {
+        internal EnumProperty() => throw null;
+
         void IJsonModel<EnumProperty>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;

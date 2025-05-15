@@ -58,7 +58,7 @@ namespace Azure.AI.Translation.Document
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureAITranslationDocumentContext.Default);
                 case "MFD":
                     return SerializeMultipart(options);
                 default:

@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.MachineLearning
 
         MachineLearningRegistryCodeContainerResource IOperationSource<MachineLearningRegistryCodeContainerResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<MachineLearningCodeContainerData>(response.Content);
+            var data = ModelReaderWriter.Read<MachineLearningCodeContainerData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerMachineLearningContext.Default);
             return new MachineLearningRegistryCodeContainerResource(_client, data);
         }
 
         async ValueTask<MachineLearningRegistryCodeContainerResource> IOperationSource<MachineLearningRegistryCodeContainerResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<MachineLearningCodeContainerData>(response.Content);
+            var data = ModelReaderWriter.Read<MachineLearningCodeContainerData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerMachineLearningContext.Default);
             return await Task.FromResult(new MachineLearningRegistryCodeContainerResource(_client, data)).ConfigureAwait(false);
         }
     }

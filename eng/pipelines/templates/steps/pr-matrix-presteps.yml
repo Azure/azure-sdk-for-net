@@ -11,10 +11,6 @@ parameters:
     default: []
 
 steps:
-  - script: |
-      echo "##vso[task.setvariable variable=DISCOVER_DEPENDENT_PACKAGES]1"
-    displayName: Enable AdditionalDependency Calculation
-
   - template: /eng/pipelines/templates/steps/install-dotnet.yml
 
   - template: /eng/common/pipelines/templates/steps/save-package-properties.yml

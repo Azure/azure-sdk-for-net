@@ -15,6 +15,8 @@ namespace _Type.Property.ValueTypes
 {
     public partial class DecimalProperty : IJsonModel<DecimalProperty>
     {
+        internal DecimalProperty() => throw null;
+
         void IJsonModel<DecimalProperty>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;

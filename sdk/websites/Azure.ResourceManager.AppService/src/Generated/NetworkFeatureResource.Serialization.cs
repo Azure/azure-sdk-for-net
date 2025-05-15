@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.AppService
 
         NetworkFeatureData IJsonModel<NetworkFeatureData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetworkFeatureData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<NetworkFeatureData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<NetworkFeatureData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<NetworkFeatureData>(Data, options, AzureResourceManagerAppServiceContext.Default);
 
-        NetworkFeatureData IPersistableModel<NetworkFeatureData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetworkFeatureData>(data, options);
+        NetworkFeatureData IPersistableModel<NetworkFeatureData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetworkFeatureData>(data, options, AzureResourceManagerAppServiceContext.Default);
 
         string IPersistableModel<NetworkFeatureData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetworkFeatureData>)Data).GetFormatFromOptions(options);
     }

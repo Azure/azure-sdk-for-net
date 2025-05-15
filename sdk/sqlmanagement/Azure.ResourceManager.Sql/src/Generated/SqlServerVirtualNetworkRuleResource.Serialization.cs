@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Sql
 
         SqlServerVirtualNetworkRuleData IJsonModel<SqlServerVirtualNetworkRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SqlServerVirtualNetworkRuleData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SqlServerVirtualNetworkRuleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<SqlServerVirtualNetworkRuleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SqlServerVirtualNetworkRuleData>(Data, options, AzureResourceManagerSqlContext.Default);
 
-        SqlServerVirtualNetworkRuleData IPersistableModel<SqlServerVirtualNetworkRuleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SqlServerVirtualNetworkRuleData>(data, options);
+        SqlServerVirtualNetworkRuleData IPersistableModel<SqlServerVirtualNetworkRuleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SqlServerVirtualNetworkRuleData>(data, options, AzureResourceManagerSqlContext.Default);
 
         string IPersistableModel<SqlServerVirtualNetworkRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SqlServerVirtualNetworkRuleData>)Data).GetFormatFromOptions(options);
     }

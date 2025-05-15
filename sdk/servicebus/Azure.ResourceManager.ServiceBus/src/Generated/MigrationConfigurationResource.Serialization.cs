@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.ServiceBus
 
         MigrationConfigurationData IJsonModel<MigrationConfigurationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MigrationConfigurationData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<MigrationConfigurationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<MigrationConfigurationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<MigrationConfigurationData>(Data, options, AzureResourceManagerServiceBusContext.Default);
 
-        MigrationConfigurationData IPersistableModel<MigrationConfigurationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MigrationConfigurationData>(data, options);
+        MigrationConfigurationData IPersistableModel<MigrationConfigurationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MigrationConfigurationData>(data, options, AzureResourceManagerServiceBusContext.Default);
 
         string IPersistableModel<MigrationConfigurationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MigrationConfigurationData>)Data).GetFormatFromOptions(options);
     }

@@ -366,7 +366,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHardwareSecurityModulesContext.Default);
                 case "bicep":
                     return SerializeBicep(options);
                 default:

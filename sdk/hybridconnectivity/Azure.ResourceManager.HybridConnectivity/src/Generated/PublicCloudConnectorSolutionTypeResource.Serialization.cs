@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.HybridConnectivity
 
         PublicCloudConnectorSolutionTypeData IJsonModel<PublicCloudConnectorSolutionTypeData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PublicCloudConnectorSolutionTypeData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<PublicCloudConnectorSolutionTypeData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<PublicCloudConnectorSolutionTypeData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<PublicCloudConnectorSolutionTypeData>(Data, options, AzureResourceManagerHybridConnectivityContext.Default);
 
-        PublicCloudConnectorSolutionTypeData IPersistableModel<PublicCloudConnectorSolutionTypeData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PublicCloudConnectorSolutionTypeData>(data, options);
+        PublicCloudConnectorSolutionTypeData IPersistableModel<PublicCloudConnectorSolutionTypeData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PublicCloudConnectorSolutionTypeData>(data, options, AzureResourceManagerHybridConnectivityContext.Default);
 
         string IPersistableModel<PublicCloudConnectorSolutionTypeData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PublicCloudConnectorSolutionTypeData>)Data).GetFormatFromOptions(options);
     }

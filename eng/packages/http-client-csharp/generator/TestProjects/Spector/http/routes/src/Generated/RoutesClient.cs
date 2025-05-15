@@ -19,7 +19,7 @@ namespace Routes
 
         public RoutesClient(Uri endpoint, RoutesClientOptions options) => throw null;
 
-        public HttpPipeline Pipeline => throw null;
+        public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response Fixed(RequestContext context) => throw null;
 

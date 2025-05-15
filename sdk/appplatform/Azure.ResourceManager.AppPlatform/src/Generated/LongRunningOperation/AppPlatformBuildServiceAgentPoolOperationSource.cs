@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.AppPlatform
 
         AppPlatformBuildServiceAgentPoolResource IOperationSource<AppPlatformBuildServiceAgentPoolResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<AppPlatformBuildServiceAgentPoolData>(response.Content);
+            var data = ModelReaderWriter.Read<AppPlatformBuildServiceAgentPoolData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerAppPlatformContext.Default);
             return new AppPlatformBuildServiceAgentPoolResource(_client, data);
         }
 
         async ValueTask<AppPlatformBuildServiceAgentPoolResource> IOperationSource<AppPlatformBuildServiceAgentPoolResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<AppPlatformBuildServiceAgentPoolData>(response.Content);
+            var data = ModelReaderWriter.Read<AppPlatformBuildServiceAgentPoolData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerAppPlatformContext.Default);
             return await Task.FromResult(new AppPlatformBuildServiceAgentPoolResource(_client, data)).ConfigureAwait(false);
         }
     }

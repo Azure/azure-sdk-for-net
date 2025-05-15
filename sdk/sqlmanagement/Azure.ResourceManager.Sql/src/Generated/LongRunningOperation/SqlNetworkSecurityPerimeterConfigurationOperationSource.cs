@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Sql
 
         SqlNetworkSecurityPerimeterConfigurationResource IOperationSource<SqlNetworkSecurityPerimeterConfigurationResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<SqlNetworkSecurityPerimeterConfigurationData>(response.Content);
+            var data = ModelReaderWriter.Read<SqlNetworkSecurityPerimeterConfigurationData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSqlContext.Default);
             return new SqlNetworkSecurityPerimeterConfigurationResource(_client, data);
         }
 
         async ValueTask<SqlNetworkSecurityPerimeterConfigurationResource> IOperationSource<SqlNetworkSecurityPerimeterConfigurationResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<SqlNetworkSecurityPerimeterConfigurationData>(response.Content);
+            var data = ModelReaderWriter.Read<SqlNetworkSecurityPerimeterConfigurationData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSqlContext.Default);
             return await Task.FromResult(new SqlNetworkSecurityPerimeterConfigurationResource(_client, data)).ConfigureAwait(false);
         }
     }

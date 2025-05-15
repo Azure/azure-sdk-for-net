@@ -15,6 +15,8 @@ namespace SpecialWords._Models
 {
     public partial class Assert : IJsonModel<Assert>
     {
+        internal Assert() => throw null;
+
         void IJsonModel<Assert>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;

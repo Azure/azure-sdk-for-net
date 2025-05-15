@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.ApiManagement
 
         ServiceWorkspaceApiSchemaResource IOperationSource<ServiceWorkspaceApiSchemaResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ApiSchemaData>(response.Content);
+            var data = ModelReaderWriter.Read<ApiSchemaData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerApiManagementContext.Default);
             return new ServiceWorkspaceApiSchemaResource(_client, data);
         }
 
         async ValueTask<ServiceWorkspaceApiSchemaResource> IOperationSource<ServiceWorkspaceApiSchemaResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ApiSchemaData>(response.Content);
+            var data = ModelReaderWriter.Read<ApiSchemaData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerApiManagementContext.Default);
             return await Task.FromResult(new ServiceWorkspaceApiSchemaResource(_client, data)).ConfigureAwait(false);
         }
     }

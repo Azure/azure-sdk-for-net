@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.SecurityCenter
 
         SecurityContactData IJsonModel<SecurityContactData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SecurityContactData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SecurityContactData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<SecurityContactData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SecurityContactData>(Data, options, AzureResourceManagerSecurityCenterContext.Default);
 
-        SecurityContactData IPersistableModel<SecurityContactData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SecurityContactData>(data, options);
+        SecurityContactData IPersistableModel<SecurityContactData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SecurityContactData>(data, options, AzureResourceManagerSecurityCenterContext.Default);
 
         string IPersistableModel<SecurityContactData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SecurityContactData>)Data).GetFormatFromOptions(options);
     }

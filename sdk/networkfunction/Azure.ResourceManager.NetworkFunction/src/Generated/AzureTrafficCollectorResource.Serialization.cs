@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.NetworkFunction
 
         AzureTrafficCollectorData IJsonModel<AzureTrafficCollectorData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AzureTrafficCollectorData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<AzureTrafficCollectorData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<AzureTrafficCollectorData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AzureTrafficCollectorData>(Data, options, AzureResourceManagerNetworkFunctionContext.Default);
 
-        AzureTrafficCollectorData IPersistableModel<AzureTrafficCollectorData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AzureTrafficCollectorData>(data, options);
+        AzureTrafficCollectorData IPersistableModel<AzureTrafficCollectorData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AzureTrafficCollectorData>(data, options, AzureResourceManagerNetworkFunctionContext.Default);
 
         string IPersistableModel<AzureTrafficCollectorData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AzureTrafficCollectorData>)Data).GetFormatFromOptions(options);
     }

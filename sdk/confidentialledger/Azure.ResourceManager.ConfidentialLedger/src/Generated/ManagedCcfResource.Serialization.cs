@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.ConfidentialLedger
 
         ManagedCcfData IJsonModel<ManagedCcfData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ManagedCcfData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ManagedCcfData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<ManagedCcfData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ManagedCcfData>(Data, options, AzureResourceManagerConfidentialLedgerContext.Default);
 
-        ManagedCcfData IPersistableModel<ManagedCcfData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ManagedCcfData>(data, options);
+        ManagedCcfData IPersistableModel<ManagedCcfData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ManagedCcfData>(data, options, AzureResourceManagerConfidentialLedgerContext.Default);
 
         string IPersistableModel<ManagedCcfData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ManagedCcfData>)Data).GetFormatFromOptions(options);
     }

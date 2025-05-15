@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Migration.Assessment
 
         MigrationAssessmentHyperVCollectorResource IOperationSource<MigrationAssessmentHyperVCollectorResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<MigrationAssessmentHyperVCollectorData>(response.Content);
+            var data = ModelReaderWriter.Read<MigrationAssessmentHyperVCollectorData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerMigrationAssessmentContext.Default);
             return new MigrationAssessmentHyperVCollectorResource(_client, data);
         }
 
         async ValueTask<MigrationAssessmentHyperVCollectorResource> IOperationSource<MigrationAssessmentHyperVCollectorResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<MigrationAssessmentHyperVCollectorData>(response.Content);
+            var data = ModelReaderWriter.Read<MigrationAssessmentHyperVCollectorData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerMigrationAssessmentContext.Default);
             return await Task.FromResult(new MigrationAssessmentHyperVCollectorResource(_client, data)).ConfigureAwait(false);
         }
     }

@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.DevTestLabs
 
         DevTestLabCustomImageData IJsonModel<DevTestLabCustomImageData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DevTestLabCustomImageData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<DevTestLabCustomImageData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<DevTestLabCustomImageData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DevTestLabCustomImageData>(Data, options, AzureResourceManagerDevTestLabsContext.Default);
 
-        DevTestLabCustomImageData IPersistableModel<DevTestLabCustomImageData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DevTestLabCustomImageData>(data, options);
+        DevTestLabCustomImageData IPersistableModel<DevTestLabCustomImageData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DevTestLabCustomImageData>(data, options, AzureResourceManagerDevTestLabsContext.Default);
 
         string IPersistableModel<DevTestLabCustomImageData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DevTestLabCustomImageData>)Data).GetFormatFromOptions(options);
     }

@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.DigitalTwins
 
         DigitalTwinsDescriptionData IJsonModel<DigitalTwinsDescriptionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DigitalTwinsDescriptionData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<DigitalTwinsDescriptionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<DigitalTwinsDescriptionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DigitalTwinsDescriptionData>(Data, options, AzureResourceManagerDigitalTwinsContext.Default);
 
-        DigitalTwinsDescriptionData IPersistableModel<DigitalTwinsDescriptionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DigitalTwinsDescriptionData>(data, options);
+        DigitalTwinsDescriptionData IPersistableModel<DigitalTwinsDescriptionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DigitalTwinsDescriptionData>(data, options, AzureResourceManagerDigitalTwinsContext.Default);
 
         string IPersistableModel<DigitalTwinsDescriptionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DigitalTwinsDescriptionData>)Data).GetFormatFromOptions(options);
     }

@@ -1,5 +1,11 @@
 namespace Azure.ResourceManager.StorageMover
 {
+    public partial class AzureResourceManagerStorageMoverContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureResourceManagerStorageMoverContext() { }
+        public static Azure.ResourceManager.StorageMover.AzureResourceManagerStorageMoverContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class JobDefinitionCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.StorageMover.JobDefinitionResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.StorageMover.JobDefinitionResource>, System.Collections.IEnumerable
     {
         protected JobDefinitionCollection() { }

@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.AppService
 
         PrivateAccessData IJsonModel<PrivateAccessData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PrivateAccessData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<PrivateAccessData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<PrivateAccessData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<PrivateAccessData>(Data, options, AzureResourceManagerAppServiceContext.Default);
 
-        PrivateAccessData IPersistableModel<PrivateAccessData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PrivateAccessData>(data, options);
+        PrivateAccessData IPersistableModel<PrivateAccessData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PrivateAccessData>(data, options, AzureResourceManagerAppServiceContext.Default);
 
         string IPersistableModel<PrivateAccessData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PrivateAccessData>)Data).GetFormatFromOptions(options);
     }

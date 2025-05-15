@@ -16,9 +16,9 @@ namespace Azure.ResourceManager.Sql
 
         DistributedAvailabilityGroupData IJsonModel<DistributedAvailabilityGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DistributedAvailabilityGroupData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<DistributedAvailabilityGroupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<DistributedAvailabilityGroupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DistributedAvailabilityGroupData>(Data, options, AzureResourceManagerSqlContext.Default);
 
-        DistributedAvailabilityGroupData IPersistableModel<DistributedAvailabilityGroupData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DistributedAvailabilityGroupData>(data, options);
+        DistributedAvailabilityGroupData IPersistableModel<DistributedAvailabilityGroupData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DistributedAvailabilityGroupData>(data, options, AzureResourceManagerSqlContext.Default);
 
         string IPersistableModel<DistributedAvailabilityGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DistributedAvailabilityGroupData>)Data).GetFormatFromOptions(options);
     }

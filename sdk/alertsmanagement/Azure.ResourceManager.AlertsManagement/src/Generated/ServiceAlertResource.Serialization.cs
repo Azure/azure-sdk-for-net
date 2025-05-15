@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.AlertsManagement
 
         ServiceAlertData IJsonModel<ServiceAlertData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ServiceAlertData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ServiceAlertData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<ServiceAlertData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ServiceAlertData>(Data, options, AzureResourceManagerAlertsManagementContext.Default);
 
-        ServiceAlertData IPersistableModel<ServiceAlertData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ServiceAlertData>(data, options);
+        ServiceAlertData IPersistableModel<ServiceAlertData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ServiceAlertData>(data, options, AzureResourceManagerAlertsManagementContext.Default);
 
         string IPersistableModel<ServiceAlertData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ServiceAlertData>)Data).GetFormatFromOptions(options);
     }

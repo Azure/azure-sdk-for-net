@@ -1,5 +1,11 @@
 namespace Azure.ResourceManager.Nginx
 {
+    public partial class AzureResourceManagerNginxContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureResourceManagerNginxContext() { }
+        public static Azure.ResourceManager.Nginx.AzureResourceManagerNginxContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class NginxCertificateCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Nginx.NginxCertificateResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Nginx.NginxCertificateResource>, System.Collections.IEnumerable
     {
         protected NginxCertificateCollection() { }

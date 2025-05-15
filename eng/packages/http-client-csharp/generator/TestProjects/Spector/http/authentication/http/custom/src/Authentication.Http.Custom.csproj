@@ -18,6 +18,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)../../../../../../../../../../../sdk/core/Azure.Core/src/Shared/DiagnosticScope.cs" LinkBase="Shared/Core" />
     <Compile Include="$(MSBuildThisFileDirectory)../../../../../../../../../../../sdk/core/Azure.Core/src/Shared/HttpMessageSanitizer.cs" LinkBase="Shared/Core" />
     <Compile Include="$(MSBuildThisFileDirectory)../../../../../../../../../../../sdk/core/Azure.Core/src/Shared/TrimmingAttribute.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(MSBuildThisFileDirectory)../../../../../../../../../../../sdk/core/Azure.Core/src/Shared/NoValueResponseOfT.cs" LinkBase="Shared/Core" />
   </ItemGroup>
 
   <ItemGroup>

@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.MachineLearning
 
         MachineLearninRegistryComponentVersionResource IOperationSource<MachineLearninRegistryComponentVersionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<MachineLearningComponentVersionData>(response.Content);
+            var data = ModelReaderWriter.Read<MachineLearningComponentVersionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerMachineLearningContext.Default);
             return new MachineLearninRegistryComponentVersionResource(_client, data);
         }
 
         async ValueTask<MachineLearninRegistryComponentVersionResource> IOperationSource<MachineLearninRegistryComponentVersionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<MachineLearningComponentVersionData>(response.Content);
+            var data = ModelReaderWriter.Read<MachineLearningComponentVersionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerMachineLearningContext.Default);
             return await Task.FromResult(new MachineLearninRegistryComponentVersionResource(_client, data)).ConfigureAwait(false);
         }
     }

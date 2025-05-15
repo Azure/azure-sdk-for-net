@@ -1,5 +1,11 @@
 namespace Azure.ResourceManager.DeviceProvisioningServices
 {
+    public partial class AzureResourceManagerDeviceProvisioningServicesContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureResourceManagerDeviceProvisioningServicesContext() { }
+        public static Azure.ResourceManager.DeviceProvisioningServices.AzureResourceManagerDeviceProvisioningServicesContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class DeviceProvisioningServiceCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.DeviceProvisioningServices.DeviceProvisioningServiceResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DeviceProvisioningServices.DeviceProvisioningServiceResource>, System.Collections.IEnumerable
     {
         protected DeviceProvisioningServiceCollection() { }

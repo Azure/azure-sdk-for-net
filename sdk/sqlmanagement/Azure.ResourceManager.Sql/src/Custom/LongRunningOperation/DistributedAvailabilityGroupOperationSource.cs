@@ -21,13 +21,13 @@ namespace Azure.ResourceManager.Sql
 
         DistributedAvailabilityGroupResource IOperationSource<DistributedAvailabilityGroupResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DistributedAvailabilityGroupData>(response.Content);
+            var data = ModelReaderWriter.Read<DistributedAvailabilityGroupData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSqlContext.Default);
             return new DistributedAvailabilityGroupResource(_client, data);
         }
 
         async ValueTask<DistributedAvailabilityGroupResource> IOperationSource<DistributedAvailabilityGroupResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DistributedAvailabilityGroupData>(response.Content);
+            var data = ModelReaderWriter.Read<DistributedAvailabilityGroupData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSqlContext.Default);
             return await Task.FromResult(new DistributedAvailabilityGroupResource(_client, data)).ConfigureAwait(false);
         }
     }

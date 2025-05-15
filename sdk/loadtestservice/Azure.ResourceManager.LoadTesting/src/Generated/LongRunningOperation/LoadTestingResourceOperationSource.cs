@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.LoadTesting
 
         LoadTestingResource IOperationSource<LoadTestingResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<LoadTestingResourceData>(response.Content);
+            var data = ModelReaderWriter.Read<LoadTestingResourceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerLoadTestingContext.Default);
             return new LoadTestingResource(_client, data);
         }
 
         async ValueTask<LoadTestingResource> IOperationSource<LoadTestingResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<LoadTestingResourceData>(response.Content);
+            var data = ModelReaderWriter.Read<LoadTestingResourceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerLoadTestingContext.Default);
             return await Task.FromResult(new LoadTestingResource(_client, data)).ConfigureAwait(false);
         }
     }

@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.MobileNetwork
 
         MobileNetworkSiteData IJsonModel<MobileNetworkSiteData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MobileNetworkSiteData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<MobileNetworkSiteData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<MobileNetworkSiteData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<MobileNetworkSiteData>(Data, options, AzureResourceManagerMobileNetworkContext.Default);
 
-        MobileNetworkSiteData IPersistableModel<MobileNetworkSiteData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MobileNetworkSiteData>(data, options);
+        MobileNetworkSiteData IPersistableModel<MobileNetworkSiteData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MobileNetworkSiteData>(data, options, AzureResourceManagerMobileNetworkContext.Default);
 
         string IPersistableModel<MobileNetworkSiteData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MobileNetworkSiteData>)Data).GetFormatFromOptions(options);
     }

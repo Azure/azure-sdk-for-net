@@ -9,7 +9,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 ``` yaml
 title: WebPubSubServiceClient
 input-file:
-- https://github.com/Azure/azure-rest-api-specs/blob/356aa5174e8eec6ed904bf5ff104595aec8c0411/specification/webpubsub/data-plane/WebPubSub/stable/2024-01-01/webpubsub.json
+- https://github.com/Azure/azure-rest-api-specs/blob/a67a8c166cdbcb357ac3e56cbc1c1e285b52706a/specification/webpubsub/data-plane/WebPubSub/stable/2024-12-01/webpubsub.json
 
 credential-types: AzureKeyCredential
 credential-header-name: Ocp-Apim-Subscription-Key
@@ -344,4 +344,18 @@ directive:
 - from: swagger-document
   where: $.paths["/api/hubs/{hub}/connections/{connectionId}/groups"].delete.parameters["0"]
   transform: $["x-ms-parameter-location"] = "client"
+```
+
+### ListConnectionsInGroup
+``` yaml
+directive:
+- from: swagger-document
+  where: $.paths["/api/hubs/{hub}/groups/{group}/connections"].get.operationId
+  transform: return "WebPubSubService_ListConnectionsInGroup";
+- from: swagger-document
+  where: $.paths["/api/hubs/{hub}/groups/{group}/connections"].get.parameters["0"]
+  transform: $["x-ms-parameter-location"] = "client"
+- from: swagger-document
+  where: $.paths["/api/hubs/{hub}/groups/{group}/connections"].get
+  transform: $["x-accessibility"] = "internal"
 ```

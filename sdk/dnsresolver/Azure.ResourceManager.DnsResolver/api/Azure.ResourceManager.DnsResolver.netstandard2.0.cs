@@ -1,5 +1,11 @@
 namespace Azure.ResourceManager.DnsResolver
 {
+    public partial class AzureResourceManagerDnsResolverContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureResourceManagerDnsResolverContext() { }
+        public static Azure.ResourceManager.DnsResolver.AzureResourceManagerDnsResolverContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class DnsForwardingRuleCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.DnsResolver.DnsForwardingRuleResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DnsResolver.DnsForwardingRuleResource>, System.Collections.IEnumerable
     {
         protected DnsForwardingRuleCollection() { }

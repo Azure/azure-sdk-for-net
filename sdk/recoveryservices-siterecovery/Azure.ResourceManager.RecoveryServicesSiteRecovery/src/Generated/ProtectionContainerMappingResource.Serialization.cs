@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 
         ProtectionContainerMappingData IJsonModel<ProtectionContainerMappingData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ProtectionContainerMappingData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ProtectionContainerMappingData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<ProtectionContainerMappingData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ProtectionContainerMappingData>(Data, options, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
 
-        ProtectionContainerMappingData IPersistableModel<ProtectionContainerMappingData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ProtectionContainerMappingData>(data, options);
+        ProtectionContainerMappingData IPersistableModel<ProtectionContainerMappingData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ProtectionContainerMappingData>(data, options, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
 
         string IPersistableModel<ProtectionContainerMappingData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ProtectionContainerMappingData>)Data).GetFormatFromOptions(options);
     }

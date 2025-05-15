@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.HybridCompute
 
         HybridComputeMachineExtensionResource IOperationSource<HybridComputeMachineExtensionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<HybridComputeMachineExtensionData>(response.Content);
+            var data = ModelReaderWriter.Read<HybridComputeMachineExtensionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerHybridComputeContext.Default);
             return new HybridComputeMachineExtensionResource(_client, data);
         }
 
         async ValueTask<HybridComputeMachineExtensionResource> IOperationSource<HybridComputeMachineExtensionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<HybridComputeMachineExtensionData>(response.Content);
+            var data = ModelReaderWriter.Read<HybridComputeMachineExtensionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerHybridComputeContext.Default);
             return await Task.FromResult(new HybridComputeMachineExtensionResource(_client, data)).ConfigureAwait(false);
         }
     }

@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.ScVmm
 
         ScVmmAvailabilitySetResource IOperationSource<ScVmmAvailabilitySetResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ScVmmAvailabilitySetData>(response.Content);
+            var data = ModelReaderWriter.Read<ScVmmAvailabilitySetData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerScVmmContext.Default);
             return new ScVmmAvailabilitySetResource(_client, data);
         }
 
         async ValueTask<ScVmmAvailabilitySetResource> IOperationSource<ScVmmAvailabilitySetResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ScVmmAvailabilitySetData>(response.Content);
+            var data = ModelReaderWriter.Read<ScVmmAvailabilitySetData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerScVmmContext.Default);
             return await Task.FromResult(new ScVmmAvailabilitySetResource(_client, data)).ConfigureAwait(false);
         }
     }

@@ -1,5 +1,11 @@
 namespace Azure.ResourceManager.ContainerInstance
 {
+    public partial class AzureResourceManagerContainerInstanceContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureResourceManagerContainerInstanceContext() { }
+        public static Azure.ResourceManager.ContainerInstance.AzureResourceManagerContainerInstanceContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class ContainerGroupCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.ContainerInstance.ContainerGroupResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerInstance.ContainerGroupResource>, System.Collections.IEnumerable
     {
         protected ContainerGroupCollection() { }

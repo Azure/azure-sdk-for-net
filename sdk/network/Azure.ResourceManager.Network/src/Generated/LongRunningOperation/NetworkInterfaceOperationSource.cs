@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Network
 
         NetworkInterfaceResource IOperationSource<NetworkInterfaceResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<NetworkInterfaceData>(response.Content);
+            var data = ModelReaderWriter.Read<NetworkInterfaceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkContext.Default);
             return new NetworkInterfaceResource(_client, data);
         }
 
         async ValueTask<NetworkInterfaceResource> IOperationSource<NetworkInterfaceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<NetworkInterfaceData>(response.Content);
+            var data = ModelReaderWriter.Read<NetworkInterfaceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkContext.Default);
             return await Task.FromResult(new NetworkInterfaceResource(_client, data)).ConfigureAwait(false);
         }
     }

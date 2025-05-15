@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Communication
 
         EmailServiceResource IOperationSource<EmailServiceResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<EmailServiceResourceData>(response.Content);
+            var data = ModelReaderWriter.Read<EmailServiceResourceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerCommunicationContext.Default);
             return new EmailServiceResource(_client, data);
         }
 
         async ValueTask<EmailServiceResource> IOperationSource<EmailServiceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<EmailServiceResourceData>(response.Content);
+            var data = ModelReaderWriter.Read<EmailServiceResourceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerCommunicationContext.Default);
             return await Task.FromResult(new EmailServiceResource(_client, data)).ConfigureAwait(false);
         }
     }

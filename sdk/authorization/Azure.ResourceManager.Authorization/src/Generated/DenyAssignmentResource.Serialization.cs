@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Authorization
 
         DenyAssignmentData IJsonModel<DenyAssignmentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DenyAssignmentData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<DenyAssignmentData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<DenyAssignmentData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DenyAssignmentData>(Data, options, AzureResourceManagerAuthorizationContext.Default);
 
-        DenyAssignmentData IPersistableModel<DenyAssignmentData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DenyAssignmentData>(data, options);
+        DenyAssignmentData IPersistableModel<DenyAssignmentData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DenyAssignmentData>(data, options, AzureResourceManagerAuthorizationContext.Default);
 
         string IPersistableModel<DenyAssignmentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DenyAssignmentData>)Data).GetFormatFromOptions(options);
     }

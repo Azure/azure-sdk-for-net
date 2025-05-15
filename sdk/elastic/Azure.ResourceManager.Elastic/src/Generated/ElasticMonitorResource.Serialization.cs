@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Elastic
 
         ElasticMonitorData IJsonModel<ElasticMonitorData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ElasticMonitorData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ElasticMonitorData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<ElasticMonitorData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ElasticMonitorData>(Data, options, AzureResourceManagerElasticContext.Default);
 
-        ElasticMonitorData IPersistableModel<ElasticMonitorData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ElasticMonitorData>(data, options);
+        ElasticMonitorData IPersistableModel<ElasticMonitorData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ElasticMonitorData>(data, options, AzureResourceManagerElasticContext.Default);
 
         string IPersistableModel<ElasticMonitorData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ElasticMonitorData>)Data).GetFormatFromOptions(options);
     }

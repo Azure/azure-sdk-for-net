@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.HybridContainerService
 
         HybridContainerServiceVmSkuData IJsonModel<HybridContainerServiceVmSkuData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<HybridContainerServiceVmSkuData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<HybridContainerServiceVmSkuData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<HybridContainerServiceVmSkuData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<HybridContainerServiceVmSkuData>(Data, options, AzureResourceManagerHybridContainerServiceContext.Default);
 
-        HybridContainerServiceVmSkuData IPersistableModel<HybridContainerServiceVmSkuData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<HybridContainerServiceVmSkuData>(data, options);
+        HybridContainerServiceVmSkuData IPersistableModel<HybridContainerServiceVmSkuData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<HybridContainerServiceVmSkuData>(data, options, AzureResourceManagerHybridContainerServiceContext.Default);
 
         string IPersistableModel<HybridContainerServiceVmSkuData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<HybridContainerServiceVmSkuData>)Data).GetFormatFromOptions(options);
     }

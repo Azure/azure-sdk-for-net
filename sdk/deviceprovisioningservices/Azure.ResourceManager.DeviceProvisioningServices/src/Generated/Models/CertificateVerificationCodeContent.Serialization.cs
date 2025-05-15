@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDeviceProvisioningServicesContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(CertificateVerificationCodeContent)} does not support writing '{options.Format}' format.");
             }

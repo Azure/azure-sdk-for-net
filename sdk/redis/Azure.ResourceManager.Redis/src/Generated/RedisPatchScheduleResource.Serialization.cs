@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Redis
 
         RedisPatchScheduleData IJsonModel<RedisPatchScheduleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<RedisPatchScheduleData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<RedisPatchScheduleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<RedisPatchScheduleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<RedisPatchScheduleData>(Data, options, AzureResourceManagerRedisContext.Default);
 
-        RedisPatchScheduleData IPersistableModel<RedisPatchScheduleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<RedisPatchScheduleData>(data, options);
+        RedisPatchScheduleData IPersistableModel<RedisPatchScheduleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<RedisPatchScheduleData>(data, options, AzureResourceManagerRedisContext.Default);
 
         string IPersistableModel<RedisPatchScheduleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<RedisPatchScheduleData>)Data).GetFormatFromOptions(options);
     }

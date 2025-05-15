@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerConfidentialLedgerContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ManagedCcfBackupContent)} does not support writing '{options.Format}' format.");
             }

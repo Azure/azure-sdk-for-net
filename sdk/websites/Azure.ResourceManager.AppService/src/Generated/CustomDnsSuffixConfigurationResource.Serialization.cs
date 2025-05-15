@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.AppService
 
         CustomDnsSuffixConfigurationData IJsonModel<CustomDnsSuffixConfigurationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<CustomDnsSuffixConfigurationData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<CustomDnsSuffixConfigurationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<CustomDnsSuffixConfigurationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<CustomDnsSuffixConfigurationData>(Data, options, AzureResourceManagerAppServiceContext.Default);
 
-        CustomDnsSuffixConfigurationData IPersistableModel<CustomDnsSuffixConfigurationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CustomDnsSuffixConfigurationData>(data, options);
+        CustomDnsSuffixConfigurationData IPersistableModel<CustomDnsSuffixConfigurationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CustomDnsSuffixConfigurationData>(data, options, AzureResourceManagerAppServiceContext.Default);
 
         string IPersistableModel<CustomDnsSuffixConfigurationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<CustomDnsSuffixConfigurationData>)Data).GetFormatFromOptions(options);
     }

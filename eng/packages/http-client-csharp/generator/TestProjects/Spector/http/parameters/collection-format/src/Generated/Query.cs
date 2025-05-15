@@ -17,7 +17,7 @@ namespace Parameters.CollectionFormat
     {
         protected Query() => throw null;
 
-        public HttpPipeline Pipeline => throw null;
+        public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response Multi(IEnumerable<string> colors, RequestContext context) => throw null;
 

@@ -436,7 +436,7 @@ namespace Azure.ResourceManager.DataBox
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataBoxContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(DataBoxJobData)} does not support writing '{options.Format}' format.");
             }

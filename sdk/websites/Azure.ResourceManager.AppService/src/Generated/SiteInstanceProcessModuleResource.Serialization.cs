@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.AppService
 
         ProcessModuleInfoData IJsonModel<ProcessModuleInfoData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ProcessModuleInfoData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ProcessModuleInfoData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<ProcessModuleInfoData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ProcessModuleInfoData>(Data, options, AzureResourceManagerAppServiceContext.Default);
 
-        ProcessModuleInfoData IPersistableModel<ProcessModuleInfoData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ProcessModuleInfoData>(data, options);
+        ProcessModuleInfoData IPersistableModel<ProcessModuleInfoData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ProcessModuleInfoData>(data, options, AzureResourceManagerAppServiceContext.Default);
 
         string IPersistableModel<ProcessModuleInfoData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ProcessModuleInfoData>)Data).GetFormatFromOptions(options);
     }

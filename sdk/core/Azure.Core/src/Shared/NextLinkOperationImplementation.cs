@@ -58,17 +58,21 @@ namespace Azure.Core
                 apiVersionStr = !skipApiVersionOverride && TryGetApiVersion(startRequestUri, out ReadOnlySpan<char> apiVersion) ? apiVersion.ToString() : null;
             }
             var headerSource = GetHeaderSource(requestMethod, startRequestUri, response, apiVersionStr, out string nextRequestUri, out bool isNextRequestPolling);
-            if (headerSource == HeaderSource.None && IsFinalState(response, headerSource, out var failureState, out _))
-            {
-                return new CompletedOperation(failureState ?? GetOperationStateFromFinalResponse(requestMethod, response));
-            }
 
             string? lastKnownLocation;
             if (!response.Headers.TryGetValue("Location", out lastKnownLocation))
             {
                 lastKnownLocation = null;
             }
-            return new NextLinkOperationImplementation(pipeline, requestMethod, startRequestUri, nextRequestUri, headerSource, lastKnownLocation, finalStateVia, apiVersionStr, isNextRequestPolling : isNextRequestPolling);
+
+            NextLinkOperationImplementation operation = new(pipeline, requestMethod, startRequestUri, nextRequestUri, headerSource, lastKnownLocation, finalStateVia, apiVersionStr, isNextRequestPolling: isNextRequestPolling);
+
+            if (headerSource == HeaderSource.None && IsFinalState(response, headerSource, out var failureState, out _))
+            {
+                return new CompletedOperation(failureState ?? GetOperationStateFromFinalResponse(requestMethod, response), operation);
+            }
+
+            return operation;
         }
 
         public static IOperation<T> Create<T>(
@@ -99,7 +103,7 @@ namespace Azure.Core
 
             // TODO: Once we remove NextLinkOperationImplementation from internal shared and make it internal to Azure.Core only in https://github.com/Azure/azure-sdk-for-net/issues/43260
             // We can access the internal members from RehydrationToken directly
-            var data = ModelReaderWriter.Write(rehydrationToken!, ModelReaderWriterOptions.Json);
+            var data = ModelReaderWriter.Write(rehydrationToken!, ModelReaderWriterOptions.Json, AzureCoreContext.Default);
             using var document = JsonDocument.Parse(data);
             var lroDetails = document.RootElement;
 
@@ -228,7 +232,7 @@ namespace Azure.Core
             {"version":"{{RehydrationTokenVersion}}","id":{{ConstructStringValue(operationId)}},"requestMethod":"{{requestMethod}}","initialUri":"{{startRequestUri.AbsoluteUri}}","nextRequestUri":"{{nextRequestUri}}","headerSource":"{{headerSource}}","finalStateVia":"{{finalStateVia}}","lastKnownLocation":{{ConstructStringValue(lastKnownLocation)}}}
             """;
             var data = new BinaryData(json);
-            return ModelReaderWriter.Read<RehydrationToken>(data);
+            return ModelReaderWriter.Read<RehydrationToken>(data, ModelReaderWriterOptions.Json, AzureCoreContext.Default);
         }
 
         private static string? ConstructStringValue(string? value) => value is null ? "null" : $"\"{value}\"";
@@ -647,12 +651,17 @@ namespace Azure.Core
         {
             private readonly OperationState _operationState;
 
-            public CompletedOperation(OperationState operationState)
+            private readonly NextLinkOperationImplementation _operation;
+
+            public CompletedOperation(OperationState operationState, NextLinkOperationImplementation operation)
             {
                 _operationState = operationState;
+                _operation = operation;
             }
 
             public ValueTask<OperationState> UpdateStateAsync(bool async, CancellationToken cancellationToken) => new(_operationState);
+
+            public RehydrationToken GetRehydrationToken() => _operation.GetRehydrationToken();
         }
 
         private sealed class OperationToOperationOfT<T> : IOperation<T>
@@ -685,6 +694,8 @@ namespace Azure.Core
 
                 return OperationState<T>.Pending(state.RawResponse);
             }
+
+            public RehydrationToken GetRehydrationToken() => _operation.GetRehydrationToken();
         }
     }
 }

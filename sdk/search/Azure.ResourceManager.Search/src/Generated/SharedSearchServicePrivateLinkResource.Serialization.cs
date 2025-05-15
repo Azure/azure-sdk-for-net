@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Search
 
         SharedSearchServicePrivateLinkResourceData IJsonModel<SharedSearchServicePrivateLinkResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SharedSearchServicePrivateLinkResourceData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SharedSearchServicePrivateLinkResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<SharedSearchServicePrivateLinkResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SharedSearchServicePrivateLinkResourceData>(Data, options, AzureResourceManagerSearchContext.Default);
 
-        SharedSearchServicePrivateLinkResourceData IPersistableModel<SharedSearchServicePrivateLinkResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SharedSearchServicePrivateLinkResourceData>(data, options);
+        SharedSearchServicePrivateLinkResourceData IPersistableModel<SharedSearchServicePrivateLinkResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SharedSearchServicePrivateLinkResourceData>(data, options, AzureResourceManagerSearchContext.Default);
 
         string IPersistableModel<SharedSearchServicePrivateLinkResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SharedSearchServicePrivateLinkResourceData>)Data).GetFormatFromOptions(options);
     }

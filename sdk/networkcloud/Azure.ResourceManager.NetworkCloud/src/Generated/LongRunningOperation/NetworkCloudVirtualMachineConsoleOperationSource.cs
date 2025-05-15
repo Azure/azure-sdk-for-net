@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.NetworkCloud
 
         NetworkCloudVirtualMachineConsoleResource IOperationSource<NetworkCloudVirtualMachineConsoleResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<NetworkCloudVirtualMachineConsoleData>(response.Content);
+            var data = ModelReaderWriter.Read<NetworkCloudVirtualMachineConsoleData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkCloudContext.Default);
             return new NetworkCloudVirtualMachineConsoleResource(_client, data);
         }
 
         async ValueTask<NetworkCloudVirtualMachineConsoleResource> IOperationSource<NetworkCloudVirtualMachineConsoleResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<NetworkCloudVirtualMachineConsoleData>(response.Content);
+            var data = ModelReaderWriter.Read<NetworkCloudVirtualMachineConsoleData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkCloudContext.Default);
             return await Task.FromResult(new NetworkCloudVirtualMachineConsoleResource(_client, data)).ConfigureAwait(false);
         }
     }

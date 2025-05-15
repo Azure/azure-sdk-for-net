@@ -16,7 +16,7 @@ namespace Parameters.CollectionFormat
 
         public CollectionFormatClient(Uri endpoint, CollectionFormatClientOptions options) => throw null;
 
-        public HttpPipeline Pipeline => throw null;
+        public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Query GetQueryClient() => throw null;
 

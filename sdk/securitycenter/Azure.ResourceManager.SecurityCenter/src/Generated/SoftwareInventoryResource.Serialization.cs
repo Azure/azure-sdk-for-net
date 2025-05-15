@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.SecurityCenter
 
         SoftwareInventoryData IJsonModel<SoftwareInventoryData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SoftwareInventoryData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SoftwareInventoryData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<SoftwareInventoryData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SoftwareInventoryData>(Data, options, AzureResourceManagerSecurityCenterContext.Default);
 
-        SoftwareInventoryData IPersistableModel<SoftwareInventoryData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SoftwareInventoryData>(data, options);
+        SoftwareInventoryData IPersistableModel<SoftwareInventoryData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SoftwareInventoryData>(data, options, AzureResourceManagerSecurityCenterContext.Default);
 
         string IPersistableModel<SoftwareInventoryData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SoftwareInventoryData>)Data).GetFormatFromOptions(options);
     }

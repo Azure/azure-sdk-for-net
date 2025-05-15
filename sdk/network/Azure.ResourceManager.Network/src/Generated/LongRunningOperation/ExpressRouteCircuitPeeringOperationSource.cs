@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Network
 
         ExpressRouteCircuitPeeringResource IOperationSource<ExpressRouteCircuitPeeringResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ExpressRouteCircuitPeeringData>(response.Content);
+            var data = ModelReaderWriter.Read<ExpressRouteCircuitPeeringData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkContext.Default);
             return new ExpressRouteCircuitPeeringResource(_client, data);
         }
 
         async ValueTask<ExpressRouteCircuitPeeringResource> IOperationSource<ExpressRouteCircuitPeeringResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ExpressRouteCircuitPeeringData>(response.Content);
+            var data = ModelReaderWriter.Read<ExpressRouteCircuitPeeringData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkContext.Default);
             return await Task.FromResult(new ExpressRouteCircuitPeeringResource(_client, data)).ConfigureAwait(false);
         }
     }

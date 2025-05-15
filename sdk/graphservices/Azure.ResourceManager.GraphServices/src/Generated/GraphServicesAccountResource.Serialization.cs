@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.GraphServices
 
         GraphServicesAccountResourceData IJsonModel<GraphServicesAccountResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<GraphServicesAccountResourceData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<GraphServicesAccountResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<GraphServicesAccountResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<GraphServicesAccountResourceData>(Data, options, AzureResourceManagerGraphServicesContext.Default);
 
-        GraphServicesAccountResourceData IPersistableModel<GraphServicesAccountResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<GraphServicesAccountResourceData>(data, options);
+        GraphServicesAccountResourceData IPersistableModel<GraphServicesAccountResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<GraphServicesAccountResourceData>(data, options, AzureResourceManagerGraphServicesContext.Default);
 
         string IPersistableModel<GraphServicesAccountResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<GraphServicesAccountResourceData>)Data).GetFormatFromOptions(options);
     }

@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Synapse
 
         SynapseWorkspaceData IJsonModel<SynapseWorkspaceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SynapseWorkspaceData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SynapseWorkspaceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<SynapseWorkspaceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SynapseWorkspaceData>(Data, options, AzureResourceManagerSynapseContext.Default);
 
-        SynapseWorkspaceData IPersistableModel<SynapseWorkspaceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SynapseWorkspaceData>(data, options);
+        SynapseWorkspaceData IPersistableModel<SynapseWorkspaceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SynapseWorkspaceData>(data, options, AzureResourceManagerSynapseContext.Default);
 
         string IPersistableModel<SynapseWorkspaceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SynapseWorkspaceData>)Data).GetFormatFromOptions(options);
     }

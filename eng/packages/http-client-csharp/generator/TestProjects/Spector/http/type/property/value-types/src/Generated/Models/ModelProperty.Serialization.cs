@@ -15,6 +15,8 @@ namespace _Type.Property.ValueTypes
 {
     public partial class ModelProperty : IJsonModel<ModelProperty>
     {
+        internal ModelProperty() => throw null;
+
         void IJsonModel<ModelProperty>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;

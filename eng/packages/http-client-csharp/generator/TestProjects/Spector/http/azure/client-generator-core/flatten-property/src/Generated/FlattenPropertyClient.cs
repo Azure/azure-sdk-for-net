@@ -20,7 +20,7 @@ namespace _Specs_.Azure.ClientGenerator.Core.FlattenProperty
 
         public FlattenPropertyClient(Uri endpoint, FlattenPropertyClientOptions options) => throw null;
 
-        public HttpPipeline Pipeline => throw null;
+        public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response PutFlattenModel(RequestContent content, RequestContext context = null) => throw null;
 

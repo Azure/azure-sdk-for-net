@@ -13,6 +13,8 @@ namespace _Type.Property.AdditionalProperties
 {
     internal partial class UnknownIsUnknownAdditionalPropertiesDiscriminated : IJsonModel<IsUnknownAdditionalPropertiesDiscriminated>
     {
+        internal UnknownIsUnknownAdditionalPropertiesDiscriminated() => throw null;
+
         void IJsonModel<IsUnknownAdditionalPropertiesDiscriminated>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;

@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Advisor
 
         SuppressionContractData IJsonModel<SuppressionContractData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SuppressionContractData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SuppressionContractData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<SuppressionContractData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SuppressionContractData>(Data, options, AzureResourceManagerAdvisorContext.Default);
 
-        SuppressionContractData IPersistableModel<SuppressionContractData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SuppressionContractData>(data, options);
+        SuppressionContractData IPersistableModel<SuppressionContractData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SuppressionContractData>(data, options, AzureResourceManagerAdvisorContext.Default);
 
         string IPersistableModel<SuppressionContractData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SuppressionContractData>)Data).GetFormatFromOptions(options);
     }

@@ -1,5 +1,11 @@
 namespace Azure.ResourceManager.EventHubs
 {
+    public partial class AzureResourceManagerEventHubsContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureResourceManagerEventHubsContext() { }
+        public static Azure.ResourceManager.EventHubs.AzureResourceManagerEventHubsContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class EventHubAuthorizationRuleCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.EventHubs.EventHubAuthorizationRuleResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.EventHubs.EventHubAuthorizationRuleResource>, System.Collections.IEnumerable
     {
         protected EventHubAuthorizationRuleCollection() { }

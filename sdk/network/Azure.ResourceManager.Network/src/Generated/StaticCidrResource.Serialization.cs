@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Network
 
         StaticCidrData IJsonModel<StaticCidrData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<StaticCidrData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<StaticCidrData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<StaticCidrData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<StaticCidrData>(Data, options, AzureResourceManagerNetworkContext.Default);
 
-        StaticCidrData IPersistableModel<StaticCidrData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<StaticCidrData>(data, options);
+        StaticCidrData IPersistableModel<StaticCidrData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<StaticCidrData>(data, options, AzureResourceManagerNetworkContext.Default);
 
         string IPersistableModel<StaticCidrData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<StaticCidrData>)Data).GetFormatFromOptions(options);
     }

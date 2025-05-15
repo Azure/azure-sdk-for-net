@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.AlertsManagement
 
         SmartGroupData IJsonModel<SmartGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SmartGroupData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SmartGroupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<SmartGroupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SmartGroupData>(Data, options, AzureResourceManagerAlertsManagementContext.Default);
 
-        SmartGroupData IPersistableModel<SmartGroupData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SmartGroupData>(data, options);
+        SmartGroupData IPersistableModel<SmartGroupData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SmartGroupData>(data, options, AzureResourceManagerAlertsManagementContext.Default);
 
         string IPersistableModel<SmartGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SmartGroupData>)Data).GetFormatFromOptions(options);
     }

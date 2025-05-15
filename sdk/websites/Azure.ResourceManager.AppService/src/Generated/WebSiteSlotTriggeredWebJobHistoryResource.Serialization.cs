@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.AppService
 
         TriggeredJobHistoryData IJsonModel<TriggeredJobHistoryData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<TriggeredJobHistoryData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<TriggeredJobHistoryData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<TriggeredJobHistoryData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<TriggeredJobHistoryData>(Data, options, AzureResourceManagerAppServiceContext.Default);
 
-        TriggeredJobHistoryData IPersistableModel<TriggeredJobHistoryData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<TriggeredJobHistoryData>(data, options);
+        TriggeredJobHistoryData IPersistableModel<TriggeredJobHistoryData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<TriggeredJobHistoryData>(data, options, AzureResourceManagerAppServiceContext.Default);
 
         string IPersistableModel<TriggeredJobHistoryData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<TriggeredJobHistoryData>)Data).GetFormatFromOptions(options);
     }

@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.SecurityInsights
 
         SecurityInsightsBookmarkData IJsonModel<SecurityInsightsBookmarkData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SecurityInsightsBookmarkData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SecurityInsightsBookmarkData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<SecurityInsightsBookmarkData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SecurityInsightsBookmarkData>(Data, options, AzureResourceManagerSecurityInsightsContext.Default);
 
-        SecurityInsightsBookmarkData IPersistableModel<SecurityInsightsBookmarkData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SecurityInsightsBookmarkData>(data, options);
+        SecurityInsightsBookmarkData IPersistableModel<SecurityInsightsBookmarkData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SecurityInsightsBookmarkData>(data, options, AzureResourceManagerSecurityInsightsContext.Default);
 
         string IPersistableModel<SecurityInsightsBookmarkData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SecurityInsightsBookmarkData>)Data).GetFormatFromOptions(options);
     }

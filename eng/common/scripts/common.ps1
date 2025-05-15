@@ -24,6 +24,9 @@ $PackageRepository = "Unknown"
 $packagePattern = "Unknown"
 $MetadataUri = "Unknown"
 
+# Whether the language repo supports automatically loading .env file generated from TestResources scripts.
+$SupportsTestResourcesDotenv = $false
+
 # Import common language settings
 $EngScriptsLanguageSettings = Join-path $EngScriptsDir "Language-Settings.ps1"
 if (Test-Path $EngScriptsLanguageSettings) {

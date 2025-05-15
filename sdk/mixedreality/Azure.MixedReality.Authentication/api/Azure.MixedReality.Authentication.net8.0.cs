@@ -1,5 +1,11 @@
 namespace Azure.MixedReality.Authentication
 {
+    public partial class AzureMixedRealityAuthenticationContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureMixedRealityAuthenticationContext() { }
+        public static Azure.MixedReality.Authentication.AzureMixedRealityAuthenticationContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class MixedRealityStsClient
     {
         protected MixedRealityStsClient() { }

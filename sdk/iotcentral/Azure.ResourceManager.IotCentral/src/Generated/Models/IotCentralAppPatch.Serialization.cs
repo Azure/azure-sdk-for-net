@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.IotCentral.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerIotCentralContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(IotCentralAppPatch)} does not support writing '{options.Format}' format.");
             }

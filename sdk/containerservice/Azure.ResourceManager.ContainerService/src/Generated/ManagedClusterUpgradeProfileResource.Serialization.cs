@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.ContainerService
 
         ManagedClusterUpgradeProfileData IJsonModel<ManagedClusterUpgradeProfileData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ManagedClusterUpgradeProfileData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ManagedClusterUpgradeProfileData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<ManagedClusterUpgradeProfileData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ManagedClusterUpgradeProfileData>(Data, options, AzureResourceManagerContainerServiceContext.Default);
 
-        ManagedClusterUpgradeProfileData IPersistableModel<ManagedClusterUpgradeProfileData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ManagedClusterUpgradeProfileData>(data, options);
+        ManagedClusterUpgradeProfileData IPersistableModel<ManagedClusterUpgradeProfileData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ManagedClusterUpgradeProfileData>(data, options, AzureResourceManagerContainerServiceContext.Default);
 
         string IPersistableModel<ManagedClusterUpgradeProfileData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ManagedClusterUpgradeProfileData>)Data).GetFormatFromOptions(options);
     }

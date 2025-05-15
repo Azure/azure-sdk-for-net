@@ -307,7 +307,7 @@ namespace Azure.ResourceManager.LargeInstance
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerLargeInstanceContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(LargeInstanceData)} does not support writing '{options.Format}' format.");
             }

@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.HardwareSecurityModules
 
         CloudHsmClusterPrivateEndpointConnectionData IJsonModel<CloudHsmClusterPrivateEndpointConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<CloudHsmClusterPrivateEndpointConnectionData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<CloudHsmClusterPrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<CloudHsmClusterPrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<CloudHsmClusterPrivateEndpointConnectionData>(Data, options, AzureResourceManagerHardwareSecurityModulesContext.Default);
 
-        CloudHsmClusterPrivateEndpointConnectionData IPersistableModel<CloudHsmClusterPrivateEndpointConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CloudHsmClusterPrivateEndpointConnectionData>(data, options);
+        CloudHsmClusterPrivateEndpointConnectionData IPersistableModel<CloudHsmClusterPrivateEndpointConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CloudHsmClusterPrivateEndpointConnectionData>(data, options, AzureResourceManagerHardwareSecurityModulesContext.Default);
 
         string IPersistableModel<CloudHsmClusterPrivateEndpointConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<CloudHsmClusterPrivateEndpointConnectionData>)Data).GetFormatFromOptions(options);
     }

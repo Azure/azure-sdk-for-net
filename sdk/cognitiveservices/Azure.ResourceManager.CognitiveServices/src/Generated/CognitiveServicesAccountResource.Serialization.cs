@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.CognitiveServices
 
         CognitiveServicesAccountData IJsonModel<CognitiveServicesAccountData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<CognitiveServicesAccountData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<CognitiveServicesAccountData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<CognitiveServicesAccountData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<CognitiveServicesAccountData>(Data, options, AzureResourceManagerCognitiveServicesContext.Default);
 
-        CognitiveServicesAccountData IPersistableModel<CognitiveServicesAccountData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CognitiveServicesAccountData>(data, options);
+        CognitiveServicesAccountData IPersistableModel<CognitiveServicesAccountData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CognitiveServicesAccountData>(data, options, AzureResourceManagerCognitiveServicesContext.Default);
 
         string IPersistableModel<CognitiveServicesAccountData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<CognitiveServicesAccountData>)Data).GetFormatFromOptions(options);
     }

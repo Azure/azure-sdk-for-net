@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.SecurityInsights
 
         SecurityInsightsIncidentCommentData IJsonModel<SecurityInsightsIncidentCommentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SecurityInsightsIncidentCommentData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SecurityInsightsIncidentCommentData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<SecurityInsightsIncidentCommentData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SecurityInsightsIncidentCommentData>(Data, options, AzureResourceManagerSecurityInsightsContext.Default);
 
-        SecurityInsightsIncidentCommentData IPersistableModel<SecurityInsightsIncidentCommentData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SecurityInsightsIncidentCommentData>(data, options);
+        SecurityInsightsIncidentCommentData IPersistableModel<SecurityInsightsIncidentCommentData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SecurityInsightsIncidentCommentData>(data, options, AzureResourceManagerSecurityInsightsContext.Default);
 
         string IPersistableModel<SecurityInsightsIncidentCommentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SecurityInsightsIncidentCommentData>)Data).GetFormatFromOptions(options);
     }

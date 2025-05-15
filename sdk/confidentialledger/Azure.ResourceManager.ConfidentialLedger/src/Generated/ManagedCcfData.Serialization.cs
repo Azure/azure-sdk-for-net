@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerConfidentialLedgerContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ManagedCcfData)} does not support writing '{options.Format}' format.");
             }

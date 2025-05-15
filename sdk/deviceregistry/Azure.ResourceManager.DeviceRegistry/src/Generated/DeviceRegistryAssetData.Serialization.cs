@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.DeviceRegistry
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDeviceRegistryContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(DeviceRegistryAssetData)} does not support writing '{options.Format}' format.");
             }

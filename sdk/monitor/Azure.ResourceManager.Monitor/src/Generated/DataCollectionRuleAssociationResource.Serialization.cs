@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Monitor
 
         DataCollectionRuleAssociationData IJsonModel<DataCollectionRuleAssociationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DataCollectionRuleAssociationData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<DataCollectionRuleAssociationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<DataCollectionRuleAssociationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DataCollectionRuleAssociationData>(Data, options, AzureResourceManagerMonitorContext.Default);
 
-        DataCollectionRuleAssociationData IPersistableModel<DataCollectionRuleAssociationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DataCollectionRuleAssociationData>(data, options);
+        DataCollectionRuleAssociationData IPersistableModel<DataCollectionRuleAssociationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DataCollectionRuleAssociationData>(data, options, AzureResourceManagerMonitorContext.Default);
 
         string IPersistableModel<DataCollectionRuleAssociationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DataCollectionRuleAssociationData>)Data).GetFormatFromOptions(options);
     }

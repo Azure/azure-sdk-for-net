@@ -1,5 +1,11 @@
 namespace Azure.ResourceManager.HealthBot
 {
+    public partial class AzureResourceManagerHealthBotContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureResourceManagerHealthBotContext() { }
+        public static Azure.ResourceManager.HealthBot.AzureResourceManagerHealthBotContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class HealthBotCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.HealthBot.HealthBotResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HealthBot.HealthBotResource>, System.Collections.IEnumerable
     {
         protected HealthBotCollection() { }

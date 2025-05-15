@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Compute
 
         SshPublicKeyData IJsonModel<SshPublicKeyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SshPublicKeyData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SshPublicKeyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<SshPublicKeyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SshPublicKeyData>(Data, options, AzureResourceManagerComputeContext.Default);
 
-        SshPublicKeyData IPersistableModel<SshPublicKeyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SshPublicKeyData>(data, options);
+        SshPublicKeyData IPersistableModel<SshPublicKeyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SshPublicKeyData>(data, options, AzureResourceManagerComputeContext.Default);
 
         string IPersistableModel<SshPublicKeyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SshPublicKeyData>)Data).GetFormatFromOptions(options);
     }

@@ -15,6 +15,8 @@ namespace _Type.Property.AdditionalProperties
 {
     public partial class IsModelArrayAdditionalProperties : IJsonModel<IsModelArrayAdditionalProperties>
     {
+        internal IsModelArrayAdditionalProperties() => throw null;
+
         void IJsonModel<IsModelArrayAdditionalProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;

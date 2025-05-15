@@ -124,6 +124,12 @@ namespace Azure.AI.Vision.Face
             V1_2_Preview_1 = 2,
         }
     }
+    public partial class AzureAIVisionFaceContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureAIVisionFaceContext() { }
+        public static Azure.AI.Vision.Face.AzureAIVisionFaceContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct BlurLevel : System.IEquatable<Azure.AI.Vision.Face.BlurLevel>
     {

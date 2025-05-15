@@ -312,10 +312,6 @@ Global
 		{015670AB-881C-464F-8545-E686C9A92C4F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{015670AB-881C-464F-8545-E686C9A92C4F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{015670AB-881C-464F-8545-E686C9A92C4F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F54CA64F-3BB8-49D5-AE3B-3408AE324632}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F54CA64F-3BB8-49D5-AE3B-3408AE324632}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F54CA64F-3BB8-49D5-AE3B-3408AE324632}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F54CA64F-3BB8-49D5-AE3B-3408AE324632}.Release|Any CPU.Build.0 = Release|Any CPU
 		{94642992-7CC0-4649-B58F-8E5E3F134C8A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{94642992-7CC0-4649-B58F-8E5E3F134C8A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{94642992-7CC0-4649-B58F-8E5E3F134C8A}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -331,10 +327,6 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{F54CA64F-3BB8-49D5-AE3B-3408AE324632} = {DB2FC0CB-7103-4D3C-A737-8C6AB61168F8}
-		{94642992-7CC0-4649-B58F-8E5E3F134C8A} = {DB2FC0CB-7103-4D3C-A737-8C6AB61168F8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {7CB2D417-323C-4A66-9355-26459881303F}

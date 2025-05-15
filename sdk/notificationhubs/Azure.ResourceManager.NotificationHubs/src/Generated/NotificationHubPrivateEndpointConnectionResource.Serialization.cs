@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.NotificationHubs
 
         NotificationHubPrivateEndpointConnectionData IJsonModel<NotificationHubPrivateEndpointConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NotificationHubPrivateEndpointConnectionData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<NotificationHubPrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<NotificationHubPrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<NotificationHubPrivateEndpointConnectionData>(Data, options, AzureResourceManagerNotificationHubsContext.Default);
 
-        NotificationHubPrivateEndpointConnectionData IPersistableModel<NotificationHubPrivateEndpointConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NotificationHubPrivateEndpointConnectionData>(data, options);
+        NotificationHubPrivateEndpointConnectionData IPersistableModel<NotificationHubPrivateEndpointConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NotificationHubPrivateEndpointConnectionData>(data, options, AzureResourceManagerNotificationHubsContext.Default);
 
         string IPersistableModel<NotificationHubPrivateEndpointConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NotificationHubPrivateEndpointConnectionData>)Data).GetFormatFromOptions(options);
     }

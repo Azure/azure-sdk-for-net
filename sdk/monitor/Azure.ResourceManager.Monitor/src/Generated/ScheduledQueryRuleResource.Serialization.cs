@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Monitor
 
         ScheduledQueryRuleData IJsonModel<ScheduledQueryRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ScheduledQueryRuleData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ScheduledQueryRuleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<ScheduledQueryRuleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ScheduledQueryRuleData>(Data, options, AzureResourceManagerMonitorContext.Default);
 
-        ScheduledQueryRuleData IPersistableModel<ScheduledQueryRuleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ScheduledQueryRuleData>(data, options);
+        ScheduledQueryRuleData IPersistableModel<ScheduledQueryRuleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ScheduledQueryRuleData>(data, options, AzureResourceManagerMonitorContext.Default);
 
         string IPersistableModel<ScheduledQueryRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ScheduledQueryRuleData>)Data).GetFormatFromOptions(options);
     }

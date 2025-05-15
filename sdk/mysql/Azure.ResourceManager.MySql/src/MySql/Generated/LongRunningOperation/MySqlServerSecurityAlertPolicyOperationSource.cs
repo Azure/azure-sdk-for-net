@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.MySql
 
         MySqlServerSecurityAlertPolicyResource IOperationSource<MySqlServerSecurityAlertPolicyResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<MySqlServerSecurityAlertPolicyData>(response.Content);
+            var data = ModelReaderWriter.Read<MySqlServerSecurityAlertPolicyData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerMySqlContext.Default);
             return new MySqlServerSecurityAlertPolicyResource(_client, data);
         }
 
         async ValueTask<MySqlServerSecurityAlertPolicyResource> IOperationSource<MySqlServerSecurityAlertPolicyResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<MySqlServerSecurityAlertPolicyData>(response.Content);
+            var data = ModelReaderWriter.Read<MySqlServerSecurityAlertPolicyData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerMySqlContext.Default);
             return await Task.FromResult(new MySqlServerSecurityAlertPolicyResource(_client, data)).ConfigureAwait(false);
         }
     }

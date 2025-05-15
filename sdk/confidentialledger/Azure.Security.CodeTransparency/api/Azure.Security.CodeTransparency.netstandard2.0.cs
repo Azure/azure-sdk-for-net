@@ -1,5 +1,11 @@
 namespace Azure.Security.CodeTransparency
 {
+    public partial class AzureSecurityCodeTransparencyContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureSecurityCodeTransparencyContext() { }
+        public static Azure.Security.CodeTransparency.AzureSecurityCodeTransparencyContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class CodeTransparencyCertificateClient
     {
         protected CodeTransparencyCertificateClient() { }

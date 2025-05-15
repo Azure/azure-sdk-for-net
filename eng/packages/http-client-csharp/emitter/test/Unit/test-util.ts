@@ -9,8 +9,9 @@ import { createTestHost, TestHost } from "@typespec/compiler/testing";
 import {
   CSharpEmitterContext,
   CSharpEmitterOptions,
+  createCSharpEmitterContext,
   Logger,
-  LoggerLevel
+  LoggerLevel,
 } from "@typespec/http-client-csharp";
 import { HttpTestLibrary } from "@typespec/http/testing";
 import { RestTestLibrary } from "@typespec/rest/testing";
@@ -119,22 +120,5 @@ export async function createCSharpSdkContext(
     "@typespec/http-client-csharp",
     sdkContextOptions
   );
-  return {
-    ...context,
-    logger: new Logger(program.program, LoggerLevel.INFO),
-    __typeCache: {
-      crossLanguageDefinitionIds: new Map(),
-      types: new Map(),
-      models: new Map(),
-      enums: new Map(),
-      clients: new Map(),
-      properties: new Map(),
-      responses: new Map(),
-      updateSdkClientReferences: () => {},
-      updateSdkPropertyReferences: () => {},
-      updateSdkResponseReferences: () => {},
-      updateSdkTypeReferences: () => {},
-      updateTypeCache: () => {}
-    }
-  };
+  return createCSharpEmitterContext(context, new Logger(program.program, LoggerLevel.INFO));
 }

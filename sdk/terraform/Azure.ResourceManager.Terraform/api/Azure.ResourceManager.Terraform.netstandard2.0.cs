@@ -1,5 +1,11 @@
 namespace Azure.ResourceManager.Terraform
 {
+    public partial class AzureResourceManagerTerraformContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureResourceManagerTerraformContext() { }
+        public static Azure.ResourceManager.Terraform.AzureResourceManagerTerraformContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public static partial class TerraformExtensions
     {
         public static Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Terraform.Models.TerraformOperationStatus> ExportTerraform(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.WaitUntil waitUntil, Azure.ResourceManager.Terraform.Models.CommonExportProperties body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }

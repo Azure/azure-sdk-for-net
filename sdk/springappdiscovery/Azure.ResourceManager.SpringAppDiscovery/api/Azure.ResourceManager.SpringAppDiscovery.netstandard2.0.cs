@@ -1,5 +1,11 @@
 namespace Azure.ResourceManager.SpringAppDiscovery
 {
+    public partial class AzureResourceManagerSpringAppDiscoveryContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureResourceManagerSpringAppDiscoveryContext() { }
+        public static Azure.ResourceManager.SpringAppDiscovery.AzureResourceManagerSpringAppDiscoveryContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public static partial class SpringAppDiscoveryExtensions
     {
         public static Azure.ResourceManager.SpringAppDiscovery.SpringBootAppResource GetSpringBootAppResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }

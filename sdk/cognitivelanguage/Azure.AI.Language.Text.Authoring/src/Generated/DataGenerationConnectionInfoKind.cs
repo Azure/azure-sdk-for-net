@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.AI.Language.Text.Authoring
 {
-    /// <summary> The DataGenerationConnectionInfo_kind. </summary>
+    /// <summary> The DataGenerationConnectionInfoKind. </summary>
     public readonly partial struct DataGenerationConnectionInfoKind : IEquatable<DataGenerationConnectionInfoKind>
     {
         private readonly string _value;

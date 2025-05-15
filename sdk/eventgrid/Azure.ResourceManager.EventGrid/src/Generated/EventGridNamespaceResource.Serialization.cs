@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.EventGrid
 
         EventGridNamespaceData IJsonModel<EventGridNamespaceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<EventGridNamespaceData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<EventGridNamespaceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<EventGridNamespaceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<EventGridNamespaceData>(Data, options, AzureResourceManagerEventGridContext.Default);
 
-        EventGridNamespaceData IPersistableModel<EventGridNamespaceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<EventGridNamespaceData>(data, options);
+        EventGridNamespaceData IPersistableModel<EventGridNamespaceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<EventGridNamespaceData>(data, options, AzureResourceManagerEventGridContext.Default);
 
         string IPersistableModel<EventGridNamespaceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<EventGridNamespaceData>)Data).GetFormatFromOptions(options);
     }

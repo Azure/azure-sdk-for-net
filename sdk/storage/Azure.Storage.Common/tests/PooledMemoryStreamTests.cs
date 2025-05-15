@@ -71,7 +71,7 @@ namespace Azure.Storage.Tests
             PredictableStream originalStream = new PredictableStream();
             PooledMemoryStream arrayPoolStream = new(_pool, bufferPartitionSize);
             originalStream.CopyToExactInternal(arrayPoolStream, dataSize, async: false, cancellationToken: default).EnsureCompleted();
-            originalStream.Position = 0;
+            arrayPoolStream.Position = 0;
 
             // assert it holds the correct amount of data. other tests assert data validity and it's so expensive to do that here.
             // test without blowing up memory

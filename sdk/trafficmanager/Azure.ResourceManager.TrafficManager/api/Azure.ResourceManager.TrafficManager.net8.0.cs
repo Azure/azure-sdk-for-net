@@ -1,5 +1,11 @@
 namespace Azure.ResourceManager.TrafficManager
 {
+    public partial class AzureResourceManagerTrafficManagerContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureResourceManagerTrafficManagerContext() { }
+        public static Azure.ResourceManager.TrafficManager.AzureResourceManagerTrafficManagerContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class TrafficManagerEndpointCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.TrafficManager.TrafficManagerEndpointData>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.TrafficManager.TrafficManagerEndpointData>, System.Collections.IEnumerable
     {
         protected TrafficManagerEndpointCollection() { }

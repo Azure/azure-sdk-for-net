@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Network
 
         SecurityRuleResource IOperationSource<SecurityRuleResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<SecurityRuleData>(response.Content);
+            var data = ModelReaderWriter.Read<SecurityRuleData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkContext.Default);
             return new SecurityRuleResource(_client, data);
         }
 
         async ValueTask<SecurityRuleResource> IOperationSource<SecurityRuleResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<SecurityRuleData>(response.Content);
+            var data = ModelReaderWriter.Read<SecurityRuleData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkContext.Default);
             return await Task.FromResult(new SecurityRuleResource(_client, data)).ConfigureAwait(false);
         }
     }

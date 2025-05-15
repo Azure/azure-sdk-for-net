@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.EdgeOrder
 
         EdgeOrderAddressResource IOperationSource<EdgeOrderAddressResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<EdgeOrderAddressData>(response.Content);
+            var data = ModelReaderWriter.Read<EdgeOrderAddressData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerEdgeOrderContext.Default);
             return new EdgeOrderAddressResource(_client, data);
         }
 
         async ValueTask<EdgeOrderAddressResource> IOperationSource<EdgeOrderAddressResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<EdgeOrderAddressData>(response.Content);
+            var data = ModelReaderWriter.Read<EdgeOrderAddressData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerEdgeOrderContext.Default);
             return await Task.FromResult(new EdgeOrderAddressResource(_client, data)).ConfigureAwait(false);
         }
     }

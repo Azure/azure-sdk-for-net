@@ -16,7 +16,7 @@ namespace Payload.MultiPart
 
         public MultiPartClient(Uri endpoint, MultiPartClientOptions options) => throw null;
 
-        public HttpPipeline Pipeline => throw null;
+        public virtual HttpPipeline Pipeline => throw null;
 
         public virtual FormData GetFormDataClient() => throw null;
     }

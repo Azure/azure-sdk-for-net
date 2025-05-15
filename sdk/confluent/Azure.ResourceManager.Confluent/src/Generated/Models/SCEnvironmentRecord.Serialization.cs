@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Confluent.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerConfluentContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(SCEnvironmentRecord)} does not support writing '{options.Format}' format.");
             }

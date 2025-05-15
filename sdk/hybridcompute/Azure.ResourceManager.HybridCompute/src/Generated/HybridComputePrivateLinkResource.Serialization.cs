@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.HybridCompute
 
         HybridComputePrivateLinkResourceData IJsonModel<HybridComputePrivateLinkResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<HybridComputePrivateLinkResourceData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<HybridComputePrivateLinkResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<HybridComputePrivateLinkResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<HybridComputePrivateLinkResourceData>(Data, options, AzureResourceManagerHybridComputeContext.Default);
 
-        HybridComputePrivateLinkResourceData IPersistableModel<HybridComputePrivateLinkResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<HybridComputePrivateLinkResourceData>(data, options);
+        HybridComputePrivateLinkResourceData IPersistableModel<HybridComputePrivateLinkResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<HybridComputePrivateLinkResourceData>(data, options, AzureResourceManagerHybridComputeContext.Default);
 
         string IPersistableModel<HybridComputePrivateLinkResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<HybridComputePrivateLinkResourceData>)Data).GetFormatFromOptions(options);
     }

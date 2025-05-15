@@ -15,6 +15,8 @@ namespace SpecialWords._Models
 {
     public partial class While : IJsonModel<While>
     {
+        internal While() => throw null;
+
         void IJsonModel<While>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;

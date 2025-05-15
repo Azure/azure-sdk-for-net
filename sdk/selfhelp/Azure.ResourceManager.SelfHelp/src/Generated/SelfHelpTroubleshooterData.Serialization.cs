@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.SelfHelp
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSelfHelpContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(SelfHelpTroubleshooterData)} does not support writing '{options.Format}' format.");
             }

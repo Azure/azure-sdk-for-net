@@ -1,5 +1,11 @@
 namespace Azure.ResourceManager.StoragePool
 {
+    public partial class AzureResourceManagerStoragePoolContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureResourceManagerStoragePoolContext() { }
+        public static Azure.ResourceManager.StoragePool.AzureResourceManagerStoragePoolContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class DiskPoolCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.StoragePool.DiskPoolResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.StoragePool.DiskPoolResource>, System.Collections.IEnumerable
     {
         protected DiskPoolCollection() { }

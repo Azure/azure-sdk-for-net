@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Network
 
         VirtualHubResource IOperationSource<VirtualHubResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<VirtualHubData>(response.Content);
+            var data = ModelReaderWriter.Read<VirtualHubData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkContext.Default);
             return new VirtualHubResource(_client, data);
         }
 
         async ValueTask<VirtualHubResource> IOperationSource<VirtualHubResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<VirtualHubData>(response.Content);
+            var data = ModelReaderWriter.Read<VirtualHubData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkContext.Default);
             return await Task.FromResult(new VirtualHubResource(_client, data)).ConfigureAwait(false);
         }
     }

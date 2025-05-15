@@ -1,5 +1,11 @@
 namespace Azure.Security.KeyVault.Administration
 {
+    public partial class AzureSecurityKeyVaultAdministrationContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureSecurityKeyVaultAdministrationContext() { }
+        public static Azure.Security.KeyVault.Administration.AzureSecurityKeyVaultAdministrationContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class CreateOrUpdateRoleDefinitionOptions
     {
         public CreateOrUpdateRoleDefinitionOptions(Azure.Security.KeyVault.Administration.KeyVaultRoleScope roleScope) { }

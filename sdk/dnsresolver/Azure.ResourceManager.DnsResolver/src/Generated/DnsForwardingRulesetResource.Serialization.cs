@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.DnsResolver
 
         DnsForwardingRulesetData IJsonModel<DnsForwardingRulesetData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DnsForwardingRulesetData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<DnsForwardingRulesetData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<DnsForwardingRulesetData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DnsForwardingRulesetData>(Data, options, AzureResourceManagerDnsResolverContext.Default);
 
-        DnsForwardingRulesetData IPersistableModel<DnsForwardingRulesetData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DnsForwardingRulesetData>(data, options);
+        DnsForwardingRulesetData IPersistableModel<DnsForwardingRulesetData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DnsForwardingRulesetData>(data, options, AzureResourceManagerDnsResolverContext.Default);
 
         string IPersistableModel<DnsForwardingRulesetData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DnsForwardingRulesetData>)Data).GetFormatFromOptions(options);
     }

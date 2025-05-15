@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Network
 
         ServiceEndpointPolicyDefinitionData IJsonModel<ServiceEndpointPolicyDefinitionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ServiceEndpointPolicyDefinitionData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ServiceEndpointPolicyDefinitionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<ServiceEndpointPolicyDefinitionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ServiceEndpointPolicyDefinitionData>(Data, options, AzureResourceManagerNetworkContext.Default);
 
-        ServiceEndpointPolicyDefinitionData IPersistableModel<ServiceEndpointPolicyDefinitionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ServiceEndpointPolicyDefinitionData>(data, options);
+        ServiceEndpointPolicyDefinitionData IPersistableModel<ServiceEndpointPolicyDefinitionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ServiceEndpointPolicyDefinitionData>(data, options, AzureResourceManagerNetworkContext.Default);
 
         string IPersistableModel<ServiceEndpointPolicyDefinitionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ServiceEndpointPolicyDefinitionData>)Data).GetFormatFromOptions(options);
     }

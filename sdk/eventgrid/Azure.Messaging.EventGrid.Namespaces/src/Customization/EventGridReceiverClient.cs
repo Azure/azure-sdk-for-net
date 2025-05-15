@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -14,8 +13,8 @@ namespace Azure.Messaging.EventGrid.Namespaces
 {
     [CodeGenSuppress("EventGridReceiverClient", typeof(Uri), typeof(AzureKeyCredential))]
     [CodeGenSuppress("EventGridReceiverClient", typeof(Uri), typeof(TokenCredential))]
-    [CodeGenSuppress("EventGridReceiverClient", typeof(Uri), typeof(AzureKeyCredential), typeof(AzureMessagingEventGridNamespacesClientOptions))]
-    [CodeGenSuppress("EventGridReceiverClient", typeof(Uri), typeof(TokenCredential), typeof(AzureMessagingEventGridNamespacesClientOptions))]
+    [CodeGenSuppress("EventGridReceiverClient", typeof(Uri), typeof(AzureKeyCredential), typeof(EventGridReceiverClientOptions))]
+    [CodeGenSuppress("EventGridReceiverClient", typeof(Uri), typeof(TokenCredential), typeof(EventGridReceiverClientOptions))]
     public partial class EventGridReceiverClient
     {
         private readonly string _topicName;
@@ -68,7 +67,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
 
             ClientDiagnostics = new ClientDiagnostics(options, true);
             _keyCredential = credential;
-            _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new AzureKeyCredentialPolicy(_keyCredential, AuthorizationHeader, AuthorizationApiKeyPrefix) }, new ResponseClassifier());
+            Pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new AzureKeyCredentialPolicy(_keyCredential, AuthorizationHeader, AuthorizationApiKeyPrefix) }, new ResponseClassifier());
             _endpoint = endpoint;
             _apiVersion = options.Version;
             _topicName = topicName;
@@ -96,7 +95,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
 
             ClientDiagnostics = new ClientDiagnostics(options, true);
             _tokenCredential = credential;
-            _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) }, new ResponseClassifier());
+            Pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) }, new ResponseClassifier());
             _endpoint = endpoint;
             _apiVersion = options.Version;
             _topicName = topicName;

@@ -13,7 +13,7 @@ namespace Routes
     {
         protected QueryParametersQueryContinuation() => throw null;
 
-        public HttpPipeline Pipeline => throw null;
+        public virtual HttpPipeline Pipeline => throw null;
 
         public virtual QueryParametersQueryContinuationStandard GetQueryParametersQueryContinuationStandardClient() => throw null;
 

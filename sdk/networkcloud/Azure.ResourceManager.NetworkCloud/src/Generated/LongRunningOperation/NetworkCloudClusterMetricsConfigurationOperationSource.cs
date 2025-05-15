@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.NetworkCloud
 
         NetworkCloudClusterMetricsConfigurationResource IOperationSource<NetworkCloudClusterMetricsConfigurationResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<NetworkCloudClusterMetricsConfigurationData>(response.Content);
+            var data = ModelReaderWriter.Read<NetworkCloudClusterMetricsConfigurationData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkCloudContext.Default);
             return new NetworkCloudClusterMetricsConfigurationResource(_client, data);
         }
 
         async ValueTask<NetworkCloudClusterMetricsConfigurationResource> IOperationSource<NetworkCloudClusterMetricsConfigurationResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<NetworkCloudClusterMetricsConfigurationData>(response.Content);
+            var data = ModelReaderWriter.Read<NetworkCloudClusterMetricsConfigurationData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkCloudContext.Default);
             return await Task.FromResult(new NetworkCloudClusterMetricsConfigurationResource(_client, data)).ConfigureAwait(false);
         }
     }

@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.WebPubSub
 
         WebPubSubSharedPrivateLinkResource IOperationSource<WebPubSubSharedPrivateLinkResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<WebPubSubSharedPrivateLinkData>(response.Content);
+            var data = ModelReaderWriter.Read<WebPubSubSharedPrivateLinkData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerWebPubSubContext.Default);
             return new WebPubSubSharedPrivateLinkResource(_client, data);
         }
 
         async ValueTask<WebPubSubSharedPrivateLinkResource> IOperationSource<WebPubSubSharedPrivateLinkResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<WebPubSubSharedPrivateLinkData>(response.Content);
+            var data = ModelReaderWriter.Read<WebPubSubSharedPrivateLinkData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerWebPubSubContext.Default);
             return await Task.FromResult(new WebPubSubSharedPrivateLinkResource(_client, data)).ConfigureAwait(false);
         }
     }

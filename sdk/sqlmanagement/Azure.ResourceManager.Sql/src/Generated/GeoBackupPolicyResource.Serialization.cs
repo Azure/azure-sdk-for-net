@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Sql
 
         GeoBackupPolicyData IJsonModel<GeoBackupPolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<GeoBackupPolicyData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<GeoBackupPolicyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<GeoBackupPolicyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<GeoBackupPolicyData>(Data, options, AzureResourceManagerSqlContext.Default);
 
-        GeoBackupPolicyData IPersistableModel<GeoBackupPolicyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<GeoBackupPolicyData>(data, options);
+        GeoBackupPolicyData IPersistableModel<GeoBackupPolicyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<GeoBackupPolicyData>(data, options, AzureResourceManagerSqlContext.Default);
 
         string IPersistableModel<GeoBackupPolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<GeoBackupPolicyData>)Data).GetFormatFromOptions(options);
     }

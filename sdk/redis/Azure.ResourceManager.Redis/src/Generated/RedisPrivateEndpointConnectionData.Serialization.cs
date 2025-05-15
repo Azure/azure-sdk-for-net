@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.Redis
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRedisContext.Default);
                 case "bicep":
                     return SerializeBicep(options);
                 default:

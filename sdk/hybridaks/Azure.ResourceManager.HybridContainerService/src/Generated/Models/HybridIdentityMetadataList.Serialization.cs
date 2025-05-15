@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHybridContainerServiceContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(HybridIdentityMetadataList)} does not support writing '{options.Format}' format.");
             }

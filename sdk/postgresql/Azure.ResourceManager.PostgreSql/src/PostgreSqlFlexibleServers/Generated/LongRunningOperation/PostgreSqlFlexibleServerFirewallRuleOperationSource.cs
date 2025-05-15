@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
 
         PostgreSqlFlexibleServerFirewallRuleResource IOperationSource<PostgreSqlFlexibleServerFirewallRuleResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<PostgreSqlFlexibleServerFirewallRuleData>(response.Content);
+            var data = ModelReaderWriter.Read<PostgreSqlFlexibleServerFirewallRuleData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerPostgreSqlContext.Default);
             return new PostgreSqlFlexibleServerFirewallRuleResource(_client, data);
         }
 
         async ValueTask<PostgreSqlFlexibleServerFirewallRuleResource> IOperationSource<PostgreSqlFlexibleServerFirewallRuleResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<PostgreSqlFlexibleServerFirewallRuleData>(response.Content);
+            var data = ModelReaderWriter.Read<PostgreSqlFlexibleServerFirewallRuleData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerPostgreSqlContext.Default);
             return await Task.FromResult(new PostgreSqlFlexibleServerFirewallRuleResource(_client, data)).ConfigureAwait(false);
         }
     }

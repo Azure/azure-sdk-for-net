@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.DesktopVirtualization
 
         ScalingPlanData IJsonModel<ScalingPlanData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ScalingPlanData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ScalingPlanData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<ScalingPlanData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ScalingPlanData>(Data, options, AzureResourceManagerDesktopVirtualizationContext.Default);
 
-        ScalingPlanData IPersistableModel<ScalingPlanData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ScalingPlanData>(data, options);
+        ScalingPlanData IPersistableModel<ScalingPlanData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ScalingPlanData>(data, options, AzureResourceManagerDesktopVirtualizationContext.Default);
 
         string IPersistableModel<ScalingPlanData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ScalingPlanData>)Data).GetFormatFromOptions(options);
     }

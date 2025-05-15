@@ -15,6 +15,8 @@ namespace SpecialWords._Models
 {
     public partial class Is : IJsonModel<Is>
     {
+        internal Is() => throw null;
+
         void IJsonModel<Is>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;

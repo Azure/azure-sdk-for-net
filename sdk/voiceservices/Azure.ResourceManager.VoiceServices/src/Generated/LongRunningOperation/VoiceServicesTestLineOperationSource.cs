@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.VoiceServices
 
         VoiceServicesTestLineResource IOperationSource<VoiceServicesTestLineResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<VoiceServicesTestLineData>(response.Content);
+            var data = ModelReaderWriter.Read<VoiceServicesTestLineData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerVoiceServicesContext.Default);
             return new VoiceServicesTestLineResource(_client, data);
         }
 
         async ValueTask<VoiceServicesTestLineResource> IOperationSource<VoiceServicesTestLineResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<VoiceServicesTestLineData>(response.Content);
+            var data = ModelReaderWriter.Read<VoiceServicesTestLineData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerVoiceServicesContext.Default);
             return await Task.FromResult(new VoiceServicesTestLineResource(_client, data)).ConfigureAwait(false);
         }
     }

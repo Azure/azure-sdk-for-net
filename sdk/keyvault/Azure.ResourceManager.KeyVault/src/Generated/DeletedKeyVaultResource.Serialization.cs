@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.KeyVault
 
         DeletedKeyVaultData IJsonModel<DeletedKeyVaultData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DeletedKeyVaultData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<DeletedKeyVaultData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<DeletedKeyVaultData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DeletedKeyVaultData>(Data, options, AzureResourceManagerKeyVaultContext.Default);
 
-        DeletedKeyVaultData IPersistableModel<DeletedKeyVaultData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DeletedKeyVaultData>(data, options);
+        DeletedKeyVaultData IPersistableModel<DeletedKeyVaultData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DeletedKeyVaultData>(data, options, AzureResourceManagerKeyVaultContext.Default);
 
         string IPersistableModel<DeletedKeyVaultData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DeletedKeyVaultData>)Data).GetFormatFromOptions(options);
     }

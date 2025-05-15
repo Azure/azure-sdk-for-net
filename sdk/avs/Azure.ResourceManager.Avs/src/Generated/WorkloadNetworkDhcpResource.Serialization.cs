@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Avs
 
         WorkloadNetworkDhcpData IJsonModel<WorkloadNetworkDhcpData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<WorkloadNetworkDhcpData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<WorkloadNetworkDhcpData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<WorkloadNetworkDhcpData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<WorkloadNetworkDhcpData>(Data, options, AzureResourceManagerAvsContext.Default);
 
-        WorkloadNetworkDhcpData IPersistableModel<WorkloadNetworkDhcpData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<WorkloadNetworkDhcpData>(data, options);
+        WorkloadNetworkDhcpData IPersistableModel<WorkloadNetworkDhcpData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<WorkloadNetworkDhcpData>(data, options, AzureResourceManagerAvsContext.Default);
 
         string IPersistableModel<WorkloadNetworkDhcpData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<WorkloadNetworkDhcpData>)Data).GetFormatFromOptions(options);
     }

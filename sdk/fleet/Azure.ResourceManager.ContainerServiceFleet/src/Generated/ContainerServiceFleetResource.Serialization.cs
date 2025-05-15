@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.ContainerServiceFleet
 
         ContainerServiceFleetData IJsonModel<ContainerServiceFleetData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ContainerServiceFleetData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ContainerServiceFleetData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<ContainerServiceFleetData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ContainerServiceFleetData>(Data, options, AzureResourceManagerContainerServiceFleetContext.Default);
 
-        ContainerServiceFleetData IPersistableModel<ContainerServiceFleetData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ContainerServiceFleetData>(data, options);
+        ContainerServiceFleetData IPersistableModel<ContainerServiceFleetData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ContainerServiceFleetData>(data, options, AzureResourceManagerContainerServiceFleetContext.Default);
 
         string IPersistableModel<ContainerServiceFleetData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ContainerServiceFleetData>)Data).GetFormatFromOptions(options);
     }

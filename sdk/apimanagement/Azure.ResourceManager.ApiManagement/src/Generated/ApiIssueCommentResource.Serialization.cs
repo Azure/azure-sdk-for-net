@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.ApiManagement
 
         ApiIssueCommentData IJsonModel<ApiIssueCommentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ApiIssueCommentData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ApiIssueCommentData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<ApiIssueCommentData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ApiIssueCommentData>(Data, options, AzureResourceManagerApiManagementContext.Default);
 
-        ApiIssueCommentData IPersistableModel<ApiIssueCommentData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ApiIssueCommentData>(data, options);
+        ApiIssueCommentData IPersistableModel<ApiIssueCommentData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ApiIssueCommentData>(data, options, AzureResourceManagerApiManagementContext.Default);
 
         string IPersistableModel<ApiIssueCommentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ApiIssueCommentData>)Data).GetFormatFromOptions(options);
     }

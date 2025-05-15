@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Sql
 
         ManagedInstanceEncryptionProtectorResource IOperationSource<ManagedInstanceEncryptionProtectorResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ManagedInstanceEncryptionProtectorData>(response.Content);
+            var data = ModelReaderWriter.Read<ManagedInstanceEncryptionProtectorData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSqlContext.Default);
             return new ManagedInstanceEncryptionProtectorResource(_client, data);
         }
 
         async ValueTask<ManagedInstanceEncryptionProtectorResource> IOperationSource<ManagedInstanceEncryptionProtectorResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ManagedInstanceEncryptionProtectorData>(response.Content);
+            var data = ModelReaderWriter.Read<ManagedInstanceEncryptionProtectorData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSqlContext.Default);
             return await Task.FromResult(new ManagedInstanceEncryptionProtectorResource(_client, data)).ConfigureAwait(false);
         }
     }

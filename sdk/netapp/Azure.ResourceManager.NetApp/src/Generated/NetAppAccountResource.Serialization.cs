@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.NetApp
 
         NetAppAccountData IJsonModel<NetAppAccountData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetAppAccountData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<NetAppAccountData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<NetAppAccountData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<NetAppAccountData>(Data, options, AzureResourceManagerNetAppContext.Default);
 
-        NetAppAccountData IPersistableModel<NetAppAccountData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetAppAccountData>(data, options);
+        NetAppAccountData IPersistableModel<NetAppAccountData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetAppAccountData>(data, options, AzureResourceManagerNetAppContext.Default);
 
         string IPersistableModel<NetAppAccountData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetAppAccountData>)Data).GetFormatFromOptions(options);
     }

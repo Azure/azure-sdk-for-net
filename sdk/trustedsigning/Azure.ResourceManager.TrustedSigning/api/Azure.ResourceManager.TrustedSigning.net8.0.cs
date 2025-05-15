@@ -1,5 +1,11 @@
 namespace Azure.ResourceManager.TrustedSigning
 {
+    public partial class AzureResourceManagerTrustedSigningContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureResourceManagerTrustedSigningContext() { }
+        public static Azure.ResourceManager.TrustedSigning.AzureResourceManagerTrustedSigningContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class TrustedSigningAccountCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.TrustedSigning.TrustedSigningAccountResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.TrustedSigning.TrustedSigningAccountResource>, System.Collections.IEnumerable
     {
         protected TrustedSigningAccountCollection() { }

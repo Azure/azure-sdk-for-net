@@ -16,7 +16,7 @@ namespace Routes
     {
         protected PathParametersReservedExpansion() => throw null;
 
-        public HttpPipeline Pipeline => throw null;
+        public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response Template(string @param, RequestContext context) => throw null;
 

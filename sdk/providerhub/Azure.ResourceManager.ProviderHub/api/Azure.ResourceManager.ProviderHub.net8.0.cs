@@ -1,5 +1,11 @@
 namespace Azure.ResourceManager.ProviderHub
 {
+    public partial class AzureResourceManagerProviderHubContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureResourceManagerProviderHubContext() { }
+        public static Azure.ResourceManager.ProviderHub.AzureResourceManagerProviderHubContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class CustomRolloutCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.ProviderHub.CustomRolloutResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.CustomRolloutResource>, System.Collections.IEnumerable
     {
         protected CustomRolloutCollection() { }

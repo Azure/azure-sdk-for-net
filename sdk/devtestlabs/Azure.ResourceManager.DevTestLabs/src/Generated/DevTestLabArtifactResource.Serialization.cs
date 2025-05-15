@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.DevTestLabs
 
         DevTestLabArtifactData IJsonModel<DevTestLabArtifactData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DevTestLabArtifactData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<DevTestLabArtifactData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<DevTestLabArtifactData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DevTestLabArtifactData>(Data, options, AzureResourceManagerDevTestLabsContext.Default);
 
-        DevTestLabArtifactData IPersistableModel<DevTestLabArtifactData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DevTestLabArtifactData>(data, options);
+        DevTestLabArtifactData IPersistableModel<DevTestLabArtifactData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DevTestLabArtifactData>(data, options, AzureResourceManagerDevTestLabsContext.Default);
 
         string IPersistableModel<DevTestLabArtifactData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DevTestLabArtifactData>)Data).GetFormatFromOptions(options);
     }

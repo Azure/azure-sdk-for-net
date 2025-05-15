@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.StandbyPool
 
         StandbyContainerGroupPoolRuntimeViewData IJsonModel<StandbyContainerGroupPoolRuntimeViewData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<StandbyContainerGroupPoolRuntimeViewData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<StandbyContainerGroupPoolRuntimeViewData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<StandbyContainerGroupPoolRuntimeViewData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<StandbyContainerGroupPoolRuntimeViewData>(Data, options, AzureResourceManagerStandbyPoolContext.Default);
 
-        StandbyContainerGroupPoolRuntimeViewData IPersistableModel<StandbyContainerGroupPoolRuntimeViewData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<StandbyContainerGroupPoolRuntimeViewData>(data, options);
+        StandbyContainerGroupPoolRuntimeViewData IPersistableModel<StandbyContainerGroupPoolRuntimeViewData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<StandbyContainerGroupPoolRuntimeViewData>(data, options, AzureResourceManagerStandbyPoolContext.Default);
 
         string IPersistableModel<StandbyContainerGroupPoolRuntimeViewData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<StandbyContainerGroupPoolRuntimeViewData>)Data).GetFormatFromOptions(options);
     }

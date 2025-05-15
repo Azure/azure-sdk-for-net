@@ -13,6 +13,12 @@ namespace Azure.Analytics.Synapse.Artifacts
             V2023_04_18_Preview = 6,
         }
     }
+    public partial class AzureAnalyticsSynapseArtifactsContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureAnalyticsSynapseArtifactsContext() { }
+        public static Azure.Analytics.Synapse.Artifacts.AzureAnalyticsSynapseArtifactsContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class BigDataPoolsClient
     {
         protected BigDataPoolsClient() { }

@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Kusto
 
         KustoPrivateLinkResourceData IJsonModel<KustoPrivateLinkResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<KustoPrivateLinkResourceData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<KustoPrivateLinkResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<KustoPrivateLinkResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<KustoPrivateLinkResourceData>(Data, options, AzureResourceManagerKustoContext.Default);
 
-        KustoPrivateLinkResourceData IPersistableModel<KustoPrivateLinkResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<KustoPrivateLinkResourceData>(data, options);
+        KustoPrivateLinkResourceData IPersistableModel<KustoPrivateLinkResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<KustoPrivateLinkResourceData>(data, options, AzureResourceManagerKustoContext.Default);
 
         string IPersistableModel<KustoPrivateLinkResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<KustoPrivateLinkResourceData>)Data).GetFormatFromOptions(options);
     }

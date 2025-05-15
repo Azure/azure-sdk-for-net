@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.StreamAnalytics
 
         StreamAnalyticsClusterResource IOperationSource<StreamAnalyticsClusterResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<StreamAnalyticsClusterData>(response.Content);
+            var data = ModelReaderWriter.Read<StreamAnalyticsClusterData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerStreamAnalyticsContext.Default);
             return new StreamAnalyticsClusterResource(_client, data);
         }
 
         async ValueTask<StreamAnalyticsClusterResource> IOperationSource<StreamAnalyticsClusterResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<StreamAnalyticsClusterData>(response.Content);
+            var data = ModelReaderWriter.Read<StreamAnalyticsClusterData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerStreamAnalyticsContext.Default);
             return await Task.FromResult(new StreamAnalyticsClusterResource(_client, data)).ConfigureAwait(false);
         }
     }

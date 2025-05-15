@@ -16,7 +16,7 @@ namespace Payload.ContentNegotiation
 
         public ContentNegotiationClient(Uri endpoint, ContentNegotiationClientOptions options) => throw null;
 
-        public HttpPipeline Pipeline => throw null;
+        public virtual HttpPipeline Pipeline => throw null;
 
         public virtual SameBody GetSameBodyClient() => throw null;
 

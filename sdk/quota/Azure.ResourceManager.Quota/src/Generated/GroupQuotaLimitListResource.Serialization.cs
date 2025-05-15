@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Quota
 
         GroupQuotaLimitListData IJsonModel<GroupQuotaLimitListData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<GroupQuotaLimitListData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<GroupQuotaLimitListData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<GroupQuotaLimitListData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<GroupQuotaLimitListData>(Data, options, AzureResourceManagerQuotaContext.Default);
 
-        GroupQuotaLimitListData IPersistableModel<GroupQuotaLimitListData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<GroupQuotaLimitListData>(data, options);
+        GroupQuotaLimitListData IPersistableModel<GroupQuotaLimitListData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<GroupQuotaLimitListData>(data, options, AzureResourceManagerQuotaContext.Default);
 
         string IPersistableModel<GroupQuotaLimitListData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<GroupQuotaLimitListData>)Data).GetFormatFromOptions(options);
     }

@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.NewRelicObservability
 
         NewRelicMonitoredSubscriptionResource IOperationSource<NewRelicMonitoredSubscriptionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<NewRelicMonitoredSubscriptionData>(response.Content);
+            var data = ModelReaderWriter.Read<NewRelicMonitoredSubscriptionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNewRelicObservabilityContext.Default);
             return new NewRelicMonitoredSubscriptionResource(_client, data);
         }
 
         async ValueTask<NewRelicMonitoredSubscriptionResource> IOperationSource<NewRelicMonitoredSubscriptionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<NewRelicMonitoredSubscriptionData>(response.Content);
+            var data = ModelReaderWriter.Read<NewRelicMonitoredSubscriptionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNewRelicObservabilityContext.Default);
             return await Task.FromResult(new NewRelicMonitoredSubscriptionResource(_client, data)).ConfigureAwait(false);
         }
     }

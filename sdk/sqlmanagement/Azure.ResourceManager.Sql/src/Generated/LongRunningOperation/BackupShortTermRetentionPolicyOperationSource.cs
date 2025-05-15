@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Sql
 
         BackupShortTermRetentionPolicyResource IOperationSource<BackupShortTermRetentionPolicyResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<BackupShortTermRetentionPolicyData>(response.Content);
+            var data = ModelReaderWriter.Read<BackupShortTermRetentionPolicyData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSqlContext.Default);
             return new BackupShortTermRetentionPolicyResource(_client, data);
         }
 
         async ValueTask<BackupShortTermRetentionPolicyResource> IOperationSource<BackupShortTermRetentionPolicyResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<BackupShortTermRetentionPolicyData>(response.Content);
+            var data = ModelReaderWriter.Read<BackupShortTermRetentionPolicyData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSqlContext.Default);
             return await Task.FromResult(new BackupShortTermRetentionPolicyResource(_client, data)).ConfigureAwait(false);
         }
     }

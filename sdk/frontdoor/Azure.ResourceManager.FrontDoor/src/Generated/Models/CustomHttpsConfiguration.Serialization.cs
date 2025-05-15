@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerFrontDoorContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(CustomHttpsConfiguration)} does not support writing '{options.Format}' format.");
             }

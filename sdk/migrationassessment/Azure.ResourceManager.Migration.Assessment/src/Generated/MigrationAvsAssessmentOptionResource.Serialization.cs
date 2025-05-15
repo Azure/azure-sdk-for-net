@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Migration.Assessment
 
         MigrationAvsAssessmentOptionData IJsonModel<MigrationAvsAssessmentOptionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MigrationAvsAssessmentOptionData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<MigrationAvsAssessmentOptionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<MigrationAvsAssessmentOptionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<MigrationAvsAssessmentOptionData>(Data, options, AzureResourceManagerMigrationAssessmentContext.Default);
 
-        MigrationAvsAssessmentOptionData IPersistableModel<MigrationAvsAssessmentOptionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MigrationAvsAssessmentOptionData>(data, options);
+        MigrationAvsAssessmentOptionData IPersistableModel<MigrationAvsAssessmentOptionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MigrationAvsAssessmentOptionData>(data, options, AzureResourceManagerMigrationAssessmentContext.Default);
 
         string IPersistableModel<MigrationAvsAssessmentOptionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MigrationAvsAssessmentOptionData>)Data).GetFormatFromOptions(options);
     }

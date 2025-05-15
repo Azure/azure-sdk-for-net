@@ -584,7 +584,7 @@ namespace Azure.ResourceManager.StorageMover
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerStorageMoverContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(JobRunData)} does not support writing '{options.Format}' format.");
             }

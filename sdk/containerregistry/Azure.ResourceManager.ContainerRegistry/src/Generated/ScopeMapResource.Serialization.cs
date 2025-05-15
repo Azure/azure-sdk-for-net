@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.ContainerRegistry
 
         ScopeMapData IJsonModel<ScopeMapData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ScopeMapData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ScopeMapData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<ScopeMapData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ScopeMapData>(Data, options, AzureResourceManagerContainerRegistryContext.Default);
 
-        ScopeMapData IPersistableModel<ScopeMapData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ScopeMapData>(data, options);
+        ScopeMapData IPersistableModel<ScopeMapData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ScopeMapData>(data, options, AzureResourceManagerContainerRegistryContext.Default);
 
         string IPersistableModel<ScopeMapData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ScopeMapData>)Data).GetFormatFromOptions(options);
     }

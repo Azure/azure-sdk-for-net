@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Sql
 
         SyncAgentResource IOperationSource<SyncAgentResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<SyncAgentData>(response.Content);
+            var data = ModelReaderWriter.Read<SyncAgentData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSqlContext.Default);
             return new SyncAgentResource(_client, data);
         }
 
         async ValueTask<SyncAgentResource> IOperationSource<SyncAgentResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<SyncAgentData>(response.Content);
+            var data = ModelReaderWriter.Read<SyncAgentData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSqlContext.Default);
             return await Task.FromResult(new SyncAgentResource(_client, data)).ConfigureAwait(false);
         }
     }

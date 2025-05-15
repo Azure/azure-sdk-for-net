@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Resources
 
         ArmDeploymentScriptResource IOperationSource<ArmDeploymentScriptResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ArmDeploymentScriptData>(response.Content);
+            var data = ModelReaderWriter.Read<ArmDeploymentScriptData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerResourcesContext.Default);
             return new ArmDeploymentScriptResource(_client, data);
         }
 
         async ValueTask<ArmDeploymentScriptResource> IOperationSource<ArmDeploymentScriptResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ArmDeploymentScriptData>(response.Content);
+            var data = ModelReaderWriter.Read<ArmDeploymentScriptData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerResourcesContext.Default);
             return await Task.FromResult(new ArmDeploymentScriptResource(_client, data)).ConfigureAwait(false);
         }
     }

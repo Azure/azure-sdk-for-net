@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerResourceHealthContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ServiceImpactingEventIncidentProperties)} does not support writing '{options.Format}' format.");
             }

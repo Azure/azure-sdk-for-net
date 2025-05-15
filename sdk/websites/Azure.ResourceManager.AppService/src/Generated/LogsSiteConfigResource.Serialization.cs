@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.AppService
 
         SiteLogsConfigData IJsonModel<SiteLogsConfigData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SiteLogsConfigData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SiteLogsConfigData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<SiteLogsConfigData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SiteLogsConfigData>(Data, options, AzureResourceManagerAppServiceContext.Default);
 
-        SiteLogsConfigData IPersistableModel<SiteLogsConfigData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SiteLogsConfigData>(data, options);
+        SiteLogsConfigData IPersistableModel<SiteLogsConfigData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SiteLogsConfigData>(data, options, AzureResourceManagerAppServiceContext.Default);
 
         string IPersistableModel<SiteLogsConfigData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SiteLogsConfigData>)Data).GetFormatFromOptions(options);
     }

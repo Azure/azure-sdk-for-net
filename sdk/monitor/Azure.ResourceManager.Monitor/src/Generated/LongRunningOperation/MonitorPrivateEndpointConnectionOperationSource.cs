@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Monitor
 
         MonitorPrivateEndpointConnectionResource IOperationSource<MonitorPrivateEndpointConnectionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<MonitorPrivateEndpointConnectionData>(response.Content);
+            var data = ModelReaderWriter.Read<MonitorPrivateEndpointConnectionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerMonitorContext.Default);
             return new MonitorPrivateEndpointConnectionResource(_client, data);
         }
 
         async ValueTask<MonitorPrivateEndpointConnectionResource> IOperationSource<MonitorPrivateEndpointConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<MonitorPrivateEndpointConnectionData>(response.Content);
+            var data = ModelReaderWriter.Read<MonitorPrivateEndpointConnectionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerMonitorContext.Default);
             return await Task.FromResult(new MonitorPrivateEndpointConnectionResource(_client, data)).ConfigureAwait(false);
         }
     }

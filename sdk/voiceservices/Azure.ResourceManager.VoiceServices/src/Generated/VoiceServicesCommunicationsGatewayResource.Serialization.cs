@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.VoiceServices
 
         VoiceServicesCommunicationsGatewayData IJsonModel<VoiceServicesCommunicationsGatewayData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<VoiceServicesCommunicationsGatewayData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<VoiceServicesCommunicationsGatewayData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<VoiceServicesCommunicationsGatewayData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<VoiceServicesCommunicationsGatewayData>(Data, options, AzureResourceManagerVoiceServicesContext.Default);
 
-        VoiceServicesCommunicationsGatewayData IPersistableModel<VoiceServicesCommunicationsGatewayData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<VoiceServicesCommunicationsGatewayData>(data, options);
+        VoiceServicesCommunicationsGatewayData IPersistableModel<VoiceServicesCommunicationsGatewayData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<VoiceServicesCommunicationsGatewayData>(data, options, AzureResourceManagerVoiceServicesContext.Default);
 
         string IPersistableModel<VoiceServicesCommunicationsGatewayData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<VoiceServicesCommunicationsGatewayData>)Data).GetFormatFromOptions(options);
     }

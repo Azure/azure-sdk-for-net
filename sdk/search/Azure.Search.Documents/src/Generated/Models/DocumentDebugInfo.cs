@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System.Collections.Generic;
+
 namespace Azure.Search.Documents.Models
 {
     /// <summary> Contains debugging information that can be used to further explore your search results. </summary>
@@ -13,20 +15,25 @@ namespace Azure.Search.Documents.Models
         /// <summary> Initializes a new instance of <see cref="DocumentDebugInfo"/>. </summary>
         internal DocumentDebugInfo()
         {
+            InnerHits = new ChangeTrackingDictionary<string, IList<QueryResultDocumentInnerHit>>();
         }
 
         /// <summary> Initializes a new instance of <see cref="DocumentDebugInfo"/>. </summary>
         /// <param name="semantic"> Contains debugging information specific to semantic ranking requests. </param>
         /// <param name="vectors"> Contains debugging information specific to vector and hybrid search. </param>
-        internal DocumentDebugInfo(SemanticDebugInfo semantic, VectorsDebugInfo vectors)
+        /// <param name="innerHits"> Contains debugging information specific to vectors matched within a collection of complex types. </param>
+        internal DocumentDebugInfo(SemanticDebugInfo semantic, VectorsDebugInfo vectors, IReadOnlyDictionary<string, IList<QueryResultDocumentInnerHit>> innerHits)
         {
             Semantic = semantic;
             Vectors = vectors;
+            InnerHits = innerHits;
         }
 
         /// <summary> Contains debugging information specific to semantic ranking requests. </summary>
         public SemanticDebugInfo Semantic { get; }
         /// <summary> Contains debugging information specific to vector and hybrid search. </summary>
         public VectorsDebugInfo Vectors { get; }
+        /// <summary> Contains debugging information specific to vectors matched within a collection of complex types. </summary>
+        public IReadOnlyDictionary<string, IList<QueryResultDocumentInnerHit>> InnerHits { get; }
     }
 }

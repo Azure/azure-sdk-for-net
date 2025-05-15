@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.ManagementPartner
 
         PartnerResponseData IJsonModel<PartnerResponseData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PartnerResponseData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<PartnerResponseData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<PartnerResponseData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<PartnerResponseData>(Data, options, AzureResourceManagerManagementPartnerContext.Default);
 
-        PartnerResponseData IPersistableModel<PartnerResponseData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PartnerResponseData>(data, options);
+        PartnerResponseData IPersistableModel<PartnerResponseData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PartnerResponseData>(data, options, AzureResourceManagerManagementPartnerContext.Default);
 
         string IPersistableModel<PartnerResponseData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PartnerResponseData>)Data).GetFormatFromOptions(options);
     }

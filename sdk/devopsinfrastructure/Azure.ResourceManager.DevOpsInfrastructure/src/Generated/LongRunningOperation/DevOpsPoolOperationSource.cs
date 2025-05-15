@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
 
         DevOpsPoolResource IOperationSource<DevOpsPoolResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DevOpsPoolData>(response.Content);
+            var data = ModelReaderWriter.Read<DevOpsPoolData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDevOpsInfrastructureContext.Default);
             return new DevOpsPoolResource(_client, data);
         }
 
         async ValueTask<DevOpsPoolResource> IOperationSource<DevOpsPoolResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DevOpsPoolData>(response.Content);
+            var data = ModelReaderWriter.Read<DevOpsPoolData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDevOpsInfrastructureContext.Default);
             return await Task.FromResult(new DevOpsPoolResource(_client, data)).ConfigureAwait(false);
         }
     }

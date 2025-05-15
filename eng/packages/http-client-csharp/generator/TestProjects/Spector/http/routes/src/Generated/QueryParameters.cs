@@ -16,7 +16,7 @@ namespace Routes
     {
         protected QueryParameters() => throw null;
 
-        public HttpPipeline Pipeline => throw null;
+        public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response TemplateOnly(string @param, RequestContext context) => throw null;
 

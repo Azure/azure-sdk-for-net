@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.PortalServicesCopilot.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerPortalServicesCopilotContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(PortalServicesCopilotSettingsProperties)} does not support writing '{options.Format}' format.");
             }

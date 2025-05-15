@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
 
         NetworkDeviceResource IOperationSource<NetworkDeviceResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<NetworkDeviceData>(response.Content);
+            var data = ModelReaderWriter.Read<NetworkDeviceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerManagedNetworkFabricContext.Default);
             return new NetworkDeviceResource(_client, data);
         }
 
         async ValueTask<NetworkDeviceResource> IOperationSource<NetworkDeviceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<NetworkDeviceData>(response.Content);
+            var data = ModelReaderWriter.Read<NetworkDeviceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerManagedNetworkFabricContext.Default);
             return await Task.FromResult(new NetworkDeviceResource(_client, data)).ConfigureAwait(false);
         }
     }

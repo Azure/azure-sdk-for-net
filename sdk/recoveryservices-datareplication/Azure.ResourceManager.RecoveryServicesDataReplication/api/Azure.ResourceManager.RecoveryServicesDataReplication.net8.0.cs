@@ -1,5 +1,11 @@
 namespace Azure.ResourceManager.RecoveryServicesDataReplication
 {
+    public partial class AzureResourceManagerRecoveryServicesDataReplicationContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureResourceManagerRecoveryServicesDataReplicationContext() { }
+        public static Azure.ResourceManager.RecoveryServicesDataReplication.AzureResourceManagerRecoveryServicesDataReplicationContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class DataReplicationEmailConfigurationCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationEmailConfigurationResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.RecoveryServicesDataReplication.DataReplicationEmailConfigurationResource>, System.Collections.IEnumerable
     {
         protected DataReplicationEmailConfigurationCollection() { }

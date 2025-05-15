@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.ManagedNetwork
 
         ScopeAssignmentData IJsonModel<ScopeAssignmentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ScopeAssignmentData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ScopeAssignmentData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<ScopeAssignmentData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ScopeAssignmentData>(Data, options, AzureResourceManagerManagedNetworkContext.Default);
 
-        ScopeAssignmentData IPersistableModel<ScopeAssignmentData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ScopeAssignmentData>(data, options);
+        ScopeAssignmentData IPersistableModel<ScopeAssignmentData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ScopeAssignmentData>(data, options, AzureResourceManagerManagedNetworkContext.Default);
 
         string IPersistableModel<ScopeAssignmentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ScopeAssignmentData>)Data).GetFormatFromOptions(options);
     }

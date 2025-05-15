@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Sql
 
         SqlServerKeyResource IOperationSource<SqlServerKeyResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<SqlServerKeyData>(response.Content);
+            var data = ModelReaderWriter.Read<SqlServerKeyData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSqlContext.Default);
             return new SqlServerKeyResource(_client, data);
         }
 
         async ValueTask<SqlServerKeyResource> IOperationSource<SqlServerKeyResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<SqlServerKeyData>(response.Content);
+            var data = ModelReaderWriter.Read<SqlServerKeyData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSqlContext.Default);
             return await Task.FromResult(new SqlServerKeyResource(_client, data)).ConfigureAwait(false);
         }
     }

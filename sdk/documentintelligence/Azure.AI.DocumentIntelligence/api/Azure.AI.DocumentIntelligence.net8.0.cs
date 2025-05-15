@@ -195,6 +195,12 @@ namespace Azure.AI.DocumentIntelligence
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.DocumentIntelligence.AuthorizeModelCopyOptions>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.DocumentIntelligence.AuthorizeModelCopyOptions>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class AzureAIDocumentIntelligenceContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureAIDocumentIntelligenceContext() { }
+        public static Azure.AI.DocumentIntelligence.AzureAIDocumentIntelligenceContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class BlobContentSource : System.ClientModel.Primitives.IJsonModel<Azure.AI.DocumentIntelligence.BlobContentSource>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.DocumentIntelligence.BlobContentSource>
     {
         public BlobContentSource(System.Uri containerUri) { }

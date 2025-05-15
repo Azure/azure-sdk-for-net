@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.EventHubs.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerEventHubsContext.Default);
                 case "bicep":
                     return SerializeBicep(options);
                 default:

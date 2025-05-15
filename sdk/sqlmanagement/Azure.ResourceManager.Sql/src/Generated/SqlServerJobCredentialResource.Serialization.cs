@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Sql
 
         SqlServerJobCredentialData IJsonModel<SqlServerJobCredentialData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SqlServerJobCredentialData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SqlServerJobCredentialData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<SqlServerJobCredentialData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SqlServerJobCredentialData>(Data, options, AzureResourceManagerSqlContext.Default);
 
-        SqlServerJobCredentialData IPersistableModel<SqlServerJobCredentialData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SqlServerJobCredentialData>(data, options);
+        SqlServerJobCredentialData IPersistableModel<SqlServerJobCredentialData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SqlServerJobCredentialData>(data, options, AzureResourceManagerSqlContext.Default);
 
         string IPersistableModel<SqlServerJobCredentialData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SqlServerJobCredentialData>)Data).GetFormatFromOptions(options);
     }

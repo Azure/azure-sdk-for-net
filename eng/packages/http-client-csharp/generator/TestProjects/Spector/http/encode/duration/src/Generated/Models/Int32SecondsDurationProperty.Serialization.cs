@@ -15,6 +15,8 @@ namespace Encode.Duration._Property
 {
     public partial class Int32SecondsDurationProperty : IJsonModel<Int32SecondsDurationProperty>
     {
+        internal Int32SecondsDurationProperty() => throw null;
+
         void IJsonModel<Int32SecondsDurationProperty>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;

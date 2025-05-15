@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Sql
 
         DataWarehouseUserActivityData IJsonModel<DataWarehouseUserActivityData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DataWarehouseUserActivityData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<DataWarehouseUserActivityData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<DataWarehouseUserActivityData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DataWarehouseUserActivityData>(Data, options, AzureResourceManagerSqlContext.Default);
 
-        DataWarehouseUserActivityData IPersistableModel<DataWarehouseUserActivityData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DataWarehouseUserActivityData>(data, options);
+        DataWarehouseUserActivityData IPersistableModel<DataWarehouseUserActivityData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DataWarehouseUserActivityData>(data, options, AzureResourceManagerSqlContext.Default);
 
         string IPersistableModel<DataWarehouseUserActivityData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DataWarehouseUserActivityData>)Data).GetFormatFromOptions(options);
     }

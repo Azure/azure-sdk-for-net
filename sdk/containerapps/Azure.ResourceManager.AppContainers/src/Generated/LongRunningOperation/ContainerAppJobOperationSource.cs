@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.AppContainers
 
         ContainerAppJobResource IOperationSource<ContainerAppJobResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ContainerAppJobData>(response.Content);
+            var data = ModelReaderWriter.Read<ContainerAppJobData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerAppContainersContext.Default);
             return new ContainerAppJobResource(_client, data);
         }
 
         async ValueTask<ContainerAppJobResource> IOperationSource<ContainerAppJobResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ContainerAppJobData>(response.Content);
+            var data = ModelReaderWriter.Read<ContainerAppJobData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerAppContainersContext.Default);
             return await Task.FromResult(new ContainerAppJobResource(_client, data)).ConfigureAwait(false);
         }
     }

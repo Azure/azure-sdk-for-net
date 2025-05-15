@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.CosmosDB
 
         CosmosDBSqlStoredProcedureResource IOperationSource<CosmosDBSqlStoredProcedureResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<CosmosDBSqlStoredProcedureData>(response.Content);
+            var data = ModelReaderWriter.Read<CosmosDBSqlStoredProcedureData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerCosmosDBContext.Default);
             return new CosmosDBSqlStoredProcedureResource(_client, data);
         }
 
         async ValueTask<CosmosDBSqlStoredProcedureResource> IOperationSource<CosmosDBSqlStoredProcedureResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<CosmosDBSqlStoredProcedureData>(response.Content);
+            var data = ModelReaderWriter.Read<CosmosDBSqlStoredProcedureData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerCosmosDBContext.Default);
             return await Task.FromResult(new CosmosDBSqlStoredProcedureResource(_client, data)).ConfigureAwait(false);
         }
     }

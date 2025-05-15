@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.DnsResolver
 
         DnsForwardingRulesetVirtualNetworkLinkData IJsonModel<DnsForwardingRulesetVirtualNetworkLinkData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DnsForwardingRulesetVirtualNetworkLinkData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<DnsForwardingRulesetVirtualNetworkLinkData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<DnsForwardingRulesetVirtualNetworkLinkData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DnsForwardingRulesetVirtualNetworkLinkData>(Data, options, AzureResourceManagerDnsResolverContext.Default);
 
-        DnsForwardingRulesetVirtualNetworkLinkData IPersistableModel<DnsForwardingRulesetVirtualNetworkLinkData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DnsForwardingRulesetVirtualNetworkLinkData>(data, options);
+        DnsForwardingRulesetVirtualNetworkLinkData IPersistableModel<DnsForwardingRulesetVirtualNetworkLinkData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DnsForwardingRulesetVirtualNetworkLinkData>(data, options, AzureResourceManagerDnsResolverContext.Default);
 
         string IPersistableModel<DnsForwardingRulesetVirtualNetworkLinkData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DnsForwardingRulesetVirtualNetworkLinkData>)Data).GetFormatFromOptions(options);
     }

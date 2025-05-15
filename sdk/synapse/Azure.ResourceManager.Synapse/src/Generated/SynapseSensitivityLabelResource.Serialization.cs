@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Synapse
 
         SynapseSensitivityLabelData IJsonModel<SynapseSensitivityLabelData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SynapseSensitivityLabelData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SynapseSensitivityLabelData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<SynapseSensitivityLabelData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SynapseSensitivityLabelData>(Data, options, AzureResourceManagerSynapseContext.Default);
 
-        SynapseSensitivityLabelData IPersistableModel<SynapseSensitivityLabelData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SynapseSensitivityLabelData>(data, options);
+        SynapseSensitivityLabelData IPersistableModel<SynapseSensitivityLabelData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SynapseSensitivityLabelData>(data, options, AzureResourceManagerSynapseContext.Default);
 
         string IPersistableModel<SynapseSensitivityLabelData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SynapseSensitivityLabelData>)Data).GetFormatFromOptions(options);
     }

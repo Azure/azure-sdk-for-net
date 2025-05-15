@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.MySql
 
         MySqlPrivateEndpointConnectionResource IOperationSource<MySqlPrivateEndpointConnectionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<MySqlPrivateEndpointConnectionData>(response.Content);
+            var data = ModelReaderWriter.Read<MySqlPrivateEndpointConnectionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerMySqlContext.Default);
             return new MySqlPrivateEndpointConnectionResource(_client, data);
         }
 
         async ValueTask<MySqlPrivateEndpointConnectionResource> IOperationSource<MySqlPrivateEndpointConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<MySqlPrivateEndpointConnectionData>(response.Content);
+            var data = ModelReaderWriter.Read<MySqlPrivateEndpointConnectionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerMySqlContext.Default);
             return await Task.FromResult(new MySqlPrivateEndpointConnectionResource(_client, data)).ConfigureAwait(false);
         }
     }

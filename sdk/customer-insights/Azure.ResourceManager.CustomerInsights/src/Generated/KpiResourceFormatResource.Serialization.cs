@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.CustomerInsights
 
         KpiResourceFormatData IJsonModel<KpiResourceFormatData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<KpiResourceFormatData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<KpiResourceFormatData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<KpiResourceFormatData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<KpiResourceFormatData>(Data, options, AzureResourceManagerCustomerInsightsContext.Default);
 
-        KpiResourceFormatData IPersistableModel<KpiResourceFormatData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<KpiResourceFormatData>(data, options);
+        KpiResourceFormatData IPersistableModel<KpiResourceFormatData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<KpiResourceFormatData>(data, options, AzureResourceManagerCustomerInsightsContext.Default);
 
         string IPersistableModel<KpiResourceFormatData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<KpiResourceFormatData>)Data).GetFormatFromOptions(options);
     }

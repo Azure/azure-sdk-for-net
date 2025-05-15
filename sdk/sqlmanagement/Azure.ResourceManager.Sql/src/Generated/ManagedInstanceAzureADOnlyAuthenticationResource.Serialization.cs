@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Sql
 
         ManagedInstanceAzureADOnlyAuthenticationData IJsonModel<ManagedInstanceAzureADOnlyAuthenticationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ManagedInstanceAzureADOnlyAuthenticationData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ManagedInstanceAzureADOnlyAuthenticationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<ManagedInstanceAzureADOnlyAuthenticationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ManagedInstanceAzureADOnlyAuthenticationData>(Data, options, AzureResourceManagerSqlContext.Default);
 
-        ManagedInstanceAzureADOnlyAuthenticationData IPersistableModel<ManagedInstanceAzureADOnlyAuthenticationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ManagedInstanceAzureADOnlyAuthenticationData>(data, options);
+        ManagedInstanceAzureADOnlyAuthenticationData IPersistableModel<ManagedInstanceAzureADOnlyAuthenticationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ManagedInstanceAzureADOnlyAuthenticationData>(data, options, AzureResourceManagerSqlContext.Default);
 
         string IPersistableModel<ManagedInstanceAzureADOnlyAuthenticationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ManagedInstanceAzureADOnlyAuthenticationData>)Data).GetFormatFromOptions(options);
     }

@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerPolicyInsightsContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ComponentEventDetails)} does not support writing '{options.Format}' format.");
             }

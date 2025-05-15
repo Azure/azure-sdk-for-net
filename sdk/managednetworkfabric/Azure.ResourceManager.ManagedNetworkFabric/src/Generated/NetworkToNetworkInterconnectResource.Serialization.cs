@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
 
         NetworkToNetworkInterconnectData IJsonModel<NetworkToNetworkInterconnectData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetworkToNetworkInterconnectData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<NetworkToNetworkInterconnectData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<NetworkToNetworkInterconnectData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<NetworkToNetworkInterconnectData>(Data, options, AzureResourceManagerManagedNetworkFabricContext.Default);
 
-        NetworkToNetworkInterconnectData IPersistableModel<NetworkToNetworkInterconnectData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetworkToNetworkInterconnectData>(data, options);
+        NetworkToNetworkInterconnectData IPersistableModel<NetworkToNetworkInterconnectData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetworkToNetworkInterconnectData>(data, options, AzureResourceManagerManagedNetworkFabricContext.Default);
 
         string IPersistableModel<NetworkToNetworkInterconnectData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetworkToNetworkInterconnectData>)Data).GetFormatFromOptions(options);
     }

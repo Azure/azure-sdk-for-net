@@ -150,6 +150,12 @@ namespace Azure.Compute.Batch
         string System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.AzureBlobFileSystemConfiguration>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.AzureBlobFileSystemConfiguration>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class AzureComputeBatchContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureComputeBatchContext() { }
+        public static Azure.Compute.Batch.AzureComputeBatchContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class AzureFileShareConfiguration : System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.AzureFileShareConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.AzureFileShareConfiguration>
     {
         public AzureFileShareConfiguration(string accountName, string azureFileUrl, string accountKey, string relativeMountPath) { }

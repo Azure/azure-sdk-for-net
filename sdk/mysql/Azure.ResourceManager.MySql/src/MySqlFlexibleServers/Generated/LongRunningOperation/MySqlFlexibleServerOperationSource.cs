@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
 
         MySqlFlexibleServerResource IOperationSource<MySqlFlexibleServerResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<MySqlFlexibleServerData>(response.Content);
+            var data = ModelReaderWriter.Read<MySqlFlexibleServerData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerMySqlContext.Default);
             return new MySqlFlexibleServerResource(_client, data);
         }
 
         async ValueTask<MySqlFlexibleServerResource> IOperationSource<MySqlFlexibleServerResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<MySqlFlexibleServerData>(response.Content);
+            var data = ModelReaderWriter.Read<MySqlFlexibleServerData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerMySqlContext.Default);
             return await Task.FromResult(new MySqlFlexibleServerResource(_client, data)).ConfigureAwait(false);
         }
     }

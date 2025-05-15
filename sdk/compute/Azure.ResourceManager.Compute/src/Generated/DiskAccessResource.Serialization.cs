@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Compute
 
         DiskAccessData IJsonModel<DiskAccessData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DiskAccessData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<DiskAccessData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<DiskAccessData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DiskAccessData>(Data, options, AzureResourceManagerComputeContext.Default);
 
-        DiskAccessData IPersistableModel<DiskAccessData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DiskAccessData>(data, options);
+        DiskAccessData IPersistableModel<DiskAccessData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DiskAccessData>(data, options, AzureResourceManagerComputeContext.Default);
 
         string IPersistableModel<DiskAccessData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DiskAccessData>)Data).GetFormatFromOptions(options);
     }

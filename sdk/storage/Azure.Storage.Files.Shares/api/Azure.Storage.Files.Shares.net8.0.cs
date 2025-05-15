@@ -1,5 +1,11 @@
 namespace Azure.Storage.Files.Shares
 {
+    public partial class AzureStorageFilesSharesContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureStorageFilesSharesContext() { }
+        public static Azure.Storage.Files.Shares.AzureStorageFilesSharesContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class ShareClient
     {
         protected ShareClient() { }

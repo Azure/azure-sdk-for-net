@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.IotOperations
 
         IotOperationsBrokerResource IOperationSource<IotOperationsBrokerResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<IotOperationsBrokerData>(response.Content);
+            var data = ModelReaderWriter.Read<IotOperationsBrokerData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerIotOperationsContext.Default);
             return new IotOperationsBrokerResource(_client, data);
         }
 
         async ValueTask<IotOperationsBrokerResource> IOperationSource<IotOperationsBrokerResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<IotOperationsBrokerData>(response.Content);
+            var data = ModelReaderWriter.Read<IotOperationsBrokerData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerIotOperationsContext.Default);
             return await Task.FromResult(new IotOperationsBrokerResource(_client, data)).ConfigureAwait(false);
         }
     }

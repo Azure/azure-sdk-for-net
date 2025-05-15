@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Network
 
         NetworkWatcherData IJsonModel<NetworkWatcherData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetworkWatcherData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<NetworkWatcherData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<NetworkWatcherData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<NetworkWatcherData>(Data, options, AzureResourceManagerNetworkContext.Default);
 
-        NetworkWatcherData IPersistableModel<NetworkWatcherData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetworkWatcherData>(data, options);
+        NetworkWatcherData IPersistableModel<NetworkWatcherData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetworkWatcherData>(data, options, AzureResourceManagerNetworkContext.Default);
 
         string IPersistableModel<NetworkWatcherData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetworkWatcherData>)Data).GetFormatFromOptions(options);
     }

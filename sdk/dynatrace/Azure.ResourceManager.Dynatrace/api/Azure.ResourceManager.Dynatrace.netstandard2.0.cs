@@ -1,5 +1,11 @@
 namespace Azure.ResourceManager.Dynatrace
 {
+    public partial class AzureResourceManagerDynatraceContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureResourceManagerDynatraceContext() { }
+        public static Azure.ResourceManager.Dynatrace.AzureResourceManagerDynatraceContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public static partial class DynatraceExtensions
     {
         public static Azure.Response<Azure.ResourceManager.Dynatrace.DynatraceMonitorResource> GetDynatraceMonitor(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string monitorName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }

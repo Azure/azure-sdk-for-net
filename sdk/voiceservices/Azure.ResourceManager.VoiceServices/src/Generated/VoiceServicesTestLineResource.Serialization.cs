@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.VoiceServices
 
         VoiceServicesTestLineData IJsonModel<VoiceServicesTestLineData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<VoiceServicesTestLineData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<VoiceServicesTestLineData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<VoiceServicesTestLineData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<VoiceServicesTestLineData>(Data, options, AzureResourceManagerVoiceServicesContext.Default);
 
-        VoiceServicesTestLineData IPersistableModel<VoiceServicesTestLineData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<VoiceServicesTestLineData>(data, options);
+        VoiceServicesTestLineData IPersistableModel<VoiceServicesTestLineData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<VoiceServicesTestLineData>(data, options, AzureResourceManagerVoiceServicesContext.Default);
 
         string IPersistableModel<VoiceServicesTestLineData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<VoiceServicesTestLineData>)Data).GetFormatFromOptions(options);
     }

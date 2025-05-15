@@ -16,7 +16,7 @@ namespace _Type._Array
 
         public ArrayClient(Uri endpoint, ArrayClientOptions options) => throw null;
 
-        public HttpPipeline Pipeline => throw null;
+        public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Int32Value GetInt32ValueClient() => throw null;
 

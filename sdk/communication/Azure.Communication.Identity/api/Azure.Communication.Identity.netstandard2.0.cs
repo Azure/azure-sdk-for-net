@@ -1,5 +1,11 @@
 namespace Azure.Communication.Identity
 {
+    public partial class AzureCommunicationIdentityContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureCommunicationIdentityContext() { }
+        public static Azure.Communication.Identity.AzureCommunicationIdentityContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class CommunicationIdentityClient
     {
         protected CommunicationIdentityClient() { }

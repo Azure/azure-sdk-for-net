@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.LargeInstance
 
         LargeStorageInstanceData IJsonModel<LargeStorageInstanceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<LargeStorageInstanceData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<LargeStorageInstanceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<LargeStorageInstanceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<LargeStorageInstanceData>(Data, options, AzureResourceManagerLargeInstanceContext.Default);
 
-        LargeStorageInstanceData IPersistableModel<LargeStorageInstanceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<LargeStorageInstanceData>(data, options);
+        LargeStorageInstanceData IPersistableModel<LargeStorageInstanceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<LargeStorageInstanceData>(data, options, AzureResourceManagerLargeInstanceContext.Default);
 
         string IPersistableModel<LargeStorageInstanceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<LargeStorageInstanceData>)Data).GetFormatFromOptions(options);
     }

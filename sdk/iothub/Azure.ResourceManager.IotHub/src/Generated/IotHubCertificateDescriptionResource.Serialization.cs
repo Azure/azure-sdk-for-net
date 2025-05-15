@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.IotHub
 
         IotHubCertificateDescriptionData IJsonModel<IotHubCertificateDescriptionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<IotHubCertificateDescriptionData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<IotHubCertificateDescriptionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<IotHubCertificateDescriptionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<IotHubCertificateDescriptionData>(Data, options, AzureResourceManagerIotHubContext.Default);
 
-        IotHubCertificateDescriptionData IPersistableModel<IotHubCertificateDescriptionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<IotHubCertificateDescriptionData>(data, options);
+        IotHubCertificateDescriptionData IPersistableModel<IotHubCertificateDescriptionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<IotHubCertificateDescriptionData>(data, options, AzureResourceManagerIotHubContext.Default);
 
         string IPersistableModel<IotHubCertificateDescriptionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<IotHubCertificateDescriptionData>)Data).GetFormatFromOptions(options);
     }

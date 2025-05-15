@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.AppService
 
         ContinuousWebJobData IJsonModel<ContinuousWebJobData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ContinuousWebJobData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ContinuousWebJobData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<ContinuousWebJobData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ContinuousWebJobData>(Data, options, AzureResourceManagerAppServiceContext.Default);
 
-        ContinuousWebJobData IPersistableModel<ContinuousWebJobData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ContinuousWebJobData>(data, options);
+        ContinuousWebJobData IPersistableModel<ContinuousWebJobData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ContinuousWebJobData>(data, options, AzureResourceManagerAppServiceContext.Default);
 
         string IPersistableModel<ContinuousWebJobData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ContinuousWebJobData>)Data).GetFormatFromOptions(options);
     }

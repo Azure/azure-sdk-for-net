@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.AppService
 
         RemotePrivateEndpointConnectionARMResourceData IJsonModel<RemotePrivateEndpointConnectionARMResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<RemotePrivateEndpointConnectionARMResourceData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<RemotePrivateEndpointConnectionARMResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<RemotePrivateEndpointConnectionARMResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<RemotePrivateEndpointConnectionARMResourceData>(Data, options, AzureResourceManagerAppServiceContext.Default);
 
-        RemotePrivateEndpointConnectionARMResourceData IPersistableModel<RemotePrivateEndpointConnectionARMResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<RemotePrivateEndpointConnectionARMResourceData>(data, options);
+        RemotePrivateEndpointConnectionARMResourceData IPersistableModel<RemotePrivateEndpointConnectionARMResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<RemotePrivateEndpointConnectionARMResourceData>(data, options, AzureResourceManagerAppServiceContext.Default);
 
         string IPersistableModel<RemotePrivateEndpointConnectionARMResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<RemotePrivateEndpointConnectionARMResourceData>)Data).GetFormatFromOptions(options);
     }

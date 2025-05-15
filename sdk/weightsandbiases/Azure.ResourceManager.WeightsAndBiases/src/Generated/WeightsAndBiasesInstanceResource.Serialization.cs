@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.WeightsAndBiases
 
         WeightsAndBiasesInstanceData IJsonModel<WeightsAndBiasesInstanceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<WeightsAndBiasesInstanceData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<WeightsAndBiasesInstanceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<WeightsAndBiasesInstanceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<WeightsAndBiasesInstanceData>(Data, options, AzureResourceManagerWeightsAndBiasesContext.Default);
 
-        WeightsAndBiasesInstanceData IPersistableModel<WeightsAndBiasesInstanceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<WeightsAndBiasesInstanceData>(data, options);
+        WeightsAndBiasesInstanceData IPersistableModel<WeightsAndBiasesInstanceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<WeightsAndBiasesInstanceData>(data, options, AzureResourceManagerWeightsAndBiasesContext.Default);
 
         string IPersistableModel<WeightsAndBiasesInstanceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<WeightsAndBiasesInstanceData>)Data).GetFormatFromOptions(options);
     }

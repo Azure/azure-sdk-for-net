@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Sql
 
         SqlPrivateLinkResourceData IJsonModel<SqlPrivateLinkResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SqlPrivateLinkResourceData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SqlPrivateLinkResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<SqlPrivateLinkResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SqlPrivateLinkResourceData>(Data, options, AzureResourceManagerSqlContext.Default);
 
-        SqlPrivateLinkResourceData IPersistableModel<SqlPrivateLinkResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SqlPrivateLinkResourceData>(data, options);
+        SqlPrivateLinkResourceData IPersistableModel<SqlPrivateLinkResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SqlPrivateLinkResourceData>(data, options, AzureResourceManagerSqlContext.Default);
 
         string IPersistableModel<SqlPrivateLinkResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SqlPrivateLinkResourceData>)Data).GetFormatFromOptions(options);
     }

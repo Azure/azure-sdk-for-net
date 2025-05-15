@@ -116,6 +116,12 @@ namespace Azure.ResourceManager.ServiceNetworking
         public virtual Azure.Response<Azure.ResourceManager.ServiceNetworking.AssociationResource> Update(Azure.ResourceManager.ServiceNetworking.Models.AssociationPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceNetworking.AssociationResource>> UpdateAsync(Azure.ResourceManager.ServiceNetworking.Models.AssociationPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
+    public partial class AzureResourceManagerServiceNetworkingContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureResourceManagerServiceNetworkingContext() { }
+        public static Azure.ResourceManager.ServiceNetworking.AzureResourceManagerServiceNetworkingContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     [System.ObsoleteAttribute("This class is now deprecated. Please use the new class `TrafficControllerFrontendCollection` moving forward.")]
     public partial class FrontendCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.ServiceNetworking.FrontendResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ServiceNetworking.FrontendResource>, System.Collections.IEnumerable

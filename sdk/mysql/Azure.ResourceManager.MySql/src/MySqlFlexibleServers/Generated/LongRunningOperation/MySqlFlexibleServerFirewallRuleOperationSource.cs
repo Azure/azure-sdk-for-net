@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
 
         MySqlFlexibleServerFirewallRuleResource IOperationSource<MySqlFlexibleServerFirewallRuleResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<MySqlFlexibleServerFirewallRuleData>(response.Content);
+            var data = ModelReaderWriter.Read<MySqlFlexibleServerFirewallRuleData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerMySqlContext.Default);
             return new MySqlFlexibleServerFirewallRuleResource(_client, data);
         }
 
         async ValueTask<MySqlFlexibleServerFirewallRuleResource> IOperationSource<MySqlFlexibleServerFirewallRuleResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<MySqlFlexibleServerFirewallRuleData>(response.Content);
+            var data = ModelReaderWriter.Read<MySqlFlexibleServerFirewallRuleData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerMySqlContext.Default);
             return await Task.FromResult(new MySqlFlexibleServerFirewallRuleResource(_client, data)).ConfigureAwait(false);
         }
     }

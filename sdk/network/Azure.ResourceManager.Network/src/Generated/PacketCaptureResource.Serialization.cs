@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Network
 
         PacketCaptureData IJsonModel<PacketCaptureData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PacketCaptureData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<PacketCaptureData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<PacketCaptureData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<PacketCaptureData>(Data, options, AzureResourceManagerNetworkContext.Default);
 
-        PacketCaptureData IPersistableModel<PacketCaptureData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PacketCaptureData>(data, options);
+        PacketCaptureData IPersistableModel<PacketCaptureData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PacketCaptureData>(data, options, AzureResourceManagerNetworkContext.Default);
 
         string IPersistableModel<PacketCaptureData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PacketCaptureData>)Data).GetFormatFromOptions(options);
     }

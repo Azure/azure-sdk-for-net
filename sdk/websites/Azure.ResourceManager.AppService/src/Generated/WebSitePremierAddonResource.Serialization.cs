@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.AppService
 
         PremierAddOnData IJsonModel<PremierAddOnData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PremierAddOnData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<PremierAddOnData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<PremierAddOnData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<PremierAddOnData>(Data, options, AzureResourceManagerAppServiceContext.Default);
 
-        PremierAddOnData IPersistableModel<PremierAddOnData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PremierAddOnData>(data, options);
+        PremierAddOnData IPersistableModel<PremierAddOnData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PremierAddOnData>(data, options, AzureResourceManagerAppServiceContext.Default);
 
         string IPersistableModel<PremierAddOnData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PremierAddOnData>)Data).GetFormatFromOptions(options);
     }

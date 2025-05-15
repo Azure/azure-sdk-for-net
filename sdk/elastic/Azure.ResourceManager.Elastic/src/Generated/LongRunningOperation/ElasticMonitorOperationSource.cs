@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Elastic
 
         ElasticMonitorResource IOperationSource<ElasticMonitorResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ElasticMonitorData>(response.Content);
+            var data = ModelReaderWriter.Read<ElasticMonitorData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerElasticContext.Default);
             return new ElasticMonitorResource(_client, data);
         }
 
         async ValueTask<ElasticMonitorResource> IOperationSource<ElasticMonitorResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ElasticMonitorData>(response.Content);
+            var data = ModelReaderWriter.Read<ElasticMonitorData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerElasticContext.Default);
             return await Task.FromResult(new ElasticMonitorResource(_client, data)).ConfigureAwait(false);
         }
     }

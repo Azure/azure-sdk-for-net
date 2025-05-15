@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Grafana
 
         GrafanaPrivateEndpointConnectionResource IOperationSource<GrafanaPrivateEndpointConnectionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<GrafanaPrivateEndpointConnectionData>(response.Content);
+            var data = ModelReaderWriter.Read<GrafanaPrivateEndpointConnectionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerGrafanaContext.Default);
             return new GrafanaPrivateEndpointConnectionResource(_client, data);
         }
 
         async ValueTask<GrafanaPrivateEndpointConnectionResource> IOperationSource<GrafanaPrivateEndpointConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<GrafanaPrivateEndpointConnectionData>(response.Content);
+            var data = ModelReaderWriter.Read<GrafanaPrivateEndpointConnectionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerGrafanaContext.Default);
             return await Task.FromResult(new GrafanaPrivateEndpointConnectionResource(_client, data)).ConfigureAwait(false);
         }
     }

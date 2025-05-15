@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Cdn
 
         ProfileData IJsonModel<ProfileData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ProfileData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ProfileData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<ProfileData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ProfileData>(Data, options, AzureResourceManagerCdnContext.Default);
 
-        ProfileData IPersistableModel<ProfileData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ProfileData>(data, options);
+        ProfileData IPersistableModel<ProfileData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ProfileData>(data, options, AzureResourceManagerCdnContext.Default);
 
         string IPersistableModel<ProfileData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ProfileData>)Data).GetFormatFromOptions(options);
     }

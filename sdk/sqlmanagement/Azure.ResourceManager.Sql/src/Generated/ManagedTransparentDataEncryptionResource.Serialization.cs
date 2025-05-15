@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Sql
 
         ManagedTransparentDataEncryptionData IJsonModel<ManagedTransparentDataEncryptionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ManagedTransparentDataEncryptionData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ManagedTransparentDataEncryptionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<ManagedTransparentDataEncryptionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ManagedTransparentDataEncryptionData>(Data, options, AzureResourceManagerSqlContext.Default);
 
-        ManagedTransparentDataEncryptionData IPersistableModel<ManagedTransparentDataEncryptionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ManagedTransparentDataEncryptionData>(data, options);
+        ManagedTransparentDataEncryptionData IPersistableModel<ManagedTransparentDataEncryptionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ManagedTransparentDataEncryptionData>(data, options, AzureResourceManagerSqlContext.Default);
 
         string IPersistableModel<ManagedTransparentDataEncryptionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ManagedTransparentDataEncryptionData>)Data).GetFormatFromOptions(options);
     }

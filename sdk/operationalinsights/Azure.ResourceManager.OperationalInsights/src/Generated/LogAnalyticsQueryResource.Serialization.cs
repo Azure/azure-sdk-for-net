@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.OperationalInsights
 
         LogAnalyticsQueryData IJsonModel<LogAnalyticsQueryData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<LogAnalyticsQueryData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<LogAnalyticsQueryData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<LogAnalyticsQueryData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<LogAnalyticsQueryData>(Data, options, AzureResourceManagerOperationalInsightsContext.Default);
 
-        LogAnalyticsQueryData IPersistableModel<LogAnalyticsQueryData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<LogAnalyticsQueryData>(data, options);
+        LogAnalyticsQueryData IPersistableModel<LogAnalyticsQueryData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<LogAnalyticsQueryData>(data, options, AzureResourceManagerOperationalInsightsContext.Default);
 
         string IPersistableModel<LogAnalyticsQueryData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<LogAnalyticsQueryData>)Data).GetFormatFromOptions(options);
     }

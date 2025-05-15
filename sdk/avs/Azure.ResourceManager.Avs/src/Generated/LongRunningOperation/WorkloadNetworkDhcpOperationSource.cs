@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Avs
 
         WorkloadNetworkDhcpResource IOperationSource<WorkloadNetworkDhcpResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<WorkloadNetworkDhcpData>(response.Content);
+            var data = ModelReaderWriter.Read<WorkloadNetworkDhcpData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerAvsContext.Default);
             return new WorkloadNetworkDhcpResource(_client, data);
         }
 
         async ValueTask<WorkloadNetworkDhcpResource> IOperationSource<WorkloadNetworkDhcpResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<WorkloadNetworkDhcpData>(response.Content);
+            var data = ModelReaderWriter.Read<WorkloadNetworkDhcpData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerAvsContext.Default);
             return await Task.FromResult(new WorkloadNetworkDhcpResource(_client, data)).ConfigureAwait(false);
         }
     }

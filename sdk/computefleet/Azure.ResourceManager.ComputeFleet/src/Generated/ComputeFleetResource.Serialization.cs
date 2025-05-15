@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.ComputeFleet
 
         ComputeFleetData IJsonModel<ComputeFleetData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ComputeFleetData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ComputeFleetData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<ComputeFleetData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ComputeFleetData>(Data, options, AzureResourceManagerComputeFleetContext.Default);
 
-        ComputeFleetData IPersistableModel<ComputeFleetData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ComputeFleetData>(data, options);
+        ComputeFleetData IPersistableModel<ComputeFleetData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ComputeFleetData>(data, options, AzureResourceManagerComputeFleetContext.Default);
 
         string IPersistableModel<ComputeFleetData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ComputeFleetData>)Data).GetFormatFromOptions(options);
     }

@@ -10,6 +10,12 @@
 
 ### Other Changes
 
+## 1.6.1 (2025-05-09)
+
+### Features Added
+
+- Added AOT annotations to support AOT compilation.
+
 ## 1.6.0 (2025-03-11)
 
 ### Features Added

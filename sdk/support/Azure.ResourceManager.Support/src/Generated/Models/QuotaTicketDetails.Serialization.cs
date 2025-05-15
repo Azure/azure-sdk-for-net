@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Support.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSupportContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(QuotaTicketDetails)} does not support writing '{options.Format}' format.");
             }

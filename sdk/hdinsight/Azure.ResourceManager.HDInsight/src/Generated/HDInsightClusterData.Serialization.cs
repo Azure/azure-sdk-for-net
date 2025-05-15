@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.HDInsight
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHDInsightContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(HDInsightClusterData)} does not support writing '{options.Format}' format.");
             }

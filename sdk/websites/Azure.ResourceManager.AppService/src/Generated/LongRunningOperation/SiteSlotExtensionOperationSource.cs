@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.AppService
 
         SiteSlotExtensionResource IOperationSource<SiteSlotExtensionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<MSDeployStatusData>(response.Content);
+            var data = ModelReaderWriter.Read<MSDeployStatusData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerAppServiceContext.Default);
             return new SiteSlotExtensionResource(_client, data);
         }
 
         async ValueTask<SiteSlotExtensionResource> IOperationSource<SiteSlotExtensionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<MSDeployStatusData>(response.Content);
+            var data = ModelReaderWriter.Read<MSDeployStatusData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerAppServiceContext.Default);
             return await Task.FromResult(new SiteSlotExtensionResource(_client, data)).ConfigureAwait(false);
         }
     }

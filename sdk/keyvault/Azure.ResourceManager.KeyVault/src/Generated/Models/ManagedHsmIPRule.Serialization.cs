@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerKeyVaultContext.Default);
                 case "bicep":
                     return SerializeBicep(options);
                 default:

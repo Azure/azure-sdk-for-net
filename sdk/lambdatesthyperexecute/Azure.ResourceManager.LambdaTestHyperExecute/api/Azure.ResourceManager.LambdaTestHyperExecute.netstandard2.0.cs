@@ -1,5 +1,11 @@
 namespace Azure.ResourceManager.LambdaTestHyperExecute
 {
+    public partial class AzureResourceManagerLambdaTestHyperExecuteContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureResourceManagerLambdaTestHyperExecuteContext() { }
+        public static Azure.ResourceManager.LambdaTestHyperExecute.AzureResourceManagerLambdaTestHyperExecuteContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public static partial class LambdaTestHyperExecuteExtensions
     {
         public static Azure.Response<Azure.ResourceManager.LambdaTestHyperExecute.LambdaTestHyperExecuteOrganizationResource> GetLambdaTestHyperExecuteOrganization(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string organizationname, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }

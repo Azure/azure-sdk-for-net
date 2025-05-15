@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.DurableTask
 
         DurableTaskSchedulerResource IOperationSource<DurableTaskSchedulerResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DurableTaskSchedulerData>(response.Content);
+            var data = ModelReaderWriter.Read<DurableTaskSchedulerData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDurableTaskContext.Default);
             return new DurableTaskSchedulerResource(_client, data);
         }
 
         async ValueTask<DurableTaskSchedulerResource> IOperationSource<DurableTaskSchedulerResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DurableTaskSchedulerData>(response.Content);
+            var data = ModelReaderWriter.Read<DurableTaskSchedulerData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDurableTaskContext.Default);
             return await Task.FromResult(new DurableTaskSchedulerResource(_client, data)).ConfigureAwait(false);
         }
     }

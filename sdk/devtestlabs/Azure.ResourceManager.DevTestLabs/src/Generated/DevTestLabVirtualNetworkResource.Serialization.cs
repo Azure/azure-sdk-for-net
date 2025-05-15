@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.DevTestLabs
 
         DevTestLabVirtualNetworkData IJsonModel<DevTestLabVirtualNetworkData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DevTestLabVirtualNetworkData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<DevTestLabVirtualNetworkData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<DevTestLabVirtualNetworkData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DevTestLabVirtualNetworkData>(Data, options, AzureResourceManagerDevTestLabsContext.Default);
 
-        DevTestLabVirtualNetworkData IPersistableModel<DevTestLabVirtualNetworkData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DevTestLabVirtualNetworkData>(data, options);
+        DevTestLabVirtualNetworkData IPersistableModel<DevTestLabVirtualNetworkData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DevTestLabVirtualNetworkData>(data, options, AzureResourceManagerDevTestLabsContext.Default);
 
         string IPersistableModel<DevTestLabVirtualNetworkData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DevTestLabVirtualNetworkData>)Data).GetFormatFromOptions(options);
     }

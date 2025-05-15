@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
 
         AdvancedThreatProtectionResource IOperationSource<AdvancedThreatProtectionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<AdvancedThreatProtectionData>(response.Content);
+            var data = ModelReaderWriter.Read<AdvancedThreatProtectionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerMySqlContext.Default);
             return new AdvancedThreatProtectionResource(_client, data);
         }
 
         async ValueTask<AdvancedThreatProtectionResource> IOperationSource<AdvancedThreatProtectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<AdvancedThreatProtectionData>(response.Content);
+            var data = ModelReaderWriter.Read<AdvancedThreatProtectionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerMySqlContext.Default);
             return await Task.FromResult(new AdvancedThreatProtectionResource(_client, data)).ConfigureAwait(false);
         }
     }

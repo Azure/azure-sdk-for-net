@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Support
 
         SupportAzureServiceData IJsonModel<SupportAzureServiceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SupportAzureServiceData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SupportAzureServiceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<SupportAzureServiceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SupportAzureServiceData>(Data, options, AzureResourceManagerSupportContext.Default);
 
-        SupportAzureServiceData IPersistableModel<SupportAzureServiceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SupportAzureServiceData>(data, options);
+        SupportAzureServiceData IPersistableModel<SupportAzureServiceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SupportAzureServiceData>(data, options, AzureResourceManagerSupportContext.Default);
 
         string IPersistableModel<SupportAzureServiceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SupportAzureServiceData>)Data).GetFormatFromOptions(options);
     }

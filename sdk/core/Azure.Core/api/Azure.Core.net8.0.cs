@@ -314,6 +314,12 @@ namespace Azure.Core
         public override bool Equals(object? obj) { throw null; }
         public override int GetHashCode() { throw null; }
     }
+    public partial class AzureCoreContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureCoreContext() { }
+        public static Azure.Core.AzureCoreContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct AzureLocation : System.IEquatable<Azure.Core.AzureLocation>
     {

@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.EventHubs
 
         EventHubsPrivateEndpointConnectionData IJsonModel<EventHubsPrivateEndpointConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<EventHubsPrivateEndpointConnectionData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<EventHubsPrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<EventHubsPrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<EventHubsPrivateEndpointConnectionData>(Data, options, AzureResourceManagerEventHubsContext.Default);
 
-        EventHubsPrivateEndpointConnectionData IPersistableModel<EventHubsPrivateEndpointConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<EventHubsPrivateEndpointConnectionData>(data, options);
+        EventHubsPrivateEndpointConnectionData IPersistableModel<EventHubsPrivateEndpointConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<EventHubsPrivateEndpointConnectionData>(data, options, AzureResourceManagerEventHubsContext.Default);
 
         string IPersistableModel<EventHubsPrivateEndpointConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<EventHubsPrivateEndpointConnectionData>)Data).GetFormatFromOptions(options);
     }

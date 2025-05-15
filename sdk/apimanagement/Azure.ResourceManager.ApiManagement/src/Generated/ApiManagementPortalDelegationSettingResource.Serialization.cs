@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.ApiManagement
 
         ApiManagementPortalDelegationSettingData IJsonModel<ApiManagementPortalDelegationSettingData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ApiManagementPortalDelegationSettingData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ApiManagementPortalDelegationSettingData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<ApiManagementPortalDelegationSettingData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ApiManagementPortalDelegationSettingData>(Data, options, AzureResourceManagerApiManagementContext.Default);
 
-        ApiManagementPortalDelegationSettingData IPersistableModel<ApiManagementPortalDelegationSettingData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ApiManagementPortalDelegationSettingData>(data, options);
+        ApiManagementPortalDelegationSettingData IPersistableModel<ApiManagementPortalDelegationSettingData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ApiManagementPortalDelegationSettingData>(data, options, AzureResourceManagerApiManagementContext.Default);
 
         string IPersistableModel<ApiManagementPortalDelegationSettingData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ApiManagementPortalDelegationSettingData>)Data).GetFormatFromOptions(options);
     }

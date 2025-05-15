@@ -1,5 +1,11 @@
 namespace Azure.ResourceManager.ChangeAnalysis
 {
+    public partial class AzureResourceManagerChangeAnalysisContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureResourceManagerChangeAnalysisContext() { }
+        public static Azure.ResourceManager.ChangeAnalysis.AzureResourceManagerChangeAnalysisContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public static partial class ChangeAnalysisExtensions
     {
         public static Azure.Pageable<Azure.ResourceManager.ChangeAnalysis.Models.DetectedChangeData> GetChangesByResourceGroup(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, System.DateTimeOffset startTime, System.DateTimeOffset endTime, string skipToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }

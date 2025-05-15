@@ -110,7 +110,7 @@ namespace Azure.AI.ContentSafety
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureAIContentSafetyContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(TextBlocklist)} does not support writing '{options.Format}' format.");
             }

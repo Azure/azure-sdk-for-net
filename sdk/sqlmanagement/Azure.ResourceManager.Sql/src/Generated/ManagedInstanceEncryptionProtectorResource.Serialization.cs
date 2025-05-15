@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Sql
 
         ManagedInstanceEncryptionProtectorData IJsonModel<ManagedInstanceEncryptionProtectorData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ManagedInstanceEncryptionProtectorData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ManagedInstanceEncryptionProtectorData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<ManagedInstanceEncryptionProtectorData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ManagedInstanceEncryptionProtectorData>(Data, options, AzureResourceManagerSqlContext.Default);
 
-        ManagedInstanceEncryptionProtectorData IPersistableModel<ManagedInstanceEncryptionProtectorData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ManagedInstanceEncryptionProtectorData>(data, options);
+        ManagedInstanceEncryptionProtectorData IPersistableModel<ManagedInstanceEncryptionProtectorData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ManagedInstanceEncryptionProtectorData>(data, options, AzureResourceManagerSqlContext.Default);
 
         string IPersistableModel<ManagedInstanceEncryptionProtectorData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ManagedInstanceEncryptionProtectorData>)Data).GetFormatFromOptions(options);
     }

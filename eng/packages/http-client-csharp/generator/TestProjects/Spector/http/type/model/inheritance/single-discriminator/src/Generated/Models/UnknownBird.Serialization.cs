@@ -13,6 +13,8 @@ namespace _Type.Model.Inheritance.SingleDiscriminator
 {
     internal partial class UnknownBird : IJsonModel<Bird>
     {
+        internal UnknownBird() => throw null;
+
         void IJsonModel<Bird>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;

@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Sql
 
         SqlDatabaseSecurityAlertPolicyData IJsonModel<SqlDatabaseSecurityAlertPolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SqlDatabaseSecurityAlertPolicyData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SqlDatabaseSecurityAlertPolicyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<SqlDatabaseSecurityAlertPolicyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SqlDatabaseSecurityAlertPolicyData>(Data, options, AzureResourceManagerSqlContext.Default);
 
-        SqlDatabaseSecurityAlertPolicyData IPersistableModel<SqlDatabaseSecurityAlertPolicyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SqlDatabaseSecurityAlertPolicyData>(data, options);
+        SqlDatabaseSecurityAlertPolicyData IPersistableModel<SqlDatabaseSecurityAlertPolicyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SqlDatabaseSecurityAlertPolicyData>(data, options, AzureResourceManagerSqlContext.Default);
 
         string IPersistableModel<SqlDatabaseSecurityAlertPolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SqlDatabaseSecurityAlertPolicyData>)Data).GetFormatFromOptions(options);
     }

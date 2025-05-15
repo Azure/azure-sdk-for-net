@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.OracleDatabase
 
         CloudVmClusterVirtualNetworkAddressData IJsonModel<CloudVmClusterVirtualNetworkAddressData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<CloudVmClusterVirtualNetworkAddressData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<CloudVmClusterVirtualNetworkAddressData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<CloudVmClusterVirtualNetworkAddressData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<CloudVmClusterVirtualNetworkAddressData>(Data, options, AzureResourceManagerOracleDatabaseContext.Default);
 
-        CloudVmClusterVirtualNetworkAddressData IPersistableModel<CloudVmClusterVirtualNetworkAddressData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CloudVmClusterVirtualNetworkAddressData>(data, options);
+        CloudVmClusterVirtualNetworkAddressData IPersistableModel<CloudVmClusterVirtualNetworkAddressData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CloudVmClusterVirtualNetworkAddressData>(data, options, AzureResourceManagerOracleDatabaseContext.Default);
 
         string IPersistableModel<CloudVmClusterVirtualNetworkAddressData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<CloudVmClusterVirtualNetworkAddressData>)Data).GetFormatFromOptions(options);
     }

@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
 
         NetworkFabricRoutePolicyResource IOperationSource<NetworkFabricRoutePolicyResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<NetworkFabricRoutePolicyData>(response.Content);
+            var data = ModelReaderWriter.Read<NetworkFabricRoutePolicyData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerManagedNetworkFabricContext.Default);
             return new NetworkFabricRoutePolicyResource(_client, data);
         }
 
         async ValueTask<NetworkFabricRoutePolicyResource> IOperationSource<NetworkFabricRoutePolicyResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<NetworkFabricRoutePolicyData>(response.Content);
+            var data = ModelReaderWriter.Read<NetworkFabricRoutePolicyData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerManagedNetworkFabricContext.Default);
             return await Task.FromResult(new NetworkFabricRoutePolicyResource(_client, data)).ConfigureAwait(false);
         }
     }

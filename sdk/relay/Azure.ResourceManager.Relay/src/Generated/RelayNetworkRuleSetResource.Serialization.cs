@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Relay
 
         RelayNetworkRuleSetData IJsonModel<RelayNetworkRuleSetData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<RelayNetworkRuleSetData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<RelayNetworkRuleSetData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<RelayNetworkRuleSetData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<RelayNetworkRuleSetData>(Data, options, AzureResourceManagerRelayContext.Default);
 
-        RelayNetworkRuleSetData IPersistableModel<RelayNetworkRuleSetData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<RelayNetworkRuleSetData>(data, options);
+        RelayNetworkRuleSetData IPersistableModel<RelayNetworkRuleSetData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<RelayNetworkRuleSetData>(data, options, AzureResourceManagerRelayContext.Default);
 
         string IPersistableModel<RelayNetworkRuleSetData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<RelayNetworkRuleSetData>)Data).GetFormatFromOptions(options);
     }

@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.AI.OpenAI.Assistants
 {
-    /// <summary> The ThreadDeletionStatus_object. </summary>
+    /// <summary> The ThreadDeletionStatusObject. </summary>
     internal readonly partial struct ThreadDeletionStatusObject : IEquatable<ThreadDeletionStatusObject>
     {
         private readonly string _value;

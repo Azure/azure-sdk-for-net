@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.OracleDatabase
 
         AutonomousDatabaseBackupResource IOperationSource<AutonomousDatabaseBackupResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<AutonomousDatabaseBackupData>(response.Content);
+            var data = ModelReaderWriter.Read<AutonomousDatabaseBackupData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerOracleDatabaseContext.Default);
             return new AutonomousDatabaseBackupResource(_client, data);
         }
 
         async ValueTask<AutonomousDatabaseBackupResource> IOperationSource<AutonomousDatabaseBackupResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<AutonomousDatabaseBackupData>(response.Content);
+            var data = ModelReaderWriter.Read<AutonomousDatabaseBackupData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerOracleDatabaseContext.Default);
             return await Task.FromResult(new AutonomousDatabaseBackupResource(_client, data)).ConfigureAwait(false);
         }
     }

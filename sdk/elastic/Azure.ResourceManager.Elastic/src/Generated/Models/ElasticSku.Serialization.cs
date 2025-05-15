@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Elastic.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerElasticContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ElasticSku)} does not support writing '{options.Format}' format.");
             }

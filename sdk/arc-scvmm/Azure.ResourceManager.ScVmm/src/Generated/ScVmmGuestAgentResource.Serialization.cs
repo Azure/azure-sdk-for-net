@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.ScVmm
 
         ScVmmGuestAgentData IJsonModel<ScVmmGuestAgentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ScVmmGuestAgentData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ScVmmGuestAgentData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<ScVmmGuestAgentData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ScVmmGuestAgentData>(Data, options, AzureResourceManagerScVmmContext.Default);
 
-        ScVmmGuestAgentData IPersistableModel<ScVmmGuestAgentData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ScVmmGuestAgentData>(data, options);
+        ScVmmGuestAgentData IPersistableModel<ScVmmGuestAgentData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ScVmmGuestAgentData>(data, options, AzureResourceManagerScVmmContext.Default);
 
         string IPersistableModel<ScVmmGuestAgentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ScVmmGuestAgentData>)Data).GetFormatFromOptions(options);
     }

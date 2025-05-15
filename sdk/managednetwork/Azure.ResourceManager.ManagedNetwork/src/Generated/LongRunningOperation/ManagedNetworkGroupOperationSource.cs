@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.ManagedNetwork
 
         ManagedNetworkGroupResource IOperationSource<ManagedNetworkGroupResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ManagedNetworkGroupData>(response.Content);
+            var data = ModelReaderWriter.Read<ManagedNetworkGroupData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerManagedNetworkContext.Default);
             return new ManagedNetworkGroupResource(_client, data);
         }
 
         async ValueTask<ManagedNetworkGroupResource> IOperationSource<ManagedNetworkGroupResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ManagedNetworkGroupData>(response.Content);
+            var data = ModelReaderWriter.Read<ManagedNetworkGroupData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerManagedNetworkContext.Default);
             return await Task.FromResult(new ManagedNetworkGroupResource(_client, data)).ConfigureAwait(false);
         }
     }

@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Network
 
         OutboundRuleData IJsonModel<OutboundRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<OutboundRuleData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<OutboundRuleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<OutboundRuleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<OutboundRuleData>(Data, options, AzureResourceManagerNetworkContext.Default);
 
-        OutboundRuleData IPersistableModel<OutboundRuleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<OutboundRuleData>(data, options);
+        OutboundRuleData IPersistableModel<OutboundRuleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<OutboundRuleData>(data, options, AzureResourceManagerNetworkContext.Default);
 
         string IPersistableModel<OutboundRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<OutboundRuleData>)Data).GetFormatFromOptions(options);
     }

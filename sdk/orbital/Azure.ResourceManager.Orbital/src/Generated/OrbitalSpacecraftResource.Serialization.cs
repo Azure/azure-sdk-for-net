@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Orbital
 
         OrbitalSpacecraftData IJsonModel<OrbitalSpacecraftData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<OrbitalSpacecraftData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<OrbitalSpacecraftData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<OrbitalSpacecraftData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<OrbitalSpacecraftData>(Data, options, AzureResourceManagerOrbitalContext.Default);
 
-        OrbitalSpacecraftData IPersistableModel<OrbitalSpacecraftData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<OrbitalSpacecraftData>(data, options);
+        OrbitalSpacecraftData IPersistableModel<OrbitalSpacecraftData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<OrbitalSpacecraftData>(data, options, AzureResourceManagerOrbitalContext.Default);
 
         string IPersistableModel<OrbitalSpacecraftData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<OrbitalSpacecraftData>)Data).GetFormatFromOptions(options);
     }

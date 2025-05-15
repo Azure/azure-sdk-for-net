@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.DataBox
 
         DataBoxJobData IJsonModel<DataBoxJobData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DataBoxJobData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<DataBoxJobData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<DataBoxJobData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DataBoxJobData>(Data, options, AzureResourceManagerDataBoxContext.Default);
 
-        DataBoxJobData IPersistableModel<DataBoxJobData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DataBoxJobData>(data, options);
+        DataBoxJobData IPersistableModel<DataBoxJobData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DataBoxJobData>(data, options, AzureResourceManagerDataBoxContext.Default);
 
         string IPersistableModel<DataBoxJobData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DataBoxJobData>)Data).GetFormatFromOptions(options);
     }

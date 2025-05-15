@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Compute
 
         DiskRestorePointData IJsonModel<DiskRestorePointData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DiskRestorePointData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<DiskRestorePointData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<DiskRestorePointData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DiskRestorePointData>(Data, options, AzureResourceManagerComputeContext.Default);
 
-        DiskRestorePointData IPersistableModel<DiskRestorePointData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DiskRestorePointData>(data, options);
+        DiskRestorePointData IPersistableModel<DiskRestorePointData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DiskRestorePointData>(data, options, AzureResourceManagerComputeContext.Default);
 
         string IPersistableModel<DiskRestorePointData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DiskRestorePointData>)Data).GetFormatFromOptions(options);
     }

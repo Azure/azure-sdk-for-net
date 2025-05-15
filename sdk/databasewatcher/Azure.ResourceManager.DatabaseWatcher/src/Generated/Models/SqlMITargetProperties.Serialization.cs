@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.DatabaseWatcher.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDatabaseWatcherContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(SqlMITargetProperties)} does not support writing '{options.Format}' format.");
             }

@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.DataShare
 
         ProviderShareSubscriptionData IJsonModel<ProviderShareSubscriptionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ProviderShareSubscriptionData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ProviderShareSubscriptionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<ProviderShareSubscriptionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ProviderShareSubscriptionData>(Data, options, AzureResourceManagerDataShareContext.Default);
 
-        ProviderShareSubscriptionData IPersistableModel<ProviderShareSubscriptionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ProviderShareSubscriptionData>(data, options);
+        ProviderShareSubscriptionData IPersistableModel<ProviderShareSubscriptionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ProviderShareSubscriptionData>(data, options, AzureResourceManagerDataShareContext.Default);
 
         string IPersistableModel<ProviderShareSubscriptionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ProviderShareSubscriptionData>)Data).GetFormatFromOptions(options);
     }

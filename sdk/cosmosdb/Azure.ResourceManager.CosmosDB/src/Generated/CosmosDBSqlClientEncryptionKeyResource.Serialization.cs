@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.CosmosDB
 
         CosmosDBSqlClientEncryptionKeyData IJsonModel<CosmosDBSqlClientEncryptionKeyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<CosmosDBSqlClientEncryptionKeyData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<CosmosDBSqlClientEncryptionKeyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<CosmosDBSqlClientEncryptionKeyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<CosmosDBSqlClientEncryptionKeyData>(Data, options, AzureResourceManagerCosmosDBContext.Default);
 
-        CosmosDBSqlClientEncryptionKeyData IPersistableModel<CosmosDBSqlClientEncryptionKeyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CosmosDBSqlClientEncryptionKeyData>(data, options);
+        CosmosDBSqlClientEncryptionKeyData IPersistableModel<CosmosDBSqlClientEncryptionKeyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CosmosDBSqlClientEncryptionKeyData>(data, options, AzureResourceManagerCosmosDBContext.Default);
 
         string IPersistableModel<CosmosDBSqlClientEncryptionKeyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<CosmosDBSqlClientEncryptionKeyData>)Data).GetFormatFromOptions(options);
     }

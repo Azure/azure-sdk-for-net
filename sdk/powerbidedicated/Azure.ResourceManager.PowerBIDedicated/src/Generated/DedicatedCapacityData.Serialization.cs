@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerPowerBIDedicatedContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(DedicatedCapacityData)} does not support writing '{options.Format}' format.");
             }

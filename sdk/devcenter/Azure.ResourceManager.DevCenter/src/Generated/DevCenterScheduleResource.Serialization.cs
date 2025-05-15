@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.DevCenter
 
         DevCenterScheduleData IJsonModel<DevCenterScheduleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DevCenterScheduleData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<DevCenterScheduleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<DevCenterScheduleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DevCenterScheduleData>(Data, options, AzureResourceManagerDevCenterContext.Default);
 
-        DevCenterScheduleData IPersistableModel<DevCenterScheduleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DevCenterScheduleData>(data, options);
+        DevCenterScheduleData IPersistableModel<DevCenterScheduleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DevCenterScheduleData>(data, options, AzureResourceManagerDevCenterContext.Default);
 
         string IPersistableModel<DevCenterScheduleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DevCenterScheduleData>)Data).GetFormatFromOptions(options);
     }

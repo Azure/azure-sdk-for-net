@@ -1,5 +1,11 @@
 namespace Azure.ResourceManager.ServiceBus
 {
+    public partial class AzureResourceManagerServiceBusContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureResourceManagerServiceBusContext() { }
+        public static Azure.ResourceManager.ServiceBus.AzureResourceManagerServiceBusContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class MigrationConfigurationCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.ServiceBus.MigrationConfigurationResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ServiceBus.MigrationConfigurationResource>, System.Collections.IEnumerable
     {
         protected MigrationConfigurationCollection() { }

@@ -11,3 +11,4 @@ using Azure.Core;
 [assembly: CodeGenSuppressType("Azure.ResourceManager.PostgreSql.ChangeTrackingDictionary")]
 [assembly: CodeGenSuppressType("Azure.ResourceManager.PostgreSql.ModelSerializationExtensions")]
 [assembly: CodeGenSuppressType("Azure.ResourceManager.PostgreSql.BicepSerializationHelpers")]
+[assembly: CodeGenSuppressType("Azure.ResourceManager.PostgreSql.FlexibleServers.AzureResourceManagerPostgreSqlFlexibleServersContext")]

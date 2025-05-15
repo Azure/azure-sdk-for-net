@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.HealthcareApis
 
         FhirServiceResource IOperationSource<FhirServiceResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<FhirServiceData>(response.Content);
+            var data = ModelReaderWriter.Read<FhirServiceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerHealthcareApisContext.Default);
             return new FhirServiceResource(_client, data);
         }
 
         async ValueTask<FhirServiceResource> IOperationSource<FhirServiceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<FhirServiceData>(response.Content);
+            var data = ModelReaderWriter.Read<FhirServiceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerHealthcareApisContext.Default);
             return await Task.FromResult(new FhirServiceResource(_client, data)).ConfigureAwait(false);
         }
     }

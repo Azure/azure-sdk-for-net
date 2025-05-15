@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Quantum
 
         QuantumWorkspaceData IJsonModel<QuantumWorkspaceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<QuantumWorkspaceData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<QuantumWorkspaceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<QuantumWorkspaceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<QuantumWorkspaceData>(Data, options, AzureResourceManagerQuantumContext.Default);
 
-        QuantumWorkspaceData IPersistableModel<QuantumWorkspaceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<QuantumWorkspaceData>(data, options);
+        QuantumWorkspaceData IPersistableModel<QuantumWorkspaceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<QuantumWorkspaceData>(data, options, AzureResourceManagerQuantumContext.Default);
 
         string IPersistableModel<QuantumWorkspaceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<QuantumWorkspaceData>)Data).GetFormatFromOptions(options);
     }

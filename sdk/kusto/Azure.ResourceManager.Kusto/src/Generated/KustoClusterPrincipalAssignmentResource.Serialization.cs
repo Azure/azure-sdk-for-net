@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Kusto
 
         KustoClusterPrincipalAssignmentData IJsonModel<KustoClusterPrincipalAssignmentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<KustoClusterPrincipalAssignmentData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<KustoClusterPrincipalAssignmentData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<KustoClusterPrincipalAssignmentData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<KustoClusterPrincipalAssignmentData>(Data, options, AzureResourceManagerKustoContext.Default);
 
-        KustoClusterPrincipalAssignmentData IPersistableModel<KustoClusterPrincipalAssignmentData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<KustoClusterPrincipalAssignmentData>(data, options);
+        KustoClusterPrincipalAssignmentData IPersistableModel<KustoClusterPrincipalAssignmentData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<KustoClusterPrincipalAssignmentData>(data, options, AzureResourceManagerKustoContext.Default);
 
         string IPersistableModel<KustoClusterPrincipalAssignmentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<KustoClusterPrincipalAssignmentData>)Data).GetFormatFromOptions(options);
     }

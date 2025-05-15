@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
 
         VmInstanceHybridIdentityMetadataData IJsonModel<VmInstanceHybridIdentityMetadataData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<VmInstanceHybridIdentityMetadataData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<VmInstanceHybridIdentityMetadataData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<VmInstanceHybridIdentityMetadataData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<VmInstanceHybridIdentityMetadataData>(Data, options, AzureResourceManagerConnectedVMwarevSphereContext.Default);
 
-        VmInstanceHybridIdentityMetadataData IPersistableModel<VmInstanceHybridIdentityMetadataData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<VmInstanceHybridIdentityMetadataData>(data, options);
+        VmInstanceHybridIdentityMetadataData IPersistableModel<VmInstanceHybridIdentityMetadataData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<VmInstanceHybridIdentityMetadataData>(data, options, AzureResourceManagerConnectedVMwarevSphereContext.Default);
 
         string IPersistableModel<VmInstanceHybridIdentityMetadataData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<VmInstanceHybridIdentityMetadataData>)Data).GetFormatFromOptions(options);
     }

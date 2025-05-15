@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
 
         VCenterInventoryItemData IJsonModel<VCenterInventoryItemData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<VCenterInventoryItemData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<VCenterInventoryItemData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<VCenterInventoryItemData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<VCenterInventoryItemData>(Data, options, AzureResourceManagerConnectedVMwarevSphereContext.Default);
 
-        VCenterInventoryItemData IPersistableModel<VCenterInventoryItemData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<VCenterInventoryItemData>(data, options);
+        VCenterInventoryItemData IPersistableModel<VCenterInventoryItemData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<VCenterInventoryItemData>(data, options, AzureResourceManagerConnectedVMwarevSphereContext.Default);
 
         string IPersistableModel<VCenterInventoryItemData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<VCenterInventoryItemData>)Data).GetFormatFromOptions(options);
     }

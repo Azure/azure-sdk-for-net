@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.DnsResolver
 
         DnsResolverPolicyResource IOperationSource<DnsResolverPolicyResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DnsResolverPolicyData>(response.Content);
+            var data = ModelReaderWriter.Read<DnsResolverPolicyData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDnsResolverContext.Default);
             return new DnsResolverPolicyResource(_client, data);
         }
 
         async ValueTask<DnsResolverPolicyResource> IOperationSource<DnsResolverPolicyResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DnsResolverPolicyData>(response.Content);
+            var data = ModelReaderWriter.Read<DnsResolverPolicyData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDnsResolverContext.Default);
             return await Task.FromResult(new DnsResolverPolicyResource(_client, data)).ConfigureAwait(false);
         }
     }

@@ -1,5 +1,11 @@
 namespace Azure.ResourceManager.Quota
 {
+    public partial class AzureResourceManagerQuotaContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureResourceManagerQuotaContext() { }
+        public static Azure.ResourceManager.Quota.AzureResourceManagerQuotaContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class CurrentQuotaLimitBaseCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Quota.CurrentQuotaLimitBaseResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Quota.CurrentQuotaLimitBaseResource>, System.Collections.IEnumerable
     {
         protected CurrentQuotaLimitBaseCollection() { }

@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.SecurityCenter
 
         IotSecuritySolutionAnalyticsModelData IJsonModel<IotSecuritySolutionAnalyticsModelData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<IotSecuritySolutionAnalyticsModelData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<IotSecuritySolutionAnalyticsModelData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<IotSecuritySolutionAnalyticsModelData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<IotSecuritySolutionAnalyticsModelData>(Data, options, AzureResourceManagerSecurityCenterContext.Default);
 
-        IotSecuritySolutionAnalyticsModelData IPersistableModel<IotSecuritySolutionAnalyticsModelData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<IotSecuritySolutionAnalyticsModelData>(data, options);
+        IotSecuritySolutionAnalyticsModelData IPersistableModel<IotSecuritySolutionAnalyticsModelData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<IotSecuritySolutionAnalyticsModelData>(data, options, AzureResourceManagerSecurityCenterContext.Default);
 
         string IPersistableModel<IotSecuritySolutionAnalyticsModelData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<IotSecuritySolutionAnalyticsModelData>)Data).GetFormatFromOptions(options);
     }

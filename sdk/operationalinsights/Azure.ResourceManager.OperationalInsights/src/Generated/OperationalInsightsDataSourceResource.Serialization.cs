@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.OperationalInsights
 
         OperationalInsightsDataSourceData IJsonModel<OperationalInsightsDataSourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<OperationalInsightsDataSourceData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<OperationalInsightsDataSourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<OperationalInsightsDataSourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<OperationalInsightsDataSourceData>(Data, options, AzureResourceManagerOperationalInsightsContext.Default);
 
-        OperationalInsightsDataSourceData IPersistableModel<OperationalInsightsDataSourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<OperationalInsightsDataSourceData>(data, options);
+        OperationalInsightsDataSourceData IPersistableModel<OperationalInsightsDataSourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<OperationalInsightsDataSourceData>(data, options, AzureResourceManagerOperationalInsightsContext.Default);
 
         string IPersistableModel<OperationalInsightsDataSourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<OperationalInsightsDataSourceData>)Data).GetFormatFromOptions(options);
     }

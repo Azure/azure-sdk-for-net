@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Network
 
         VirtualNetworkGatewayConnectionData IJsonModel<VirtualNetworkGatewayConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<VirtualNetworkGatewayConnectionData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<VirtualNetworkGatewayConnectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<VirtualNetworkGatewayConnectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<VirtualNetworkGatewayConnectionData>(Data, options, AzureResourceManagerNetworkContext.Default);
 
-        VirtualNetworkGatewayConnectionData IPersistableModel<VirtualNetworkGatewayConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<VirtualNetworkGatewayConnectionData>(data, options);
+        VirtualNetworkGatewayConnectionData IPersistableModel<VirtualNetworkGatewayConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<VirtualNetworkGatewayConnectionData>(data, options, AzureResourceManagerNetworkContext.Default);
 
         string IPersistableModel<VirtualNetworkGatewayConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<VirtualNetworkGatewayConnectionData>)Data).GetFormatFromOptions(options);
     }

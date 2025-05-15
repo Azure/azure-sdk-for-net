@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Avs.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAvsContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(DiskPoolVolume)} does not support writing '{options.Format}' format.");
             }

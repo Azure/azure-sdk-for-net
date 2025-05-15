@@ -5,6 +5,12 @@ namespace Azure.Communication.Chat
         internal AddChatParticipantsResult() { }
         public System.Collections.Generic.IReadOnlyList<Azure.Communication.Chat.ChatError> InvalidParticipants { get { throw null; } }
     }
+    public partial class AzureCommunicationChatContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureCommunicationChatContext() { }
+        public static Azure.Communication.Chat.AzureCommunicationChatContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class ChatAttachment
     {
         internal ChatAttachment() { }

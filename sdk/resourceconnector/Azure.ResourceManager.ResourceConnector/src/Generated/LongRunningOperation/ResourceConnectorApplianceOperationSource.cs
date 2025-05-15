@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.ResourceConnector
 
         ResourceConnectorApplianceResource IOperationSource<ResourceConnectorApplianceResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ResourceConnectorApplianceData>(response.Content);
+            var data = ModelReaderWriter.Read<ResourceConnectorApplianceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerResourceConnectorContext.Default);
             return new ResourceConnectorApplianceResource(_client, data);
         }
 
         async ValueTask<ResourceConnectorApplianceResource> IOperationSource<ResourceConnectorApplianceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ResourceConnectorApplianceData>(response.Content);
+            var data = ModelReaderWriter.Read<ResourceConnectorApplianceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerResourceConnectorContext.Default);
             return await Task.FromResult(new ResourceConnectorApplianceResource(_client, data)).ConfigureAwait(false);
         }
     }

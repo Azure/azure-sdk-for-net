@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
 
         BackupProtectionPolicyData IJsonModel<BackupProtectionPolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<BackupProtectionPolicyData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<BackupProtectionPolicyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<BackupProtectionPolicyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<BackupProtectionPolicyData>(Data, options, AzureResourceManagerRecoveryServicesBackupContext.Default);
 
-        BackupProtectionPolicyData IPersistableModel<BackupProtectionPolicyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<BackupProtectionPolicyData>(data, options);
+        BackupProtectionPolicyData IPersistableModel<BackupProtectionPolicyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<BackupProtectionPolicyData>(data, options, AzureResourceManagerRecoveryServicesBackupContext.Default);
 
         string IPersistableModel<BackupProtectionPolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<BackupProtectionPolicyData>)Data).GetFormatFromOptions(options);
     }

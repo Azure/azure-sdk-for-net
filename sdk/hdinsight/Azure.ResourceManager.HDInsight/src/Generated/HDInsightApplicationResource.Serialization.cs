@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.HDInsight
 
         HDInsightApplicationData IJsonModel<HDInsightApplicationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<HDInsightApplicationData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<HDInsightApplicationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<HDInsightApplicationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<HDInsightApplicationData>(Data, options, AzureResourceManagerHDInsightContext.Default);
 
-        HDInsightApplicationData IPersistableModel<HDInsightApplicationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<HDInsightApplicationData>(data, options);
+        HDInsightApplicationData IPersistableModel<HDInsightApplicationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<HDInsightApplicationData>(data, options, AzureResourceManagerHDInsightContext.Default);
 
         string IPersistableModel<HDInsightApplicationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<HDInsightApplicationData>)Data).GetFormatFromOptions(options);
     }

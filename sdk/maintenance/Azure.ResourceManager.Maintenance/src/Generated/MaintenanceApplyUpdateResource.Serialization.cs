@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Maintenance
 
         MaintenanceApplyUpdateData IJsonModel<MaintenanceApplyUpdateData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MaintenanceApplyUpdateData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<MaintenanceApplyUpdateData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<MaintenanceApplyUpdateData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<MaintenanceApplyUpdateData>(Data, options, AzureResourceManagerMaintenanceContext.Default);
 
-        MaintenanceApplyUpdateData IPersistableModel<MaintenanceApplyUpdateData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MaintenanceApplyUpdateData>(data, options);
+        MaintenanceApplyUpdateData IPersistableModel<MaintenanceApplyUpdateData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MaintenanceApplyUpdateData>(data, options, AzureResourceManagerMaintenanceContext.Default);
 
         string IPersistableModel<MaintenanceApplyUpdateData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MaintenanceApplyUpdateData>)Data).GetFormatFromOptions(options);
     }

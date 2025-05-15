@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.DataBoxEdge
 
         DataBoxEdgeTriggerResource IOperationSource<DataBoxEdgeTriggerResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DataBoxEdgeTriggerData>(response.Content);
+            var data = ModelReaderWriter.Read<DataBoxEdgeTriggerData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDataBoxEdgeContext.Default);
             return new DataBoxEdgeTriggerResource(_client, data);
         }
 
         async ValueTask<DataBoxEdgeTriggerResource> IOperationSource<DataBoxEdgeTriggerResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DataBoxEdgeTriggerData>(response.Content);
+            var data = ModelReaderWriter.Read<DataBoxEdgeTriggerData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDataBoxEdgeContext.Default);
             return await Task.FromResult(new DataBoxEdgeTriggerResource(_client, data)).ConfigureAwait(false);
         }
     }

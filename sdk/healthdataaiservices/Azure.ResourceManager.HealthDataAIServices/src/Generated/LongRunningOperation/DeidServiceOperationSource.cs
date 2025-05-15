@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.HealthDataAIServices
 
         DeidServiceResource IOperationSource<DeidServiceResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DeidServiceData>(response.Content);
+            var data = ModelReaderWriter.Read<DeidServiceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerHealthDataAIServicesContext.Default);
             return new DeidServiceResource(_client, data);
         }
 
         async ValueTask<DeidServiceResource> IOperationSource<DeidServiceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DeidServiceData>(response.Content);
+            var data = ModelReaderWriter.Read<DeidServiceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerHealthDataAIServicesContext.Default);
             return await Task.FromResult(new DeidServiceResource(_client, data)).ConfigureAwait(false);
         }
     }

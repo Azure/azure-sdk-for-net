@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.ManagedNetwork
 
         ManagedNetworkPeeringPolicyResource IOperationSource<ManagedNetworkPeeringPolicyResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ManagedNetworkPeeringPolicyData>(response.Content);
+            var data = ModelReaderWriter.Read<ManagedNetworkPeeringPolicyData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerManagedNetworkContext.Default);
             return new ManagedNetworkPeeringPolicyResource(_client, data);
         }
 
         async ValueTask<ManagedNetworkPeeringPolicyResource> IOperationSource<ManagedNetworkPeeringPolicyResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ManagedNetworkPeeringPolicyData>(response.Content);
+            var data = ModelReaderWriter.Read<ManagedNetworkPeeringPolicyData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerManagedNetworkContext.Default);
             return await Task.FromResult(new ManagedNetworkPeeringPolicyResource(_client, data)).ConfigureAwait(false);
         }
     }

@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.HealthcareApis
 
         HealthcareApisPrivateLinkResourceData IJsonModel<HealthcareApisPrivateLinkResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<HealthcareApisPrivateLinkResourceData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<HealthcareApisPrivateLinkResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<HealthcareApisPrivateLinkResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<HealthcareApisPrivateLinkResourceData>(Data, options, AzureResourceManagerHealthcareApisContext.Default);
 
-        HealthcareApisPrivateLinkResourceData IPersistableModel<HealthcareApisPrivateLinkResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<HealthcareApisPrivateLinkResourceData>(data, options);
+        HealthcareApisPrivateLinkResourceData IPersistableModel<HealthcareApisPrivateLinkResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<HealthcareApisPrivateLinkResourceData>(data, options, AzureResourceManagerHealthcareApisContext.Default);
 
         string IPersistableModel<HealthcareApisPrivateLinkResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<HealthcareApisPrivateLinkResourceData>)Data).GetFormatFromOptions(options);
     }

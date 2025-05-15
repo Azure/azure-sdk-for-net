@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.AppContainers
 
         ContainerAppJobData IJsonModel<ContainerAppJobData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ContainerAppJobData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ContainerAppJobData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<ContainerAppJobData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ContainerAppJobData>(Data, options, AzureResourceManagerAppContainersContext.Default);
 
-        ContainerAppJobData IPersistableModel<ContainerAppJobData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ContainerAppJobData>(data, options);
+        ContainerAppJobData IPersistableModel<ContainerAppJobData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ContainerAppJobData>(data, options, AzureResourceManagerAppContainersContext.Default);
 
         string IPersistableModel<ContainerAppJobData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ContainerAppJobData>)Data).GetFormatFromOptions(options);
     }

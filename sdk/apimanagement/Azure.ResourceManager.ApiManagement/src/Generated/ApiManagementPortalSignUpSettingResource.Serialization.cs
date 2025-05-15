@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.ApiManagement
 
         ApiManagementPortalSignUpSettingData IJsonModel<ApiManagementPortalSignUpSettingData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ApiManagementPortalSignUpSettingData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ApiManagementPortalSignUpSettingData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<ApiManagementPortalSignUpSettingData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ApiManagementPortalSignUpSettingData>(Data, options, AzureResourceManagerApiManagementContext.Default);
 
-        ApiManagementPortalSignUpSettingData IPersistableModel<ApiManagementPortalSignUpSettingData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ApiManagementPortalSignUpSettingData>(data, options);
+        ApiManagementPortalSignUpSettingData IPersistableModel<ApiManagementPortalSignUpSettingData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ApiManagementPortalSignUpSettingData>(data, options, AzureResourceManagerApiManagementContext.Default);
 
         string IPersistableModel<ApiManagementPortalSignUpSettingData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ApiManagementPortalSignUpSettingData>)Data).GetFormatFromOptions(options);
     }

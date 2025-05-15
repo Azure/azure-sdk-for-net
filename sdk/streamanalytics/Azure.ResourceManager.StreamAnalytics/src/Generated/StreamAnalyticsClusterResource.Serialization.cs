@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.StreamAnalytics
 
         StreamAnalyticsClusterData IJsonModel<StreamAnalyticsClusterData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<StreamAnalyticsClusterData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<StreamAnalyticsClusterData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<StreamAnalyticsClusterData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<StreamAnalyticsClusterData>(Data, options, AzureResourceManagerStreamAnalyticsContext.Default);
 
-        StreamAnalyticsClusterData IPersistableModel<StreamAnalyticsClusterData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<StreamAnalyticsClusterData>(data, options);
+        StreamAnalyticsClusterData IPersistableModel<StreamAnalyticsClusterData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<StreamAnalyticsClusterData>(data, options, AzureResourceManagerStreamAnalyticsContext.Default);
 
         string IPersistableModel<StreamAnalyticsClusterData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<StreamAnalyticsClusterData>)Data).GetFormatFromOptions(options);
     }

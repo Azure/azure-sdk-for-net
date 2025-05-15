@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Sql
 
         SyncMemberData IJsonModel<SyncMemberData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SyncMemberData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SyncMemberData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<SyncMemberData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SyncMemberData>(Data, options, AzureResourceManagerSqlContext.Default);
 
-        SyncMemberData IPersistableModel<SyncMemberData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SyncMemberData>(data, options);
+        SyncMemberData IPersistableModel<SyncMemberData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SyncMemberData>(data, options, AzureResourceManagerSqlContext.Default);
 
         string IPersistableModel<SyncMemberData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SyncMemberData>)Data).GetFormatFromOptions(options);
     }

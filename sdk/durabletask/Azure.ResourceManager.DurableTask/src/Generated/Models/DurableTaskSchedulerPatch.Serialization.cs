@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.DurableTask.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDurableTaskContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(DurableTaskSchedulerPatch)} does not support writing '{options.Format}' format.");
             }

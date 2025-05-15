@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Analysis
 
         AnalysisServerData IJsonModel<AnalysisServerData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AnalysisServerData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<AnalysisServerData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<AnalysisServerData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AnalysisServerData>(Data, options, AzureResourceManagerAnalysisContext.Default);
 
-        AnalysisServerData IPersistableModel<AnalysisServerData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AnalysisServerData>(data, options);
+        AnalysisServerData IPersistableModel<AnalysisServerData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AnalysisServerData>(data, options, AzureResourceManagerAnalysisContext.Default);
 
         string IPersistableModel<AnalysisServerData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AnalysisServerData>)Data).GetFormatFromOptions(options);
     }

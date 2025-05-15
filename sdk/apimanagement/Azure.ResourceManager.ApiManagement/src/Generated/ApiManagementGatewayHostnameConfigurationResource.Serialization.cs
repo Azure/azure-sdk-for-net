@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.ApiManagement
 
         ApiManagementGatewayHostnameConfigurationData IJsonModel<ApiManagementGatewayHostnameConfigurationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ApiManagementGatewayHostnameConfigurationData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ApiManagementGatewayHostnameConfigurationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<ApiManagementGatewayHostnameConfigurationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ApiManagementGatewayHostnameConfigurationData>(Data, options, AzureResourceManagerApiManagementContext.Default);
 
-        ApiManagementGatewayHostnameConfigurationData IPersistableModel<ApiManagementGatewayHostnameConfigurationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ApiManagementGatewayHostnameConfigurationData>(data, options);
+        ApiManagementGatewayHostnameConfigurationData IPersistableModel<ApiManagementGatewayHostnameConfigurationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ApiManagementGatewayHostnameConfigurationData>(data, options, AzureResourceManagerApiManagementContext.Default);
 
         string IPersistableModel<ApiManagementGatewayHostnameConfigurationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ApiManagementGatewayHostnameConfigurationData>)Data).GetFormatFromOptions(options);
     }

@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.HealthcareApis
 
         FhirServiceData IJsonModel<FhirServiceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<FhirServiceData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<FhirServiceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<FhirServiceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<FhirServiceData>(Data, options, AzureResourceManagerHealthcareApisContext.Default);
 
-        FhirServiceData IPersistableModel<FhirServiceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<FhirServiceData>(data, options);
+        FhirServiceData IPersistableModel<FhirServiceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<FhirServiceData>(data, options, AzureResourceManagerHealthcareApisContext.Default);
 
         string IPersistableModel<FhirServiceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<FhirServiceData>)Data).GetFormatFromOptions(options);
     }

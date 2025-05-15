@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Sql
 
         FailoverGroupData IJsonModel<FailoverGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<FailoverGroupData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<FailoverGroupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<FailoverGroupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<FailoverGroupData>(Data, options, AzureResourceManagerSqlContext.Default);
 
-        FailoverGroupData IPersistableModel<FailoverGroupData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<FailoverGroupData>(data, options);
+        FailoverGroupData IPersistableModel<FailoverGroupData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<FailoverGroupData>(data, options, AzureResourceManagerSqlContext.Default);
 
         string IPersistableModel<FailoverGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<FailoverGroupData>)Data).GetFormatFromOptions(options);
     }

@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.SecurityInsights
 
         TriggeredAnalyticsRuleRunData IJsonModel<TriggeredAnalyticsRuleRunData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<TriggeredAnalyticsRuleRunData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<TriggeredAnalyticsRuleRunData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<TriggeredAnalyticsRuleRunData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<TriggeredAnalyticsRuleRunData>(Data, options, AzureResourceManagerSecurityInsightsContext.Default);
 
-        TriggeredAnalyticsRuleRunData IPersistableModel<TriggeredAnalyticsRuleRunData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<TriggeredAnalyticsRuleRunData>(data, options);
+        TriggeredAnalyticsRuleRunData IPersistableModel<TriggeredAnalyticsRuleRunData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<TriggeredAnalyticsRuleRunData>(data, options, AzureResourceManagerSecurityInsightsContext.Default);
 
         string IPersistableModel<TriggeredAnalyticsRuleRunData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<TriggeredAnalyticsRuleRunData>)Data).GetFormatFromOptions(options);
     }

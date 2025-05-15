@@ -15,6 +15,8 @@ namespace _Type.Model.Inheritance.NotDiscriminated
 {
     public partial class Pet : IJsonModel<Pet>
     {
+        internal Pet() => throw null;
+
         void IJsonModel<Pet>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;

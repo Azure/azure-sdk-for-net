@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Communication
 
         CommunicationDomainResourceData IJsonModel<CommunicationDomainResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<CommunicationDomainResourceData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<CommunicationDomainResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<CommunicationDomainResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<CommunicationDomainResourceData>(Data, options, AzureResourceManagerCommunicationContext.Default);
 
-        CommunicationDomainResourceData IPersistableModel<CommunicationDomainResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CommunicationDomainResourceData>(data, options);
+        CommunicationDomainResourceData IPersistableModel<CommunicationDomainResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CommunicationDomainResourceData>(data, options, AzureResourceManagerCommunicationContext.Default);
 
         string IPersistableModel<CommunicationDomainResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<CommunicationDomainResourceData>)Data).GetFormatFromOptions(options);
     }

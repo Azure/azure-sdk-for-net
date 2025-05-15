@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.NetworkCloud
 
         NetworkCloudVirtualMachineConsoleData IJsonModel<NetworkCloudVirtualMachineConsoleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetworkCloudVirtualMachineConsoleData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<NetworkCloudVirtualMachineConsoleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<NetworkCloudVirtualMachineConsoleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<NetworkCloudVirtualMachineConsoleData>(Data, options, AzureResourceManagerNetworkCloudContext.Default);
 
-        NetworkCloudVirtualMachineConsoleData IPersistableModel<NetworkCloudVirtualMachineConsoleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetworkCloudVirtualMachineConsoleData>(data, options);
+        NetworkCloudVirtualMachineConsoleData IPersistableModel<NetworkCloudVirtualMachineConsoleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetworkCloudVirtualMachineConsoleData>(data, options, AzureResourceManagerNetworkCloudContext.Default);
 
         string IPersistableModel<NetworkCloudVirtualMachineConsoleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetworkCloudVirtualMachineConsoleData>)Data).GetFormatFromOptions(options);
     }

@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Quota
 
         GroupQuotaEntityResource IOperationSource<GroupQuotaEntityResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<GroupQuotaEntityData>(response.Content);
+            var data = ModelReaderWriter.Read<GroupQuotaEntityData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerQuotaContext.Default);
             return new GroupQuotaEntityResource(_client, data);
         }
 
         async ValueTask<GroupQuotaEntityResource> IOperationSource<GroupQuotaEntityResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<GroupQuotaEntityData>(response.Content);
+            var data = ModelReaderWriter.Read<GroupQuotaEntityData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerQuotaContext.Default);
             return await Task.FromResult(new GroupQuotaEntityResource(_client, data)).ConfigureAwait(false);
         }
     }

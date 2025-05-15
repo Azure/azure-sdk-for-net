@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+
 using Azure.Core;
 
 [assembly: CodeGenSuppressType("WebPubSubServiceClientOptions")]
@@ -30,13 +31,17 @@ namespace Azure.Messaging.WebPubSub
             /// The 2024_01_01_stable version of the Azure WebPubSub service.
             /// </summary>
             V2024_01_01 = 2,
+            /// <summary>
+            /// The 2024_12_01_stable version of the Azure WebPubSub service.
+            /// </summary>
+            V2024_12_01 = 3,
 #pragma warning restore CA1707 // Identifiers should not contain underscores
         }
 
         /// <summary>
         /// The Latest <see cref="ServiceVersion"/> supported by this client library.
         /// </summary>
-        private const ServiceVersion LatestVersion = ServiceVersion.V2024_01_01;
+        private const ServiceVersion LatestVersion = ServiceVersion.V2024_12_01;
 
         /// <summary>
         /// Gets the version of the service API used when making requests.
@@ -85,6 +90,7 @@ namespace Azure.Messaging.WebPubSub
             {
                 WebPubSubServiceClientOptions.ServiceVersion.V2021_10_01 => "2021-10-01",
                 WebPubSubServiceClientOptions.ServiceVersion.V2024_01_01 => "2024-01-01",
+                WebPubSubServiceClientOptions.ServiceVersion.V2024_12_01 => "2024-12-01",
                 _ => throw CreateInvalidVersionException(version)
             };
 

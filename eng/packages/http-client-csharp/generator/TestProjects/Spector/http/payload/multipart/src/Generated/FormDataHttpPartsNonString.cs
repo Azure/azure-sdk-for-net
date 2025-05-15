@@ -16,7 +16,7 @@ namespace Payload.MultiPart
     {
         protected FormDataHttpPartsNonString() => throw null;
 
-        public HttpPipeline Pipeline => throw null;
+        public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response Float(RequestContent content, string contentType, RequestContext context = null) => throw null;
 

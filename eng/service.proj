@@ -163,13 +163,13 @@
             SkipNonexistentTargets="true">
       <Output ItemName="ProjectsToInclude" TaskParameter="TargetOutputs"/>
     </MSBuild>
-    <RemoveDuplicates Inputs="@(ProjectsToInclude->Replace($(RepoRoot), ''))">
+    <RemoveDuplicates Inputs="@(ProjectsToInclude)">
       <Output TaskParameter="Filtered" ItemName="ProjectsToIncludeFitered"/>
     </RemoveDuplicates>
     <Message Text="Write to file $(OutputProjectFilePath)" Importance="high"/>
-    <Message Text="%24%28RepoRoot%29%(ProjectsToIncludeFitered.Identity)" Importance="high"/>
+    <Message Text="%(ProjectsToIncludeFitered.Identity)" Importance="high"/>
     <ItemGroup>
-      <_WriteToLines Include="%24%28RepoRoot%29%(ProjectsToIncludeFitered.Identity)" />
+      <_WriteToLines Include="%(ProjectsToIncludeFitered.Identity)" />
     </ItemGroup>
     <WriteLinesToFile File="$(OutputProjectFilePath)" Lines="@(_WriteToLines)" />
   </Target>

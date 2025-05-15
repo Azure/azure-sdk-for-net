@@ -57,6 +57,12 @@ namespace Azure.ResourceManager.HybridCompute
         public virtual Azure.Response<Azure.ResourceManager.HybridCompute.ArcGatewayResource> Update(Azure.ResourceManager.HybridCompute.Models.ArcGatewayPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridCompute.ArcGatewayResource>> UpdateAsync(Azure.ResourceManager.HybridCompute.Models.ArcGatewayPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
+    public partial class AzureResourceManagerHybridComputeContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureResourceManagerHybridComputeContext() { }
+        public static Azure.ResourceManager.HybridCompute.AzureResourceManagerHybridComputeContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public static partial class HybridComputeExtensions
     {
         public static Azure.Response<Azure.ResourceManager.HybridCompute.ArcGatewayResource> GetArcGateway(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string gatewayName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }

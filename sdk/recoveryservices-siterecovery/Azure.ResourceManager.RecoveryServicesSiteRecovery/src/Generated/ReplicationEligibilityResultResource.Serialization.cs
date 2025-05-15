@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 
         ReplicationEligibilityResultData IJsonModel<ReplicationEligibilityResultData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ReplicationEligibilityResultData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ReplicationEligibilityResultData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<ReplicationEligibilityResultData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ReplicationEligibilityResultData>(Data, options, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
 
-        ReplicationEligibilityResultData IPersistableModel<ReplicationEligibilityResultData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ReplicationEligibilityResultData>(data, options);
+        ReplicationEligibilityResultData IPersistableModel<ReplicationEligibilityResultData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ReplicationEligibilityResultData>(data, options, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
 
         string IPersistableModel<ReplicationEligibilityResultData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ReplicationEligibilityResultData>)Data).GetFormatFromOptions(options);
     }

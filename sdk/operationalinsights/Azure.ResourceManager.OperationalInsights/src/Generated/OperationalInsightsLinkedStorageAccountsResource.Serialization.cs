@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.OperationalInsights
 
         OperationalInsightsLinkedStorageAccountsData IJsonModel<OperationalInsightsLinkedStorageAccountsData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<OperationalInsightsLinkedStorageAccountsData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<OperationalInsightsLinkedStorageAccountsData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<OperationalInsightsLinkedStorageAccountsData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<OperationalInsightsLinkedStorageAccountsData>(Data, options, AzureResourceManagerOperationalInsightsContext.Default);
 
-        OperationalInsightsLinkedStorageAccountsData IPersistableModel<OperationalInsightsLinkedStorageAccountsData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<OperationalInsightsLinkedStorageAccountsData>(data, options);
+        OperationalInsightsLinkedStorageAccountsData IPersistableModel<OperationalInsightsLinkedStorageAccountsData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<OperationalInsightsLinkedStorageAccountsData>(data, options, AzureResourceManagerOperationalInsightsContext.Default);
 
         string IPersistableModel<OperationalInsightsLinkedStorageAccountsData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<OperationalInsightsLinkedStorageAccountsData>)Data).GetFormatFromOptions(options);
     }

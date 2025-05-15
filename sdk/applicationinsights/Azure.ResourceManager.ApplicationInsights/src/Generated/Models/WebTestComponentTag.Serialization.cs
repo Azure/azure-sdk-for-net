@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerApplicationInsightsContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(WebTestComponentTag)} does not support writing '{options.Format}' format.");
             }

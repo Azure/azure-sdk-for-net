@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerPostgreSqlContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(PostgreSqlServerCreateOrUpdateContent)} does not support writing '{options.Format}' format.");
             }

@@ -1,5 +1,11 @@
 namespace Azure.ResourceManager.ManagedNetwork
 {
+    public partial class AzureResourceManagerManagedNetworkContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureResourceManagerManagedNetworkContext() { }
+        public static Azure.ResourceManager.ManagedNetwork.AzureResourceManagerManagedNetworkContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class ManagedNetworkCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.ManagedNetwork.ManagedNetworkResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ManagedNetwork.ManagedNetworkResource>, System.Collections.IEnumerable
     {
         protected ManagedNetworkCollection() { }

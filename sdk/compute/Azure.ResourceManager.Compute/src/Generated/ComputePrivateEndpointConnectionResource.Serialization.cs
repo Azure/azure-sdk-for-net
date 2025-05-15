@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Compute
 
         ComputePrivateEndpointConnectionData IJsonModel<ComputePrivateEndpointConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ComputePrivateEndpointConnectionData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ComputePrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<ComputePrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ComputePrivateEndpointConnectionData>(Data, options, AzureResourceManagerComputeContext.Default);
 
-        ComputePrivateEndpointConnectionData IPersistableModel<ComputePrivateEndpointConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ComputePrivateEndpointConnectionData>(data, options);
+        ComputePrivateEndpointConnectionData IPersistableModel<ComputePrivateEndpointConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ComputePrivateEndpointConnectionData>(data, options, AzureResourceManagerComputeContext.Default);
 
         string IPersistableModel<ComputePrivateEndpointConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ComputePrivateEndpointConnectionData>)Data).GetFormatFromOptions(options);
     }

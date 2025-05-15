@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHDInsightContainersContext.Default);
                 case "bicep":
                     return SerializeBicep(options);
                 default:

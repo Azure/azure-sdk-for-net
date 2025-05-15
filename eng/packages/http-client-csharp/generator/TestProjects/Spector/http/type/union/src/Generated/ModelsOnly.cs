@@ -18,7 +18,7 @@ namespace _Type.Union
     {
         protected ModelsOnly() => throw null;
 
-        public HttpPipeline Pipeline => throw null;
+        public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response Get(RequestContext context) => throw null;
 

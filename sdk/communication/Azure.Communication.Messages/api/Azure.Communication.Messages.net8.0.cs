@@ -91,6 +91,12 @@ namespace Azure.Communication.Messages
         string System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.AudioNotificationContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.AudioNotificationContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class AzureCommunicationMessagesContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureCommunicationMessagesContext() { }
+        public static Azure.Communication.Messages.AzureCommunicationMessagesContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class BotContact : Azure.Communication.Messages.ConversationContact, System.ClientModel.Primitives.IJsonModel<Azure.Communication.Messages.BotContact>, System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.BotContact>
     {
         public BotContact(string id, string botAppId) : base (default(string)) { }

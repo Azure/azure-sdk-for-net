@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Support
 
         SupportFileDetailData IJsonModel<SupportFileDetailData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SupportFileDetailData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SupportFileDetailData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<SupportFileDetailData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SupportFileDetailData>(Data, options, AzureResourceManagerSupportContext.Default);
 
-        SupportFileDetailData IPersistableModel<SupportFileDetailData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SupportFileDetailData>(data, options);
+        SupportFileDetailData IPersistableModel<SupportFileDetailData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SupportFileDetailData>(data, options, AzureResourceManagerSupportContext.Default);
 
         string IPersistableModel<SupportFileDetailData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SupportFileDetailData>)Data).GetFormatFromOptions(options);
     }

@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Compute
 
         CapacityReservationGroupData IJsonModel<CapacityReservationGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<CapacityReservationGroupData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<CapacityReservationGroupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<CapacityReservationGroupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<CapacityReservationGroupData>(Data, options, AzureResourceManagerComputeContext.Default);
 
-        CapacityReservationGroupData IPersistableModel<CapacityReservationGroupData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CapacityReservationGroupData>(data, options);
+        CapacityReservationGroupData IPersistableModel<CapacityReservationGroupData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CapacityReservationGroupData>(data, options, AzureResourceManagerComputeContext.Default);
 
         string IPersistableModel<CapacityReservationGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<CapacityReservationGroupData>)Data).GetFormatFromOptions(options);
     }

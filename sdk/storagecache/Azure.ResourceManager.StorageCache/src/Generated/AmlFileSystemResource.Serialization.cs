@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.StorageCache
 
         AmlFileSystemData IJsonModel<AmlFileSystemData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AmlFileSystemData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<AmlFileSystemData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<AmlFileSystemData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AmlFileSystemData>(Data, options, AzureResourceManagerStorageCacheContext.Default);
 
-        AmlFileSystemData IPersistableModel<AmlFileSystemData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AmlFileSystemData>(data, options);
+        AmlFileSystemData IPersistableModel<AmlFileSystemData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AmlFileSystemData>(data, options, AzureResourceManagerStorageCacheContext.Default);
 
         string IPersistableModel<AmlFileSystemData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AmlFileSystemData>)Data).GetFormatFromOptions(options);
     }

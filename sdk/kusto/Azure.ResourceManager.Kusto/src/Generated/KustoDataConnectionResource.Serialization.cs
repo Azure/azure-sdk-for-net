@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Kusto
 
         KustoDataConnectionData IJsonModel<KustoDataConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<KustoDataConnectionData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<KustoDataConnectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<KustoDataConnectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<KustoDataConnectionData>(Data, options, AzureResourceManagerKustoContext.Default);
 
-        KustoDataConnectionData IPersistableModel<KustoDataConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<KustoDataConnectionData>(data, options);
+        KustoDataConnectionData IPersistableModel<KustoDataConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<KustoDataConnectionData>(data, options, AzureResourceManagerKustoContext.Default);
 
         string IPersistableModel<KustoDataConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<KustoDataConnectionData>)Data).GetFormatFromOptions(options);
     }

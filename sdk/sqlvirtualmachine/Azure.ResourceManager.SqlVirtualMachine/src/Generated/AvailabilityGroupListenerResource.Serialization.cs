@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.SqlVirtualMachine
 
         AvailabilityGroupListenerData IJsonModel<AvailabilityGroupListenerData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AvailabilityGroupListenerData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<AvailabilityGroupListenerData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<AvailabilityGroupListenerData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AvailabilityGroupListenerData>(Data, options, AzureResourceManagerSqlVirtualMachineContext.Default);
 
-        AvailabilityGroupListenerData IPersistableModel<AvailabilityGroupListenerData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AvailabilityGroupListenerData>(data, options);
+        AvailabilityGroupListenerData IPersistableModel<AvailabilityGroupListenerData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AvailabilityGroupListenerData>(data, options, AzureResourceManagerSqlVirtualMachineContext.Default);
 
         string IPersistableModel<AvailabilityGroupListenerData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AvailabilityGroupListenerData>)Data).GetFormatFromOptions(options);
     }

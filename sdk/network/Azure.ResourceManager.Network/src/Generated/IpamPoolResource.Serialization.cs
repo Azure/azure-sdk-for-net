@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Network
 
         IpamPoolData IJsonModel<IpamPoolData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<IpamPoolData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<IpamPoolData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<IpamPoolData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<IpamPoolData>(Data, options, AzureResourceManagerNetworkContext.Default);
 
-        IpamPoolData IPersistableModel<IpamPoolData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<IpamPoolData>(data, options);
+        IpamPoolData IPersistableModel<IpamPoolData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<IpamPoolData>(data, options, AzureResourceManagerNetworkContext.Default);
 
         string IPersistableModel<IpamPoolData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<IpamPoolData>)Data).GetFormatFromOptions(options);
     }

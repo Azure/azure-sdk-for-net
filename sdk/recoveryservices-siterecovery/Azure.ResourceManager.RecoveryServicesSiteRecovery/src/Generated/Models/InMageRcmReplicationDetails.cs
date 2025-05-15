@@ -19,9 +19,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         internal InMageRcmReplicationDetails()
         {
             ProtectedDisks = new ChangeTrackingList<InMageRcmProtectedDiskDetails>();
+            UnprotectedDisks = new ChangeTrackingList<InMageRcmUnProtectedDiskDetails>();
             LastAgentUpgradeErrorDetails = new ChangeTrackingList<InMageRcmLastAgentUpgradeErrorDetails>();
             AgentUpgradeBlockingErrorDetails = new ChangeTrackingList<InMageRcmAgentUpgradeBlockingErrorDetails>();
             VmNics = new ChangeTrackingList<InMageRcmNicDetails>();
+            TargetVmTags = new ChangeTrackingList<UserCreatedResourceTag>();
+            SeedManagedDiskTags = new ChangeTrackingList<UserCreatedResourceTag>();
+            TargetManagedDiskTags = new ChangeTrackingList<UserCreatedResourceTag>();
+            TargetNicTags = new ChangeTrackingList<UserCreatedResourceTag>();
+            SupportedOSVersions = new ChangeTrackingList<string>();
             InstanceType = "InMageRcm";
         }
 
@@ -42,6 +48,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="primaryNicIPAddress"> The IP address of the primary network interface. </param>
         /// <param name="targetGeneration"> The target generation. </param>
         /// <param name="licenseType"> License Type of the VM to be used. </param>
+        /// <param name="linuxLicenseType"> The license type for Linux VM's. </param>
         /// <param name="storageAccountId"> The replication storage account ARM Id. This is applicable only for the blob based replication test hook. </param>
         /// <param name="targetVmName"> Target VM name. </param>
         /// <param name="targetVmSize"> The target VM size. </param>
@@ -73,6 +80,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="agentUpgradeJobId"> The agent upgrade job Id. </param>
         /// <param name="agentUpgradeAttemptToVersion"> The agent version to which last agent upgrade was attempted. </param>
         /// <param name="protectedDisks"> The list of protected disks. </param>
+        /// <param name="unprotectedDisks"> The list of unprotected disks. </param>
         /// <param name="isLastUpgradeSuccessful"> A value indicating whether last agent upgrade was successful or not. </param>
         /// <param name="isAgentRegistrationSuccessfulAfterFailover"> A value indicating whether agent registration was successful after failover. </param>
         /// <param name="mobilityAgentDetails"> The mobility agent information. </param>
@@ -80,7 +88,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="agentUpgradeBlockingErrorDetails"> The agent upgrade blocking error information. </param>
         /// <param name="vmNics"> The network details. </param>
         /// <param name="discoveredVmDetails"> The discovered VM details. </param>
-        internal InMageRcmReplicationDetails(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData, string internalIdentifier, string fabricDiscoveryMachineId, string multiVmGroupName, string discoveryType, Guid? processServerId, int? processorCoreCount, double? allocatedMemoryInMB, string processServerName, string runAsAccountId, string osType, string firmwareType, IPAddress primaryNicIPAddress, string targetGeneration, string licenseType, ResourceIdentifier storageAccountId, string targetVmName, string targetVmSize, ResourceIdentifier targetResourceGroupId, string targetLocation, ResourceIdentifier targetAvailabilitySetId, string targetAvailabilityZone, ResourceIdentifier targetProximityPlacementGroupId, ResourceIdentifier targetBootDiagnosticsStorageAccountId, ResourceIdentifier targetNetworkId, ResourceIdentifier testNetworkId, ResourceIdentifier failoverRecoveryPointId, DateTimeOffset? lastRecoveryPointReceived, long? lastRpoInSeconds, DateTimeOffset? lastRpoCalculatedOn, ResourceIdentifier lastRecoveryPointId, int? initialReplicationProgressPercentage, long? initialReplicationProcessedBytes, long? initialReplicationTransferredBytes, VmReplicationProgressHealth? initialReplicationProgressHealth, int? resyncProgressPercentage, long? resyncProcessedBytes, long? resyncTransferredBytes, VmReplicationProgressHealth? resyncProgressHealth, string resyncRequired, SiteRecoveryResyncState? resyncState, MobilityAgentUpgradeState? agentUpgradeState, string lastAgentUpgradeType, string agentUpgradeJobId, string agentUpgradeAttemptToVersion, IReadOnlyList<InMageRcmProtectedDiskDetails> protectedDisks, string isLastUpgradeSuccessful, bool? isAgentRegistrationSuccessfulAfterFailover, InMageRcmMobilityAgentDetails mobilityAgentDetails, IReadOnlyList<InMageRcmLastAgentUpgradeErrorDetails> lastAgentUpgradeErrorDetails, IReadOnlyList<InMageRcmAgentUpgradeBlockingErrorDetails> agentUpgradeBlockingErrorDetails, IReadOnlyList<InMageRcmNicDetails> vmNics, InMageRcmDiscoveredProtectedVmDetails discoveredVmDetails) : base(instanceType, serializedAdditionalRawData)
+        /// <param name="targetVmTags"> The target VM tags. </param>
+        /// <param name="seedManagedDiskTags"> The tags for the seed managed disks. </param>
+        /// <param name="targetManagedDiskTags"> The tags for the target managed disks. </param>
+        /// <param name="targetNicTags"> The tags for the target NICs. </param>
+        /// <param name="sqlServerLicenseType"> The SQL Server license type. </param>
+        /// <param name="supportedOSVersions"> A value indicating the inplace OS Upgrade version. </param>
+        /// <param name="osName"> The OS name associated with VM. </param>
+        /// <param name="targetVmSecurityProfile"> The target VM security profile. </param>
+        internal InMageRcmReplicationDetails(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData, string internalIdentifier, string fabricDiscoveryMachineId, string multiVmGroupName, string discoveryType, Guid? processServerId, int? processorCoreCount, double? allocatedMemoryInMB, string processServerName, string runAsAccountId, string osType, string firmwareType, IPAddress primaryNicIPAddress, string targetGeneration, string licenseType, RecoveryServicesSiteRecoveryLinuxLicenseType? linuxLicenseType, ResourceIdentifier storageAccountId, string targetVmName, string targetVmSize, ResourceIdentifier targetResourceGroupId, string targetLocation, ResourceIdentifier targetAvailabilitySetId, string targetAvailabilityZone, ResourceIdentifier targetProximityPlacementGroupId, ResourceIdentifier targetBootDiagnosticsStorageAccountId, ResourceIdentifier targetNetworkId, ResourceIdentifier testNetworkId, ResourceIdentifier failoverRecoveryPointId, DateTimeOffset? lastRecoveryPointReceived, long? lastRpoInSeconds, DateTimeOffset? lastRpoCalculatedOn, ResourceIdentifier lastRecoveryPointId, int? initialReplicationProgressPercentage, long? initialReplicationProcessedBytes, long? initialReplicationTransferredBytes, VmReplicationProgressHealth? initialReplicationProgressHealth, int? resyncProgressPercentage, long? resyncProcessedBytes, long? resyncTransferredBytes, VmReplicationProgressHealth? resyncProgressHealth, string resyncRequired, SiteRecoveryResyncState? resyncState, MobilityAgentUpgradeState? agentUpgradeState, string lastAgentUpgradeType, string agentUpgradeJobId, string agentUpgradeAttemptToVersion, IReadOnlyList<InMageRcmProtectedDiskDetails> protectedDisks, IReadOnlyList<InMageRcmUnProtectedDiskDetails> unprotectedDisks, string isLastUpgradeSuccessful, bool? isAgentRegistrationSuccessfulAfterFailover, InMageRcmMobilityAgentDetails mobilityAgentDetails, IReadOnlyList<InMageRcmLastAgentUpgradeErrorDetails> lastAgentUpgradeErrorDetails, IReadOnlyList<InMageRcmAgentUpgradeBlockingErrorDetails> agentUpgradeBlockingErrorDetails, IReadOnlyList<InMageRcmNicDetails> vmNics, InMageRcmDiscoveredProtectedVmDetails discoveredVmDetails, IReadOnlyList<UserCreatedResourceTag> targetVmTags, IReadOnlyList<UserCreatedResourceTag> seedManagedDiskTags, IReadOnlyList<UserCreatedResourceTag> targetManagedDiskTags, IReadOnlyList<UserCreatedResourceTag> targetNicTags, string sqlServerLicenseType, IReadOnlyList<string> supportedOSVersions, string osName, RecoveryServicesSiteRecoverySecurityProfileProperties targetVmSecurityProfile) : base(instanceType, serializedAdditionalRawData)
         {
             InternalIdentifier = internalIdentifier;
             FabricDiscoveryMachineId = fabricDiscoveryMachineId;
@@ -96,6 +112,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             PrimaryNicIPAddress = primaryNicIPAddress;
             TargetGeneration = targetGeneration;
             LicenseType = licenseType;
+            LinuxLicenseType = linuxLicenseType;
             StorageAccountId = storageAccountId;
             TargetVmName = targetVmName;
             TargetVmSize = targetVmSize;
@@ -127,6 +144,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             AgentUpgradeJobId = agentUpgradeJobId;
             AgentUpgradeAttemptToVersion = agentUpgradeAttemptToVersion;
             ProtectedDisks = protectedDisks;
+            UnprotectedDisks = unprotectedDisks;
             IsLastUpgradeSuccessful = isLastUpgradeSuccessful;
             IsAgentRegistrationSuccessfulAfterFailover = isAgentRegistrationSuccessfulAfterFailover;
             MobilityAgentDetails = mobilityAgentDetails;
@@ -134,6 +152,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             AgentUpgradeBlockingErrorDetails = agentUpgradeBlockingErrorDetails;
             VmNics = vmNics;
             DiscoveredVmDetails = discoveredVmDetails;
+            TargetVmTags = targetVmTags;
+            SeedManagedDiskTags = seedManagedDiskTags;
+            TargetManagedDiskTags = targetManagedDiskTags;
+            TargetNicTags = targetNicTags;
+            SqlServerLicenseType = sqlServerLicenseType;
+            SupportedOSVersions = supportedOSVersions;
+            OSName = osName;
+            TargetVmSecurityProfile = targetVmSecurityProfile;
             InstanceType = instanceType ?? "InMageRcm";
         }
 
@@ -165,6 +191,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public string TargetGeneration { get; }
         /// <summary> License Type of the VM to be used. </summary>
         public string LicenseType { get; }
+        /// <summary> The license type for Linux VM's. </summary>
+        public RecoveryServicesSiteRecoveryLinuxLicenseType? LinuxLicenseType { get; }
         /// <summary> The replication storage account ARM Id. This is applicable only for the blob based replication test hook. </summary>
         public ResourceIdentifier StorageAccountId { get; }
         /// <summary> Target VM name. </summary>
@@ -227,6 +255,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public string AgentUpgradeAttemptToVersion { get; }
         /// <summary> The list of protected disks. </summary>
         public IReadOnlyList<InMageRcmProtectedDiskDetails> ProtectedDisks { get; }
+        /// <summary> The list of unprotected disks. </summary>
+        public IReadOnlyList<InMageRcmUnProtectedDiskDetails> UnprotectedDisks { get; }
         /// <summary> A value indicating whether last agent upgrade was successful or not. </summary>
         public string IsLastUpgradeSuccessful { get; }
         /// <summary> A value indicating whether agent registration was successful after failover. </summary>
@@ -241,5 +271,21 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public IReadOnlyList<InMageRcmNicDetails> VmNics { get; }
         /// <summary> The discovered VM details. </summary>
         public InMageRcmDiscoveredProtectedVmDetails DiscoveredVmDetails { get; }
+        /// <summary> The target VM tags. </summary>
+        public IReadOnlyList<UserCreatedResourceTag> TargetVmTags { get; }
+        /// <summary> The tags for the seed managed disks. </summary>
+        public IReadOnlyList<UserCreatedResourceTag> SeedManagedDiskTags { get; }
+        /// <summary> The tags for the target managed disks. </summary>
+        public IReadOnlyList<UserCreatedResourceTag> TargetManagedDiskTags { get; }
+        /// <summary> The tags for the target NICs. </summary>
+        public IReadOnlyList<UserCreatedResourceTag> TargetNicTags { get; }
+        /// <summary> The SQL Server license type. </summary>
+        public string SqlServerLicenseType { get; }
+        /// <summary> A value indicating the inplace OS Upgrade version. </summary>
+        public IReadOnlyList<string> SupportedOSVersions { get; }
+        /// <summary> The OS name associated with VM. </summary>
+        public string OSName { get; }
+        /// <summary> The target VM security profile. </summary>
+        public RecoveryServicesSiteRecoverySecurityProfileProperties TargetVmSecurityProfile { get; }
     }
 }

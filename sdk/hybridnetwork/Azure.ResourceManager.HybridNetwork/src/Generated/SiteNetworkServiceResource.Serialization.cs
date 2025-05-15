@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.HybridNetwork
 
         SiteNetworkServiceData IJsonModel<SiteNetworkServiceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SiteNetworkServiceData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SiteNetworkServiceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<SiteNetworkServiceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SiteNetworkServiceData>(Data, options, AzureResourceManagerHybridNetworkContext.Default);
 
-        SiteNetworkServiceData IPersistableModel<SiteNetworkServiceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SiteNetworkServiceData>(data, options);
+        SiteNetworkServiceData IPersistableModel<SiteNetworkServiceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SiteNetworkServiceData>(data, options, AzureResourceManagerHybridNetworkContext.Default);
 
         string IPersistableModel<SiteNetworkServiceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SiteNetworkServiceData>)Data).GetFormatFromOptions(options);
     }

@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.SecurityCenter
 
         SecurityConnectorData IJsonModel<SecurityConnectorData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SecurityConnectorData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SecurityConnectorData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<SecurityConnectorData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SecurityConnectorData>(Data, options, AzureResourceManagerSecurityCenterContext.Default);
 
-        SecurityConnectorData IPersistableModel<SecurityConnectorData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SecurityConnectorData>(data, options);
+        SecurityConnectorData IPersistableModel<SecurityConnectorData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SecurityConnectorData>(data, options, AzureResourceManagerSecurityCenterContext.Default);
 
         string IPersistableModel<SecurityConnectorData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SecurityConnectorData>)Data).GetFormatFromOptions(options);
     }

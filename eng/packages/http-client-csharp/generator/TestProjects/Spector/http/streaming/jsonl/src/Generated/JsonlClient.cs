@@ -16,7 +16,7 @@ namespace Streaming.Jsonl
 
         public JsonlClient(Uri endpoint, JsonlClientOptions options) => throw null;
 
-        public HttpPipeline Pipeline => throw null;
+        public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Basic GetBasicClient() => throw null;
     }

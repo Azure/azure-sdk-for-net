@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.KeyVault
 
         KeyVaultPrivateEndpointConnectionResource IOperationSource<KeyVaultPrivateEndpointConnectionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<KeyVaultPrivateEndpointConnectionData>(response.Content);
+            var data = ModelReaderWriter.Read<KeyVaultPrivateEndpointConnectionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerKeyVaultContext.Default);
             return new KeyVaultPrivateEndpointConnectionResource(_client, data);
         }
 
         async ValueTask<KeyVaultPrivateEndpointConnectionResource> IOperationSource<KeyVaultPrivateEndpointConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<KeyVaultPrivateEndpointConnectionData>(response.Content);
+            var data = ModelReaderWriter.Read<KeyVaultPrivateEndpointConnectionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerKeyVaultContext.Default);
             return await Task.FromResult(new KeyVaultPrivateEndpointConnectionResource(_client, data)).ConfigureAwait(false);
         }
     }

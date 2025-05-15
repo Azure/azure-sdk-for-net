@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAppPlatformContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(AppPlatformUserSourceInfo)} does not support writing '{options.Format}' format.");
             }

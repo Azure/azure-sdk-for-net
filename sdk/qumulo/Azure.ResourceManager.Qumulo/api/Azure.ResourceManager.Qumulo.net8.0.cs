@@ -1,5 +1,11 @@
 namespace Azure.ResourceManager.Qumulo
 {
+    public partial class AzureResourceManagerQumuloContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureResourceManagerQumuloContext() { }
+        public static Azure.ResourceManager.Qumulo.AzureResourceManagerQumuloContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public static partial class QumuloExtensions
     {
         public static Azure.ResourceManager.Qumulo.QumuloFileSystemResource GetQumuloFileSystemResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }

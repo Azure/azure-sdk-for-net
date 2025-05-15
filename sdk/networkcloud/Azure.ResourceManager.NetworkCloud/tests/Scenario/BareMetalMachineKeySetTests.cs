@@ -9,6 +9,7 @@ using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Net;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
@@ -38,7 +39,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
             (
                 cluster.Data.Location,
                 cluster.Data.ClusterExtendedLocation,
-                "fake-id",
+                TestEnvironment.BMMKeySetGroupId,
                 TestEnvironment.DayFromNow,
                 new List<IPAddress>(),
                 BareMetalMachineKeySetPrivilegeLevel.Standard,
@@ -47,8 +48,11 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
                     new KeySetUser
                     (
                         "userABC",
-                        new NetworkCloudSshPublicKey("ssh-rsa REDACTED")
-                    ),
+                        new NetworkCloudSshPublicKey(TestEnvironment.BMMKeySetSSHPublicKey)
+                    )
+                    {
+                        UserPrincipalName = "userABC@contoso.com"
+                    }
                 }
             )
             {
@@ -85,7 +89,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
             Assert.AreEqual(patch.Tags, updateResult.Value.Data.Tags);
 
             // Delete
-            var deleteResult = await bareMetalMachineKeySet.DeleteAsync(WaitUntil.Completed);
+            var deleteResult = await bareMetalMachineKeySet.DeleteAsync(WaitUntil.Completed, CancellationToken.None);
             Assert.IsTrue(deleteResult.HasCompleted);
         }
     }

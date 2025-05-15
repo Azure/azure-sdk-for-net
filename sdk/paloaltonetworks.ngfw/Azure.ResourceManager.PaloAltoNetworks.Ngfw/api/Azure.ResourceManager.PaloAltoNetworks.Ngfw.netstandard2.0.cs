@@ -1,5 +1,11 @@
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
 {
+    public partial class AzureResourceManagerPaloAltoNetworksNgfwContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureResourceManagerPaloAltoNetworksNgfwContext() { }
+        public static Azure.ResourceManager.PaloAltoNetworks.Ngfw.AzureResourceManagerPaloAltoNetworksNgfwContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class GlobalRulestackCertificateObjectCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.PaloAltoNetworks.Ngfw.GlobalRulestackCertificateObjectResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.PaloAltoNetworks.Ngfw.GlobalRulestackCertificateObjectResource>, System.Collections.IEnumerable
     {
         protected GlobalRulestackCertificateObjectCollection() { }

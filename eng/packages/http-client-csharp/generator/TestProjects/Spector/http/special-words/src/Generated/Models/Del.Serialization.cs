@@ -15,6 +15,8 @@ namespace SpecialWords._Models
 {
     public partial class Del : IJsonModel<Del>
     {
+        internal Del() => throw null;
+
         void IJsonModel<Del>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;

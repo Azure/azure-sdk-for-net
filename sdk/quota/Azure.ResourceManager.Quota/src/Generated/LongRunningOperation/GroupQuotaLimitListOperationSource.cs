@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Quota
 
         GroupQuotaLimitListResource IOperationSource<GroupQuotaLimitListResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<GroupQuotaLimitListData>(response.Content);
+            var data = ModelReaderWriter.Read<GroupQuotaLimitListData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerQuotaContext.Default);
             return new GroupQuotaLimitListResource(_client, data);
         }
 
         async ValueTask<GroupQuotaLimitListResource> IOperationSource<GroupQuotaLimitListResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<GroupQuotaLimitListData>(response.Content);
+            var data = ModelReaderWriter.Read<GroupQuotaLimitListData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerQuotaContext.Default);
             return await Task.FromResult(new GroupQuotaLimitListResource(_client, data)).ConfigureAwait(false);
         }
     }

@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Nginx
 
         NginxCertificateData IJsonModel<NginxCertificateData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NginxCertificateData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<NginxCertificateData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<NginxCertificateData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<NginxCertificateData>(Data, options, AzureResourceManagerNginxContext.Default);
 
-        NginxCertificateData IPersistableModel<NginxCertificateData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NginxCertificateData>(data, options);
+        NginxCertificateData IPersistableModel<NginxCertificateData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NginxCertificateData>(data, options, AzureResourceManagerNginxContext.Default);
 
         string IPersistableModel<NginxCertificateData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NginxCertificateData>)Data).GetFormatFromOptions(options);
     }

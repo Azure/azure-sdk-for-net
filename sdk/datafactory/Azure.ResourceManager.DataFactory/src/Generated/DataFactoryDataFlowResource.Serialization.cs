@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.DataFactory
 
         DataFactoryDataFlowData IJsonModel<DataFactoryDataFlowData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DataFactoryDataFlowData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<DataFactoryDataFlowData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<DataFactoryDataFlowData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DataFactoryDataFlowData>(Data, options, AzureResourceManagerDataFactoryContext.Default);
 
-        DataFactoryDataFlowData IPersistableModel<DataFactoryDataFlowData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DataFactoryDataFlowData>(data, options);
+        DataFactoryDataFlowData IPersistableModel<DataFactoryDataFlowData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DataFactoryDataFlowData>(data, options, AzureResourceManagerDataFactoryContext.Default);
 
         string IPersistableModel<DataFactoryDataFlowData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DataFactoryDataFlowData>)Data).GetFormatFromOptions(options);
     }

@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.PrivateDns
 
         VirtualNetworkLinkData IJsonModel<VirtualNetworkLinkData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<VirtualNetworkLinkData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<VirtualNetworkLinkData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<VirtualNetworkLinkData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<VirtualNetworkLinkData>(Data, options, AzureResourceManagerPrivateDnsContext.Default);
 
-        VirtualNetworkLinkData IPersistableModel<VirtualNetworkLinkData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<VirtualNetworkLinkData>(data, options);
+        VirtualNetworkLinkData IPersistableModel<VirtualNetworkLinkData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<VirtualNetworkLinkData>(data, options, AzureResourceManagerPrivateDnsContext.Default);
 
         string IPersistableModel<VirtualNetworkLinkData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<VirtualNetworkLinkData>)Data).GetFormatFromOptions(options);
     }

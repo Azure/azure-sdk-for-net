@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerArizeAIObservabilityEvalContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ArizeAIObservabilityEvalOrganizationPatch)} does not support writing '{options.Format}' format.");
             }

@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.OracleDatabase
 
         AutonomousDatabaseBackupData IJsonModel<AutonomousDatabaseBackupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AutonomousDatabaseBackupData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<AutonomousDatabaseBackupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<AutonomousDatabaseBackupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AutonomousDatabaseBackupData>(Data, options, AzureResourceManagerOracleDatabaseContext.Default);
 
-        AutonomousDatabaseBackupData IPersistableModel<AutonomousDatabaseBackupData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AutonomousDatabaseBackupData>(data, options);
+        AutonomousDatabaseBackupData IPersistableModel<AutonomousDatabaseBackupData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AutonomousDatabaseBackupData>(data, options, AzureResourceManagerOracleDatabaseContext.Default);
 
         string IPersistableModel<AutonomousDatabaseBackupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AutonomousDatabaseBackupData>)Data).GetFormatFromOptions(options);
     }

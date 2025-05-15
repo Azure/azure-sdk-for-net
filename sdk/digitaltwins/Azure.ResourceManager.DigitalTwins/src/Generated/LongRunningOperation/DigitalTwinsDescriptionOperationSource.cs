@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.DigitalTwins
 
         DigitalTwinsDescriptionResource IOperationSource<DigitalTwinsDescriptionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DigitalTwinsDescriptionData>(response.Content);
+            var data = ModelReaderWriter.Read<DigitalTwinsDescriptionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDigitalTwinsContext.Default);
             return new DigitalTwinsDescriptionResource(_client, data);
         }
 
         async ValueTask<DigitalTwinsDescriptionResource> IOperationSource<DigitalTwinsDescriptionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DigitalTwinsDescriptionData>(response.Content);
+            var data = ModelReaderWriter.Read<DigitalTwinsDescriptionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDigitalTwinsContext.Default);
             return await Task.FromResult(new DigitalTwinsDescriptionResource(_client, data)).ConfigureAwait(false);
         }
     }

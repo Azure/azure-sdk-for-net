@@ -37,6 +37,12 @@ namespace Azure.AI.Language.QuestionAnswering
         internal AnswersResult() { }
         public System.Collections.Generic.IReadOnlyList<Azure.AI.Language.QuestionAnswering.KnowledgeBaseAnswer> Answers { get { throw null; } }
     }
+    public partial class AzureAILanguageQuestionAnsweringContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureAILanguageQuestionAnsweringContext() { }
+        public static Azure.AI.Language.QuestionAnswering.AzureAILanguageQuestionAnsweringContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class KnowledgeBaseAnswer
     {
         internal KnowledgeBaseAnswer() { }

@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDevTestLabsContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(DevTestLabExportResourceUsageContent)} does not support writing '{options.Format}' format.");
             }

@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.HybridCompute
 
         HybridComputeLicenseData IJsonModel<HybridComputeLicenseData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<HybridComputeLicenseData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<HybridComputeLicenseData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<HybridComputeLicenseData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<HybridComputeLicenseData>(Data, options, AzureResourceManagerHybridComputeContext.Default);
 
-        HybridComputeLicenseData IPersistableModel<HybridComputeLicenseData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<HybridComputeLicenseData>(data, options);
+        HybridComputeLicenseData IPersistableModel<HybridComputeLicenseData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<HybridComputeLicenseData>(data, options, AzureResourceManagerHybridComputeContext.Default);
 
         string IPersistableModel<HybridComputeLicenseData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<HybridComputeLicenseData>)Data).GetFormatFromOptions(options);
     }

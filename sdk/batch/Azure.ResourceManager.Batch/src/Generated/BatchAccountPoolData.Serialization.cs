@@ -721,7 +721,7 @@ namespace Azure.ResourceManager.Batch
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerBatchContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(BatchAccountPoolData)} does not support writing '{options.Format}' format.");
             }

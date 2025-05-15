@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Resources
 
         JitRequestData IJsonModel<JitRequestData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<JitRequestData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<JitRequestData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<JitRequestData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<JitRequestData>(Data, options, AzureResourceManagerResourcesContext.Default);
 
-        JitRequestData IPersistableModel<JitRequestData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<JitRequestData>(data, options);
+        JitRequestData IPersistableModel<JitRequestData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<JitRequestData>(data, options, AzureResourceManagerResourcesContext.Default);
 
         string IPersistableModel<JitRequestData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<JitRequestData>)Data).GetFormatFromOptions(options);
     }

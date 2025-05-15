@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Synapse
 
         SynapseManagedIdentitySqlControlSettingData IJsonModel<SynapseManagedIdentitySqlControlSettingData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SynapseManagedIdentitySqlControlSettingData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SynapseManagedIdentitySqlControlSettingData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<SynapseManagedIdentitySqlControlSettingData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SynapseManagedIdentitySqlControlSettingData>(Data, options, AzureResourceManagerSynapseContext.Default);
 
-        SynapseManagedIdentitySqlControlSettingData IPersistableModel<SynapseManagedIdentitySqlControlSettingData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SynapseManagedIdentitySqlControlSettingData>(data, options);
+        SynapseManagedIdentitySqlControlSettingData IPersistableModel<SynapseManagedIdentitySqlControlSettingData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SynapseManagedIdentitySqlControlSettingData>(data, options, AzureResourceManagerSynapseContext.Default);
 
         string IPersistableModel<SynapseManagedIdentitySqlControlSettingData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SynapseManagedIdentitySqlControlSettingData>)Data).GetFormatFromOptions(options);
     }

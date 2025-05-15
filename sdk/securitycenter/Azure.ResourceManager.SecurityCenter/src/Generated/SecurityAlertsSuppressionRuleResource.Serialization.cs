@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.SecurityCenter
 
         SecurityAlertsSuppressionRuleData IJsonModel<SecurityAlertsSuppressionRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SecurityAlertsSuppressionRuleData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SecurityAlertsSuppressionRuleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<SecurityAlertsSuppressionRuleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SecurityAlertsSuppressionRuleData>(Data, options, AzureResourceManagerSecurityCenterContext.Default);
 
-        SecurityAlertsSuppressionRuleData IPersistableModel<SecurityAlertsSuppressionRuleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SecurityAlertsSuppressionRuleData>(data, options);
+        SecurityAlertsSuppressionRuleData IPersistableModel<SecurityAlertsSuppressionRuleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SecurityAlertsSuppressionRuleData>(data, options, AzureResourceManagerSecurityCenterContext.Default);
 
         string IPersistableModel<SecurityAlertsSuppressionRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SecurityAlertsSuppressionRuleData>)Data).GetFormatFromOptions(options);
     }

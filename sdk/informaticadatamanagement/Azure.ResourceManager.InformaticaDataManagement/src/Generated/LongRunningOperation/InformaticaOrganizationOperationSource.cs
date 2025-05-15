@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.InformaticaDataManagement
 
         InformaticaOrganizationResource IOperationSource<InformaticaOrganizationResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<InformaticaOrganizationData>(response.Content);
+            var data = ModelReaderWriter.Read<InformaticaOrganizationData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerInformaticaDataManagementContext.Default);
             return new InformaticaOrganizationResource(_client, data);
         }
 
         async ValueTask<InformaticaOrganizationResource> IOperationSource<InformaticaOrganizationResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<InformaticaOrganizationData>(response.Content);
+            var data = ModelReaderWriter.Read<InformaticaOrganizationData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerInformaticaDataManagementContext.Default);
             return await Task.FromResult(new InformaticaOrganizationResource(_client, data)).ConfigureAwait(false);
         }
     }

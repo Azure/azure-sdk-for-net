@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.InformaticaDataManagement
 
         InformaticaOrganizationData IJsonModel<InformaticaOrganizationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<InformaticaOrganizationData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<InformaticaOrganizationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<InformaticaOrganizationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<InformaticaOrganizationData>(Data, options, AzureResourceManagerInformaticaDataManagementContext.Default);
 
-        InformaticaOrganizationData IPersistableModel<InformaticaOrganizationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<InformaticaOrganizationData>(data, options);
+        InformaticaOrganizationData IPersistableModel<InformaticaOrganizationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<InformaticaOrganizationData>(data, options, AzureResourceManagerInformaticaDataManagementContext.Default);
 
         string IPersistableModel<InformaticaOrganizationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<InformaticaOrganizationData>)Data).GetFormatFromOptions(options);
     }

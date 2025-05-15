@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.HybridCompute
 
         ArcGatewayResource IOperationSource<ArcGatewayResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ArcGatewayData>(response.Content);
+            var data = ModelReaderWriter.Read<ArcGatewayData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerHybridComputeContext.Default);
             return new ArcGatewayResource(_client, data);
         }
 
         async ValueTask<ArcGatewayResource> IOperationSource<ArcGatewayResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ArcGatewayData>(response.Content);
+            var data = ModelReaderWriter.Read<ArcGatewayData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerHybridComputeContext.Default);
             return await Task.FromResult(new ArcGatewayResource(_client, data)).ConfigureAwait(false);
         }
     }

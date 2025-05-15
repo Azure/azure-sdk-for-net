@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.ExtendedLocations
 
         CustomLocationData IJsonModel<CustomLocationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<CustomLocationData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<CustomLocationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<CustomLocationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<CustomLocationData>(Data, options, AzureResourceManagerExtendedLocationsContext.Default);
 
-        CustomLocationData IPersistableModel<CustomLocationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CustomLocationData>(data, options);
+        CustomLocationData IPersistableModel<CustomLocationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CustomLocationData>(data, options, AzureResourceManagerExtendedLocationsContext.Default);
 
         string IPersistableModel<CustomLocationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<CustomLocationData>)Data).GetFormatFromOptions(options);
     }

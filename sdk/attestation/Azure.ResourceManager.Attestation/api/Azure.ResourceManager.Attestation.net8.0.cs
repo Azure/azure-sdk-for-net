@@ -125,6 +125,12 @@ namespace Azure.ResourceManager.Attestation
         public virtual Azure.Response<Azure.ResourceManager.Attestation.AttestationProviderResource> Update(Azure.ResourceManager.Attestation.Models.AttestationProviderPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Attestation.AttestationProviderResource>> UpdateAsync(Azure.ResourceManager.Attestation.Models.AttestationProviderPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
+    public partial class AzureResourceManagerAttestationContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureResourceManagerAttestationContext() { }
+        public static Azure.ResourceManager.Attestation.AzureResourceManagerAttestationContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
 }
 namespace Azure.ResourceManager.Attestation.Mocking
 {

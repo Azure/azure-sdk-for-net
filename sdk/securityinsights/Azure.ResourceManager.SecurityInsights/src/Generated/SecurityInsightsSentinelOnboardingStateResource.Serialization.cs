@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.SecurityInsights
 
         SecurityInsightsSentinelOnboardingStateData IJsonModel<SecurityInsightsSentinelOnboardingStateData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SecurityInsightsSentinelOnboardingStateData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SecurityInsightsSentinelOnboardingStateData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<SecurityInsightsSentinelOnboardingStateData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SecurityInsightsSentinelOnboardingStateData>(Data, options, AzureResourceManagerSecurityInsightsContext.Default);
 
-        SecurityInsightsSentinelOnboardingStateData IPersistableModel<SecurityInsightsSentinelOnboardingStateData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SecurityInsightsSentinelOnboardingStateData>(data, options);
+        SecurityInsightsSentinelOnboardingStateData IPersistableModel<SecurityInsightsSentinelOnboardingStateData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SecurityInsightsSentinelOnboardingStateData>(data, options, AzureResourceManagerSecurityInsightsContext.Default);
 
         string IPersistableModel<SecurityInsightsSentinelOnboardingStateData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SecurityInsightsSentinelOnboardingStateData>)Data).GetFormatFromOptions(options);
     }

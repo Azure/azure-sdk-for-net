@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.Monitor
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMonitorContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(AutoscaleSettingData)} does not support writing '{options.Format}' format.");
             }

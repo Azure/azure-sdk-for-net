@@ -633,6 +633,12 @@ namespace Azure.AI.Projects
     {
         public AutoFunctionCallOptions(System.Collections.Generic.Dictionary<string, System.Delegate> toolDelegates, int maxRetry) { }
     }
+    public partial class AzureAIProjectsContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureAIProjectsContext() { }
+        public static Azure.AI.Projects.AzureAIProjectsContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct AzureAISearchQueryType : System.IEquatable<Azure.AI.Projects.AzureAISearchQueryType>
     {

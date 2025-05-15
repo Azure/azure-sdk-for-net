@@ -1166,7 +1166,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerApplicationInsightsContext.Default);
                 case "bicep":
                     return SerializeBicep(options);
                 default:

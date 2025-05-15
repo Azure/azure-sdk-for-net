@@ -16,6 +16,8 @@ namespace _Type.Model.Inheritance.SingleDiscriminator
     [PersistableModelProxy(typeof(UnknownDinosaur))]
     public abstract partial class Dinosaur : IJsonModel<Dinosaur>
     {
+        internal Dinosaur() => throw null;
+
         void IJsonModel<Dinosaur>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;

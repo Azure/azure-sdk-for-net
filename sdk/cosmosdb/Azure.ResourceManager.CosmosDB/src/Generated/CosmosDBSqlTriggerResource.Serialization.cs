@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.CosmosDB
 
         CosmosDBSqlTriggerData IJsonModel<CosmosDBSqlTriggerData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<CosmosDBSqlTriggerData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<CosmosDBSqlTriggerData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<CosmosDBSqlTriggerData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<CosmosDBSqlTriggerData>(Data, options, AzureResourceManagerCosmosDBContext.Default);
 
-        CosmosDBSqlTriggerData IPersistableModel<CosmosDBSqlTriggerData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CosmosDBSqlTriggerData>(data, options);
+        CosmosDBSqlTriggerData IPersistableModel<CosmosDBSqlTriggerData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CosmosDBSqlTriggerData>(data, options, AzureResourceManagerCosmosDBContext.Default);
 
         string IPersistableModel<CosmosDBSqlTriggerData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<CosmosDBSqlTriggerData>)Data).GetFormatFromOptions(options);
     }

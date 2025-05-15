@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.SelfHelp
 
         SelfHelpSimplifiedSolutionResource IOperationSource<SelfHelpSimplifiedSolutionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<SelfHelpSimplifiedSolutionData>(response.Content);
+            var data = ModelReaderWriter.Read<SelfHelpSimplifiedSolutionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSelfHelpContext.Default);
             return new SelfHelpSimplifiedSolutionResource(_client, data);
         }
 
         async ValueTask<SelfHelpSimplifiedSolutionResource> IOperationSource<SelfHelpSimplifiedSolutionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<SelfHelpSimplifiedSolutionData>(response.Content);
+            var data = ModelReaderWriter.Read<SelfHelpSimplifiedSolutionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSelfHelpContext.Default);
             return await Task.FromResult(new SelfHelpSimplifiedSolutionResource(_client, data)).ConfigureAwait(false);
         }
     }

@@ -15,6 +15,8 @@ namespace _Type.Property.AdditionalProperties
 {
     public partial class IsUnknownAdditionalPropertiesDerived : IJsonModel<IsUnknownAdditionalPropertiesDerived>
     {
+        internal IsUnknownAdditionalPropertiesDerived() => throw null;
+
         void IJsonModel<IsUnknownAdditionalPropertiesDerived>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;

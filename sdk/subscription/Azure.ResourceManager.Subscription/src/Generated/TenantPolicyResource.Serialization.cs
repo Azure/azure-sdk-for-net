@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Subscription
 
         TenantPolicyData IJsonModel<TenantPolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<TenantPolicyData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<TenantPolicyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<TenantPolicyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<TenantPolicyData>(Data, options, AzureResourceManagerSubscriptionContext.Default);
 
-        TenantPolicyData IPersistableModel<TenantPolicyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<TenantPolicyData>(data, options);
+        TenantPolicyData IPersistableModel<TenantPolicyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<TenantPolicyData>(data, options, AzureResourceManagerSubscriptionContext.Default);
 
         string IPersistableModel<TenantPolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<TenantPolicyData>)Data).GetFormatFromOptions(options);
     }

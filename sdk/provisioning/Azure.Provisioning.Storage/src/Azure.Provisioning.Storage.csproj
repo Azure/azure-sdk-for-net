@@ -18,6 +18,7 @@
     <PackageReference Include="Azure.Storage.Queues" />
     ...
     -->
+    <PackageReference Include="Azure.Provisioning" />
   </ItemGroup>
 
 </Project>

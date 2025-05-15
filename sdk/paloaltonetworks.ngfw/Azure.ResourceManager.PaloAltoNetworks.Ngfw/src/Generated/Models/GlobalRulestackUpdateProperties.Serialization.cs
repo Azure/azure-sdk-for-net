@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerPaloAltoNetworksNgfwContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(GlobalRulestackUpdateProperties)} does not support writing '{options.Format}' format.");
             }

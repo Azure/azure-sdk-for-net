@@ -7,6 +7,8 @@ namespace Azure.Storage.DataMovement.Blobs
 {
     internal class DataMovementBlobConstants
     {
+        internal const string FolderMetadataKey = "hdi_isfolder";
+
         internal class ResourceId
         {
             internal const string BlockBlob = "BlockBlob";

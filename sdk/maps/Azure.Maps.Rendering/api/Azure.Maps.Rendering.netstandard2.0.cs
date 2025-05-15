@@ -1,5 +1,11 @@
 namespace Azure.Maps.Rendering
 {
+    public partial class AzureMapsRenderingContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureMapsRenderingContext() { }
+        public static Azure.Maps.Rendering.AzureMapsRenderingContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class CopyrightCaption
     {
         internal CopyrightCaption() { }

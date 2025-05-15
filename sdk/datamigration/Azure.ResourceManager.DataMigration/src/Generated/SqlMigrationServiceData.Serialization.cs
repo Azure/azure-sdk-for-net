@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.DataMigration
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataMigrationContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(SqlMigrationServiceData)} does not support writing '{options.Format}' format.");
             }

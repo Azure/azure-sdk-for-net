@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.HealthcareApis
 
         HealthcareApisServiceData IJsonModel<HealthcareApisServiceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<HealthcareApisServiceData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<HealthcareApisServiceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<HealthcareApisServiceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<HealthcareApisServiceData>(Data, options, AzureResourceManagerHealthcareApisContext.Default);
 
-        HealthcareApisServiceData IPersistableModel<HealthcareApisServiceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<HealthcareApisServiceData>(data, options);
+        HealthcareApisServiceData IPersistableModel<HealthcareApisServiceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<HealthcareApisServiceData>(data, options, AzureResourceManagerHealthcareApisContext.Default);
 
         string IPersistableModel<HealthcareApisServiceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<HealthcareApisServiceData>)Data).GetFormatFromOptions(options);
     }

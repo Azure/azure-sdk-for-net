@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.BillingBenefits
 
         BillingBenefitsReservationOrderAliasData IJsonModel<BillingBenefitsReservationOrderAliasData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<BillingBenefitsReservationOrderAliasData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<BillingBenefitsReservationOrderAliasData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<BillingBenefitsReservationOrderAliasData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<BillingBenefitsReservationOrderAliasData>(Data, options, AzureResourceManagerBillingBenefitsContext.Default);
 
-        BillingBenefitsReservationOrderAliasData IPersistableModel<BillingBenefitsReservationOrderAliasData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<BillingBenefitsReservationOrderAliasData>(data, options);
+        BillingBenefitsReservationOrderAliasData IPersistableModel<BillingBenefitsReservationOrderAliasData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<BillingBenefitsReservationOrderAliasData>(data, options, AzureResourceManagerBillingBenefitsContext.Default);
 
         string IPersistableModel<BillingBenefitsReservationOrderAliasData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<BillingBenefitsReservationOrderAliasData>)Data).GetFormatFromOptions(options);
     }

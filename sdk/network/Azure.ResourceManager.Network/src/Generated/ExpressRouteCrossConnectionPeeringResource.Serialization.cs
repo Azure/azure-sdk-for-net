@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Network
 
         ExpressRouteCrossConnectionPeeringData IJsonModel<ExpressRouteCrossConnectionPeeringData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ExpressRouteCrossConnectionPeeringData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ExpressRouteCrossConnectionPeeringData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<ExpressRouteCrossConnectionPeeringData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ExpressRouteCrossConnectionPeeringData>(Data, options, AzureResourceManagerNetworkContext.Default);
 
-        ExpressRouteCrossConnectionPeeringData IPersistableModel<ExpressRouteCrossConnectionPeeringData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ExpressRouteCrossConnectionPeeringData>(data, options);
+        ExpressRouteCrossConnectionPeeringData IPersistableModel<ExpressRouteCrossConnectionPeeringData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ExpressRouteCrossConnectionPeeringData>(data, options, AzureResourceManagerNetworkContext.Default);
 
         string IPersistableModel<ExpressRouteCrossConnectionPeeringData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ExpressRouteCrossConnectionPeeringData>)Data).GetFormatFromOptions(options);
     }

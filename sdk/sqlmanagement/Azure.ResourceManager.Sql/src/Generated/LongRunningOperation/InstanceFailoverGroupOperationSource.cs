@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Sql
 
         InstanceFailoverGroupResource IOperationSource<InstanceFailoverGroupResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<InstanceFailoverGroupData>(response.Content);
+            var data = ModelReaderWriter.Read<InstanceFailoverGroupData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSqlContext.Default);
             return new InstanceFailoverGroupResource(_client, data);
         }
 
         async ValueTask<InstanceFailoverGroupResource> IOperationSource<InstanceFailoverGroupResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<InstanceFailoverGroupData>(response.Content);
+            var data = ModelReaderWriter.Read<InstanceFailoverGroupData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSqlContext.Default);
             return await Task.FromResult(new InstanceFailoverGroupResource(_client, data)).ConfigureAwait(false);
         }
     }

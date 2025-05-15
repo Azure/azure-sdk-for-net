@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Media
 
         MediaLiveOutputData IJsonModel<MediaLiveOutputData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MediaLiveOutputData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<MediaLiveOutputData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<MediaLiveOutputData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<MediaLiveOutputData>(Data, options, AzureResourceManagerMediaContext.Default);
 
-        MediaLiveOutputData IPersistableModel<MediaLiveOutputData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MediaLiveOutputData>(data, options);
+        MediaLiveOutputData IPersistableModel<MediaLiveOutputData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MediaLiveOutputData>(data, options, AzureResourceManagerMediaContext.Default);
 
         string IPersistableModel<MediaLiveOutputData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MediaLiveOutputData>)Data).GetFormatFromOptions(options);
     }

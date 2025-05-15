@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.AgriculturePlatform
 
         AgricultureServiceData IJsonModel<AgricultureServiceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AgricultureServiceData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<AgricultureServiceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<AgricultureServiceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AgricultureServiceData>(Data, options, AzureResourceManagerAgriculturePlatformContext.Default);
 
-        AgricultureServiceData IPersistableModel<AgricultureServiceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AgricultureServiceData>(data, options);
+        AgricultureServiceData IPersistableModel<AgricultureServiceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AgricultureServiceData>(data, options, AzureResourceManagerAgriculturePlatformContext.Default);
 
         string IPersistableModel<AgricultureServiceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AgricultureServiceData>)Data).GetFormatFromOptions(options);
     }

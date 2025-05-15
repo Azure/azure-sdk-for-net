@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Relay
 
         RelayNamespaceData IJsonModel<RelayNamespaceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<RelayNamespaceData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<RelayNamespaceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<RelayNamespaceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<RelayNamespaceData>(Data, options, AzureResourceManagerRelayContext.Default);
 
-        RelayNamespaceData IPersistableModel<RelayNamespaceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<RelayNamespaceData>(data, options);
+        RelayNamespaceData IPersistableModel<RelayNamespaceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<RelayNamespaceData>(data, options, AzureResourceManagerRelayContext.Default);
 
         string IPersistableModel<RelayNamespaceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<RelayNamespaceData>)Data).GetFormatFromOptions(options);
     }

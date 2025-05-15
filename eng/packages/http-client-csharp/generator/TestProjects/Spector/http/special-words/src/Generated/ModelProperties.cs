@@ -18,7 +18,7 @@ namespace SpecialWords
     {
         protected ModelProperties() => throw null;
 
-        public HttpPipeline Pipeline => throw null;
+        public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response SameAsModel(RequestContent content, RequestContext context = null) => throw null;
 

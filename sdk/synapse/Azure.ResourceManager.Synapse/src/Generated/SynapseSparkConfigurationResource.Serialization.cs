@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Synapse
 
         SynapseSparkConfigurationData IJsonModel<SynapseSparkConfigurationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SynapseSparkConfigurationData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SynapseSparkConfigurationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<SynapseSparkConfigurationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SynapseSparkConfigurationData>(Data, options, AzureResourceManagerSynapseContext.Default);
 
-        SynapseSparkConfigurationData IPersistableModel<SynapseSparkConfigurationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SynapseSparkConfigurationData>(data, options);
+        SynapseSparkConfigurationData IPersistableModel<SynapseSparkConfigurationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SynapseSparkConfigurationData>(data, options, AzureResourceManagerSynapseContext.Default);
 
         string IPersistableModel<SynapseSparkConfigurationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SynapseSparkConfigurationData>)Data).GetFormatFromOptions(options);
     }

@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.NewRelicObservability
 
         NewRelicObservabilityTagRuleData IJsonModel<NewRelicObservabilityTagRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NewRelicObservabilityTagRuleData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<NewRelicObservabilityTagRuleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<NewRelicObservabilityTagRuleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<NewRelicObservabilityTagRuleData>(Data, options, AzureResourceManagerNewRelicObservabilityContext.Default);
 
-        NewRelicObservabilityTagRuleData IPersistableModel<NewRelicObservabilityTagRuleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NewRelicObservabilityTagRuleData>(data, options);
+        NewRelicObservabilityTagRuleData IPersistableModel<NewRelicObservabilityTagRuleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NewRelicObservabilityTagRuleData>(data, options, AzureResourceManagerNewRelicObservabilityContext.Default);
 
         string IPersistableModel<NewRelicObservabilityTagRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NewRelicObservabilityTagRuleData>)Data).GetFormatFromOptions(options);
     }

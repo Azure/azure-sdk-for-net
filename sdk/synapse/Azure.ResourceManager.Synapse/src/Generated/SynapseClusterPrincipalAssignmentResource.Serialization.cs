@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Synapse
 
         SynapseClusterPrincipalAssignmentData IJsonModel<SynapseClusterPrincipalAssignmentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SynapseClusterPrincipalAssignmentData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SynapseClusterPrincipalAssignmentData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<SynapseClusterPrincipalAssignmentData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SynapseClusterPrincipalAssignmentData>(Data, options, AzureResourceManagerSynapseContext.Default);
 
-        SynapseClusterPrincipalAssignmentData IPersistableModel<SynapseClusterPrincipalAssignmentData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SynapseClusterPrincipalAssignmentData>(data, options);
+        SynapseClusterPrincipalAssignmentData IPersistableModel<SynapseClusterPrincipalAssignmentData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SynapseClusterPrincipalAssignmentData>(data, options, AzureResourceManagerSynapseContext.Default);
 
         string IPersistableModel<SynapseClusterPrincipalAssignmentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SynapseClusterPrincipalAssignmentData>)Data).GetFormatFromOptions(options);
     }

@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Sql
 
         ManagedLedgerDigestUploadData IJsonModel<ManagedLedgerDigestUploadData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ManagedLedgerDigestUploadData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ManagedLedgerDigestUploadData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<ManagedLedgerDigestUploadData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ManagedLedgerDigestUploadData>(Data, options, AzureResourceManagerSqlContext.Default);
 
-        ManagedLedgerDigestUploadData IPersistableModel<ManagedLedgerDigestUploadData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ManagedLedgerDigestUploadData>(data, options);
+        ManagedLedgerDigestUploadData IPersistableModel<ManagedLedgerDigestUploadData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ManagedLedgerDigestUploadData>(data, options, AzureResourceManagerSqlContext.Default);
 
         string IPersistableModel<ManagedLedgerDigestUploadData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ManagedLedgerDigestUploadData>)Data).GetFormatFromOptions(options);
     }

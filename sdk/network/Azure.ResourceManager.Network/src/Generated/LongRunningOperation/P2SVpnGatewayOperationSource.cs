@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Network
 
         P2SVpnGatewayResource IOperationSource<P2SVpnGatewayResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<P2SVpnGatewayData>(response.Content);
+            var data = ModelReaderWriter.Read<P2SVpnGatewayData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkContext.Default);
             return new P2SVpnGatewayResource(_client, data);
         }
 
         async ValueTask<P2SVpnGatewayResource> IOperationSource<P2SVpnGatewayResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<P2SVpnGatewayData>(response.Content);
+            var data = ModelReaderWriter.Read<P2SVpnGatewayData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkContext.Default);
             return await Task.FromResult(new P2SVpnGatewayResource(_client, data)).ConfigureAwait(false);
         }
     }

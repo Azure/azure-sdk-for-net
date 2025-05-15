@@ -6,7 +6,7 @@
       Microsoft Azure Communication Call Automation quickstart - https://learn.microsoft.com/azure/communication-services/quickstarts/voice-video-calling/callflows-for-customer-interactions?pivots=programming-language-csharp
     </Description>
     <AssemblyTitle>Azure Communication CallAutomation Service</AssemblyTitle>
-    <Version>1.4.0-beta.2</Version>
+    <Version>1.5.0-beta.1</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
     <PackageTags>Microsoft Azure Communication CallAutomation Service;Microsoft;Azure;Azure Communication Service;Azure Communication CallAutomation Service;Calling;Communication;$(PackageCommonTags)</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>

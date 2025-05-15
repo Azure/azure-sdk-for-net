@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Network
 
         NetworkSecurityGroupData IJsonModel<NetworkSecurityGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetworkSecurityGroupData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<NetworkSecurityGroupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<NetworkSecurityGroupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<NetworkSecurityGroupData>(Data, options, AzureResourceManagerNetworkContext.Default);
 
-        NetworkSecurityGroupData IPersistableModel<NetworkSecurityGroupData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetworkSecurityGroupData>(data, options);
+        NetworkSecurityGroupData IPersistableModel<NetworkSecurityGroupData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetworkSecurityGroupData>(data, options, AzureResourceManagerNetworkContext.Default);
 
         string IPersistableModel<NetworkSecurityGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetworkSecurityGroupData>)Data).GetFormatFromOptions(options);
     }

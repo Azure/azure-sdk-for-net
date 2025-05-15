@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Authorization
 
         RoleManagementPolicyAssignmentData IJsonModel<RoleManagementPolicyAssignmentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<RoleManagementPolicyAssignmentData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<RoleManagementPolicyAssignmentData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<RoleManagementPolicyAssignmentData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<RoleManagementPolicyAssignmentData>(Data, options, AzureResourceManagerAuthorizationContext.Default);
 
-        RoleManagementPolicyAssignmentData IPersistableModel<RoleManagementPolicyAssignmentData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<RoleManagementPolicyAssignmentData>(data, options);
+        RoleManagementPolicyAssignmentData IPersistableModel<RoleManagementPolicyAssignmentData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<RoleManagementPolicyAssignmentData>(data, options, AzureResourceManagerAuthorizationContext.Default);
 
         string IPersistableModel<RoleManagementPolicyAssignmentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<RoleManagementPolicyAssignmentData>)Data).GetFormatFromOptions(options);
     }

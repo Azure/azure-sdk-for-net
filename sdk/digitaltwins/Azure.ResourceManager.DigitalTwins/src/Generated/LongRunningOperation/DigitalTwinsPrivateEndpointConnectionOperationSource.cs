@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.DigitalTwins
 
         DigitalTwinsPrivateEndpointConnectionResource IOperationSource<DigitalTwinsPrivateEndpointConnectionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DigitalTwinsPrivateEndpointConnectionData>(response.Content);
+            var data = ModelReaderWriter.Read<DigitalTwinsPrivateEndpointConnectionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDigitalTwinsContext.Default);
             return new DigitalTwinsPrivateEndpointConnectionResource(_client, data);
         }
 
         async ValueTask<DigitalTwinsPrivateEndpointConnectionResource> IOperationSource<DigitalTwinsPrivateEndpointConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DigitalTwinsPrivateEndpointConnectionData>(response.Content);
+            var data = ModelReaderWriter.Read<DigitalTwinsPrivateEndpointConnectionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDigitalTwinsContext.Default);
             return await Task.FromResult(new DigitalTwinsPrivateEndpointConnectionResource(_client, data)).ConfigureAwait(false);
         }
     }

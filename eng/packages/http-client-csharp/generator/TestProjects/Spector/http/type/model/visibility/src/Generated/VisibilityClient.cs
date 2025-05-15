@@ -20,7 +20,7 @@ namespace _Type.Model.Visibility
 
         public VisibilityClient(Uri endpoint, VisibilityClientOptions options) => throw null;
 
-        public HttpPipeline Pipeline => throw null;
+        public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response GetModel(int queryProp, RequestContent content, RequestContext context = null) => throw null;
 

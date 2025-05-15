@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.ContainerService
 
         ContainerServiceManagedClusterData IJsonModel<ContainerServiceManagedClusterData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ContainerServiceManagedClusterData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ContainerServiceManagedClusterData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<ContainerServiceManagedClusterData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ContainerServiceManagedClusterData>(Data, options, AzureResourceManagerContainerServiceContext.Default);
 
-        ContainerServiceManagedClusterData IPersistableModel<ContainerServiceManagedClusterData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ContainerServiceManagedClusterData>(data, options);
+        ContainerServiceManagedClusterData IPersistableModel<ContainerServiceManagedClusterData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ContainerServiceManagedClusterData>(data, options, AzureResourceManagerContainerServiceContext.Default);
 
         string IPersistableModel<ContainerServiceManagedClusterData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ContainerServiceManagedClusterData>)Data).GetFormatFromOptions(options);
     }

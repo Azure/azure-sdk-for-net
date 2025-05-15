@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Monitor
 
         DiagnosticSettingsCategoryData IJsonModel<DiagnosticSettingsCategoryData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DiagnosticSettingsCategoryData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<DiagnosticSettingsCategoryData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<DiagnosticSettingsCategoryData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DiagnosticSettingsCategoryData>(Data, options, AzureResourceManagerMonitorContext.Default);
 
-        DiagnosticSettingsCategoryData IPersistableModel<DiagnosticSettingsCategoryData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DiagnosticSettingsCategoryData>(data, options);
+        DiagnosticSettingsCategoryData IPersistableModel<DiagnosticSettingsCategoryData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DiagnosticSettingsCategoryData>(data, options, AzureResourceManagerMonitorContext.Default);
 
         string IPersistableModel<DiagnosticSettingsCategoryData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DiagnosticSettingsCategoryData>)Data).GetFormatFromOptions(options);
     }

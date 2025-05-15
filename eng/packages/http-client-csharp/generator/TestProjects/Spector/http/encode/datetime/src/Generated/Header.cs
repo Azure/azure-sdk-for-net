@@ -18,7 +18,7 @@ namespace Encode.Datetime
     {
         protected Header() => throw null;
 
-        public HttpPipeline Pipeline => throw null;
+        public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response Default(DateTimeOffset value, RequestContext context) => throw null;
 

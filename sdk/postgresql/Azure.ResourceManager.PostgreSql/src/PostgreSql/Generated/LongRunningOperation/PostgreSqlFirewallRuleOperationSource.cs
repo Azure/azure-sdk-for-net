@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.PostgreSql
 
         PostgreSqlFirewallRuleResource IOperationSource<PostgreSqlFirewallRuleResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<PostgreSqlFirewallRuleData>(response.Content);
+            var data = ModelReaderWriter.Read<PostgreSqlFirewallRuleData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerPostgreSqlContext.Default);
             return new PostgreSqlFirewallRuleResource(_client, data);
         }
 
         async ValueTask<PostgreSqlFirewallRuleResource> IOperationSource<PostgreSqlFirewallRuleResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<PostgreSqlFirewallRuleData>(response.Content);
+            var data = ModelReaderWriter.Read<PostgreSqlFirewallRuleData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerPostgreSqlContext.Default);
             return await Task.FromResult(new PostgreSqlFirewallRuleResource(_client, data)).ConfigureAwait(false);
         }
     }
