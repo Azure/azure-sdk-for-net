@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Cdn.Models
             }
             IsDeviceOperator @operator = default;
             bool? negateCondition = default;
-            IList<IsDeviceMatchValue> matchValues = default;
+            IList<IsDeviceMatchConditionMatchValue> matchValues = default;
             IList<PreTransformCategory> transforms = default;
             DeliveryRuleConditionParametersType typeName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -113,10 +113,10 @@ namespace Azure.ResourceManager.Cdn.Models
                     {
                         continue;
                     }
-                    List<IsDeviceMatchValue> array = new List<IsDeviceMatchValue>();
+                    List<IsDeviceMatchConditionMatchValue> array = new List<IsDeviceMatchConditionMatchValue>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(new IsDeviceMatchValue(item.GetString()));
+                        array.Add(new IsDeviceMatchConditionMatchValue(item.GetString()));
                     }
                     matchValues = array;
                     continue;
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 serializedAdditionalRawData,
                 @operator,
                 negateCondition,
-                matchValues ?? new ChangeTrackingList<IsDeviceMatchValue>(),
+                matchValues ?? new ChangeTrackingList<IsDeviceMatchConditionMatchValue>(),
                 transforms ?? new ChangeTrackingList<PreTransformCategory>());
         }
 

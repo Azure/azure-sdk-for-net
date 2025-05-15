@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Cdn.Models
         public IsDeviceMatchCondition(IsDeviceOperator isDeviceOperator)
         {
             IsDeviceOperator = isDeviceOperator;
-            MatchValues = new ChangeTrackingList<IsDeviceMatchValue>();
+            MatchValues = new ChangeTrackingList<IsDeviceMatchConditionMatchValue>();
             Transforms = new ChangeTrackingList<PreTransformCategory>();
             TypeName = DeliveryRuleConditionParametersType.DeliveryRuleIsDeviceConditionParameters;
         }
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// List of transforms
         /// Serialized Name: IsDeviceMatchConditionParameters.transforms
         /// </param>
-        internal IsDeviceMatchCondition(DeliveryRuleConditionParametersType typeName, IDictionary<string, BinaryData> serializedAdditionalRawData, IsDeviceOperator isDeviceOperator, bool? negateCondition, IList<IsDeviceMatchValue> matchValues, IList<PreTransformCategory> transforms) : base(typeName, serializedAdditionalRawData)
+        internal IsDeviceMatchCondition(DeliveryRuleConditionParametersType typeName, IDictionary<string, BinaryData> serializedAdditionalRawData, IsDeviceOperator isDeviceOperator, bool? negateCondition, IList<IsDeviceMatchConditionMatchValue> matchValues, IList<PreTransformCategory> transforms) : base(typeName, serializedAdditionalRawData)
         {
             IsDeviceOperator = isDeviceOperator;
             NegateCondition = negateCondition;
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// The match value for the condition of the delivery rule
         /// Serialized Name: IsDeviceMatchConditionParameters.matchValues
         /// </summary>
-        public IList<IsDeviceMatchValue> MatchValues { get; }
+        public IList<IsDeviceMatchConditionMatchValue> MatchValues { get; }
         /// <summary>
         /// List of transforms
         /// Serialized Name: IsDeviceMatchConditionParameters.transforms

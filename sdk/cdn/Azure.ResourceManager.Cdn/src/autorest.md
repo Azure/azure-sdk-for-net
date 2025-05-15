@@ -355,6 +355,7 @@ rename-mapping:
   DeliveryRuleConditionParameters: DeliveryRuleConditionProperties
   CanMigrateResult.id: ResourceId
   MigrateResult.id: ResourceId
+  IsDeviceMatchValue: IsDeviceMatchConditionMatchValue
 
 directive:
   - from: swagger-document
