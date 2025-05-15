@@ -7,16 +7,16 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    public partial class ClientPortMatchCondition
+    public partial class CookiesMatchCondition
     {
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public ClientPortMatchCondition(ClientPortMatchConditionType type, ClientPortOperator clientPortOperator) : this(clientPortOperator)
+        public CookiesMatchCondition(CookiesMatchConditionType type, CookiesOperator cookiesOperator) : this(cookiesOperator)
         {
-            ClientPortConditionType = type;
+            CookiesMatchConditionType = type;
         }
 
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public ClientPortMatchConditionType ClientPortConditionType
+        public CookiesMatchConditionType CookiesMatchConditionType
         {
             get => new(TypeName.ToString());
             set

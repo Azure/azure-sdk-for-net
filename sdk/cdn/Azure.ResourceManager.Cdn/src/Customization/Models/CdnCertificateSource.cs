@@ -10,13 +10,13 @@ namespace Azure.ResourceManager.Cdn.Models
     public partial class CdnCertificateSource
     {
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public CdnCertificateSource(CdnCertificateSourceType sourceType, CdnManagedCertificateType certificateType) : this(certificateType)
+        public CdnCertificateSource(CdnCertificateSourceType type, CdnManagedCertificateType certificateType) : this(certificateType)
         {
-            SourceType = sourceType;
+            CdnCertificateSourceType = type;
         }
 
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public CdnCertificateSourceType SourceType
+        public CdnCertificateSourceType CdnCertificateSourceType
         {
             get => new(TypeName.ToString());
             set

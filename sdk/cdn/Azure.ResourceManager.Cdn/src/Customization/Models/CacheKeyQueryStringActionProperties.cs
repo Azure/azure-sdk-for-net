@@ -10,13 +10,13 @@ namespace Azure.ResourceManager.Cdn.Models
     public partial class CacheKeyQueryStringActionProperties
     {
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public CacheKeyQueryStringActionProperties(CacheKeyQueryStringActionType actionType, QueryStringBehavior queryStringBehavior) : this(queryStringBehavior)
+        public CacheKeyQueryStringActionProperties(CacheKeyQueryStringActionType type, QueryStringBehavior queryStringBehavior) : this(queryStringBehavior)
         {
-            ActionType = actionType;
+            CacheKeyQueryStringAction = type;
         }
 
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public CacheKeyQueryStringActionType ActionType
+        public CacheKeyQueryStringActionType CacheKeyQueryStringAction
         {
             get => new(TypeName.ToString());
             set
