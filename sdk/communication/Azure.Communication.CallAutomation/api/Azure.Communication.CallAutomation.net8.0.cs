@@ -103,11 +103,11 @@ namespace Azure.Communication.CallAutomation
     public partial class AudioMetadata : Azure.Communication.CallAutomation.StreamingData
     {
         internal AudioMetadata() { }
-        public Azure.Communication.CallAutomation.AudioChannel Channels { get { throw null; } set { } }
-        public string Encoding { get { throw null; } set { } }
-        public int Length { get { throw null; } set { } }
-        public string MediaSubscriptionId { get { throw null; } set { } }
-        public int SampleRate { get { throw null; } set { } }
+        public Azure.Communication.CallAutomation.AudioChannel Channels { get { throw null; } }
+        public string Encoding { get { throw null; } }
+        public int Length { get { throw null; } }
+        public string MediaSubscriptionId { get { throw null; } }
+        public int SampleRate { get { throw null; } }
     }
     public partial class CallAutomationClient
     {
@@ -941,7 +941,7 @@ namespace Azure.Communication.CallAutomation
     }
     public partial class MediaStreamingSubscription
     {
-        public MediaStreamingSubscription(string id, Azure.Communication.CallAutomation.MediaStreamingSubscriptionState? state, System.Collections.Generic.IReadOnlyList<Azure.Communication.CallAutomation.MediaStreamingContent> subscribedContentTypes) { }
+        internal MediaStreamingSubscription() { }
         public string Id { get { throw null; } }
         public Azure.Communication.CallAutomation.MediaStreamingSubscriptionState? State { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.Communication.CallAutomation.MediaStreamingContent> SubscribedContentTypes { get { throw null; } }
@@ -1483,14 +1483,14 @@ namespace Azure.Communication.CallAutomation
     public partial class TranscriptionData : Azure.Communication.CallAutomation.StreamingData
     {
         internal TranscriptionData() { }
-        public double Confidence { get { throw null; } set { } }
-        public System.TimeSpan Duration { get { throw null; } set { } }
-        public Azure.Communication.CallAutomation.TextFormat Format { get { throw null; } set { } }
-        public System.TimeSpan Offset { get { throw null; } set { } }
-        public Azure.Communication.CommunicationIdentifier Participant { get { throw null; } set { } }
-        public Azure.Communication.CallAutomation.TranscriptionResultState ResultState { get { throw null; } set { } }
-        public string Text { get { throw null; } set { } }
-        public System.Collections.Generic.IEnumerable<Azure.Communication.CallAutomation.WordData> Words { get { throw null; } set { } }
+        public double Confidence { get { throw null; } }
+        public System.TimeSpan Duration { get { throw null; } }
+        public Azure.Communication.CallAutomation.TextFormat Format { get { throw null; } }
+        public System.TimeSpan Offset { get { throw null; } }
+        public Azure.Communication.CommunicationIdentifier Participant { get { throw null; } }
+        public Azure.Communication.CallAutomation.TranscriptionResultState ResultState { get { throw null; } }
+        public string Text { get { throw null; } }
+        public System.Collections.Generic.IEnumerable<Azure.Communication.CallAutomation.WordData> Words { get { throw null; } }
     }
     public partial class TranscriptionFailed : Azure.Communication.CallAutomation.CallAutomationEventBase
     {
@@ -1503,13 +1503,13 @@ namespace Azure.Communication.CallAutomation
     {
         public TranscriptionMetadata() { }
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("callConnectionId")]
-        public string CallConnectionId { get { throw null; } set { } }
+        public string CallConnectionId { get { throw null; } }
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("correlationId")]
-        public string CorrelationId { get { throw null; } set { } }
+        public string CorrelationId { get { throw null; } }
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("locale")]
-        public string Locale { get { throw null; } set { } }
+        public string Locale { get { throw null; } }
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("subscriptionId")]
-        public string TranscriptionSubscriptionId { get { throw null; } set { } }
+        public string TranscriptionSubscriptionId { get { throw null; } }
     }
     public partial class TranscriptionOptions
     {
@@ -1678,7 +1678,7 @@ namespace Azure.Communication.CallAutomation
     public partial class UpdateTranscriptionOptions
     {
         public UpdateTranscriptionOptions(string locale) { }
-        public string OperationCallbackUri { get { throw null; } set { } }
+        public System.Uri OperationCallbackUri { get { throw null; } set { } }
         public string OperationContext { get { throw null; } set { } }
         public string SpeechRecognitionModelEndpointId { get { throw null; } set { } }
     }
@@ -1704,10 +1704,10 @@ namespace Azure.Communication.CallAutomation
     {
         internal WordData() { }
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("duration")]
-        public System.TimeSpan Duration { get { throw null; } set { } }
+        public System.TimeSpan Duration { get { throw null; } }
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("offset")]
-        public System.TimeSpan Offset { get { throw null; } set { } }
+        public System.TimeSpan Offset { get { throw null; } }
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("text")]
-        public string Text { get { throw null; } set { } }
+        public string Text { get { throw null; } }
     }
 }

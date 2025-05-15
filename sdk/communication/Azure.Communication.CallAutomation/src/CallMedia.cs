@@ -1394,7 +1394,7 @@ namespace Azure.Communication.CallAutomation
             scope.Start();
             try
             {
-                UpdateTranscriptionRequestInternal request = new(options.Locale, options.SpeechRecognitionModelEndpointId, options.OperationContext, options.OperationCallbackUri);
+                UpdateTranscriptionRequestInternal request = new(options.Locale, options.SpeechRecognitionModelEndpointId, options.OperationContext, options.OperationCallbackUri?.AbsoluteUri);
 
                 return CallMediaRestClient.UpdateTranscription(CallConnectionId, request, cancellationToken);
             }
@@ -1443,7 +1443,7 @@ namespace Azure.Communication.CallAutomation
             scope.Start();
             try
             {
-                UpdateTranscriptionRequestInternal request = new(options.Locale, options.SpeechRecognitionModelEndpointId, options.OperationContext, options.OperationCallbackUri);
+                UpdateTranscriptionRequestInternal request = new(options.Locale, options.SpeechRecognitionModelEndpointId, options.OperationContext, options.OperationCallbackUri?.AbsoluteUri);
 
                 return await CallMediaRestClient.UpdateTranscriptionAsync(CallConnectionId, request, cancellationToken).ConfigureAwait(false);
             }

@@ -6,7 +6,7 @@ using System.Text.Json;
 namespace Azure.Communication.CallAutomation
 {
     /// <summary>
-    /// The answer failed event.
+    /// The failed to answer call event.
     /// </summary>
     public partial class AnswerFailed : CallAutomationEventBase
     {
