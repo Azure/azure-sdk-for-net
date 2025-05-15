@@ -21,13 +21,13 @@ namespace Azure.ResourceManager.Sql
 
         SqlServerCommunicationLinkResource IOperationSource<SqlServerCommunicationLinkResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<SqlServerCommunicationLinkData>(response.Content);
+            var data = ModelReaderWriter.Read<SqlServerCommunicationLinkData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSqlContext.Default);
             return new SqlServerCommunicationLinkResource(_client, data);
         }
 
         async ValueTask<SqlServerCommunicationLinkResource> IOperationSource<SqlServerCommunicationLinkResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<SqlServerCommunicationLinkData>(response.Content);
+            var data = ModelReaderWriter.Read<SqlServerCommunicationLinkData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSqlContext.Default);
             return await Task.FromResult(new SqlServerCommunicationLinkResource(_client, data)).ConfigureAwait(false);
         }
     }

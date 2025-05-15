@@ -40,10 +40,10 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="attachments">An optional list of files attached to the message.</param>
         /// <param name="metadata">Optional metadata as key/value pairs.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>The newly created <see cref="ThreadMessage"/>.</returns>
+        /// <returns>The newly created <see cref="PersistentThreadMessage"/>.</returns>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="threadId"/> or <paramref name="content"/> is null.</exception>
         /// <exception cref="ArgumentException">Thrown when <paramref name="threadId"/> is empty.</exception>
-        public virtual async Task<Response<ThreadMessage>> CreateMessageAsync(
+        public virtual async Task<Response<PersistentThreadMessage>> CreateMessageAsync(
             string threadId,
             MessageRole role,
             string content,
@@ -81,10 +81,10 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="attachments">An optional list of files attached to the message.</param>
         /// <param name="metadata">Optional metadata as key/value pairs.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>The newly created <see cref="ThreadMessage"/>.</returns>
+        /// <returns>The newly created <see cref="PersistentThreadMessage"/>.</returns>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="threadId"/> or <paramref name="content"/> is null.</exception>
         /// <exception cref="ArgumentException">Thrown when <paramref name="threadId"/> is empty.</exception>
-        public virtual Response<ThreadMessage> CreateMessage(
+        public virtual Response<PersistentThreadMessage> CreateMessage(
             string threadId,
             MessageRole role,
             string content,
@@ -122,17 +122,17 @@ namespace Azure.AI.Agents.Persistent
         /// </param>
         /// <param name="contentBlocks">
         /// A collection of specialized content blocks (e.g. <see cref="MessageInputTextBlock"/>,
-        /// <see cref="MessageInputImageUrlBlock"/>, <see cref="MessageInputImageFileBlock"/>, etc.).
+        /// <see cref="MessageInputImageUriBlock"/>, <see cref="MessageInputImageFileBlock"/>, etc.).
         /// </param>
         /// <param name="attachments">An optional list of files attached to the message.</param>
         /// <param name="metadata">Optional metadata as key/value pairs.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>A <see cref="ThreadMessage"/> encapsulating the newly created message.</returns>
+        /// <returns>A <see cref="PersistentThreadMessage"/> encapsulating the newly created message.</returns>
         /// <exception cref="ArgumentNullException">
         /// Thrown if <paramref name="threadId"/> is null or empty, or if <paramref name="contentBlocks"/> is null.
         /// </exception>
         /// <exception cref="ArgumentException">Thrown if <paramref name="threadId"/> is empty.</exception>
-        public virtual async Task<Response<ThreadMessage>> CreateMessageAsync(
+        public virtual async Task<Response<PersistentThreadMessage>> CreateMessageAsync(
             string threadId,
             MessageRole role,
             IEnumerable<MessageInputContentBlock> contentBlocks,
@@ -186,17 +186,17 @@ namespace Azure.AI.Agents.Persistent
         /// </param>
         /// <param name="contentBlocks">
         /// A collection of specialized content blocks (e.g. <see cref="MessageInputTextBlock"/>,
-        /// <see cref="MessageInputImageUrlBlock"/>, <see cref="MessageInputImageFileBlock"/>, etc.).
+        /// <see cref="MessageInputImageUriBlock"/>, <see cref="MessageInputImageFileBlock"/>, etc.).
         /// </param>
         /// <param name="attachments">An optional list of files attached to the message.</param>
         /// <param name="metadata">Optional metadata as key/value pairs.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>A <see cref="ThreadMessage"/> encapsulating the newly created message.</returns>
+        /// <returns>A <see cref="PersistentThreadMessage"/> encapsulating the newly created message.</returns>
         /// <exception cref="ArgumentNullException">
         /// Thrown if <paramref name="threadId"/> is null or empty, or if <paramref name="contentBlocks"/> is null.
         /// </exception>
         /// <exception cref="ArgumentException">Thrown if <paramref name="threadId"/> is empty.</exception>
-        public virtual Response<ThreadMessage> CreateMessage(
+        public virtual Response<PersistentThreadMessage> CreateMessage(
             string threadId,
             MessageRole role,
             IEnumerable<MessageInputContentBlock> contentBlocks,
@@ -248,15 +248,15 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual AsyncPageable<ThreadMessage> GetMessagesAsync(string threadId, string runId = null, int? limit = null, ListSortOrder? order = null, string after = null, string before = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<PersistentThreadMessage> GetMessagesAsync(string threadId, string runId = null, int? limit = null, ListSortOrder? order = null, string after = null, string before = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
 
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage PageRequest(int? pageSizeHint, string continuationToken) => CreateGetMessagesRequest(threadId, runId, limit, order?.ToString(), continuationToken, before, context);
-            return new ContinuationTokenPageableAsync<ThreadMessage>(
+            return new ContinuationTokenPageableAsync<PersistentThreadMessage>(
                 createPageRequest: PageRequest,
-                valueFactory: e => ThreadMessage.DeserializeThreadMessage(e),
+                valueFactory: e => PersistentThreadMessage.DeserializePersistentThreadMessage(e),
                 pipeline: _pipeline,
                 clientDiagnostics: ClientDiagnostics,
                 scopeName: "ThreadMessagesClient.GetMessages",
@@ -274,15 +274,15 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Pageable<ThreadMessage> GetMessages(string threadId, string runId = null, int? limit = null, ListSortOrder? order = null, string after = null, string before = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<PersistentThreadMessage> GetMessages(string threadId, string runId = null, int? limit = null, ListSortOrder? order = null, string after = null, string before = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
 
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage PageRequest(int? pageSizeHint, string continuationToken) => CreateGetMessagesRequest(threadId, runId, limit, order?.ToString(), continuationToken, before, context);
-            return new ContinuationTokenPageable<ThreadMessage>(
+            return new ContinuationTokenPageable<PersistentThreadMessage>(
                 createPageRequest: PageRequest,
-                valueFactory: e => ThreadMessage.DeserializeThreadMessage(e),
+                valueFactory: e => PersistentThreadMessage.DeserializePersistentThreadMessage(e),
                 pipeline: _pipeline,
                 clientDiagnostics: ClientDiagnostics,
                 scopeName: "ThreadMessagesClient.GetMessages",

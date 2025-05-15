@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.StorageSync
 
         StorageSyncRegisteredServerData IJsonModel<StorageSyncRegisteredServerData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<StorageSyncRegisteredServerData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<StorageSyncRegisteredServerData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<StorageSyncRegisteredServerData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<StorageSyncRegisteredServerData>(Data, options, AzureResourceManagerStorageSyncContext.Default);
 
-        StorageSyncRegisteredServerData IPersistableModel<StorageSyncRegisteredServerData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<StorageSyncRegisteredServerData>(data, options);
+        StorageSyncRegisteredServerData IPersistableModel<StorageSyncRegisteredServerData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<StorageSyncRegisteredServerData>(data, options, AzureResourceManagerStorageSyncContext.Default);
 
         string IPersistableModel<StorageSyncRegisteredServerData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<StorageSyncRegisteredServerData>)Data).GetFormatFromOptions(options);
     }

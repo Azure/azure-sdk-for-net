@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.DataBoxEdge
 
         BandwidthScheduleResource IOperationSource<BandwidthScheduleResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<BandwidthScheduleData>(response.Content);
+            var data = ModelReaderWriter.Read<BandwidthScheduleData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDataBoxEdgeContext.Default);
             return new BandwidthScheduleResource(_client, data);
         }
 
         async ValueTask<BandwidthScheduleResource> IOperationSource<BandwidthScheduleResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<BandwidthScheduleData>(response.Content);
+            var data = ModelReaderWriter.Read<BandwidthScheduleData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDataBoxEdgeContext.Default);
             return await Task.FromResult(new BandwidthScheduleResource(_client, data)).ConfigureAwait(false);
         }
     }

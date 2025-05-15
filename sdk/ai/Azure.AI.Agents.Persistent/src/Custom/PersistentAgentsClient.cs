@@ -16,12 +16,12 @@ namespace Azure.AI.Agents.Persistent
         protected PersistentAgentsClient()
         { }
 
-        internal PersistentAgentsClient(PersistentAgentsAdministration client)
+        internal PersistentAgentsClient(PersistentAgentsAdministrationClient client)
         {
             _client = client;
         }
 
-        private PersistentAgentsAdministration _client;
+        private PersistentAgentsAdministrationClient _client;
         /// <summary> Initializes a new instance of AzureAIClient. </summary>
         /// <param name="endpoint"> The Azure AI Foundry project endpoint, in the form `https://&lt;aiservices-id&gt;.services.ai.azure.com/api/projects/&lt;project-name&gt;`</param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
@@ -88,7 +88,7 @@ namespace Azure.AI.Agents.Persistent
             ).ConfigureAwait(false);
         }
 
-        public PersistentAgentsAdministration Administration { get => _client; }
+        public PersistentAgentsAdministrationClient Administration { get => _client; }
         public PersistentAgentsFiles Files { get => _client.GetPersistentAgentsFilesClient(); }
         public ThreadMessages Messages { get => _client.GetThreadMessagesClient();}
         public Threads Threads { get => _client.GetThreadsClient(); }

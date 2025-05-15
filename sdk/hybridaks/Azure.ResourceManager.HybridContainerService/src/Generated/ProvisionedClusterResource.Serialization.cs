@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.HybridContainerService
 
         ProvisionedClusterData IJsonModel<ProvisionedClusterData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ProvisionedClusterData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ProvisionedClusterData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<ProvisionedClusterData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ProvisionedClusterData>(Data, options, AzureResourceManagerHybridContainerServiceContext.Default);
 
-        ProvisionedClusterData IPersistableModel<ProvisionedClusterData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ProvisionedClusterData>(data, options);
+        ProvisionedClusterData IPersistableModel<ProvisionedClusterData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ProvisionedClusterData>(data, options, AzureResourceManagerHybridContainerServiceContext.Default);
 
         string IPersistableModel<ProvisionedClusterData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ProvisionedClusterData>)Data).GetFormatFromOptions(options);
     }

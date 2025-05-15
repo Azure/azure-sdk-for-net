@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.MongoCluster
 
         MongoClusterPrivateEndpointConnectionResourceData IJsonModel<MongoClusterPrivateEndpointConnectionResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MongoClusterPrivateEndpointConnectionResourceData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<MongoClusterPrivateEndpointConnectionResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<MongoClusterPrivateEndpointConnectionResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<MongoClusterPrivateEndpointConnectionResourceData>(Data, options, AzureResourceManagerMongoClusterContext.Default);
 
-        MongoClusterPrivateEndpointConnectionResourceData IPersistableModel<MongoClusterPrivateEndpointConnectionResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MongoClusterPrivateEndpointConnectionResourceData>(data, options);
+        MongoClusterPrivateEndpointConnectionResourceData IPersistableModel<MongoClusterPrivateEndpointConnectionResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MongoClusterPrivateEndpointConnectionResourceData>(data, options, AzureResourceManagerMongoClusterContext.Default);
 
         string IPersistableModel<MongoClusterPrivateEndpointConnectionResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MongoClusterPrivateEndpointConnectionResourceData>)Data).GetFormatFromOptions(options);
     }

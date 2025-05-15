@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.DevCenter
 
         AttachedNetworkConnectionData IJsonModel<AttachedNetworkConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AttachedNetworkConnectionData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<AttachedNetworkConnectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<AttachedNetworkConnectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AttachedNetworkConnectionData>(Data, options, AzureResourceManagerDevCenterContext.Default);
 
-        AttachedNetworkConnectionData IPersistableModel<AttachedNetworkConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AttachedNetworkConnectionData>(data, options);
+        AttachedNetworkConnectionData IPersistableModel<AttachedNetworkConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AttachedNetworkConnectionData>(data, options, AzureResourceManagerDevCenterContext.Default);
 
         string IPersistableModel<AttachedNetworkConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AttachedNetworkConnectionData>)Data).GetFormatFromOptions(options);
     }

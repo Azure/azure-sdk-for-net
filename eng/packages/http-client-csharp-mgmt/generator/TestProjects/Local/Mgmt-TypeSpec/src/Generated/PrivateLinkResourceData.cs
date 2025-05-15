@@ -8,12 +8,16 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace MgmtTypeSpec.Models
 {
     /// <summary> Concrete proxy resource types can be created by aliasing this type using a specific property type. </summary>
-    public partial class PrivateLinkResourceData : ProxyResource
+    internal partial class PrivateLinkResourceData : ResourceData
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="PrivateLinkResourceData"/>. </summary>
         internal PrivateLinkResourceData()
         {
@@ -27,17 +31,15 @@ namespace MgmtTypeSpec.Models
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="name"> The name of the private link associated with the Azure resource. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
-        internal PrivateLinkResourceData(ResourceIdentifier id, string @type, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, PrivateLinkResourceProperties properties, string name, ManagedServiceIdentity identity) : base(id, name, @type, systemData, additionalBinaryDataProperties)
+        internal PrivateLinkResourceData(ResourceIdentifier id, string @type, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, PrivateLinkResourceProperties properties, string name, ManagedServiceIdentity identity) : base(id, name, @type, systemData)
         {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
             Identity = identity;
         }
 
         /// <summary> The resource-specific properties for this resource. </summary>
         public PrivateLinkResourceProperties Properties { get; }
-
-        /// <summary> The name of the private link associated with the Azure resource. </summary>
-        public new string Name => _name ?? default;
 
         /// <summary> The managed service identities assigned to this resource. </summary>
         public ManagedServiceIdentity Identity { get; }

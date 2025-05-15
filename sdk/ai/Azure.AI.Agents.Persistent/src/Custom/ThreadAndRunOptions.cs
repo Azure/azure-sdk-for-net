@@ -18,7 +18,7 @@ namespace Azure.AI.Agents.Persistent
         public float? TopP { get; set; } = null;
         public int? MaxPromptTokens { get; set; } = null;
         public int? MaxCompletionTokens { get; set; } = null;
-        public TruncationObject TruncationStrategy { get; set; } = null;
+        public Truncation TruncationStrategy { get; set; } = null;
         public BinaryData ToolChoice { get; set; } = null;
         public BinaryData ResponseFormat { get; set; } = null;
         public bool? ParallelToolCalls { get; set; } = null;

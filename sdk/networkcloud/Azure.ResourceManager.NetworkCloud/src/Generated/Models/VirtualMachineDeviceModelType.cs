@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static VirtualMachineDeviceModelType T1 { get; } = new VirtualMachineDeviceModelType(T1Value);
         /// <summary> Modern and enhanced device virtualization interface. </summary>
         public static VirtualMachineDeviceModelType T2 { get; } = new VirtualMachineDeviceModelType(T2Value);
-        /// <summary> Improved security and functionality (including TPM and secure boot support). </summary>
+        /// <summary> Improved security and functionality (including TPM and secure boot support). Required for windows 11 and server 2025. </summary>
         public static VirtualMachineDeviceModelType T3 { get; } = new VirtualMachineDeviceModelType(T3Value);
         /// <summary> Determines if two <see cref="VirtualMachineDeviceModelType"/> values are the same. </summary>
         public static bool operator ==(VirtualMachineDeviceModelType left, VirtualMachineDeviceModelType right) => left.Equals(right);

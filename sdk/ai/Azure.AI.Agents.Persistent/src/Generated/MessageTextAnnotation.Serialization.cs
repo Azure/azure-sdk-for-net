@@ -81,7 +81,7 @@ namespace Azure.AI.Agents.Persistent
                 {
                     case "file_citation": return MessageTextFileCitationAnnotation.DeserializeMessageTextFileCitationAnnotation(element, options);
                     case "file_path": return MessageTextFilePathAnnotation.DeserializeMessageTextFilePathAnnotation(element, options);
-                    case "url_citation": return MessageTextUrlCitationAnnotation.DeserializeMessageTextUrlCitationAnnotation(element, options);
+                    case "url_citation": return MessageTextUriCitationAnnotation.DeserializeMessageTextUriCitationAnnotation(element, options);
                 }
             }
             return UnknownMessageTextAnnotation.DeserializeUnknownMessageTextAnnotation(element, options);
@@ -94,7 +94,7 @@ namespace Azure.AI.Agents.Persistent
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureAIAgentsPersistentContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(MessageTextAnnotation)} does not support writing '{options.Format}' format.");
             }

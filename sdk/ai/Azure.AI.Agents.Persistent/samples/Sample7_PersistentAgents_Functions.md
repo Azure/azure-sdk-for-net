@@ -1,6 +1,6 @@
 # Sample using agents with functions in Azure.AI.Agents.Persistent.
 
-In this example we are demonstrating how to use the local functions with the agents. The functions can be used to provide agent with specific information in response to user question.
+In this example we are demonstrating how to use the local functions with the agents. The functions can be used to provide the agent with specific information in response to a user question.
 
 1. First we need to create agent client and read the environment variables that will be used in the next steps.
 ```C# Snippet:AgentsFunctions_CreateClient
@@ -212,12 +212,12 @@ Assert.AreEqual(
 
 Synchronous sample:
 ```C# Snippet:AgentsFunctionsSync_ListMessages
-Pageable<ThreadMessage> messages = client.Messages.GetMessages(
+Pageable<PersistentThreadMessage> messages = client.Messages.GetMessages(
     threadId: thread.Id,
     order: ListSortOrder.Ascending
 );
 
-foreach (ThreadMessage threadMessage in messages)
+foreach (PersistentThreadMessage threadMessage in messages)
 {
     Console.Write($"{threadMessage.CreatedAt:yyyy-MM-dd HH:mm:ss} - {threadMessage.Role,10}: ");
     foreach (MessageContent contentItem in threadMessage.ContentItems)
@@ -237,12 +237,12 @@ foreach (ThreadMessage threadMessage in messages)
 
 Asynchronous sample:
 ```C# Snippet:AgentsFunctions_ListMessages
-AsyncPageable<ThreadMessage> messages = client.Messages.GetMessagesAsync(
+AsyncPageable<PersistentThreadMessage> messages = client.Messages.GetMessagesAsync(
     threadId: thread.Id,
     order: ListSortOrder.Ascending
 );
 
-await foreach (ThreadMessage threadMessage in messages)
+await foreach (PersistentThreadMessage threadMessage in messages)
 {
     Console.Write($"{threadMessage.CreatedAt:yyyy-MM-dd HH:mm:ss} - {threadMessage.Role,10}: ");
     foreach (MessageContent contentItem in threadMessage.ContentItems)

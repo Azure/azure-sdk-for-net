@@ -47,7 +47,7 @@ public partial class Sample_PersistentAgents_Bing_Grounding : SamplesBase<AIAgen
         PersistentAgentThread thread = await agentClient.Threads.CreateThreadAsync();
 
         // Create message to thread
-        ThreadMessage message = await agentClient.Messages.CreateMessageAsync(
+        PersistentThreadMessage message = await agentClient.Messages.CreateMessageAsync(
             thread.Id,
             MessageRole.User,
             "How does wikipedia explain Euler's Identity?");
@@ -69,12 +69,12 @@ public partial class Sample_PersistentAgents_Bing_Grounding : SamplesBase<AIAgen
         #endregion
 
         #region Snippet:AgentsBingGroundingAsync_Print
-        AsyncPageable<ThreadMessage> messages = agentClient.Messages.GetMessagesAsync(
+        AsyncPageable<PersistentThreadMessage> messages = agentClient.Messages.GetMessagesAsync(
             threadId: thread.Id,
             order: ListSortOrder.Ascending
         );
 
-        await foreach (ThreadMessage threadMessage in messages)
+        await foreach (PersistentThreadMessage threadMessage in messages)
         {
             Console.Write($"{threadMessage.CreatedAt:yyyy-MM-dd HH:mm:ss} - {threadMessage.Role,10}: ");
             foreach (MessageContent contentItem in threadMessage.ContentItems)
@@ -86,9 +86,9 @@ public partial class Sample_PersistentAgents_Bing_Grounding : SamplesBase<AIAgen
                     {
                         foreach (MessageTextAnnotation annotation in textItem.Annotations)
                         {
-                            if (annotation is MessageTextUrlCitationAnnotation urlAnnotation)
+                            if (annotation is MessageTextUriCitationAnnotation uriAnnotation)
                             {
-                                response = response.Replace(urlAnnotation.Text, $" [{urlAnnotation.UrlCitation.Title}]({urlAnnotation.UrlCitation.Url})");
+                                response = response.Replace(uriAnnotation.Text, $" [{uriAnnotation.UriCitation.Title}]({uriAnnotation.UriCitation.Uri})");
                             }
                         }
                     }
@@ -138,7 +138,7 @@ public partial class Sample_PersistentAgents_Bing_Grounding : SamplesBase<AIAgen
         PersistentAgentThread thread = agentClient.Threads.CreateThread();
 
         // Create message to thread
-        ThreadMessage message = agentClient.Messages.CreateMessage(
+        PersistentThreadMessage message = agentClient.Messages.CreateMessage(
             thread.Id,
             MessageRole.User,
             "How does wikipedia explain Euler's Identity?");
@@ -160,12 +160,12 @@ public partial class Sample_PersistentAgents_Bing_Grounding : SamplesBase<AIAgen
         #endregion
 
         #region Snippet:AgentsBingGrounding_Print
-        Pageable<ThreadMessage> messages = agentClient.Messages.GetMessages(
+        Pageable<PersistentThreadMessage> messages = agentClient.Messages.GetMessages(
             threadId: thread.Id,
             order: ListSortOrder.Ascending
         );
 
-        foreach (ThreadMessage threadMessage in messages)
+        foreach (PersistentThreadMessage threadMessage in messages)
         {
             Console.Write($"{threadMessage.CreatedAt:yyyy-MM-dd HH:mm:ss} - {threadMessage.Role,10}: ");
             foreach (MessageContent contentItem in threadMessage.ContentItems)
@@ -177,9 +177,9 @@ public partial class Sample_PersistentAgents_Bing_Grounding : SamplesBase<AIAgen
                     {
                         foreach (MessageTextAnnotation annotation in textItem.Annotations)
                         {
-                            if (annotation is MessageTextUrlCitationAnnotation urlAnnotation)
+                            if (annotation is MessageTextUriCitationAnnotation uriAnnotation)
                             {
-                                response = response.Replace(urlAnnotation.Text, $" [{urlAnnotation.UrlCitation.Title}]({urlAnnotation.UrlCitation.Url})");
+                                response = response.Replace(uriAnnotation.Text, $" [{uriAnnotation.UriCitation.Title}]({uriAnnotation.UriCitation.Uri})");
                             }
                         }
                     }
