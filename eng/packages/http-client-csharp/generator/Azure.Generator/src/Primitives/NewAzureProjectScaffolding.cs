@@ -81,7 +81,7 @@ namespace Azure.Generator.Primitives
             "DiagnosticScope.cs",
             "HttpMessageSanitizer.cs",
             "TrimmingAttribute.cs",
-            "NoValueResponseOfT.cs"
+            "NoValueResponseOfT.cs",
         ];
 
         private static readonly IReadOnlyList<string> _lroSharedFiles =
