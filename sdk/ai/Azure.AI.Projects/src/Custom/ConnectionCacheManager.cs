@@ -73,6 +73,7 @@ namespace Azure.AI.Projects
                     return ConnectionType.AzureAISearch;
 
                 case "Azure.AI.Inference.ChatCompletionsClient":
+                case "Azure.AI.Inference.EmbeddingsClient":
                 case "Azure.AI.Inference.ImageEmbeddingsClient":
                     return new ConnectionType("Inference");
 

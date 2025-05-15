@@ -29,7 +29,7 @@ public class Sample_AzureOpenAI : SamplesBase<AIProjectsTestEnvironment>
         var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
 #endif
         AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
-        ChatClient chatClient = projectClient.GetAzureOpenAIChatClient(connectionName: null, apiVersion: null, deploymentName: modelDeploymentName);
+        ChatClient chatClient = projectClient.GetAzureOpenAIChatClient(deploymentName: modelDeploymentName, connectionName: null, apiVersion: null);
 
         ChatCompletion result = chatClient.CompleteChat("List all the rainbow colors");
         Console.WriteLine(result.Content[0].Text);
@@ -49,7 +49,7 @@ public class Sample_AzureOpenAI : SamplesBase<AIProjectsTestEnvironment>
         var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
 #endif
         AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
-        ChatClient chatClient = projectClient.GetAzureOpenAIChatClient(connectionName: null, apiVersion: null, deploymentName: modelDeploymentName);
+        ChatClient chatClient = projectClient.GetAzureOpenAIChatClient(deploymentName: modelDeploymentName, connectionName: null, apiVersion: null);
 
         ChatCompletion result = await chatClient.CompleteChatAsync("List all the rainbow colors");
         Console.WriteLine(result.Content[0].Text);

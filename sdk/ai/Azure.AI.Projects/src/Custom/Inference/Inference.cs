@@ -39,10 +39,6 @@ namespace Azure.AI.Projects
             uri = new Uri($"https://{uri.Host}/models");
 
             AzureAIInferenceClientOptions options = new AzureAIInferenceClientOptions();
-            // OverrideApiVersionPolicy overrideApiVersionPolicy = new OverrideApiVersionPolicy(AIProjectClientOptions.ServiceVersion.V2025_05_15_Preview.ToString());
-            // OverrideApiVersionPolicy overrideApiVersionPolicy = new OverrideApiVersionPolicy("2024-05-01-preview"); // TODO: update to default version or remove this line
-
-            // options.AddPolicy(overrideApiVersionPolicy, HttpPipelinePosition.PerRetry);
             BearerTokenAuthenticationPolicy tokenPolicy = new BearerTokenAuthenticationPolicy((TokenCredential)connection.Credential!, AuthorizationScopes);
             options.AddPolicy(tokenPolicy, HttpPipelinePosition.PerRetry);
 
@@ -78,10 +74,6 @@ namespace Azure.AI.Projects
             uri = new Uri($"https://{uri.Host}/models");
 
             AzureAIInferenceClientOptions options = new AzureAIInferenceClientOptions();
-            // OverrideApiVersionPolicy overrideApiVersionPolicy = new OverrideApiVersionPolicy(AIProjectClientOptions.ServiceVersion.V2025_05_15_Preview.ToString());
-            // OverrideApiVersionPolicy overrideApiVersionPolicy = new OverrideApiVersionPolicy("2025-05-15-preview");
-
-            // options.AddPolicy(overrideApiVersionPolicy, HttpPipelinePosition.PerRetry);
             BearerTokenAuthenticationPolicy tokenPolicy = new BearerTokenAuthenticationPolicy((TokenCredential)connection.Credential!, AuthorizationScopes);
             options.AddPolicy(tokenPolicy, HttpPipelinePosition.PerRetry);
 
@@ -117,7 +109,6 @@ namespace Azure.AI.Projects
             uri = new Uri($"https://{uri.Host}/models");
 
             AzureAIInferenceClientOptions options = new AzureAIInferenceClientOptions();
-            // OverrideApiVersionPolicy overrideApiVersionPolicy = new OverrideApiVersionPolicy(AIProjectClientOptions.ServiceVersion.V2025_05_15_Preview.ToString());
             OverrideApiVersionPolicy overrideApiVersionPolicy = new OverrideApiVersionPolicy("2024-05-01-preview");
 
             options.AddPolicy(overrideApiVersionPolicy, HttpPipelinePosition.PerRetry);
