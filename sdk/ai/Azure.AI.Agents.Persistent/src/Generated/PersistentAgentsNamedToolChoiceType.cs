@@ -25,8 +25,8 @@ namespace Azure.AI.Agents.Persistent
         private const string FunctionValue = "function";
         private const string CodeInterpreterValue = "code_interpreter";
         private const string FileSearchValue = "file_search";
+        private const string BingGroundingValue = "bing_grounding";
         private const string AzureAISearchValue = "azure_ai_search";
-        private const string BingCustomSearchValue = "bing_custom_search";
         private const string ConnectedAgentValue = "connected_agent";
 
         /// <summary> Tool type `function`. </summary>
@@ -35,10 +35,10 @@ namespace Azure.AI.Agents.Persistent
         public static PersistentAgentsNamedToolChoiceType CodeInterpreter { get; } = new PersistentAgentsNamedToolChoiceType(CodeInterpreterValue);
         /// <summary> Tool type `file_search`. </summary>
         public static PersistentAgentsNamedToolChoiceType FileSearch { get; } = new PersistentAgentsNamedToolChoiceType(FileSearchValue);
+        /// <summary> Tool type `bing_grounding`. </summary>
+        public static PersistentAgentsNamedToolChoiceType BingGrounding { get; } = new PersistentAgentsNamedToolChoiceType(BingGroundingValue);
         /// <summary> Tool type `azure_ai_search`. </summary>
         public static PersistentAgentsNamedToolChoiceType AzureAISearch { get; } = new PersistentAgentsNamedToolChoiceType(AzureAISearchValue);
-        /// <summary> Tool type `bing_custom_search`. </summary>
-        public static PersistentAgentsNamedToolChoiceType BingCustomSearch { get; } = new PersistentAgentsNamedToolChoiceType(BingCustomSearchValue);
         /// <summary> Tool type `connected_agent`. </summary>
         public static PersistentAgentsNamedToolChoiceType ConnectedAgent { get; } = new PersistentAgentsNamedToolChoiceType(ConnectedAgentValue);
         /// <summary> Determines if two <see cref="PersistentAgentsNamedToolChoiceType"/> values are the same. </summary>

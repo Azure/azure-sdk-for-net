@@ -1,6 +1,6 @@
 # Release History
 
-## 11.7.0-beta.4 (Unreleased)
+## 11.7.0-beta.5 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,20 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 11.7.0-beta.4 (2025-05-14)
+
+### Features Added
+- Added new `KnowledgeAgent` resource APIs in `SearchIndexClient` and introduced `KnowledgeAgentRetrievalClient` for managing and querying KnowledgeAgents, enabling multi-index grounding for agentic retrieval.
+- Added a method overload for search query to include the `QuerySourceAuthorization` parameter to enforce per-user filtering in queries.
+- Added `Resync` method in `SearchIndexerClient` to resync selective options from the data source to be re-ingested by the indexer.
+- Added `PermissionFilter` to `SearchField`, `SimpleField`, and `SimpleFieldAttribute`, indicating whether the field should be used as a permission filter.
+- Added `PermissionFilterOption` to `SearchIndex`, indicating whether permission filtering is enabled for the index.
+- Added `RerankerBoostedScore` to `SemanticSearchResult` and updated `SemanticConfiguration` with a new `RankingOrder` property.
+- Introduced new skill `ChatCompletionSkill` that integrates with Azure AI Foundry.
+- Enhanced `DocumentIntelligenceLayoutSkill` with new properties: `ChunkingProperties`, `ExtractionOptions`, and `OutputFormat`.
+- Added `IndexerPermissionOptions` to `SearchIndexerDataSourceConnection` to support ingestion of various types of permission data.
+- Introduced sub-field vector support (multi-vectors) via `VectorQuery.Fields`, and added new query option `VectorQuery.PerDocumentVectorLimit`.
 
 ## 11.7.0-beta.3 (2025-03-25)
 

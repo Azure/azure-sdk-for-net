@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.AI.Projects
 {
-    /// <summary> The InternalFileDeletionStatus_object. </summary>
+    /// <summary> The InternalFileDeletionStatusObject. </summary>
     internal readonly partial struct InternalFileDeletionStatusObject : IEquatable<InternalFileDeletionStatusObject>
     {
         private readonly string _value;

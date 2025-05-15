@@ -136,21 +136,21 @@ namespace Azure.AI.Agents.Persistent
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.BingGroundingSearchConfiguration>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.BingGroundingSearchConfiguration>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class BingGroundingSearchConfigurationList : System.ClientModel.Primitives.IJsonModel<Azure.AI.Agents.Persistent.BingGroundingSearchConfigurationList>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.BingGroundingSearchConfigurationList>
+    public partial class BingGroundingSearchToolParameters : System.ClientModel.Primitives.IJsonModel<Azure.AI.Agents.Persistent.BingGroundingSearchToolParameters>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.BingGroundingSearchToolParameters>
     {
-        public BingGroundingSearchConfigurationList(System.Collections.Generic.IEnumerable<Azure.AI.Agents.Persistent.BingGroundingSearchConfiguration> searchConfigurations) { }
+        public BingGroundingSearchToolParameters(System.Collections.Generic.IEnumerable<Azure.AI.Agents.Persistent.BingGroundingSearchConfiguration> searchConfigurations) { }
         public System.Collections.Generic.IList<Azure.AI.Agents.Persistent.BingGroundingSearchConfiguration> SearchConfigurations { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Agents.Persistent.BingGroundingSearchConfigurationList System.ClientModel.Primitives.IJsonModel<Azure.AI.Agents.Persistent.BingGroundingSearchConfigurationList>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Agents.Persistent.BingGroundingSearchConfigurationList>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Agents.Persistent.BingGroundingSearchConfigurationList System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.BingGroundingSearchConfigurationList>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.BingGroundingSearchConfigurationList>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.BingGroundingSearchConfigurationList>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.Agents.Persistent.BingGroundingSearchToolParameters System.ClientModel.Primitives.IJsonModel<Azure.AI.Agents.Persistent.BingGroundingSearchToolParameters>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Agents.Persistent.BingGroundingSearchToolParameters>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Agents.Persistent.BingGroundingSearchToolParameters System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.BingGroundingSearchToolParameters>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.BingGroundingSearchToolParameters>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.BingGroundingSearchToolParameters>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class BingGroundingToolDefinition : Azure.AI.Agents.Persistent.ToolDefinition, System.ClientModel.Primitives.IJsonModel<Azure.AI.Agents.Persistent.BingGroundingToolDefinition>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.BingGroundingToolDefinition>
     {
-        public BingGroundingToolDefinition(Azure.AI.Agents.Persistent.BingGroundingSearchConfigurationList bingGrounding) { }
-        public Azure.AI.Agents.Persistent.BingGroundingSearchConfigurationList BingGrounding { get { throw null; } set { } }
+        public BingGroundingToolDefinition(Azure.AI.Agents.Persistent.BingGroundingSearchToolParameters bingGrounding) { }
+        public Azure.AI.Agents.Persistent.BingGroundingSearchToolParameters BingGrounding { get { throw null; } set { } }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Agents.Persistent.BingGroundingToolDefinition System.ClientModel.Primitives.IJsonModel<Azure.AI.Agents.Persistent.BingGroundingToolDefinition>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.Agents.Persistent.BingGroundingToolDefinition>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -1034,10 +1034,6 @@ namespace Azure.AI.Agents.Persistent
         public PersistentAgentFilePurpose(string value) { throw null; }
         public static Azure.AI.Agents.Persistent.PersistentAgentFilePurpose Agents { get { throw null; } }
         public static Azure.AI.Agents.Persistent.PersistentAgentFilePurpose AgentsOutput { get { throw null; } }
-        public static Azure.AI.Agents.Persistent.PersistentAgentFilePurpose Batch { get { throw null; } }
-        public static Azure.AI.Agents.Persistent.PersistentAgentFilePurpose BatchOutput { get { throw null; } }
-        public static Azure.AI.Agents.Persistent.PersistentAgentFilePurpose FineTune { get { throw null; } }
-        public static Azure.AI.Agents.Persistent.PersistentAgentFilePurpose FineTuneResults { get { throw null; } }
         public static Azure.AI.Agents.Persistent.PersistentAgentFilePurpose Vision { get { throw null; } }
         public bool Equals(Azure.AI.Agents.Persistent.PersistentAgentFilePurpose other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
@@ -1244,7 +1240,7 @@ namespace Azure.AI.Agents.Persistent
         private readonly int _dummyPrimitive;
         public PersistentAgentsNamedToolChoiceType(string value) { throw null; }
         public static Azure.AI.Agents.Persistent.PersistentAgentsNamedToolChoiceType AzureAISearch { get { throw null; } }
-        public static Azure.AI.Agents.Persistent.PersistentAgentsNamedToolChoiceType BingCustomSearch { get { throw null; } }
+        public static Azure.AI.Agents.Persistent.PersistentAgentsNamedToolChoiceType BingGrounding { get { throw null; } }
         public static Azure.AI.Agents.Persistent.PersistentAgentsNamedToolChoiceType CodeInterpreter { get { throw null; } }
         public static Azure.AI.Agents.Persistent.PersistentAgentsNamedToolChoiceType ConnectedAgent { get { throw null; } }
         public static Azure.AI.Agents.Persistent.PersistentAgentsNamedToolChoiceType FileSearch { get { throw null; } }
