@@ -26,5 +26,5 @@ steps:
         arguments: >-
           -ServiceDirectory ${{ parameters.ServiceDirectory }}
           -PackageName ${{ artifact.name }}
-          -ExpectedWarningsFilePath ${{ parameters.ExpectedAOTWarnings | map('match', 'ArtifactName', artifact.name, true) | map('get', 'ExpectedWarningsFilePath') | first('None') }}
+          -ExpectedWarningsFilePath ${{ parameters.ExpectedAOTWarnings }}
         workingDirectory: $(Build.SourcesDirectory)/eng/scripts/compatibility
