@@ -23,7 +23,9 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Keys.Tests
             TestDelegate action = () => builder.ProtectKeysWithAzureKeyVault((string)null, new DefaultAzureCredential());
 
             // Assert
-            Assert.Throws<ArgumentNullException>(action);
+            var ex = Assert.Throws<ArgumentNullException>(action);
+            Assert.NotNull(ex);
+            Assert.AreEqual(ex.ParamName, "keyIdentifier");
         }
 
         [Test]
@@ -37,7 +39,9 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Keys.Tests
             TestDelegate action = () => builder.ProtectKeysWithAzureKeyVault((Uri)null, new DefaultAzureCredential());
 
             // Assert
-            Assert.Throws<ArgumentNullException>(action);
+            var ex = Assert.Throws<ArgumentNullException>(action);
+            Assert.NotNull(ex);
+            Assert.AreEqual(ex.ParamName, "keyIdentifier");
         }
 
         [Test]
@@ -51,7 +55,9 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Keys.Tests
             TestDelegate action = () => builder.ProtectKeysWithAzureKeyVault((string)null, _ => new DefaultAzureCredential());
 
             // Assert
-            Assert.Throws<ArgumentNullException>(action);
+            var ex = Assert.Throws<ArgumentNullException>(action);
+            Assert.NotNull(ex);
+            Assert.AreEqual(ex.ParamName, "keyIdentifier");
         }
 
         [Test]
@@ -65,7 +71,9 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Keys.Tests
             TestDelegate action = () => builder.ProtectKeysWithAzureKeyVault((Uri)null, new KeyResolver(new DefaultAzureCredential()));
 
             // Assert
-            Assert.Throws<ArgumentNullException>(action);
+            var ex = Assert.Throws<ArgumentNullException>(action);
+            Assert.NotNull(ex);
+            Assert.AreEqual(ex.ParamName, "keyIdentifier");
         }
 
         [Test]
@@ -79,7 +87,9 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Keys.Tests
             TestDelegate action = () => builder.ProtectKeysWithAzureKeyVault((string)null, new KeyResolver(new DefaultAzureCredential()));
 
             // Assert
-            Assert.Throws<ArgumentNullException>(action);
+            var ex = Assert.Throws<ArgumentNullException>(action);
+            Assert.NotNull(ex);
+            Assert.AreEqual(ex.ParamName, "keyIdentifier");
         }
 
         [Test]
@@ -93,7 +103,9 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Keys.Tests
             TestDelegate action = () => builder.ProtectKeysWithAzureKeyVault((Uri)null, _ => new DefaultAzureCredential());
 
             // Assert
-            Assert.Throws<ArgumentNullException>(action);
+            var ex = Assert.Throws<ArgumentNullException>(action);
+            Assert.NotNull(ex);
+            Assert.AreEqual(ex.ParamName, "keyIdentifier");
         }
 
         [Test]
@@ -107,7 +119,9 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Keys.Tests
             TestDelegate action = () => builder.ProtectKeysWithAzureKeyVault((Func<IServiceProvider, string>)null, _ => new DefaultAzureCredential());
 
             // Assert
-            Assert.Throws<ArgumentNullException>(action);
+            var ex = Assert.Throws<ArgumentNullException>(action);
+            Assert.NotNull(ex);
+            Assert.AreEqual(ex.ParamName, "keyIdentifierFactory");
         }
 
         [Test]
@@ -121,7 +135,9 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Keys.Tests
             TestDelegate action = () => builder.ProtectKeysWithAzureKeyVault((Func<IServiceProvider, Uri>)null, _ => new DefaultAzureCredential());
 
             // Assert
-            Assert.Throws<ArgumentNullException>(action);
+            var ex = Assert.Throws<ArgumentNullException>(action);
+            Assert.NotNull(ex);
+            Assert.AreEqual(ex.ParamName, "keyIdentifierFactory");
         }
 
         [Test]
@@ -135,7 +151,9 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Keys.Tests
             TestDelegate action = () => builder.ProtectKeysWithAzureKeyVault((string)null, _ => new KeyResolver(new DefaultAzureCredential()));
 
             // Assert
-            Assert.Throws<ArgumentNullException>(action);
+            var ex = Assert.Throws<ArgumentNullException>(action);
+            Assert.NotNull(ex);
+            Assert.AreEqual(ex.ParamName, "keyIdentifier");
         }
 
         [Test]
@@ -149,7 +167,9 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Keys.Tests
             TestDelegate action = () => builder.ProtectKeysWithAzureKeyVault((Uri)null, _ => new KeyResolver(new DefaultAzureCredential()));
 
             // Assert
-            Assert.Throws<ArgumentNullException>(action);
+            var ex = Assert.Throws<ArgumentNullException>(action);
+            Assert.NotNull(ex);
+            Assert.AreEqual(ex.ParamName, "keyIdentifier");
         }
     }
 }

@@ -22,7 +22,9 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Keys.Tests
             TestDelegate action = () => builder.ProtectKeysWithAzureKeyVault("http://www.example.com/dummyKey", (TokenCredential)null);
 
             // Assert
-            Assert.Throws<ArgumentNullException>(action);
+            var ex = Assert.Throws<ArgumentNullException>(action);
+            Assert.NotNull(ex);
+            Assert.AreEqual(ex.ParamName, "tokenCredential");
         }
 
         [Test]
@@ -36,7 +38,9 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Keys.Tests
             TestDelegate action = () => builder.ProtectKeysWithAzureKeyVault(new Uri("http://www.example.com/dummyKey"), (TokenCredential)null);
 
             // Assert
-            Assert.Throws<ArgumentNullException>(action);
+            var ex = Assert.Throws<ArgumentNullException>(action);
+            Assert.NotNull(ex);
+            Assert.AreEqual(ex.ParamName, "tokenCredential");
         }
 
         [Test]
@@ -50,7 +54,9 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Keys.Tests
             TestDelegate action = () => builder.ProtectKeysWithAzureKeyVault("http://www.example.com/dummyKey", (Func<IServiceProvider, TokenCredential>)null);
 
             // Assert
-            Assert.Throws<ArgumentNullException>(action);
+            var ex = Assert.Throws<ArgumentNullException>(action);
+            Assert.NotNull(ex);
+            Assert.AreEqual(ex.ParamName, "tokenCredentialFactory");
         }
 
         [Test]
@@ -64,7 +70,9 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Keys.Tests
             TestDelegate action = () => builder.ProtectKeysWithAzureKeyVault(new Uri("http://www.example.com/dummyKey"), (Func<IServiceProvider, TokenCredential>)null);
 
             // Assert
-            Assert.Throws<ArgumentNullException>(action);
+            var ex = Assert.Throws<ArgumentNullException>(action);
+            Assert.NotNull(ex);
+            Assert.AreEqual(ex.ParamName, "tokenCredentialFactory");
         }
 
         [Test]
@@ -78,7 +86,9 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Keys.Tests
             TestDelegate action = () => builder.ProtectKeysWithAzureKeyVault(_ => "http://www.example.com/dummyKey", null);
 
             // Assert
-            Assert.Throws<ArgumentNullException>(action);
+            var ex = Assert.Throws<ArgumentNullException>(action);
+            Assert.NotNull(ex);
+            Assert.AreEqual(ex.ParamName, "tokenCredentialFactory");
         }
 
         [Test]
@@ -92,7 +102,9 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Keys.Tests
             TestDelegate action = () => builder.ProtectKeysWithAzureKeyVault(_ => new Uri("http://www.example.com/dummyKey"), null);
 
             // Assert
-            Assert.Throws<ArgumentNullException>(action);
+            var ex = Assert.Throws<ArgumentNullException>(action);
+            Assert.NotNull(ex);
+            Assert.AreEqual(ex.ParamName, "tokenCredentialFactory");
         }
     }
 }

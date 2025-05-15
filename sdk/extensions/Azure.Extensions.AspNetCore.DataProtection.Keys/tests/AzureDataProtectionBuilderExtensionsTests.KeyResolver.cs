@@ -23,7 +23,9 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Keys.Tests
             TestDelegate action = () => builder.ProtectKeysWithAzureKeyVault("http://www.example.com/dummyKey", (KeyResolver)null);
 
             // Assert
-            Assert.Throws<ArgumentNullException>(action);
+            var ex = Assert.Throws<ArgumentNullException>(action);
+            Assert.NotNull(ex);
+            Assert.AreEqual(ex.ParamName, "keyResolver");
         }
 
         [Test]
@@ -37,21 +39,27 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Keys.Tests
             TestDelegate action = () => builder.ProtectKeysWithAzureKeyVault(new Uri("http://www.example.com/dummyKey"), (KeyResolver)null);
 
             // Assert
-            Assert.Throws<ArgumentNullException>(action);
+            var ex = Assert.Throws<ArgumentNullException>(action);
+            Assert.NotNull(ex);
+            Assert.AreEqual(ex.ParamName, "keyResolver");
         }
 
         [Test]
-        public void ProtectKeysWithAzureKeyVault_With_String_And_KeyResolverFunc_Throws_Exception_When_KeyResolverFactory_Is_Null()
+        public void
+            ProtectKeysWithAzureKeyVault_With_String_And_KeyResolverFunc_Throws_Exception_When_KeyResolverFactory_Is_Null()
         {
             // Arrange
             var serviceCollection = new ServiceCollection();
             var builder = serviceCollection.AddDataProtection();
 
             // Act
-            TestDelegate action = () => builder.ProtectKeysWithAzureKeyVault("http://www.example.com/dummyKey", (Func<IServiceProvider, IKeyEncryptionKeyResolver>)null);
+            TestDelegate action = () => builder.ProtectKeysWithAzureKeyVault("http://www.example.com/dummyKey",
+                (Func<IServiceProvider, IKeyEncryptionKeyResolver>)null);
 
             // Assert
-            Assert.Throws<ArgumentNullException>(action);
+            var ex = Assert.Throws<ArgumentNullException>(action);
+            Assert.NotNull(ex);
+            Assert.AreEqual(ex.ParamName, "keyResolverFactory");
         }
 
         [Test]
@@ -65,7 +73,9 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Keys.Tests
             TestDelegate action = () => builder.ProtectKeysWithAzureKeyVault(new Uri("http://www.example.com/dummyKey"), (Func<IServiceProvider, IKeyEncryptionKeyResolver>)null);
 
             // Assert
-            Assert.Throws<ArgumentNullException>(action);
+            var ex = Assert.Throws<ArgumentNullException>(action);
+            Assert.NotNull(ex);
+            Assert.AreEqual(ex.ParamName, "keyResolverFactory");
         }
     }
 }
