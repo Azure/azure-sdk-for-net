@@ -12,8 +12,24 @@ using NUnit.Framework;
 
 namespace Azure.Extensions.AspNetCore.DataProtection.Keys.Tests
 {
-    public class AzureDataProtectionBuilderExtensionsTests
+    public partial class AzureDataProtectionBuilderExtensionsTests
     {
+        [Test]
+        public void ProtectKeysWithAzureKeyVault_With_String_And_Credential_Uses_AzureKeyVaultXmlEncryptor()
+        {
+            // Arrange
+            var serviceCollection = new ServiceCollection();
+            var builder = serviceCollection.AddDataProtection();
+
+            // Act
+            builder.ProtectKeysWithAzureKeyVault("http://www.example.com/dummyKey", new DefaultAzureCredential());
+            var services = serviceCollection.BuildServiceProvider();
+
+            // Assert
+            var options = services.GetRequiredService<IOptions<KeyManagementOptions>>();
+            Assert.IsInstanceOf<AzureKeyVaultXmlEncryptor>(options.Value.XmlEncryptor);
+        }
+
         [Test]
         public void ProtectKeysWithAzureKeyVault_With_Uri_And_Credential_Uses_AzureKeyVaultXmlEncryptor()
         {
@@ -127,7 +143,7 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Keys.Tests
         }
 
         [Test]
-        public void ProtectKeysWithAzureKeyVault_With_String_And_KeyResolverFunc_Uses_AzureKeyVaultXmlEncryptor2()
+        public void ProtectKeysWithAzureKeyVault_With_String_And_KeyResolverFunc_Uses_AzureKeyVaultXmlEncryptor()
         {
             // Arrange
             var serviceCollection = new ServiceCollection();
@@ -143,7 +159,7 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Keys.Tests
         }
 
         [Test]
-        public void ProtectKeysWithAzureKeyVault_With_Uri_And_KeyResolverFunc_Uses_AzureKeyVaultXmlEncryptor2()
+        public void ProtectKeysWithAzureKeyVault_With_Uri_And_KeyResolverFunc_Uses_AzureKeyVaultXmlEncryptor()
         {
             // Arrange
             var serviceCollection = new ServiceCollection();

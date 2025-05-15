@@ -27,6 +27,18 @@ namespace Microsoft.AspNetCore.DataProtection
         /// <param name="keyIdentifier">The Azure Key Vault key identifier used for key encryption.</param>
         /// <param name="tokenCredential">The token credential to use for authentication.</param>
         /// <returns>The value <paramref name="builder"/>.</returns>
+        public static IDataProtectionBuilder ProtectKeysWithAzureKeyVault(this IDataProtectionBuilder builder, string keyIdentifier, TokenCredential tokenCredential)
+        {
+            return builder.ProtectKeysWithAzureKeyVault(keyIdentifier, new KeyResolver(tokenCredential));
+        }
+
+        /// <summary>
+        /// Configures the data protection system to protect keys with specified key in Azure KeyVault.
+        /// </summary>
+        /// <param name="builder">The builder instance to modify.</param>
+        /// <param name="keyIdentifier">The Azure Key Vault key identifier used for key encryption.</param>
+        /// <param name="tokenCredential">The token credential to use for authentication.</param>
+        /// <returns>The value <paramref name="builder"/>.</returns>
         public static IDataProtectionBuilder ProtectKeysWithAzureKeyVault(this IDataProtectionBuilder builder, Uri keyIdentifier, TokenCredential tokenCredential)
         {
             Argument.AssertNotNull(keyIdentifier, nameof(keyIdentifier));
@@ -117,10 +129,7 @@ namespace Microsoft.AspNetCore.DataProtection
         /// <returns>The value <paramref name="builder"/>.</returns>
         public static IDataProtectionBuilder ProtectKeysWithAzureKeyVault(this IDataProtectionBuilder builder, string keyIdentifier, Func<IServiceProvider, TokenCredential> tokenCredentialFactory)
         {
-            Argument.AssertNotNull(builder, nameof(builder));
-            Argument.AssertNotNull(tokenCredentialFactory, nameof(tokenCredentialFactory));
             Argument.AssertNotNullOrEmpty(keyIdentifier, nameof(keyIdentifier));
-
             return builder.ProtectKeysWithAzureKeyVault(_ => keyIdentifier, tokenCredentialFactory);
         }
 
