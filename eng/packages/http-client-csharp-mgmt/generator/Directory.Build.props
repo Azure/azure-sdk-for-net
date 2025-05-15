@@ -3,7 +3,7 @@
     <Nullable>enable</Nullable>
     <ImportDefaultReferences>false</ImportDefaultReferences>
     <IsShippingLibrary>false</IsShippingLibrary>
-    <NoWarn>$(NoWarn);CS8002</NoWarn>
+    <NoWarn>$(NoWarn);CS8002;NU1608</NoWarn>
   </PropertyGroup>
   <!--
   Add any shared properties you want for the projects under this package directory that need to be set before the auto imported Directory.Build.props
