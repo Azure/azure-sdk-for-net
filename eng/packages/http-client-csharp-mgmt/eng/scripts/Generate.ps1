@@ -66,7 +66,7 @@ if ($null -eq $filter) {
     }
 
     # Write the launch settings to the launchSettings.json file
-    $mgmtLaunchSettingsPath = Join-Path $mgmtSolutionDir "Azure.Generator.Mgmt" "src" "Properties" "launchSettings.json"
+    $mgmtLaunchSettingsPath = Join-Path $mgmtSolutionDir "Azure.Generator.Management" "src" "Properties" "launchSettings.json"
     # Write the settings to JSON and normalize line endings to Unix style (LF)
     $mgmtSortedLaunchSettings | ConvertTo-Json | ForEach-Object { ($_ -replace "`r`n", "`n") + "`n" } | Set-Content -NoNewline $mgmtLaunchSettingsPath
 }

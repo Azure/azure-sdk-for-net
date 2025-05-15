@@ -46,7 +46,7 @@ public partial class Sample_PersistentAgents_Vector_Store_Batch_File_Search : Sa
             {file.Id, Path.GetFileName(file.Filename)}
         };
 
-        VectorStoreFileBatch uploadTask = await client.VectorStoreFileBatches.CreateVectorStoreFileBatchAsync(
+        VectorStoreFileBatch uploadTask = await client.VectorStores.CreateVectorStoreFileBatchAsync(
             vectorStoreId: vectorStore.Id,
             fileIds: [file.Id]
         );
@@ -134,7 +134,7 @@ public partial class Sample_PersistentAgents_Vector_Store_Batch_File_Search : Sa
             {file.Id, Path.GetFileName(file.Filename)}
         };
 
-        var uploadTask = client.VectorStoreFileBatches.CreateVectorStoreFileBatch(
+        var uploadTask = client.VectorStores.CreateVectorStoreFileBatch(
             vectorStoreId: vectorStore.Id,
             fileIds: [file.Id]
         );

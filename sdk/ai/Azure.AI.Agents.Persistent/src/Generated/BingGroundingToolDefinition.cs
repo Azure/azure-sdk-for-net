@@ -14,9 +14,9 @@ namespace Azure.AI.Agents.Persistent
     public partial class BingGroundingToolDefinition : ToolDefinition
     {
         /// <summary> Initializes a new instance of <see cref="BingGroundingToolDefinition"/>. </summary>
-        /// <param name="bingGrounding"> The list of search configurations used by the bing grounding tool. </param>
+        /// <param name="bingGrounding"> The bing grounding search tool parameters. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="bingGrounding"/> is null. </exception>
-        public BingGroundingToolDefinition(BingGroundingSearchConfigurationList bingGrounding)
+        public BingGroundingToolDefinition(BingGroundingSearchToolParameters bingGrounding)
         {
             Argument.AssertNotNull(bingGrounding, nameof(bingGrounding));
 
@@ -27,8 +27,8 @@ namespace Azure.AI.Agents.Persistent
         /// <summary> Initializes a new instance of <see cref="BingGroundingToolDefinition"/>. </summary>
         /// <param name="type"> The object type. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="bingGrounding"> The list of search configurations used by the bing grounding tool. </param>
-        internal BingGroundingToolDefinition(string type, IDictionary<string, BinaryData> serializedAdditionalRawData, BingGroundingSearchConfigurationList bingGrounding) : base(type, serializedAdditionalRawData)
+        /// <param name="bingGrounding"> The bing grounding search tool parameters. </param>
+        internal BingGroundingToolDefinition(string type, IDictionary<string, BinaryData> serializedAdditionalRawData, BingGroundingSearchToolParameters bingGrounding) : base(type, serializedAdditionalRawData)
         {
             BingGrounding = bingGrounding;
         }
@@ -38,7 +38,7 @@ namespace Azure.AI.Agents.Persistent
         {
         }
 
-        /// <summary> The list of search configurations used by the bing grounding tool. </summary>
-        public BingGroundingSearchConfigurationList BingGrounding { get; set; }
+        /// <summary> The bing grounding search tool parameters. </summary>
+        public BingGroundingSearchToolParameters BingGrounding { get; set; }
     }
 }
