@@ -197,7 +197,8 @@
     {
       "filename": "**/sdk/ai/**/*.cs",
       "words": [
-        "Ubinary"
+        "Ubinary",
+        "Vlatest"
       ]
     },
     {
