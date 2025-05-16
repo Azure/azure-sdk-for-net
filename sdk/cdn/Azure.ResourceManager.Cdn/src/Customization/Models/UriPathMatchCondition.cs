@@ -10,9 +10,9 @@ namespace Azure.ResourceManager.Cdn.Models
     public partial class UriPathMatchCondition
     {
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public UriPathMatchCondition(UriPathMatchConditionType type, UriPathOperator uriPathOperator) : this(uriPathOperator)
+        public UriPathMatchCondition(UriPathMatchConditionType conditionType, UriPathOperator uriPathOperator) : this(uriPathOperator)
         {
-            UriPathMatchConditionType = type;
+            UriPathMatchConditionType = conditionType;
         }
 
         [EditorBrowsable(EditorBrowsableState.Never)]

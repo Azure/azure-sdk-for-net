@@ -10,9 +10,9 @@ namespace Azure.ResourceManager.Cdn.Models
     public partial class HttpVersionMatchCondition
     {
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public HttpVersionMatchCondition(HttpVersionMatchConditionType type, HttpVersionOperator httpVersionOperator) : this(httpVersionOperator)
+        public HttpVersionMatchCondition(HttpVersionMatchConditionType conditionType, HttpVersionOperator httpVersionOperator) : this(httpVersionOperator)
         {
-            HttpVersionMatchConditionType = type;
+            HttpVersionMatchConditionType = conditionType;
         }
 
         [EditorBrowsable(EditorBrowsableState.Never)]

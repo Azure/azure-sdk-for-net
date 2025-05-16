@@ -10,9 +10,9 @@ namespace Azure.ResourceManager.Cdn.Models
     public partial class RequestUriMatchCondition
     {
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public RequestUriMatchCondition(RequestUriMatchConditionType type, RequestUriOperator requestUriOperator) : this(requestUriOperator)
+        public RequestUriMatchCondition(RequestUriMatchConditionType conditionType, RequestUriOperator requestUriOperator) : this(requestUriOperator)
         {
-            RequestUriMatchConditionType = type;
+            RequestUriMatchConditionType = conditionType;
         }
 
         [EditorBrowsable(EditorBrowsableState.Never)]

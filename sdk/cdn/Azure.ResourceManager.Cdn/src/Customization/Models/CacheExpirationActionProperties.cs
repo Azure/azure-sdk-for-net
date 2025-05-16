@@ -10,9 +10,9 @@ namespace Azure.ResourceManager.Cdn.Models
     public partial class CacheExpirationActionProperties
     {
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public CacheExpirationActionProperties(CacheExpirationActionType type, CacheBehaviorSetting cacheBehavior, CdnCacheLevel cacheType) : this(cacheBehavior, cacheType)
+        public CacheExpirationActionProperties(CacheExpirationActionType actionType, CacheBehaviorSetting cacheBehavior, CdnCacheLevel cacheType) : this(cacheBehavior, cacheType)
         {
-            CacheExpirationAction = type;
+            CacheExpirationAction = actionType;
         }
 
         [EditorBrowsable(EditorBrowsableState.Never)]

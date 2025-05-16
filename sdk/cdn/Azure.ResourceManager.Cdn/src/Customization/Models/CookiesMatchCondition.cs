@@ -10,9 +10,9 @@ namespace Azure.ResourceManager.Cdn.Models
     public partial class CookiesMatchCondition
     {
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public CookiesMatchCondition(CookiesMatchConditionType type, CookiesOperator cookiesOperator) : this(cookiesOperator)
+        public CookiesMatchCondition(CookiesMatchConditionType conditionType, CookiesOperator cookiesOperator) : this(cookiesOperator)
         {
-            CookiesMatchConditionType = type;
+            CookiesMatchConditionType = conditionType;
         }
 
         [EditorBrowsable(EditorBrowsableState.Never)]

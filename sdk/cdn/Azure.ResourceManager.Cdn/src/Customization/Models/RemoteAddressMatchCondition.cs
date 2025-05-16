@@ -10,9 +10,9 @@ namespace Azure.ResourceManager.Cdn.Models
     public partial class RemoteAddressMatchCondition
     {
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public RemoteAddressMatchCondition(RemoteAddressMatchConditionType type, string remoteAddressOperator) : this(remoteAddressOperator)
+        public RemoteAddressMatchCondition(RemoteAddressMatchConditionType conditionType, string remoteAddressOperator) : this(remoteAddressOperator)
         {
-            RemoteAddressMatchConditionType = type;
+            RemoteAddressMatchConditionType = conditionType;
         }
 
         [EditorBrowsable(EditorBrowsableState.Never)]

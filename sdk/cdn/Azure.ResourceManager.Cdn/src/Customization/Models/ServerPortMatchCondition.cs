@@ -10,9 +10,9 @@ namespace Azure.ResourceManager.Cdn.Models
     public partial class ServerPortMatchCondition
     {
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public ServerPortMatchCondition(ServerPortMatchConditionType type, ServerPortOperator serverPortOperator) : this(serverPortOperator)
+        public ServerPortMatchCondition(ServerPortMatchConditionType conditionType, ServerPortOperator serverPortOperator) : this(serverPortOperator)
         {
-            ServerPortMatchConditionType = type;
+            ServerPortMatchConditionType = conditionType;
         }
 
         [EditorBrowsable(EditorBrowsableState.Never)]

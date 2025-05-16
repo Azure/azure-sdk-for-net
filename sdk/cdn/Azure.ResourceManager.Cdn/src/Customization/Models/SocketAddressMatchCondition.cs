@@ -10,9 +10,9 @@ namespace Azure.ResourceManager.Cdn.Models
     public partial class SocketAddressMatchCondition
     {
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public SocketAddressMatchCondition(SocketAddressMatchConditionType type, SocketAddressOperator socketAddressOperator) : this(socketAddressOperator)
+        public SocketAddressMatchCondition(SocketAddressMatchConditionType conditionType, SocketAddressOperator socketAddressOperator) : this(socketAddressOperator)
         {
-            SocketAddressMatchConditionType = type;
+            SocketAddressMatchConditionType = conditionType;
         }
 
         [EditorBrowsable(EditorBrowsableState.Never)]

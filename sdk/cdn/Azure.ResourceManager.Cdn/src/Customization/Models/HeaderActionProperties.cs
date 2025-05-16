@@ -9,9 +9,9 @@ namespace Azure.ResourceManager.Cdn.Models
 {
     public partial class HeaderActionProperties {
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public HeaderActionProperties(HeaderActionType type, HeaderAction headerAction, string headerName) : this(headerAction, headerName)
+        public HeaderActionProperties(HeaderActionType actionType, HeaderAction headerAction, string headerName) : this(headerAction, headerName)
         {
-            HeaderActionType = type;
+            HeaderActionType = actionType;
         }
 
         [EditorBrowsable(EditorBrowsableState.Never)]

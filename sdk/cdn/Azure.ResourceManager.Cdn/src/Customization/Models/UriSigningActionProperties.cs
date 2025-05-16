@@ -10,9 +10,9 @@ namespace Azure.ResourceManager.Cdn.Models
     public partial class UriSigningActionProperties
     {
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public UriSigningActionProperties(UriSigningActionType type) : this()
+        public UriSigningActionProperties(UriSigningActionType actionType) : this()
         {
-            UriSigningActionType = type;
+            UriSigningActionType = actionType;
         }
 
         [EditorBrowsable(EditorBrowsableState.Never)]

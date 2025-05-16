@@ -10,9 +10,9 @@ namespace Azure.ResourceManager.Cdn.Models
     public partial class UriRedirectActionProperties
     {
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public UriRedirectActionProperties(UriRedirectActionType type, RedirectType redirectType) : this(redirectType)
+        public UriRedirectActionProperties(UriRedirectActionType conditionType, RedirectType redirectType) : this(redirectType)
         {
-            UriRedirectActionType = type;
+            UriRedirectActionType = conditionType;
         }
 
         [EditorBrowsable(EditorBrowsableState.Never)]

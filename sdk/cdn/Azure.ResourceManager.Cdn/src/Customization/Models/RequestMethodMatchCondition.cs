@@ -10,9 +10,9 @@ namespace Azure.ResourceManager.Cdn.Models
     public partial class RequestMethodMatchCondition
     {
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public RequestMethodMatchCondition(RequestMethodMatchConditionType type, RequestMethodOperator requestMethodOperator) : this(requestMethodOperator)
+        public RequestMethodMatchCondition(RequestMethodMatchConditionType conditionType, RequestMethodOperator requestMethodOperator) : this(requestMethodOperator)
         {
-            RequestMethodMatchConditionType = type;
+            RequestMethodMatchConditionType = conditionType;
         }
 
         [EditorBrowsable(EditorBrowsableState.Never)]

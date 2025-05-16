@@ -10,9 +10,9 @@ namespace Azure.ResourceManager.Cdn.Models
     public partial class RequestBodyMatchCondition
     {
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public RequestBodyMatchCondition(RequestBodyMatchConditionType type, RequestBodyOperator requestBodyOperator) : this(requestBodyOperator)
+        public RequestBodyMatchCondition(RequestBodyMatchConditionType conditionType, RequestBodyOperator requestBodyOperator) : this(requestBodyOperator)
         {
-            RequestBodyMatchConditionType = type;
+            RequestBodyMatchConditionType = conditionType;
         }
 
         [EditorBrowsable(EditorBrowsableState.Never)]

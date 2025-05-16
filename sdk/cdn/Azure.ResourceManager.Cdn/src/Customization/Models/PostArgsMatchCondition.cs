@@ -10,9 +10,9 @@ namespace Azure.ResourceManager.Cdn.Models
     public partial class PostArgsMatchCondition
     {
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public PostArgsMatchCondition(PostArgsMatchConditionType type, PostArgsOperator postArgsOperator) : this(postArgsOperator)
+        public PostArgsMatchCondition(PostArgsMatchConditionType conditionType, PostArgsOperator postArgsOperator) : this(postArgsOperator)
         {
-            PostArgsMatchConditionType = type;
+            PostArgsMatchConditionType = conditionType;
         }
 
         [EditorBrowsable(EditorBrowsableState.Never)]

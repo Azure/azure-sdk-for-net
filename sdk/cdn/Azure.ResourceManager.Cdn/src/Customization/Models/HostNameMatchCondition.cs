@@ -10,9 +10,9 @@ namespace Azure.ResourceManager.Cdn.Models
    public partial class HostNameMatchCondition
     {
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public HostNameMatchCondition(HostNameMatchConditionType type, HostNameOperator hostNameOperator) : this(hostNameOperator)
+        public HostNameMatchCondition(HostNameMatchConditionType conditionType, HostNameOperator hostNameOperator) : this(hostNameOperator)
         {
-            HostNameMatchConditionType = type;
+            HostNameMatchConditionType = conditionType;
         }
 
         [EditorBrowsable(EditorBrowsableState.Never)]

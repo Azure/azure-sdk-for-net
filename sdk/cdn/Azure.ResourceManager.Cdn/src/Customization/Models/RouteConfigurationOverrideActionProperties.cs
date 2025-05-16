@@ -10,9 +10,9 @@ namespace Azure.ResourceManager.Cdn.Models
     public partial class RouteConfigurationOverrideActionProperties
     {
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public RouteConfigurationOverrideActionProperties(RouteConfigurationOverrideActionType type) : this()
+        public RouteConfigurationOverrideActionProperties(RouteConfigurationOverrideActionType actionType) : this()
         {
-            RouteConfigurationOverrideActionType = type;
+            RouteConfigurationOverrideActionType = actionType;
         }
 
         [EditorBrowsable(EditorBrowsableState.Never)]

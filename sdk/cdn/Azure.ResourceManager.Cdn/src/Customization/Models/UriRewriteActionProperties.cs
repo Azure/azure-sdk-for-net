@@ -10,9 +10,9 @@ namespace Azure.ResourceManager.Cdn.Models
     public partial class UriRewriteActionProperties
     {
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public UriRewriteActionProperties(UriRewriteActionType type, string sourcePattern, string destination) : this(sourcePattern, destination)
+        public UriRewriteActionProperties(UriRewriteActionType conditionType, string sourcePattern, string destination) : this(sourcePattern, destination)
         {
-            UriRewriteActionType = type;
+            UriRewriteActionType = conditionType;
         }
 
         [EditorBrowsable(EditorBrowsableState.Never)]

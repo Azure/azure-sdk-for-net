@@ -11,9 +11,9 @@ namespace Azure.ResourceManager.Cdn.Models
     public partial class OriginGroupOverrideActionProperties
     {
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public OriginGroupOverrideActionProperties(OriginGroupOverrideActionType type, WritableSubResource originGroup) : this(originGroup)
+        public OriginGroupOverrideActionProperties(OriginGroupOverrideActionType actionType, WritableSubResource originGroup) : this(originGroup)
         {
-            OriginGroupOverrideActionType = type;
+            OriginGroupOverrideActionType = actionType;
         }
 
         [EditorBrowsable(EditorBrowsableState.Never)]

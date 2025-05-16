@@ -10,9 +10,9 @@ namespace Azure.ResourceManager.Cdn.Models
     public partial class QueryStringMatchCondition
     {
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public QueryStringMatchCondition(QueryStringMatchConditionType type, QueryStringOperator queryStringOperator) : this(queryStringOperator)
+        public QueryStringMatchCondition(QueryStringMatchConditionType conditionType, QueryStringOperator queryStringOperator) : this(queryStringOperator)
         {
-            QueryStringMatchConditionType = type;
+            QueryStringMatchConditionType = conditionType;
         }
 
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -10,9 +10,9 @@ namespace Azure.ResourceManager.Cdn.Models
     public partial class UriFileNameMatchCondition
     {
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public UriFileNameMatchCondition(UriFileNameMatchConditionType type, UriFileNameOperator uriFileNameOperator) : this(uriFileNameOperator)
+        public UriFileNameMatchCondition(UriFileNameMatchConditionType conditionType, UriFileNameOperator uriFileNameOperator) : this(uriFileNameOperator)
         {
-            UriFileNameMatchConditionType = type;
+            UriFileNameMatchConditionType = conditionType;
         }
 
         [EditorBrowsable(EditorBrowsableState.Never)]

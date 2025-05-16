@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Cdn.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public KeyVaultCertificateSource
             (
-            KeyVaultCertificateSourceType type,
+            KeyVaultCertificateSourceType sourceType,
             string subscriptionId,
             string resourceGroupName,
             string vaultName,
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 deleteRule
             )
         {
-            KeyVaultCertificateSourceType = type;
+            KeyVaultCertificateSourceType = sourceType;
         }
 
         [EditorBrowsable(EditorBrowsableState.Never)]
