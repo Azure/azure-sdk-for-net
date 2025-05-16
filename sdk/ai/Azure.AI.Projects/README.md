@@ -1,5 +1,5 @@
 # Azure AI Projects client library for .NET
-Use the AI Projects client library to:
+The AI Projects client library (in preview) is part of the Azure AI Foundry SDK and provides easy access to resources in your Azure AI Foundry Project. Use it to:
 
 * **Create and run Agents** using the `GetPersistentAgentsClient` method on the client.
 * **Get an AzureOpenAI client** using the `GetAzureOpenAIChatClient` method on the client.
