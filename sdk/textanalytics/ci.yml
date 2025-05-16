@@ -31,3 +31,6 @@ extends:
       safeName: AzureAITextAnalytics
       triggeringPaths:
       - Azure.AI.TextAnalytics.Legacy.Shared
+    ExpectedAOTWarnings:
+    - ArtifactName: Azure.AI.TextAnalytics
+      ExpectedWarningsFilepath: Azure.AI.TextAnalytics/tests/compatibility/ExpectedWarnings.txt

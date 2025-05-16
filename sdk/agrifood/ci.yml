@@ -33,3 +33,6 @@ extends:
     Artifacts:
     - name: Azure.Verticals.AgriFood.Farming
       safeName: AzureVerticalsAgriFoodFarming
+    ExpectedAOTWarnings:
+    - ArtifactName: Azure.Verticals.AgriFood.Farming
+      ExpectedWarningsFilepath: "Azure.Verticals.AgriFood.Farming/tests/compatibility/ExpectedWarnings.txt"

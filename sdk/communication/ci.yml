@@ -61,3 +61,18 @@ extends:
       skipReleaseStage: true
     - name: Azure.Communication.ProgrammableConnectivity
       safeName: AzureCommunicationProgrammableConnectivity
+    ExpectedAOTWarnings:
+    - ArtifactName: Azure.Communication.JobRouter
+      ExpectedWarningsFilepath: "Azure.Communication.JobRouter/tests/compatibility/ExpectedWarnings.txt"
+    - ArtifactName: Azure.Communication.CallAutomation
+      ExpectedWarningsFilepath: "Azure.Communication.CallAutomation/tests/compatibility/ExpectedWarnings.txt"
+    - ArtifactName: Azure.Communication.CallingServer
+      ExpectedWarningsFilepath: "Azure.Communication.CallingServer/tests/compatibility/ExpectedWarnings.txt"
+    - ArtifactName: Azure.Communication.Messages
+      ExpectedWarningsFilepath: "Azure.Communication.Messages/tests/compatibility/ExpectedWarnings.txt"
+    - ArtifactName: Azure.Communication.Common
+      ExpectedWarningsFilepath: "Azure.Communication.Common/tests/compatibility/ExpectedWarnings.txt"
+    - ArtifactName: Azure.Communication.Email
+      ExpectedWarningsFilepath: "Azure.Communication.Email/tests/compatibility/ExpectedWarnings.txt"
+    - ArtifactName: Azure.Communication.ProgrammableConnectivity
+      ExpectedWarningsFilepath: "Azure.Communication.ProgrammableConnectivity/tests/compatibility/ExpectedWarnings.txt"

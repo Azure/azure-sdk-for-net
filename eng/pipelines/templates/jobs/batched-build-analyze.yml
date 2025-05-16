@@ -13,8 +13,8 @@ parameters:
     default: all
   - name: CheckAOTCompat
     type: boolean
-    default: false
-  - name: AOTTestInputs
+    default: true
+  - name: ExpectedAOTWarnings
     type: object
     default: []
   - name: BuildSnippets
@@ -70,7 +70,7 @@ jobs:
           ServiceDirectory: ${{ parameters.ServiceDirectory }}
           SDKType: ${{ parameters.SDKType }}
           CheckAOTCompat: ${{ parameters.CheckAOTCompat }}
-          AOTTestInputs: ${{ parameters.AOTTestInputs }}
+          ExpectedAOTWarnings: ${{ parameters.ExpectedAOTWarnings }}
 
   - job:
     displayName: "Analyze"

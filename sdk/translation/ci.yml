@@ -30,3 +30,8 @@ extends:
       safeName: AzureAITranslationText
     - name: Azure.AI.Translation.Document
       safeName: AzureAITranslationDocument
+    ExpectedAOTWarnings:
+    - ArtifactName: Azure.AI.Translation.Text
+      ExpectedWarningsFilepath: Azure.AI.Translation.Text/tests/compatibility/ExpectedWarnings.txt
+    - ArtifactName: Azure.AI.Translation.Document
+      ExpectedWarningsFilepath: Azure.AI.Translation.Document/tests/compatibility/ExpectedWarnings.txt

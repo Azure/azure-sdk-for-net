@@ -34,3 +34,6 @@ extends:
     Artifacts:
     - name: Azure.Data.Tables
       safeName: AzureDataTables
+    ExpectedAOTWarnings:
+    - ArtifactName: Azure.Data.Tables
+      ExpectedWarningsFilepath: Azure.Data.Tables/tests/compatibility/ExpectedWarnings.txt

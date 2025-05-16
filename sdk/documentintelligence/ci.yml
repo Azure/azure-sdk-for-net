@@ -29,3 +29,6 @@ extends:
     Artifacts:
     - name: Azure.AI.DocumentIntelligence
       safeName: AzureAIDocumentIntelligence
+    ExpectedAOTWarnings:
+    - ArtifactName: Azure.AI.DocumentIntelligence
+      ExpectedWarningsFilepath: "Azure.AI.DocumentIntelligence/tests/compatibility/ExpectedWarnings.txt"

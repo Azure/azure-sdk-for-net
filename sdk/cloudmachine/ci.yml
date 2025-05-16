@@ -51,4 +51,10 @@ extends:
       safeName: AzureProjectsAIFoundry
     - name: Azure.Projects.Tsp
       safeName: AzureProjectsTsp
-
+    ExpectedAOTWarnings:
+    - ArtifactName: Azure.Projects
+      ExpectedWarningsFilepath: "Azure.Projects/tests/compatibility/ExpectedWarnings.txt"
+    - ArtifactName: Azure.Projects.Web
+      ExpectedWarningsFilepath: "Azure.Projects.Web/tests/compatibility/ExpectedWarnings.txt"
+    - ArtifactName: Azure.Projects.AI
+      ExpectedWarningsFilepath: "Azure.Projects.AI/tests/compatibility/ExpectedWarnings.txt"
