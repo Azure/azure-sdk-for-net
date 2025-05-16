@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.EventHubs
 {
     public partial class EventHubsNamespaceAuthorizationRuleResource : IJsonModel<EventHubsAuthorizationRuleData>
     {
+        private static EventHubsAuthorizationRuleData s_dataDeserializationInstance;
+        private static EventHubsAuthorizationRuleData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<EventHubsAuthorizationRuleData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<EventHubsAuthorizationRuleData>)Data).Write(writer, options);
 
-        EventHubsAuthorizationRuleData IJsonModel<EventHubsAuthorizationRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<EventHubsAuthorizationRuleData>)Data).Create(ref reader, options);
+        EventHubsAuthorizationRuleData IJsonModel<EventHubsAuthorizationRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<EventHubsAuthorizationRuleData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<EventHubsAuthorizationRuleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<EventHubsAuthorizationRuleData>(Data, options, AzureResourceManagerEventHubsContext.Default);
 
         EventHubsAuthorizationRuleData IPersistableModel<EventHubsAuthorizationRuleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<EventHubsAuthorizationRuleData>(data, options, AzureResourceManagerEventHubsContext.Default);
 
-        string IPersistableModel<EventHubsAuthorizationRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<EventHubsAuthorizationRuleData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<EventHubsAuthorizationRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<EventHubsAuthorizationRuleData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

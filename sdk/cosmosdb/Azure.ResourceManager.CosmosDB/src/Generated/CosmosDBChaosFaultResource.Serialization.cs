@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.CosmosDB
 {
     public partial class CosmosDBChaosFaultResource : IJsonModel<CosmosDBChaosFaultResourceData>
     {
+        private static CosmosDBChaosFaultResourceData s_dataDeserializationInstance;
+        private static CosmosDBChaosFaultResourceData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<CosmosDBChaosFaultResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<CosmosDBChaosFaultResourceData>)Data).Write(writer, options);
 
-        CosmosDBChaosFaultResourceData IJsonModel<CosmosDBChaosFaultResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<CosmosDBChaosFaultResourceData>)Data).Create(ref reader, options);
+        CosmosDBChaosFaultResourceData IJsonModel<CosmosDBChaosFaultResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<CosmosDBChaosFaultResourceData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<CosmosDBChaosFaultResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<CosmosDBChaosFaultResourceData>(Data, options, AzureResourceManagerCosmosDBContext.Default);
 
         CosmosDBChaosFaultResourceData IPersistableModel<CosmosDBChaosFaultResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CosmosDBChaosFaultResourceData>(data, options, AzureResourceManagerCosmosDBContext.Default);
 
-        string IPersistableModel<CosmosDBChaosFaultResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<CosmosDBChaosFaultResourceData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<CosmosDBChaosFaultResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<CosmosDBChaosFaultResourceData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

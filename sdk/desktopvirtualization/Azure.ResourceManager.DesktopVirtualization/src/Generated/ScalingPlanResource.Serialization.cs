@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.DesktopVirtualization
 {
     public partial class ScalingPlanResource : IJsonModel<ScalingPlanData>
     {
+        private static ScalingPlanData s_dataDeserializationInstance;
+        private static ScalingPlanData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<ScalingPlanData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ScalingPlanData>)Data).Write(writer, options);
 
-        ScalingPlanData IJsonModel<ScalingPlanData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ScalingPlanData>)Data).Create(ref reader, options);
+        ScalingPlanData IJsonModel<ScalingPlanData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ScalingPlanData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<ScalingPlanData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ScalingPlanData>(Data, options, AzureResourceManagerDesktopVirtualizationContext.Default);
 
         ScalingPlanData IPersistableModel<ScalingPlanData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ScalingPlanData>(data, options, AzureResourceManagerDesktopVirtualizationContext.Default);
 
-        string IPersistableModel<ScalingPlanData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ScalingPlanData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<ScalingPlanData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ScalingPlanData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

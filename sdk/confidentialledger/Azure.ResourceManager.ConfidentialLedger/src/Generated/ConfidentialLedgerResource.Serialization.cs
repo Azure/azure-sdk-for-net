@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.ConfidentialLedger
 {
     public partial class ConfidentialLedgerResource : IJsonModel<ConfidentialLedgerData>
     {
+        private static ConfidentialLedgerData s_dataDeserializationInstance;
+        private static ConfidentialLedgerData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<ConfidentialLedgerData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ConfidentialLedgerData>)Data).Write(writer, options);
 
-        ConfidentialLedgerData IJsonModel<ConfidentialLedgerData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ConfidentialLedgerData>)Data).Create(ref reader, options);
+        ConfidentialLedgerData IJsonModel<ConfidentialLedgerData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ConfidentialLedgerData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<ConfidentialLedgerData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ConfidentialLedgerData>(Data, options, AzureResourceManagerConfidentialLedgerContext.Default);
 
         ConfidentialLedgerData IPersistableModel<ConfidentialLedgerData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ConfidentialLedgerData>(data, options, AzureResourceManagerConfidentialLedgerContext.Default);
 
-        string IPersistableModel<ConfidentialLedgerData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ConfidentialLedgerData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<ConfidentialLedgerData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ConfidentialLedgerData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

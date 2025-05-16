@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.SecurityCenter
 {
     public partial class IotSecurityAggregatedAlertResource : IJsonModel<IotSecurityAggregatedAlertData>
     {
+        private static IotSecurityAggregatedAlertData s_dataDeserializationInstance;
+        private static IotSecurityAggregatedAlertData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<IotSecurityAggregatedAlertData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<IotSecurityAggregatedAlertData>)Data).Write(writer, options);
 
-        IotSecurityAggregatedAlertData IJsonModel<IotSecurityAggregatedAlertData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<IotSecurityAggregatedAlertData>)Data).Create(ref reader, options);
+        IotSecurityAggregatedAlertData IJsonModel<IotSecurityAggregatedAlertData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<IotSecurityAggregatedAlertData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<IotSecurityAggregatedAlertData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<IotSecurityAggregatedAlertData>(Data, options, AzureResourceManagerSecurityCenterContext.Default);
 
         IotSecurityAggregatedAlertData IPersistableModel<IotSecurityAggregatedAlertData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<IotSecurityAggregatedAlertData>(data, options, AzureResourceManagerSecurityCenterContext.Default);
 
-        string IPersistableModel<IotSecurityAggregatedAlertData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<IotSecurityAggregatedAlertData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<IotSecurityAggregatedAlertData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<IotSecurityAggregatedAlertData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

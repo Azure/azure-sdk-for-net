@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.AppConfiguration
 {
     public partial class AppConfigurationSnapshotResource : IJsonModel<AppConfigurationSnapshotData>
     {
+        private static AppConfigurationSnapshotData s_dataDeserializationInstance;
+        private static AppConfigurationSnapshotData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<AppConfigurationSnapshotData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<AppConfigurationSnapshotData>)Data).Write(writer, options);
 
-        AppConfigurationSnapshotData IJsonModel<AppConfigurationSnapshotData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AppConfigurationSnapshotData>)Data).Create(ref reader, options);
+        AppConfigurationSnapshotData IJsonModel<AppConfigurationSnapshotData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AppConfigurationSnapshotData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<AppConfigurationSnapshotData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AppConfigurationSnapshotData>(Data, options, AzureResourceManagerAppConfigurationContext.Default);
 
         AppConfigurationSnapshotData IPersistableModel<AppConfigurationSnapshotData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AppConfigurationSnapshotData>(data, options, AzureResourceManagerAppConfigurationContext.Default);
 
-        string IPersistableModel<AppConfigurationSnapshotData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AppConfigurationSnapshotData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<AppConfigurationSnapshotData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AppConfigurationSnapshotData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

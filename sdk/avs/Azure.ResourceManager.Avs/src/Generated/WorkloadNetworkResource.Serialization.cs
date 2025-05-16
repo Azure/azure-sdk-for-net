@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Avs
 {
     public partial class WorkloadNetworkResource : IJsonModel<WorkloadNetworkData>
     {
+        private static WorkloadNetworkData s_dataDeserializationInstance;
+        private static WorkloadNetworkData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<WorkloadNetworkData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<WorkloadNetworkData>)Data).Write(writer, options);
 
-        WorkloadNetworkData IJsonModel<WorkloadNetworkData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<WorkloadNetworkData>)Data).Create(ref reader, options);
+        WorkloadNetworkData IJsonModel<WorkloadNetworkData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<WorkloadNetworkData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<WorkloadNetworkData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<WorkloadNetworkData>(Data, options, AzureResourceManagerAvsContext.Default);
 
         WorkloadNetworkData IPersistableModel<WorkloadNetworkData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<WorkloadNetworkData>(data, options, AzureResourceManagerAvsContext.Default);
 
-        string IPersistableModel<WorkloadNetworkData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<WorkloadNetworkData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<WorkloadNetworkData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<WorkloadNetworkData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

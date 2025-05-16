@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Purview
 {
     public partial class PurviewAccountResource : IJsonModel<PurviewAccountData>
     {
+        private static PurviewAccountData s_dataDeserializationInstance;
+        private static PurviewAccountData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<PurviewAccountData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<PurviewAccountData>)Data).Write(writer, options);
 
-        PurviewAccountData IJsonModel<PurviewAccountData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PurviewAccountData>)Data).Create(ref reader, options);
+        PurviewAccountData IJsonModel<PurviewAccountData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PurviewAccountData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<PurviewAccountData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<PurviewAccountData>(Data, options, AzureResourceManagerPurviewContext.Default);
 
         PurviewAccountData IPersistableModel<PurviewAccountData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PurviewAccountData>(data, options, AzureResourceManagerPurviewContext.Default);
 
-        string IPersistableModel<PurviewAccountData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PurviewAccountData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<PurviewAccountData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PurviewAccountData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

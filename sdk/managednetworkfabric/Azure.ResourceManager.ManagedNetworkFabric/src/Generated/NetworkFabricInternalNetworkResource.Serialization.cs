@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
 {
     public partial class NetworkFabricInternalNetworkResource : IJsonModel<NetworkFabricInternalNetworkData>
     {
+        private static NetworkFabricInternalNetworkData s_dataDeserializationInstance;
+        private static NetworkFabricInternalNetworkData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<NetworkFabricInternalNetworkData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<NetworkFabricInternalNetworkData>)Data).Write(writer, options);
 
-        NetworkFabricInternalNetworkData IJsonModel<NetworkFabricInternalNetworkData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetworkFabricInternalNetworkData>)Data).Create(ref reader, options);
+        NetworkFabricInternalNetworkData IJsonModel<NetworkFabricInternalNetworkData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetworkFabricInternalNetworkData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<NetworkFabricInternalNetworkData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<NetworkFabricInternalNetworkData>(Data, options, AzureResourceManagerManagedNetworkFabricContext.Default);
 
         NetworkFabricInternalNetworkData IPersistableModel<NetworkFabricInternalNetworkData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetworkFabricInternalNetworkData>(data, options, AzureResourceManagerManagedNetworkFabricContext.Default);
 
-        string IPersistableModel<NetworkFabricInternalNetworkData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetworkFabricInternalNetworkData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<NetworkFabricInternalNetworkData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetworkFabricInternalNetworkData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }
