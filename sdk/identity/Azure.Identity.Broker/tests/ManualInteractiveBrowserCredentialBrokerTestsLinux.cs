@@ -41,7 +41,7 @@ namespace Azure.Identity.Broker.Tests
         [Ignore("This test is an integration test which can only be run with user interaction")]
         public async Task AuthenticateWithBrokerWithDefaultBrokerAccountLinux()
         {
-            IntPtr parentWindowHandle = IntPtr.Zero;
+            IntPtr parentWindowHandle = XRootWindow(XOpenDisplay(null), 0);
 
             using var _listener = new TestEventListener();
             _listener.EnableEvents(AzureIdentityEventSource.Singleton, EventLevel.Verbose); // Capture all event levels
