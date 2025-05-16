@@ -11,7 +11,7 @@ namespace: Azure.ResourceManager.DnsResolver
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
-  sample: true
+  sample: false # Current issue with virtual network dns resolver resouce autogen that is being addressed in autorest repo https://github.com/Azure/autorest.csharp/issues/5134
   output-folder: $(this-folder)/../samples/Generated
   clear-output-folder: true
 skip-csproj: true
