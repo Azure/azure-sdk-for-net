@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.9 (Unreleased)
+## 1.0.0-beta.9 (2025-05-16)
 
 ### Features Added
 * `Deployments` methods to enumerate AI models deployed to your AI Foundry Project.
