@@ -9,7 +9,7 @@ name: Azure.AI.Projects samples for .NET
 description: Samples for the Azure.AI.Projects client library.
 ---
 <!-- TODO: update the links once the samples are in main (currently linking to feature/azure-ai-projects-1dp branch) -->
-# Azure.AI.Projects Samples
+# Azure.AI.Projects samples
 
 | Sample | Description |
 | ------ | ----------- |
@@ -20,7 +20,7 @@ description: Samples for the Azure.AI.Projects client library.
 | [Sample5_Evaluations](https://github.com/Azure/azure-sdk-for-net/blob/feature/azure-ai-projects-1dp/sdk/ai/Azure.AI.Projects/samples/Sample5_Evaluations.md) | Sample for evaluations functions. |
 | [Sample8_Telemetry](https://github.com/Azure/azure-sdk-for-net/blob/feature/azure-ai-projects-1dp/sdk/ai/Azure.AI.Projects/samples/Sample8_Telemetry.md) | Sample for telemetry functions. |
 
-# Azure.AI.Projects Samples for Agents and Inference Extensions
+# Azure.AI.Projects samples for Agents and Inference extensions
 
 | Sample | Description |
 | ------ | ----------- |

@@ -18,7 +18,6 @@
     <PackageReference Include="Azure.Storage.Blobs" />
     <PackageReference Include="Azure.AI.Inference" />
     <PackageReference Include="Azure.AI.OpenAI" />
-    <PackageReference Include="System.ClientModel" />
   </ItemGroup>
 
   <!-- Shared source from Azure.Core -->
