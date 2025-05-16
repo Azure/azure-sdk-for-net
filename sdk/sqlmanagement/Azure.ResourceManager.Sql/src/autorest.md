@@ -4,9 +4,9 @@ Run `dotnet build /t:GenerateCode` to generate code.
 
 ``` yaml
 azure-arm: true
-tag: package-2023-08
+tag: package-preview-2024-05
 require: https://github.com/Azure/azure-rest-api-specs/blob/8c2c4da647cc9dbe6317a5961138fd058ed78401/specification/sql/resource-manager/readme.md
-#package-2023-08
+#package-preview-2024-05
 namespace: Azure.ResourceManager.Sql
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
@@ -367,7 +367,7 @@ rename-mapping:
   TrustScope: ServerTrustGroupPropertiesTrustScopesItem
   GeoBackupPolicy.properties.state: GeoBackupPolicyState
   DistributedAvailabilityGroup: SqlDistributedAvailabilityGroup
-  RecommendedAction.properties.details: AdditionalDetails
+  RecommendedAction.properties.details: ActionDetails
   ManagedDatabase.properties.crossSubscriptionSourceDatabaseId: -|arm-id
   ManagedDatabase.properties.crossSubscriptionRestorableDroppedDatabaseId: -|arm-id
   ManagedDatabaseUpdate.properties.crossSubscriptionSourceDatabaseId: -|arm-id
@@ -398,6 +398,10 @@ rename-mapping:
   ReplicaSynchronizationHealth: SqlReplicaSynchronizationHealth
   ReplicationModeType: SqlReplicationModeType
   RoleChangeType: DistributedAvailabilityGroupRoleChangeType
+  InstancePoolOperation: SqlInstancePoolOperation
+  ManagedInstance.properties.totalMemoryMB: TotalMemoryInMB
+  ManagedInstanceUpdate.properties.totalMemoryMB: TotalMemoryInMB
+  ErrorType: SqlInstancePoolOperationErrorType
 
 prompted-enum-values:
   - Default
