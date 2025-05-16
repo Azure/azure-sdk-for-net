@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static void DeserializeResourceUri(JsonProperty property, ref Uri keyVaultUri)
+        private static void DeserializeResourceUri(JsonProperty property, ref Uri resourceUri)
         {
             if (property.Value.ValueKind != JsonValueKind.Null)
             {
-                if (Uri.TryCreate(property.Value.GetString(), UriKind.Absolute, out keyVaultUri))
+                if (Uri.TryCreate(property.Value.GetString(), UriKind.Absolute, out resourceUri))
                 {
-                    keyVaultUri = new Uri(property.Value.GetString(), UriKind.Absolute);
+                    resourceUri = new Uri(property.Value.GetString(), UriKind.Absolute);
                 }
                 else
                 {
-                    keyVaultUri = new Uri(property.Value.GetString(), UriKind.Relative);
+                    resourceUri = new Uri(property.Value.GetString(), UriKind.Relative);
                 }
             }
         }
