@@ -1305,7 +1305,7 @@ namespace Azure.ResourceManager.Cdn.Models
     public partial class CacheKeyQueryStringActionProperties : Azure.ResourceManager.Cdn.Models.DeliveryRuleActionProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.CacheKeyQueryStringActionProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.CacheKeyQueryStringActionProperties>
     {
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public CacheKeyQueryStringActionProperties(Azure.ResourceManager.Cdn.Models.CacheKeyQueryStringActionType type, Azure.ResourceManager.Cdn.Models.QueryStringBehavior queryStringBehavior) { }
+        public CacheKeyQueryStringActionProperties(Azure.ResourceManager.Cdn.Models.CacheKeyQueryStringActionType actionType, Azure.ResourceManager.Cdn.Models.QueryStringBehavior queryStringBehavior) { }
         public CacheKeyQueryStringActionProperties(Azure.ResourceManager.Cdn.Models.QueryStringBehavior queryStringBehavior) { }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public Azure.ResourceManager.Cdn.Models.CacheKeyQueryStringActionType ActionType { get { throw null; } set { } }
@@ -1398,7 +1398,7 @@ namespace Azure.ResourceManager.Cdn.Models
         public static bool operator !=(Azure.ResourceManager.Cdn.Models.CdnCacheLevel left, Azure.ResourceManager.Cdn.Models.CdnCacheLevel right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class CdnCertificateSource : Azure.ResourceManager.Cdn.Models.CertificateSourceParameters, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.CdnCertificateSource>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.CdnCertificateSource>
+    public partial class CdnCertificateSource : Azure.ResourceManager.Cdn.Models.CertificateSourceProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.CdnCertificateSource>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.CdnCertificateSource>
     {
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public CdnCertificateSource(Azure.ResourceManager.Cdn.Models.CdnCertificateSourceType sourceType, Azure.ResourceManager.Cdn.Models.CdnManagedCertificateType certificateType) { }
@@ -1711,15 +1711,15 @@ namespace Azure.ResourceManager.Cdn.Models
         public static bool operator !=(Azure.ResourceManager.Cdn.Models.CertificateDeleteAction left, Azure.ResourceManager.Cdn.Models.CertificateDeleteAction right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public abstract partial class CertificateSourceParameters : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.CertificateSourceParameters>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.CertificateSourceParameters>
+    public abstract partial class CertificateSourceProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.CertificateSourceProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.CertificateSourceProperties>
     {
-        protected CertificateSourceParameters() { }
+        protected CertificateSourceProperties() { }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Cdn.Models.CertificateSourceParameters System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.CertificateSourceParameters>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.CertificateSourceParameters>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Cdn.Models.CertificateSourceParameters System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.CertificateSourceParameters>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.CertificateSourceParameters>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.CertificateSourceParameters>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Cdn.Models.CertificateSourceProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.CertificateSourceProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.CertificateSourceProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Cdn.Models.CertificateSourceProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.CertificateSourceProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.CertificateSourceProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.CertificateSourceProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct CertificateUpdateAction : System.IEquatable<Azure.ResourceManager.Cdn.Models.CertificateUpdateAction>
@@ -2448,12 +2448,12 @@ namespace Azure.ResourceManager.Cdn.Models
     public partial class DeliveryRuleSslProtocolMatchCondition : Azure.ResourceManager.Cdn.Models.DeliveryRuleConditionProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.DeliveryRuleSslProtocolMatchCondition>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.DeliveryRuleSslProtocolMatchCondition>
     {
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public DeliveryRuleSslProtocolMatchCondition(Azure.ResourceManager.Cdn.Models.SslProtocolMatchConditionType conditionType, Azure.ResourceManager.Cdn.Models.SslProtocolOperator sslProtocolOperator) { }
+        public DeliveryRuleSslProtocolMatchCondition(Azure.ResourceManager.Cdn.Models.SslProtocolMatchConditionType sslProtocolMatchConditionType, Azure.ResourceManager.Cdn.Models.SslProtocolOperator sslProtocolOperator) { }
         public DeliveryRuleSslProtocolMatchCondition(Azure.ResourceManager.Cdn.Models.SslProtocolOperator sslProtocolOperator) { }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public Azure.ResourceManager.Cdn.Models.SslProtocolMatchConditionType ConditionType { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Cdn.Models.DeliveryRuleSslProtocol> MatchValues { get { throw null; } }
         public bool? NegateCondition { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public Azure.ResourceManager.Cdn.Models.SslProtocolMatchConditionType SslProtocolMatchConditionType { get { throw null; } set { } }
         public Azure.ResourceManager.Cdn.Models.SslProtocolOperator SslProtocolOperator { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Cdn.Models.PreTransformCategory> Transforms { get { throw null; } }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -3281,6 +3281,8 @@ namespace Azure.ResourceManager.Cdn.Models
     public partial class IsDeviceMatchCondition : Azure.ResourceManager.Cdn.Models.DeliveryRuleConditionProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.IsDeviceMatchCondition>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.IsDeviceMatchCondition>
     {
         public IsDeviceMatchCondition(Azure.ResourceManager.Cdn.Models.IsDeviceOperator isDeviceOperator) { }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public Azure.ResourceManager.Cdn.Models.IsDeviceMatchConditionType ConditionType { get { throw null; } set { } }
         public Azure.ResourceManager.Cdn.Models.IsDeviceOperator IsDeviceOperator { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Cdn.Models.IsDeviceMatchConditionMatchValue> MatchValues { get { throw null; } }
         public bool? NegateCondition { get { throw null; } set { } }
@@ -3311,6 +3313,23 @@ namespace Azure.ResourceManager.Cdn.Models
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct IsDeviceMatchConditionType : System.IEquatable<Azure.ResourceManager.Cdn.Models.IsDeviceMatchConditionType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public IsDeviceMatchConditionType(string value) { throw null; }
+        public static Azure.ResourceManager.Cdn.Models.IsDeviceMatchConditionType IsDeviceCondition { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Cdn.Models.IsDeviceMatchConditionType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Cdn.Models.IsDeviceMatchConditionType left, Azure.ResourceManager.Cdn.Models.IsDeviceMatchConditionType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Cdn.Models.IsDeviceMatchConditionType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Cdn.Models.IsDeviceMatchConditionType left, Azure.ResourceManager.Cdn.Models.IsDeviceMatchConditionType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct IsDeviceOperator : System.IEquatable<Azure.ResourceManager.Cdn.Models.IsDeviceOperator>
     {
         private readonly object _dummy;
@@ -3327,7 +3346,7 @@ namespace Azure.ResourceManager.Cdn.Models
         public static bool operator !=(Azure.ResourceManager.Cdn.Models.IsDeviceOperator left, Azure.ResourceManager.Cdn.Models.IsDeviceOperator right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class KeyVaultCertificateSource : Azure.ResourceManager.Cdn.Models.CertificateSourceParameters, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.KeyVaultCertificateSource>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.KeyVaultCertificateSource>
+    public partial class KeyVaultCertificateSource : Azure.ResourceManager.Cdn.Models.CertificateSourceProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.KeyVaultCertificateSource>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.KeyVaultCertificateSource>
     {
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public KeyVaultCertificateSource(Azure.ResourceManager.Cdn.Models.KeyVaultCertificateSourceType sourceType, string subscriptionId, string resourceGroupName, string vaultName, string secretName, Azure.ResourceManager.Cdn.Models.CertificateUpdateAction updateRule, Azure.ResourceManager.Cdn.Models.CertificateDeleteAction deleteRule) { }
@@ -4566,7 +4585,7 @@ namespace Azure.ResourceManager.Cdn.Models
     public partial class RemoteAddressMatchCondition : Azure.ResourceManager.Cdn.Models.DeliveryRuleConditionProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.RemoteAddressMatchCondition>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.RemoteAddressMatchCondition>
     {
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public RemoteAddressMatchCondition(Azure.ResourceManager.Cdn.Models.RemoteAddressMatchConditionType conditionType, string remoteAddressOperator) { }
+        public RemoteAddressMatchCondition(Azure.ResourceManager.Cdn.Models.RemoteAddressMatchConditionType conditionType, Azure.ResourceManager.Cdn.Models.RemoteAddressOperator remoteAddressOperator) { }
         public RemoteAddressMatchCondition(Azure.ResourceManager.Cdn.Models.RemoteAddressOperator remoteAddressOperator) { }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public Azure.ResourceManager.Cdn.Models.RemoteAddressMatchConditionType ConditionType { get { throw null; } set { } }
@@ -5645,7 +5664,7 @@ namespace Azure.ResourceManager.Cdn.Models
     {
         public UriRedirectActionProperties(Azure.ResourceManager.Cdn.Models.RedirectType redirectType) { }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public UriRedirectActionProperties(Azure.ResourceManager.Cdn.Models.UriRedirectActionType conditionType, Azure.ResourceManager.Cdn.Models.RedirectType redirectType) { }
+        public UriRedirectActionProperties(Azure.ResourceManager.Cdn.Models.UriRedirectActionType actionType, Azure.ResourceManager.Cdn.Models.RedirectType redirectType) { }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public Azure.ResourceManager.Cdn.Models.UriRedirectActionType ActionType { get { throw null; } set { } }
         public string CustomFragment { get { throw null; } set { } }
@@ -5692,7 +5711,7 @@ namespace Azure.ResourceManager.Cdn.Models
     public partial class UriRewriteActionProperties : Azure.ResourceManager.Cdn.Models.DeliveryRuleActionProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.UriRewriteActionProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.UriRewriteActionProperties>
     {
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public UriRewriteActionProperties(Azure.ResourceManager.Cdn.Models.UriRewriteActionType conditionType, string sourcePattern, string destination) { }
+        public UriRewriteActionProperties(Azure.ResourceManager.Cdn.Models.UriRewriteActionType actionType, string sourcePattern, string destination) { }
         public UriRewriteActionProperties(string sourcePattern, string destination) { }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public Azure.ResourceManager.Cdn.Models.UriRewriteActionType ActionType { get { throw null; } set { } }

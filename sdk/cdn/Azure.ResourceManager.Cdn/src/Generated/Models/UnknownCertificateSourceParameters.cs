@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Unknown version of CertificateSourceParameters. </summary>
-    internal partial class UnknownCertificateSourceParameters : CertificateSourceParameters
+    internal partial class UnknownCertificateSourceParameters : CertificateSourceProperties
     {
         /// <summary> Initializes a new instance of <see cref="UnknownCertificateSourceParameters"/>. </summary>
         /// <param name="typeName"> Serialized Name: CertificateSourceParameters.typeName. </param>

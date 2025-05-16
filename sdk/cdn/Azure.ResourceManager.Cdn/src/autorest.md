@@ -353,6 +353,7 @@ rename-mapping:
   Status: ValidationStatus
   DeliveryRuleActionParameters: DeliveryRuleActionProperties
   DeliveryRuleConditionParameters: DeliveryRuleConditionProperties
+  CertificateSourceParameters: CertificateSourceProperties
   CanMigrateResult.id: ResourceId
   MigrateResult.id: ResourceId
   IsDeviceMatchValue: IsDeviceMatchConditionMatchValue

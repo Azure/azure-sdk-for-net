@@ -13,10 +13,10 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary>
     /// Defines the parameters for certificate source
     /// Serialized Name: CertificateSourceParameters
-    /// Please note <see cref="CertificateSourceParameters"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+    /// Please note <see cref="CertificateSourceProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="CdnCertificateSource"/> and <see cref="KeyVaultCertificateSource"/>.
     /// </summary>
-    public abstract partial class CertificateSourceParameters
+    public abstract partial class CertificateSourceProperties
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -50,15 +50,15 @@ namespace Azure.ResourceManager.Cdn.Models
         /// </summary>
         private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="CertificateSourceParameters"/>. </summary>
-        protected CertificateSourceParameters()
+        /// <summary> Initializes a new instance of <see cref="CertificateSourceProperties"/>. </summary>
+        protected CertificateSourceProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="CertificateSourceParameters"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CertificateSourceProperties"/>. </summary>
         /// <param name="typeName"> Serialized Name: CertificateSourceParameters.typeName. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CertificateSourceParameters(CertificateSourceParametersType typeName, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CertificateSourceProperties(CertificateSourceParametersType typeName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             TypeName = typeName;
             _serializedAdditionalRawData = serializedAdditionalRawData;

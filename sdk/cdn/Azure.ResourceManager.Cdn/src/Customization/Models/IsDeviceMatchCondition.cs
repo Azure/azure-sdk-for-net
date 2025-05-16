@@ -7,16 +7,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    public partial class UriRedirectActionProperties
+    public partial class IsDeviceMatchCondition
     {
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public UriRedirectActionProperties(UriRedirectActionType actionType, RedirectType redirectType) : this(redirectType)
-        {
-            ActionType = actionType;
-        }
-
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public UriRedirectActionType ActionType
+        public IsDeviceMatchConditionType ConditionType
         {
             get => new(TypeName.ToString());
             set

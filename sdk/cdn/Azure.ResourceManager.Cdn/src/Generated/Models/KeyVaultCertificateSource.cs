@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Cdn.Models
     /// Describes the parameters for using a user's KeyVault certificate for securing custom domain.
     /// Serialized Name: KeyVaultCertificateSourceParameters
     /// </summary>
-    public partial class KeyVaultCertificateSource : CertificateSourceParameters
+    public partial class KeyVaultCertificateSource : CertificateSourceProperties
     {
         /// <summary> Initializes a new instance of <see cref="KeyVaultCertificateSource"/>. </summary>
         /// <param name="subscriptionId">

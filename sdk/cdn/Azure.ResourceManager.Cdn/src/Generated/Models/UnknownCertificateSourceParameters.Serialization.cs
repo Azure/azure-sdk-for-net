@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    internal partial class UnknownCertificateSourceParameters : IUtf8JsonSerializable, IJsonModel<CertificateSourceParameters>
+    internal partial class UnknownCertificateSourceParameters : IUtf8JsonSerializable, IJsonModel<CertificateSourceProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CertificateSourceParameters>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CertificateSourceProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<CertificateSourceParameters>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<CertificateSourceProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,25 +28,25 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CertificateSourceParameters>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CertificateSourceProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CertificateSourceParameters)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(CertificateSourceProperties)} does not support writing '{format}' format.");
             }
 
             base.JsonModelWriteCore(writer, options);
         }
 
-        CertificateSourceParameters IJsonModel<CertificateSourceParameters>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        CertificateSourceProperties IJsonModel<CertificateSourceProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CertificateSourceParameters>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CertificateSourceProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CertificateSourceParameters)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(CertificateSourceProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeCertificateSourceParameters(document.RootElement, options);
+            return DeserializeCertificateSourceProperties(document.RootElement, options);
         }
 
         internal static UnknownCertificateSourceParameters DeserializeUnknownCertificateSourceParameters(JsonElement element, ModelReaderWriterOptions options = null)
@@ -76,35 +76,35 @@ namespace Azure.ResourceManager.Cdn.Models
             return new UnknownCertificateSourceParameters(typeName, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<CertificateSourceParameters>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<CertificateSourceProperties>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CertificateSourceParameters>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CertificateSourceProperties>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerCdnContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(CertificateSourceParameters)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CertificateSourceProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
-        CertificateSourceParameters IPersistableModel<CertificateSourceParameters>.Create(BinaryData data, ModelReaderWriterOptions options)
+        CertificateSourceProperties IPersistableModel<CertificateSourceProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CertificateSourceParameters>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CertificateSourceProperties>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeCertificateSourceParameters(document.RootElement, options);
+                        return DeserializeCertificateSourceProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CertificateSourceParameters)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CertificateSourceProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<CertificateSourceParameters>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<CertificateSourceProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
