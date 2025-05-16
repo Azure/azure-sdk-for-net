@@ -1,8 +1,31 @@
-param([string]$ServiceDirectory, [string]$PackageName, [string]$ExpectedWarningsFilePath)
+<#
+.SYNOPSIS
+    Checks a specific package for AOT regressions.
+
+.DESCRIPTION
+    This script creates a test app with a dependency on a specific package to publish and use to
+    collect trimming warnings. It compares the actual warnings against a list of expected warnings
+    provided in a text file if one is provided.
+    
+.PARAMETER ServiceDirectory
+    The name of the service directory holding the package (e.g., "core", "identity").
+    
+.PARAMETER PackageName
+    The name of the package to check for AOT regressions.
+
+.PARAMETER ExpectedWarningsFilePath
+    The path to the text file containing the expected warnings. If not provided, it assumes no warnings are expected.
+#>
+
+param(
+  [string]$ServiceDirectory,
+  [string]$PackageName,
+  [string]$ExpectedWarningsFilePath
+)
 
 ### Creating a test app ###
 
-Write-Host "Creating a test app to publish."
+Write-Host "Creating a test app to publish fpr $PackageName in $ServiceDirectory."
 
 $expectedWarningsFullPath = Join-Path -Path "..\..\..\..\sdk\$ServiceDirectory\" -ChildPath $ExpectedWarningsFilePath
 
@@ -89,7 +112,7 @@ Write-Host "There were $actualWarningCount warnings reported."
 
 ### Reading the contents of the text file path ###
 
-Write-Host "Reading the list of patterns that represent the list of expected warnings."
+Write-Host "Reading the list of patterns that represent the list of expected warnings from $expectedWarningsFullPath."
 
 if (Test-Path $expectedWarningsFullPath -PathType Leaf) {
     # Read the contents of the file and store each line in an array

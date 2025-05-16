@@ -2,9 +2,21 @@
 
 An increasing number of .NET Azure SDK libraries are committed to being fully compatible with native AOT. For more information about native AOT deployment see [this article](https://learn.microsoft.com/dotnet/core/deploying/native-aot/).
 
-In order to align with this priority, a pipeline step called "Check for AOT compatibility regressions in \[Package Name\]" was added in all CI pipelines to prevent further AOT regressions. This is true even if the package is not fully compatible with native AOT. This pipeline creates a small sample app that uses a project reference to collect the set of trimming warnings reported for the specified library. This approach for collecting warnings is described in [this article](https://learn.microsoft.com/dotnet/core/deploying/trimming/prepare-libraries-for-trimming?pivots=dotnet-8-0#show-all-warnings-with-test-app).
+In order to align with this priority, a pipeline step called "Check for AOT compatibility regressions in \[Package Name\]" was added in all CI pipelines to prevent AOT regressions in all SDK libraries. This is true even if the package is not yet fully compatible with native AOT. This pipeline creates a small sample app that uses a project reference to collect the set of trimming warnings reported for the specified library. This approach for collecting warnings is described in [this article](https://learn.microsoft.com/dotnet/core/deploying/trimming/prepare-libraries-for-trimming?pivots=dotnet-8-0#show-all-warnings-with-test-app).
 
 ## See AOT warnings locally
+
+Run the [Check AOT Compatibility script](https://github.com/Azure/azure-sdk-for-net/blob/main/eng/scripts/compatibility/Check-AOT-Compatibility.ps1).
+
+To see all warnings:
+```
+PS C:\...\azure-sdk-for-net\eng\scripts\compatibility> .\Check-AOT-Compatibility.ps1 core Azure.Core
+```
+
+To see only the warnings that are not baselined:
+```
+PS C:\...\azure-sdk-for-net\eng\scripts\compatibility> .\Check-AOT-Compatibility.ps1 core Azure.Core "Azure.Core/tests/compatibility/ExpectedWarnings.txt"
+```
 
 ## Resolve AOT warnings
 
@@ -22,15 +34,10 @@ Learning how to use source generation for serialization/deserialization:
 
 In an ideal scenario, this pipeline will pass with no baselined warnings. However, there are cases where a library needs to define an expected set of warnings to ignore when running this check. Sometimes warnings are not straightforward \(or are even impossible\) to resolve, but are not expected to impact the majority of customer use cases. In other cases, warnings may be dependent on other work finishing first (for example, adding a net6.0 target, or upgrading a package dependency version).
 
-The text file should be formatted with each warning on its own line. The pipeline uses pattern matching to validate warnings. This means that warnings will need to be edited to avoid using special characters incorrectly. Even though it seems easier to just do simple string matching, the errors are formatted differently depending on the environment, so using correctly formatted pattern matching makes it easier.
+The text file should be formatted with each warning on its own line. The pipeline uses pattern matching to validate warnings. You can use BaselineExistingWarnings.ps1 in eng/scripts/compatibility to create the expected warnings file from the AOT regressions output from Check-AOT-Compatibility.
 
-**Example**:
-
-Actual warning:
-> C:\Users\mredding\source\repos\azure-sdk-for-net\sdk\core\Azure.Core\src\JsonPatchDocument.cs(44): Trim analysis warning IL2026: Azure.JsonPatchDocument.JsonPatchDocument(ReadOnlyMemory`1<Byte>): Using member 'Azure.Core.Serialization.JsonObjectSerializer.JsonObjectSerializer()' which has 'RequiresUnreferencedCodeAttribute' can break functionality when trimming application code. This class uses reflection-based JSON serialization and deserialization that is not compatible with trimming. [C:\Users\mredding\source\repos\ResolveAOT\ResolveAOT\ResolveAOT.csproj]
-
-Line in the text file:
-> Azure\\.Core.src.JsonPatchDocument\\.cs\\(\\d*\\): Trim analysis warning IL2026: Azure\\.JsonPatchDocument\\.JsonPatchDocument\\(ReadOnlyMemory`1<Byte>\\): Using member 'Azure\\.Core\\.Serialization\\.JsonObjectSerializer\\.JsonObjectSerializer\\(\\)' which has 'RequiresUnreferencedCodeAttribute'
+```
+```
 
 
 ### Update ci.yml file
