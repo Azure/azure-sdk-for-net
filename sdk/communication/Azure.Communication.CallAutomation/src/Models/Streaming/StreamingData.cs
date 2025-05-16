@@ -65,10 +65,6 @@ namespace Azure.Communication.CallAutomation
                 #endregion
 
                 #region Dtmf
-                case "DtmfMetadata":
-                    var dtmfMetadataInternal = JsonSerializer.Deserialize<DtmfMetaDataInternal>(streamingData.GetProperty("dtmfMetadata").ToString());
-                    return new DtmfMetaData(dtmfMetadataInternal);
-
                 case "DtmfData":
                     DtmfDataInternal dtmfInternal = JsonSerializer.Deserialize<DtmfDataInternal>(streamingData.GetProperty("dtmfData").ToString());
                     return new DtmfData(dtmfInternal.Data, dtmfInternal.Timestamp, dtmfInternal.ParticipantRawId);

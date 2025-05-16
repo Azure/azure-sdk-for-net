@@ -69,21 +69,6 @@ namespace Azure.Communication.CallAutomation.Tests.MediaStreaming
 
         #region DTMF
         [Test]
-        public void ParseDtmfMetadata_Test()
-        {
-            string metadataJson = "{"
-                + "\"kind\": \"DtmfMetadata\","
-                + "\"dtmfMetadata\": {"
-                + "\"data\": \"5\","
-                + "\"timestamp\": \"2022-08-23T11:48:05Z\","
-                + "\"participantRawID\": \"participantId\""
-                + "}"
-                + "}";
-
-            DtmfMetaData metadata = (DtmfMetaData)StreamingData.Parse(metadataJson);
-            ValidateDtmfMetadata(metadata);
-        }
-        [Test]
         public void ParseDtmfData_Test()
         {
             string dtmfJson = "{"
@@ -98,16 +83,6 @@ namespace Azure.Communication.CallAutomation.Tests.MediaStreaming
             DtmfData streamingDtmf = (DtmfData)StreamingData.Parse(dtmfJson);
             ValidateDtmfData(streamingDtmf);
         }
-
-        private static void ValidateDtmfMetadata(DtmfMetaData streamingDtmf)
-        {
-            Assert.IsNotNull(streamingDtmf);
-            Assert.AreEqual("5", streamingDtmf.Data);
-            Assert.AreEqual(2022, streamingDtmf.Timestamp.Year);
-            Assert.IsTrue(streamingDtmf.Participant is CommunicationIdentifier);
-            Assert.AreEqual("participantId", streamingDtmf.Participant.RawId);
-        }
-
         private static void ValidateDtmfData(DtmfData streamingDtmf)
         {
             Assert.IsNotNull(streamingDtmf);
