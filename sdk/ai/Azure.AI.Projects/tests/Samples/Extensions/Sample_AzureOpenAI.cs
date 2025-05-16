@@ -20,7 +20,7 @@ public class Sample_AzureOpenAI : SamplesBase<AIProjectsTestEnvironment>
     [SyncOnly]
     public void AzureOpenAIChatCompletion()
     {
-        #region Snippet:AzureOpenAISync
+        #region Snippet:AI_Projects_AzureOpenAISync
 #if SNIPPET
         var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
         var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
@@ -40,7 +40,7 @@ public class Sample_AzureOpenAI : SamplesBase<AIProjectsTestEnvironment>
     [AsyncOnly]
     public async Task AzureOpenAIChatCompletionAsync()
     {
-        #region Snippet:AzureOpenAIAsync
+        #region Snippet:AI_Projects_AzureOpenAIAsync
 #if SNIPPET
         var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
         var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");

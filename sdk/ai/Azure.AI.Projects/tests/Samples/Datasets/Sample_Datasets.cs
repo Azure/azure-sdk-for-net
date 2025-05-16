@@ -20,7 +20,7 @@ namespace Azure.AI.Projects.Tests
         [SyncOnly]
         public void DatasetsExample()
         {
-            #region Snippet:DatasetsExampleSync
+            #region Snippet:AI_Projects_DatasetsExampleSync
 #if SNIPPET
             var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
             var datasetName = System.Environment.GetEnvironmentVariable("DATASET_NAME");
@@ -73,7 +73,7 @@ namespace Azure.AI.Projects.Tests
         [AsyncOnly]
         public async Task DatasetsExampleAsync()
         {
-            #region Snippet:DatasetsExampleAsync
+            #region Snippet:AI_Projects_DatasetsExampleAsync
 #if SNIPPET
             var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
             var datasetName = System.Environment.GetEnvironmentVariable("DATASET_NAME");

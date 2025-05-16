@@ -16,7 +16,7 @@ namespace Azure.AI.Projects.Tests
         [SyncOnly]
         public void TelemetryExample()
         {
-            #region Snippet:TelemetryExampleSync
+            #region Snippet:AI_Projects_TelemetryExampleSync
 #if SNIPPET
             var endpoint = Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
 #else
@@ -34,7 +34,7 @@ namespace Azure.AI.Projects.Tests
         [AsyncOnly]
         public async Task TelemetryExampleAsync()
         {
-            #region Snippet:TelemetryExampleAsync
+            #region Snippet:AI_Projects_TelemetryExampleAsync
 #if SNIPPET
             var endpoint = Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
 #else

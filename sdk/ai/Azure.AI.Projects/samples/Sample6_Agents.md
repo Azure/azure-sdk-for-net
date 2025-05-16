@@ -13,7 +13,7 @@ This sample demonstrates how to use the synchronous and asynchronous `persistent
 
 1. We need to create the agents client and read in some environment variables.
 
-```C# Snippet:ExtensionsAgentsBasicsAsync
+```C# Snippet:AI_Projects_ExtensionsAgentsBasicsAsync
 var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
 var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
 AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
@@ -22,7 +22,7 @@ PersistentAgentsClient agentsClient = projectClient.GetPersistentAgentsClient();
 
 1. Create an agent.
 
-```C# Snippet:ExtensionsAgentsOverviewCreateAgent
+```C# Snippet:AI_Projects_ExtensionsAgentsOverviewCreateAgent
 PersistentAgent agent = await agentsClient.Administration.CreateAgentAsync(
     model: modelDeploymentName,
     name: "Math Tutor",
@@ -32,13 +32,13 @@ PersistentAgent agent = await agentsClient.Administration.CreateAgentAsync(
 
 3. Create a thread.
 
-```C# Snippet:ExtensionsAgentsOverviewCreateThread
+```C# Snippet:AI_Projects_ExtensionsAgentsOverviewCreateThread
 PersistentAgentThread thread = await agentsClient.Threads.CreateThreadAsync();
 ```
 
 4. Add a message to a thread.
 
-```C# Snippet:ExtensionsAgentsOverviewCreateMessage
+```C# Snippet:AI_Projects_ExtensionsAgentsOverviewCreateMessage
 PersistentThreadMessage message = await agentsClient.Messages.CreateMessageAsync(
     thread.Id,
     MessageRole.User,
@@ -47,7 +47,7 @@ PersistentThreadMessage message = await agentsClient.Messages.CreateMessageAsync
 
 5. Run the agent.
 
-```C# Snippet:ExtensionsAgentsOverviewCreateRun
+```C# Snippet:AI_Projects_ExtensionsAgentsOverviewCreateRun
 ThreadRun run = await agentsClient.Runs.CreateRunAsync(
     thread.Id,
     agent.Id,
@@ -56,7 +56,7 @@ ThreadRun run = await agentsClient.Runs.CreateRunAsync(
 
 6 . Whait while run complete.
 
-```C# Snippet:ExtensionsAgentsOverviewWaitForRun
+```C# Snippet:AI_Projects_ExtensionsAgentsOverviewWaitForRun
 do
 {
     await Task.Delay(TimeSpan.FromMilliseconds(500));
@@ -72,7 +72,7 @@ Assert.AreEqual(
 
 7. List messages in chronological order.
 
-```C# Snippet:ExtensionsAgentsOverviewListUpdatedMessages
+```C# Snippet:AI_Projects_ExtensionsAgentsOverviewListUpdatedMessages
 AsyncPageable<PersistentThreadMessage> messages
     = agentsClient.Messages.GetMessagesAsync(
         threadId: thread.Id, order: ListSortOrder.Ascending);
@@ -97,7 +97,7 @@ await foreach (PersistentThreadMessage threadMessage in messages)
 
 8. Clean up the resources.
 
-```C# Snippet:ExtensionsAgentsOverviewCleanup
+```C# Snippet:AI_Projects_ExtensionsAgentsOverviewCleanup
 await agentsClient.Threads.DeleteThreadAsync(threadId: thread.Id);
 
 await agentsClient.Administration.DeleteAgentAsync(agentId: agent.Id);
@@ -106,7 +106,7 @@ await agentsClient.Administration.DeleteAgentAsync(agentId: agent.Id);
 
 ## Synchronous Sample
 
-```C# Snippet:ExtensionsAgentsBasicsSync
+```C# Snippet:AI_Projects_ExtensionsAgentsBasicsSync
 var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
 var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
 AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());

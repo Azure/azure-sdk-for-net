@@ -17,7 +17,7 @@ namespace Azure.AI.Projects.Tests
         [SyncOnly]
         public void IndexesExample()
         {
-            #region Snippet:IndexesExampleSync
+            #region Snippet:AI_Projects_IndexesExampleSync
 #if SNIPPET
             var endpoint = Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
             var indexName = Environment.GetEnvironmentVariable("INDEX_NAME") ?? "my-index";

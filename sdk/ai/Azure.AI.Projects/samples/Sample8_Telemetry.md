@@ -10,7 +10,7 @@ This sample demonstrates how to use the synchronous and asynchronous `Telemetry`
 
 ## Synchronous Sample
 
-```C# Snippet:TelemetryExampleSync
+```C# Snippet:AI_Projects_TelemetryExampleSync
 var endpoint = Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
 AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
 
@@ -20,7 +20,7 @@ Console.WriteLine($"Connection string: {connectionString}");
 ```
 
 ## Asynchronous Sample
-```C# Snippet:TelemetryExampleAsync
+```C# Snippet:AI_Projects_TelemetryExampleAsync
 var endpoint = Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
 AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
 

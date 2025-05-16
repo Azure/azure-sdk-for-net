@@ -16,7 +16,7 @@ public class Sample_Deployment : SamplesBase<AIProjectsTestEnvironment>
     [SyncOnly]
     public void DeploymentExample()
     {
-        #region Snippet:DeploymentExampleSync
+        #region Snippet:AI_Projects_DeploymentExampleSync
 #if SNIPPET
         var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
         var deploymentName = System.Environment.GetEnvironmentVariable("DEPLOYMENT_NAME");
@@ -51,7 +51,7 @@ public class Sample_Deployment : SamplesBase<AIProjectsTestEnvironment>
     [AsyncOnly]
     public async Task DeploymentExampleAsync()
     {
-        #region Snippet:DeploymentExampleAsync
+        #region Snippet:AI_Projects_DeploymentExampleAsync
 #if SNIPPET
         var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
         var deploymentName = System.Environment.GetEnvironmentVariable("DEPLOYMENT_NAME");

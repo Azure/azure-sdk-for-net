@@ -14,7 +14,7 @@ public partial class Readme : SamplesBase<AIProjectsTestEnvironment>
     [Test]
     public void Authenticate()
     {
-        #region Snippet:OverviewCreateClient
+        #region Snippet:AI_Projects_OverviewCreateClient
 #if SNIPPET
         var endpoint = Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
 #else
@@ -30,7 +30,7 @@ public partial class Readme : SamplesBase<AIProjectsTestEnvironment>
         var endpoint = TestEnvironment.PROJECTENDPOINT;
         AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
 
-        #region Snippet:Readme_Troubleshooting
+        #region Snippet:AI_Projects_Readme_Troubleshooting
         try
         {
             projectClient.GetDatasetsClient().GetDataset("non-existent-dataset-name", "non-existent-dataset-version");

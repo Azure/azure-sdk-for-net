@@ -10,7 +10,7 @@ In this example, we will demonstrate how to upload files and folders to create n
   - `DATASET_NAME`: The name of the dataset to retrieve.
 
 ## Synchronous sample:
-```C# Snippet:DatasetsExampleSync
+```C# Snippet:AI_Projects_DatasetsExampleSync
 var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
 var datasetName = System.Environment.GetEnvironmentVariable("DATASET_NAME");
 AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
@@ -55,7 +55,7 @@ datasets.Delete(datasetName, "2");
 
 
 ## Asynchronous sample:
-```C# Snippet:DatasetsExampleAsync
+```C# Snippet:AI_Projects_DatasetsExampleAsync
 var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
 var datasetName = System.Environment.GetEnvironmentVariable("DATASET_NAME");
 AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());

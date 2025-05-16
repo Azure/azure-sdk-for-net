@@ -20,7 +20,7 @@ public class Sample_AIInference : SamplesBase<AIProjectsTestEnvironment>
     [SyncOnly]
     public void InferenceChatCompletion()
     {
-        #region Snippet:ChatClientSync
+        #region Snippet:AI_Projects_ChatClientSync
 #if SNIPPET
         var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
         var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
@@ -49,7 +49,7 @@ public class Sample_AIInference : SamplesBase<AIProjectsTestEnvironment>
     [AsyncOnly]
     public async Task InferenceChatCompletionAsync()
     {
-        #region Snippet:ChatClientAsync
+        #region Snippet:AI_Projects_ChatClientAsync
 #if SNIPPET
         var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
         var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
@@ -78,7 +78,7 @@ public class Sample_AIInference : SamplesBase<AIProjectsTestEnvironment>
     [SyncOnly]
     public void InferenceEmbedding()
     {
-        #region Snippet:EmbeddingSync
+        #region Snippet:AI_Projects_EmbeddingSync
 #if SNIPPET
         var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
         var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
@@ -108,7 +108,7 @@ public class Sample_AIInference : SamplesBase<AIProjectsTestEnvironment>
     [AsyncOnly]
     public async Task InferenceEmbeddingAsync()
     {
-        #region Snippet:EmbeddingAsync
+        #region Snippet:AI_Projects_EmbeddingAsync
 #if SNIPPET
         var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
         var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
@@ -138,7 +138,7 @@ public class Sample_AIInference : SamplesBase<AIProjectsTestEnvironment>
     [SyncOnly]
     public void InferenceImageEmbedding()
     {
-        #region Snippet:ImageEmbeddingSync
+        #region Snippet:AI_Projects_ImageEmbeddingSync
 #if SNIPPET
         var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
         var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
@@ -188,7 +188,7 @@ public class Sample_AIInference : SamplesBase<AIProjectsTestEnvironment>
     [AsyncOnly]
     public async Task InferenceImageEmbeddingAsync()
     {
-        #region Snippet:ImageEmbeddingAsync
+        #region Snippet:AI_Projects_ImageEmbeddingAsync
 #if SNIPPET
         var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
         var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");

@@ -65,7 +65,7 @@ dotnet add package Azure.Identity
 
 To interact with Azure AI Projects, you’ll need to create an instance of `AIProjectClient`. Use the appropriate credential type from the Azure Identity library. For example, [DefaultAzureCredential][azure_identity_dac]:
 
-```C# Snippet:OverviewCreateClient
+```C# Snippet:AI_Projects_OverviewCreateClient
 var endpoint = Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
 AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
 ```
@@ -79,7 +79,7 @@ Once the `AIProjectClient` is created, you can call methods in the form of `Get<
 The `GetPersistentAgentsClient` method on the `AIProjectsClient` gives you access to an authenticated `PersistentAgentsClient` from the `Azure.AI.Agents.Persistent` package. Below we show how to create an Agent and delete it. To see what you can do with the agent you created, see the [many samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/ai/Azure.AI.Agents.Persistent/samples) associated with the `Azure.AI.Agents.Persistent` package.
 
 The code below assumes `ModelDeploymentName` (a string) is defined. It's the deployment name of an AI model in your Foundry Project, as shown in the "Models + endpoints" tab, under the "Name" column.
-```C# Snippet:ExtensionsAgentsBasicsSync
+```C# Snippet:AI_Projects_ExtensionsAgentsBasicsSync
 var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
 var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
 AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
@@ -157,7 +157,7 @@ The code below assumes `ModelDeploymentName` (a string) is defined. It's the dep
 
 You can update the `connectionName` with one of the connections in your Foundry project, and you can update the `apiVersion` value with one found in the "Data plane - inference" row [in this table](https://learn.microsoft.com/azure/ai-services/openai/reference#api-specs).
 
-```C# Snippet:AzureOpenAISync
+```C# Snippet:AI_Projects_AzureOpenAISync
 var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
 var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
 AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
@@ -173,7 +173,7 @@ Your Azure AI Foundry project may have one or more AI models deployed that suppo
 
 The code below assumes `ModelDeploymentName` (a string) is defined. It's the deployment name of an AI model in your Foundry Project, or a connected Azure OpenAI resource. As shown in the "Models + endpoints" tab, under the "Name" column.
 
-```C# Snippet:ChatClientSync
+```C# Snippet:AI_Projects_ChatClientSync
 var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
 var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
 AIProjectClient client = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
@@ -196,7 +196,7 @@ Console.WriteLine(response.Value.Content);
 
 The code below shows some Deployments operations, which allow you to enumerate the AI models deployed to your AI Foundry Projects. These models can be seen in the "Models + endpoints" tab in your AI Foundry Project. Full samples can be found under the "Deployment" folder in the [package samples][samples].
 
-```C# Snippet:DeploymentExampleSync
+```C# Snippet:AI_Projects_DeploymentExampleSync
 var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
 var deploymentName = System.Environment.GetEnvironmentVariable("DEPLOYMENT_NAME");
 var modelPublisher = System.Environment.GetEnvironmentVariable("MODEL_PUBLISHER");
@@ -224,7 +224,7 @@ Console.WriteLine(deploymentDetails);
 
 The code below shows some Connection operations, which allow you to enumerate the Azure Resources connected to your AI Foundry Projects. These connections can be seen in the "Management Center", in the "Connected resources" tab in your AI Foundry Project. Full samples can be found under the "Connections" folder in the [package samples][samples].
 
-```C# Snippet:ConnectionsExampleSync
+```C# Snippet:AI_Projects_ConnectionsExampleSync
 var endpoint = Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
 var connectionName = Environment.GetEnvironmentVariable("CONNECTION_NAME");
 AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
@@ -264,7 +264,7 @@ Console.WriteLine(defaultConnectionCredentials);
 
 The code below shows some Dataset operations. Full samples can be found under the "Datasets" folder in the [package samples][samples].
 
-```C# Snippet:DatasetsExampleSync
+```C# Snippet:AI_Projects_DatasetsExampleSync
 var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
 var datasetName = System.Environment.GetEnvironmentVariable("DATASET_NAME");
 AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
@@ -311,7 +311,7 @@ datasets.Delete(datasetName, "2");
 
 The code below shows some Indexes operations. Full samples can be found under the "Indexes" folder in the [package samples][samples].
 
-```C# Snippet:IndexesExampleSync
+```C# Snippet:AI_Projects_IndexesExampleSync
 var endpoint = Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
 var indexName = Environment.GetEnvironmentVariable("INDEX_NAME") ?? "my-index";
 var indexVersion = Environment.GetEnvironmentVariable("INDEX_VERSION") ?? "1.0";
@@ -362,7 +362,7 @@ indexesClient.Delete(name: indexName, version: indexVersion);
 
 Any operation that fails will throw a [RequestFailedException][RequestFailedException]. The exception's `code` will hold the HTTP response status code. The exception's `message` contains a detailed message that may be helpful in diagnosing the issue:
 
-```C# Snippet:Readme_Troubleshooting
+```C# Snippet:AI_Projects_Readme_Troubleshooting
 try
 {
     projectClient.GetDatasetsClient().GetDataset("non-existent-dataset-name", "non-existent-dataset-version");
