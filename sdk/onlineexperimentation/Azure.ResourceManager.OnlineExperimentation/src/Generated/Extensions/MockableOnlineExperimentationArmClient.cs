@@ -35,15 +35,15 @@ namespace Azure.ResourceManager.OnlineExperimentation.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="OnlineExperimentWorkspaceResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="OnlineExperimentWorkspaceResource.CreateResourceIdentifier" /> to create an <see cref="OnlineExperimentWorkspaceResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing an <see cref="OnlineExperimentationWorkspaceResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="OnlineExperimentationWorkspaceResource.CreateResourceIdentifier" /> to create an <see cref="OnlineExperimentationWorkspaceResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="OnlineExperimentWorkspaceResource"/> object. </returns>
-        public virtual OnlineExperimentWorkspaceResource GetOnlineExperimentWorkspaceResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="OnlineExperimentationWorkspaceResource"/> object. </returns>
+        public virtual OnlineExperimentationWorkspaceResource GetOnlineExperimentationWorkspaceResource(ResourceIdentifier id)
         {
-            OnlineExperimentWorkspaceResource.ValidateResourceId(id);
-            return new OnlineExperimentWorkspaceResource(Client, id);
+            OnlineExperimentationWorkspaceResource.ValidateResourceId(id);
+            return new OnlineExperimentationWorkspaceResource(Client, id);
         }
     }
 }

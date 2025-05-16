@@ -7,17 +7,12 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.OnlineExperimentation.Models;
 
-namespace Azure.ResourceManager.OnlineExperimentation
+namespace Azure.ResourceManager.OnlineExperimentation.Models
 {
-    /// <summary>
-    /// A class representing the OnlineExperimentWorkspace data model.
-    /// An online experiment workspace resource.
-    /// </summary>
-    public partial class OnlineExperimentWorkspaceData : TrackedResourceData
+    /// <summary> Partial update of an online experimentation workspace resource. </summary>
+    public partial class OnlineExperimentationWorkspacePatch
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -51,41 +46,34 @@ namespace Azure.ResourceManager.OnlineExperimentation
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="OnlineExperimentWorkspaceData"/>. </summary>
-        /// <param name="location"> The location. </param>
-        public OnlineExperimentWorkspaceData(AzureLocation location) : base(location)
+        /// <summary> Initializes a new instance of <see cref="OnlineExperimentationWorkspacePatch"/>. </summary>
+        public OnlineExperimentationWorkspacePatch()
         {
+            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="OnlineExperimentWorkspaceData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <summary> Initializes a new instance of <see cref="OnlineExperimentationWorkspacePatch"/>. </summary>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
+        /// <param name="tags"> Resource tags. </param>
         /// <param name="sku"> The SKU (Stock Keeping Unit) assigned to this resource. </param>
+        /// <param name="properties"> Updatable properties of the online experimentation workspace resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal OnlineExperimentWorkspaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, OnlineExperimentWorkspaceProperties properties, ManagedServiceIdentity identity, OnlineExperimentationWorkspaceSku sku, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal OnlineExperimentationWorkspacePatch(ManagedServiceIdentity identity, IDictionary<string, string> tags, OnlineExperimentationWorkspaceSku sku, OnlineExperimentationWorkspacePatchProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Properties = properties;
             Identity = identity;
+            Tags = tags;
             Sku = sku;
+            Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="OnlineExperimentWorkspaceData"/> for deserialization. </summary>
-        internal OnlineExperimentWorkspaceData()
-        {
-        }
-
-        /// <summary> The resource-specific properties for this resource. </summary>
-        public OnlineExperimentWorkspaceProperties Properties { get; set; }
         /// <summary> The managed service identities assigned to this resource. </summary>
         public ManagedServiceIdentity Identity { get; set; }
+        /// <summary> Resource tags. </summary>
+        public IDictionary<string, string> Tags { get; }
         /// <summary> The SKU (Stock Keeping Unit) assigned to this resource. </summary>
         public OnlineExperimentationWorkspaceSku Sku { get; set; }
+        /// <summary> Updatable properties of the online experimentation workspace resource. </summary>
+        public OnlineExperimentationWorkspacePatchProperties Properties { get; set; }
     }
 }

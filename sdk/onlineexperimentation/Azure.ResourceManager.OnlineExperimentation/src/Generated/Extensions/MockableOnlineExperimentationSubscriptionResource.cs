@@ -15,8 +15,8 @@ namespace Azure.ResourceManager.OnlineExperimentation.Mocking
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
     public partial class MockableOnlineExperimentationSubscriptionResource : ArmResource
     {
-        private ClientDiagnostics _onlineExperimentWorkspaceClientDiagnostics;
-        private OnlineExperimentWorkspacesRestOperations _onlineExperimentWorkspaceRestClient;
+        private ClientDiagnostics _onlineExperimentationWorkspaceClientDiagnostics;
+        private OnlineExperimentationWorkspacesRestOperations _onlineExperimentationWorkspaceRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="MockableOnlineExperimentationSubscriptionResource"/> class for mocking. </summary>
         protected MockableOnlineExperimentationSubscriptionResource()
@@ -30,8 +30,8 @@ namespace Azure.ResourceManager.OnlineExperimentation.Mocking
         {
         }
 
-        private ClientDiagnostics OnlineExperimentWorkspaceClientDiagnostics => _onlineExperimentWorkspaceClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.OnlineExperimentation", OnlineExperimentWorkspaceResource.ResourceType.Namespace, Diagnostics);
-        private OnlineExperimentWorkspacesRestOperations OnlineExperimentWorkspaceRestClient => _onlineExperimentWorkspaceRestClient ??= new OnlineExperimentWorkspacesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(OnlineExperimentWorkspaceResource.ResourceType));
+        private ClientDiagnostics OnlineExperimentationWorkspaceClientDiagnostics => _onlineExperimentationWorkspaceClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.OnlineExperimentation", OnlineExperimentationWorkspaceResource.ResourceType.Namespace, Diagnostics);
+        private OnlineExperimentationWorkspacesRestOperations OnlineExperimentationWorkspaceRestClient => _onlineExperimentationWorkspaceRestClient ??= new OnlineExperimentationWorkspacesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(OnlineExperimentationWorkspaceResource.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.OnlineExperimentation.Mocking
         }
 
         /// <summary>
-        /// Gets all experiment workspaces in the specified subscription.
+        /// Gets all online experimentation workspaces in the specified subscription.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.OnlineExperimentation.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>OnlineExperimentWorkspace_ListBySubscription</description>
+        /// <description>OnlineExperimentationWorkspace_ListBySubscription</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -56,21 +56,21 @@ namespace Azure.ResourceManager.OnlineExperimentation.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="OnlineExperimentWorkspaceResource"/></description>
+        /// <description><see cref="OnlineExperimentationWorkspaceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="OnlineExperimentWorkspaceResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<OnlineExperimentWorkspaceResource> GetOnlineExperimentWorkspacesAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="OnlineExperimentationWorkspaceResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<OnlineExperimentationWorkspaceResource> GetOnlineExperimentationWorkspacesAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => OnlineExperimentWorkspaceRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => OnlineExperimentWorkspaceRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new OnlineExperimentWorkspaceResource(Client, OnlineExperimentWorkspaceData.DeserializeOnlineExperimentWorkspaceData(e)), OnlineExperimentWorkspaceClientDiagnostics, Pipeline, "MockableOnlineExperimentationSubscriptionResource.GetOnlineExperimentWorkspaces", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => OnlineExperimentationWorkspaceRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => OnlineExperimentationWorkspaceRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new OnlineExperimentationWorkspaceResource(Client, OnlineExperimentationWorkspaceData.DeserializeOnlineExperimentationWorkspaceData(e)), OnlineExperimentationWorkspaceClientDiagnostics, Pipeline, "MockableOnlineExperimentationSubscriptionResource.GetOnlineExperimentationWorkspaces", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
-        /// Gets all experiment workspaces in the specified subscription.
+        /// Gets all online experimentation workspaces in the specified subscription.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.OnlineExperimentation.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>OnlineExperimentWorkspace_ListBySubscription</description>
+        /// <description>OnlineExperimentationWorkspace_ListBySubscription</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -86,17 +86,17 @@ namespace Azure.ResourceManager.OnlineExperimentation.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="OnlineExperimentWorkspaceResource"/></description>
+        /// <description><see cref="OnlineExperimentationWorkspaceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="OnlineExperimentWorkspaceResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<OnlineExperimentWorkspaceResource> GetOnlineExperimentWorkspaces(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="OnlineExperimentationWorkspaceResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<OnlineExperimentationWorkspaceResource> GetOnlineExperimentationWorkspaces(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => OnlineExperimentWorkspaceRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => OnlineExperimentWorkspaceRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new OnlineExperimentWorkspaceResource(Client, OnlineExperimentWorkspaceData.DeserializeOnlineExperimentWorkspaceData(e)), OnlineExperimentWorkspaceClientDiagnostics, Pipeline, "MockableOnlineExperimentationSubscriptionResource.GetOnlineExperimentWorkspaces", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => OnlineExperimentationWorkspaceRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => OnlineExperimentationWorkspaceRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new OnlineExperimentationWorkspaceResource(Client, OnlineExperimentationWorkspaceData.DeserializeOnlineExperimentationWorkspaceData(e)), OnlineExperimentationWorkspaceClientDiagnostics, Pipeline, "MockableOnlineExperimentationSubscriptionResource.GetOnlineExperimentationWorkspaces", "value", "nextLink", cancellationToken);
         }
     }
 }

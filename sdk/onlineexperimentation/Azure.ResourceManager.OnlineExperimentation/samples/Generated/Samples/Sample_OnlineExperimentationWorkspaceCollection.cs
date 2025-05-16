@@ -16,14 +16,14 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.OnlineExperimentation.Samples
 {
-    public partial class Sample_OnlineExperimentWorkspaceCollection
+    public partial class Sample_OnlineExperimentationWorkspaceCollection
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task CreateOrUpdate_CreateOrUpdateAnOnlineExperimentWorkspaceWithFreeSku()
+        public async Task CreateOrUpdate_CreateOrUpdateAnOnlineExperimentationWorkspaceWithFreeSku()
         {
-            // Generated from example definition: 2025-05-31-preview/OnlineExperimentWorkspaces_CreateOrUpdate.json
-            // this example is just showing the usage of "OnlineExperimentWorkspace_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-05-31-preview/OnlineExperimentationWorkspaces_CreateOrUpdate.json
+            // this example is just showing the usage of "OnlineExperimentationWorkspace_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -37,14 +37,14 @@ namespace Azure.ResourceManager.OnlineExperimentation.Samples
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this OnlineExperimentWorkspaceResource
-            OnlineExperimentWorkspaceCollection collection = resourceGroupResource.GetOnlineExperimentWorkspaces();
+            // get the collection of this OnlineExperimentationWorkspaceResource
+            OnlineExperimentationWorkspaceCollection collection = resourceGroupResource.GetOnlineExperimentationWorkspaces();
 
             // invoke the operation
             string workspaceName = "expworkspace7";
-            OnlineExperimentWorkspaceData data = new OnlineExperimentWorkspaceData(new AzureLocation("eastus2"))
+            OnlineExperimentationWorkspaceData data = new OnlineExperimentationWorkspaceData(new AzureLocation("eastus2"))
             {
-                Properties = new OnlineExperimentWorkspaceProperties(new ResourceIdentifier("/subscriptions/fa5fc227-a624-475e-b696-cdd604c735bc/resourceGroups/res9871/providers/Microsoft.OperationalInsights/workspaces/log9871"), new ResourceIdentifier("/subscriptions/fa5fc227-a624-475e-b696-cdd604c735bc/resourceGroups/res9871/providers/Microsoft.Storage/storageAccounts/sto9871"), new ResourceIdentifier("/subscriptions/fa5fc227-a624-475e-b696-cdd604c735bc/resourceGroups/res9871/providers/Microsoft.AppConfiguration/configurationStores/appconfig9871")),
+                Properties = new OnlineExperimentationWorkspaceProperties(new ResourceIdentifier("/subscriptions/fa5fc227-a624-475e-b696-cdd604c735bc/resourceGroups/res9871/providers/Microsoft.OperationalInsights/workspaces/log9871"), new ResourceIdentifier("/subscriptions/fa5fc227-a624-475e-b696-cdd604c735bc/resourceGroups/res9871/providers/Microsoft.Storage/storageAccounts/sto9871"), new ResourceIdentifier("/subscriptions/fa5fc227-a624-475e-b696-cdd604c735bc/resourceGroups/res9871/providers/Microsoft.AppConfiguration/configurationStores/appconfig9871")),
                 Identity = new ManagedServiceIdentity("UserAssigned")
                 {
                     UserAssignedIdentities =
@@ -59,22 +59,22 @@ namespace Azure.ResourceManager.OnlineExperimentation.Samples
 ["newKey"] = "newVal"
 },
             };
-            ArmOperation<OnlineExperimentWorkspaceResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, workspaceName, data);
-            OnlineExperimentWorkspaceResource result = lro.Value;
+            ArmOperation<OnlineExperimentationWorkspaceResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, workspaceName, data);
+            OnlineExperimentationWorkspaceResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            OnlineExperimentWorkspaceData resourceData = result.Data;
+            OnlineExperimentationWorkspaceData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task CreateOrUpdate_CreateOrUpdateAnOnlineExperimentWorkspaceWithFreeSkuAndCustomerManagedKey()
+        public async Task CreateOrUpdate_CreateOrUpdateAnOnlineExperimentationWorkspaceWithFreeSkuAndCustomerManagedKey()
         {
-            // Generated from example definition: 2025-05-31-preview/OnlineExperimentWorkspaces_CreateOrUpdateWithEncryption.json
-            // this example is just showing the usage of "OnlineExperimentWorkspace_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-05-31-preview/OnlineExperimentationWorkspaces_CreateOrUpdateWithEncryption.json
+            // this example is just showing the usage of "OnlineExperimentationWorkspace_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -88,14 +88,14 @@ namespace Azure.ResourceManager.OnlineExperimentation.Samples
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this OnlineExperimentWorkspaceResource
-            OnlineExperimentWorkspaceCollection collection = resourceGroupResource.GetOnlineExperimentWorkspaces();
+            // get the collection of this OnlineExperimentationWorkspaceResource
+            OnlineExperimentationWorkspaceCollection collection = resourceGroupResource.GetOnlineExperimentationWorkspaces();
 
             // invoke the operation
             string workspaceName = "expworkspace7";
-            OnlineExperimentWorkspaceData data = new OnlineExperimentWorkspaceData(new AzureLocation("eastus2"))
+            OnlineExperimentationWorkspaceData data = new OnlineExperimentationWorkspaceData(new AzureLocation("eastus2"))
             {
-                Properties = new OnlineExperimentWorkspaceProperties(new ResourceIdentifier("/subscriptions/fa5fc227-a624-475e-b696-cdd604c735bc/resourceGroups/res9871/providers/Microsoft.OperationalInsights/workspaces/log9871"), new ResourceIdentifier("/subscriptions/fa5fc227-a624-475e-b696-cdd604c735bc/resourceGroups/res9871/providers/Microsoft.Storage/storageAccounts/sto9871"), new ResourceIdentifier("/subscriptions/fa5fc227-a624-475e-b696-cdd604c735bc/resourceGroups/res9871/providers/Microsoft.AppConfiguration/configurationStores/appconfig9871"))
+                Properties = new OnlineExperimentationWorkspaceProperties(new ResourceIdentifier("/subscriptions/fa5fc227-a624-475e-b696-cdd604c735bc/resourceGroups/res9871/providers/Microsoft.OperationalInsights/workspaces/log9871"), new ResourceIdentifier("/subscriptions/fa5fc227-a624-475e-b696-cdd604c735bc/resourceGroups/res9871/providers/Microsoft.Storage/storageAccounts/sto9871"), new ResourceIdentifier("/subscriptions/fa5fc227-a624-475e-b696-cdd604c735bc/resourceGroups/res9871/providers/Microsoft.AppConfiguration/configurationStores/appconfig9871"))
                 {
                     CustomerManagedKeyEncryption = new CustomerManagedKeyEncryption
                     {
@@ -121,22 +121,22 @@ namespace Azure.ResourceManager.OnlineExperimentation.Samples
 ["newKey"] = "newVal"
 },
             };
-            ArmOperation<OnlineExperimentWorkspaceResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, workspaceName, data);
-            OnlineExperimentWorkspaceResource result = lro.Value;
+            ArmOperation<OnlineExperimentationWorkspaceResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, workspaceName, data);
+            OnlineExperimentationWorkspaceResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            OnlineExperimentWorkspaceData resourceData = result.Data;
+            OnlineExperimentationWorkspaceData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Get_GetASingleOnlineExperimentWorkspace()
+        public async Task Get_GetASingleOnlineExperimentationWorkspace()
         {
-            // Generated from example definition: 2025-05-31-preview/OnlineExperimentWorkspaces_Get.json
-            // this example is just showing the usage of "OnlineExperimentWorkspace_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-05-31-preview/OnlineExperimentationWorkspaces_Get.json
+            // this example is just showing the usage of "OnlineExperimentationWorkspace_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -150,26 +150,26 @@ namespace Azure.ResourceManager.OnlineExperimentation.Samples
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this OnlineExperimentWorkspaceResource
-            OnlineExperimentWorkspaceCollection collection = resourceGroupResource.GetOnlineExperimentWorkspaces();
+            // get the collection of this OnlineExperimentationWorkspaceResource
+            OnlineExperimentationWorkspaceCollection collection = resourceGroupResource.GetOnlineExperimentationWorkspaces();
 
             // invoke the operation
             string workspaceName = "expworkspace3";
-            OnlineExperimentWorkspaceResource result = await collection.GetAsync(workspaceName);
+            OnlineExperimentationWorkspaceResource result = await collection.GetAsync(workspaceName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            OnlineExperimentWorkspaceData resourceData = result.Data;
+            OnlineExperimentationWorkspaceData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetAll_ListOnlineExperimentWorkspacesInAResourceGroup()
+        public async Task GetAll_ListOnlineExperimentationWorkspacesInAResourceGroup()
         {
-            // Generated from example definition: 2025-05-31-preview/OnlineExperimentWorkspaces_ListByResourceGroup.json
-            // this example is just showing the usage of "OnlineExperimentWorkspace_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-05-31-preview/OnlineExperimentationWorkspaces_ListByResourceGroup.json
+            // this example is just showing the usage of "OnlineExperimentationWorkspace_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -183,15 +183,15 @@ namespace Azure.ResourceManager.OnlineExperimentation.Samples
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this OnlineExperimentWorkspaceResource
-            OnlineExperimentWorkspaceCollection collection = resourceGroupResource.GetOnlineExperimentWorkspaces();
+            // get the collection of this OnlineExperimentationWorkspaceResource
+            OnlineExperimentationWorkspaceCollection collection = resourceGroupResource.GetOnlineExperimentationWorkspaces();
 
             // invoke the operation and iterate over the result
-            await foreach (OnlineExperimentWorkspaceResource item in collection.GetAllAsync())
+            await foreach (OnlineExperimentationWorkspaceResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                OnlineExperimentWorkspaceData resourceData = item.Data;
+                OnlineExperimentationWorkspaceData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -201,10 +201,10 @@ namespace Azure.ResourceManager.OnlineExperimentation.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Exists_GetASingleOnlineExperimentWorkspace()
+        public async Task Exists_GetASingleOnlineExperimentationWorkspace()
         {
-            // Generated from example definition: 2025-05-31-preview/OnlineExperimentWorkspaces_Get.json
-            // this example is just showing the usage of "OnlineExperimentWorkspace_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-05-31-preview/OnlineExperimentationWorkspaces_Get.json
+            // this example is just showing the usage of "OnlineExperimentationWorkspace_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -218,8 +218,8 @@ namespace Azure.ResourceManager.OnlineExperimentation.Samples
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this OnlineExperimentWorkspaceResource
-            OnlineExperimentWorkspaceCollection collection = resourceGroupResource.GetOnlineExperimentWorkspaces();
+            // get the collection of this OnlineExperimentationWorkspaceResource
+            OnlineExperimentationWorkspaceCollection collection = resourceGroupResource.GetOnlineExperimentationWorkspaces();
 
             // invoke the operation
             string workspaceName = "expworkspace3";
@@ -230,10 +230,10 @@ namespace Azure.ResourceManager.OnlineExperimentation.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetIfExists_GetASingleOnlineExperimentWorkspace()
+        public async Task GetIfExists_GetASingleOnlineExperimentationWorkspace()
         {
-            // Generated from example definition: 2025-05-31-preview/OnlineExperimentWorkspaces_Get.json
-            // this example is just showing the usage of "OnlineExperimentWorkspace_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-05-31-preview/OnlineExperimentationWorkspaces_Get.json
+            // this example is just showing the usage of "OnlineExperimentationWorkspace_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -247,13 +247,13 @@ namespace Azure.ResourceManager.OnlineExperimentation.Samples
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this OnlineExperimentWorkspaceResource
-            OnlineExperimentWorkspaceCollection collection = resourceGroupResource.GetOnlineExperimentWorkspaces();
+            // get the collection of this OnlineExperimentationWorkspaceResource
+            OnlineExperimentationWorkspaceCollection collection = resourceGroupResource.GetOnlineExperimentationWorkspaces();
 
             // invoke the operation
             string workspaceName = "expworkspace3";
-            NullableResponse<OnlineExperimentWorkspaceResource> response = await collection.GetIfExistsAsync(workspaceName);
-            OnlineExperimentWorkspaceResource result = response.HasValue ? response.Value : null;
+            NullableResponse<OnlineExperimentationWorkspaceResource> response = await collection.GetIfExistsAsync(workspaceName);
+            OnlineExperimentationWorkspaceResource result = response.HasValue ? response.Value : null;
 
             if (result == null)
             {
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.OnlineExperimentation.Samples
             {
                 // the variable result is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                OnlineExperimentWorkspaceData resourceData = result.Data;
+                OnlineExperimentationWorkspaceData resourceData = result.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }

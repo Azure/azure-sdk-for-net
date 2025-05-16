@@ -11,8 +11,8 @@ using System.Linq;
 
 namespace Azure.ResourceManager.OnlineExperimentation.Models
 {
-    /// <summary> The response of a OnlineExperimentWorkspace list operation. </summary>
-    internal partial class OnlineExperimentWorkspaceListResult
+    /// <summary> The response of a OnlineExperimentationWorkspace list operation. </summary>
+    internal partial class OnlineExperimentationWorkspaceListResult
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,34 +46,34 @@ namespace Azure.ResourceManager.OnlineExperimentation.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="OnlineExperimentWorkspaceListResult"/>. </summary>
-        /// <param name="value"> The OnlineExperimentWorkspace items on this page. </param>
+        /// <summary> Initializes a new instance of <see cref="OnlineExperimentationWorkspaceListResult"/>. </summary>
+        /// <param name="value"> The OnlineExperimentationWorkspace items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal OnlineExperimentWorkspaceListResult(IEnumerable<OnlineExperimentWorkspaceData> value)
+        internal OnlineExperimentationWorkspaceListResult(IEnumerable<OnlineExperimentationWorkspaceData> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="OnlineExperimentWorkspaceListResult"/>. </summary>
-        /// <param name="value"> The OnlineExperimentWorkspace items on this page. </param>
+        /// <summary> Initializes a new instance of <see cref="OnlineExperimentationWorkspaceListResult"/>. </summary>
+        /// <param name="value"> The OnlineExperimentationWorkspace items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal OnlineExperimentWorkspaceListResult(IReadOnlyList<OnlineExperimentWorkspaceData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal OnlineExperimentationWorkspaceListResult(IReadOnlyList<OnlineExperimentationWorkspaceData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="OnlineExperimentWorkspaceListResult"/> for deserialization. </summary>
-        internal OnlineExperimentWorkspaceListResult()
+        /// <summary> Initializes a new instance of <see cref="OnlineExperimentationWorkspaceListResult"/> for deserialization. </summary>
+        internal OnlineExperimentationWorkspaceListResult()
         {
         }
 
-        /// <summary> The OnlineExperimentWorkspace items on this page. </summary>
-        public IReadOnlyList<OnlineExperimentWorkspaceData> Value { get; }
+        /// <summary> The OnlineExperimentationWorkspace items on this page. </summary>
+        public IReadOnlyList<OnlineExperimentationWorkspaceData> Value { get; }
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }
     }

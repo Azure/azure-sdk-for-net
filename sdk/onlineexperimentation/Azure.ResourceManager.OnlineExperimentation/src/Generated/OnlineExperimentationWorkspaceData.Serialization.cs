@@ -15,11 +15,11 @@ using Azure.ResourceManager.OnlineExperimentation.Models;
 
 namespace Azure.ResourceManager.OnlineExperimentation
 {
-    public partial class OnlineExperimentWorkspaceData : IUtf8JsonSerializable, IJsonModel<OnlineExperimentWorkspaceData>
+    public partial class OnlineExperimentationWorkspaceData : IUtf8JsonSerializable, IJsonModel<OnlineExperimentationWorkspaceData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OnlineExperimentWorkspaceData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OnlineExperimentationWorkspaceData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<OnlineExperimentWorkspaceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<OnlineExperimentationWorkspaceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -30,10 +30,10 @@ namespace Azure.ResourceManager.OnlineExperimentation
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<OnlineExperimentWorkspaceData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<OnlineExperimentationWorkspaceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OnlineExperimentWorkspaceData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(OnlineExperimentationWorkspaceData)} does not support writing '{format}' format.");
             }
 
             base.JsonModelWriteCore(writer, options);
@@ -55,19 +55,19 @@ namespace Azure.ResourceManager.OnlineExperimentation
             }
         }
 
-        OnlineExperimentWorkspaceData IJsonModel<OnlineExperimentWorkspaceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        OnlineExperimentationWorkspaceData IJsonModel<OnlineExperimentationWorkspaceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<OnlineExperimentWorkspaceData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<OnlineExperimentationWorkspaceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OnlineExperimentWorkspaceData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(OnlineExperimentationWorkspaceData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeOnlineExperimentWorkspaceData(document.RootElement, options);
+            return DeserializeOnlineExperimentationWorkspaceData(document.RootElement, options);
         }
 
-        internal static OnlineExperimentWorkspaceData DeserializeOnlineExperimentWorkspaceData(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static OnlineExperimentationWorkspaceData DeserializeOnlineExperimentationWorkspaceData(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.OnlineExperimentation
             {
                 return null;
             }
-            OnlineExperimentWorkspaceProperties properties = default;
+            OnlineExperimentationWorkspaceProperties properties = default;
             ManagedServiceIdentity identity = default;
             OnlineExperimentationWorkspaceSku sku = default;
             IDictionary<string, string> tags = default;
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.OnlineExperimentation
                     {
                         continue;
                     }
-                    properties = OnlineExperimentWorkspaceProperties.DeserializeOnlineExperimentWorkspaceProperties(property.Value, options);
+                    properties = OnlineExperimentationWorkspaceProperties.DeserializeOnlineExperimentationWorkspaceProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("identity"u8))
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.OnlineExperimentation
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new OnlineExperimentWorkspaceData(
+            return new OnlineExperimentationWorkspaceData(
                 id,
                 name,
                 type,
@@ -178,35 +178,35 @@ namespace Azure.ResourceManager.OnlineExperimentation
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<OnlineExperimentWorkspaceData>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<OnlineExperimentationWorkspaceData>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<OnlineExperimentWorkspaceData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<OnlineExperimentationWorkspaceData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerOnlineExperimentationContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(OnlineExperimentWorkspaceData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OnlineExperimentationWorkspaceData)} does not support writing '{options.Format}' format.");
             }
         }
 
-        OnlineExperimentWorkspaceData IPersistableModel<OnlineExperimentWorkspaceData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        OnlineExperimentationWorkspaceData IPersistableModel<OnlineExperimentationWorkspaceData>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<OnlineExperimentWorkspaceData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<OnlineExperimentationWorkspaceData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeOnlineExperimentWorkspaceData(document.RootElement, options);
+                        return DeserializeOnlineExperimentationWorkspaceData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(OnlineExperimentWorkspaceData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OnlineExperimentationWorkspaceData)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<OnlineExperimentWorkspaceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<OnlineExperimentationWorkspaceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

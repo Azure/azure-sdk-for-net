@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.OnlineExperimentation.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmOnlineExperimentationModelFactory
     {
-        /// <summary> Initializes a new instance of <see cref="OnlineExperimentation.OnlineExperimentWorkspaceData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="OnlineExperimentation.OnlineExperimentationWorkspaceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.OnlineExperimentation.Models
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="sku"> The SKU (Stock Keeping Unit) assigned to this resource. </param>
-        /// <returns> A new <see cref="OnlineExperimentation.OnlineExperimentWorkspaceData"/> instance for mocking. </returns>
-        public static OnlineExperimentWorkspaceData OnlineExperimentWorkspaceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, OnlineExperimentWorkspaceProperties properties = null, ManagedServiceIdentity identity = null, OnlineExperimentationWorkspaceSku sku = null)
+        /// <returns> A new <see cref="OnlineExperimentation.OnlineExperimentationWorkspaceData"/> instance for mocking. </returns>
+        public static OnlineExperimentationWorkspaceData OnlineExperimentationWorkspaceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, OnlineExperimentationWorkspaceProperties properties = null, ManagedServiceIdentity identity = null, OnlineExperimentationWorkspaceSku sku = null)
         {
             tags ??= new Dictionary<string, string>();
 
-            return new OnlineExperimentWorkspaceData(
+            return new OnlineExperimentationWorkspaceData(
                 id,
                 name,
                 resourceType,
@@ -44,18 +44,18 @@ namespace Azure.ResourceManager.OnlineExperimentation.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.OnlineExperimentWorkspaceProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.OnlineExperimentationWorkspaceProperties"/>. </summary>
         /// <param name="workspaceId"> The Id of the workspace. </param>
         /// <param name="provisioningState"> The provisioning state for the resource. </param>
-        /// <param name="logAnalyticsWorkspaceResourceId"> The resource identifier of the Log Analytics workspace which online experiment workspace uses for generating experiment analysis results. </param>
-        /// <param name="logsExporterStorageAccountResourceId"> The resource identifier of storage account where logs are exported from Log Analytics workspace. Online Experiment workspace uses it generating experiment analysis results. </param>
-        /// <param name="appConfigurationResourceId"> The resource identifier of App Configuration with which this online experiment workspace is tied for experimentation. This is a required field for creating an online experiment workspace. </param>
-        /// <param name="customerManagedKeyEncryption"> The encryption configuration for the online experiment workspace resource. </param>
-        /// <param name="endpoint"> The data plane endpoint for the online experiment workspace resource. </param>
-        /// <returns> A new <see cref="Models.OnlineExperimentWorkspaceProperties"/> instance for mocking. </returns>
-        public static OnlineExperimentWorkspaceProperties OnlineExperimentWorkspaceProperties(string workspaceId = null, ResourceProvisioningState? provisioningState = null, ResourceIdentifier logAnalyticsWorkspaceResourceId = null, ResourceIdentifier logsExporterStorageAccountResourceId = null, ResourceIdentifier appConfigurationResourceId = null, CustomerManagedKeyEncryption customerManagedKeyEncryption = null, Uri endpoint = null)
+        /// <param name="logAnalyticsWorkspaceResourceId"> The resource identifier of the Log Analytics workspace which online experimentation workspace uses for generating experiment analysis results. </param>
+        /// <param name="logsExporterStorageAccountResourceId"> The resource identifier of storage account where logs are exported from Log Analytics workspace. online experimentation workspace uses it generating experiment analysis results. </param>
+        /// <param name="appConfigurationResourceId"> The resource identifier of App Configuration with which this online experimentation workspace is tied for experimentation. This is a required field for creating an online experimentation workspace. </param>
+        /// <param name="customerManagedKeyEncryption"> The encryption configuration for the online experimentation workspace resource. </param>
+        /// <param name="endpoint"> The data plane endpoint for the online experimentation workspace resource. </param>
+        /// <returns> A new <see cref="Models.OnlineExperimentationWorkspaceProperties"/> instance for mocking. </returns>
+        public static OnlineExperimentationWorkspaceProperties OnlineExperimentationWorkspaceProperties(string workspaceId = null, ResourceProvisioningState? provisioningState = null, ResourceIdentifier logAnalyticsWorkspaceResourceId = null, ResourceIdentifier logsExporterStorageAccountResourceId = null, ResourceIdentifier appConfigurationResourceId = null, CustomerManagedKeyEncryption customerManagedKeyEncryption = null, Uri endpoint = null)
         {
-            return new OnlineExperimentWorkspaceProperties(
+            return new OnlineExperimentationWorkspaceProperties(
                 workspaceId,
                 provisioningState,
                 logAnalyticsWorkspaceResourceId,

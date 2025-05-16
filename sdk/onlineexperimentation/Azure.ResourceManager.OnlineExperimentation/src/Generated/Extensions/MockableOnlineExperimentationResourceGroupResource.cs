@@ -33,15 +33,15 @@ namespace Azure.ResourceManager.OnlineExperimentation.Mocking
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of OnlineExperimentWorkspaceResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of OnlineExperimentWorkspaceResources and their operations over a OnlineExperimentWorkspaceResource. </returns>
-        public virtual OnlineExperimentWorkspaceCollection GetOnlineExperimentWorkspaces()
+        /// <summary> Gets a collection of OnlineExperimentationWorkspaceResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of OnlineExperimentationWorkspaceResources and their operations over a OnlineExperimentationWorkspaceResource. </returns>
+        public virtual OnlineExperimentationWorkspaceCollection GetOnlineExperimentationWorkspaces()
         {
-            return GetCachedClient(client => new OnlineExperimentWorkspaceCollection(client, Id));
+            return GetCachedClient(client => new OnlineExperimentationWorkspaceCollection(client, Id));
         }
 
         /// <summary>
-        /// Gets an experiment workspace
+        /// Gets an online experimentation workspace.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.OnlineExperimentation.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>OnlineExperimentWorkspace_Get</description>
+        /// <description>OnlineExperimentationWorkspace_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -57,22 +57,22 @@ namespace Azure.ResourceManager.OnlineExperimentation.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="OnlineExperimentWorkspaceResource"/></description>
+        /// <description><see cref="OnlineExperimentationWorkspaceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="workspaceName"> The name of the OnlineExperimentWorkspace. </param>
+        /// <param name="workspaceName"> The name of the OnlineExperimentationWorkspace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<OnlineExperimentWorkspaceResource>> GetOnlineExperimentWorkspaceAsync(string workspaceName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<OnlineExperimentationWorkspaceResource>> GetOnlineExperimentationWorkspaceAsync(string workspaceName, CancellationToken cancellationToken = default)
         {
-            return await GetOnlineExperimentWorkspaces().GetAsync(workspaceName, cancellationToken).ConfigureAwait(false);
+            return await GetOnlineExperimentationWorkspaces().GetAsync(workspaceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// Gets an experiment workspace
+        /// Gets an online experimentation workspace.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.OnlineExperimentation.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>OnlineExperimentWorkspace_Get</description>
+        /// <description>OnlineExperimentationWorkspace_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -88,18 +88,18 @@ namespace Azure.ResourceManager.OnlineExperimentation.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="OnlineExperimentWorkspaceResource"/></description>
+        /// <description><see cref="OnlineExperimentationWorkspaceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="workspaceName"> The name of the OnlineExperimentWorkspace. </param>
+        /// <param name="workspaceName"> The name of the OnlineExperimentationWorkspace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<OnlineExperimentWorkspaceResource> GetOnlineExperimentWorkspace(string workspaceName, CancellationToken cancellationToken = default)
+        public virtual Response<OnlineExperimentationWorkspaceResource> GetOnlineExperimentationWorkspace(string workspaceName, CancellationToken cancellationToken = default)
         {
-            return GetOnlineExperimentWorkspaces().Get(workspaceName, cancellationToken);
+            return GetOnlineExperimentationWorkspaces().Get(workspaceName, cancellationToken);
         }
     }
 }

@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.OnlineExperimentation.Models
 {
-    /// <summary> The encryption configuration for the online experiment workspace resource. </summary>
+    /// <summary> The encryption configuration for the online experimentation workspace resource. </summary>
     internal partial class ResourceEncryptionConfiguration
     {
         /// <summary>

@@ -11,8 +11,8 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.OnlineExperimentation.Models
 {
-    /// <summary> The properties of an online experiment workspace. </summary>
-    public partial class OnlineExperimentWorkspaceProperties
+    /// <summary> The properties of an online experimentation workspace. </summary>
+    public partial class OnlineExperimentationWorkspaceProperties
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,12 +46,12 @@ namespace Azure.ResourceManager.OnlineExperimentation.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="OnlineExperimentWorkspaceProperties"/>. </summary>
-        /// <param name="logAnalyticsWorkspaceResourceId"> The resource identifier of the Log Analytics workspace which online experiment workspace uses for generating experiment analysis results. </param>
-        /// <param name="logsExporterStorageAccountResourceId"> The resource identifier of storage account where logs are exported from Log Analytics workspace. Online Experiment workspace uses it generating experiment analysis results. </param>
-        /// <param name="appConfigurationResourceId"> The resource identifier of App Configuration with which this online experiment workspace is tied for experimentation. This is a required field for creating an online experiment workspace. </param>
+        /// <summary> Initializes a new instance of <see cref="OnlineExperimentationWorkspaceProperties"/>. </summary>
+        /// <param name="logAnalyticsWorkspaceResourceId"> The resource identifier of the Log Analytics workspace which online experimentation workspace uses for generating experiment analysis results. </param>
+        /// <param name="logsExporterStorageAccountResourceId"> The resource identifier of storage account where logs are exported from Log Analytics workspace. online experimentation workspace uses it generating experiment analysis results. </param>
+        /// <param name="appConfigurationResourceId"> The resource identifier of App Configuration with which this online experimentation workspace is tied for experimentation. This is a required field for creating an online experimentation workspace. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="logAnalyticsWorkspaceResourceId"/>, <paramref name="logsExporterStorageAccountResourceId"/> or <paramref name="appConfigurationResourceId"/> is null. </exception>
-        public OnlineExperimentWorkspaceProperties(ResourceIdentifier logAnalyticsWorkspaceResourceId, ResourceIdentifier logsExporterStorageAccountResourceId, ResourceIdentifier appConfigurationResourceId)
+        public OnlineExperimentationWorkspaceProperties(ResourceIdentifier logAnalyticsWorkspaceResourceId, ResourceIdentifier logsExporterStorageAccountResourceId, ResourceIdentifier appConfigurationResourceId)
         {
             Argument.AssertNotNull(logAnalyticsWorkspaceResourceId, nameof(logAnalyticsWorkspaceResourceId));
             Argument.AssertNotNull(logsExporterStorageAccountResourceId, nameof(logsExporterStorageAccountResourceId));
@@ -62,16 +62,16 @@ namespace Azure.ResourceManager.OnlineExperimentation.Models
             AppConfigurationResourceId = appConfigurationResourceId;
         }
 
-        /// <summary> Initializes a new instance of <see cref="OnlineExperimentWorkspaceProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="OnlineExperimentationWorkspaceProperties"/>. </summary>
         /// <param name="workspaceId"> The Id of the workspace. </param>
         /// <param name="provisioningState"> The provisioning state for the resource. </param>
-        /// <param name="logAnalyticsWorkspaceResourceId"> The resource identifier of the Log Analytics workspace which online experiment workspace uses for generating experiment analysis results. </param>
-        /// <param name="logsExporterStorageAccountResourceId"> The resource identifier of storage account where logs are exported from Log Analytics workspace. Online Experiment workspace uses it generating experiment analysis results. </param>
-        /// <param name="appConfigurationResourceId"> The resource identifier of App Configuration with which this online experiment workspace is tied for experimentation. This is a required field for creating an online experiment workspace. </param>
-        /// <param name="encryption"> The encryption configuration for the online experiment workspace resource. </param>
-        /// <param name="endpoint"> The data plane endpoint for the online experiment workspace resource. </param>
+        /// <param name="logAnalyticsWorkspaceResourceId"> The resource identifier of the Log Analytics workspace which online experimentation workspace uses for generating experiment analysis results. </param>
+        /// <param name="logsExporterStorageAccountResourceId"> The resource identifier of storage account where logs are exported from Log Analytics workspace. online experimentation workspace uses it generating experiment analysis results. </param>
+        /// <param name="appConfigurationResourceId"> The resource identifier of App Configuration with which this online experimentation workspace is tied for experimentation. This is a required field for creating an online experimentation workspace. </param>
+        /// <param name="encryption"> The encryption configuration for the online experimentation workspace resource. </param>
+        /// <param name="endpoint"> The data plane endpoint for the online experimentation workspace resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal OnlineExperimentWorkspaceProperties(string workspaceId, ResourceProvisioningState? provisioningState, ResourceIdentifier logAnalyticsWorkspaceResourceId, ResourceIdentifier logsExporterStorageAccountResourceId, ResourceIdentifier appConfigurationResourceId, ResourceEncryptionConfiguration encryption, Uri endpoint, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal OnlineExperimentationWorkspaceProperties(string workspaceId, ResourceProvisioningState? provisioningState, ResourceIdentifier logAnalyticsWorkspaceResourceId, ResourceIdentifier logsExporterStorageAccountResourceId, ResourceIdentifier appConfigurationResourceId, ResourceEncryptionConfiguration encryption, Uri endpoint, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             WorkspaceId = workspaceId;
             ProvisioningState = provisioningState;
@@ -83,8 +83,8 @@ namespace Azure.ResourceManager.OnlineExperimentation.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="OnlineExperimentWorkspaceProperties"/> for deserialization. </summary>
-        internal OnlineExperimentWorkspaceProperties()
+        /// <summary> Initializes a new instance of <see cref="OnlineExperimentationWorkspaceProperties"/> for deserialization. </summary>
+        internal OnlineExperimentationWorkspaceProperties()
         {
         }
 
@@ -92,13 +92,13 @@ namespace Azure.ResourceManager.OnlineExperimentation.Models
         public string WorkspaceId { get; }
         /// <summary> The provisioning state for the resource. </summary>
         public ResourceProvisioningState? ProvisioningState { get; }
-        /// <summary> The resource identifier of the Log Analytics workspace which online experiment workspace uses for generating experiment analysis results. </summary>
+        /// <summary> The resource identifier of the Log Analytics workspace which online experimentation workspace uses for generating experiment analysis results. </summary>
         public ResourceIdentifier LogAnalyticsWorkspaceResourceId { get; set; }
-        /// <summary> The resource identifier of storage account where logs are exported from Log Analytics workspace. Online Experiment workspace uses it generating experiment analysis results. </summary>
+        /// <summary> The resource identifier of storage account where logs are exported from Log Analytics workspace. online experimentation workspace uses it generating experiment analysis results. </summary>
         public ResourceIdentifier LogsExporterStorageAccountResourceId { get; set; }
-        /// <summary> The resource identifier of App Configuration with which this online experiment workspace is tied for experimentation. This is a required field for creating an online experiment workspace. </summary>
+        /// <summary> The resource identifier of App Configuration with which this online experimentation workspace is tied for experimentation. This is a required field for creating an online experimentation workspace. </summary>
         public ResourceIdentifier AppConfigurationResourceId { get; set; }
-        /// <summary> The encryption configuration for the online experiment workspace resource. </summary>
+        /// <summary> The encryption configuration for the online experimentation workspace resource. </summary>
         internal ResourceEncryptionConfiguration Encryption { get; set; }
         /// <summary> All Customer-managed key encryption properties for the resource. </summary>
         public CustomerManagedKeyEncryption CustomerManagedKeyEncryption
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.OnlineExperimentation.Models
             }
         }
 
-        /// <summary> The data plane endpoint for the online experiment workspace resource. </summary>
+        /// <summary> The data plane endpoint for the online experimentation workspace resource. </summary>
         public Uri Endpoint { get; }
     }
 }

@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.OnlineExperimentation.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerOnlineExperimentationContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ResourceEncryptionConfiguration)} does not support writing '{options.Format}' format.");
             }

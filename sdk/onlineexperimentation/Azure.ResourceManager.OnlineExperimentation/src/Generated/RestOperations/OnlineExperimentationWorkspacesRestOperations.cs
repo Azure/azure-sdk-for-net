@@ -15,20 +15,20 @@ using Azure.ResourceManager.OnlineExperimentation.Models;
 
 namespace Azure.ResourceManager.OnlineExperimentation
 {
-    internal partial class OnlineExperimentWorkspacesRestOperations
+    internal partial class OnlineExperimentationWorkspacesRestOperations
     {
         private readonly TelemetryDetails _userAgent;
         private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
-        /// <summary> Initializes a new instance of OnlineExperimentWorkspacesRestOperations. </summary>
+        /// <summary> Initializes a new instance of OnlineExperimentationWorkspacesRestOperations. </summary>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="applicationId"> The application id to use for user agent. </param>
         /// <param name="endpoint"> Service host. </param>
         /// <param name="apiVersion"> The API version to use for this operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="pipeline"/> or <paramref name="apiVersion"/> is null. </exception>
-        public OnlineExperimentWorkspacesRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
+        public OnlineExperimentationWorkspacesRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
@@ -70,14 +70,14 @@ namespace Azure.ResourceManager.OnlineExperimentation
             return message;
         }
 
-        /// <summary> Gets an experiment workspace. </summary>
+        /// <summary> Gets an online experimentation workspace. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="workspaceName"> The name of the OnlineExperimentWorkspace. </param>
+        /// <param name="workspaceName"> The name of the OnlineExperimentationWorkspace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<OnlineExperimentWorkspaceData>> GetAsync(string subscriptionId, string resourceGroupName, string workspaceName, CancellationToken cancellationToken = default)
+        public async Task<Response<OnlineExperimentationWorkspaceData>> GetAsync(string subscriptionId, string resourceGroupName, string workspaceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -89,26 +89,26 @@ namespace Azure.ResourceManager.OnlineExperimentation
             {
                 case 200:
                     {
-                        OnlineExperimentWorkspaceData value = default;
+                        OnlineExperimentationWorkspaceData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = OnlineExperimentWorkspaceData.DeserializeOnlineExperimentWorkspaceData(document.RootElement);
+                        value = OnlineExperimentationWorkspaceData.DeserializeOnlineExperimentationWorkspaceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((OnlineExperimentWorkspaceData)null, message.Response);
+                    return Response.FromValue((OnlineExperimentationWorkspaceData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        /// <summary> Gets an experiment workspace. </summary>
+        /// <summary> Gets an online experimentation workspace. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="workspaceName"> The name of the OnlineExperimentWorkspace. </param>
+        /// <param name="workspaceName"> The name of the OnlineExperimentationWorkspace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<OnlineExperimentWorkspaceData> Get(string subscriptionId, string resourceGroupName, string workspaceName, CancellationToken cancellationToken = default)
+        public Response<OnlineExperimentationWorkspaceData> Get(string subscriptionId, string resourceGroupName, string workspaceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -120,19 +120,19 @@ namespace Azure.ResourceManager.OnlineExperimentation
             {
                 case 200:
                     {
-                        OnlineExperimentWorkspaceData value = default;
+                        OnlineExperimentationWorkspaceData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = OnlineExperimentWorkspaceData.DeserializeOnlineExperimentWorkspaceData(document.RootElement);
+                        value = OnlineExperimentationWorkspaceData.DeserializeOnlineExperimentationWorkspaceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((OnlineExperimentWorkspaceData)null, message.Response);
+                    return Response.FromValue((OnlineExperimentationWorkspaceData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string workspaceName, OnlineExperimentWorkspaceData data)
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string workspaceName, OnlineExperimentationWorkspaceData data)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.OnlineExperimentation
             return uri;
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string workspaceName, OnlineExperimentWorkspaceData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string workspaceName, OnlineExperimentationWorkspaceData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -170,15 +170,15 @@ namespace Azure.ResourceManager.OnlineExperimentation
             return message;
         }
 
-        /// <summary> Create an experiment workspace, or update an existing workspace. </summary>
+        /// <summary> Create an online experimentation workspace, or update an existing workspace. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="workspaceName"> The name of the OnlineExperimentWorkspace. </param>
+        /// <param name="workspaceName"> The name of the OnlineExperimentationWorkspace. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string workspaceName, OnlineExperimentWorkspaceData data, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string workspaceName, OnlineExperimentationWorkspaceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -197,15 +197,15 @@ namespace Azure.ResourceManager.OnlineExperimentation
             }
         }
 
-        /// <summary> Create an experiment workspace, or update an existing workspace. </summary>
+        /// <summary> Create an online experimentation workspace, or update an existing workspace. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="workspaceName"> The name of the OnlineExperimentWorkspace. </param>
+        /// <param name="workspaceName"> The name of the OnlineExperimentationWorkspace. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string workspaceName, OnlineExperimentWorkspaceData data, CancellationToken cancellationToken = default)
+        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string workspaceName, OnlineExperimentationWorkspaceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.OnlineExperimentation
             }
         }
 
-        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string workspaceName, OnlineExperimentWorkspacePatch patch)
+        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string workspaceName, OnlineExperimentationWorkspacePatch patch)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.OnlineExperimentation
             return uri;
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string workspaceName, OnlineExperimentWorkspacePatch patch)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string workspaceName, OnlineExperimentationWorkspacePatch patch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -262,15 +262,15 @@ namespace Azure.ResourceManager.OnlineExperimentation
             return message;
         }
 
-        /// <summary> Patch an experiment workspace. </summary>
+        /// <summary> Patch an online experimentation workspace. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="workspaceName"> The name of the OnlineExperimentWorkspace. </param>
+        /// <param name="workspaceName"> The name of the OnlineExperimentationWorkspace. </param>
         /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string workspaceName, OnlineExperimentWorkspacePatch patch, CancellationToken cancellationToken = default)
+        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string workspaceName, OnlineExperimentationWorkspacePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -289,15 +289,15 @@ namespace Azure.ResourceManager.OnlineExperimentation
             }
         }
 
-        /// <summary> Patch an experiment workspace. </summary>
+        /// <summary> Patch an online experimentation workspace. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="workspaceName"> The name of the OnlineExperimentWorkspace. </param>
+        /// <param name="workspaceName"> The name of the OnlineExperimentationWorkspace. </param>
         /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Update(string subscriptionId, string resourceGroupName, string workspaceName, OnlineExperimentWorkspacePatch patch, CancellationToken cancellationToken = default)
+        public Response Update(string subscriptionId, string resourceGroupName, string workspaceName, OnlineExperimentationWorkspacePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -350,10 +350,10 @@ namespace Azure.ResourceManager.OnlineExperimentation
             return message;
         }
 
-        /// <summary> Deletes an experiment workspace. </summary>
+        /// <summary> Deletes an online experimentation workspace. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="workspaceName"> The name of the OnlineExperimentWorkspace. </param>
+        /// <param name="workspaceName"> The name of the OnlineExperimentationWorkspace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -375,10 +375,10 @@ namespace Azure.ResourceManager.OnlineExperimentation
             }
         }
 
-        /// <summary> Deletes an experiment workspace. </summary>
+        /// <summary> Deletes an online experimentation workspace. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="workspaceName"> The name of the OnlineExperimentWorkspace. </param>
+        /// <param name="workspaceName"> The name of the OnlineExperimentationWorkspace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -432,13 +432,13 @@ namespace Azure.ResourceManager.OnlineExperimentation
             return message;
         }
 
-        /// <summary> Gets all experiment workspaces in a resource group. </summary>
+        /// <summary> Gets all online experimentation workspaces in a resource group. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<OnlineExperimentWorkspaceListResult>> ListByResourceGroupAsync(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        public async Task<Response<OnlineExperimentationWorkspaceListResult>> ListByResourceGroupAsync(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -449,9 +449,9 @@ namespace Azure.ResourceManager.OnlineExperimentation
             {
                 case 200:
                     {
-                        OnlineExperimentWorkspaceListResult value = default;
+                        OnlineExperimentationWorkspaceListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = OnlineExperimentWorkspaceListResult.DeserializeOnlineExperimentWorkspaceListResult(document.RootElement);
+                        value = OnlineExperimentationWorkspaceListResult.DeserializeOnlineExperimentationWorkspaceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -459,13 +459,13 @@ namespace Azure.ResourceManager.OnlineExperimentation
             }
         }
 
-        /// <summary> Gets all experiment workspaces in a resource group. </summary>
+        /// <summary> Gets all online experimentation workspaces in a resource group. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<OnlineExperimentWorkspaceListResult> ListByResourceGroup(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        public Response<OnlineExperimentationWorkspaceListResult> ListByResourceGroup(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -476,9 +476,9 @@ namespace Azure.ResourceManager.OnlineExperimentation
             {
                 case 200:
                     {
-                        OnlineExperimentWorkspaceListResult value = default;
+                        OnlineExperimentationWorkspaceListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = OnlineExperimentWorkspaceListResult.DeserializeOnlineExperimentWorkspaceListResult(document.RootElement);
+                        value = OnlineExperimentationWorkspaceListResult.DeserializeOnlineExperimentationWorkspaceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -514,12 +514,12 @@ namespace Azure.ResourceManager.OnlineExperimentation
             return message;
         }
 
-        /// <summary> Gets all experiment workspaces in the specified subscription. </summary>
+        /// <summary> Gets all online experimentation workspaces in the specified subscription. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<OnlineExperimentWorkspaceListResult>> ListBySubscriptionAsync(string subscriptionId, CancellationToken cancellationToken = default)
+        public async Task<Response<OnlineExperimentationWorkspaceListResult>> ListBySubscriptionAsync(string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -529,9 +529,9 @@ namespace Azure.ResourceManager.OnlineExperimentation
             {
                 case 200:
                     {
-                        OnlineExperimentWorkspaceListResult value = default;
+                        OnlineExperimentationWorkspaceListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = OnlineExperimentWorkspaceListResult.DeserializeOnlineExperimentWorkspaceListResult(document.RootElement);
+                        value = OnlineExperimentationWorkspaceListResult.DeserializeOnlineExperimentationWorkspaceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -539,12 +539,12 @@ namespace Azure.ResourceManager.OnlineExperimentation
             }
         }
 
-        /// <summary> Gets all experiment workspaces in the specified subscription. </summary>
+        /// <summary> Gets all online experimentation workspaces in the specified subscription. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<OnlineExperimentWorkspaceListResult> ListBySubscription(string subscriptionId, CancellationToken cancellationToken = default)
+        public Response<OnlineExperimentationWorkspaceListResult> ListBySubscription(string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -554,9 +554,9 @@ namespace Azure.ResourceManager.OnlineExperimentation
             {
                 case 200:
                     {
-                        OnlineExperimentWorkspaceListResult value = default;
+                        OnlineExperimentationWorkspaceListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = OnlineExperimentWorkspaceListResult.DeserializeOnlineExperimentWorkspaceListResult(document.RootElement);
+                        value = OnlineExperimentationWorkspaceListResult.DeserializeOnlineExperimentationWorkspaceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -586,14 +586,14 @@ namespace Azure.ResourceManager.OnlineExperimentation
             return message;
         }
 
-        /// <summary> Gets all experiment workspaces in a resource group. </summary>
+        /// <summary> Gets all online experimentation workspaces in a resource group. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<OnlineExperimentWorkspaceListResult>> ListByResourceGroupNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        public async Task<Response<OnlineExperimentationWorkspaceListResult>> ListByResourceGroupNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -605,9 +605,9 @@ namespace Azure.ResourceManager.OnlineExperimentation
             {
                 case 200:
                     {
-                        OnlineExperimentWorkspaceListResult value = default;
+                        OnlineExperimentationWorkspaceListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = OnlineExperimentWorkspaceListResult.DeserializeOnlineExperimentWorkspaceListResult(document.RootElement);
+                        value = OnlineExperimentationWorkspaceListResult.DeserializeOnlineExperimentationWorkspaceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -615,14 +615,14 @@ namespace Azure.ResourceManager.OnlineExperimentation
             }
         }
 
-        /// <summary> Gets all experiment workspaces in a resource group. </summary>
+        /// <summary> Gets all online experimentation workspaces in a resource group. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<OnlineExperimentWorkspaceListResult> ListByResourceGroupNextPage(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        public Response<OnlineExperimentationWorkspaceListResult> ListByResourceGroupNextPage(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -634,9 +634,9 @@ namespace Azure.ResourceManager.OnlineExperimentation
             {
                 case 200:
                     {
-                        OnlineExperimentWorkspaceListResult value = default;
+                        OnlineExperimentationWorkspaceListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = OnlineExperimentWorkspaceListResult.DeserializeOnlineExperimentWorkspaceListResult(document.RootElement);
+                        value = OnlineExperimentationWorkspaceListResult.DeserializeOnlineExperimentationWorkspaceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -666,13 +666,13 @@ namespace Azure.ResourceManager.OnlineExperimentation
             return message;
         }
 
-        /// <summary> Gets all experiment workspaces in the specified subscription. </summary>
+        /// <summary> Gets all online experimentation workspaces in the specified subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<OnlineExperimentWorkspaceListResult>> ListBySubscriptionNextPageAsync(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
+        public async Task<Response<OnlineExperimentationWorkspaceListResult>> ListBySubscriptionNextPageAsync(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -683,9 +683,9 @@ namespace Azure.ResourceManager.OnlineExperimentation
             {
                 case 200:
                     {
-                        OnlineExperimentWorkspaceListResult value = default;
+                        OnlineExperimentationWorkspaceListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = OnlineExperimentWorkspaceListResult.DeserializeOnlineExperimentWorkspaceListResult(document.RootElement);
+                        value = OnlineExperimentationWorkspaceListResult.DeserializeOnlineExperimentationWorkspaceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -693,13 +693,13 @@ namespace Azure.ResourceManager.OnlineExperimentation
             }
         }
 
-        /// <summary> Gets all experiment workspaces in the specified subscription. </summary>
+        /// <summary> Gets all online experimentation workspaces in the specified subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<OnlineExperimentWorkspaceListResult> ListBySubscriptionNextPage(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
+        public Response<OnlineExperimentationWorkspaceListResult> ListBySubscriptionNextPage(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -710,9 +710,9 @@ namespace Azure.ResourceManager.OnlineExperimentation
             {
                 case 200:
                     {
-                        OnlineExperimentWorkspaceListResult value = default;
+                        OnlineExperimentationWorkspaceListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = OnlineExperimentWorkspaceListResult.DeserializeOnlineExperimentWorkspaceListResult(document.RootElement);
+                        value = OnlineExperimentationWorkspaceListResult.DeserializeOnlineExperimentationWorkspaceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

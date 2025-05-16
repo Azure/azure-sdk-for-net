@@ -18,10 +18,10 @@ namespace Azure.ResourceManager.OnlineExperimentation.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetOnlineExperimentWorkspaces_ListOnlineExperimentWorkspacesInASubscription()
+        public async Task GetOnlineExperimentationWorkspaces_ListOnlineExperimentationWorkspacesInASubscription()
         {
-            // Generated from example definition: 2025-05-31-preview/OnlineExperimentWorkspaces_ListBySubscription.json
-            // this example is just showing the usage of "OnlineExperimentWorkspace_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-05-31-preview/OnlineExperimentationWorkspaces_ListBySubscription.json
+            // this example is just showing the usage of "OnlineExperimentationWorkspace_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -35,11 +35,11 @@ namespace Azure.ResourceManager.OnlineExperimentation.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (OnlineExperimentWorkspaceResource item in subscriptionResource.GetOnlineExperimentWorkspacesAsync())
+            await foreach (OnlineExperimentationWorkspaceResource item in subscriptionResource.GetOnlineExperimentationWorkspacesAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                OnlineExperimentWorkspaceData resourceData = item.Data;
+                OnlineExperimentationWorkspaceData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
