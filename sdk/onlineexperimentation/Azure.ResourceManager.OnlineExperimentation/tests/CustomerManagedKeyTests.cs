@@ -38,11 +38,11 @@ namespace Azure.ResourceManager.OnlineExperimentation.Tests
         public async Task EnableCustomerManagedKeyEncryption()
         {
             var workspaceResourceId = ResourceIdentifier.Parse(TestEnvironment.OnlineExperimentationWorkspaceResourceId);
-            var workspaceResource = Client.GetOnlineExperimentWorkspaceResource(workspaceResourceId);
+            var workspaceResource = Client.GetOnlineExperimentationWorkspaceResource(workspaceResourceId);
 
             var keyEncryptionKeyUri = new Uri(TestEnvironment.CustomerManagedKeyUri);
 
-            var partialUpdateData = new OnlineExperimentWorkspacePatch
+            var partialUpdateData = new OnlineExperimentationWorkspacePatch
             {
                 Properties = new()
                 {

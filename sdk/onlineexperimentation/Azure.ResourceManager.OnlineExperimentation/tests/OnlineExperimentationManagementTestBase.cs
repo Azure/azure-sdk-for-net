@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.OnlineExperimentation.Tests
     public class OnlineExperimentationManagementTestBase : ManagementRecordedTestBase<OnlineExperimentationManagementTestEnvironment>
     {
         protected ArmClient Client { get; private set; }
-        public OnlineExperimentWorkspaceResource TestWorkspaceResource { get; private set; }
+        public OnlineExperimentationWorkspaceResource TestWorkspaceResource { get; private set; }
 
         protected OnlineExperimentationManagementTestBase(bool isAsync, RecordedTestMode mode)
             : base(isAsync, mode)
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.OnlineExperimentation.Tests
             Client = GetArmClient();
 
             var workspaceResourceId = ResourceIdentifier.Parse(TestEnvironment.OnlineExperimentationWorkspaceResourceId);
-            TestWorkspaceResource = Client.GetOnlineExperimentWorkspaceResource(workspaceResourceId);
+            TestWorkspaceResource = Client.GetOnlineExperimentationWorkspaceResource(workspaceResourceId);
         }
     }
 }
