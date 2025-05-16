@@ -4,6 +4,8 @@
 
 ### Features Added
 
+- Support broker on Linux.
+
 ### Breaking Changes
 
 ### Bugs Fixed
