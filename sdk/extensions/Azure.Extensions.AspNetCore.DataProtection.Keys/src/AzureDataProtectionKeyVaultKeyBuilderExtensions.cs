@@ -29,7 +29,7 @@ namespace Microsoft.AspNetCore.DataProtection
         /// <returns>The value <paramref name="builder"/>.</returns>
         public static IDataProtectionBuilder ProtectKeysWithAzureKeyVault(this IDataProtectionBuilder builder, string keyIdentifier, TokenCredential tokenCredential)
         {
-            Argument.AssertNotNull(tokenCredential, nameof(keyIdentifier));
+            Argument.AssertNotNull(keyIdentifier, nameof(keyIdentifier));
             Argument.AssertNotNull(tokenCredential, nameof(tokenCredential));
             return builder.ProtectKeysWithAzureKeyVault(keyIdentifier, new KeyResolver(tokenCredential));
         }
