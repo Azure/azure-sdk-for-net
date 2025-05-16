@@ -25,13 +25,13 @@ namespace Azure.ResourceManager.Cdn.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string KeyVaultSigningKeyParametersValue = "KeyVaultSigningKeyParameters";
+        private const string KeyVaultSigningKeyValue = "KeyVaultSigningKeyParameters";
 
         /// <summary>
         /// KeyVaultSigningKeyParameters
         /// Serialized Name: KeyVaultSigningKeyParametersType.KeyVaultSigningKeyParameters
         /// </summary>
-        public static KeyVaultSigningKeyType KeyVaultSigningKeyParameters { get; } = new KeyVaultSigningKeyType(KeyVaultSigningKeyParametersValue);
+        public static KeyVaultSigningKeyType KeyVaultSigningKey { get; } = new KeyVaultSigningKeyType(KeyVaultSigningKeyValue);
         /// <summary> Determines if two <see cref="KeyVaultSigningKeyType"/> values are the same. </summary>
         public static bool operator ==(KeyVaultSigningKeyType left, KeyVaultSigningKeyType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="KeyVaultSigningKeyType"/> values are not the same. </summary>

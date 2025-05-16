@@ -360,6 +360,7 @@ rename-mapping:
   KeyVaultSigningKeyParametersType: KeyVaultSigningKeyType
   RequestMethodMatchValue: RequestMethodMatchConditionType
   RequestSchemeMatchValue: RequestSchemeMatchConditionMatchValue
+  KeyVaultSigningKeyParametersType.KeyVaultSigningKeyParameters: KeyVaultSigningKey
 
 directive:
   - from: swagger-document
