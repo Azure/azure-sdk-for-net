@@ -31,7 +31,6 @@ namespace Microsoft.AspNetCore.DataProtection
         {
             Argument.AssertNotNull(tokenCredential, nameof(keyIdentifier));
             Argument.AssertNotNull(tokenCredential, nameof(tokenCredential));
-
             return builder.ProtectKeysWithAzureKeyVault(keyIdentifier, new KeyResolver(tokenCredential));
         }
 
@@ -46,7 +45,6 @@ namespace Microsoft.AspNetCore.DataProtection
         {
             Argument.AssertNotNull(keyIdentifier, nameof(keyIdentifier));
             Argument.AssertNotNull(tokenCredential, nameof(tokenCredential));
-
             return builder.ProtectKeysWithAzureKeyVault(keyIdentifier.ToString(), new KeyResolver(tokenCredential));
         }
 
@@ -84,7 +82,6 @@ namespace Microsoft.AspNetCore.DataProtection
         {
             Argument.AssertNotNull(keyIdentifier, nameof(keyIdentifier));
             Argument.AssertNotNull(keyResolver, nameof(keyResolver));
-
             return builder.ProtectKeysWithAzureKeyVault(keyIdentifier.ToString(), keyResolver);
         }
 
@@ -125,7 +122,6 @@ namespace Microsoft.AspNetCore.DataProtection
         {
             Argument.AssertNotNull(keyIdentifier, nameof(keyIdentifier));
             Argument.AssertNotNull(keyResolverFactory, nameof(keyResolverFactory));
-
             return builder.ProtectKeysWithAzureKeyVault(keyIdentifier.ToString(), keyResolverFactory);
         }
 
@@ -140,7 +136,6 @@ namespace Microsoft.AspNetCore.DataProtection
         {
             Argument.AssertNotNullOrEmpty(keyIdentifier, nameof(keyIdentifier));
             Argument.AssertNotNull(tokenCredentialFactory, nameof(tokenCredentialFactory));
-
             return builder.ProtectKeysWithAzureKeyVault(_ => keyIdentifier, tokenCredentialFactory);
         }
 
@@ -200,7 +195,6 @@ namespace Microsoft.AspNetCore.DataProtection
         {
             Argument.AssertNotNull(keyIdentifierFactory, nameof(keyIdentifierFactory));
             Argument.AssertNotNull(tokenCredentialFactory, nameof(tokenCredentialFactory));
-
             return builder.ProtectKeysWithAzureKeyVault(sp => keyIdentifierFactory(sp).ToString(), tokenCredentialFactory);
         }
     }
