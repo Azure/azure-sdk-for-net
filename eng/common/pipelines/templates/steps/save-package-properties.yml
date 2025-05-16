@@ -56,7 +56,7 @@ steps:
       # Instead, we will save the changed services to a file, attach it as an attachment for PiplineWitness to pick up and utilize.
       #
       - pwsh: |
-          $changedPackages = Get-Content -R -Filter *.json "${{ parameters.PackageInfoDirectory }}" `
+          $changedPackages = Get-ChildItem -Recurse -Filter *.json "${{ parameters.PackageInfoDirectory }}" `
             | ForEach-Object { Get-Content -Raw $_ | ConvertFrom-Json }
 
           $changedServices = $changedPackages | Where-Object { $_.IncludedForValidation -eq $false } `
