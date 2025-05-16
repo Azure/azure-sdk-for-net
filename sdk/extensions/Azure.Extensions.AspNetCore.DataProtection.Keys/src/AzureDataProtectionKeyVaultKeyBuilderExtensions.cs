@@ -29,7 +29,9 @@ namespace Microsoft.AspNetCore.DataProtection
         /// <returns>The value <paramref name="builder"/>.</returns>
         public static IDataProtectionBuilder ProtectKeysWithAzureKeyVault(this IDataProtectionBuilder builder, string keyIdentifier, TokenCredential tokenCredential)
         {
+            Argument.AssertNotNull(tokenCredential, nameof(keyIdentifier));
             Argument.AssertNotNull(tokenCredential, nameof(tokenCredential));
+
             return builder.ProtectKeysWithAzureKeyVault(keyIdentifier, new KeyResolver(tokenCredential));
         }
 
@@ -44,6 +46,7 @@ namespace Microsoft.AspNetCore.DataProtection
         {
             Argument.AssertNotNull(keyIdentifier, nameof(keyIdentifier));
             Argument.AssertNotNull(tokenCredential, nameof(tokenCredential));
+
             return builder.ProtectKeysWithAzureKeyVault(keyIdentifier.ToString(), new KeyResolver(tokenCredential));
         }
 
@@ -80,6 +83,8 @@ namespace Microsoft.AspNetCore.DataProtection
         public static IDataProtectionBuilder ProtectKeysWithAzureKeyVault(this IDataProtectionBuilder builder, Uri keyIdentifier, IKeyEncryptionKeyResolver keyResolver)
         {
             Argument.AssertNotNull(keyIdentifier, nameof(keyIdentifier));
+            Argument.AssertNotNull(keyResolver, nameof(keyResolver));
+
             return builder.ProtectKeysWithAzureKeyVault(keyIdentifier.ToString(), keyResolver);
         }
 
@@ -119,6 +124,8 @@ namespace Microsoft.AspNetCore.DataProtection
         public static IDataProtectionBuilder ProtectKeysWithAzureKeyVault(this IDataProtectionBuilder builder, Uri keyIdentifier, Func<IServiceProvider, IKeyEncryptionKeyResolver> keyResolverFactory)
         {
             Argument.AssertNotNull(keyIdentifier, nameof(keyIdentifier));
+            Argument.AssertNotNull(keyResolverFactory, nameof(keyResolverFactory));
+
             return builder.ProtectKeysWithAzureKeyVault(keyIdentifier.ToString(), keyResolverFactory);
         }
 
@@ -132,6 +139,8 @@ namespace Microsoft.AspNetCore.DataProtection
         public static IDataProtectionBuilder ProtectKeysWithAzureKeyVault(this IDataProtectionBuilder builder, string keyIdentifier, Func<IServiceProvider, TokenCredential> tokenCredentialFactory)
         {
             Argument.AssertNotNullOrEmpty(keyIdentifier, nameof(keyIdentifier));
+            Argument.AssertNotNull(tokenCredentialFactory, nameof(tokenCredentialFactory));
+
             return builder.ProtectKeysWithAzureKeyVault(_ => keyIdentifier, tokenCredentialFactory);
         }
 
@@ -190,6 +199,8 @@ namespace Microsoft.AspNetCore.DataProtection
         public static IDataProtectionBuilder ProtectKeysWithAzureKeyVault(this IDataProtectionBuilder builder, Func<IServiceProvider, Uri> keyIdentifierFactory, Func<IServiceProvider, TokenCredential> tokenCredentialFactory)
         {
             Argument.AssertNotNull(keyIdentifierFactory, nameof(keyIdentifierFactory));
+            Argument.AssertNotNull(tokenCredentialFactory, nameof(tokenCredentialFactory));
+
             return builder.ProtectKeysWithAzureKeyVault(sp => keyIdentifierFactory(sp).ToString(), tokenCredentialFactory);
         }
     }
