@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.ScVmm
 {
     public partial class ScVmmServerResource : IJsonModel<ScVmmServerData>
     {
+        private static ScVmmServerData s_dataDeserializationInstance;
+        private static ScVmmServerData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<ScVmmServerData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ScVmmServerData>)Data).Write(writer, options);
 
-        ScVmmServerData IJsonModel<ScVmmServerData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ScVmmServerData>)Data).Create(ref reader, options);
+        ScVmmServerData IJsonModel<ScVmmServerData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ScVmmServerData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<ScVmmServerData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ScVmmServerData>(Data, options, AzureResourceManagerScVmmContext.Default);
 
         ScVmmServerData IPersistableModel<ScVmmServerData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ScVmmServerData>(data, options, AzureResourceManagerScVmmContext.Default);
 
-        string IPersistableModel<ScVmmServerData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ScVmmServerData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<ScVmmServerData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ScVmmServerData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }
