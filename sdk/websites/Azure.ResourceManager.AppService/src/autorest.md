@@ -10,7 +10,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 azure-arm: true
 library-name: AppService
 namespace: Azure.ResourceManager.AppService
-require: https://github.com/Azure/azure-rest-api-specs/blob/7c1e8a2c1e18ac0dd65b88f00447992ed86fcc0f/specification/web/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/c9c3e8b9ec547d82c487f36f1126228f9eef0e79/specification/web/resource-manager/readme.md
 #tag: package-2024-04
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
@@ -510,10 +510,6 @@ rename-mapping:
   Site.properties.storageAccountRequired: IsStorageAccountRequired
   Site.properties.suspendedTill: SuspendOn
   Site.properties.virtualNetworkSubnetId: -|arm-id
-  Site.properties.vnetBackupRestoreEnabled: IsVnetBackupRestoreEnabled
-  Site.properties.vnetContentShareEnabled: IsVnetContentShareEnabled
-  Site.properties.vnetImagePullEnabled: IsVnetImagePullEnabled
-  Site.properties.vnetRouteAllEnabled: IsVnetRouteAllEnabled
   Site: WebSite
   SiteAuthSettings.properties.clientSecretCertificateThumbprint: ClientSecretCertificateThumbprintString
   SiteAuthSettings.properties.enabled: IsEnabled
@@ -1068,7 +1064,7 @@ directive:
             "200": {
                 "description": "OK.",
                 "schema": {
-                    "$ref": "#/definitions/Certificate"
+                    "$ref": "./CommonDefinitions.json#/definitions/Certificate"
                 }
             },
             "202": {

@@ -11,7 +11,7 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.AppService
 {
-    public partial class AppCertificateResource : IJsonModel<AppCertificateData>
+    public partial class SiteCertificateResource : IJsonModel<AppCertificateData>
     {
         void IJsonModel<AppCertificateData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<AppCertificateData>)Data).Write(writer, options);
 

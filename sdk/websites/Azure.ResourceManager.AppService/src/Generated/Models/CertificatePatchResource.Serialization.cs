@@ -12,14 +12,15 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class AppCertificatePatch : IUtf8JsonSerializable, IJsonModel<AppCertificatePatch>
+    public partial class CertificatePatchResource : IUtf8JsonSerializable, IJsonModel<CertificatePatchResource>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppCertificatePatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CertificatePatchResource>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<AppCertificatePatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<CertificatePatchResource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -30,10 +31,10 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AppCertificatePatch>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CertificatePatchResource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppCertificatePatch)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(CertificatePatchResource)} does not support writing '{format}' format.");
             }
 
             base.JsonModelWriteCore(writer, options);
@@ -157,16 +158,281 @@ namespace Azure.ResourceManager.AppService.Models
             writer.WriteEndObject();
         }
 
-        AppCertificatePatch IJsonModel<AppCertificatePatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        CertificatePatchResource IJsonModel<CertificatePatchResource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AppCertificatePatch>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CertificatePatchResource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppCertificatePatch)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(CertificatePatchResource)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAppCertificatePatch(document.RootElement, options);
+            return DeserializeCertificatePatchResource(document.RootElement, options);
+        }
+
+        internal static CertificatePatchResource DeserializeCertificatePatchResource(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string kind = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType type = default;
+            SystemData systemData = default;
+            string password = default;
+            string friendlyName = default;
+            string subjectName = default;
+            IList<string> hostNames = default;
+            byte[] pfxBlob = default;
+            string siteName = default;
+            string selfLink = default;
+            string issuer = default;
+            DateTimeOffset? issueDate = default;
+            DateTimeOffset? expirationDate = default;
+            string thumbprint = default;
+            bool? valid = default;
+            byte[] cerBlob = default;
+            string publicKeyHash = default;
+            HostingEnvironmentProfile hostingEnvironmentProfile = default;
+            ResourceIdentifier keyVaultId = default;
+            string keyVaultSecretName = default;
+            KeyVaultSecretStatus? keyVaultSecretStatus = default;
+            ResourceIdentifier serverFarmId = default;
+            string canonicalName = default;
+            string domainValidationMethod = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("kind"u8))
+                {
+                    kind = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("id"u8))
+                {
+                    id = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("name"u8))
+                {
+                    name = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("type"u8))
+                {
+                    type = new ResourceType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("systemData"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    continue;
+                }
+                if (property.NameEquals("properties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.NameEquals("password"u8))
+                        {
+                            password = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("friendlyName"u8))
+                        {
+                            friendlyName = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("subjectName"u8))
+                        {
+                            subjectName = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("hostNames"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<string> array = new List<string>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(item.GetString());
+                            }
+                            hostNames = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("pfxBlob"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            pfxBlob = property0.Value.GetBytesFromBase64("D");
+                            continue;
+                        }
+                        if (property0.NameEquals("siteName"u8))
+                        {
+                            siteName = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("selfLink"u8))
+                        {
+                            selfLink = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("issuer"u8))
+                        {
+                            issuer = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("issueDate"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            issueDate = property0.Value.GetDateTimeOffset("O");
+                            continue;
+                        }
+                        if (property0.NameEquals("expirationDate"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            expirationDate = property0.Value.GetDateTimeOffset("O");
+                            continue;
+                        }
+                        if (property0.NameEquals("thumbprint"u8))
+                        {
+                            thumbprint = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("valid"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            valid = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("cerBlob"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            cerBlob = property0.Value.GetBytesFromBase64("D");
+                            continue;
+                        }
+                        if (property0.NameEquals("publicKeyHash"u8))
+                        {
+                            publicKeyHash = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("hostingEnvironmentProfile"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            hostingEnvironmentProfile = HostingEnvironmentProfile.DeserializeHostingEnvironmentProfile(property0.Value, options);
+                            continue;
+                        }
+                        if (property0.NameEquals("keyVaultId"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            keyVaultId = new ResourceIdentifier(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("keyVaultSecretName"u8))
+                        {
+                            keyVaultSecretName = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("keyVaultSecretStatus"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            keyVaultSecretStatus = property0.Value.GetString().ToKeyVaultSecretStatus();
+                            continue;
+                        }
+                        if (property0.NameEquals("serverFarmId"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            serverFarmId = new ResourceIdentifier(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("canonicalName"u8))
+                        {
+                            canonicalName = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("domainValidationMethod"u8))
+                        {
+                            domainValidationMethod = property0.Value.GetString();
+                            continue;
+                        }
+                    }
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = rawDataDictionary;
+            return new CertificatePatchResource(
+                id,
+                name,
+                type,
+                systemData,
+                password,
+                friendlyName,
+                subjectName,
+                hostNames ?? new ChangeTrackingList<string>(),
+                pfxBlob,
+                siteName,
+                selfLink,
+                issuer,
+                issueDate,
+                expirationDate,
+                thumbprint,
+                valid,
+                cerBlob,
+                publicKeyHash,
+                hostingEnvironmentProfile,
+                keyVaultId,
+                keyVaultSecretName,
+                keyVaultSecretStatus,
+                serverFarmId,
+                canonicalName,
+                domainValidationMethod,
+                kind,
+                serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -690,9 +956,9 @@ namespace Azure.ResourceManager.AppService.Models
             return BinaryData.FromString(builder.ToString());
         }
 
-        BinaryData IPersistableModel<AppCertificatePatch>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<CertificatePatchResource>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AppCertificatePatch>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CertificatePatchResource>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
@@ -701,26 +967,26 @@ namespace Azure.ResourceManager.AppService.Models
                 case "bicep":
                     return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(AppCertificatePatch)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CertificatePatchResource)} does not support writing '{options.Format}' format.");
             }
         }
 
-        AppCertificatePatch IPersistableModel<AppCertificatePatch>.Create(BinaryData data, ModelReaderWriterOptions options)
+        CertificatePatchResource IPersistableModel<CertificatePatchResource>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AppCertificatePatch>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CertificatePatchResource>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeAppCertificatePatch(document.RootElement, options);
+                        return DeserializeCertificatePatchResource(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AppCertificatePatch)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CertificatePatchResource)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<AppCertificatePatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<CertificatePatchResource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

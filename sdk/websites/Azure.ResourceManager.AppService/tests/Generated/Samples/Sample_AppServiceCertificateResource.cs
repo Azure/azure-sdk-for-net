@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.AppService.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAppServiceCertificate()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.CertificateRegistration/stable/2024-04-01/examples/GetAppServiceCertificate.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.CertificateRegistration/stable/2024-11-01/examples/GetAppServiceCertificate.json
             // this example is just showing the usage of "AppServiceCertificateOrders_GetCertificate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.AppService.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteAppServiceCertificate()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.CertificateRegistration/stable/2024-04-01/examples/DeleteAppServiceCertificate.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.CertificateRegistration/stable/2024-11-01/examples/DeleteAppServiceCertificate.json
             // this example is just showing the usage of "AppServiceCertificateOrders_DeleteCertificate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.AppService.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateCertificate()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.CertificateRegistration/stable/2024-04-01/examples/UpdateAppServiceCertificate.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.CertificateRegistration/stable/2024-11-01/examples/UpdateAppServiceCertificate.json
             // this example is just showing the usage of "AppServiceCertificateOrders_UpdateCertificate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
