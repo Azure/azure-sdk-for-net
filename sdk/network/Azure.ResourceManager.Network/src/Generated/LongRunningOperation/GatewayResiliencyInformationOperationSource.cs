@@ -13,18 +13,18 @@ using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    internal class ConnectionMonitorQueryResultOperationSource : IOperationSource<ConnectionMonitorQueryResult>
+    internal class GatewayResiliencyInformationOperationSource : IOperationSource<GatewayResiliencyInformation>
     {
-        ConnectionMonitorQueryResult IOperationSource<ConnectionMonitorQueryResult>.CreateResult(Response response, CancellationToken cancellationToken)
+        GatewayResiliencyInformation IOperationSource<GatewayResiliencyInformation>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-            return ConnectionMonitorQueryResult.DeserializeConnectionMonitorQueryResult(document.RootElement);
+            return GatewayResiliencyInformation.DeserializeGatewayResiliencyInformation(document.RootElement);
         }
 
-        async ValueTask<ConnectionMonitorQueryResult> IOperationSource<ConnectionMonitorQueryResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<GatewayResiliencyInformation> IOperationSource<GatewayResiliencyInformation>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-            return ConnectionMonitorQueryResult.DeserializeConnectionMonitorQueryResult(document.RootElement);
+            return GatewayResiliencyInformation.DeserializeGatewayResiliencyInformation(document.RootElement);
         }
     }
 }
