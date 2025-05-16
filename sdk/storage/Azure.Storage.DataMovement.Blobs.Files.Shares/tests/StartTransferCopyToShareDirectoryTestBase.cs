@@ -102,7 +102,10 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
             string directoryPath,
             TransferPropertiesTestType propertiesTestType = default)
         {
-            ShareFileStorageResourceOptions options = default;
+            ShareFileStorageResourceOptions options = new()
+            {
+                SkipProtocolValidation = true,
+            };
             if (propertiesTestType == TransferPropertiesTestType.NewProperties)
             {
                 options = new ShareFileStorageResourceOptions
@@ -115,7 +118,8 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
                     FileAttributes = _defaultFileAttributes,
                     FileCreatedOn = _defaultFileCreatedOn,
                     FileChangedOn = _defaultFileChangedOn,
-                    FileLastWrittenOn = _defaultFileLastWrittenOn
+                    FileLastWrittenOn = _defaultFileLastWrittenOn,
+                    SkipProtocolValidation = true
                 };
             }
             else if (propertiesTestType == TransferPropertiesTestType.NoPreserve)
@@ -130,13 +134,15 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
                     FileAttributes = default,
                     FileCreatedOn = default,
                     FileLastWrittenOn = default,
+                    SkipProtocolValidation = true
                 };
             }
             else if (propertiesTestType == TransferPropertiesTestType.Preserve)
             {
                 options = new ShareFileStorageResourceOptions
                 {
-                    FilePermissions = true
+                    FilePermissions = true,
+                    SkipProtocolValidation = true
                 };
             }
             // Authorize with SAS when performing operations
