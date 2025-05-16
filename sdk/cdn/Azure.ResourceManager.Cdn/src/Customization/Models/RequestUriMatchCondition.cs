@@ -12,11 +12,11 @@ namespace Azure.ResourceManager.Cdn.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public RequestUriMatchCondition(RequestUriMatchConditionType conditionType, RequestUriOperator requestUriOperator) : this(requestUriOperator)
         {
-            RequestUriMatchConditionType = conditionType;
+            ConditionType = conditionType;
         }
 
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public RequestUriMatchConditionType RequestUriMatchConditionType
+        public RequestUriMatchConditionType ConditionType
         {
             get => new(TypeName.ToString());
             set

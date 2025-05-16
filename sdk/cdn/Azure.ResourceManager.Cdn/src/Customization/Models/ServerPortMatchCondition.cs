@@ -12,11 +12,11 @@ namespace Azure.ResourceManager.Cdn.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public ServerPortMatchCondition(ServerPortMatchConditionType conditionType, ServerPortOperator serverPortOperator) : this(serverPortOperator)
         {
-            ServerPortMatchConditionType = conditionType;
+            ConditionType = conditionType;
         }
 
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public ServerPortMatchConditionType ServerPortMatchConditionType
+        public ServerPortMatchConditionType ConditionType
         {
             get => new(TypeName.ToString());
             set

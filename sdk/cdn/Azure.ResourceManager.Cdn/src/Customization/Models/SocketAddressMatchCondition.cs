@@ -12,11 +12,11 @@ namespace Azure.ResourceManager.Cdn.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public SocketAddressMatchCondition(SocketAddressMatchConditionType conditionType, SocketAddressOperator socketAddressOperator) : this(socketAddressOperator)
         {
-            SocketAddressMatchConditionType = conditionType;
+            ConditionType = conditionType;
         }
 
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public SocketAddressMatchConditionType SocketAddressMatchConditionType
+        public SocketAddressMatchConditionType ConditionType
         {
             get => new(TypeName.ToString());
             set

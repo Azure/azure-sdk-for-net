@@ -12,11 +12,11 @@ namespace Azure.ResourceManager.Cdn.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public UriRewriteActionProperties(UriRewriteActionType conditionType, string sourcePattern, string destination) : this(sourcePattern, destination)
         {
-            UriRewriteActionType = conditionType;
+            ActionType = conditionType;
         }
 
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public UriRewriteActionType UriRewriteActionType
+        public UriRewriteActionType ActionType
         {
             get => new(TypeName.ToString());
             set

@@ -12,11 +12,11 @@ namespace Azure.ResourceManager.Cdn.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public DeliveryRuleSslProtocolMatchCondition(SslProtocolMatchConditionType conditionType, SslProtocolOperator sslProtocolOperator) : this(sslProtocolOperator)
         {
-            SslProtocolMatchConditionType = conditionType;
+            ConditionType = conditionType;
         }
 
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public SslProtocolMatchConditionType SslProtocolMatchConditionType
+        public SslProtocolMatchConditionType ConditionType
         {
             get => new(TypeName.ToString());
             set

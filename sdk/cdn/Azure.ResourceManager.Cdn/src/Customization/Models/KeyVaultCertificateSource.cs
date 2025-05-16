@@ -29,11 +29,11 @@ namespace Azure.ResourceManager.Cdn.Models
                 deleteRule
             )
         {
-            KeyVaultCertificateSourceType = sourceType;
+            SourceType = sourceType;
         }
 
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public KeyVaultCertificateSourceType KeyVaultCertificateSourceType
+        public KeyVaultCertificateSourceType SourceType
         {
             get => new(TypeName.ToString());
             set

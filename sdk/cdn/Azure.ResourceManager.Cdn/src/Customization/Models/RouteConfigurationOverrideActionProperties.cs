@@ -12,11 +12,11 @@ namespace Azure.ResourceManager.Cdn.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public RouteConfigurationOverrideActionProperties(RouteConfigurationOverrideActionType actionType) : this()
         {
-            RouteConfigurationOverrideActionType = actionType;
+            ActionType = actionType;
         }
 
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public RouteConfigurationOverrideActionType RouteConfigurationOverrideActionType
+        public RouteConfigurationOverrideActionType ActionType
         {
             get => new(TypeName.ToString());
             set

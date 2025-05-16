@@ -12,11 +12,11 @@ namespace Azure.ResourceManager.Cdn.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public CacheKeyQueryStringActionProperties(CacheKeyQueryStringActionType type, QueryStringBehavior queryStringBehavior) : this(queryStringBehavior)
         {
-            CacheKeyQueryStringAction = type;
+            ActionType = type;
         }
 
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public CacheKeyQueryStringActionType CacheKeyQueryStringAction
+        public CacheKeyQueryStringActionType ActionType
         {
             get => new(TypeName.ToString());
             set

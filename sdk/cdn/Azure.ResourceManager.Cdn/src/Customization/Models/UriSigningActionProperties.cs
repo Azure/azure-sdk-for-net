@@ -12,11 +12,11 @@ namespace Azure.ResourceManager.Cdn.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public UriSigningActionProperties(UriSigningActionType actionType) : this()
         {
-            UriSigningActionType = actionType;
+            ActionType = actionType;
         }
 
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public UriSigningActionType UriSigningActionType
+        public UriSigningActionType ActionType
         {
             get => new(TypeName.ToString());
             set

@@ -12,11 +12,11 @@ namespace Azure.ResourceManager.Cdn.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public UriPathMatchCondition(UriPathMatchConditionType conditionType, UriPathOperator uriPathOperator) : this(uriPathOperator)
         {
-            UriPathMatchConditionType = conditionType;
+            ConditionType = conditionType;
         }
 
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public UriPathMatchConditionType UriPathMatchConditionType
+        public UriPathMatchConditionType ConditionType
         {
             get => new(TypeName.ToString());
             set

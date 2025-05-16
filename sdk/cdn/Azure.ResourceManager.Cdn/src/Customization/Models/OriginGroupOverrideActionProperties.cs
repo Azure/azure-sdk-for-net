@@ -13,11 +13,11 @@ namespace Azure.ResourceManager.Cdn.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public OriginGroupOverrideActionProperties(OriginGroupOverrideActionType actionType, WritableSubResource originGroup) : this(originGroup)
         {
-            OriginGroupOverrideActionType = actionType;
+            ActionType = actionType;
         }
 
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public OriginGroupOverrideActionType OriginGroupOverrideActionType
+        public OriginGroupOverrideActionType ActionType
         {
             get => new(TypeName.ToString());
             set

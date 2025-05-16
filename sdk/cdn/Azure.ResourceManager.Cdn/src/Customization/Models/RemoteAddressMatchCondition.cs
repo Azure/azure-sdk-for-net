@@ -12,11 +12,11 @@ namespace Azure.ResourceManager.Cdn.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public RemoteAddressMatchCondition(RemoteAddressMatchConditionType conditionType, string remoteAddressOperator) : this(remoteAddressOperator)
         {
-            RemoteAddressMatchConditionType = conditionType;
+            ConditionType = conditionType;
         }
 
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public RemoteAddressMatchConditionType RemoteAddressMatchConditionType
+        public RemoteAddressMatchConditionType ConditionType
         {
             get => new(TypeName.ToString());
             set

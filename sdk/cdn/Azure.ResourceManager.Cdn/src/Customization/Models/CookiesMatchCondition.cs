@@ -12,11 +12,11 @@ namespace Azure.ResourceManager.Cdn.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public CookiesMatchCondition(CookiesMatchConditionType conditionType, CookiesOperator cookiesOperator) : this(cookiesOperator)
         {
-            CookiesMatchConditionType = conditionType;
+            ConditionType = conditionType;
         }
 
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public CookiesMatchConditionType CookiesMatchConditionType
+        public CookiesMatchConditionType ConditionType
         {
             get => new(TypeName.ToString());
             set

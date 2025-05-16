@@ -12,11 +12,11 @@ namespace Azure.ResourceManager.Cdn.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public UriFileNameMatchCondition(UriFileNameMatchConditionType conditionType, UriFileNameOperator uriFileNameOperator) : this(uriFileNameOperator)
         {
-            UriFileNameMatchConditionType = conditionType;
+            ConditionType = conditionType;
         }
 
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public UriFileNameMatchConditionType UriFileNameMatchConditionType
+        public UriFileNameMatchConditionType ConditionType
         {
             get => new(TypeName.ToString());
             set

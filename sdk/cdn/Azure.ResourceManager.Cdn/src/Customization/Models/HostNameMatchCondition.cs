@@ -12,11 +12,11 @@ namespace Azure.ResourceManager.Cdn.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public HostNameMatchCondition(HostNameMatchConditionType conditionType, HostNameOperator hostNameOperator) : this(hostNameOperator)
         {
-            HostNameMatchConditionType = conditionType;
+            ConditionType = conditionType;
         }
 
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public HostNameMatchConditionType HostNameMatchConditionType
+        public HostNameMatchConditionType ConditionType
         {
             get => new(TypeName.ToString());
             set

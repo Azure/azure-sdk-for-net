@@ -12,11 +12,11 @@ namespace Azure.ResourceManager.Cdn.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public UriRedirectActionProperties(UriRedirectActionType conditionType, RedirectType redirectType) : this(redirectType)
         {
-            UriRedirectActionType = conditionType;
+            ActionType = conditionType;
         }
 
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public UriRedirectActionType UriRedirectActionType
+        public UriRedirectActionType ActionType
         {
             get => new(TypeName.ToString());
             set

@@ -12,11 +12,11 @@ namespace Azure.ResourceManager.Cdn.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public HttpVersionMatchCondition(HttpVersionMatchConditionType conditionType, HttpVersionOperator httpVersionOperator) : this(httpVersionOperator)
         {
-            HttpVersionMatchConditionType = conditionType;
+            ConditionType = conditionType;
         }
 
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public HttpVersionMatchConditionType HttpVersionMatchConditionType
+        public HttpVersionMatchConditionType ConditionType
         {
             get => new(TypeName.ToString());
             set

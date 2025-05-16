@@ -12,11 +12,11 @@ namespace Azure.ResourceManager.Cdn.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public RequestSchemeMatchCondition(RequestSchemeMatchConditionType conditionType, RequestSchemeOperator requestSchemeOperator) : this(requestSchemeOperator)
         {
-            RequestSchemeMatchConditionType = conditionType;
+            ConditionType = conditionType;
         }
 
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public RequestSchemeMatchConditionType RequestSchemeMatchConditionType
+        public RequestSchemeMatchConditionType ConditionType
         {
             get => new(TypeName.ToString());
             set

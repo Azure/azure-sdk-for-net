@@ -11,11 +11,11 @@ namespace Azure.ResourceManager.Cdn.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public HeaderActionProperties(HeaderActionType actionType, HeaderAction headerAction, string headerName) : this(headerAction, headerName)
         {
-            HeaderActionType = actionType;
+            ActionType = actionType;
         }
 
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public HeaderActionType HeaderActionType
+        public HeaderActionType ActionType
         {
             get => new(TypeName.ToString());
             set

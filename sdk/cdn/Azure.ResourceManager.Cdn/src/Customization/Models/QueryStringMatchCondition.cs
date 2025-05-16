@@ -12,11 +12,11 @@ namespace Azure.ResourceManager.Cdn.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public QueryStringMatchCondition(QueryStringMatchConditionType conditionType, QueryStringOperator queryStringOperator) : this(queryStringOperator)
         {
-            QueryStringMatchConditionType = conditionType;
+            ConditionType = conditionType;
         }
 
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public QueryStringMatchConditionType QueryStringMatchConditionType
+        public QueryStringMatchConditionType ConditionType
         {
             get => new(TypeName.ToString());
             set
