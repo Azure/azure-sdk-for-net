@@ -3,9 +3,139 @@
  "name": "Payload.JsonMergePatch",
  "apiVersions": [],
  "enums": [],
- "models": [
+ "constants": [
   {
    "$id": "2",
+   "kind": "constant",
+   "name": "createResourceContentType",
+   "namespace": "",
+   "usage": "None",
+   "valueType": {
+    "$id": "3",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "value": "application/json",
+   "decorators": []
+  },
+  {
+   "$id": "4",
+   "kind": "constant",
+   "name": "createResourceContentType1",
+   "namespace": "",
+   "usage": "None",
+   "valueType": {
+    "$id": "5",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "value": "application/json",
+   "decorators": []
+  },
+  {
+   "$id": "6",
+   "kind": "constant",
+   "name": "UpdateResourceRequestContentType",
+   "namespace": "",
+   "usage": "None",
+   "valueType": {
+    "$id": "7",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "value": "application/merge-patch+json",
+   "decorators": []
+  },
+  {
+   "$id": "8",
+   "kind": "constant",
+   "name": "updateResourceContentType",
+   "namespace": "",
+   "usage": "None",
+   "valueType": {
+    "$id": "9",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "value": "application/json",
+   "decorators": []
+  },
+  {
+   "$id": "10",
+   "kind": "constant",
+   "name": "UpdateResourceRequestContentType1",
+   "namespace": "",
+   "usage": "None",
+   "valueType": {
+    "$id": "11",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "value": "application/merge-patch+json",
+   "decorators": []
+  },
+  {
+   "$id": "12",
+   "kind": "constant",
+   "name": "UpdateResourceRequestContentType2",
+   "namespace": "",
+   "usage": "None",
+   "valueType": {
+    "$id": "13",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "value": "application/merge-patch+json",
+   "decorators": []
+  },
+  {
+   "$id": "14",
+   "kind": "constant",
+   "name": "updateOptionalResourceContentType",
+   "namespace": "",
+   "usage": "None",
+   "valueType": {
+    "$id": "15",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "value": "application/json",
+   "decorators": []
+  },
+  {
+   "$id": "16",
+   "kind": "constant",
+   "name": "UpdateResourceRequestContentType3",
+   "namespace": "",
+   "usage": "None",
+   "valueType": {
+    "$id": "17",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "value": "application/merge-patch+json",
+   "decorators": []
+  }
+ ],
+ "models": [
+  {
+   "$id": "18",
    "kind": "model",
    "name": "Resource",
    "namespace": "Payload.JsonMergePatch",
@@ -15,12 +145,12 @@
    "decorators": [],
    "properties": [
     {
-     "$id": "3",
+     "$id": "19",
      "kind": "property",
      "name": "name",
      "serializedName": "name",
      "type": {
-      "$id": "4",
+      "$id": "20",
       "kind": "string",
       "name": "string",
       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -33,20 +163,20 @@
      "decorators": [],
      "crossLanguageDefinitionId": "Payload.JsonMergePatch.Resource.name",
      "serializationOptions": {
-      "$id": "5",
+      "$id": "21",
       "json": {
-       "$id": "6",
+       "$id": "22",
        "name": "name"
       }
      }
     },
     {
-     "$id": "7",
+     "$id": "23",
      "kind": "property",
      "name": "description",
      "serializedName": "description",
      "type": {
-      "$id": "8",
+      "$id": "24",
       "kind": "string",
       "name": "string",
       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -59,30 +189,30 @@
      "decorators": [],
      "crossLanguageDefinitionId": "Payload.JsonMergePatch.Resource.description",
      "serializationOptions": {
-      "$id": "9",
+      "$id": "25",
       "json": {
-       "$id": "10",
+       "$id": "26",
        "name": "description"
       }
      }
     },
     {
-     "$id": "11",
+     "$id": "27",
      "kind": "property",
      "name": "map",
      "serializedName": "map",
      "type": {
-      "$id": "12",
+      "$id": "28",
       "kind": "dict",
       "keyType": {
-       "$id": "13",
+       "$id": "29",
        "kind": "string",
        "name": "string",
        "crossLanguageDefinitionId": "TypeSpec.string",
        "decorators": []
       },
       "valueType": {
-       "$id": "14",
+       "$id": "30",
        "kind": "model",
        "name": "InnerModel",
        "namespace": "Payload.JsonMergePatch",
@@ -92,12 +222,12 @@
        "decorators": [],
        "properties": [
         {
-         "$id": "15",
+         "$id": "31",
          "kind": "property",
          "name": "name",
          "serializedName": "name",
          "type": {
-          "$id": "16",
+          "$id": "32",
           "kind": "string",
           "name": "string",
           "crossLanguageDefinitionId": "TypeSpec.string",
@@ -110,20 +240,20 @@
          "decorators": [],
          "crossLanguageDefinitionId": "Payload.JsonMergePatch.InnerModel.name",
          "serializationOptions": {
-          "$id": "17",
+          "$id": "33",
           "json": {
-           "$id": "18",
+           "$id": "34",
            "name": "name"
           }
          }
         },
         {
-         "$id": "19",
+         "$id": "35",
          "kind": "property",
          "name": "description",
          "serializedName": "description",
          "type": {
-          "$id": "20",
+          "$id": "36",
           "kind": "string",
           "name": "string",
           "crossLanguageDefinitionId": "TypeSpec.string",
@@ -136,9 +266,9 @@
          "decorators": [],
          "crossLanguageDefinitionId": "Payload.JsonMergePatch.InnerModel.description",
          "serializationOptions": {
-          "$id": "21",
+          "$id": "37",
           "json": {
-           "$id": "22",
+           "$id": "38",
            "name": "description"
           }
          }
@@ -154,24 +284,24 @@
      "decorators": [],
      "crossLanguageDefinitionId": "Payload.JsonMergePatch.Resource.map",
      "serializationOptions": {
-      "$id": "23",
+      "$id": "39",
       "json": {
-       "$id": "24",
+       "$id": "40",
        "name": "map"
       }
      }
     },
     {
-     "$id": "25",
+     "$id": "41",
      "kind": "property",
      "name": "array",
      "serializedName": "array",
      "type": {
-      "$id": "26",
+      "$id": "42",
       "kind": "array",
       "name": "ArrayInnerModel",
       "valueType": {
-       "$ref": "14"
+       "$ref": "30"
       },
       "crossLanguageDefinitionId": "TypeSpec.Array",
       "decorators": []
@@ -183,20 +313,20 @@
      "decorators": [],
      "crossLanguageDefinitionId": "Payload.JsonMergePatch.Resource.array",
      "serializationOptions": {
-      "$id": "27",
+      "$id": "43",
       "json": {
-       "$id": "28",
+       "$id": "44",
        "name": "array"
       }
      }
     },
     {
-     "$id": "29",
+     "$id": "45",
      "kind": "property",
      "name": "intValue",
      "serializedName": "intValue",
      "type": {
-      "$id": "30",
+      "$id": "46",
       "kind": "int32",
       "name": "int32",
       "crossLanguageDefinitionId": "TypeSpec.int32",
@@ -209,20 +339,20 @@
      "decorators": [],
      "crossLanguageDefinitionId": "Payload.JsonMergePatch.Resource.intValue",
      "serializationOptions": {
-      "$id": "31",
+      "$id": "47",
       "json": {
-       "$id": "32",
+       "$id": "48",
        "name": "intValue"
       }
      }
     },
     {
-     "$id": "33",
+     "$id": "49",
      "kind": "property",
      "name": "floatValue",
      "serializedName": "floatValue",
      "type": {
-      "$id": "34",
+      "$id": "50",
       "kind": "float32",
       "name": "float32",
       "crossLanguageDefinitionId": "TypeSpec.float32",
@@ -235,20 +365,20 @@
      "decorators": [],
      "crossLanguageDefinitionId": "Payload.JsonMergePatch.Resource.floatValue",
      "serializationOptions": {
-      "$id": "35",
+      "$id": "51",
       "json": {
-       "$id": "36",
+       "$id": "52",
        "name": "floatValue"
       }
      }
     },
     {
-     "$id": "37",
+     "$id": "53",
      "kind": "property",
      "name": "innerModel",
      "serializedName": "innerModel",
      "type": {
-      "$ref": "14"
+      "$ref": "30"
      },
      "optional": true,
      "readOnly": false,
@@ -257,24 +387,24 @@
      "decorators": [],
      "crossLanguageDefinitionId": "Payload.JsonMergePatch.Resource.innerModel",
      "serializationOptions": {
-      "$id": "38",
+      "$id": "54",
       "json": {
-       "$id": "39",
+       "$id": "55",
        "name": "innerModel"
       }
      }
     },
     {
-     "$id": "40",
+     "$id": "56",
      "kind": "property",
      "name": "intArray",
      "serializedName": "intArray",
      "type": {
-      "$id": "41",
+      "$id": "57",
       "kind": "array",
       "name": "Array",
       "valueType": {
-       "$id": "42",
+       "$id": "58",
        "kind": "int32",
        "name": "int32",
        "crossLanguageDefinitionId": "TypeSpec.int32",
@@ -290,9 +420,9 @@
      "decorators": [],
      "crossLanguageDefinitionId": "Payload.JsonMergePatch.Resource.intArray",
      "serializationOptions": {
-      "$id": "43",
+      "$id": "59",
       "json": {
-       "$id": "44",
+       "$id": "60",
        "name": "intArray"
       }
      }
@@ -300,10 +430,10 @@
    ]
   },
   {
-   "$ref": "14"
+   "$ref": "30"
   },
   {
-   "$id": "45",
+   "$id": "61",
    "kind": "model",
    "name": "ResourcePatch",
    "namespace": "Payload.JsonMergePatch",
@@ -313,12 +443,12 @@
    "decorators": [],
    "properties": [
     {
-     "$id": "46",
+     "$id": "62",
      "kind": "property",
      "name": "description",
      "serializedName": "description",
      "type": {
-      "$id": "47",
+      "$id": "63",
       "kind": "string",
       "name": "string",
       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -331,30 +461,30 @@
      "decorators": [],
      "crossLanguageDefinitionId": "Payload.JsonMergePatch.ResourcePatch.description",
      "serializationOptions": {
-      "$id": "48",
+      "$id": "64",
       "json": {
-       "$id": "49",
+       "$id": "65",
        "name": "description"
       }
      }
     },
     {
-     "$id": "50",
+     "$id": "66",
      "kind": "property",
      "name": "map",
      "serializedName": "map",
      "type": {
-      "$id": "51",
+      "$id": "67",
       "kind": "dict",
       "keyType": {
-       "$id": "52",
+       "$id": "68",
        "kind": "string",
        "name": "string",
        "crossLanguageDefinitionId": "TypeSpec.string",
        "decorators": []
       },
       "valueType": {
-       "$ref": "14"
+       "$ref": "30"
       },
       "decorators": []
      },
@@ -365,24 +495,24 @@
      "decorators": [],
      "crossLanguageDefinitionId": "Payload.JsonMergePatch.ResourcePatch.map",
      "serializationOptions": {
-      "$id": "53",
+      "$id": "69",
       "json": {
-       "$id": "54",
+       "$id": "70",
        "name": "map"
       }
      }
     },
     {
-     "$id": "55",
+     "$id": "71",
      "kind": "property",
      "name": "array",
      "serializedName": "array",
      "type": {
-      "$id": "56",
+      "$id": "72",
       "kind": "array",
       "name": "ArrayInnerModel",
       "valueType": {
-       "$ref": "14"
+       "$ref": "30"
       },
       "crossLanguageDefinitionId": "TypeSpec.Array",
       "decorators": []
@@ -394,20 +524,20 @@
      "decorators": [],
      "crossLanguageDefinitionId": "Payload.JsonMergePatch.ResourcePatch.array",
      "serializationOptions": {
-      "$id": "57",
+      "$id": "73",
       "json": {
-       "$id": "58",
+       "$id": "74",
        "name": "array"
       }
      }
     },
     {
-     "$id": "59",
+     "$id": "75",
      "kind": "property",
      "name": "intValue",
      "serializedName": "intValue",
      "type": {
-      "$id": "60",
+      "$id": "76",
       "kind": "int32",
       "name": "int32",
       "crossLanguageDefinitionId": "TypeSpec.int32",
@@ -420,20 +550,20 @@
      "decorators": [],
      "crossLanguageDefinitionId": "Payload.JsonMergePatch.ResourcePatch.intValue",
      "serializationOptions": {
-      "$id": "61",
+      "$id": "77",
       "json": {
-       "$id": "62",
+       "$id": "78",
        "name": "intValue"
       }
      }
     },
     {
-     "$id": "63",
+     "$id": "79",
      "kind": "property",
      "name": "floatValue",
      "serializedName": "floatValue",
      "type": {
-      "$id": "64",
+      "$id": "80",
       "kind": "float32",
       "name": "float32",
       "crossLanguageDefinitionId": "TypeSpec.float32",
@@ -446,20 +576,20 @@
      "decorators": [],
      "crossLanguageDefinitionId": "Payload.JsonMergePatch.ResourcePatch.floatValue",
      "serializationOptions": {
-      "$id": "65",
+      "$id": "81",
       "json": {
-       "$id": "66",
+       "$id": "82",
        "name": "floatValue"
       }
      }
     },
     {
-     "$id": "67",
+     "$id": "83",
      "kind": "property",
      "name": "innerModel",
      "serializedName": "innerModel",
      "type": {
-      "$ref": "14"
+      "$ref": "30"
      },
      "optional": true,
      "readOnly": false,
@@ -468,24 +598,24 @@
      "decorators": [],
      "crossLanguageDefinitionId": "Payload.JsonMergePatch.ResourcePatch.innerModel",
      "serializationOptions": {
-      "$id": "68",
+      "$id": "84",
       "json": {
-       "$id": "69",
+       "$id": "85",
        "name": "innerModel"
       }
      }
     },
     {
-     "$id": "70",
+     "$id": "86",
      "kind": "property",
      "name": "intArray",
      "serializedName": "intArray",
      "type": {
-      "$id": "71",
+      "$id": "87",
       "kind": "array",
       "name": "Array",
       "valueType": {
-       "$id": "72",
+       "$id": "88",
        "kind": "int32",
        "name": "int32",
        "crossLanguageDefinitionId": "TypeSpec.int32",
@@ -501,9 +631,9 @@
      "decorators": [],
      "crossLanguageDefinitionId": "Payload.JsonMergePatch.ResourcePatch.intArray",
      "serializationOptions": {
-      "$id": "73",
+      "$id": "89",
       "json": {
-       "$id": "74",
+       "$id": "90",
        "name": "intArray"
       }
      }
@@ -513,43 +643,33 @@
  ],
  "clients": [
   {
-   "$id": "75",
+   "$id": "91",
    "kind": "client",
    "name": "JsonMergePatchClient",
    "namespace": "Payload.JsonMergePatch",
    "doc": "Test for merge-patch+json content-type",
    "methods": [
     {
-     "$id": "76",
+     "$id": "92",
      "kind": "basic",
      "name": "createResource",
      "accessibility": "public",
      "apiVersions": [],
      "doc": "Test content-type: application/merge-patch+json with required body",
      "operation": {
-      "$id": "77",
+      "$id": "93",
       "name": "createResource",
       "resourceName": "JsonMergePatch",
       "doc": "Test content-type: application/merge-patch+json with required body",
       "accessibility": "public",
       "parameters": [
        {
-        "$id": "78",
+        "$id": "94",
         "name": "contentType",
         "nameInRequest": "Content-Type",
         "doc": "Body parameter's content type. Known values are application/json",
         "type": {
-         "$id": "79",
-         "kind": "constant",
-         "valueType": {
-          "$id": "80",
-          "kind": "string",
-          "name": "string",
-          "crossLanguageDefinitionId": "TypeSpec.string",
-          "decorators": []
-         },
-         "value": "application/json",
-         "decorators": []
+         "$ref": "2"
         },
         "location": "Header",
         "isApiVersion": false,
@@ -562,21 +682,11 @@
         "skipUrlEncoding": false
        },
        {
-        "$id": "81",
+        "$id": "95",
         "name": "accept",
         "nameInRequest": "Accept",
         "type": {
-         "$id": "82",
-         "kind": "constant",
-         "valueType": {
-          "$id": "83",
-          "kind": "string",
-          "name": "string",
-          "crossLanguageDefinitionId": "TypeSpec.string",
-          "decorators": []
-         },
-         "value": "application/json",
-         "decorators": []
+         "$ref": "4"
         },
         "location": "Header",
         "isApiVersion": false,
@@ -589,11 +699,11 @@
         "skipUrlEncoding": false
        },
        {
-        "$id": "84",
+        "$id": "96",
         "name": "body",
         "nameInRequest": "body",
         "type": {
-         "$ref": "2"
+         "$ref": "18"
         },
         "location": "Body",
         "isApiVersion": false,
@@ -608,12 +718,12 @@
       ],
       "responses": [
        {
-        "$id": "85",
+        "$id": "97",
         "statusCodes": [
          200
         ],
         "bodyType": {
-         "$ref": "2"
+         "$ref": "18"
         },
         "headers": [],
         "isErrorResponse": false,
@@ -636,11 +746,11 @@
      },
      "parameters": [
       {
-       "$id": "86",
+       "$id": "98",
        "name": "body",
        "nameInRequest": "body",
        "type": {
-        "$ref": "2"
+        "$ref": "18"
        },
        "location": "Body",
        "isApiVersion": false,
@@ -653,12 +763,12 @@
        "skipUrlEncoding": false
       },
       {
-       "$id": "87",
+       "$id": "99",
        "name": "contentType",
        "nameInRequest": "contentType",
        "doc": "Body parameter's content type. Known values are application/json",
        "type": {
-        "$ref": "79"
+        "$ref": "2"
        },
        "location": "Header",
        "isApiVersion": false,
@@ -671,11 +781,11 @@
        "skipUrlEncoding": false
       },
       {
-       "$id": "88",
+       "$id": "100",
        "name": "accept",
        "nameInRequest": "accept",
        "type": {
-        "$ref": "82"
+        "$ref": "4"
        },
        "location": "Header",
        "isApiVersion": false,
@@ -689,9 +799,9 @@
       }
      ],
      "response": {
-      "$id": "89",
+      "$id": "101",
       "type": {
-       "$ref": "2"
+       "$ref": "18"
       }
      },
      "isOverride": false,
@@ -700,35 +810,25 @@
      "crossLanguageDefinitionId": "Payload.JsonMergePatch.createResource"
     },
     {
-     "$id": "90",
+     "$id": "102",
      "kind": "basic",
      "name": "updateResource",
      "accessibility": "public",
      "apiVersions": [],
      "doc": "Test content-type: application/merge-patch+json with required body",
      "operation": {
-      "$id": "91",
+      "$id": "103",
       "name": "updateResource",
       "resourceName": "JsonMergePatch",
       "doc": "Test content-type: application/merge-patch+json with required body",
       "accessibility": "public",
       "parameters": [
        {
-        "$id": "92",
+        "$id": "104",
         "name": "contentType",
         "nameInRequest": "Content-Type",
         "type": {
-         "$id": "93",
-         "kind": "constant",
-         "valueType": {
-          "$id": "94",
-          "kind": "string",
-          "name": "string",
-          "crossLanguageDefinitionId": "TypeSpec.string",
-          "decorators": []
-         },
-         "value": "application/merge-patch+json",
-         "decorators": []
+         "$ref": "6"
         },
         "location": "Header",
         "isApiVersion": false,
@@ -741,21 +841,11 @@
         "skipUrlEncoding": false
        },
        {
-        "$id": "95",
+        "$id": "105",
         "name": "accept",
         "nameInRequest": "Accept",
         "type": {
-         "$id": "96",
-         "kind": "constant",
-         "valueType": {
-          "$id": "97",
-          "kind": "string",
-          "name": "string",
-          "crossLanguageDefinitionId": "TypeSpec.string",
-          "decorators": []
-         },
-         "value": "application/json",
-         "decorators": []
+         "$ref": "8"
         },
         "location": "Header",
         "isApiVersion": false,
@@ -768,11 +858,11 @@
         "skipUrlEncoding": false
        },
        {
-        "$id": "98",
+        "$id": "106",
         "name": "body",
         "nameInRequest": "body",
         "type": {
-         "$ref": "45"
+         "$ref": "61"
         },
         "location": "Body",
         "isApiVersion": false,
@@ -787,12 +877,12 @@
       ],
       "responses": [
        {
-        "$id": "99",
+        "$id": "107",
         "statusCodes": [
          200
         ],
         "bodyType": {
-         "$ref": "2"
+         "$ref": "18"
         },
         "headers": [],
         "isErrorResponse": false,
@@ -815,21 +905,11 @@
      },
      "parameters": [
       {
-       "$id": "100",
+       "$id": "108",
        "name": "contentType",
        "nameInRequest": "content-type",
        "type": {
-        "$id": "101",
-        "kind": "constant",
-        "valueType": {
-         "$id": "102",
-         "kind": "string",
-         "name": "string",
-         "crossLanguageDefinitionId": "TypeSpec.string",
-         "decorators": []
-        },
-        "value": "application/merge-patch+json",
-        "decorators": []
+        "$ref": "10"
        },
        "location": "Header",
        "isApiVersion": false,
@@ -842,11 +922,11 @@
        "skipUrlEncoding": false
       },
       {
-       "$id": "103",
+       "$id": "109",
        "name": "body",
        "nameInRequest": "body",
        "type": {
-        "$ref": "45"
+        "$ref": "61"
        },
        "location": "Body",
        "isApiVersion": false,
@@ -859,11 +939,11 @@
        "skipUrlEncoding": false
       },
       {
-       "$id": "104",
+       "$id": "110",
        "name": "accept",
        "nameInRequest": "accept",
        "type": {
-        "$ref": "96"
+        "$ref": "8"
        },
        "location": "Header",
        "isApiVersion": false,
@@ -877,9 +957,9 @@
       }
      ],
      "response": {
-      "$id": "105",
+      "$id": "111",
       "type": {
-       "$ref": "2"
+       "$ref": "18"
       }
      },
      "isOverride": false,
@@ -888,35 +968,25 @@
      "crossLanguageDefinitionId": "Payload.JsonMergePatch.updateResource"
     },
     {
-     "$id": "106",
+     "$id": "112",
      "kind": "basic",
      "name": "updateOptionalResource",
      "accessibility": "public",
      "apiVersions": [],
      "doc": "Test content-type: application/merge-patch+json with optional body",
      "operation": {
-      "$id": "107",
+      "$id": "113",
       "name": "updateOptionalResource",
       "resourceName": "JsonMergePatch",
       "doc": "Test content-type: application/merge-patch+json with optional body",
       "accessibility": "public",
       "parameters": [
        {
-        "$id": "108",
+        "$id": "114",
         "name": "contentType",
         "nameInRequest": "Content-Type",
         "type": {
-         "$id": "109",
-         "kind": "constant",
-         "valueType": {
-          "$id": "110",
-          "kind": "string",
-          "name": "string",
-          "crossLanguageDefinitionId": "TypeSpec.string",
-          "decorators": []
-         },
-         "value": "application/merge-patch+json",
-         "decorators": []
+         "$ref": "12"
         },
         "location": "Header",
         "isApiVersion": false,
@@ -929,21 +999,11 @@
         "skipUrlEncoding": false
        },
        {
-        "$id": "111",
+        "$id": "115",
         "name": "accept",
         "nameInRequest": "Accept",
         "type": {
-         "$id": "112",
-         "kind": "constant",
-         "valueType": {
-          "$id": "113",
-          "kind": "string",
-          "name": "string",
-          "crossLanguageDefinitionId": "TypeSpec.string",
-          "decorators": []
-         },
-         "value": "application/json",
-         "decorators": []
+         "$ref": "14"
         },
         "location": "Header",
         "isApiVersion": false,
@@ -956,11 +1016,11 @@
         "skipUrlEncoding": false
        },
        {
-        "$id": "114",
+        "$id": "116",
         "name": "body",
         "nameInRequest": "body",
         "type": {
-         "$ref": "45"
+         "$ref": "61"
         },
         "location": "Body",
         "isApiVersion": false,
@@ -975,12 +1035,12 @@
       ],
       "responses": [
        {
-        "$id": "115",
+        "$id": "117",
         "statusCodes": [
          200
         ],
         "bodyType": {
-         "$ref": "2"
+         "$ref": "18"
         },
         "headers": [],
         "isErrorResponse": false,
@@ -1003,21 +1063,11 @@
      },
      "parameters": [
       {
-       "$id": "116",
+       "$id": "118",
        "name": "contentType",
        "nameInRequest": "content-type",
        "type": {
-        "$id": "117",
-        "kind": "constant",
-        "valueType": {
-         "$id": "118",
-         "kind": "string",
-         "name": "string",
-         "crossLanguageDefinitionId": "TypeSpec.string",
-         "decorators": []
-        },
-        "value": "application/merge-patch+json",
-        "decorators": []
+        "$ref": "16"
        },
        "location": "Header",
        "isApiVersion": false,
@@ -1034,7 +1084,7 @@
        "name": "body",
        "nameInRequest": "body",
        "type": {
-        "$ref": "45"
+        "$ref": "61"
        },
        "location": "Body",
        "isApiVersion": false,
@@ -1051,7 +1101,7 @@
        "name": "accept",
        "nameInRequest": "accept",
        "type": {
-        "$ref": "112"
+        "$ref": "14"
        },
        "location": "Header",
        "isApiVersion": false,
@@ -1067,7 +1117,7 @@
      "response": {
       "$id": "121",
       "type": {
-       "$ref": "2"
+       "$ref": "18"
       }
      },
      "isOverride": false,

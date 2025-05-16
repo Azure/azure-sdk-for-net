@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.TrafficManager
 {
     public partial class TrafficManagerHeatMapResource : IJsonModel<TrafficManagerHeatMapData>
     {
+        private static TrafficManagerHeatMapData s_dataDeserializationInstance;
+        private static TrafficManagerHeatMapData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<TrafficManagerHeatMapData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<TrafficManagerHeatMapData>)Data).Write(writer, options);
 
-        TrafficManagerHeatMapData IJsonModel<TrafficManagerHeatMapData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<TrafficManagerHeatMapData>)Data).Create(ref reader, options);
+        TrafficManagerHeatMapData IJsonModel<TrafficManagerHeatMapData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<TrafficManagerHeatMapData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<TrafficManagerHeatMapData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<TrafficManagerHeatMapData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<TrafficManagerHeatMapData>(Data, options, AzureResourceManagerTrafficManagerContext.Default);
 
-        TrafficManagerHeatMapData IPersistableModel<TrafficManagerHeatMapData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<TrafficManagerHeatMapData>(data, options);
+        TrafficManagerHeatMapData IPersistableModel<TrafficManagerHeatMapData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<TrafficManagerHeatMapData>(data, options, AzureResourceManagerTrafficManagerContext.Default);
 
-        string IPersistableModel<TrafficManagerHeatMapData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<TrafficManagerHeatMapData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<TrafficManagerHeatMapData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<TrafficManagerHeatMapData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

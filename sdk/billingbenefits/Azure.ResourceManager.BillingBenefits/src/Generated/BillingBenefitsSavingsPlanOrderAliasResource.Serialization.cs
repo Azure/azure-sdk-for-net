@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.BillingBenefits
 {
     public partial class BillingBenefitsSavingsPlanOrderAliasResource : IJsonModel<BillingBenefitsSavingsPlanOrderAliasData>
     {
+        private static BillingBenefitsSavingsPlanOrderAliasData s_dataDeserializationInstance;
+        private static BillingBenefitsSavingsPlanOrderAliasData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<BillingBenefitsSavingsPlanOrderAliasData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<BillingBenefitsSavingsPlanOrderAliasData>)Data).Write(writer, options);
 
-        BillingBenefitsSavingsPlanOrderAliasData IJsonModel<BillingBenefitsSavingsPlanOrderAliasData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<BillingBenefitsSavingsPlanOrderAliasData>)Data).Create(ref reader, options);
+        BillingBenefitsSavingsPlanOrderAliasData IJsonModel<BillingBenefitsSavingsPlanOrderAliasData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<BillingBenefitsSavingsPlanOrderAliasData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<BillingBenefitsSavingsPlanOrderAliasData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<BillingBenefitsSavingsPlanOrderAliasData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<BillingBenefitsSavingsPlanOrderAliasData>(Data, options, AzureResourceManagerBillingBenefitsContext.Default);
 
-        BillingBenefitsSavingsPlanOrderAliasData IPersistableModel<BillingBenefitsSavingsPlanOrderAliasData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<BillingBenefitsSavingsPlanOrderAliasData>(data, options);
+        BillingBenefitsSavingsPlanOrderAliasData IPersistableModel<BillingBenefitsSavingsPlanOrderAliasData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<BillingBenefitsSavingsPlanOrderAliasData>(data, options, AzureResourceManagerBillingBenefitsContext.Default);
 
-        string IPersistableModel<BillingBenefitsSavingsPlanOrderAliasData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<BillingBenefitsSavingsPlanOrderAliasData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<BillingBenefitsSavingsPlanOrderAliasData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<BillingBenefitsSavingsPlanOrderAliasData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

@@ -3,9 +3,43 @@
  "name": "Type.Model.Inheritance.Recursive",
  "apiVersions": [],
  "enums": [],
- "models": [
+ "constants": [
   {
    "$id": "2",
+   "kind": "constant",
+   "name": "putContentType",
+   "namespace": "",
+   "usage": "None",
+   "valueType": {
+    "$id": "3",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "value": "application/json",
+   "decorators": []
+  },
+  {
+   "$id": "4",
+   "kind": "constant",
+   "name": "getContentType",
+   "namespace": "",
+   "usage": "None",
+   "valueType": {
+    "$id": "5",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "value": "application/json",
+   "decorators": []
+  }
+ ],
+ "models": [
+  {
+   "$id": "6",
    "kind": "model",
    "name": "Extension",
    "namespace": "Type.Model.Inheritance.Recursive",
@@ -14,7 +48,7 @@
    "doc": "extension",
    "decorators": [],
    "baseModel": {
-    "$id": "3",
+    "$id": "7",
     "kind": "model",
     "name": "Element",
     "namespace": "Type.Model.Inheritance.Recursive",
@@ -24,16 +58,16 @@
     "decorators": [],
     "properties": [
      {
-      "$id": "4",
+      "$id": "8",
       "kind": "property",
       "name": "extension",
       "serializedName": "extension",
       "type": {
-       "$id": "5",
+       "$id": "9",
        "kind": "array",
        "name": "ArrayExtension",
        "valueType": {
-        "$ref": "2"
+        "$ref": "6"
        },
        "crossLanguageDefinitionId": "TypeSpec.Array",
        "decorators": []
@@ -45,9 +79,9 @@
       "decorators": [],
       "crossLanguageDefinitionId": "Type.Model.Inheritance.Recursive.Element.extension",
       "serializationOptions": {
-       "$id": "6",
+       "$id": "10",
        "json": {
-        "$id": "7",
+        "$id": "11",
         "name": "extension"
        }
       }
@@ -56,12 +90,12 @@
    },
    "properties": [
     {
-     "$id": "8",
+     "$id": "12",
      "kind": "property",
      "name": "level",
      "serializedName": "level",
      "type": {
-      "$id": "9",
+      "$id": "13",
       "kind": "int8",
       "name": "int8",
       "crossLanguageDefinitionId": "TypeSpec.int8",
@@ -74,9 +108,9 @@
      "decorators": [],
      "crossLanguageDefinitionId": "Type.Model.Inheritance.Recursive.Extension.level",
      "serializationOptions": {
-      "$id": "10",
+      "$id": "14",
       "json": {
-       "$id": "11",
+       "$id": "15",
        "name": "level"
       }
      }
@@ -84,46 +118,36 @@
    ]
   },
   {
-   "$ref": "3"
+   "$ref": "7"
   }
  ],
  "clients": [
   {
-   "$id": "12",
+   "$id": "16",
    "kind": "client",
    "name": "RecursiveClient",
    "namespace": "Type.Model.Inheritance.Recursive",
    "doc": "Illustrates inheritance recursion",
    "methods": [
     {
-     "$id": "13",
+     "$id": "17",
      "kind": "basic",
      "name": "put",
      "accessibility": "public",
      "apiVersions": [],
      "operation": {
-      "$id": "14",
+      "$id": "18",
       "name": "put",
       "resourceName": "Recursive",
       "accessibility": "public",
       "parameters": [
        {
-        "$id": "15",
+        "$id": "19",
         "name": "contentType",
         "nameInRequest": "Content-Type",
         "doc": "Body parameter's content type. Known values are application/json",
         "type": {
-         "$id": "16",
-         "kind": "constant",
-         "valueType": {
-          "$id": "17",
-          "kind": "string",
-          "name": "string",
-          "crossLanguageDefinitionId": "TypeSpec.string",
-          "decorators": []
-         },
-         "value": "application/json",
-         "decorators": []
+         "$ref": "2"
         },
         "location": "Header",
         "isApiVersion": false,
@@ -136,11 +160,11 @@
         "skipUrlEncoding": false
        },
        {
-        "$id": "18",
+        "$id": "20",
         "name": "input",
         "nameInRequest": "input",
         "type": {
-         "$ref": "2"
+         "$ref": "6"
         },
         "location": "Body",
         "isApiVersion": false,
@@ -155,7 +179,7 @@
       ],
       "responses": [
        {
-        "$id": "19",
+        "$id": "21",
         "statusCodes": [
          204
         ],
@@ -177,11 +201,11 @@
      },
      "parameters": [
       {
-       "$id": "20",
+       "$id": "22",
        "name": "input",
        "nameInRequest": "input",
        "type": {
-        "$ref": "2"
+        "$ref": "6"
        },
        "location": "Body",
        "isApiVersion": false,
@@ -194,12 +218,12 @@
        "skipUrlEncoding": false
       },
       {
-       "$id": "21",
+       "$id": "23",
        "name": "contentType",
        "nameInRequest": "contentType",
        "doc": "Body parameter's content type. Known values are application/json",
        "type": {
-        "$ref": "16"
+        "$ref": "2"
        },
        "location": "Header",
        "isApiVersion": false,
@@ -213,7 +237,7 @@
       }
      ],
      "response": {
-      "$id": "22"
+      "$id": "24"
      },
      "isOverride": false,
      "generateConvenient": true,
@@ -221,33 +245,23 @@
      "crossLanguageDefinitionId": "Type.Model.Inheritance.Recursive.put"
     },
     {
-     "$id": "23",
+     "$id": "25",
      "kind": "basic",
      "name": "get",
      "accessibility": "public",
      "apiVersions": [],
      "operation": {
-      "$id": "24",
+      "$id": "26",
       "name": "get",
       "resourceName": "Recursive",
       "accessibility": "public",
       "parameters": [
        {
-        "$id": "25",
+        "$id": "27",
         "name": "accept",
         "nameInRequest": "Accept",
         "type": {
-         "$id": "26",
-         "kind": "constant",
-         "valueType": {
-          "$id": "27",
-          "kind": "string",
-          "name": "string",
-          "crossLanguageDefinitionId": "TypeSpec.string",
-          "decorators": []
-         },
-         "value": "application/json",
-         "decorators": []
+         "$ref": "4"
         },
         "location": "Header",
         "isApiVersion": false,
@@ -267,7 +281,7 @@
          200
         ],
         "bodyType": {
-         "$ref": "2"
+         "$ref": "6"
         },
         "headers": [],
         "isErrorResponse": false,
@@ -291,7 +305,7 @@
        "name": "accept",
        "nameInRequest": "accept",
        "type": {
-        "$ref": "26"
+        "$ref": "4"
        },
        "location": "Header",
        "isApiVersion": false,
@@ -307,7 +321,7 @@
      "response": {
       "$id": "30",
       "type": {
-       "$ref": "2"
+       "$ref": "6"
       }
      },
      "isOverride": false,

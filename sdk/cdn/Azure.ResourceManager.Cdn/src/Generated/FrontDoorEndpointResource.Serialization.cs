@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Cdn
 {
     public partial class FrontDoorEndpointResource : IJsonModel<FrontDoorEndpointData>
     {
+        private static FrontDoorEndpointData s_dataDeserializationInstance;
+        private static FrontDoorEndpointData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<FrontDoorEndpointData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<FrontDoorEndpointData>)Data).Write(writer, options);
 
-        FrontDoorEndpointData IJsonModel<FrontDoorEndpointData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<FrontDoorEndpointData>)Data).Create(ref reader, options);
+        FrontDoorEndpointData IJsonModel<FrontDoorEndpointData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<FrontDoorEndpointData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<FrontDoorEndpointData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<FrontDoorEndpointData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<FrontDoorEndpointData>(Data, options, AzureResourceManagerCdnContext.Default);
 
-        FrontDoorEndpointData IPersistableModel<FrontDoorEndpointData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<FrontDoorEndpointData>(data, options);
+        FrontDoorEndpointData IPersistableModel<FrontDoorEndpointData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<FrontDoorEndpointData>(data, options, AzureResourceManagerCdnContext.Default);
 
-        string IPersistableModel<FrontDoorEndpointData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<FrontDoorEndpointData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<FrontDoorEndpointData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<FrontDoorEndpointData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Datadog
 {
     public partial class MonitoringTagRuleResource : IJsonModel<MonitoringTagRuleData>
     {
+        private static MonitoringTagRuleData s_dataDeserializationInstance;
+        private static MonitoringTagRuleData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<MonitoringTagRuleData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<MonitoringTagRuleData>)Data).Write(writer, options);
 
-        MonitoringTagRuleData IJsonModel<MonitoringTagRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MonitoringTagRuleData>)Data).Create(ref reader, options);
+        MonitoringTagRuleData IJsonModel<MonitoringTagRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MonitoringTagRuleData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<MonitoringTagRuleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<MonitoringTagRuleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<MonitoringTagRuleData>(Data, options, AzureResourceManagerDatadogContext.Default);
 
-        MonitoringTagRuleData IPersistableModel<MonitoringTagRuleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MonitoringTagRuleData>(data, options);
+        MonitoringTagRuleData IPersistableModel<MonitoringTagRuleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MonitoringTagRuleData>(data, options, AzureResourceManagerDatadogContext.Default);
 
-        string IPersistableModel<MonitoringTagRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MonitoringTagRuleData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<MonitoringTagRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MonitoringTagRuleData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

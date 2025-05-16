@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.DurableTask
 
         DurableTaskRetentionPolicyResource IOperationSource<DurableTaskRetentionPolicyResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DurableTaskRetentionPolicyData>(response.Content);
+            var data = ModelReaderWriter.Read<DurableTaskRetentionPolicyData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDurableTaskContext.Default);
             return new DurableTaskRetentionPolicyResource(_client, data);
         }
 
         async ValueTask<DurableTaskRetentionPolicyResource> IOperationSource<DurableTaskRetentionPolicyResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DurableTaskRetentionPolicyData>(response.Content);
+            var data = ModelReaderWriter.Read<DurableTaskRetentionPolicyData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDurableTaskContext.Default);
             return await Task.FromResult(new DurableTaskRetentionPolicyResource(_client, data)).ConfigureAwait(false);
         }
     }

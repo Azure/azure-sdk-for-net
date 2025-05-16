@@ -40,10 +40,11 @@ namespace Azure.Generator.Tests.Common
             /// </summary>
             /// <param name="name"></param>
             /// <param name="value"></param>
+            /// <param name="enumType"></param>
             /// <returns></returns>
-            public static InputEnumTypeValue Int32(string name, int value)
+            public static InputEnumTypeValue Int32(string name, int value, InputEnumType enumType)
             {
-                return new InputEnumTypeValue(name, value, InputPrimitiveType.Int32, null, $"{name} description");
+                return new InputEnumTypeValue(name, value, InputPrimitiveType.Int32, enumType, "", $"{name} description");
             }
 
             /// <summary>
@@ -51,10 +52,11 @@ namespace Azure.Generator.Tests.Common
             /// </summary>
             /// <param name="name"></param>
             /// <param name="value"></param>
+            /// <param name="enumType"></param>
             /// <returns></returns>
-            public static InputEnumTypeValue Float32(string name, float value)
+            public static InputEnumTypeValue Float32(string name, float value, InputEnumType enumType)
             {
-                return new InputEnumTypeValue(name, value, InputPrimitiveType.Float32, null, $"{name} description");
+                return new InputEnumTypeValue(name, value, InputPrimitiveType.Float32, enumType, "", $"{name} description");
             }
 
             /// <summary>
@@ -62,10 +64,11 @@ namespace Azure.Generator.Tests.Common
             /// </summary>
             /// <param name="name"></param>
             /// <param name="value"></param>
+            /// <param name="enumType"></param>
             /// <returns></returns>
-            public static InputEnumTypeValue String(string name, string value)
+            public static InputEnumTypeValue String(string name, string value, InputEnumType enumType)
             {
-                return new InputEnumTypeValue(name, value, InputPrimitiveType.String, null, $"{name} description");
+                return new InputEnumTypeValue(name, value, InputPrimitiveType.String, enumType, "", $"{name} description");
             }
         }
 
@@ -78,20 +81,24 @@ namespace Azure.Generator.Tests.Common
             /// Construct input literal type value for string
             /// </summary>
             /// <param name="value"></param>
+            /// <param name="name"></param>
+            /// <param name="namespace"></param>
             /// <returns></returns>
-            public static InputLiteralType String(string value)
+            public static InputLiteralType String(string value, string? name = null, string? @namespace = null)
             {
-                return new InputLiteralType(InputPrimitiveType.String, value);
+                return new InputLiteralType(name ?? string.Empty, @namespace ?? string.Empty, InputPrimitiveType.String, value);
             }
 
             /// <summary>
             /// Construct input enum type value for any
             /// </summary>
             /// <param name="value"></param>
+            /// <param name="name"></param>
+            /// <param name="namespace"></param>
             /// <returns></returns>
-            public static InputLiteralType Any(object value)
+            public static InputLiteralType Int32(int value, string? name = null, string? @namespace = null)
             {
-                return new InputLiteralType(InputPrimitiveType.Any, value);
+                return new InputLiteralType(name ?? string.Empty, @namespace ?? string.Empty, InputPrimitiveType.Int32, value);
             }
         }
 
