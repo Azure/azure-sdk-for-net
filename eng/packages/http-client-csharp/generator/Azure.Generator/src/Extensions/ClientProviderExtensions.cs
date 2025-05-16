@@ -11,8 +11,6 @@ namespace Azure.Generator
 {
     internal static class ClientProviderExtensions
     {
-        private const string ClientDiagnosticsPropertyName = "ClientDiagnostics";
-
         public static ClientProvider GetClient(this ScmMethodProvider method) => (ClientProvider)method.EnclosingType;
 
         public static string GetScopeName(this ScmMethodProvider method) => $"{method.EnclosingType.Name}.{method.Signature.Name}";
