@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Compute.Batch
 {
@@ -56,13 +57,13 @@ namespace Azure.Compute.Batch
         /// <summary> Initializes a new instance of <see cref="BatchNodeIdentityReference"/>. </summary>
         /// <param name="resourceId"> The ARM resource id of the user assigned identity. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BatchNodeIdentityReference(string resourceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal BatchNodeIdentityReference(ResourceIdentifier resourceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ResourceId = resourceId;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The ARM resource id of the user assigned identity. </summary>
-        public string ResourceId { get; set; }
+        public ResourceIdentifier ResourceId { get; set; }
     }
 }

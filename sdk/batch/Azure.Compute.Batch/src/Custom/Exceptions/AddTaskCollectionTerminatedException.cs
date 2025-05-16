@@ -12,7 +12,7 @@ namespace Azure.Compute.Batch
     /// <summary>
     /// An exception thrown when a task collection is terminated due to a non-retryable failure.
     /// </summary>
-    public class AddTaskCollectionTerminatedException : BatchClientException
+    public class AddTaskCollectionTerminatedException : BatchException
     {
         /// <summary>
         /// Gets the <see cref="AddTaskResult"/> for the task which caused the exception.
@@ -23,14 +23,14 @@ namespace Azure.Compute.Batch
         public CreateTaskResult AddTaskResult { get; }
 
         internal AddTaskCollectionTerminatedException(CreateTaskResult result, Exception inner = null) :
-            base(GenerateMessageString(result), inner)
+            base(null,GenerateMessageString(result), inner)
         {
             this.AddTaskResult = result;
         }
 
         private static string GenerateMessageString(CreateTaskResult result)
         {
-            return string.Format(System.Globalization.CultureInfo.InvariantCulture, BatchErrorCodeStrings.AddTaskCollectionTerminated, result);
+            return string.Format(System.Globalization.CultureInfo.InvariantCulture, BatchErrorCode.AddTaskCollectionTerminated.ToString(), result);
         }
     }
 }

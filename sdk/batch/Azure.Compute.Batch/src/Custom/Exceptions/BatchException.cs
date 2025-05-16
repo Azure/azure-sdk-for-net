@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Azure.Compute.Batch.Custom
+namespace Azure.Compute.Batch
 {
     /// <summary>
     /// Represents an exception for the Windows Azure Batch service.
@@ -29,49 +29,6 @@ namespace Azure.Compute.Batch.Custom
         {
             this.RequestInformation = requestInformation;
         }
-
-        private static string TryGetSingleHeaderOrDefault(string headerName, IDictionary<string, IEnumerable<string>> headers)
-        {
-            string result = null;
-
-            if (headers.ContainsKey(headerName))
-            {
-                if (headers[headerName] != null)
-                {
-                    result = headers[headerName].FirstOrDefault();
-                }
-            }
-
-            return result;
-        }
-        /*
-        /// <summary>
-        /// Constructs a <see cref="BatchException"/> as a wrapper for a <see cref="BatchErrorException"/>.
-        /// </summary>
-        /// <param name="batchErrorException">The exception to wrap.</param>
-        internal BatchException(BatchErrorException batchErrorException) : base(batchErrorException.Message, batchErrorException)
-        {
-            //Process client request id header
-            string clientRequestIdString = TryGetSingleHeaderOrDefault(InternalConstants.ClientRequestIdHeader, batchErrorException.Response.Headers);
-
-            //Process request id header
-            string requestIdString = TryGetSingleHeaderOrDefault(InternalConstants.RequestIdHeader, batchErrorException.Response.Headers);
-
-            //Process retry-after header
-            string retryAfterString = TryGetSingleHeaderOrDefault(InternalConstants.RetryAfterHeader, batchErrorException.Response.Headers);
-            var retryAfter = ExtractRetryAfterHeader(retryAfterString);
-
-            this.RequestInformation = new RequestInformation()
-            {
-                BatchError = batchErrorException.Body == null ? null : new BatchError(batchErrorException.Body),
-                ClientRequestId = string.IsNullOrEmpty(clientRequestIdString) ? default(Guid?) : new Guid(clientRequestIdString),
-                HttpStatusCode = batchErrorException.Response.StatusCode,
-                HttpStatusMessage = batchErrorException.Response.ReasonPhrase, //TODO: Is this right?
-                ServiceRequestId = requestIdString,
-                RetryAfter = retryAfter
-            };
-        }
-       */
 
         /// <summary>
         /// Generates a string which describes the exception.
@@ -114,34 +71,6 @@ namespace Azure.Compute.Batch.Custom
             }
 
             return sb.ToString();
-        }
-
-        private static TimeSpan? ExtractRetryAfterHeader(string retryAfterHeader)
-        {
-            TimeSpan? retryAfter = null;
-            if (!string.IsNullOrEmpty(retryAfterHeader))
-            {
-                int retryAfterSeconds;
-                bool parsed = int.TryParse(retryAfterHeader, out retryAfterSeconds);
-                if (parsed)
-                {
-                    retryAfter = TimeSpan.FromSeconds(retryAfterSeconds);
-                }
-                else
-                {
-                    // Try RFC1123 format
-                    DateTime retryAfterDate;
-                    parsed = DateTime.TryParse(retryAfterHeader, out retryAfterDate);
-                    if (parsed)
-                    {
-                        DateTime now = DateTime.UtcNow;
-                        retryAfterDate = retryAfterDate.ToUniversalTime();
-                        retryAfter = now >= retryAfterDate ? TimeSpan.Zero : retryAfterDate.Subtract(DateTime.UtcNow);
-                    }
-                }
-            }
-
-            return retryAfter;
         }
     }
 }

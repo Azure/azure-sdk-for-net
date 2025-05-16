@@ -44,7 +44,7 @@ namespace Azure.Compute.Batch.Tests.Samples
 
             string poolID = "HelloWorldPool";
 
-            ImageReference imageReference = new ImageReference()
+            BatchVmImageReference imageReference = new BatchVmImageReference()
             {
                 Publisher = "MicrosoftWindowsServer",
                 Offer = "WindowsServer",
@@ -54,7 +54,7 @@ namespace Azure.Compute.Batch.Tests.Samples
 
             VirtualMachineConfiguration virtualMachineConfiguration = new VirtualMachineConfiguration(imageReference, "batch.node.windows amd64");
 
-            BatchPoolCreateContent batchPoolCreateOptions = new BatchPoolCreateContent(
+            BatchPoolCreateOptions batchPoolCreateOptions = new BatchPoolCreateOptions(
             poolID, "STANDARD_D1_v2")
             {
                 VirtualMachineConfiguration = virtualMachineConfiguration,
@@ -75,7 +75,7 @@ namespace Azure.Compute.Batch.Tests.Samples
             BatchPool batchPool = batchClient.GetPool("poolID");
 
             Console.WriteLine(batchPool.Id);
-            Console.WriteLine(batchPool.Url);
+            Console.WriteLine(batchPool.Uri);
             Console.WriteLine(batchPool.AllocationState);
             #endregion
         }
@@ -101,7 +101,7 @@ namespace Azure.Compute.Batch.Tests.Samples
 
             BatchNode batchNode = batchClient.GetNode("<poolId>", "<nodeId>");
             Console.WriteLine(batchNode.Id);
-            Console.WriteLine(batchNode.Url);
+            Console.WriteLine(batchNode.Uri);
             Console.WriteLine(batchNode.State);
             #endregion
         }
@@ -125,7 +125,7 @@ namespace Azure.Compute.Batch.Tests.Samples
             BatchClient batchClient = new BatchClient(
             new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
 
-            batchClient.CreateJob(new BatchJobCreateContent("jobId", new BatchPoolInfo() { PoolId = "poolName" }));
+            batchClient.CreateJob(new BatchJobCreateOptions("jobId", new BatchPoolInfo() { PoolId = "poolName" }));
             #endregion
         }
 
@@ -160,7 +160,7 @@ namespace Azure.Compute.Batch.Tests.Samples
             BatchClient batchClient = new BatchClient(
             new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
 
-            batchClient.CreateTask("jobId", new BatchTaskCreateContent("taskId", $"echo Hello world"));
+            batchClient.CreateTask("jobId", new BatchTaskCreateOptions("taskId", $"echo Hello world"));
             #endregion
         }
 

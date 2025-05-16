@@ -48,10 +48,10 @@ namespace Azure.Compute.Batch
                 writer.WritePropertyName("taskRootDirectory"u8);
                 writer.WriteStringValue(TaskRootDirectory);
             }
-            if (Optional.IsDefined(TaskRootDirectoryUrl))
+            if (Optional.IsDefined(TaskRootDirectoryUri))
             {
                 writer.WritePropertyName("taskRootDirectoryUrl"u8);
-                writer.WriteStringValue(TaskRootDirectoryUrl);
+                writer.WriteStringValue(TaskRootDirectoryUri.AbsoluteUri);
             }
             if (Optional.IsDefined(ExitCode))
             {
@@ -121,7 +121,7 @@ namespace Azure.Compute.Batch
             DateTimeOffset? endTime = default;
             BatchJobPreparationTaskState state = default;
             string taskRootDirectory = default;
-            string taskRootDirectoryUrl = default;
+            Uri taskRootDirectoryUrl = default;
             int? exitCode = default;
             BatchTaskContainerExecutionInfo containerInfo = default;
             BatchTaskFailureInfo failureInfo = default;
@@ -158,7 +158,11 @@ namespace Azure.Compute.Batch
                 }
                 if (property.NameEquals("taskRootDirectoryUrl"u8))
                 {
-                    taskRootDirectoryUrl = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    taskRootDirectoryUrl = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("exitCode"u8))

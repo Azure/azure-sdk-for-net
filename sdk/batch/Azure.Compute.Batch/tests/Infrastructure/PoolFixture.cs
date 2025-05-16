@@ -37,7 +37,7 @@ namespace Azure.Compute.Batch.Tests.Infrastructure
         public async Task<BatchPool> FindPoolIfExistsAsync()
         {
             // reuse existing pool if it exists
-            client.GetPoolsAsync(maxresults: 100, timeOutInSeconds: 10);
+            client.GetPoolsAsync(maxresults: 100, timeOutInSeconds: TimeSpan.FromSeconds(10));
             AsyncPageable<BatchPool> batchPools = client.GetPoolsAsync();
 
             await foreach (BatchPool curPool in batchPools)
