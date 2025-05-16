@@ -10,6 +10,11 @@ namespace Azure.ResourceManager.Cdn.Models
     public partial class IsDeviceMatchCondition
     {
         [EditorBrowsable(EditorBrowsableState.Never)]
+        public IsDeviceMatchCondition(IsDeviceMatchConditionType conditionType, IsDeviceOperator isDeviceOperator): this(isDeviceOperator)
+        {
+            ConditionType = conditionType;
+        }
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public IsDeviceMatchConditionType ConditionType
         {
             get => new(TypeName.ToString());
