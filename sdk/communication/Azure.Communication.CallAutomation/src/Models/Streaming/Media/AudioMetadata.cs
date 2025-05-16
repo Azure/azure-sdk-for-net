@@ -14,7 +14,6 @@ namespace Azure.Communication.CallAutomation
             Encoding = audioMetadataInternal.Encoding;
             SampleRate = audioMetadataInternal.SampleRate;
             Channels = (AudioChannel)audioMetadataInternal.Channels;
-            Length = audioMetadataInternal.Length;
         }
 
         /// <summary>
@@ -35,9 +34,5 @@ namespace Azure.Communication.CallAutomation
         /// Currently, only "mono" (single channel) is supported.
         /// </summary>
         public AudioChannel Channels { get; }
-        /// <summary>
-        /// The size of the audio data (base64 byte) being sent, based on the sample rate and duration.
-        /// </summary>
-        public int Length { get; }
     }
 }
