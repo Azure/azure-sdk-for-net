@@ -154,12 +154,21 @@ internal sealed class AzureAIInferenceEmbeddingGenerator :
     /// <summary>Converts an extensions options instance to an Azure.AI.Inference options instance.</summary>
     private EmbeddingsOptions ToAzureAIOptions(IEnumerable<string> inputs, EmbeddingGenerationOptions? options)
     {
-        EmbeddingsOptions result = new(inputs)
+        if (options?.RawRepresentationFactory?.Invoke(this) is not EmbeddingsOptions result)
         {
-            Dimensions = options?.Dimensions ?? _dimensions,
-            Model = options?.ModelId ?? _metadata.DefaultModelId,
-            EncodingFormat = EmbeddingEncodingFormat.Base64,
-        };
+            result = new EmbeddingsOptions(inputs);
+        }
+        else
+        {
+            foreach (var input in inputs)
+            {
+                result.Input.Add(input);
+            }
+        }
+
+        result.Dimensions ??= options?.Dimensions ?? _dimensions;
+        result.Model ??= options?.ModelId ?? _metadata.DefaultModelId;
+        result.EncodingFormat = EmbeddingEncodingFormat.Base64;
 
         if (options?.AdditionalProperties is { } props)
         {

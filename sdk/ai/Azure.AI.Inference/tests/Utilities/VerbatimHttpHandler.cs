@@ -23,11 +23,11 @@ public sealed class VerbatimHttpHandler(string expectedInput, string expectedOut
 {
     protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
     {
-        Assert.IsNotNull(request.Content);
+        Assert.That(request.Content, Is.Not.Null);
 
         string? actualInput = await request.Content!.ReadAsStringAsync().ConfigureAwait(false);
 
-        Assert.IsNotNull(actualInput);
+        Assert.That(actualInput, Is.Not.Null);
         AssertEqualNormalized(expectedInput, actualInput);
 
         if (validateExpectedResponse)
@@ -43,7 +43,7 @@ public sealed class VerbatimHttpHandler(string expectedInput, string expectedOut
             using var response = await base.SendAsync(request, cancellationToken).ConfigureAwait(false);
             string? actualOutput = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
 
-            Assert.IsNotNull(actualOutput);
+            Assert.That(actualOutput, Is.Not.Null);
             AssertEqualNormalized(expectedOutput, actualOutput);
         }
 
