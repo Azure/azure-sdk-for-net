@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.DataBoxEdge
 {
     public partial class DataBoxEdgeTriggerResource : IJsonModel<DataBoxEdgeTriggerData>
     {
+        private static DataBoxEdgeTriggerData s_dataDeserializationInstance;
+        private static DataBoxEdgeTriggerData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<DataBoxEdgeTriggerData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DataBoxEdgeTriggerData>)Data).Write(writer, options);
 
-        DataBoxEdgeTriggerData IJsonModel<DataBoxEdgeTriggerData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DataBoxEdgeTriggerData>)Data).Create(ref reader, options);
+        DataBoxEdgeTriggerData IJsonModel<DataBoxEdgeTriggerData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DataBoxEdgeTriggerData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<DataBoxEdgeTriggerData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DataBoxEdgeTriggerData>(Data, options, AzureResourceManagerDataBoxEdgeContext.Default);
 
         DataBoxEdgeTriggerData IPersistableModel<DataBoxEdgeTriggerData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DataBoxEdgeTriggerData>(data, options, AzureResourceManagerDataBoxEdgeContext.Default);
 
-        string IPersistableModel<DataBoxEdgeTriggerData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DataBoxEdgeTriggerData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<DataBoxEdgeTriggerData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DataBoxEdgeTriggerData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

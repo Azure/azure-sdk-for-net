@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.ServiceNetworking
 {
     public partial class ApplicationGatewayForContainersSecurityPolicyResource : IJsonModel<ApplicationGatewayForContainersSecurityPolicyData>
     {
+        private static ApplicationGatewayForContainersSecurityPolicyData s_dataDeserializationInstance;
+        private static ApplicationGatewayForContainersSecurityPolicyData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<ApplicationGatewayForContainersSecurityPolicyData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ApplicationGatewayForContainersSecurityPolicyData>)Data).Write(writer, options);
 
-        ApplicationGatewayForContainersSecurityPolicyData IJsonModel<ApplicationGatewayForContainersSecurityPolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ApplicationGatewayForContainersSecurityPolicyData>)Data).Create(ref reader, options);
+        ApplicationGatewayForContainersSecurityPolicyData IJsonModel<ApplicationGatewayForContainersSecurityPolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ApplicationGatewayForContainersSecurityPolicyData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<ApplicationGatewayForContainersSecurityPolicyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ApplicationGatewayForContainersSecurityPolicyData>(Data, options, AzureResourceManagerServiceNetworkingContext.Default);
 
         ApplicationGatewayForContainersSecurityPolicyData IPersistableModel<ApplicationGatewayForContainersSecurityPolicyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ApplicationGatewayForContainersSecurityPolicyData>(data, options, AzureResourceManagerServiceNetworkingContext.Default);
 
-        string IPersistableModel<ApplicationGatewayForContainersSecurityPolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ApplicationGatewayForContainersSecurityPolicyData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<ApplicationGatewayForContainersSecurityPolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ApplicationGatewayForContainersSecurityPolicyData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

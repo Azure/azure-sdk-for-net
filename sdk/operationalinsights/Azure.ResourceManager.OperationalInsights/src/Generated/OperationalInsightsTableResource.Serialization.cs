@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.OperationalInsights
 {
     public partial class OperationalInsightsTableResource : IJsonModel<OperationalInsightsTableData>
     {
+        private static OperationalInsightsTableData s_dataDeserializationInstance;
+        private static OperationalInsightsTableData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<OperationalInsightsTableData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<OperationalInsightsTableData>)Data).Write(writer, options);
 
-        OperationalInsightsTableData IJsonModel<OperationalInsightsTableData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<OperationalInsightsTableData>)Data).Create(ref reader, options);
+        OperationalInsightsTableData IJsonModel<OperationalInsightsTableData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<OperationalInsightsTableData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<OperationalInsightsTableData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<OperationalInsightsTableData>(Data, options, AzureResourceManagerOperationalInsightsContext.Default);
 
         OperationalInsightsTableData IPersistableModel<OperationalInsightsTableData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<OperationalInsightsTableData>(data, options, AzureResourceManagerOperationalInsightsContext.Default);
 
-        string IPersistableModel<OperationalInsightsTableData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<OperationalInsightsTableData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<OperationalInsightsTableData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<OperationalInsightsTableData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
 {
     public partial class MySqlFlexibleServerDatabaseResource : IJsonModel<MySqlFlexibleServerDatabaseData>
     {
+        private static MySqlFlexibleServerDatabaseData s_dataDeserializationInstance;
+        private static MySqlFlexibleServerDatabaseData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<MySqlFlexibleServerDatabaseData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<MySqlFlexibleServerDatabaseData>)Data).Write(writer, options);
 
-        MySqlFlexibleServerDatabaseData IJsonModel<MySqlFlexibleServerDatabaseData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MySqlFlexibleServerDatabaseData>)Data).Create(ref reader, options);
+        MySqlFlexibleServerDatabaseData IJsonModel<MySqlFlexibleServerDatabaseData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MySqlFlexibleServerDatabaseData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<MySqlFlexibleServerDatabaseData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<MySqlFlexibleServerDatabaseData>(Data, options, AzureResourceManagerMySqlContext.Default);
 
         MySqlFlexibleServerDatabaseData IPersistableModel<MySqlFlexibleServerDatabaseData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MySqlFlexibleServerDatabaseData>(data, options, AzureResourceManagerMySqlContext.Default);
 
-        string IPersistableModel<MySqlFlexibleServerDatabaseData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MySqlFlexibleServerDatabaseData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<MySqlFlexibleServerDatabaseData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MySqlFlexibleServerDatabaseData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

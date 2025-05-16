@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.ApiManagement
 {
     public partial class AuthorizationContractResource : IJsonModel<AuthorizationContractData>
     {
+        private static AuthorizationContractData s_dataDeserializationInstance;
+        private static AuthorizationContractData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<AuthorizationContractData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<AuthorizationContractData>)Data).Write(writer, options);
 
-        AuthorizationContractData IJsonModel<AuthorizationContractData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AuthorizationContractData>)Data).Create(ref reader, options);
+        AuthorizationContractData IJsonModel<AuthorizationContractData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AuthorizationContractData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<AuthorizationContractData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AuthorizationContractData>(Data, options, AzureResourceManagerApiManagementContext.Default);
 
         AuthorizationContractData IPersistableModel<AuthorizationContractData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AuthorizationContractData>(data, options, AzureResourceManagerApiManagementContext.Default);
 
-        string IPersistableModel<AuthorizationContractData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AuthorizationContractData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<AuthorizationContractData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AuthorizationContractData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

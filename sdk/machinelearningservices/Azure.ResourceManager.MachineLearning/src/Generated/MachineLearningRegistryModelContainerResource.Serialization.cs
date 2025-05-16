@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.MachineLearning
 {
     public partial class MachineLearningRegistryModelContainerResource : IJsonModel<MachineLearningModelContainerData>
     {
+        private static MachineLearningModelContainerData s_dataDeserializationInstance;
+        private static MachineLearningModelContainerData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<MachineLearningModelContainerData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<MachineLearningModelContainerData>)Data).Write(writer, options);
 
-        MachineLearningModelContainerData IJsonModel<MachineLearningModelContainerData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MachineLearningModelContainerData>)Data).Create(ref reader, options);
+        MachineLearningModelContainerData IJsonModel<MachineLearningModelContainerData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MachineLearningModelContainerData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<MachineLearningModelContainerData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<MachineLearningModelContainerData>(Data, options, AzureResourceManagerMachineLearningContext.Default);
 
         MachineLearningModelContainerData IPersistableModel<MachineLearningModelContainerData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MachineLearningModelContainerData>(data, options, AzureResourceManagerMachineLearningContext.Default);
 
-        string IPersistableModel<MachineLearningModelContainerData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MachineLearningModelContainerData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<MachineLearningModelContainerData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MachineLearningModelContainerData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

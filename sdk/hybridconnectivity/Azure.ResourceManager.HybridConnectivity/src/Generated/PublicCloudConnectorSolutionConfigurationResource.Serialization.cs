@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.HybridConnectivity
 {
     public partial class PublicCloudConnectorSolutionConfigurationResource : IJsonModel<PublicCloudConnectorSolutionConfigurationData>
     {
+        private static PublicCloudConnectorSolutionConfigurationData s_dataDeserializationInstance;
+        private static PublicCloudConnectorSolutionConfigurationData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<PublicCloudConnectorSolutionConfigurationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<PublicCloudConnectorSolutionConfigurationData>)Data).Write(writer, options);
 
-        PublicCloudConnectorSolutionConfigurationData IJsonModel<PublicCloudConnectorSolutionConfigurationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PublicCloudConnectorSolutionConfigurationData>)Data).Create(ref reader, options);
+        PublicCloudConnectorSolutionConfigurationData IJsonModel<PublicCloudConnectorSolutionConfigurationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PublicCloudConnectorSolutionConfigurationData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<PublicCloudConnectorSolutionConfigurationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<PublicCloudConnectorSolutionConfigurationData>(Data, options, AzureResourceManagerHybridConnectivityContext.Default);
 
         PublicCloudConnectorSolutionConfigurationData IPersistableModel<PublicCloudConnectorSolutionConfigurationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PublicCloudConnectorSolutionConfigurationData>(data, options, AzureResourceManagerHybridConnectivityContext.Default);
 
-        string IPersistableModel<PublicCloudConnectorSolutionConfigurationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PublicCloudConnectorSolutionConfigurationData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<PublicCloudConnectorSolutionConfigurationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PublicCloudConnectorSolutionConfigurationData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

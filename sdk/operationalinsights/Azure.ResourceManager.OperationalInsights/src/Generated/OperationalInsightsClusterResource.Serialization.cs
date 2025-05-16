@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.OperationalInsights
 {
     public partial class OperationalInsightsClusterResource : IJsonModel<OperationalInsightsClusterData>
     {
+        private static OperationalInsightsClusterData s_dataDeserializationInstance;
+        private static OperationalInsightsClusterData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<OperationalInsightsClusterData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<OperationalInsightsClusterData>)Data).Write(writer, options);
 
-        OperationalInsightsClusterData IJsonModel<OperationalInsightsClusterData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<OperationalInsightsClusterData>)Data).Create(ref reader, options);
+        OperationalInsightsClusterData IJsonModel<OperationalInsightsClusterData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<OperationalInsightsClusterData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<OperationalInsightsClusterData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<OperationalInsightsClusterData>(Data, options, AzureResourceManagerOperationalInsightsContext.Default);
 
         OperationalInsightsClusterData IPersistableModel<OperationalInsightsClusterData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<OperationalInsightsClusterData>(data, options, AzureResourceManagerOperationalInsightsContext.Default);
 
-        string IPersistableModel<OperationalInsightsClusterData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<OperationalInsightsClusterData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<OperationalInsightsClusterData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<OperationalInsightsClusterData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

@@ -88,6 +88,18 @@ namespace Azure.Generator.Tests.Common
             {
                 return new InputLiteralType(name ?? string.Empty, @namespace ?? string.Empty, InputPrimitiveType.String, value);
             }
+
+            /// <summary>
+            /// Construct input enum type value for any
+            /// </summary>
+            /// <param name="value"></param>
+            /// <param name="name"></param>
+            /// <param name="namespace"></param>
+            /// <returns></returns>
+            public static InputLiteralType Int32(int value, string? name = null, string? @namespace = null)
+            {
+                return new InputLiteralType(name ?? string.Empty, @namespace ?? string.Empty, InputPrimitiveType.Int32, value);
+            }
         }
 
         /// <summary>

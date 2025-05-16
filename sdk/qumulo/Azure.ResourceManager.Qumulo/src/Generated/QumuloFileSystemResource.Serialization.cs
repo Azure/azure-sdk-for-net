@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Qumulo
 {
     public partial class QumuloFileSystemResource : IJsonModel<QumuloFileSystemResourceData>
     {
+        private static QumuloFileSystemResourceData s_dataDeserializationInstance;
+        private static QumuloFileSystemResourceData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<QumuloFileSystemResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<QumuloFileSystemResourceData>)Data).Write(writer, options);
 
-        QumuloFileSystemResourceData IJsonModel<QumuloFileSystemResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<QumuloFileSystemResourceData>)Data).Create(ref reader, options);
+        QumuloFileSystemResourceData IJsonModel<QumuloFileSystemResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<QumuloFileSystemResourceData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<QumuloFileSystemResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<QumuloFileSystemResourceData>(Data, options, AzureResourceManagerQumuloContext.Default);
 
         QumuloFileSystemResourceData IPersistableModel<QumuloFileSystemResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<QumuloFileSystemResourceData>(data, options, AzureResourceManagerQumuloContext.Default);
 
-        string IPersistableModel<QumuloFileSystemResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<QumuloFileSystemResourceData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<QumuloFileSystemResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<QumuloFileSystemResourceData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.MachineLearning
 {
     public partial class MachineLearningFeatureSetVersionResource : IJsonModel<MachineLearningFeatureSetVersionData>
     {
+        private static MachineLearningFeatureSetVersionData s_dataDeserializationInstance;
+        private static MachineLearningFeatureSetVersionData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<MachineLearningFeatureSetVersionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<MachineLearningFeatureSetVersionData>)Data).Write(writer, options);
 
-        MachineLearningFeatureSetVersionData IJsonModel<MachineLearningFeatureSetVersionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MachineLearningFeatureSetVersionData>)Data).Create(ref reader, options);
+        MachineLearningFeatureSetVersionData IJsonModel<MachineLearningFeatureSetVersionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MachineLearningFeatureSetVersionData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<MachineLearningFeatureSetVersionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<MachineLearningFeatureSetVersionData>(Data, options, AzureResourceManagerMachineLearningContext.Default);
 
         MachineLearningFeatureSetVersionData IPersistableModel<MachineLearningFeatureSetVersionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MachineLearningFeatureSetVersionData>(data, options, AzureResourceManagerMachineLearningContext.Default);
 
-        string IPersistableModel<MachineLearningFeatureSetVersionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MachineLearningFeatureSetVersionData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<MachineLearningFeatureSetVersionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MachineLearningFeatureSetVersionData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

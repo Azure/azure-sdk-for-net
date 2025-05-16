@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.StorageSync
 {
     public partial class StorageSyncRegisteredServerResource : IJsonModel<StorageSyncRegisteredServerData>
     {
+        private static StorageSyncRegisteredServerData s_dataDeserializationInstance;
+        private static StorageSyncRegisteredServerData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<StorageSyncRegisteredServerData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<StorageSyncRegisteredServerData>)Data).Write(writer, options);
 
-        StorageSyncRegisteredServerData IJsonModel<StorageSyncRegisteredServerData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<StorageSyncRegisteredServerData>)Data).Create(ref reader, options);
+        StorageSyncRegisteredServerData IJsonModel<StorageSyncRegisteredServerData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<StorageSyncRegisteredServerData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<StorageSyncRegisteredServerData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<StorageSyncRegisteredServerData>(Data, options, AzureResourceManagerStorageSyncContext.Default);
 
         StorageSyncRegisteredServerData IPersistableModel<StorageSyncRegisteredServerData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<StorageSyncRegisteredServerData>(data, options, AzureResourceManagerStorageSyncContext.Default);
 
-        string IPersistableModel<StorageSyncRegisteredServerData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<StorageSyncRegisteredServerData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<StorageSyncRegisteredServerData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<StorageSyncRegisteredServerData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

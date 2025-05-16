@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Sql
 {
     public partial class SyncMemberResource : IJsonModel<SyncMemberData>
     {
+        private static SyncMemberData s_dataDeserializationInstance;
+        private static SyncMemberData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<SyncMemberData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SyncMemberData>)Data).Write(writer, options);
 
-        SyncMemberData IJsonModel<SyncMemberData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SyncMemberData>)Data).Create(ref reader, options);
+        SyncMemberData IJsonModel<SyncMemberData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SyncMemberData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<SyncMemberData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SyncMemberData>(Data, options, AzureResourceManagerSqlContext.Default);
 
         SyncMemberData IPersistableModel<SyncMemberData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SyncMemberData>(data, options, AzureResourceManagerSqlContext.Default);
 
-        string IPersistableModel<SyncMemberData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SyncMemberData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<SyncMemberData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SyncMemberData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

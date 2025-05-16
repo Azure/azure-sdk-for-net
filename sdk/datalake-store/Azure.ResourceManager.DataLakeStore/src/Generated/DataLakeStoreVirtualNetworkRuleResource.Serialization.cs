@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.DataLakeStore
 {
     public partial class DataLakeStoreVirtualNetworkRuleResource : IJsonModel<DataLakeStoreVirtualNetworkRuleData>
     {
+        private static DataLakeStoreVirtualNetworkRuleData s_dataDeserializationInstance;
+        private static DataLakeStoreVirtualNetworkRuleData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<DataLakeStoreVirtualNetworkRuleData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DataLakeStoreVirtualNetworkRuleData>)Data).Write(writer, options);
 
-        DataLakeStoreVirtualNetworkRuleData IJsonModel<DataLakeStoreVirtualNetworkRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DataLakeStoreVirtualNetworkRuleData>)Data).Create(ref reader, options);
+        DataLakeStoreVirtualNetworkRuleData IJsonModel<DataLakeStoreVirtualNetworkRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DataLakeStoreVirtualNetworkRuleData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<DataLakeStoreVirtualNetworkRuleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DataLakeStoreVirtualNetworkRuleData>(Data, options, AzureResourceManagerDataLakeStoreContext.Default);
 
         DataLakeStoreVirtualNetworkRuleData IPersistableModel<DataLakeStoreVirtualNetworkRuleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DataLakeStoreVirtualNetworkRuleData>(data, options, AzureResourceManagerDataLakeStoreContext.Default);
 
-        string IPersistableModel<DataLakeStoreVirtualNetworkRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DataLakeStoreVirtualNetworkRuleData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<DataLakeStoreVirtualNetworkRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DataLakeStoreVirtualNetworkRuleData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

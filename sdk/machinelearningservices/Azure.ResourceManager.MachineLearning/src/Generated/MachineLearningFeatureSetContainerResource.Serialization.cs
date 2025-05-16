@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.MachineLearning
 {
     public partial class MachineLearningFeatureSetContainerResource : IJsonModel<MachineLearningFeatureSetContainerData>
     {
+        private static MachineLearningFeatureSetContainerData s_dataDeserializationInstance;
+        private static MachineLearningFeatureSetContainerData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<MachineLearningFeatureSetContainerData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<MachineLearningFeatureSetContainerData>)Data).Write(writer, options);
 
-        MachineLearningFeatureSetContainerData IJsonModel<MachineLearningFeatureSetContainerData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MachineLearningFeatureSetContainerData>)Data).Create(ref reader, options);
+        MachineLearningFeatureSetContainerData IJsonModel<MachineLearningFeatureSetContainerData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MachineLearningFeatureSetContainerData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<MachineLearningFeatureSetContainerData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<MachineLearningFeatureSetContainerData>(Data, options, AzureResourceManagerMachineLearningContext.Default);
 
         MachineLearningFeatureSetContainerData IPersistableModel<MachineLearningFeatureSetContainerData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MachineLearningFeatureSetContainerData>(data, options, AzureResourceManagerMachineLearningContext.Default);
 
-        string IPersistableModel<MachineLearningFeatureSetContainerData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MachineLearningFeatureSetContainerData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<MachineLearningFeatureSetContainerData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MachineLearningFeatureSetContainerData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

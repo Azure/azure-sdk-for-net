@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.ApiManagement
 {
     public partial class ApiManagementGroupResource : IJsonModel<ApiManagementGroupData>
     {
+        private static ApiManagementGroupData s_dataDeserializationInstance;
+        private static ApiManagementGroupData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<ApiManagementGroupData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ApiManagementGroupData>)Data).Write(writer, options);
 
-        ApiManagementGroupData IJsonModel<ApiManagementGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ApiManagementGroupData>)Data).Create(ref reader, options);
+        ApiManagementGroupData IJsonModel<ApiManagementGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ApiManagementGroupData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<ApiManagementGroupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ApiManagementGroupData>(Data, options, AzureResourceManagerApiManagementContext.Default);
 
         ApiManagementGroupData IPersistableModel<ApiManagementGroupData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ApiManagementGroupData>(data, options, AzureResourceManagerApiManagementContext.Default);
 
-        string IPersistableModel<ApiManagementGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ApiManagementGroupData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<ApiManagementGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ApiManagementGroupData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }
