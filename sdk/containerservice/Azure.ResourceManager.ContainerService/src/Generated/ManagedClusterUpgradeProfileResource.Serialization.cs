@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.ContainerService
 {
     public partial class ManagedClusterUpgradeProfileResource : IJsonModel<ManagedClusterUpgradeProfileData>
     {
+        private static ManagedClusterUpgradeProfileData s_dataDeserializationInstance;
+        private static ManagedClusterUpgradeProfileData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<ManagedClusterUpgradeProfileData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ManagedClusterUpgradeProfileData>)Data).Write(writer, options);
 
-        ManagedClusterUpgradeProfileData IJsonModel<ManagedClusterUpgradeProfileData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ManagedClusterUpgradeProfileData>)Data).Create(ref reader, options);
+        ManagedClusterUpgradeProfileData IJsonModel<ManagedClusterUpgradeProfileData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ManagedClusterUpgradeProfileData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<ManagedClusterUpgradeProfileData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ManagedClusterUpgradeProfileData>(Data, options, AzureResourceManagerContainerServiceContext.Default);
 
         ManagedClusterUpgradeProfileData IPersistableModel<ManagedClusterUpgradeProfileData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ManagedClusterUpgradeProfileData>(data, options, AzureResourceManagerContainerServiceContext.Default);
 
-        string IPersistableModel<ManagedClusterUpgradeProfileData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ManagedClusterUpgradeProfileData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<ManagedClusterUpgradeProfileData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ManagedClusterUpgradeProfileData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

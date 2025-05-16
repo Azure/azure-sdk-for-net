@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.SecurityInsights
 {
     public partial class SecurityInsightsRecommendationResource : IJsonModel<SecurityInsightsRecommendationData>
     {
+        private static SecurityInsightsRecommendationData s_dataDeserializationInstance;
+        private static SecurityInsightsRecommendationData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<SecurityInsightsRecommendationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SecurityInsightsRecommendationData>)Data).Write(writer, options);
 
-        SecurityInsightsRecommendationData IJsonModel<SecurityInsightsRecommendationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SecurityInsightsRecommendationData>)Data).Create(ref reader, options);
+        SecurityInsightsRecommendationData IJsonModel<SecurityInsightsRecommendationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SecurityInsightsRecommendationData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<SecurityInsightsRecommendationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SecurityInsightsRecommendationData>(Data, options, AzureResourceManagerSecurityInsightsContext.Default);
 
         SecurityInsightsRecommendationData IPersistableModel<SecurityInsightsRecommendationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SecurityInsightsRecommendationData>(data, options, AzureResourceManagerSecurityInsightsContext.Default);
 
-        string IPersistableModel<SecurityInsightsRecommendationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SecurityInsightsRecommendationData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<SecurityInsightsRecommendationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SecurityInsightsRecommendationData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

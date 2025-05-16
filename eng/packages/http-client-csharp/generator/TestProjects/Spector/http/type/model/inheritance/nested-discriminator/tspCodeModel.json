@@ -3,9 +3,171 @@
  "name": "Type.Model.Inheritance.NestedDiscriminator",
  "apiVersions": [],
  "enums": [],
- "models": [
+ "constants": [
   {
    "$id": "2",
+   "kind": "constant",
+   "name": "SharkKind",
+   "namespace": "Type.Model.Inheritance.NestedDiscriminator",
+   "usage": "Input,Output,Json",
+   "valueType": {
+    "$id": "3",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "value": "shark",
+   "decorators": []
+  },
+  {
+   "$id": "4",
+   "kind": "constant",
+   "name": "SawSharkSharktype",
+   "namespace": "Type.Model.Inheritance.NestedDiscriminator",
+   "usage": "Input,Output,Json",
+   "valueType": {
+    "$id": "5",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "value": "saw",
+   "decorators": []
+  },
+  {
+   "$id": "6",
+   "kind": "constant",
+   "name": "GoblinSharkSharktype",
+   "namespace": "Type.Model.Inheritance.NestedDiscriminator",
+   "usage": "Input,Output,Json",
+   "valueType": {
+    "$id": "7",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "value": "goblin",
+   "decorators": []
+  },
+  {
+   "$id": "8",
+   "kind": "constant",
+   "name": "SalmonKind",
+   "namespace": "Type.Model.Inheritance.NestedDiscriminator",
+   "usage": "Input,Output,Json",
+   "valueType": {
+    "$id": "9",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "value": "salmon",
+   "decorators": []
+  },
+  {
+   "$id": "10",
+   "kind": "constant",
+   "name": "getModelContentType",
+   "namespace": "",
+   "usage": "None",
+   "valueType": {
+    "$id": "11",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "value": "application/json",
+   "decorators": []
+  },
+  {
+   "$id": "12",
+   "kind": "constant",
+   "name": "putModelContentType",
+   "namespace": "",
+   "usage": "None",
+   "valueType": {
+    "$id": "13",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "value": "application/json",
+   "decorators": []
+  },
+  {
+   "$id": "14",
+   "kind": "constant",
+   "name": "getRecursiveModelContentType",
+   "namespace": "",
+   "usage": "None",
+   "valueType": {
+    "$id": "15",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "value": "application/json",
+   "decorators": []
+  },
+  {
+   "$id": "16",
+   "kind": "constant",
+   "name": "putRecursiveModelContentType",
+   "namespace": "",
+   "usage": "None",
+   "valueType": {
+    "$id": "17",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "value": "application/json",
+   "decorators": []
+  },
+  {
+   "$id": "18",
+   "kind": "constant",
+   "name": "getMissingDiscriminatorContentType",
+   "namespace": "",
+   "usage": "None",
+   "valueType": {
+    "$id": "19",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "value": "application/json",
+   "decorators": []
+  },
+  {
+   "$id": "20",
+   "kind": "constant",
+   "name": "getWrongDiscriminatorContentType",
+   "namespace": "",
+   "usage": "None",
+   "valueType": {
+    "$id": "21",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "value": "application/json",
+   "decorators": []
+  }
+ ],
+ "models": [
+  {
+   "$id": "22",
    "kind": "model",
    "name": "Fish",
    "namespace": "Type.Model.Inheritance.NestedDiscriminator",
@@ -14,13 +176,13 @@
    "doc": "This is base model for polymorphic multiple levels inheritance with a discriminator.",
    "decorators": [],
    "discriminatorProperty": {
-    "$id": "3",
+    "$id": "23",
     "kind": "property",
     "name": "kind",
     "serializedName": "kind",
     "doc": "Discriminator property for Fish.",
     "type": {
-     "$id": "4",
+     "$id": "24",
      "kind": "string",
      "name": "string",
      "crossLanguageDefinitionId": "TypeSpec.string",
@@ -33,24 +195,24 @@
     "decorators": [],
     "crossLanguageDefinitionId": "Type.Model.Inheritance.NestedDiscriminator.Fish.kind",
     "serializationOptions": {
-     "$id": "5",
+     "$id": "25",
      "json": {
-      "$id": "6",
+      "$id": "26",
       "name": "kind"
      }
     }
    },
    "properties": [
     {
-     "$ref": "3"
+     "$ref": "23"
     },
     {
-     "$id": "7",
+     "$id": "27",
      "kind": "property",
      "name": "age",
      "serializedName": "age",
      "type": {
-      "$id": "8",
+      "$id": "28",
       "kind": "int32",
       "name": "int32",
       "crossLanguageDefinitionId": "TypeSpec.int32",
@@ -63,18 +225,18 @@
      "decorators": [],
      "crossLanguageDefinitionId": "Type.Model.Inheritance.NestedDiscriminator.Fish.age",
      "serializationOptions": {
-      "$id": "9",
+      "$id": "29",
       "json": {
-       "$id": "10",
+       "$id": "30",
        "name": "age"
       }
      }
     }
    ],
    "discriminatedSubtypes": {
-    "$id": "11",
+    "$id": "31",
     "shark": {
-     "$id": "12",
+     "$id": "32",
      "kind": "model",
      "name": "Shark",
      "namespace": "Type.Model.Inheritance.NestedDiscriminator",
@@ -84,12 +246,12 @@
      "discriminatorValue": "shark",
      "decorators": [],
      "discriminatorProperty": {
-      "$id": "13",
+      "$id": "33",
       "kind": "property",
       "name": "sharktype",
       "serializedName": "sharktype",
       "type": {
-       "$id": "14",
+       "$id": "34",
        "kind": "string",
        "name": "string",
        "crossLanguageDefinitionId": "TypeSpec.string",
@@ -102,34 +264,24 @@
       "decorators": [],
       "crossLanguageDefinitionId": "Type.Model.Inheritance.NestedDiscriminator.Shark.sharktype",
       "serializationOptions": {
-       "$id": "15",
+       "$id": "35",
        "json": {
-        "$id": "16",
+        "$id": "36",
         "name": "sharktype"
        }
       }
      },
      "baseModel": {
-      "$ref": "2"
+      "$ref": "22"
      },
      "properties": [
       {
-       "$id": "17",
+       "$id": "37",
        "kind": "property",
        "name": "kind",
        "serializedName": "kind",
        "type": {
-        "$id": "18",
-        "kind": "constant",
-        "valueType": {
-         "$id": "19",
-         "kind": "string",
-         "name": "string",
-         "crossLanguageDefinitionId": "TypeSpec.string",
-         "decorators": []
-        },
-        "value": "shark",
-        "decorators": []
+        "$ref": "2"
        },
        "optional": false,
        "readOnly": false,
@@ -138,21 +290,21 @@
        "decorators": [],
        "crossLanguageDefinitionId": "Type.Model.Inheritance.NestedDiscriminator.Shark.kind",
        "serializationOptions": {
-        "$id": "20",
+        "$id": "38",
         "json": {
-         "$id": "21",
+         "$id": "39",
          "name": "kind"
         }
        }
       },
       {
-       "$ref": "13"
+       "$ref": "33"
       }
      ],
      "discriminatedSubtypes": {
-      "$id": "22",
+      "$id": "40",
       "saw": {
-       "$id": "23",
+       "$id": "41",
        "kind": "model",
        "name": "SawShark",
        "namespace": "Type.Model.Inheritance.NestedDiscriminator",
@@ -162,26 +314,16 @@
        "discriminatorValue": "saw",
        "decorators": [],
        "baseModel": {
-        "$ref": "12"
+        "$ref": "32"
        },
        "properties": [
         {
-         "$id": "24",
+         "$id": "42",
          "kind": "property",
          "name": "sharktype",
          "serializedName": "sharktype",
          "type": {
-          "$id": "25",
-          "kind": "constant",
-          "valueType": {
-           "$id": "26",
-           "kind": "string",
-           "name": "string",
-           "crossLanguageDefinitionId": "TypeSpec.string",
-           "decorators": []
-          },
-          "value": "saw",
-          "decorators": []
+          "$ref": "4"
          },
          "optional": false,
          "readOnly": false,
@@ -190,9 +332,9 @@
          "decorators": [],
          "crossLanguageDefinitionId": "Type.Model.Inheritance.NestedDiscriminator.SawShark.sharktype",
          "serializationOptions": {
-          "$id": "27",
+          "$id": "43",
           "json": {
-           "$id": "28",
+           "$id": "44",
            "name": "sharktype"
           }
          }
@@ -200,7 +342,7 @@
        ]
       },
       "goblin": {
-       "$id": "29",
+       "$id": "45",
        "kind": "model",
        "name": "GoblinShark",
        "namespace": "Type.Model.Inheritance.NestedDiscriminator",
@@ -210,26 +352,16 @@
        "discriminatorValue": "goblin",
        "decorators": [],
        "baseModel": {
-        "$ref": "12"
+        "$ref": "32"
        },
        "properties": [
         {
-         "$id": "30",
+         "$id": "46",
          "kind": "property",
          "name": "sharktype",
          "serializedName": "sharktype",
          "type": {
-          "$id": "31",
-          "kind": "constant",
-          "valueType": {
-           "$id": "32",
-           "kind": "string",
-           "name": "string",
-           "crossLanguageDefinitionId": "TypeSpec.string",
-           "decorators": []
-          },
-          "value": "goblin",
-          "decorators": []
+          "$ref": "6"
          },
          "optional": false,
          "readOnly": false,
@@ -238,9 +370,9 @@
          "decorators": [],
          "crossLanguageDefinitionId": "Type.Model.Inheritance.NestedDiscriminator.GoblinShark.sharktype",
          "serializationOptions": {
-          "$id": "33",
+          "$id": "47",
           "json": {
-           "$id": "34",
+           "$id": "48",
            "name": "sharktype"
           }
          }
@@ -250,7 +382,7 @@
      }
     },
     "salmon": {
-     "$id": "35",
+     "$id": "49",
      "kind": "model",
      "name": "Salmon",
      "namespace": "Type.Model.Inheritance.NestedDiscriminator",
@@ -260,26 +392,16 @@
      "discriminatorValue": "salmon",
      "decorators": [],
      "baseModel": {
-      "$ref": "2"
+      "$ref": "22"
      },
      "properties": [
       {
-       "$id": "36",
+       "$id": "50",
        "kind": "property",
        "name": "kind",
        "serializedName": "kind",
        "type": {
-        "$id": "37",
-        "kind": "constant",
-        "valueType": {
-         "$id": "38",
-         "kind": "string",
-         "name": "string",
-         "crossLanguageDefinitionId": "TypeSpec.string",
-         "decorators": []
-        },
-        "value": "salmon",
-        "decorators": []
+        "$ref": "8"
        },
        "optional": false,
        "readOnly": false,
@@ -288,24 +410,24 @@
        "decorators": [],
        "crossLanguageDefinitionId": "Type.Model.Inheritance.NestedDiscriminator.Salmon.kind",
        "serializationOptions": {
-        "$id": "39",
+        "$id": "51",
         "json": {
-         "$id": "40",
+         "$id": "52",
          "name": "kind"
         }
        }
       },
       {
-       "$id": "41",
+       "$id": "53",
        "kind": "property",
        "name": "friends",
        "serializedName": "friends",
        "type": {
-        "$id": "42",
+        "$id": "54",
         "kind": "array",
         "name": "ArrayFish",
         "valueType": {
-         "$ref": "2"
+         "$ref": "22"
         },
         "crossLanguageDefinitionId": "TypeSpec.Array",
         "decorators": []
@@ -317,30 +439,30 @@
        "decorators": [],
        "crossLanguageDefinitionId": "Type.Model.Inheritance.NestedDiscriminator.Salmon.friends",
        "serializationOptions": {
-        "$id": "43",
+        "$id": "55",
         "json": {
-         "$id": "44",
+         "$id": "56",
          "name": "friends"
         }
        }
       },
       {
-       "$id": "45",
+       "$id": "57",
        "kind": "property",
        "name": "hate",
        "serializedName": "hate",
        "type": {
-        "$id": "46",
+        "$id": "58",
         "kind": "dict",
         "keyType": {
-         "$id": "47",
+         "$id": "59",
          "kind": "string",
          "name": "string",
          "crossLanguageDefinitionId": "TypeSpec.string",
          "decorators": []
         },
         "valueType": {
-         "$ref": "2"
+         "$ref": "22"
         },
         "decorators": []
        },
@@ -351,20 +473,20 @@
        "decorators": [],
        "crossLanguageDefinitionId": "Type.Model.Inheritance.NestedDiscriminator.Salmon.hate",
        "serializationOptions": {
-        "$id": "48",
+        "$id": "60",
         "json": {
-         "$id": "49",
+         "$id": "61",
          "name": "hate"
         }
        }
       },
       {
-       "$id": "50",
+       "$id": "62",
        "kind": "property",
        "name": "partner",
        "serializedName": "partner",
        "type": {
-        "$ref": "2"
+        "$ref": "22"
        },
        "optional": true,
        "readOnly": false,
@@ -373,9 +495,9 @@
        "decorators": [],
        "crossLanguageDefinitionId": "Type.Model.Inheritance.NestedDiscriminator.Salmon.partner",
        "serializationOptions": {
-        "$id": "51",
+        "$id": "63",
         "json": {
-         "$id": "52",
+         "$id": "64",
          "name": "partner"
         }
        }
@@ -385,54 +507,44 @@
    }
   },
   {
-   "$ref": "12"
+   "$ref": "32"
   },
   {
-   "$ref": "23"
+   "$ref": "41"
   },
   {
-   "$ref": "29"
+   "$ref": "45"
   },
   {
-   "$ref": "35"
+   "$ref": "49"
   }
  ],
  "clients": [
   {
-   "$id": "53",
+   "$id": "65",
    "kind": "client",
    "name": "NestedDiscriminatorClient",
    "namespace": "Type.Model.Inheritance.NestedDiscriminator",
    "doc": "Illustrates multiple level inheritance with multiple discriminators.",
    "methods": [
     {
-     "$id": "54",
+     "$id": "66",
      "kind": "basic",
      "name": "getModel",
      "accessibility": "public",
      "apiVersions": [],
      "operation": {
-      "$id": "55",
+      "$id": "67",
       "name": "getModel",
       "resourceName": "NestedDiscriminator",
       "accessibility": "public",
       "parameters": [
        {
-        "$id": "56",
+        "$id": "68",
         "name": "accept",
         "nameInRequest": "Accept",
         "type": {
-         "$id": "57",
-         "kind": "constant",
-         "valueType": {
-          "$id": "58",
-          "kind": "string",
-          "name": "string",
-          "crossLanguageDefinitionId": "TypeSpec.string",
-          "decorators": []
-         },
-         "value": "application/json",
-         "decorators": []
+         "$ref": "10"
         },
         "location": "Header",
         "isApiVersion": false,
@@ -447,12 +559,12 @@
       ],
       "responses": [
        {
-        "$id": "59",
+        "$id": "69",
         "statusCodes": [
          200
         ],
         "bodyType": {
-         "$ref": "2"
+         "$ref": "22"
         },
         "headers": [],
         "isErrorResponse": false,
@@ -472,11 +584,11 @@
      },
      "parameters": [
       {
-       "$id": "60",
+       "$id": "70",
        "name": "accept",
        "nameInRequest": "accept",
        "type": {
-        "$ref": "57"
+        "$ref": "10"
        },
        "location": "Header",
        "isApiVersion": false,
@@ -490,9 +602,9 @@
       }
      ],
      "response": {
-      "$id": "61",
+      "$id": "71",
       "type": {
-       "$ref": "2"
+       "$ref": "22"
       }
      },
      "isOverride": false,
@@ -501,34 +613,24 @@
      "crossLanguageDefinitionId": "Type.Model.Inheritance.NestedDiscriminator.getModel"
     },
     {
-     "$id": "62",
+     "$id": "72",
      "kind": "basic",
      "name": "putModel",
      "accessibility": "public",
      "apiVersions": [],
      "operation": {
-      "$id": "63",
+      "$id": "73",
       "name": "putModel",
       "resourceName": "NestedDiscriminator",
       "accessibility": "public",
       "parameters": [
        {
-        "$id": "64",
+        "$id": "74",
         "name": "contentType",
         "nameInRequest": "Content-Type",
         "doc": "Body parameter's content type. Known values are application/json",
         "type": {
-         "$id": "65",
-         "kind": "constant",
-         "valueType": {
-          "$id": "66",
-          "kind": "string",
-          "name": "string",
-          "crossLanguageDefinitionId": "TypeSpec.string",
-          "decorators": []
-         },
-         "value": "application/json",
-         "decorators": []
+         "$ref": "12"
         },
         "location": "Header",
         "isApiVersion": false,
@@ -541,11 +643,11 @@
         "skipUrlEncoding": false
        },
        {
-        "$id": "67",
+        "$id": "75",
         "name": "input",
         "nameInRequest": "input",
         "type": {
-         "$ref": "2"
+         "$ref": "22"
         },
         "location": "Body",
         "isApiVersion": false,
@@ -560,7 +662,7 @@
       ],
       "responses": [
        {
-        "$id": "68",
+        "$id": "76",
         "statusCodes": [
          204
         ],
@@ -582,11 +684,11 @@
      },
      "parameters": [
       {
-       "$id": "69",
+       "$id": "77",
        "name": "input",
        "nameInRequest": "input",
        "type": {
-        "$ref": "2"
+        "$ref": "22"
        },
        "location": "Body",
        "isApiVersion": false,
@@ -599,12 +701,12 @@
        "skipUrlEncoding": false
       },
       {
-       "$id": "70",
+       "$id": "78",
        "name": "contentType",
        "nameInRequest": "contentType",
        "doc": "Body parameter's content type. Known values are application/json",
        "type": {
-        "$ref": "65"
+        "$ref": "12"
        },
        "location": "Header",
        "isApiVersion": false,
@@ -618,7 +720,7 @@
       }
      ],
      "response": {
-      "$id": "71"
+      "$id": "79"
      },
      "isOverride": false,
      "generateConvenient": true,
@@ -626,33 +728,23 @@
      "crossLanguageDefinitionId": "Type.Model.Inheritance.NestedDiscriminator.putModel"
     },
     {
-     "$id": "72",
+     "$id": "80",
      "kind": "basic",
      "name": "getRecursiveModel",
      "accessibility": "public",
      "apiVersions": [],
      "operation": {
-      "$id": "73",
+      "$id": "81",
       "name": "getRecursiveModel",
       "resourceName": "NestedDiscriminator",
       "accessibility": "public",
       "parameters": [
        {
-        "$id": "74",
+        "$id": "82",
         "name": "accept",
         "nameInRequest": "Accept",
         "type": {
-         "$id": "75",
-         "kind": "constant",
-         "valueType": {
-          "$id": "76",
-          "kind": "string",
-          "name": "string",
-          "crossLanguageDefinitionId": "TypeSpec.string",
-          "decorators": []
-         },
-         "value": "application/json",
-         "decorators": []
+         "$ref": "14"
         },
         "location": "Header",
         "isApiVersion": false,
@@ -667,12 +759,12 @@
       ],
       "responses": [
        {
-        "$id": "77",
+        "$id": "83",
         "statusCodes": [
          200
         ],
         "bodyType": {
-         "$ref": "2"
+         "$ref": "22"
         },
         "headers": [],
         "isErrorResponse": false,
@@ -692,11 +784,11 @@
      },
      "parameters": [
       {
-       "$id": "78",
+       "$id": "84",
        "name": "accept",
        "nameInRequest": "accept",
        "type": {
-        "$ref": "75"
+        "$ref": "14"
        },
        "location": "Header",
        "isApiVersion": false,
@@ -710,9 +802,9 @@
       }
      ],
      "response": {
-      "$id": "79",
+      "$id": "85",
       "type": {
-       "$ref": "2"
+       "$ref": "22"
       }
      },
      "isOverride": false,
@@ -721,34 +813,24 @@
      "crossLanguageDefinitionId": "Type.Model.Inheritance.NestedDiscriminator.getRecursiveModel"
     },
     {
-     "$id": "80",
+     "$id": "86",
      "kind": "basic",
      "name": "putRecursiveModel",
      "accessibility": "public",
      "apiVersions": [],
      "operation": {
-      "$id": "81",
+      "$id": "87",
       "name": "putRecursiveModel",
       "resourceName": "NestedDiscriminator",
       "accessibility": "public",
       "parameters": [
        {
-        "$id": "82",
+        "$id": "88",
         "name": "contentType",
         "nameInRequest": "Content-Type",
         "doc": "Body parameter's content type. Known values are application/json",
         "type": {
-         "$id": "83",
-         "kind": "constant",
-         "valueType": {
-          "$id": "84",
-          "kind": "string",
-          "name": "string",
-          "crossLanguageDefinitionId": "TypeSpec.string",
-          "decorators": []
-         },
-         "value": "application/json",
-         "decorators": []
+         "$ref": "16"
         },
         "location": "Header",
         "isApiVersion": false,
@@ -761,11 +843,11 @@
         "skipUrlEncoding": false
        },
        {
-        "$id": "85",
+        "$id": "89",
         "name": "input",
         "nameInRequest": "input",
         "type": {
-         "$ref": "2"
+         "$ref": "22"
         },
         "location": "Body",
         "isApiVersion": false,
@@ -780,7 +862,7 @@
       ],
       "responses": [
        {
-        "$id": "86",
+        "$id": "90",
         "statusCodes": [
          204
         ],
@@ -802,11 +884,11 @@
      },
      "parameters": [
       {
-       "$id": "87",
+       "$id": "91",
        "name": "input",
        "nameInRequest": "input",
        "type": {
-        "$ref": "2"
+        "$ref": "22"
        },
        "location": "Body",
        "isApiVersion": false,
@@ -819,12 +901,12 @@
        "skipUrlEncoding": false
       },
       {
-       "$id": "88",
+       "$id": "92",
        "name": "contentType",
        "nameInRequest": "contentType",
        "doc": "Body parameter's content type. Known values are application/json",
        "type": {
-        "$ref": "83"
+        "$ref": "16"
        },
        "location": "Header",
        "isApiVersion": false,
@@ -838,7 +920,7 @@
       }
      ],
      "response": {
-      "$id": "89"
+      "$id": "93"
      },
      "isOverride": false,
      "generateConvenient": true,
@@ -846,33 +928,23 @@
      "crossLanguageDefinitionId": "Type.Model.Inheritance.NestedDiscriminator.putRecursiveModel"
     },
     {
-     "$id": "90",
+     "$id": "94",
      "kind": "basic",
      "name": "getMissingDiscriminator",
      "accessibility": "public",
      "apiVersions": [],
      "operation": {
-      "$id": "91",
+      "$id": "95",
       "name": "getMissingDiscriminator",
       "resourceName": "NestedDiscriminator",
       "accessibility": "public",
       "parameters": [
        {
-        "$id": "92",
+        "$id": "96",
         "name": "accept",
         "nameInRequest": "Accept",
         "type": {
-         "$id": "93",
-         "kind": "constant",
-         "valueType": {
-          "$id": "94",
-          "kind": "string",
-          "name": "string",
-          "crossLanguageDefinitionId": "TypeSpec.string",
-          "decorators": []
-         },
-         "value": "application/json",
-         "decorators": []
+         "$ref": "18"
         },
         "location": "Header",
         "isApiVersion": false,
@@ -887,12 +959,12 @@
       ],
       "responses": [
        {
-        "$id": "95",
+        "$id": "97",
         "statusCodes": [
          200
         ],
         "bodyType": {
-         "$ref": "2"
+         "$ref": "22"
         },
         "headers": [],
         "isErrorResponse": false,
@@ -912,11 +984,11 @@
      },
      "parameters": [
       {
-       "$id": "96",
+       "$id": "98",
        "name": "accept",
        "nameInRequest": "accept",
        "type": {
-        "$ref": "93"
+        "$ref": "18"
        },
        "location": "Header",
        "isApiVersion": false,
@@ -930,9 +1002,9 @@
       }
      ],
      "response": {
-      "$id": "97",
+      "$id": "99",
       "type": {
-       "$ref": "2"
+       "$ref": "22"
       }
      },
      "isOverride": false,
@@ -941,33 +1013,23 @@
      "crossLanguageDefinitionId": "Type.Model.Inheritance.NestedDiscriminator.getMissingDiscriminator"
     },
     {
-     "$id": "98",
+     "$id": "100",
      "kind": "basic",
      "name": "getWrongDiscriminator",
      "accessibility": "public",
      "apiVersions": [],
      "operation": {
-      "$id": "99",
+      "$id": "101",
       "name": "getWrongDiscriminator",
       "resourceName": "NestedDiscriminator",
       "accessibility": "public",
       "parameters": [
        {
-        "$id": "100",
+        "$id": "102",
         "name": "accept",
         "nameInRequest": "Accept",
         "type": {
-         "$id": "101",
-         "kind": "constant",
-         "valueType": {
-          "$id": "102",
-          "kind": "string",
-          "name": "string",
-          "crossLanguageDefinitionId": "TypeSpec.string",
-          "decorators": []
-         },
-         "value": "application/json",
-         "decorators": []
+         "$ref": "20"
         },
         "location": "Header",
         "isApiVersion": false,
@@ -987,7 +1049,7 @@
          200
         ],
         "bodyType": {
-         "$ref": "2"
+         "$ref": "22"
         },
         "headers": [],
         "isErrorResponse": false,
@@ -1011,7 +1073,7 @@
        "name": "accept",
        "nameInRequest": "accept",
        "type": {
-        "$ref": "101"
+        "$ref": "20"
        },
        "location": "Header",
        "isApiVersion": false,
@@ -1027,7 +1089,7 @@
      "response": {
       "$id": "105",
       "type": {
-       "$ref": "2"
+       "$ref": "22"
       }
      },
      "isOverride": false,

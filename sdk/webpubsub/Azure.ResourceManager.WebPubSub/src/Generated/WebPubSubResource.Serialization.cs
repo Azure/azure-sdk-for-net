@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.WebPubSub
 {
     public partial class WebPubSubResource : IJsonModel<WebPubSubData>
     {
+        private static WebPubSubData s_dataDeserializationInstance;
+        private static WebPubSubData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<WebPubSubData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<WebPubSubData>)Data).Write(writer, options);
 
-        WebPubSubData IJsonModel<WebPubSubData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<WebPubSubData>)Data).Create(ref reader, options);
+        WebPubSubData IJsonModel<WebPubSubData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<WebPubSubData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<WebPubSubData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<WebPubSubData>(Data, options, AzureResourceManagerWebPubSubContext.Default);
 
         WebPubSubData IPersistableModel<WebPubSubData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<WebPubSubData>(data, options, AzureResourceManagerWebPubSubContext.Default);
 
-        string IPersistableModel<WebPubSubData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<WebPubSubData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<WebPubSubData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<WebPubSubData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

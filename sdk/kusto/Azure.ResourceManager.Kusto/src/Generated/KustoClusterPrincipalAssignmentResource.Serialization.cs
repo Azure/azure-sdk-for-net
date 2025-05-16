@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Kusto
 {
     public partial class KustoClusterPrincipalAssignmentResource : IJsonModel<KustoClusterPrincipalAssignmentData>
     {
+        private static KustoClusterPrincipalAssignmentData s_dataDeserializationInstance;
+        private static KustoClusterPrincipalAssignmentData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<KustoClusterPrincipalAssignmentData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<KustoClusterPrincipalAssignmentData>)Data).Write(writer, options);
 
-        KustoClusterPrincipalAssignmentData IJsonModel<KustoClusterPrincipalAssignmentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<KustoClusterPrincipalAssignmentData>)Data).Create(ref reader, options);
+        KustoClusterPrincipalAssignmentData IJsonModel<KustoClusterPrincipalAssignmentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<KustoClusterPrincipalAssignmentData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<KustoClusterPrincipalAssignmentData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<KustoClusterPrincipalAssignmentData>(Data, options, AzureResourceManagerKustoContext.Default);
 
         KustoClusterPrincipalAssignmentData IPersistableModel<KustoClusterPrincipalAssignmentData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<KustoClusterPrincipalAssignmentData>(data, options, AzureResourceManagerKustoContext.Default);
 
-        string IPersistableModel<KustoClusterPrincipalAssignmentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<KustoClusterPrincipalAssignmentData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<KustoClusterPrincipalAssignmentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<KustoClusterPrincipalAssignmentData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

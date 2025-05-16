@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.DataBoxEdge
 {
     public partial class DiagnosticProactiveLogCollectionSettingResource : IJsonModel<DiagnosticProactiveLogCollectionSettingData>
     {
+        private static DiagnosticProactiveLogCollectionSettingData s_dataDeserializationInstance;
+        private static DiagnosticProactiveLogCollectionSettingData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<DiagnosticProactiveLogCollectionSettingData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DiagnosticProactiveLogCollectionSettingData>)Data).Write(writer, options);
 
-        DiagnosticProactiveLogCollectionSettingData IJsonModel<DiagnosticProactiveLogCollectionSettingData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DiagnosticProactiveLogCollectionSettingData>)Data).Create(ref reader, options);
+        DiagnosticProactiveLogCollectionSettingData IJsonModel<DiagnosticProactiveLogCollectionSettingData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DiagnosticProactiveLogCollectionSettingData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<DiagnosticProactiveLogCollectionSettingData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DiagnosticProactiveLogCollectionSettingData>(Data, options, AzureResourceManagerDataBoxEdgeContext.Default);
 
         DiagnosticProactiveLogCollectionSettingData IPersistableModel<DiagnosticProactiveLogCollectionSettingData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DiagnosticProactiveLogCollectionSettingData>(data, options, AzureResourceManagerDataBoxEdgeContext.Default);
 
-        string IPersistableModel<DiagnosticProactiveLogCollectionSettingData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DiagnosticProactiveLogCollectionSettingData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<DiagnosticProactiveLogCollectionSettingData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DiagnosticProactiveLogCollectionSettingData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

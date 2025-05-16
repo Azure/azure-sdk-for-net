@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Monitor
 {
     public partial class MonitorPrivateLinkResource : IJsonModel<MonitorPrivateLinkResourceData>
     {
+        private static MonitorPrivateLinkResourceData s_dataDeserializationInstance;
+        private static MonitorPrivateLinkResourceData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<MonitorPrivateLinkResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<MonitorPrivateLinkResourceData>)Data).Write(writer, options);
 
-        MonitorPrivateLinkResourceData IJsonModel<MonitorPrivateLinkResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MonitorPrivateLinkResourceData>)Data).Create(ref reader, options);
+        MonitorPrivateLinkResourceData IJsonModel<MonitorPrivateLinkResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MonitorPrivateLinkResourceData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<MonitorPrivateLinkResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<MonitorPrivateLinkResourceData>(Data, options, AzureResourceManagerMonitorContext.Default);
 
         MonitorPrivateLinkResourceData IPersistableModel<MonitorPrivateLinkResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MonitorPrivateLinkResourceData>(data, options, AzureResourceManagerMonitorContext.Default);
 
-        string IPersistableModel<MonitorPrivateLinkResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MonitorPrivateLinkResourceData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<MonitorPrivateLinkResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MonitorPrivateLinkResourceData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

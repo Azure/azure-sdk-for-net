@@ -35,5 +35,9 @@ namespace Azure.Communication.CallAutomation
             Transcription = transcription;
             Summarization = summarization;
         }
+        /// <summary> Define options of the transcription for the post recording processing. </summary>
+        public TranscriptionSettings Transcription { get; }
+        /// <summary> Define options of the summarization for the post recording processing. </summary>
+        public SummarizationSettings Summarization { get; set; }
     }
 }

@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.LoadTesting
 {
     public partial class LoadTestingResource : IJsonModel<LoadTestingResourceData>
     {
+        private static LoadTestingResourceData s_dataDeserializationInstance;
+        private static LoadTestingResourceData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<LoadTestingResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<LoadTestingResourceData>)Data).Write(writer, options);
 
-        LoadTestingResourceData IJsonModel<LoadTestingResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<LoadTestingResourceData>)Data).Create(ref reader, options);
+        LoadTestingResourceData IJsonModel<LoadTestingResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<LoadTestingResourceData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<LoadTestingResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<LoadTestingResourceData>(Data, options, AzureResourceManagerLoadTestingContext.Default);
 
         LoadTestingResourceData IPersistableModel<LoadTestingResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<LoadTestingResourceData>(data, options, AzureResourceManagerLoadTestingContext.Default);
 
-        string IPersistableModel<LoadTestingResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<LoadTestingResourceData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<LoadTestingResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<LoadTestingResourceData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

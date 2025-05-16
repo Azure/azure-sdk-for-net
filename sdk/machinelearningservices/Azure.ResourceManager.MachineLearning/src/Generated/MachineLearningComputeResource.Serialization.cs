@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.MachineLearning
 {
     public partial class MachineLearningComputeResource : IJsonModel<MachineLearningComputeData>
     {
+        private static MachineLearningComputeData s_dataDeserializationInstance;
+        private static MachineLearningComputeData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<MachineLearningComputeData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<MachineLearningComputeData>)Data).Write(writer, options);
 
-        MachineLearningComputeData IJsonModel<MachineLearningComputeData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MachineLearningComputeData>)Data).Create(ref reader, options);
+        MachineLearningComputeData IJsonModel<MachineLearningComputeData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MachineLearningComputeData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<MachineLearningComputeData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<MachineLearningComputeData>(Data, options, AzureResourceManagerMachineLearningContext.Default);
 
         MachineLearningComputeData IPersistableModel<MachineLearningComputeData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MachineLearningComputeData>(data, options, AzureResourceManagerMachineLearningContext.Default);
 
-        string IPersistableModel<MachineLearningComputeData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MachineLearningComputeData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<MachineLearningComputeData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MachineLearningComputeData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

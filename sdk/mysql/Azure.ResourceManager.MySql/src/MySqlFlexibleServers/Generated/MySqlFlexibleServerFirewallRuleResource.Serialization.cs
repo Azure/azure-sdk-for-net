@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
 {
     public partial class MySqlFlexibleServerFirewallRuleResource : IJsonModel<MySqlFlexibleServerFirewallRuleData>
     {
+        private static MySqlFlexibleServerFirewallRuleData s_dataDeserializationInstance;
+        private static MySqlFlexibleServerFirewallRuleData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<MySqlFlexibleServerFirewallRuleData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<MySqlFlexibleServerFirewallRuleData>)Data).Write(writer, options);
 
-        MySqlFlexibleServerFirewallRuleData IJsonModel<MySqlFlexibleServerFirewallRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MySqlFlexibleServerFirewallRuleData>)Data).Create(ref reader, options);
+        MySqlFlexibleServerFirewallRuleData IJsonModel<MySqlFlexibleServerFirewallRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MySqlFlexibleServerFirewallRuleData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<MySqlFlexibleServerFirewallRuleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<MySqlFlexibleServerFirewallRuleData>(Data, options, AzureResourceManagerMySqlContext.Default);
 
         MySqlFlexibleServerFirewallRuleData IPersistableModel<MySqlFlexibleServerFirewallRuleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MySqlFlexibleServerFirewallRuleData>(data, options, AzureResourceManagerMySqlContext.Default);
 
-        string IPersistableModel<MySqlFlexibleServerFirewallRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MySqlFlexibleServerFirewallRuleData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<MySqlFlexibleServerFirewallRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MySqlFlexibleServerFirewallRuleData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Billing
 {
     public partial class RecipientTransferDetailResource : IJsonModel<RecipientTransferDetailData>
     {
+        private static RecipientTransferDetailData s_dataDeserializationInstance;
+        private static RecipientTransferDetailData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<RecipientTransferDetailData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<RecipientTransferDetailData>)Data).Write(writer, options);
 
-        RecipientTransferDetailData IJsonModel<RecipientTransferDetailData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<RecipientTransferDetailData>)Data).Create(ref reader, options);
+        RecipientTransferDetailData IJsonModel<RecipientTransferDetailData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<RecipientTransferDetailData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<RecipientTransferDetailData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<RecipientTransferDetailData>(Data, options, AzureResourceManagerBillingContext.Default);
 
         RecipientTransferDetailData IPersistableModel<RecipientTransferDetailData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<RecipientTransferDetailData>(data, options, AzureResourceManagerBillingContext.Default);
 
-        string IPersistableModel<RecipientTransferDetailData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<RecipientTransferDetailData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<RecipientTransferDetailData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<RecipientTransferDetailData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

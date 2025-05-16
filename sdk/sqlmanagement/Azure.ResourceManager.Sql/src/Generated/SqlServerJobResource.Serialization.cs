@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Sql
 {
     public partial class SqlServerJobResource : IJsonModel<SqlServerJobData>
     {
+        private static SqlServerJobData s_dataDeserializationInstance;
+        private static SqlServerJobData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<SqlServerJobData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SqlServerJobData>)Data).Write(writer, options);
 
-        SqlServerJobData IJsonModel<SqlServerJobData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SqlServerJobData>)Data).Create(ref reader, options);
+        SqlServerJobData IJsonModel<SqlServerJobData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SqlServerJobData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<SqlServerJobData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SqlServerJobData>(Data, options, AzureResourceManagerSqlContext.Default);
 
         SqlServerJobData IPersistableModel<SqlServerJobData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SqlServerJobData>(data, options, AzureResourceManagerSqlContext.Default);
 
-        string IPersistableModel<SqlServerJobData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SqlServerJobData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<SqlServerJobData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SqlServerJobData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

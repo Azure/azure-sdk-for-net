@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Sql
 {
     public partial class ManagedInstanceKeyResource : IJsonModel<ManagedInstanceKeyData>
     {
+        private static ManagedInstanceKeyData s_dataDeserializationInstance;
+        private static ManagedInstanceKeyData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<ManagedInstanceKeyData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ManagedInstanceKeyData>)Data).Write(writer, options);
 
-        ManagedInstanceKeyData IJsonModel<ManagedInstanceKeyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ManagedInstanceKeyData>)Data).Create(ref reader, options);
+        ManagedInstanceKeyData IJsonModel<ManagedInstanceKeyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ManagedInstanceKeyData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<ManagedInstanceKeyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ManagedInstanceKeyData>(Data, options, AzureResourceManagerSqlContext.Default);
 
         ManagedInstanceKeyData IPersistableModel<ManagedInstanceKeyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ManagedInstanceKeyData>(data, options, AzureResourceManagerSqlContext.Default);
 
-        string IPersistableModel<ManagedInstanceKeyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ManagedInstanceKeyData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<ManagedInstanceKeyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ManagedInstanceKeyData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

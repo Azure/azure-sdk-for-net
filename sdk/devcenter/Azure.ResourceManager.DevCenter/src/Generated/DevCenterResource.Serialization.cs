@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.DevCenter
 {
     public partial class DevCenterResource : IJsonModel<DevCenterData>
     {
+        private static DevCenterData s_dataDeserializationInstance;
+        private static DevCenterData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<DevCenterData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DevCenterData>)Data).Write(writer, options);
 
-        DevCenterData IJsonModel<DevCenterData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DevCenterData>)Data).Create(ref reader, options);
+        DevCenterData IJsonModel<DevCenterData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DevCenterData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<DevCenterData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DevCenterData>(Data, options, AzureResourceManagerDevCenterContext.Default);
 
         DevCenterData IPersistableModel<DevCenterData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DevCenterData>(data, options, AzureResourceManagerDevCenterContext.Default);
 
-        string IPersistableModel<DevCenterData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DevCenterData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<DevCenterData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DevCenterData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

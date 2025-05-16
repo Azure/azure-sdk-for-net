@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Network
 {
     public partial class ReachabilityAnalysisRunResource : IJsonModel<ReachabilityAnalysisRunData>
     {
+        private static ReachabilityAnalysisRunData s_dataDeserializationInstance;
+        private static ReachabilityAnalysisRunData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<ReachabilityAnalysisRunData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ReachabilityAnalysisRunData>)Data).Write(writer, options);
 
-        ReachabilityAnalysisRunData IJsonModel<ReachabilityAnalysisRunData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ReachabilityAnalysisRunData>)Data).Create(ref reader, options);
+        ReachabilityAnalysisRunData IJsonModel<ReachabilityAnalysisRunData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ReachabilityAnalysisRunData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<ReachabilityAnalysisRunData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ReachabilityAnalysisRunData>(Data, options, AzureResourceManagerNetworkContext.Default);
 
         ReachabilityAnalysisRunData IPersistableModel<ReachabilityAnalysisRunData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ReachabilityAnalysisRunData>(data, options, AzureResourceManagerNetworkContext.Default);
 
-        string IPersistableModel<ReachabilityAnalysisRunData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ReachabilityAnalysisRunData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<ReachabilityAnalysisRunData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ReachabilityAnalysisRunData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }
