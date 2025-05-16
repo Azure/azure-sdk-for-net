@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core.Extensions;
 using Azure.ResourceManager;
 
@@ -23,6 +24,8 @@ namespace Microsoft.Extensions.Azure
         /// <summary>
         /// Registers an <see cref="ArmClient"/> instance with connection options loaded from the provided <paramref name="configuration"/> instance.
         /// </summary>
+        [RequiresUnreferencedCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
+        [RequiresDynamicCode("Requires code generation until we opt into EnableConfigurationBindingGenerator.")]
         public static IAzureClientBuilder<ArmClient, ArmClientOptions> AddArmClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
             where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration>
         {
