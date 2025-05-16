@@ -96,9 +96,9 @@ namespace Azure.Generator.Tests.Common
             /// <param name="name"></param>
             /// <param name="namespace"></param>
             /// <returns></returns>
-            public static InputLiteralType Any(object value, string? name = null, string? @namespace = null)
+            public static InputLiteralType Int32(int value, string? name = null, string? @namespace = null)
             {
-                return new InputLiteralType(name ?? string.Empty, @namespace ?? string.Empty, InputPrimitiveType.String, value);
+                return new InputLiteralType(name ?? string.Empty, @namespace ?? string.Empty, InputPrimitiveType.Int32, value);
             }
         }
 

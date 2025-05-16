@@ -3,6 +3,7 @@
  "name": "Parameters.CollectionFormat",
  "apiVersions": [],
  "enums": [],
+ "constants": [],
  "models": [],
  "clients": [
   {
