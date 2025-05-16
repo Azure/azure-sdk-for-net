@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.DataFactory
 {
     public partial class DataFactoryServiceCredentialResource : IJsonModel<DataFactoryServiceCredentialData>
     {
+        private static DataFactoryServiceCredentialData s_dataDeserializationInstance;
+        private static DataFactoryServiceCredentialData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<DataFactoryServiceCredentialData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DataFactoryServiceCredentialData>)Data).Write(writer, options);
 
-        DataFactoryServiceCredentialData IJsonModel<DataFactoryServiceCredentialData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DataFactoryServiceCredentialData>)Data).Create(ref reader, options);
+        DataFactoryServiceCredentialData IJsonModel<DataFactoryServiceCredentialData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DataFactoryServiceCredentialData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<DataFactoryServiceCredentialData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DataFactoryServiceCredentialData>(Data, options, AzureResourceManagerDataFactoryContext.Default);
 
         DataFactoryServiceCredentialData IPersistableModel<DataFactoryServiceCredentialData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DataFactoryServiceCredentialData>(data, options, AzureResourceManagerDataFactoryContext.Default);
 
-        string IPersistableModel<DataFactoryServiceCredentialData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DataFactoryServiceCredentialData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<DataFactoryServiceCredentialData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DataFactoryServiceCredentialData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

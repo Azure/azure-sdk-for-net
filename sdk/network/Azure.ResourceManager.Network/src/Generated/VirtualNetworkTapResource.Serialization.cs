@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Network
 {
     public partial class VirtualNetworkTapResource : IJsonModel<VirtualNetworkTapData>
     {
+        private static VirtualNetworkTapData s_dataDeserializationInstance;
+        private static VirtualNetworkTapData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<VirtualNetworkTapData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<VirtualNetworkTapData>)Data).Write(writer, options);
 
-        VirtualNetworkTapData IJsonModel<VirtualNetworkTapData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<VirtualNetworkTapData>)Data).Create(ref reader, options);
+        VirtualNetworkTapData IJsonModel<VirtualNetworkTapData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<VirtualNetworkTapData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<VirtualNetworkTapData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<VirtualNetworkTapData>(Data, options, AzureResourceManagerNetworkContext.Default);
 
         VirtualNetworkTapData IPersistableModel<VirtualNetworkTapData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<VirtualNetworkTapData>(data, options, AzureResourceManagerNetworkContext.Default);
 
-        string IPersistableModel<VirtualNetworkTapData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<VirtualNetworkTapData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<VirtualNetworkTapData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<VirtualNetworkTapData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

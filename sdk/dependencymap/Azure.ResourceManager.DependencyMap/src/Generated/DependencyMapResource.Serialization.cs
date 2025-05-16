@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.DependencyMap
 {
     public partial class DependencyMapResource : IJsonModel<DependencyMapData>
     {
+        private static DependencyMapData s_dataDeserializationInstance;
+        private static DependencyMapData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<DependencyMapData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DependencyMapData>)Data).Write(writer, options);
 
-        DependencyMapData IJsonModel<DependencyMapData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DependencyMapData>)Data).Create(ref reader, options);
+        DependencyMapData IJsonModel<DependencyMapData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DependencyMapData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<DependencyMapData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DependencyMapData>(Data, options, AzureResourceManagerDependencyMapContext.Default);
 
         DependencyMapData IPersistableModel<DependencyMapData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DependencyMapData>(data, options, AzureResourceManagerDependencyMapContext.Default);
 
-        string IPersistableModel<DependencyMapData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DependencyMapData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<DependencyMapData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DependencyMapData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

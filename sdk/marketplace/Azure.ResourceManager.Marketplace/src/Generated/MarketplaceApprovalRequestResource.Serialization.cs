@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Marketplace
 {
     public partial class MarketplaceApprovalRequestResource : IJsonModel<MarketplaceApprovalRequestData>
     {
+        private static MarketplaceApprovalRequestData s_dataDeserializationInstance;
+        private static MarketplaceApprovalRequestData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<MarketplaceApprovalRequestData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<MarketplaceApprovalRequestData>)Data).Write(writer, options);
 
-        MarketplaceApprovalRequestData IJsonModel<MarketplaceApprovalRequestData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MarketplaceApprovalRequestData>)Data).Create(ref reader, options);
+        MarketplaceApprovalRequestData IJsonModel<MarketplaceApprovalRequestData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MarketplaceApprovalRequestData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<MarketplaceApprovalRequestData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<MarketplaceApprovalRequestData>(Data, options, AzureResourceManagerMarketplaceContext.Default);
 
         MarketplaceApprovalRequestData IPersistableModel<MarketplaceApprovalRequestData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MarketplaceApprovalRequestData>(data, options, AzureResourceManagerMarketplaceContext.Default);
 
-        string IPersistableModel<MarketplaceApprovalRequestData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MarketplaceApprovalRequestData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<MarketplaceApprovalRequestData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MarketplaceApprovalRequestData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

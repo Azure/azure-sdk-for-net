@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.DesktopVirtualization
 {
     public partial class SessionHostResource : IJsonModel<SessionHostData>
     {
+        private static SessionHostData s_dataDeserializationInstance;
+        private static SessionHostData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<SessionHostData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SessionHostData>)Data).Write(writer, options);
 
-        SessionHostData IJsonModel<SessionHostData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SessionHostData>)Data).Create(ref reader, options);
+        SessionHostData IJsonModel<SessionHostData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SessionHostData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<SessionHostData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SessionHostData>(Data, options, AzureResourceManagerDesktopVirtualizationContext.Default);
 
         SessionHostData IPersistableModel<SessionHostData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SessionHostData>(data, options, AzureResourceManagerDesktopVirtualizationContext.Default);
 
-        string IPersistableModel<SessionHostData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SessionHostData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<SessionHostData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SessionHostData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

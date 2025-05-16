@@ -292,7 +292,7 @@ namespace MgmtTypeSpec
                 Response<FooData> response = Response.FromValue((FooData)result, result);
                 if (response.Value == null)
                 {
-                    throw new RequestFailedException(response.GetRawResponse());
+                    return new NoValueResponse<FooResource>(response.GetRawResponse());
                 }
                 return Response.FromValue(new FooResource(Client, response.Value), response.GetRawResponse());
             }
@@ -325,7 +325,7 @@ namespace MgmtTypeSpec
                 Response<FooData> response = Response.FromValue((FooData)result, result);
                 if (response.Value == null)
                 {
-                    throw new RequestFailedException(response.GetRawResponse());
+                    return new NoValueResponse<FooResource>(response.GetRawResponse());
                 }
                 return Response.FromValue(new FooResource(Client, response.Value), response.GetRawResponse());
             }

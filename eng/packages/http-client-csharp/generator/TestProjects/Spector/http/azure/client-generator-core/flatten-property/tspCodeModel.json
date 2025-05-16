@@ -3,9 +3,75 @@
  "name": "_Specs_.Azure.ClientGenerator.Core.FlattenProperty",
  "apiVersions": [],
  "enums": [],
- "models": [
+ "constants": [
   {
    "$id": "2",
+   "kind": "constant",
+   "name": "putFlattenModelContentType",
+   "namespace": "",
+   "usage": "None",
+   "valueType": {
+    "$id": "3",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "value": "application/json",
+   "decorators": []
+  },
+  {
+   "$id": "4",
+   "kind": "constant",
+   "name": "putFlattenModelContentType1",
+   "namespace": "",
+   "usage": "None",
+   "valueType": {
+    "$id": "5",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "value": "application/json",
+   "decorators": []
+  },
+  {
+   "$id": "6",
+   "kind": "constant",
+   "name": "putNestedFlattenModelContentType",
+   "namespace": "",
+   "usage": "None",
+   "valueType": {
+    "$id": "7",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "value": "application/json",
+   "decorators": []
+  },
+  {
+   "$id": "8",
+   "kind": "constant",
+   "name": "putNestedFlattenModelContentType1",
+   "namespace": "",
+   "usage": "None",
+   "valueType": {
+    "$id": "9",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "value": "application/json",
+   "decorators": []
+  }
+ ],
+ "models": [
+  {
+   "$id": "10",
    "kind": "model",
    "name": "FlattenModel",
    "namespace": "_Specs_.Azure.ClientGenerator.Core.FlattenProperty",
@@ -15,12 +81,12 @@
    "decorators": [],
    "properties": [
     {
-     "$id": "3",
+     "$id": "11",
      "kind": "property",
      "name": "name",
      "serializedName": "name",
      "type": {
-      "$id": "4",
+      "$id": "12",
       "kind": "string",
       "name": "string",
       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -33,20 +99,20 @@
      "decorators": [],
      "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.FlattenProperty.FlattenModel.name",
      "serializationOptions": {
-      "$id": "5",
+      "$id": "13",
       "json": {
-       "$id": "6",
+       "$id": "14",
        "name": "name"
       }
      }
     },
     {
-     "$id": "7",
+     "$id": "15",
      "kind": "property",
      "name": "properties",
      "serializedName": "properties",
      "type": {
-      "$id": "8",
+      "$id": "16",
       "kind": "model",
       "name": "ChildModel",
       "namespace": "_Specs_.Azure.ClientGenerator.Core.FlattenProperty",
@@ -56,12 +122,12 @@
       "decorators": [],
       "properties": [
        {
-        "$id": "9",
+        "$id": "17",
         "kind": "property",
         "name": "description",
         "serializedName": "description",
         "type": {
-         "$id": "10",
+         "$id": "18",
          "kind": "string",
          "name": "string",
          "crossLanguageDefinitionId": "TypeSpec.string",
@@ -74,20 +140,20 @@
         "decorators": [],
         "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.FlattenProperty.ChildModel.description",
         "serializationOptions": {
-         "$id": "11",
+         "$id": "19",
          "json": {
-          "$id": "12",
+          "$id": "20",
           "name": "description"
          }
         }
        },
        {
-        "$id": "13",
+        "$id": "21",
         "kind": "property",
         "name": "age",
         "serializedName": "age",
         "type": {
-         "$id": "14",
+         "$id": "22",
          "kind": "int32",
          "name": "int32",
          "crossLanguageDefinitionId": "TypeSpec.int32",
@@ -100,9 +166,9 @@
         "decorators": [],
         "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.FlattenProperty.ChildModel.age",
         "serializationOptions": {
-         "$id": "15",
+         "$id": "23",
          "json": {
-          "$id": "16",
+          "$id": "24",
           "name": "age"
          }
         }
@@ -116,9 +182,9 @@
      "decorators": [],
      "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.FlattenProperty.FlattenModel.properties",
      "serializationOptions": {
-      "$id": "17",
+      "$id": "25",
       "json": {
-       "$id": "18",
+       "$id": "26",
        "name": "properties"
       }
      }
@@ -126,10 +192,10 @@
    ]
   },
   {
-   "$ref": "8"
+   "$ref": "16"
   },
   {
-   "$id": "19",
+   "$id": "27",
    "kind": "model",
    "name": "NestedFlattenModel",
    "namespace": "_Specs_.Azure.ClientGenerator.Core.FlattenProperty",
@@ -139,12 +205,12 @@
    "decorators": [],
    "properties": [
     {
-     "$id": "20",
+     "$id": "28",
      "kind": "property",
      "name": "name",
      "serializedName": "name",
      "type": {
-      "$id": "21",
+      "$id": "29",
       "kind": "string",
       "name": "string",
       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -157,20 +223,20 @@
      "decorators": [],
      "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.FlattenProperty.NestedFlattenModel.name",
      "serializationOptions": {
-      "$id": "22",
+      "$id": "30",
       "json": {
-       "$id": "23",
+       "$id": "31",
        "name": "name"
       }
      }
     },
     {
-     "$id": "24",
+     "$id": "32",
      "kind": "property",
      "name": "properties",
      "serializedName": "properties",
      "type": {
-      "$id": "25",
+      "$id": "33",
       "kind": "model",
       "name": "ChildFlattenModel",
       "namespace": "_Specs_.Azure.ClientGenerator.Core.FlattenProperty",
@@ -180,12 +246,12 @@
       "decorators": [],
       "properties": [
        {
-        "$id": "26",
+        "$id": "34",
         "kind": "property",
         "name": "summary",
         "serializedName": "summary",
         "type": {
-         "$id": "27",
+         "$id": "35",
          "kind": "string",
          "name": "string",
          "crossLanguageDefinitionId": "TypeSpec.string",
@@ -198,20 +264,20 @@
         "decorators": [],
         "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.FlattenProperty.ChildFlattenModel.summary",
         "serializationOptions": {
-         "$id": "28",
+         "$id": "36",
          "json": {
-          "$id": "29",
+          "$id": "37",
           "name": "summary"
          }
         }
        },
        {
-        "$id": "30",
+        "$id": "38",
         "kind": "property",
         "name": "properties",
         "serializedName": "properties",
         "type": {
-         "$ref": "8"
+         "$ref": "16"
         },
         "optional": false,
         "readOnly": false,
@@ -220,9 +286,9 @@
         "decorators": [],
         "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.FlattenProperty.ChildFlattenModel.properties",
         "serializationOptions": {
-         "$id": "31",
+         "$id": "39",
          "json": {
-          "$id": "32",
+          "$id": "40",
           "name": "properties"
          }
         }
@@ -236,9 +302,9 @@
      "decorators": [],
      "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.FlattenProperty.NestedFlattenModel.properties",
      "serializationOptions": {
-      "$id": "33",
+      "$id": "41",
       "json": {
-       "$id": "34",
+       "$id": "42",
        "name": "properties"
       }
      }
@@ -246,46 +312,36 @@
    ]
   },
   {
-   "$ref": "25"
+   "$ref": "33"
   }
  ],
  "clients": [
   {
-   "$id": "35",
+   "$id": "43",
    "kind": "client",
    "name": "FlattenPropertyClient",
    "namespace": "_Specs_.Azure.ClientGenerator.Core.FlattenProperty",
    "doc": "Illustrates the model flatten cases.",
    "methods": [
     {
-     "$id": "36",
+     "$id": "44",
      "kind": "basic",
      "name": "putFlattenModel",
      "accessibility": "public",
      "apiVersions": [],
      "operation": {
-      "$id": "37",
+      "$id": "45",
       "name": "putFlattenModel",
       "resourceName": "FlattenProperty",
       "accessibility": "public",
       "parameters": [
        {
-        "$id": "38",
+        "$id": "46",
         "name": "contentType",
         "nameInRequest": "Content-Type",
         "doc": "Body parameter's content type. Known values are application/json",
         "type": {
-         "$id": "39",
-         "kind": "constant",
-         "valueType": {
-          "$id": "40",
-          "kind": "string",
-          "name": "string",
-          "crossLanguageDefinitionId": "TypeSpec.string",
-          "decorators": []
-         },
-         "value": "application/json",
-         "decorators": []
+         "$ref": "2"
         },
         "location": "Header",
         "isApiVersion": false,
@@ -298,21 +354,11 @@
         "skipUrlEncoding": false
        },
        {
-        "$id": "41",
+        "$id": "47",
         "name": "accept",
         "nameInRequest": "Accept",
         "type": {
-         "$id": "42",
-         "kind": "constant",
-         "valueType": {
-          "$id": "43",
-          "kind": "string",
-          "name": "string",
-          "crossLanguageDefinitionId": "TypeSpec.string",
-          "decorators": []
-         },
-         "value": "application/json",
-         "decorators": []
+         "$ref": "4"
         },
         "location": "Header",
         "isApiVersion": false,
@@ -325,11 +371,11 @@
         "skipUrlEncoding": false
        },
        {
-        "$id": "44",
+        "$id": "48",
         "name": "input",
         "nameInRequest": "input",
         "type": {
-         "$ref": "2"
+         "$ref": "10"
         },
         "location": "Body",
         "isApiVersion": false,
@@ -344,12 +390,12 @@
       ],
       "responses": [
        {
-        "$id": "45",
+        "$id": "49",
         "statusCodes": [
          200
         ],
         "bodyType": {
-         "$ref": "2"
+         "$ref": "10"
         },
         "headers": [],
         "isErrorResponse": false,
@@ -372,11 +418,11 @@
      },
      "parameters": [
       {
-       "$id": "46",
+       "$id": "50",
        "name": "input",
        "nameInRequest": "input",
        "type": {
-        "$ref": "2"
+        "$ref": "10"
        },
        "location": "Body",
        "isApiVersion": false,
@@ -389,12 +435,12 @@
        "skipUrlEncoding": false
       },
       {
-       "$id": "47",
+       "$id": "51",
        "name": "contentType",
        "nameInRequest": "contentType",
        "doc": "Body parameter's content type. Known values are application/json",
        "type": {
-        "$ref": "39"
+        "$ref": "2"
        },
        "location": "Header",
        "isApiVersion": false,
@@ -407,11 +453,11 @@
        "skipUrlEncoding": false
       },
       {
-       "$id": "48",
+       "$id": "52",
        "name": "accept",
        "nameInRequest": "accept",
        "type": {
-        "$ref": "42"
+        "$ref": "4"
        },
        "location": "Header",
        "isApiVersion": false,
@@ -425,9 +471,9 @@
       }
      ],
      "response": {
-      "$id": "49",
+      "$id": "53",
       "type": {
-       "$ref": "2"
+       "$ref": "10"
       }
      },
      "isOverride": false,
@@ -436,34 +482,24 @@
      "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.FlattenProperty.putFlattenModel"
     },
     {
-     "$id": "50",
+     "$id": "54",
      "kind": "basic",
      "name": "putNestedFlattenModel",
      "accessibility": "public",
      "apiVersions": [],
      "operation": {
-      "$id": "51",
+      "$id": "55",
       "name": "putNestedFlattenModel",
       "resourceName": "FlattenProperty",
       "accessibility": "public",
       "parameters": [
        {
-        "$id": "52",
+        "$id": "56",
         "name": "contentType",
         "nameInRequest": "Content-Type",
         "doc": "Body parameter's content type. Known values are application/json",
         "type": {
-         "$id": "53",
-         "kind": "constant",
-         "valueType": {
-          "$id": "54",
-          "kind": "string",
-          "name": "string",
-          "crossLanguageDefinitionId": "TypeSpec.string",
-          "decorators": []
-         },
-         "value": "application/json",
-         "decorators": []
+         "$ref": "6"
         },
         "location": "Header",
         "isApiVersion": false,
@@ -476,21 +512,11 @@
         "skipUrlEncoding": false
        },
        {
-        "$id": "55",
+        "$id": "57",
         "name": "accept",
         "nameInRequest": "Accept",
         "type": {
-         "$id": "56",
-         "kind": "constant",
-         "valueType": {
-          "$id": "57",
-          "kind": "string",
-          "name": "string",
-          "crossLanguageDefinitionId": "TypeSpec.string",
-          "decorators": []
-         },
-         "value": "application/json",
-         "decorators": []
+         "$ref": "8"
         },
         "location": "Header",
         "isApiVersion": false,
@@ -507,7 +533,7 @@
         "name": "input",
         "nameInRequest": "input",
         "type": {
-         "$ref": "19"
+         "$ref": "27"
         },
         "location": "Body",
         "isApiVersion": false,
@@ -527,7 +553,7 @@
          200
         ],
         "bodyType": {
-         "$ref": "19"
+         "$ref": "27"
         },
         "headers": [],
         "isErrorResponse": false,
@@ -554,7 +580,7 @@
        "name": "input",
        "nameInRequest": "input",
        "type": {
-        "$ref": "19"
+        "$ref": "27"
        },
        "location": "Body",
        "isApiVersion": false,
@@ -572,7 +598,7 @@
        "nameInRequest": "contentType",
        "doc": "Body parameter's content type. Known values are application/json",
        "type": {
-        "$ref": "53"
+        "$ref": "6"
        },
        "location": "Header",
        "isApiVersion": false,
@@ -589,7 +615,7 @@
        "name": "accept",
        "nameInRequest": "accept",
        "type": {
-        "$ref": "56"
+        "$ref": "8"
        },
        "location": "Header",
        "isApiVersion": false,
@@ -605,7 +631,7 @@
      "response": {
       "$id": "63",
       "type": {
-       "$ref": "19"
+       "$ref": "27"
       }
      },
      "isOverride": false,

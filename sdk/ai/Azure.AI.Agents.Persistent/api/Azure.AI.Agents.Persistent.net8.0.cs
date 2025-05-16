@@ -1034,10 +1034,6 @@ namespace Azure.AI.Agents.Persistent
         public PersistentAgentFilePurpose(string value) { throw null; }
         public static Azure.AI.Agents.Persistent.PersistentAgentFilePurpose Agents { get { throw null; } }
         public static Azure.AI.Agents.Persistent.PersistentAgentFilePurpose AgentsOutput { get { throw null; } }
-        public static Azure.AI.Agents.Persistent.PersistentAgentFilePurpose Batch { get { throw null; } }
-        public static Azure.AI.Agents.Persistent.PersistentAgentFilePurpose BatchOutput { get { throw null; } }
-        public static Azure.AI.Agents.Persistent.PersistentAgentFilePurpose FineTune { get { throw null; } }
-        public static Azure.AI.Agents.Persistent.PersistentAgentFilePurpose FineTuneResults { get { throw null; } }
         public static Azure.AI.Agents.Persistent.PersistentAgentFilePurpose Vision { get { throw null; } }
         public bool Equals(Azure.AI.Agents.Persistent.PersistentAgentFilePurpose other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
