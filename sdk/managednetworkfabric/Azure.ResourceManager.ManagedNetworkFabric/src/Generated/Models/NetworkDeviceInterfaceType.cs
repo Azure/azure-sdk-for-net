@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         private const string ManagementValue = "Management";
         private const string DataValue = "Data";
 
-        /// <summary> Management. </summary>
+        /// <summary> InterfaceType-Management. </summary>
         public static NetworkDeviceInterfaceType Management { get; } = new NetworkDeviceInterfaceType(ManagementValue);
-        /// <summary> Data. </summary>
+        /// <summary> InterfaceType-Data. </summary>
         public static NetworkDeviceInterfaceType Data { get; } = new NetworkDeviceInterfaceType(DataValue);
         /// <summary> Determines if two <see cref="NetworkDeviceInterfaceType"/> values are the same. </summary>
         public static bool operator ==(NetworkDeviceInterfaceType left, NetworkDeviceInterfaceType right) => left.Equals(right);

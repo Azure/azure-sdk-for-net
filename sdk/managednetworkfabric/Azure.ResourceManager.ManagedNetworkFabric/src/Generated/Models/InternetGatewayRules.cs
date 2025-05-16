@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
@@ -48,24 +47,31 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <summary> Initializes a new instance of <see cref="InternetGatewayRules"/>. </summary>
         /// <param name="action"> Specify action. </param>
-        /// <param name="addressList"> List of Addresses to be allowed or denied. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="addressList"/> is null. </exception>
-        public InternetGatewayRules(InternetGatewayRuleAction action, IEnumerable<string> addressList)
+        public InternetGatewayRules(InternetGatewayRuleAction action)
         {
-            Argument.AssertNotNull(addressList, nameof(addressList));
-
             Action = action;
-            AddressList = addressList.ToList();
+            AddressList = new ChangeTrackingList<string>();
+            DestinationAddressList = new ChangeTrackingList<string>();
+            SourceAddressList = new ChangeTrackingList<string>();
+            HeaderAddressList = new ChangeTrackingList<HeaderAddressProperties>();
         }
 
         /// <summary> Initializes a new instance of <see cref="InternetGatewayRules"/>. </summary>
         /// <param name="action"> Specify action. </param>
         /// <param name="addressList"> List of Addresses to be allowed or denied. </param>
+        /// <param name="condition"> Specify rule condition. </param>
+        /// <param name="destinationAddressList"> List of Addresses to be allowed or denied. </param>
+        /// <param name="sourceAddressList"> List of source IPv4 and IPv6 address to be allowed or denied. </param>
+        /// <param name="headerAddressList"> List of header Name and source addresses associated with the header. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal InternetGatewayRules(InternetGatewayRuleAction action, IList<string> addressList, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal InternetGatewayRules(InternetGatewayRuleAction action, IList<string> addressList, RuleCondition? condition, IList<string> destinationAddressList, IList<string> sourceAddressList, IList<HeaderAddressProperties> headerAddressList, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Action = action;
             AddressList = addressList;
+            Condition = condition;
+            DestinationAddressList = destinationAddressList;
+            SourceAddressList = sourceAddressList;
+            HeaderAddressList = headerAddressList;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -78,5 +84,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public InternetGatewayRuleAction Action { get; set; }
         /// <summary> List of Addresses to be allowed or denied. </summary>
         public IList<string> AddressList { get; }
+        /// <summary> Specify rule condition. </summary>
+        public RuleCondition? Condition { get; set; }
+        /// <summary> List of Addresses to be allowed or denied. </summary>
+        public IList<string> DestinationAddressList { get; }
+        /// <summary> List of source IPv4 and IPv6 address to be allowed or denied. </summary>
+        public IList<string> SourceAddressList { get; }
+        /// <summary> List of header Name and source addresses associated with the header. </summary>
+        public IList<HeaderAddressProperties> HeaderAddressList { get; }
     }
 }
