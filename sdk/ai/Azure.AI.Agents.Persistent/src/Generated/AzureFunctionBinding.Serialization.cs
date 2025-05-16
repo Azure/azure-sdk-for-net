@@ -37,7 +37,7 @@ namespace Azure.AI.Agents.Persistent
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type.ToString());
             writer.WritePropertyName("storage_queue"u8);
-            writer.WriteObjectValue(StorageQueue, options);
+            writer.WriteObjectValue<AzureFunctionStorageQueue>(StorageQueue, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

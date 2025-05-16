@@ -18,7 +18,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="toolCalls">
         /// A list of tool call details for this run step.
         /// Please note <see cref="RunStepToolCall"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="RunStepAzureAISearchToolCall"/>, <see cref="RunStepBingCustomSearchToolCall"/>, <see cref="RunStepBingGroundingToolCall"/>, <see cref="RunStepCodeInterpreterToolCall"/>, <see cref="RunStepMicrosoftFabricToolCall"/>, <see cref="RunStepFileSearchToolCall"/>, <see cref="RunStepFunctionToolCall"/>, <see cref="RunStepOpenAPIToolCall"/> and <see cref="RunStepSharepointToolCall"/>.
+        /// The available derived classes include <see cref="RunStepAzureAISearchToolCall"/>, <see cref="RunStepBingGroundingToolCall"/>, <see cref="RunStepCodeInterpreterToolCall"/>, <see cref="RunStepFileSearchToolCall"/>, <see cref="RunStepFunctionToolCall"/> and <see cref="RunStepOpenAPIToolCall"/>.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="toolCalls"/> is null. </exception>
         internal RunStepToolCallDetails(IEnumerable<RunStepToolCall> toolCalls)
@@ -35,7 +35,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="toolCalls">
         /// A list of tool call details for this run step.
         /// Please note <see cref="RunStepToolCall"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="RunStepAzureAISearchToolCall"/>, <see cref="RunStepBingCustomSearchToolCall"/>, <see cref="RunStepBingGroundingToolCall"/>, <see cref="RunStepCodeInterpreterToolCall"/>, <see cref="RunStepMicrosoftFabricToolCall"/>, <see cref="RunStepFileSearchToolCall"/>, <see cref="RunStepFunctionToolCall"/>, <see cref="RunStepOpenAPIToolCall"/> and <see cref="RunStepSharepointToolCall"/>.
+        /// The available derived classes include <see cref="RunStepAzureAISearchToolCall"/>, <see cref="RunStepBingGroundingToolCall"/>, <see cref="RunStepCodeInterpreterToolCall"/>, <see cref="RunStepFileSearchToolCall"/>, <see cref="RunStepFunctionToolCall"/> and <see cref="RunStepOpenAPIToolCall"/>.
         /// </param>
         internal RunStepToolCallDetails(RunStepType type, IDictionary<string, BinaryData> serializedAdditionalRawData, IReadOnlyList<RunStepToolCall> toolCalls) : base(type, serializedAdditionalRawData)
         {
@@ -50,7 +50,7 @@ namespace Azure.AI.Agents.Persistent
         /// <summary>
         /// A list of tool call details for this run step.
         /// Please note <see cref="RunStepToolCall"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="RunStepAzureAISearchToolCall"/>, <see cref="RunStepBingCustomSearchToolCall"/>, <see cref="RunStepBingGroundingToolCall"/>, <see cref="RunStepCodeInterpreterToolCall"/>, <see cref="RunStepMicrosoftFabricToolCall"/>, <see cref="RunStepFileSearchToolCall"/>, <see cref="RunStepFunctionToolCall"/>, <see cref="RunStepOpenAPIToolCall"/> and <see cref="RunStepSharepointToolCall"/>.
+        /// The available derived classes include <see cref="RunStepAzureAISearchToolCall"/>, <see cref="RunStepBingGroundingToolCall"/>, <see cref="RunStepCodeInterpreterToolCall"/>, <see cref="RunStepFileSearchToolCall"/>, <see cref="RunStepFunctionToolCall"/> and <see cref="RunStepOpenAPIToolCall"/>.
         /// </summary>
         public IReadOnlyList<RunStepToolCall> ToolCalls { get; }
     }

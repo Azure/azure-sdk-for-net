@@ -39,7 +39,7 @@ function Get-Mgmt-TspCommand {
     if ($generateStub) {
         $command += " --option @azure-typespec/http-client-csharp-mgmt.plugin-name=AzureStubPlugin"
     }
-    
+
     if ($apiVersion) {
         $command += " --option @azure-typespec/http-client-csharp-mgmt.api-version=$apiVersion"
     }
@@ -58,7 +58,7 @@ function Refresh-Mgmt-Build {
     }
 
     # we don't want to build the entire solution because the test projects might not build until after regeneration
-    Invoke "dotnet build $repoRoot/../../http-client-csharp-mgmt/generator/Azure.Generator.Mgmt/src"
+    Invoke "dotnet build $repoRoot/../../http-client-csharp-mgmt/generator/Azure.Generator.Management/src"
     # exit if the generation failed
     if ($LASTEXITCODE -ne 0) {
         exit $LASTEXITCODE
