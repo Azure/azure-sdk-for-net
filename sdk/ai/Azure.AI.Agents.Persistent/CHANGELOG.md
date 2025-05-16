@@ -1,5 +1,10 @@
 # Release History
 
+## 1.0.0 (2025-05-15)
+
+### Features Added
+- First stable release of Azure AI Agents Persistent client library.
+
 ## 1.0.0-beta.2 (2025-05-14)
 
 ### Breaking Changes

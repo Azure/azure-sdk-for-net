@@ -1,7 +1,7 @@
 #!/bin/env pwsh
 
 param(
-    [string]$FileName = 'azsdk',
+    [string]$FileName = 'Azure.Sdk.Tools.Cli',
     [string]$Package = 'azsdk',
     [string]$Version, # Default to latest
     [string]$InstallDirectory = (Join-Path $HOME ".azure-sdk-mcp" "azsdk"),
@@ -56,5 +56,5 @@ $exe = Install-Standalone-Tool `
     -Repository $Repository
 
 if ($Run) {
-    Start-Process -FilePath $exe -NoNewWindow -Wait
+    Start-Process -FilePath $exe -ArgumentList 'start' -NoNewWindow -Wait
 }
