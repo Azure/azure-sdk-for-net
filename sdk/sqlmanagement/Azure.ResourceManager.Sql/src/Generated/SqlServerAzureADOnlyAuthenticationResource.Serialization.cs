@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Sql
 {
     public partial class SqlServerAzureADOnlyAuthenticationResource : IJsonModel<SqlServerAzureADOnlyAuthenticationData>
     {
+        private static SqlServerAzureADOnlyAuthenticationData s_dataDeserializationInstance;
+        private static SqlServerAzureADOnlyAuthenticationData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<SqlServerAzureADOnlyAuthenticationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SqlServerAzureADOnlyAuthenticationData>)Data).Write(writer, options);
 
-        SqlServerAzureADOnlyAuthenticationData IJsonModel<SqlServerAzureADOnlyAuthenticationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SqlServerAzureADOnlyAuthenticationData>)Data).Create(ref reader, options);
+        SqlServerAzureADOnlyAuthenticationData IJsonModel<SqlServerAzureADOnlyAuthenticationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SqlServerAzureADOnlyAuthenticationData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<SqlServerAzureADOnlyAuthenticationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SqlServerAzureADOnlyAuthenticationData>(Data, options, AzureResourceManagerSqlContext.Default);
 
         SqlServerAzureADOnlyAuthenticationData IPersistableModel<SqlServerAzureADOnlyAuthenticationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SqlServerAzureADOnlyAuthenticationData>(data, options, AzureResourceManagerSqlContext.Default);
 
-        string IPersistableModel<SqlServerAzureADOnlyAuthenticationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SqlServerAzureADOnlyAuthenticationData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<SqlServerAzureADOnlyAuthenticationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SqlServerAzureADOnlyAuthenticationData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

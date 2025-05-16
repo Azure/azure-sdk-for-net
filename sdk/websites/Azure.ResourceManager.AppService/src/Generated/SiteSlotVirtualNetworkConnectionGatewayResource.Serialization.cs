@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.AppService
 {
     public partial class SiteSlotVirtualNetworkConnectionGatewayResource : IJsonModel<AppServiceVirtualNetworkGatewayData>
     {
+        private static AppServiceVirtualNetworkGatewayData s_dataDeserializationInstance;
+        private static AppServiceVirtualNetworkGatewayData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<AppServiceVirtualNetworkGatewayData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<AppServiceVirtualNetworkGatewayData>)Data).Write(writer, options);
 
-        AppServiceVirtualNetworkGatewayData IJsonModel<AppServiceVirtualNetworkGatewayData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AppServiceVirtualNetworkGatewayData>)Data).Create(ref reader, options);
+        AppServiceVirtualNetworkGatewayData IJsonModel<AppServiceVirtualNetworkGatewayData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AppServiceVirtualNetworkGatewayData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<AppServiceVirtualNetworkGatewayData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AppServiceVirtualNetworkGatewayData>(Data, options, AzureResourceManagerAppServiceContext.Default);
 
         AppServiceVirtualNetworkGatewayData IPersistableModel<AppServiceVirtualNetworkGatewayData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AppServiceVirtualNetworkGatewayData>(data, options, AzureResourceManagerAppServiceContext.Default);
 
-        string IPersistableModel<AppServiceVirtualNetworkGatewayData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AppServiceVirtualNetworkGatewayData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<AppServiceVirtualNetworkGatewayData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AppServiceVirtualNetworkGatewayData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }
