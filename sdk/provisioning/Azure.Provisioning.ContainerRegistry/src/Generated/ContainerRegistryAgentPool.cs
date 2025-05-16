@@ -136,7 +136,7 @@ public partial class ContainerRegistryAgentPool : ProvisionableResource
     /// </param>
     /// <param name="resourceVersion">Version of the ContainerRegistryAgentPool.</param>
     public ContainerRegistryAgentPool(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.ContainerRegistry/registries/agentPools", resourceVersion ?? "2023-07-01")
+        : base(bicepIdentifier, "Microsoft.ContainerRegistry/registries/agentPools", resourceVersion ?? "2025-04-01")
     {
     }
 
@@ -163,6 +163,11 @@ public partial class ContainerRegistryAgentPool : ProvisionableResource
     /// </summary>
     public static class ResourceVersions
     {
+        /// <summary>
+        /// 2025-04-01.
+        /// </summary>
+        public static readonly string V2025_04_01 = "2025-04-01";
+
         /// <summary>
         /// 2023-07-01.
         /// </summary>

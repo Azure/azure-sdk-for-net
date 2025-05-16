@@ -44,9 +44,4 @@ public enum PartnerNamespaceChannelProvisioningState
     /// IdleDueToMirroredPartnerTopicDeletion.
     /// </summary>
     IdleDueToMirroredPartnerTopicDeletion,
-
-    /// <summary>
-    /// IdleDueToMirroredPartnerDestinationDeletion.
-    /// </summary>
-    IdleDueToMirroredPartnerDestinationDeletion,
 }

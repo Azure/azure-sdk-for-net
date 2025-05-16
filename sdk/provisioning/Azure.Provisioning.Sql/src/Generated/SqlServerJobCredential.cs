@@ -86,7 +86,7 @@ public partial class SqlServerJobCredential : ProvisionableResource
     /// </param>
     /// <param name="resourceVersion">Version of the SqlServerJobCredential.</param>
     public SqlServerJobCredential(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.Sql/servers/jobAgents/credentials", resourceVersion ?? "2021-11-01")
+        : base(bicepIdentifier, "Microsoft.Sql/servers/jobAgents/credentials", resourceVersion ?? "2023-08-01")
     {
     }
 
@@ -108,6 +108,11 @@ public partial class SqlServerJobCredential : ProvisionableResource
     /// </summary>
     public static class ResourceVersions
     {
+        /// <summary>
+        /// 2023-08-01.
+        /// </summary>
+        public static readonly string V2023_08_01 = "2023-08-01";
+
         /// <summary>
         /// 2021-11-01.
         /// </summary>
