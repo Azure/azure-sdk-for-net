@@ -236,7 +236,7 @@ public partial class KubernetesClusterExtension : ProvisionableResource
     /// </param>
     /// <param name="resourceVersion">Version of the KubernetesClusterExtension.</param>
     public KubernetesClusterExtension(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.KubernetesConfiguration/extensions", resourceVersion ?? "2023-05-01")
+        : base(bicepIdentifier, "Microsoft.KubernetesConfiguration/extensions", resourceVersion ?? "2024-11-01")
     {
     }
 
@@ -272,6 +272,11 @@ public partial class KubernetesClusterExtension : ProvisionableResource
     /// </summary>
     public static class ResourceVersions
     {
+        /// <summary>
+        /// 2024-11-01.
+        /// </summary>
+        public static readonly string V2024_11_01 = "2024-11-01";
+
         /// <summary>
         /// 2023-05-01.
         /// </summary>
@@ -317,7 +322,7 @@ public partial class KubernetesClusterExtension : ProvisionableResource
     public RoleAssignment CreateRoleAssignment(KubernetesConfigurationBuiltInRole role, UserAssignedIdentity identity) =>
         new($"{BicepIdentifier}_{identity.BicepIdentifier}_{KubernetesConfigurationBuiltInRole.GetBuiltInRoleName(role)}")
         {
-            Name = BicepFunction.CreateGuid(Id, identity.PrincipalId, BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString())),
+            Name = BicepFunction.CreateGuid(Id, identity.Id, BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString())),
             Scope = new IdentifierExpression(BicepIdentifier),
             PrincipalType = RoleManagementPrincipalType.ServicePrincipal,
             RoleDefinitionId = BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString()),
