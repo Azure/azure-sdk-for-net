@@ -12,7 +12,10 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Defines the parameters for the origin group override configuration. </summary>
+    /// <summary>
+    /// Defines the parameters for the origin group override configuration.
+    /// Serialized Name: OriginGroupOverride
+    /// </summary>
     public partial class OriginGroupOverride
     {
         /// <summary>
@@ -53,8 +56,14 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="OriginGroupOverride"/>. </summary>
-        /// <param name="originGroup"> defines the OriginGroup that would override the DefaultOriginGroup on route. </param>
-        /// <param name="forwardingProtocol"> Protocol this rule will use when forwarding traffic to backends. </param>
+        /// <param name="originGroup">
+        /// defines the OriginGroup that would override the DefaultOriginGroup on route.
+        /// Serialized Name: OriginGroupOverride.originGroup
+        /// </param>
+        /// <param name="forwardingProtocol">
+        /// Protocol this rule will use when forwarding traffic to backends.
+        /// Serialized Name: OriginGroupOverride.forwardingProtocol
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal OriginGroupOverride(WritableSubResource originGroup, ForwardingProtocol? forwardingProtocol, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -63,7 +72,10 @@ namespace Azure.ResourceManager.Cdn.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> defines the OriginGroup that would override the DefaultOriginGroup on route. </summary>
+        /// <summary>
+        /// defines the OriginGroup that would override the DefaultOriginGroup on route.
+        /// Serialized Name: OriginGroupOverride.originGroup
+        /// </summary>
         internal WritableSubResource OriginGroup { get; set; }
         /// <summary> Gets or sets Id. </summary>
         public ResourceIdentifier OriginGroupId
@@ -77,7 +89,10 @@ namespace Azure.ResourceManager.Cdn.Models
             }
         }
 
-        /// <summary> Protocol this rule will use when forwarding traffic to backends. </summary>
+        /// <summary>
+        /// Protocol this rule will use when forwarding traffic to backends.
+        /// Serialized Name: OriginGroupOverride.forwardingProtocol
+        /// </summary>
         public ForwardingProtocol? ForwardingProtocol { get; set; }
     }
 }

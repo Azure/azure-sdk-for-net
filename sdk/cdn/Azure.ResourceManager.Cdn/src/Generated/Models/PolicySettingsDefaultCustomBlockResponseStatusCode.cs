@@ -11,7 +11,10 @@ using System.Globalization;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> If the action type is block, this field defines the default customer overridable http response status code. </summary>
+    /// <summary>
+    /// If the action type is block, this field defines the default customer overridable http response status code.
+    /// Serialized Name: PolicySettingsDefaultCustomBlockResponseStatusCode
+    /// </summary>
     public readonly partial struct PolicySettingsDefaultCustomBlockResponseStatusCode : IEquatable<PolicySettingsDefaultCustomBlockResponseStatusCode>
     {
         private readonly int _value;
@@ -28,15 +31,30 @@ namespace Azure.ResourceManager.Cdn.Models
         private const int FourHundredSixValue = 406;
         private const int FourHundredTwentyNineValue = 429;
 
-        /// <summary> 200. </summary>
+        /// <summary>
+        /// 200
+        /// Serialized Name: PolicySettingsDefaultCustomBlockResponseStatusCode.200
+        /// </summary>
         public static PolicySettingsDefaultCustomBlockResponseStatusCode TwoHundred { get; } = new PolicySettingsDefaultCustomBlockResponseStatusCode(TwoHundredValue);
-        /// <summary> 403. </summary>
+        /// <summary>
+        /// 403
+        /// Serialized Name: PolicySettingsDefaultCustomBlockResponseStatusCode.403
+        /// </summary>
         public static PolicySettingsDefaultCustomBlockResponseStatusCode FourHundredThree { get; } = new PolicySettingsDefaultCustomBlockResponseStatusCode(FourHundredThreeValue);
-        /// <summary> 405. </summary>
+        /// <summary>
+        /// 405
+        /// Serialized Name: PolicySettingsDefaultCustomBlockResponseStatusCode.405
+        /// </summary>
         public static PolicySettingsDefaultCustomBlockResponseStatusCode FourHundredFive { get; } = new PolicySettingsDefaultCustomBlockResponseStatusCode(FourHundredFiveValue);
-        /// <summary> 406. </summary>
+        /// <summary>
+        /// 406
+        /// Serialized Name: PolicySettingsDefaultCustomBlockResponseStatusCode.406
+        /// </summary>
         public static PolicySettingsDefaultCustomBlockResponseStatusCode FourHundredSix { get; } = new PolicySettingsDefaultCustomBlockResponseStatusCode(FourHundredSixValue);
-        /// <summary> 429. </summary>
+        /// <summary>
+        /// 429
+        /// Serialized Name: PolicySettingsDefaultCustomBlockResponseStatusCode.429
+        /// </summary>
         public static PolicySettingsDefaultCustomBlockResponseStatusCode FourHundredTwentyNine { get; } = new PolicySettingsDefaultCustomBlockResponseStatusCode(FourHundredTwentyNineValue);
 
         internal int ToSerialInt32() => _value;

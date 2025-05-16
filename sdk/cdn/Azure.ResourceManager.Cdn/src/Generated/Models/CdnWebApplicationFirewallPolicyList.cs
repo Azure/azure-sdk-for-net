@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Defines a list of WebApplicationFirewallPolicies for Azure CDN. It contains a list of WebApplicationFirewallPolicy objects and a URL link to get the next set of results. </summary>
+    /// <summary>
+    /// Defines a list of WebApplicationFirewallPolicies for Azure CDN. It contains a list of WebApplicationFirewallPolicy objects and a URL link to get the next set of results.
+    /// Serialized Name: CdnWebApplicationFirewallPolicyList
+    /// </summary>
     internal partial class CdnWebApplicationFirewallPolicyList
     {
         /// <summary>
@@ -52,8 +55,14 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="CdnWebApplicationFirewallPolicyList"/>. </summary>
-        /// <param name="value"> List of Azure CDN WebApplicationFirewallPolicies within a resource group. </param>
-        /// <param name="nextLink"> URL to get the next set of WebApplicationFirewallPolicy objects if there are any. </param>
+        /// <param name="value">
+        /// List of Azure CDN WebApplicationFirewallPolicies within a resource group.
+        /// Serialized Name: CdnWebApplicationFirewallPolicyList.value
+        /// </param>
+        /// <param name="nextLink">
+        /// URL to get the next set of WebApplicationFirewallPolicy objects if there are any.
+        /// Serialized Name: CdnWebApplicationFirewallPolicyList.nextLink
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal CdnWebApplicationFirewallPolicyList(IReadOnlyList<CdnWebApplicationFirewallPolicyData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -62,9 +71,15 @@ namespace Azure.ResourceManager.Cdn.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> List of Azure CDN WebApplicationFirewallPolicies within a resource group. </summary>
+        /// <summary>
+        /// List of Azure CDN WebApplicationFirewallPolicies within a resource group.
+        /// Serialized Name: CdnWebApplicationFirewallPolicyList.value
+        /// </summary>
         public IReadOnlyList<CdnWebApplicationFirewallPolicyData> Value { get; }
-        /// <summary> URL to get the next set of WebApplicationFirewallPolicy objects if there are any. </summary>
+        /// <summary>
+        /// URL to get the next set of WebApplicationFirewallPolicy objects if there are any.
+        /// Serialized Name: CdnWebApplicationFirewallPolicyList.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

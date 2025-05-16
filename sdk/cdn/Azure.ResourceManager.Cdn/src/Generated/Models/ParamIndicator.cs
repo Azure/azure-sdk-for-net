@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Indicates the purpose of the parameter. </summary>
+    /// <summary>
+    /// Indicates the purpose of the parameter
+    /// Serialized Name: ParamIndicator
+    /// </summary>
     public readonly partial struct ParamIndicator : IEquatable<ParamIndicator>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.Cdn.Models
         private const string KeyIdValue = "KeyId";
         private const string SignatureValue = "Signature";
 
-        /// <summary> Expires. </summary>
+        /// <summary>
+        /// Expires
+        /// Serialized Name: ParamIndicator.Expires
+        /// </summary>
         public static ParamIndicator Expires { get; } = new ParamIndicator(ExpiresValue);
-        /// <summary> KeyId. </summary>
+        /// <summary>
+        /// KeyId
+        /// Serialized Name: ParamIndicator.KeyId
+        /// </summary>
         public static ParamIndicator KeyId { get; } = new ParamIndicator(KeyIdValue);
-        /// <summary> Signature. </summary>
+        /// <summary>
+        /// Signature
+        /// Serialized Name: ParamIndicator.Signature
+        /// </summary>
         public static ParamIndicator Signature { get; } = new ParamIndicator(SignatureValue);
         /// <summary> Determines if two <see cref="ParamIndicator"/> values are the same. </summary>
         public static bool operator ==(ParamIndicator left, ParamIndicator right) => left.Equals(right);

@@ -40,11 +40,8 @@ namespace Azure.ResourceManager.Cdn.Models
             writer.WriteStringValue(KeyId);
             writer.WritePropertyName("secretSource"u8);
             JsonSerializer.Serialize(writer, SecretSource);
-            if (Optional.IsDefined(SecretVersion))
-            {
-                writer.WritePropertyName("secretVersion"u8);
-                writer.WriteStringValue(SecretVersion);
-            }
+            writer.WritePropertyName("secretVersion"u8);
+            writer.WriteStringValue(SecretVersion);
         }
 
         UriSigningKeyProperties IJsonModel<UriSigningKeyProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

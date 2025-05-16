@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> describes if the policy is in enabled state or disabled state. </summary>
+    /// <summary>
+    /// describes if the policy is in enabled state or disabled state
+    /// Serialized Name: PolicyEnabledState
+    /// </summary>
     public readonly partial struct PolicyEnabledState : IEquatable<PolicyEnabledState>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.Cdn.Models
         private const string DisabledValue = "Disabled";
         private const string EnabledValue = "Enabled";
 
-        /// <summary> Disabled. </summary>
+        /// <summary>
+        /// Disabled
+        /// Serialized Name: PolicyEnabledState.Disabled
+        /// </summary>
         public static PolicyEnabledState Disabled { get; } = new PolicyEnabledState(DisabledValue);
-        /// <summary> Enabled. </summary>
+        /// <summary>
+        /// Enabled
+        /// Serialized Name: PolicyEnabledState.Enabled
+        /// </summary>
         public static PolicyEnabledState Enabled { get; } = new PolicyEnabledState(EnabledValue);
         /// <summary> Determines if two <see cref="PolicyEnabledState"/> values are the same. </summary>
         public static bool operator ==(PolicyEnabledState left, PolicyEnabledState right) => left.Equals(right);

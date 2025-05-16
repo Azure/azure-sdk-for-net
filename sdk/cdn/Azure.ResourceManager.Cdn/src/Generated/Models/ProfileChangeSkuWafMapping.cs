@@ -12,7 +12,10 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Parameters required for profile upgrade. </summary>
+    /// <summary>
+    /// Parameters required for profile upgrade.
+    /// Serialized Name: ProfileChangeSkuWafMapping
+    /// </summary>
     public partial class ProfileChangeSkuWafMapping
     {
         /// <summary>
@@ -48,8 +51,14 @@ namespace Azure.ResourceManager.Cdn.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ProfileChangeSkuWafMapping"/>. </summary>
-        /// <param name="securityPolicyName"> The security policy name. </param>
-        /// <param name="changeToWafPolicy"> The new waf resource for the security policy to use. </param>
+        /// <param name="securityPolicyName">
+        /// The security policy name.
+        /// Serialized Name: ProfileChangeSkuWafMapping.securityPolicyName
+        /// </param>
+        /// <param name="changeToWafPolicy">
+        /// The new waf resource for the security policy to use.
+        /// Serialized Name: ProfileChangeSkuWafMapping.changeToWafPolicy
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="securityPolicyName"/> or <paramref name="changeToWafPolicy"/> is null. </exception>
         public ProfileChangeSkuWafMapping(string securityPolicyName, WritableSubResource changeToWafPolicy)
         {
@@ -61,8 +70,14 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ProfileChangeSkuWafMapping"/>. </summary>
-        /// <param name="securityPolicyName"> The security policy name. </param>
-        /// <param name="changeToWafPolicy"> The new waf resource for the security policy to use. </param>
+        /// <param name="securityPolicyName">
+        /// The security policy name.
+        /// Serialized Name: ProfileChangeSkuWafMapping.securityPolicyName
+        /// </param>
+        /// <param name="changeToWafPolicy">
+        /// The new waf resource for the security policy to use.
+        /// Serialized Name: ProfileChangeSkuWafMapping.changeToWafPolicy
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ProfileChangeSkuWafMapping(string securityPolicyName, WritableSubResource changeToWafPolicy, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -76,9 +91,15 @@ namespace Azure.ResourceManager.Cdn.Models
         {
         }
 
-        /// <summary> The security policy name. </summary>
+        /// <summary>
+        /// The security policy name.
+        /// Serialized Name: ProfileChangeSkuWafMapping.securityPolicyName
+        /// </summary>
         public string SecurityPolicyName { get; }
-        /// <summary> The new waf resource for the security policy to use. </summary>
+        /// <summary>
+        /// The new waf resource for the security policy to use.
+        /// Serialized Name: ProfileChangeSkuWafMapping.changeToWafPolicy
+        /// </summary>
         internal WritableSubResource ChangeToWafPolicy { get; }
         /// <summary> Gets or sets Id. </summary>
         public ResourceIdentifier ChangeToWafPolicyId

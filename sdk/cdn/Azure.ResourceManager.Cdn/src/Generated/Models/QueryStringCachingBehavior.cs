@@ -7,16 +7,31 @@
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Defines how CDN caches requests that include query strings. You can ignore any query strings when caching, bypass caching to prevent requests that contain query strings from being cached, or cache every request with a unique URL. </summary>
+    /// <summary>
+    /// Defines how CDN caches requests that include query strings. You can ignore any query strings when caching, bypass caching to prevent requests that contain query strings from being cached, or cache every request with a unique URL.
+    /// Serialized Name: QueryStringCachingBehavior
+    /// </summary>
     public enum QueryStringCachingBehavior
     {
-        /// <summary> NotSet. </summary>
+        /// <summary>
+        /// NotSet
+        /// Serialized Name: QueryStringCachingBehavior.NotSet
+        /// </summary>
         NotSet,
-        /// <summary> IgnoreQueryString. </summary>
+        /// <summary>
+        /// IgnoreQueryString
+        /// Serialized Name: QueryStringCachingBehavior.IgnoreQueryString
+        /// </summary>
         IgnoreQueryString,
-        /// <summary> BypassCaching. </summary>
+        /// <summary>
+        /// BypassCaching
+        /// Serialized Name: QueryStringCachingBehavior.BypassCaching
+        /// </summary>
         BypassCaching,
-        /// <summary> UseQueryString. </summary>
+        /// <summary>
+        /// UseQueryString
+        /// Serialized Name: QueryStringCachingBehavior.UseQueryString
+        /// </summary>
         UseQueryString
     }
 }

@@ -25,6 +25,7 @@ namespace Azure.ResourceManager.Cdn.Models
     /// StandardPlus_955BandWidth_ChinaCdn = The SKU name for a China CDN live-streaming profile using 95-5 peak bandwidth billing model.
     /// StandardPlus_AvgBandWidth_ChinaCdn = The SKU name for a China CDN live-streaming profile using monthly average peak bandwidth billing model.
     ///
+    /// Serialized Name: Sku
     /// </summary>
     public partial class CdnSku
     {
@@ -66,7 +67,10 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="CdnSku"/>. </summary>
-        /// <param name="name"> Name of the pricing tier. </param>
+        /// <param name="name">
+        /// Name of the pricing tier.
+        /// Serialized Name: Sku.name
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal CdnSku(CdnSkuName? name, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -74,7 +78,10 @@ namespace Azure.ResourceManager.Cdn.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Name of the pricing tier. </summary>
+        /// <summary>
+        /// Name of the pricing tier.
+        /// Serialized Name: Sku.name
+        /// </summary>
         public CdnSkuName? Name { get; set; }
     }
 }

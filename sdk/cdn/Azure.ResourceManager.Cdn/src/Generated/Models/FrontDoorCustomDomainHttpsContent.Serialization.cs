@@ -37,10 +37,20 @@ namespace Azure.ResourceManager.Cdn.Models
 
             writer.WritePropertyName("certificateType"u8);
             writer.WriteStringValue(CertificateType.ToString());
+            if (Optional.IsDefined(CipherSuiteSetType))
+            {
+                writer.WritePropertyName("cipherSuiteSetType"u8);
+                writer.WriteStringValue(CipherSuiteSetType.Value.ToString());
+            }
             if (Optional.IsDefined(MinimumTlsVersion))
             {
                 writer.WritePropertyName("minimumTlsVersion"u8);
                 writer.WriteStringValue(MinimumTlsVersion.Value.ToSerialString());
+            }
+            if (Optional.IsDefined(CustomizedCipherSuiteSet))
+            {
+                writer.WritePropertyName("customizedCipherSuiteSet"u8);
+                writer.WriteObjectValue(CustomizedCipherSuiteSet, options);
             }
             if (Optional.IsDefined(Secret))
             {
@@ -85,7 +95,9 @@ namespace Azure.ResourceManager.Cdn.Models
                 return null;
             }
             FrontDoorCertificateType certificateType = default;
+            AfdCipherSuiteSetType? cipherSuiteSetType = default;
             FrontDoorMinimumTlsVersion? minimumTlsVersion = default;
+            FrontDoorCustomDomainHttpsCustomizedCipherSuiteSet customizedCipherSuiteSet = default;
             WritableSubResource secret = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -96,6 +108,15 @@ namespace Azure.ResourceManager.Cdn.Models
                     certificateType = new FrontDoorCertificateType(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("cipherSuiteSetType"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    cipherSuiteSetType = new AfdCipherSuiteSetType(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("minimumTlsVersion"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -103,6 +124,15 @@ namespace Azure.ResourceManager.Cdn.Models
                         continue;
                     }
                     minimumTlsVersion = property.Value.GetString().ToFrontDoorMinimumTlsVersion();
+                    continue;
+                }
+                if (property.NameEquals("customizedCipherSuiteSet"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    customizedCipherSuiteSet = FrontDoorCustomDomainHttpsCustomizedCipherSuiteSet.DeserializeFrontDoorCustomDomainHttpsCustomizedCipherSuiteSet(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("secret"u8))
@@ -120,7 +150,13 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new FrontDoorCustomDomainHttpsContent(certificateType, minimumTlsVersion, secret, serializedAdditionalRawData);
+            return new FrontDoorCustomDomainHttpsContent(
+                certificateType,
+                cipherSuiteSetType,
+                minimumTlsVersion,
+                customizedCipherSuiteSet,
+                secret,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FrontDoorCustomDomainHttpsContent>.Write(ModelReaderWriterOptions options)

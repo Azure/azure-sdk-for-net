@@ -10,11 +10,17 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Defines the RequestHeader condition for the delivery rule. </summary>
+    /// <summary>
+    /// Defines the RequestHeader condition for the delivery rule.
+    /// Serialized Name: DeliveryRuleRequestHeaderCondition
+    /// </summary>
     public partial class DeliveryRuleRequestHeaderCondition : DeliveryRuleCondition
     {
         /// <summary> Initializes a new instance of <see cref="DeliveryRuleRequestHeaderCondition"/>. </summary>
-        /// <param name="properties"> Defines the parameters for the condition. </param>
+        /// <param name="properties">
+        /// Defines the parameters for the condition.
+        /// Serialized Name: DeliveryRuleRequestHeaderCondition.parameters
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public DeliveryRuleRequestHeaderCondition(RequestHeaderMatchCondition properties)
         {
@@ -25,9 +31,15 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DeliveryRuleRequestHeaderCondition"/>. </summary>
-        /// <param name="name"> The name of the condition for the delivery rule. </param>
+        /// <param name="name">
+        /// The name of the condition for the delivery rule.
+        /// Serialized Name: DeliveryRuleCondition.name
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="properties"> Defines the parameters for the condition. </param>
+        /// <param name="properties">
+        /// Defines the parameters for the condition.
+        /// Serialized Name: DeliveryRuleRequestHeaderCondition.parameters
+        /// </param>
         internal DeliveryRuleRequestHeaderCondition(MatchVariable name, IDictionary<string, BinaryData> serializedAdditionalRawData, RequestHeaderMatchCondition properties) : base(name, serializedAdditionalRawData)
         {
             Properties = properties;
@@ -39,7 +51,10 @@ namespace Azure.ResourceManager.Cdn.Models
         {
         }
 
-        /// <summary> Defines the parameters for the condition. </summary>
+        /// <summary>
+        /// Defines the parameters for the condition.
+        /// Serialized Name: DeliveryRuleRequestHeaderCondition.parameters
+        /// </summary>
         public RequestHeaderMatchCondition Properties { get; set; }
     }
 }

@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Describes operator to be matched. </summary>
+    /// <summary>
+    /// Describes operator to be matched
+    /// Serialized Name: HostNameOperator
+    /// </summary>
     public readonly partial struct HostNameOperator : IEquatable<HostNameOperator>
     {
         private readonly string _value;
@@ -33,25 +36,55 @@ namespace Azure.ResourceManager.Cdn.Models
         private const string GreaterThanOrEqualValue = "GreaterThanOrEqual";
         private const string RegExValue = "RegEx";
 
-        /// <summary> Any. </summary>
+        /// <summary>
+        /// Any
+        /// Serialized Name: HostNameOperator.Any
+        /// </summary>
         public static HostNameOperator Any { get; } = new HostNameOperator(AnyValue);
-        /// <summary> Equal. </summary>
+        /// <summary>
+        /// Equal
+        /// Serialized Name: HostNameOperator.Equal
+        /// </summary>
         public static HostNameOperator Equal { get; } = new HostNameOperator(EqualValue);
-        /// <summary> Contains. </summary>
+        /// <summary>
+        /// Contains
+        /// Serialized Name: HostNameOperator.Contains
+        /// </summary>
         public static HostNameOperator Contains { get; } = new HostNameOperator(ContainsValue);
-        /// <summary> BeginsWith. </summary>
+        /// <summary>
+        /// BeginsWith
+        /// Serialized Name: HostNameOperator.BeginsWith
+        /// </summary>
         public static HostNameOperator BeginsWith { get; } = new HostNameOperator(BeginsWithValue);
-        /// <summary> EndsWith. </summary>
+        /// <summary>
+        /// EndsWith
+        /// Serialized Name: HostNameOperator.EndsWith
+        /// </summary>
         public static HostNameOperator EndsWith { get; } = new HostNameOperator(EndsWithValue);
-        /// <summary> LessThan. </summary>
+        /// <summary>
+        /// LessThan
+        /// Serialized Name: HostNameOperator.LessThan
+        /// </summary>
         public static HostNameOperator LessThan { get; } = new HostNameOperator(LessThanValue);
-        /// <summary> LessThanOrEqual. </summary>
+        /// <summary>
+        /// LessThanOrEqual
+        /// Serialized Name: HostNameOperator.LessThanOrEqual
+        /// </summary>
         public static HostNameOperator LessThanOrEqual { get; } = new HostNameOperator(LessThanOrEqualValue);
-        /// <summary> GreaterThan. </summary>
+        /// <summary>
+        /// GreaterThan
+        /// Serialized Name: HostNameOperator.GreaterThan
+        /// </summary>
         public static HostNameOperator GreaterThan { get; } = new HostNameOperator(GreaterThanValue);
-        /// <summary> GreaterThanOrEqual. </summary>
+        /// <summary>
+        /// GreaterThanOrEqual
+        /// Serialized Name: HostNameOperator.GreaterThanOrEqual
+        /// </summary>
         public static HostNameOperator GreaterThanOrEqual { get; } = new HostNameOperator(GreaterThanOrEqualValue);
-        /// <summary> RegEx. </summary>
+        /// <summary>
+        /// RegEx
+        /// Serialized Name: HostNameOperator.RegEx
+        /// </summary>
         public static HostNameOperator RegEx { get; } = new HostNameOperator(RegExValue);
         /// <summary> Determines if two <see cref="HostNameOperator"/> values are the same. </summary>
         public static bool operator ==(HostNameOperator left, HostNameOperator right) => left.Equals(right);

@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Supported protocols for the customer's endpoint. </summary>
+    /// <summary>
+    /// Supported protocols for the customer's endpoint.
+    /// Serialized Name: AFDEndpointProtocols
+    /// </summary>
     public readonly partial struct FrontDoorEndpointProtocol : IEquatable<FrontDoorEndpointProtocol>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.Cdn.Models
         private const string HttpValue = "Http";
         private const string HttpsValue = "Https";
 
-        /// <summary> Http. </summary>
+        /// <summary>
+        /// Http
+        /// Serialized Name: AFDEndpointProtocols.Http
+        /// </summary>
         public static FrontDoorEndpointProtocol Http { get; } = new FrontDoorEndpointProtocol(HttpValue);
-        /// <summary> Https. </summary>
+        /// <summary>
+        /// Https
+        /// Serialized Name: AFDEndpointProtocols.Https
+        /// </summary>
         public static FrontDoorEndpointProtocol Https { get; } = new FrontDoorEndpointProtocol(HttpsValue);
         /// <summary> Determines if two <see cref="FrontDoorEndpointProtocol"/> values are the same. </summary>
         public static bool operator ==(FrontDoorEndpointProtocol left, FrontDoorEndpointProtocol right) => left.Equals(right);

@@ -12,11 +12,17 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Customer Certificate used for https. </summary>
+    /// <summary>
+    /// Customer Certificate used for https
+    /// Serialized Name: CustomerCertificateParameters
+    /// </summary>
     public partial class CustomerCertificateProperties : FrontDoorSecretProperties
     {
         /// <summary> Initializes a new instance of <see cref="CustomerCertificateProperties"/>. </summary>
-        /// <param name="secretSource"> Resource reference to the Azure Key Vault certificate. Expected to be in format of /subscriptions/{​​​​​​​​​subscriptionId}​​​​​​​​​/resourceGroups/{​​​​​​​​​resourceGroupName}​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​/providers/Microsoft.KeyVault/vaults/{vaultName}​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​/secrets/{certificateName}​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​. </param>
+        /// <param name="secretSource">
+        /// Resource reference to the Azure Key Vault certificate. Expected to be in format of /subscriptions/{​​​​​​​​​subscriptionId}​​​​​​​​​/resourceGroups/{​​​​​​​​​resourceGroupName}​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​/providers/Microsoft.KeyVault/vaults/{vaultName}​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​/secrets/{certificateName}​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​
+        /// Serialized Name: CustomerCertificateParameters.secretSource
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="secretSource"/> is null. </exception>
         public CustomerCertificateProperties(WritableSubResource secretSource)
         {
@@ -28,16 +34,43 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="CustomerCertificateProperties"/>. </summary>
-        /// <param name="secretType"> The type of the secret resource. </param>
+        /// <param name="secretType">
+        /// The type of the secret resource.
+        /// Serialized Name: SecretParameters.type
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="secretSource"> Resource reference to the Azure Key Vault certificate. Expected to be in format of /subscriptions/{​​​​​​​​​subscriptionId}​​​​​​​​​/resourceGroups/{​​​​​​​​​resourceGroupName}​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​/providers/Microsoft.KeyVault/vaults/{vaultName}​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​/secrets/{certificateName}​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​. </param>
-        /// <param name="secretVersion"> Version of the secret to be used. </param>
-        /// <param name="useLatestVersion"> Whether to use the latest version for the certificate. </param>
-        /// <param name="subject"> Subject name in the certificate. </param>
-        /// <param name="expiresOn"> Certificate expiration date. </param>
-        /// <param name="certificateAuthority"> Certificate issuing authority. </param>
-        /// <param name="subjectAlternativeNames"> The list of SANs. </param>
-        /// <param name="thumbprint"> Certificate thumbprint. </param>
+        /// <param name="secretSource">
+        /// Resource reference to the Azure Key Vault certificate. Expected to be in format of /subscriptions/{​​​​​​​​​subscriptionId}​​​​​​​​​/resourceGroups/{​​​​​​​​​resourceGroupName}​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​/providers/Microsoft.KeyVault/vaults/{vaultName}​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​/secrets/{certificateName}​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​
+        /// Serialized Name: CustomerCertificateParameters.secretSource
+        /// </param>
+        /// <param name="secretVersion">
+        /// Version of the secret to be used
+        /// Serialized Name: CustomerCertificateParameters.secretVersion
+        /// </param>
+        /// <param name="useLatestVersion">
+        /// Whether to use the latest version for the certificate
+        /// Serialized Name: CustomerCertificateParameters.useLatestVersion
+        /// </param>
+        /// <param name="subject">
+        /// Subject name in the certificate.
+        /// Serialized Name: CustomerCertificateParameters.subject
+        /// </param>
+        /// <param name="expiresOn">
+        /// Certificate expiration date.
+        /// Serialized Name: CustomerCertificateParameters.expirationDate
+        /// </param>
+        /// <param name="certificateAuthority">
+        /// Certificate issuing authority.
+        /// Serialized Name: CustomerCertificateParameters.certificateAuthority
+        /// </param>
+        /// <param name="subjectAlternativeNames">
+        /// The list of SANs.
+        /// Serialized Name: CustomerCertificateParameters.subjectAlternativeNames
+        /// </param>
+        /// <param name="thumbprint">
+        /// Certificate thumbprint.
+        /// Serialized Name: CustomerCertificateParameters.thumbprint
+        /// </param>
         internal CustomerCertificateProperties(SecretType secretType, IDictionary<string, BinaryData> serializedAdditionalRawData, WritableSubResource secretSource, string secretVersion, bool? useLatestVersion, string subject, DateTimeOffset? expiresOn, string certificateAuthority, IList<string> subjectAlternativeNames, string thumbprint) : base(secretType, serializedAdditionalRawData)
         {
             SecretSource = secretSource;
@@ -56,7 +89,10 @@ namespace Azure.ResourceManager.Cdn.Models
         {
         }
 
-        /// <summary> Resource reference to the Azure Key Vault certificate. Expected to be in format of /subscriptions/{​​​​​​​​​subscriptionId}​​​​​​​​​/resourceGroups/{​​​​​​​​​resourceGroupName}​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​/providers/Microsoft.KeyVault/vaults/{vaultName}​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​/secrets/{certificateName}​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​. </summary>
+        /// <summary>
+        /// Resource reference to the Azure Key Vault certificate. Expected to be in format of /subscriptions/{​​​​​​​​​subscriptionId}​​​​​​​​​/resourceGroups/{​​​​​​​​​resourceGroupName}​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​/providers/Microsoft.KeyVault/vaults/{vaultName}​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​/secrets/{certificateName}​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​
+        /// Serialized Name: CustomerCertificateParameters.secretSource
+        /// </summary>
         internal WritableSubResource SecretSource { get; set; }
         /// <summary> Gets or sets Id. </summary>
         public ResourceIdentifier SecretSourceId
@@ -70,19 +106,40 @@ namespace Azure.ResourceManager.Cdn.Models
             }
         }
 
-        /// <summary> Version of the secret to be used. </summary>
+        /// <summary>
+        /// Version of the secret to be used
+        /// Serialized Name: CustomerCertificateParameters.secretVersion
+        /// </summary>
         public string SecretVersion { get; set; }
-        /// <summary> Whether to use the latest version for the certificate. </summary>
+        /// <summary>
+        /// Whether to use the latest version for the certificate
+        /// Serialized Name: CustomerCertificateParameters.useLatestVersion
+        /// </summary>
         public bool? UseLatestVersion { get; set; }
-        /// <summary> Subject name in the certificate. </summary>
+        /// <summary>
+        /// Subject name in the certificate.
+        /// Serialized Name: CustomerCertificateParameters.subject
+        /// </summary>
         public string Subject { get; }
-        /// <summary> Certificate expiration date. </summary>
+        /// <summary>
+        /// Certificate expiration date.
+        /// Serialized Name: CustomerCertificateParameters.expirationDate
+        /// </summary>
         public DateTimeOffset? ExpiresOn { get; }
-        /// <summary> Certificate issuing authority. </summary>
+        /// <summary>
+        /// Certificate issuing authority.
+        /// Serialized Name: CustomerCertificateParameters.certificateAuthority
+        /// </summary>
         public string CertificateAuthority { get; }
-        /// <summary> The list of SANs. </summary>
+        /// <summary>
+        /// The list of SANs.
+        /// Serialized Name: CustomerCertificateParameters.subjectAlternativeNames
+        /// </summary>
         public IList<string> SubjectAlternativeNames { get; }
-        /// <summary> Certificate thumbprint. </summary>
+        /// <summary>
+        /// Certificate thumbprint.
+        /// Serialized Name: CustomerCertificateParameters.thumbprint
+        /// </summary>
         public string Thumbprint { get; }
     }
 }

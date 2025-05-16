@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> The customDomain JSON object required for custom domain creation or update. </summary>
+    /// <summary>
+    /// The customDomain JSON object required for custom domain creation or update.
+    /// Serialized Name: CustomDomainParameters
+    /// </summary>
     public partial class CdnCustomDomainCreateOrUpdateContent
     {
         /// <summary>
@@ -51,7 +54,10 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="CdnCustomDomainCreateOrUpdateContent"/>. </summary>
-        /// <param name="hostName"> The host name of the custom domain. Must be a domain name. </param>
+        /// <param name="hostName">
+        /// The host name of the custom domain. Must be a domain name.
+        /// Serialized Name: CustomDomainParameters.properties.hostName
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal CdnCustomDomainCreateOrUpdateContent(string hostName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -59,7 +65,10 @@ namespace Azure.ResourceManager.Cdn.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The host name of the custom domain. Must be a domain name. </summary>
+        /// <summary>
+        /// The host name of the custom domain. Must be a domain name.
+        /// Serialized Name: CustomDomainParameters.properties.hostName
+        /// </summary>
         public string HostName { get; set; }
     }
 }

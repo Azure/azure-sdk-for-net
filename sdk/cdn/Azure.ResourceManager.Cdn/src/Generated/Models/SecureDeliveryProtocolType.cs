@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Defines the TLS extension protocol that is used for secure delivery. </summary>
+    /// <summary>
+    /// Defines the TLS extension protocol that is used for secure delivery.
+    /// Serialized Name: ProtocolType
+    /// </summary>
     public readonly partial struct SecureDeliveryProtocolType : IEquatable<SecureDeliveryProtocolType>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.Cdn.Models
         private const string ServerNameIndicationValue = "ServerNameIndication";
         private const string IPBasedValue = "IPBased";
 
-        /// <summary> ServerNameIndication. </summary>
+        /// <summary>
+        /// ServerNameIndication
+        /// Serialized Name: ProtocolType.ServerNameIndication
+        /// </summary>
         public static SecureDeliveryProtocolType ServerNameIndication { get; } = new SecureDeliveryProtocolType(ServerNameIndicationValue);
-        /// <summary> IPBased. </summary>
+        /// <summary>
+        /// IPBased
+        /// Serialized Name: ProtocolType.IPBased
+        /// </summary>
         public static SecureDeliveryProtocolType IPBased { get; } = new SecureDeliveryProtocolType(IPBasedValue);
         /// <summary> Determines if two <see cref="SecureDeliveryProtocolType"/> values are the same. </summary>
         public static bool operator ==(SecureDeliveryProtocolType left, SecureDeliveryProtocolType right) => left.Equals(right);

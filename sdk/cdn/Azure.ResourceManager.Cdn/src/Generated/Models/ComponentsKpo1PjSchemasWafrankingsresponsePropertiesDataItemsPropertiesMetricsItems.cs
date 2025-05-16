@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> The ComponentsKpo1PjSchemasWafrankingsresponsePropertiesDataItemsPropertiesMetricsItems. </summary>
+    /// <summary>
+    /// The ComponentsKpo1PjSchemasWafrankingsresponsePropertiesDataItemsPropertiesMetricsItems.
+    /// Serialized Name: ComponentsKpo1PjSchemasWafrankingsresponsePropertiesDataItemsPropertiesMetricsItems
+    /// </summary>
     public partial class ComponentsKpo1PjSchemasWafrankingsresponsePropertiesDataItemsPropertiesMetricsItems
     {
         /// <summary>
@@ -51,9 +54,9 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ComponentsKpo1PjSchemasWafrankingsresponsePropertiesDataItemsPropertiesMetricsItems"/>. </summary>
-        /// <param name="metric"></param>
-        /// <param name="value"></param>
-        /// <param name="percentage"></param>
+        /// <param name="metric"> Serialized Name: ComponentsKpo1PjSchemasWafrankingsresponsePropertiesDataItemsPropertiesMetricsItems.metric. </param>
+        /// <param name="value"> Serialized Name: ComponentsKpo1PjSchemasWafrankingsresponsePropertiesDataItemsPropertiesMetricsItems.value. </param>
+        /// <param name="percentage"> Serialized Name: ComponentsKpo1PjSchemasWafrankingsresponsePropertiesDataItemsPropertiesMetricsItems.percentage. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ComponentsKpo1PjSchemasWafrankingsresponsePropertiesDataItemsPropertiesMetricsItems(string metric, long? value, double? percentage, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -63,11 +66,11 @@ namespace Azure.ResourceManager.Cdn.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets the metric. </summary>
+        /// <summary> Serialized Name: ComponentsKpo1PjSchemasWafrankingsresponsePropertiesDataItemsPropertiesMetricsItems.metric. </summary>
         public string Metric { get; }
-        /// <summary> Gets the value. </summary>
+        /// <summary> Serialized Name: ComponentsKpo1PjSchemasWafrankingsresponsePropertiesDataItemsPropertiesMetricsItems.value. </summary>
         public long? Value { get; }
-        /// <summary> Gets the percentage. </summary>
+        /// <summary> Serialized Name: ComponentsKpo1PjSchemasWafrankingsresponsePropertiesDataItemsPropertiesMetricsItems.percentage. </summary>
         public double? Percentage { get; }
     }
 }

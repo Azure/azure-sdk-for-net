@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Describes operator to be matched. </summary>
+    /// <summary>
+    /// Describes operator to be matched
+    /// Serialized Name: Operator
+    /// </summary>
     public readonly partial struct MatchOperator : IEquatable<MatchOperator>
     {
         private readonly string _value;
@@ -35,29 +38,65 @@ namespace Azure.ResourceManager.Cdn.Models
         private const string EndsWithValue = "EndsWith";
         private const string RegExValue = "RegEx";
 
-        /// <summary> Any. </summary>
+        /// <summary>
+        /// Any
+        /// Serialized Name: Operator.Any
+        /// </summary>
         public static MatchOperator Any { get; } = new MatchOperator(AnyValue);
-        /// <summary> IPMatch. </summary>
+        /// <summary>
+        /// IPMatch
+        /// Serialized Name: Operator.IPMatch
+        /// </summary>
         public static MatchOperator IPMatch { get; } = new MatchOperator(IPMatchValue);
-        /// <summary> GeoMatch. </summary>
+        /// <summary>
+        /// GeoMatch
+        /// Serialized Name: Operator.GeoMatch
+        /// </summary>
         public static MatchOperator GeoMatch { get; } = new MatchOperator(GeoMatchValue);
-        /// <summary> Equal. </summary>
+        /// <summary>
+        /// Equal
+        /// Serialized Name: Operator.Equal
+        /// </summary>
         public static MatchOperator Equal { get; } = new MatchOperator(EqualValue);
-        /// <summary> Contains. </summary>
+        /// <summary>
+        /// Contains
+        /// Serialized Name: Operator.Contains
+        /// </summary>
         public static MatchOperator Contains { get; } = new MatchOperator(ContainsValue);
-        /// <summary> LessThan. </summary>
+        /// <summary>
+        /// LessThan
+        /// Serialized Name: Operator.LessThan
+        /// </summary>
         public static MatchOperator LessThan { get; } = new MatchOperator(LessThanValue);
-        /// <summary> GreaterThan. </summary>
+        /// <summary>
+        /// GreaterThan
+        /// Serialized Name: Operator.GreaterThan
+        /// </summary>
         public static MatchOperator GreaterThan { get; } = new MatchOperator(GreaterThanValue);
-        /// <summary> LessThanOrEqual. </summary>
+        /// <summary>
+        /// LessThanOrEqual
+        /// Serialized Name: Operator.LessThanOrEqual
+        /// </summary>
         public static MatchOperator LessThanOrEqual { get; } = new MatchOperator(LessThanOrEqualValue);
-        /// <summary> GreaterThanOrEqual. </summary>
+        /// <summary>
+        /// GreaterThanOrEqual
+        /// Serialized Name: Operator.GreaterThanOrEqual
+        /// </summary>
         public static MatchOperator GreaterThanOrEqual { get; } = new MatchOperator(GreaterThanOrEqualValue);
-        /// <summary> BeginsWith. </summary>
+        /// <summary>
+        /// BeginsWith
+        /// Serialized Name: Operator.BeginsWith
+        /// </summary>
         public static MatchOperator BeginsWith { get; } = new MatchOperator(BeginsWithValue);
-        /// <summary> EndsWith. </summary>
+        /// <summary>
+        /// EndsWith
+        /// Serialized Name: Operator.EndsWith
+        /// </summary>
         public static MatchOperator EndsWith { get; } = new MatchOperator(EndsWithValue);
-        /// <summary> RegEx. </summary>
+        /// <summary>
+        /// RegEx
+        /// Serialized Name: Operator.RegEx
+        /// </summary>
         public static MatchOperator RegEx { get; } = new MatchOperator(RegExValue);
         /// <summary> Determines if two <see cref="MatchOperator"/> values are the same. </summary>
         public static bool operator ==(MatchOperator left, MatchOperator right) => left.Equals(right);

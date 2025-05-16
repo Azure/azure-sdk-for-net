@@ -10,39 +10,54 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> The RequestMethodMatchConditionType. </summary>
+    /// <summary>
+    /// The RequestMethodMatchConditionType.
+    /// Serialized Name: RequestMethodMatchValue
+    /// </summary>
     public readonly partial struct RequestMethodMatchConditionType : IEquatable<RequestMethodMatchConditionType>
     {
-        private readonly string _value;
+        private const string GetValue = "GET";
+        private const string HeadValue = "HEAD";
+        private const string PostValue = "POST";
+        private const string PutValue = "PUT";
+        private const string DeleteValue = "DELETE";
+        private const string OptionsValue = "OPTIONS";
+        private const string TraceValue = "TRACE";
 
-        /// <summary> Initializes a new instance of <see cref="RequestMethodMatchConditionType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public RequestMethodMatchConditionType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
-        private const string RequestMethodConditionValue = "DeliveryRuleRequestMethodConditionParameters";
-
-        /// <summary> DeliveryRuleRequestMethodConditionParameters. </summary>
-        public static RequestMethodMatchConditionType RequestMethodCondition { get; } = new RequestMethodMatchConditionType(RequestMethodConditionValue);
-        /// <summary> Determines if two <see cref="RequestMethodMatchConditionType"/> values are the same. </summary>
-        public static bool operator ==(RequestMethodMatchConditionType left, RequestMethodMatchConditionType right) => left.Equals(right);
-        /// <summary> Determines if two <see cref="RequestMethodMatchConditionType"/> values are not the same. </summary>
-        public static bool operator !=(RequestMethodMatchConditionType left, RequestMethodMatchConditionType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="RequestMethodMatchConditionType"/>. </summary>
-        public static implicit operator RequestMethodMatchConditionType(string value) => new RequestMethodMatchConditionType(value);
-
-        /// <inheritdoc />
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is RequestMethodMatchConditionType other && Equals(other);
-        /// <inheritdoc />
-        public bool Equals(RequestMethodMatchConditionType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
-
-        /// <inheritdoc />
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
-        public override string ToString() => _value;
+        /// <summary>
+        /// GET
+        /// Serialized Name: RequestMethodMatchValue.GET
+        /// </summary>
+        public static RequestMethodMatchConditionType Get { get; } = new RequestMethodMatchConditionType(GetValue);
+        /// <summary>
+        /// HEAD
+        /// Serialized Name: RequestMethodMatchValue.HEAD
+        /// </summary>
+        public static RequestMethodMatchConditionType Head { get; } = new RequestMethodMatchConditionType(HeadValue);
+        /// <summary>
+        /// POST
+        /// Serialized Name: RequestMethodMatchValue.POST
+        /// </summary>
+        public static RequestMethodMatchConditionType Post { get; } = new RequestMethodMatchConditionType(PostValue);
+        /// <summary>
+        /// PUT
+        /// Serialized Name: RequestMethodMatchValue.PUT
+        /// </summary>
+        public static RequestMethodMatchConditionType Put { get; } = new RequestMethodMatchConditionType(PutValue);
+        /// <summary>
+        /// DELETE
+        /// Serialized Name: RequestMethodMatchValue.DELETE
+        /// </summary>
+        public static RequestMethodMatchConditionType Delete { get; } = new RequestMethodMatchConditionType(DeleteValue);
+        /// <summary>
+        /// OPTIONS
+        /// Serialized Name: RequestMethodMatchValue.OPTIONS
+        /// </summary>
+        public static RequestMethodMatchConditionType Options { get; } = new RequestMethodMatchConditionType(OptionsValue);
+        /// <summary>
+        /// TRACE
+        /// Serialized Name: RequestMethodMatchValue.TRACE
+        /// </summary>
+        public static RequestMethodMatchConditionType Trace { get; } = new RequestMethodMatchConditionType(TraceValue);
     }
 }

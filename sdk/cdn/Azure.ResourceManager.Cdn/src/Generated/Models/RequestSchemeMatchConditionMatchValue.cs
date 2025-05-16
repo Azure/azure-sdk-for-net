@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> The RequestSchemeMatchConditionMatchValue. </summary>
+    /// <summary>
+    /// The RequestSchemeMatchConditionMatchValue.
+    /// Serialized Name: RequestSchemeMatchValue
+    /// </summary>
     public readonly partial struct RequestSchemeMatchConditionMatchValue : IEquatable<RequestSchemeMatchConditionMatchValue>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.Cdn.Models
         private const string HttpValue = "HTTP";
         private const string HttpsValue = "HTTPS";
 
-        /// <summary> HTTP. </summary>
+        /// <summary>
+        /// HTTP
+        /// Serialized Name: RequestSchemeMatchValue.HTTP
+        /// </summary>
         public static RequestSchemeMatchConditionMatchValue Http { get; } = new RequestSchemeMatchConditionMatchValue(HttpValue);
-        /// <summary> HTTPS. </summary>
+        /// <summary>
+        /// HTTPS
+        /// Serialized Name: RequestSchemeMatchValue.HTTPS
+        /// </summary>
         public static RequestSchemeMatchConditionMatchValue Https { get; } = new RequestSchemeMatchConditionMatchValue(HttpsValue);
         /// <summary> Determines if two <see cref="RequestSchemeMatchConditionMatchValue"/> values are the same. </summary>
         public static bool operator ==(RequestSchemeMatchConditionMatchValue left, RequestSchemeMatchConditionMatchValue right) => left.Equals(right);

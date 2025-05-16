@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> An enum describing the unit of measurement. </summary>
+    /// <summary>
+    /// An enum describing the unit of measurement.
+    /// Serialized Name: UsageUnit
+    /// </summary>
     public readonly partial struct FrontDoorUsageUnit : IEquatable<FrontDoorUsageUnit>
     {
         private readonly string _value;
@@ -24,7 +27,10 @@ namespace Azure.ResourceManager.Cdn.Models
 
         private const string CountValue = "Count";
 
-        /// <summary> Count. </summary>
+        /// <summary>
+        /// Count
+        /// Serialized Name: UsageUnit.Count
+        /// </summary>
         public static FrontDoorUsageUnit Count { get; } = new FrontDoorUsageUnit(CountValue);
         /// <summary> Determines if two <see cref="FrontDoorUsageUnit"/> values are the same. </summary>
         public static bool operator ==(FrontDoorUsageUnit left, FrontDoorUsageUnit right) => left.Equals(right);

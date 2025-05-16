@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Caching settings for a caching-type route. To disable caching, do not provide a cacheConfiguration object. </summary>
+    /// <summary>
+    /// Caching settings for a caching-type route. To disable caching, do not provide a cacheConfiguration object.
+    /// Serialized Name: AfdRouteCacheConfiguration
+    /// </summary>
     public partial class FrontDoorRouteCacheConfiguration
     {
         /// <summary>
@@ -51,9 +54,18 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="FrontDoorRouteCacheConfiguration"/>. </summary>
-        /// <param name="queryStringCachingBehavior"> Defines how Frontdoor caches requests that include query strings. You can ignore any query strings when caching, ignore specific query strings, cache every request with a unique URL, or cache specific query strings. </param>
-        /// <param name="queryParameters"> query parameters to include or exclude (comma separated). </param>
-        /// <param name="compressionSettings"> compression settings. </param>
+        /// <param name="queryStringCachingBehavior">
+        /// Defines how Frontdoor caches requests that include query strings. You can ignore any query strings when caching, ignore specific query strings, cache every request with a unique URL, or cache specific query strings.
+        /// Serialized Name: AfdRouteCacheConfiguration.queryStringCachingBehavior
+        /// </param>
+        /// <param name="queryParameters">
+        /// query parameters to include or exclude (comma separated).
+        /// Serialized Name: AfdRouteCacheConfiguration.queryParameters
+        /// </param>
+        /// <param name="compressionSettings">
+        /// compression settings.
+        /// Serialized Name: AfdRouteCacheConfiguration.compressionSettings
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal FrontDoorRouteCacheConfiguration(FrontDoorQueryStringCachingBehavior? queryStringCachingBehavior, string queryParameters, RouteCacheCompressionSettings compressionSettings, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -63,11 +75,20 @@ namespace Azure.ResourceManager.Cdn.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Defines how Frontdoor caches requests that include query strings. You can ignore any query strings when caching, ignore specific query strings, cache every request with a unique URL, or cache specific query strings. </summary>
+        /// <summary>
+        /// Defines how Frontdoor caches requests that include query strings. You can ignore any query strings when caching, ignore specific query strings, cache every request with a unique URL, or cache specific query strings.
+        /// Serialized Name: AfdRouteCacheConfiguration.queryStringCachingBehavior
+        /// </summary>
         public FrontDoorQueryStringCachingBehavior? QueryStringCachingBehavior { get; set; }
-        /// <summary> query parameters to include or exclude (comma separated). </summary>
+        /// <summary>
+        /// query parameters to include or exclude (comma separated).
+        /// Serialized Name: AfdRouteCacheConfiguration.queryParameters
+        /// </summary>
         public string QueryParameters { get; set; }
-        /// <summary> compression settings. </summary>
+        /// <summary>
+        /// compression settings.
+        /// Serialized Name: AfdRouteCacheConfiguration.compressionSettings
+        /// </summary>
         public RouteCacheCompressionSettings CompressionSettings { get; set; }
     }
 }

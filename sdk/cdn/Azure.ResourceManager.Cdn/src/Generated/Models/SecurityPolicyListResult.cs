@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Result of the request to list security policies. It contains a list of security policy objects and a URL link to get the next set of results. </summary>
+    /// <summary>
+    /// Result of the request to list security policies. It contains a list of security policy objects and a URL link to get the next set of results.
+    /// Serialized Name: SecurityPolicyListResult
+    /// </summary>
     internal partial class SecurityPolicyListResult
     {
         /// <summary>
@@ -52,8 +55,14 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SecurityPolicyListResult"/>. </summary>
-        /// <param name="value"> List of Security policies within a profile. </param>
-        /// <param name="nextLink"> URL to get the next set of security policy objects if there is any. </param>
+        /// <param name="value">
+        /// List of Security policies within a profile
+        /// Serialized Name: SecurityPolicyListResult.value
+        /// </param>
+        /// <param name="nextLink">
+        /// URL to get the next set of security policy objects if there is any.
+        /// Serialized Name: SecurityPolicyListResult.nextLink
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SecurityPolicyListResult(IReadOnlyList<FrontDoorSecurityPolicyData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -62,9 +71,15 @@ namespace Azure.ResourceManager.Cdn.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> List of Security policies within a profile. </summary>
+        /// <summary>
+        /// List of Security policies within a profile
+        /// Serialized Name: SecurityPolicyListResult.value
+        /// </summary>
         public IReadOnlyList<FrontDoorSecurityPolicyData> Value { get; }
-        /// <summary> URL to get the next set of security policy objects if there is any. </summary>
+        /// <summary>
+        /// URL to get the next set of security policy objects if there is any.
+        /// Serialized Name: SecurityPolicyListResult.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

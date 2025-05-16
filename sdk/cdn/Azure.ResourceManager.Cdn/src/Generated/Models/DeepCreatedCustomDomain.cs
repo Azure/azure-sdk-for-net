@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Custom domains created on the CDN endpoint. </summary>
+    /// <summary>
+    /// Custom domains created on the CDN endpoint.
+    /// Serialized Name: DeepCreatedCustomDomain
+    /// </summary>
     public partial class DeepCreatedCustomDomain
     {
         /// <summary>
@@ -46,7 +49,10 @@ namespace Azure.ResourceManager.Cdn.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="DeepCreatedCustomDomain"/>. </summary>
-        /// <param name="name"> Custom domain name. </param>
+        /// <param name="name">
+        /// Custom domain name.
+        /// Serialized Name: DeepCreatedCustomDomain.name
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         internal DeepCreatedCustomDomain(string name)
         {
@@ -56,9 +62,18 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DeepCreatedCustomDomain"/>. </summary>
-        /// <param name="name"> Custom domain name. </param>
-        /// <param name="hostName"> The host name of the custom domain. Must be a domain name. </param>
-        /// <param name="validationData"> Special validation or data may be required when delivering CDN to some regions due to local compliance reasons. E.g. ICP license number of a custom domain is required to deliver content in China. </param>
+        /// <param name="name">
+        /// Custom domain name.
+        /// Serialized Name: DeepCreatedCustomDomain.name
+        /// </param>
+        /// <param name="hostName">
+        /// The host name of the custom domain. Must be a domain name.
+        /// Serialized Name: DeepCreatedCustomDomain.properties.hostName
+        /// </param>
+        /// <param name="validationData">
+        /// Special validation or data may be required when delivering CDN to some regions due to local compliance reasons. E.g. ICP license number of a custom domain is required to deliver content in China.
+        /// Serialized Name: DeepCreatedCustomDomain.properties.validationData
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal DeepCreatedCustomDomain(string name, string hostName, string validationData, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -73,11 +88,20 @@ namespace Azure.ResourceManager.Cdn.Models
         {
         }
 
-        /// <summary> Custom domain name. </summary>
+        /// <summary>
+        /// Custom domain name.
+        /// Serialized Name: DeepCreatedCustomDomain.name
+        /// </summary>
         public string Name { get; }
-        /// <summary> The host name of the custom domain. Must be a domain name. </summary>
+        /// <summary>
+        /// The host name of the custom domain. Must be a domain name.
+        /// Serialized Name: DeepCreatedCustomDomain.properties.hostName
+        /// </summary>
         public string HostName { get; }
-        /// <summary> Special validation or data may be required when delivering CDN to some regions due to local compliance reasons. E.g. ICP license number of a custom domain is required to deliver content in China. </summary>
+        /// <summary>
+        /// Special validation or data may be required when delivering CDN to some regions due to local compliance reasons. E.g. ICP license number of a custom domain is required to deliver content in China.
+        /// Serialized Name: DeepCreatedCustomDomain.properties.validationData
+        /// </summary>
         public string ValidationData { get; }
     }
 }

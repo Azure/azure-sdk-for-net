@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> The MetricsResponseSeriesItemUnit. </summary>
+    /// <summary>
+    /// The MetricsResponseSeriesItemUnit.
+    /// Serialized Name: MetricsSeriesUnit
+    /// </summary>
     public readonly partial struct MetricsResponseSeriesItemUnit : IEquatable<MetricsResponseSeriesItemUnit>
     {
         private readonly string _value;
@@ -27,13 +30,25 @@ namespace Azure.ResourceManager.Cdn.Models
         private const string BitsPerSecondValue = "bitsPerSecond";
         private const string MilliSecondsValue = "milliSeconds";
 
-        /// <summary> count. </summary>
+        /// <summary>
+        /// count
+        /// Serialized Name: MetricsSeriesUnit.count
+        /// </summary>
         public static MetricsResponseSeriesItemUnit Count { get; } = new MetricsResponseSeriesItemUnit(CountValue);
-        /// <summary> bytes. </summary>
+        /// <summary>
+        /// bytes
+        /// Serialized Name: MetricsSeriesUnit.bytes
+        /// </summary>
         public static MetricsResponseSeriesItemUnit Bytes { get; } = new MetricsResponseSeriesItemUnit(BytesValue);
-        /// <summary> bitsPerSecond. </summary>
+        /// <summary>
+        /// bitsPerSecond
+        /// Serialized Name: MetricsSeriesUnit.bitsPerSecond
+        /// </summary>
         public static MetricsResponseSeriesItemUnit BitsPerSecond { get; } = new MetricsResponseSeriesItemUnit(BitsPerSecondValue);
-        /// <summary> milliSeconds. </summary>
+        /// <summary>
+        /// milliSeconds
+        /// Serialized Name: MetricsSeriesUnit.milliSeconds
+        /// </summary>
         public static MetricsResponseSeriesItemUnit MilliSeconds { get; } = new MetricsResponseSeriesItemUnit(MilliSecondsValue);
         /// <summary> Determines if two <see cref="MetricsResponseSeriesItemUnit"/> values are the same. </summary>
         public static bool operator ==(MetricsResponseSeriesItemUnit left, MetricsResponseSeriesItemUnit right) => left.Equals(right);

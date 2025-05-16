@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> The FrontDoorDeploymentStatus. </summary>
+    /// <summary>
+    /// The FrontDoorDeploymentStatus.
+    /// Serialized Name: DeploymentStatus
+    /// </summary>
     public readonly partial struct FrontDoorDeploymentStatus : IEquatable<FrontDoorDeploymentStatus>
     {
         private readonly string _value;
@@ -27,13 +30,25 @@ namespace Azure.ResourceManager.Cdn.Models
         private const string SucceededValue = "Succeeded";
         private const string FailedValue = "Failed";
 
-        /// <summary> NotStarted. </summary>
+        /// <summary>
+        /// NotStarted
+        /// Serialized Name: DeploymentStatus.NotStarted
+        /// </summary>
         public static FrontDoorDeploymentStatus NotStarted { get; } = new FrontDoorDeploymentStatus(NotStartedValue);
-        /// <summary> InProgress. </summary>
+        /// <summary>
+        /// InProgress
+        /// Serialized Name: DeploymentStatus.InProgress
+        /// </summary>
         public static FrontDoorDeploymentStatus InProgress { get; } = new FrontDoorDeploymentStatus(InProgressValue);
-        /// <summary> Succeeded. </summary>
+        /// <summary>
+        /// Succeeded
+        /// Serialized Name: DeploymentStatus.Succeeded
+        /// </summary>
         public static FrontDoorDeploymentStatus Succeeded { get; } = new FrontDoorDeploymentStatus(SucceededValue);
-        /// <summary> Failed. </summary>
+        /// <summary>
+        /// Failed
+        /// Serialized Name: DeploymentStatus.Failed
+        /// </summary>
         public static FrontDoorDeploymentStatus Failed { get; } = new FrontDoorDeploymentStatus(FailedValue);
         /// <summary> Determines if two <see cref="FrontDoorDeploymentStatus"/> values are the same. </summary>
         public static bool operator ==(FrontDoorDeploymentStatus left, FrontDoorDeploymentStatus right) => left.Equals(right);

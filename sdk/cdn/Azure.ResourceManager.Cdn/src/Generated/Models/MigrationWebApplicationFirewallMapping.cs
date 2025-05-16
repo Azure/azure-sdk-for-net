@@ -12,7 +12,10 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Web Application Firewall Mapping. </summary>
+    /// <summary>
+    /// Web Application Firewall Mapping
+    /// Serialized Name: MigrationWebApplicationFirewallMapping
+    /// </summary>
     public partial class MigrationWebApplicationFirewallMapping
     {
         /// <summary>
@@ -53,8 +56,14 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="MigrationWebApplicationFirewallMapping"/>. </summary>
-        /// <param name="migratedFrom"> Migration From Waf policy. </param>
-        /// <param name="migratedTo"> Migration to Waf policy. </param>
+        /// <param name="migratedFrom">
+        /// Migration From Waf policy
+        /// Serialized Name: MigrationWebApplicationFirewallMapping.migratedFrom
+        /// </param>
+        /// <param name="migratedTo">
+        /// Migration to Waf policy
+        /// Serialized Name: MigrationWebApplicationFirewallMapping.migratedTo
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal MigrationWebApplicationFirewallMapping(WritableSubResource migratedFrom, WritableSubResource migratedTo, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -63,7 +72,10 @@ namespace Azure.ResourceManager.Cdn.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Migration From Waf policy. </summary>
+        /// <summary>
+        /// Migration From Waf policy
+        /// Serialized Name: MigrationWebApplicationFirewallMapping.migratedFrom
+        /// </summary>
         internal WritableSubResource MigratedFrom { get; set; }
         /// <summary> Gets or sets Id. </summary>
         public ResourceIdentifier MigratedFromId
@@ -77,7 +89,10 @@ namespace Azure.ResourceManager.Cdn.Models
             }
         }
 
-        /// <summary> Migration to Waf policy. </summary>
+        /// <summary>
+        /// Migration to Waf policy
+        /// Serialized Name: MigrationWebApplicationFirewallMapping.migratedTo
+        /// </summary>
         internal WritableSubResource MigratedTo { get; set; }
         /// <summary> Gets or sets Id. </summary>
         public ResourceIdentifier MigratedToId

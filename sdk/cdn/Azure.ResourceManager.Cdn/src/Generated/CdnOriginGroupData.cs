@@ -17,6 +17,7 @@ namespace Azure.ResourceManager.Cdn
     /// <summary>
     /// A class representing the CdnOriginGroup data model.
     /// Origin group comprising of origins is used for load balancing to origins when the content cannot be served from CDN.
+    /// Serialized Name: OriginGroup
     /// </summary>
     public partial class CdnOriginGroupData : ResourceData
     {
@@ -63,12 +64,30 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="healthProbeSettings"> Health probe settings to the origin that is used to determine the health of the origin. </param>
-        /// <param name="origins"> The source of the content being delivered via CDN within given origin group. </param>
-        /// <param name="trafficRestorationTimeToHealedOrNewEndpointsInMinutes"> Time in minutes to shift the traffic to the endpoint gradually when an unhealthy endpoint comes healthy or a new endpoint is added. Default is 10 mins. This property is currently not supported. </param>
-        /// <param name="responseBasedOriginErrorDetectionSettings"> The JSON object that contains the properties to determine origin health using real requests/responses. This property is currently not supported. </param>
-        /// <param name="resourceState"> Resource status of the origin group. </param>
-        /// <param name="provisioningState"> Provisioning status of the origin group. </param>
+        /// <param name="healthProbeSettings">
+        /// Health probe settings to the origin that is used to determine the health of the origin.
+        /// Serialized Name: OriginGroup.properties.healthProbeSettings
+        /// </param>
+        /// <param name="origins">
+        /// The source of the content being delivered via CDN within given origin group.
+        /// Serialized Name: OriginGroup.properties.origins
+        /// </param>
+        /// <param name="trafficRestorationTimeToHealedOrNewEndpointsInMinutes">
+        /// Time in minutes to shift the traffic to the endpoint gradually when an unhealthy endpoint comes healthy or a new endpoint is added. Default is 10 mins. This property is currently not supported.
+        /// Serialized Name: OriginGroup.properties.trafficRestorationTimeToHealedOrNewEndpointsInMinutes
+        /// </param>
+        /// <param name="responseBasedOriginErrorDetectionSettings">
+        /// The JSON object that contains the properties to determine origin health using real requests/responses. This property is currently not supported.
+        /// Serialized Name: OriginGroup.properties.responseBasedOriginErrorDetectionSettings
+        /// </param>
+        /// <param name="resourceState">
+        /// Resource status of the origin group.
+        /// Serialized Name: OriginGroup.properties.resourceState
+        /// </param>
+        /// <param name="provisioningState">
+        /// Provisioning status of the origin group.
+        /// Serialized Name: OriginGroup.properties.provisioningState
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal CdnOriginGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, HealthProbeSettings healthProbeSettings, IList<WritableSubResource> origins, int? trafficRestorationTimeToHealedOrNewEndpointsInMinutes, ResponseBasedOriginErrorDetectionSettings responseBasedOriginErrorDetectionSettings, OriginGroupResourceState? resourceState, OriginGroupProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -81,17 +100,35 @@ namespace Azure.ResourceManager.Cdn
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Health probe settings to the origin that is used to determine the health of the origin. </summary>
+        /// <summary>
+        /// Health probe settings to the origin that is used to determine the health of the origin.
+        /// Serialized Name: OriginGroup.properties.healthProbeSettings
+        /// </summary>
         public HealthProbeSettings HealthProbeSettings { get; set; }
-        /// <summary> The source of the content being delivered via CDN within given origin group. </summary>
+        /// <summary>
+        /// The source of the content being delivered via CDN within given origin group.
+        /// Serialized Name: OriginGroup.properties.origins
+        /// </summary>
         public IList<WritableSubResource> Origins { get; }
-        /// <summary> Time in minutes to shift the traffic to the endpoint gradually when an unhealthy endpoint comes healthy or a new endpoint is added. Default is 10 mins. This property is currently not supported. </summary>
+        /// <summary>
+        /// Time in minutes to shift the traffic to the endpoint gradually when an unhealthy endpoint comes healthy or a new endpoint is added. Default is 10 mins. This property is currently not supported.
+        /// Serialized Name: OriginGroup.properties.trafficRestorationTimeToHealedOrNewEndpointsInMinutes
+        /// </summary>
         public int? TrafficRestorationTimeToHealedOrNewEndpointsInMinutes { get; set; }
-        /// <summary> The JSON object that contains the properties to determine origin health using real requests/responses. This property is currently not supported. </summary>
+        /// <summary>
+        /// The JSON object that contains the properties to determine origin health using real requests/responses. This property is currently not supported.
+        /// Serialized Name: OriginGroup.properties.responseBasedOriginErrorDetectionSettings
+        /// </summary>
         public ResponseBasedOriginErrorDetectionSettings ResponseBasedOriginErrorDetectionSettings { get; set; }
-        /// <summary> Resource status of the origin group. </summary>
+        /// <summary>
+        /// Resource status of the origin group.
+        /// Serialized Name: OriginGroup.properties.resourceState
+        /// </summary>
         public OriginGroupResourceState? ResourceState { get; }
-        /// <summary> Provisioning status of the origin group. </summary>
+        /// <summary>
+        /// Provisioning status of the origin group.
+        /// Serialized Name: OriginGroup.properties.provisioningState
+        /// </summary>
         public OriginGroupProvisioningState? ProvisioningState { get; }
     }
 }

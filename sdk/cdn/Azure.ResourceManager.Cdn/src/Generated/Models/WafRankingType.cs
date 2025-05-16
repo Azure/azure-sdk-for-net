@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> The WafRankingType. </summary>
+    /// <summary>
+    /// The WafRankingType.
+    /// Serialized Name: WafRankingType
+    /// </summary>
     public readonly partial struct WafRankingType : IEquatable<WafRankingType>
     {
         private readonly string _value;
@@ -31,21 +34,45 @@ namespace Azure.ResourceManager.Cdn.Models
         private const string CountryOrRegionValue = "countryOrRegion";
         private const string RuleTypeValue = "ruleType";
 
-        /// <summary> action. </summary>
+        /// <summary>
+        /// action
+        /// Serialized Name: WafRankingType.action
+        /// </summary>
         public static WafRankingType Action { get; } = new WafRankingType(ActionValue);
-        /// <summary> ruleGroup. </summary>
+        /// <summary>
+        /// ruleGroup
+        /// Serialized Name: WafRankingType.ruleGroup
+        /// </summary>
         public static WafRankingType RuleGroup { get; } = new WafRankingType(RuleGroupValue);
-        /// <summary> ruleId. </summary>
+        /// <summary>
+        /// ruleId
+        /// Serialized Name: WafRankingType.ruleId
+        /// </summary>
         public static WafRankingType RuleId { get; } = new WafRankingType(RuleIdValue);
-        /// <summary> userAgent. </summary>
+        /// <summary>
+        /// userAgent
+        /// Serialized Name: WafRankingType.userAgent
+        /// </summary>
         public static WafRankingType UserAgent { get; } = new WafRankingType(UserAgentValue);
-        /// <summary> clientIp. </summary>
+        /// <summary>
+        /// clientIp
+        /// Serialized Name: WafRankingType.clientIp
+        /// </summary>
         public static WafRankingType ClientIP { get; } = new WafRankingType(ClientIPValue);
-        /// <summary> url. </summary>
+        /// <summary>
+        /// url
+        /// Serialized Name: WafRankingType.url
+        /// </summary>
         public static WafRankingType Uri { get; } = new WafRankingType(UriValue);
-        /// <summary> countryOrRegion. </summary>
+        /// <summary>
+        /// countryOrRegion
+        /// Serialized Name: WafRankingType.countryOrRegion
+        /// </summary>
         public static WafRankingType CountryOrRegion { get; } = new WafRankingType(CountryOrRegionValue);
-        /// <summary> ruleType. </summary>
+        /// <summary>
+        /// ruleType
+        /// Serialized Name: WafRankingType.ruleType
+        /// </summary>
         public static WafRankingType RuleType { get; } = new WafRankingType(RuleTypeValue);
         /// <summary> Determines if two <see cref="WafRankingType"/> values are the same. </summary>
         public static bool operator ==(WafRankingType left, WafRankingType right) => left.Equals(right);
