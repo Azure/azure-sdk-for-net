@@ -32,11 +32,11 @@ namespace Azure.ResourceManager.OracleDatabase
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2023-09-01";
+            _apiVersion = apiVersion ?? "2025-03-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal RequestUriBuilder CreateListByAutonomousDatabaseRequestUri(string subscriptionId, string resourceGroupName, string autonomousdatabasename)
+        internal RequestUriBuilder CreateListByParentRequestUri(string subscriptionId, string resourceGroupName, string autonomousdatabasename)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.OracleDatabase
             return uri;
         }
 
-        internal HttpMessage CreateListByAutonomousDatabaseRequest(string subscriptionId, string resourceGroupName, string autonomousdatabasename)
+        internal HttpMessage CreateListByParentRequest(string subscriptionId, string resourceGroupName, string autonomousdatabasename)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -79,13 +79,13 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="autonomousdatabasename"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="autonomousdatabasename"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<AutonomousDatabaseBackupListResult>> ListByAutonomousDatabaseAsync(string subscriptionId, string resourceGroupName, string autonomousdatabasename, CancellationToken cancellationToken = default)
+        public async Task<Response<AutonomousDatabaseBackupListResult>> ListByParentAsync(string subscriptionId, string resourceGroupName, string autonomousdatabasename, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(autonomousdatabasename, nameof(autonomousdatabasename));
 
-            using var message = CreateListByAutonomousDatabaseRequest(subscriptionId, resourceGroupName, autonomousdatabasename);
+            using var message = CreateListByParentRequest(subscriptionId, resourceGroupName, autonomousdatabasename);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -108,13 +108,13 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="autonomousdatabasename"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="autonomousdatabasename"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<AutonomousDatabaseBackupListResult> ListByAutonomousDatabase(string subscriptionId, string resourceGroupName, string autonomousdatabasename, CancellationToken cancellationToken = default)
+        public Response<AutonomousDatabaseBackupListResult> ListByParent(string subscriptionId, string resourceGroupName, string autonomousdatabasename, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(autonomousdatabasename, nameof(autonomousdatabasename));
 
-            using var message = CreateListByAutonomousDatabaseRequest(subscriptionId, resourceGroupName, autonomousdatabasename);
+            using var message = CreateListByParentRequest(subscriptionId, resourceGroupName, autonomousdatabasename);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -526,7 +526,7 @@ namespace Azure.ResourceManager.OracleDatabase
             }
         }
 
-        internal RequestUriBuilder CreateListByAutonomousDatabaseNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string autonomousdatabasename)
+        internal RequestUriBuilder CreateListByParentNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string autonomousdatabasename)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -534,7 +534,7 @@ namespace Azure.ResourceManager.OracleDatabase
             return uri;
         }
 
-        internal HttpMessage CreateListByAutonomousDatabaseNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string autonomousdatabasename)
+        internal HttpMessage CreateListByParentNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string autonomousdatabasename)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -556,14 +556,14 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="autonomousdatabasename"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="autonomousdatabasename"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<AutonomousDatabaseBackupListResult>> ListByAutonomousDatabaseNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string autonomousdatabasename, CancellationToken cancellationToken = default)
+        public async Task<Response<AutonomousDatabaseBackupListResult>> ListByParentNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string autonomousdatabasename, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(autonomousdatabasename, nameof(autonomousdatabasename));
 
-            using var message = CreateListByAutonomousDatabaseNextPageRequest(nextLink, subscriptionId, resourceGroupName, autonomousdatabasename);
+            using var message = CreateListByParentNextPageRequest(nextLink, subscriptionId, resourceGroupName, autonomousdatabasename);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -587,14 +587,14 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="autonomousdatabasename"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="autonomousdatabasename"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<AutonomousDatabaseBackupListResult> ListByAutonomousDatabaseNextPage(string nextLink, string subscriptionId, string resourceGroupName, string autonomousdatabasename, CancellationToken cancellationToken = default)
+        public Response<AutonomousDatabaseBackupListResult> ListByParentNextPage(string nextLink, string subscriptionId, string resourceGroupName, string autonomousdatabasename, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(autonomousdatabasename, nameof(autonomousdatabasename));
 
-            using var message = CreateListByAutonomousDatabaseNextPageRequest(nextLink, subscriptionId, resourceGroupName, autonomousdatabasename);
+            using var message = CreateListByParentNextPageRequest(nextLink, subscriptionId, resourceGroupName, autonomousdatabasename);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

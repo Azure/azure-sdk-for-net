@@ -39,6 +39,16 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 writer.WritePropertyName("storageSizeInGbs"u8);
                 writer.WriteNumberValue(StorageSizeInGbs.Value);
             }
+            if (Optional.IsCollectionDefined(FileSystemConfigurationDetails))
+            {
+                writer.WritePropertyName("fileSystemConfigurationDetails"u8);
+                writer.WriteStartArray();
+                foreach (var item in FileSystemConfigurationDetails)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
             if (Optional.IsDefined(DataStorageSizeInTbs))
             {
                 writer.WritePropertyName("dataStorageSizeInTbs"u8);
@@ -142,6 +152,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 return null;
             }
             int? storageSizeInGbs = default;
+            IList<FileSystemConfigurationDetails> fileSystemConfigurationDetails = default;
             double? dataStorageSizeInTbs = default;
             int? dbNodeStorageSizeInGbs = default;
             int? memorySizeInGbs = default;
@@ -163,6 +174,20 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                         continue;
                     }
                     storageSizeInGbs = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("fileSystemConfigurationDetails"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<FileSystemConfigurationDetails> array = new List<FileSystemConfigurationDetails>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(Models.FileSystemConfigurationDetails.DeserializeFileSystemConfigurationDetails(item, options));
+                    }
+                    fileSystemConfigurationDetails = array;
                     continue;
                 }
                 if (property.NameEquals("dataStorageSizeInTbs"u8))
@@ -276,6 +301,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             serializedAdditionalRawData = rawDataDictionary;
             return new CloudVmClusterUpdateProperties(
                 storageSizeInGbs,
+                fileSystemConfigurationDetails ?? new ChangeTrackingList<FileSystemConfigurationDetails>(),
                 dataStorageSizeInTbs,
                 dbNodeStorageSizeInGbs,
                 memorySizeInGbs,

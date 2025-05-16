@@ -39,6 +39,16 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 writer.WritePropertyName("peerDbId"u8);
                 writer.WriteStringValue(PeerDBId);
             }
+            if (Optional.IsDefined(PeerDBOcid))
+            {
+                writer.WritePropertyName("peerDbOcid"u8);
+                writer.WriteStringValue(PeerDBOcid);
+            }
+            if (Optional.IsDefined(PeerDBLocation))
+            {
+                writer.WritePropertyName("peerDbLocation"u8);
+                writer.WriteStringValue(PeerDBLocation);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -77,6 +87,8 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 return null;
             }
             string peerDBId = default;
+            string peerDBOcid = default;
+            string peerDBLocation = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -86,13 +98,23 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                     peerDBId = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("peerDbOcid"u8))
+                {
+                    peerDBOcid = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("peerDbLocation"u8))
+                {
+                    peerDBLocation = property.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new AutonomousDatabaseActionContent(peerDBId, serializedAdditionalRawData);
+            return new AutonomousDatabaseActionContent(peerDBId, peerDBOcid, peerDBLocation, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutonomousDatabaseActionContent>.Write(ModelReaderWriterOptions options)

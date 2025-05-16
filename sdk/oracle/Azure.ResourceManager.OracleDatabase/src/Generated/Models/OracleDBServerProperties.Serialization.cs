@@ -174,6 +174,11 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
+            if (options.Format != "W" && Optional.IsDefined(ComputeModel))
+            {
+                writer.WritePropertyName("computeModel"u8);
+                writer.WriteStringValue(ComputeModel.Value.ToString());
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -231,6 +236,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             string shape = default;
             DateTimeOffset? timeCreated = default;
             OracleDatabaseResourceProvisioningState? provisioningState = default;
+            AutonomousDatabaseComputeModel? computeModel = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -451,6 +457,15 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                     provisioningState = new OracleDatabaseResourceProvisioningState(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("computeModel"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    computeModel = new AutonomousDatabaseComputeModel(property.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -478,6 +493,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 shape,
                 timeCreated,
                 provisioningState,
+                computeModel,
                 serializedAdditionalRawData);
         }
 
