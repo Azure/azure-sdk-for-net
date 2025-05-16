@@ -712,7 +712,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
                 try
                 {
                     ShareProperties properties = await parentShareClient.GetPropertiesAsync(cancellationToken).ConfigureAwait(false);
-                    ShareProtocols expectedProtocol = options.ShareProtocol;
+                    ShareProtocols expectedProtocol = options?.ShareProtocol ?? ShareProtocols.Smb;
                     ShareProtocols actualProtocol = properties.Protocols ?? ShareProtocols.Smb;
 
                     if (actualProtocol != expectedProtocol)

@@ -58,6 +58,10 @@ namespace Azure.Storage.DataMovement.Files.Shares
         /// Optional. Specifies whether the Share uses NFS or SMB protocol.
         /// By default this value is set to SMB.
         /// Applies to copy, upload, and download transfers.
+        ///
+        /// Note: Only NFS -> NFS and SMB -> SMB transfers are currently supported.
+        /// For NFS Share-to-Share Copy and Download transfers, Hardlinks will be copied as regular files. Symbolic links are skipped.
+        /// For NFS Upload transfers, Symbolic links are not supported.
         /// </summary>
         public ShareProtocols ShareProtocol { get; set; } = ShareProtocols.Smb;
 
