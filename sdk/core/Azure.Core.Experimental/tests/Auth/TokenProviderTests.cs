@@ -132,12 +132,12 @@ public class TokenProviderTests
             _client = new HttpClient(mockHandler);
         }
 
-        public override AccessToken GetToken(GetTokenOptions properties, CancellationToken cancellationToken)
+        public override AuthenticationToken GetToken(GetTokenOptions properties, CancellationToken cancellationToken)
         {
             return GetAccessTokenInternal(false, properties, cancellationToken).GetAwaiter().GetResult();
         }
 
-        public override async ValueTask<AccessToken> GetTokenAsync(GetTokenOptions properties, CancellationToken cancellationToken)
+        public override async ValueTask<AuthenticationToken> GetTokenAsync(GetTokenOptions properties, CancellationToken cancellationToken)
         {
             return await GetAccessTokenInternal(true, properties, cancellationToken).ConfigureAwait(false);
         }
@@ -157,7 +157,7 @@ public class TokenProviderTests
             return null;
         }
 
-        internal async ValueTask<AccessToken> GetAccessTokenInternal(bool async, GetTokenOptions properties, CancellationToken cancellationToken)
+        internal async ValueTask<AuthenticationToken> GetAccessTokenInternal(bool async, GetTokenOptions properties, CancellationToken cancellationToken)
         {
             if (!properties.Properties.TryGetValue("tokenUrl", out var tokenUri) || tokenUri is not string tokenUriValue)
             {
@@ -199,11 +199,11 @@ public class TokenProviderTests
             DateTimeOffset expiresOn = now.AddSeconds(expiresIn);
             DateTimeOffset refreshOn = now.AddSeconds(expiresIn * 0.85);
 
-            return new AccessToken(accessToken, tokenType, expiresOn, refreshOn);
+            return new AuthenticationToken(accessToken, tokenType, expiresOn, refreshOn);
         }
     }
 
-    public class ClientCredentialToken : AccessToken
+    public class ClientCredentialToken : AuthenticationToken
     {
         private AuthenticationTokenProvider _provider;
         private GetTokenOptions properties;
