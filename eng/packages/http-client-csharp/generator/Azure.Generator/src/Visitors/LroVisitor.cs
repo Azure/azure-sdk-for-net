@@ -39,7 +39,7 @@ namespace Azure.Generator.Visitors
                     (not null, true) => new CSharpType(typeof(Operation), typeof(BinaryData)),
                     _ => new CSharpType(typeof(Operation<>), AzureClientGenerator.Instance.TypeFactory.CreateCSharpType(responseType!)!),
                 };
-                var isAsync = method.Signature.ReturnType!.GetGenericTypeDefinition().Equals(typeof(Task<>));
+                var isAsync = method.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Async);
 
                 // Update the method signature
                 var parameters = new List<ParameterProvider>(method.Signature.Parameters);
@@ -98,7 +98,7 @@ namespace Azure.Generator.Visitors
                 {
                     // Make the requestContext parameter optional as there is no corresponding convenience method to worry about ambiguous calls
                     // update any args to use the optional request context
-                    var newArgs = new List<ValueExpression>();
+                    var newArgs = new List<ValueExpression>(expression.Arguments.Count);
                     foreach (var arg in expression.Arguments)
                     {
                         if (arg is VariableExpression variableExpression && variableExpression.Type.Equals(typeof(RequestContext)))

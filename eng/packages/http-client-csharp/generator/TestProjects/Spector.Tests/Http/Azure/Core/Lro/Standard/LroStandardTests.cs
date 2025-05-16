@@ -11,7 +11,7 @@ namespace TestProjects.Spector.Tests.Http.Azure.Core.Lro.Standard
 {
     public class LroStandardTests : SpectorTestBase
     {
-        [Test]
+        [SpectorTest]
         public Task CreateOrReplace() => Test(async (host) =>
         {
             var operation = await new StandardClient(host, null).CreateOrReplaceAsync(
@@ -24,7 +24,7 @@ namespace TestProjects.Spector.Tests.Http.Azure.Core.Lro.Standard
             Assert.AreEqual("contributor", user.Role);
         });
 
-        [Test]
+        [SpectorTest]
         public Task Delete() => Test(async (host) =>
         {
             var operation = await new StandardClient(host, null).DeleteAsync(WaitUntil.Completed, "madge");
@@ -33,7 +33,7 @@ namespace TestProjects.Spector.Tests.Http.Azure.Core.Lro.Standard
             Assert.AreEqual(((int)HttpStatusCode.OK), operation.GetRawResponse().Status);
         });
 
-        [Test]
+        [SpectorTest]
         public Task Action() => Test(async (host) =>
         {
             var operation = await new StandardClient(host, null).ExportAsync(WaitUntil.Completed, "madge", "json");
