@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
 {
     public partial class NetworkTapRuleResource : IJsonModel<NetworkTapRuleData>
     {
+        private static NetworkTapRuleData s_dataDeserializationInstance;
+        private static NetworkTapRuleData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<NetworkTapRuleData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<NetworkTapRuleData>)Data).Write(writer, options);
 
-        NetworkTapRuleData IJsonModel<NetworkTapRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetworkTapRuleData>)Data).Create(ref reader, options);
+        NetworkTapRuleData IJsonModel<NetworkTapRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetworkTapRuleData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<NetworkTapRuleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<NetworkTapRuleData>(Data, options, AzureResourceManagerManagedNetworkFabricContext.Default);
 
         NetworkTapRuleData IPersistableModel<NetworkTapRuleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetworkTapRuleData>(data, options, AzureResourceManagerManagedNetworkFabricContext.Default);
 
-        string IPersistableModel<NetworkTapRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetworkTapRuleData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<NetworkTapRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetworkTapRuleData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

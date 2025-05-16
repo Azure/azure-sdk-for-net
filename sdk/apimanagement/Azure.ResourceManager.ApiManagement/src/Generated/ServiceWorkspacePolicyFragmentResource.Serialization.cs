@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.ApiManagement
 {
     public partial class ServiceWorkspacePolicyFragmentResource : IJsonModel<PolicyFragmentContractData>
     {
+        private static PolicyFragmentContractData s_dataDeserializationInstance;
+        private static PolicyFragmentContractData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<PolicyFragmentContractData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<PolicyFragmentContractData>)Data).Write(writer, options);
 
-        PolicyFragmentContractData IJsonModel<PolicyFragmentContractData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PolicyFragmentContractData>)Data).Create(ref reader, options);
+        PolicyFragmentContractData IJsonModel<PolicyFragmentContractData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PolicyFragmentContractData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<PolicyFragmentContractData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<PolicyFragmentContractData>(Data, options, AzureResourceManagerApiManagementContext.Default);
 
         PolicyFragmentContractData IPersistableModel<PolicyFragmentContractData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PolicyFragmentContractData>(data, options, AzureResourceManagerApiManagementContext.Default);
 
-        string IPersistableModel<PolicyFragmentContractData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PolicyFragmentContractData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<PolicyFragmentContractData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PolicyFragmentContractData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

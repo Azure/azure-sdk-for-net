@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.MySql
 {
     public partial class MySqlServerSecurityAlertPolicyResource : IJsonModel<MySqlServerSecurityAlertPolicyData>
     {
+        private static MySqlServerSecurityAlertPolicyData s_dataDeserializationInstance;
+        private static MySqlServerSecurityAlertPolicyData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<MySqlServerSecurityAlertPolicyData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<MySqlServerSecurityAlertPolicyData>)Data).Write(writer, options);
 
-        MySqlServerSecurityAlertPolicyData IJsonModel<MySqlServerSecurityAlertPolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MySqlServerSecurityAlertPolicyData>)Data).Create(ref reader, options);
+        MySqlServerSecurityAlertPolicyData IJsonModel<MySqlServerSecurityAlertPolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MySqlServerSecurityAlertPolicyData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<MySqlServerSecurityAlertPolicyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<MySqlServerSecurityAlertPolicyData>(Data, options, AzureResourceManagerMySqlContext.Default);
 
         MySqlServerSecurityAlertPolicyData IPersistableModel<MySqlServerSecurityAlertPolicyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MySqlServerSecurityAlertPolicyData>(data, options, AzureResourceManagerMySqlContext.Default);
 
-        string IPersistableModel<MySqlServerSecurityAlertPolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MySqlServerSecurityAlertPolicyData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<MySqlServerSecurityAlertPolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MySqlServerSecurityAlertPolicyData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

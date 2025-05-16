@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.DefenderEasm
 {
     public partial class EasmLabelResource : IJsonModel<EasmLabelData>
     {
+        private static EasmLabelData s_dataDeserializationInstance;
+        private static EasmLabelData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<EasmLabelData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<EasmLabelData>)Data).Write(writer, options);
 
-        EasmLabelData IJsonModel<EasmLabelData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<EasmLabelData>)Data).Create(ref reader, options);
+        EasmLabelData IJsonModel<EasmLabelData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<EasmLabelData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<EasmLabelData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<EasmLabelData>(Data, options, AzureResourceManagerDefenderEasmContext.Default);
 
         EasmLabelData IPersistableModel<EasmLabelData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<EasmLabelData>(data, options, AzureResourceManagerDefenderEasmContext.Default);
 
-        string IPersistableModel<EasmLabelData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<EasmLabelData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<EasmLabelData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<EasmLabelData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

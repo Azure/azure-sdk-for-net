@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Dns
 {
     public partial class DnssecConfigResource : IJsonModel<DnssecConfigData>
     {
+        private static DnssecConfigData s_dataDeserializationInstance;
+        private static DnssecConfigData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<DnssecConfigData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DnssecConfigData>)Data).Write(writer, options);
 
-        DnssecConfigData IJsonModel<DnssecConfigData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DnssecConfigData>)Data).Create(ref reader, options);
+        DnssecConfigData IJsonModel<DnssecConfigData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DnssecConfigData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<DnssecConfigData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DnssecConfigData>(Data, options, AzureResourceManagerDnsContext.Default);
 
         DnssecConfigData IPersistableModel<DnssecConfigData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DnssecConfigData>(data, options, AzureResourceManagerDnsContext.Default);
 
-        string IPersistableModel<DnssecConfigData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DnssecConfigData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<DnssecConfigData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DnssecConfigData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

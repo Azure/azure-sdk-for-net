@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Storage
 {
     public partial class TableResource : IJsonModel<TableData>
     {
+        private static TableData s_dataDeserializationInstance;
+        private static TableData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<TableData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<TableData>)Data).Write(writer, options);
 
-        TableData IJsonModel<TableData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<TableData>)Data).Create(ref reader, options);
+        TableData IJsonModel<TableData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<TableData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<TableData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<TableData>(Data, options, AzureResourceManagerStorageContext.Default);
 
         TableData IPersistableModel<TableData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<TableData>(data, options, AzureResourceManagerStorageContext.Default);
 
-        string IPersistableModel<TableData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<TableData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<TableData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<TableData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

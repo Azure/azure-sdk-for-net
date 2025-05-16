@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Resources
 {
     public partial class ScriptLogResource : IJsonModel<ScriptLogData>
     {
+        private static ScriptLogData s_dataDeserializationInstance;
+        private static ScriptLogData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<ScriptLogData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ScriptLogData>)Data).Write(writer, options);
 
-        ScriptLogData IJsonModel<ScriptLogData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ScriptLogData>)Data).Create(ref reader, options);
+        ScriptLogData IJsonModel<ScriptLogData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ScriptLogData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<ScriptLogData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ScriptLogData>(Data, options, AzureResourceManagerResourcesContext.Default);
 
         ScriptLogData IPersistableModel<ScriptLogData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ScriptLogData>(data, options, AzureResourceManagerResourcesContext.Default);
 
-        string IPersistableModel<ScriptLogData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ScriptLogData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<ScriptLogData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ScriptLogData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.CosmosDB
 {
     public partial class CosmosDBPrivateLinkResource : IJsonModel<CosmosDBPrivateLinkResourceData>
     {
+        private static CosmosDBPrivateLinkResourceData s_dataDeserializationInstance;
+        private static CosmosDBPrivateLinkResourceData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<CosmosDBPrivateLinkResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<CosmosDBPrivateLinkResourceData>)Data).Write(writer, options);
 
-        CosmosDBPrivateLinkResourceData IJsonModel<CosmosDBPrivateLinkResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<CosmosDBPrivateLinkResourceData>)Data).Create(ref reader, options);
+        CosmosDBPrivateLinkResourceData IJsonModel<CosmosDBPrivateLinkResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<CosmosDBPrivateLinkResourceData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<CosmosDBPrivateLinkResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<CosmosDBPrivateLinkResourceData>(Data, options, AzureResourceManagerCosmosDBContext.Default);
 
         CosmosDBPrivateLinkResourceData IPersistableModel<CosmosDBPrivateLinkResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CosmosDBPrivateLinkResourceData>(data, options, AzureResourceManagerCosmosDBContext.Default);
 
-        string IPersistableModel<CosmosDBPrivateLinkResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<CosmosDBPrivateLinkResourceData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<CosmosDBPrivateLinkResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<CosmosDBPrivateLinkResourceData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

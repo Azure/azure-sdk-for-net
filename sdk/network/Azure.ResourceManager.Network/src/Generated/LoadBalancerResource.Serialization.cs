@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Network
 {
     public partial class LoadBalancerResource : IJsonModel<LoadBalancerData>
     {
+        private static LoadBalancerData s_dataDeserializationInstance;
+        private static LoadBalancerData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<LoadBalancerData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<LoadBalancerData>)Data).Write(writer, options);
 
-        LoadBalancerData IJsonModel<LoadBalancerData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<LoadBalancerData>)Data).Create(ref reader, options);
+        LoadBalancerData IJsonModel<LoadBalancerData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<LoadBalancerData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<LoadBalancerData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<LoadBalancerData>(Data, options, AzureResourceManagerNetworkContext.Default);
 
         LoadBalancerData IPersistableModel<LoadBalancerData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<LoadBalancerData>(data, options, AzureResourceManagerNetworkContext.Default);
 
-        string IPersistableModel<LoadBalancerData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<LoadBalancerData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<LoadBalancerData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<LoadBalancerData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

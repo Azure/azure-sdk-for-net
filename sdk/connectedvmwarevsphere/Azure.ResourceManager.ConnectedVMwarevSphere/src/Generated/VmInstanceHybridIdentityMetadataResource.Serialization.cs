@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
 {
     public partial class VmInstanceHybridIdentityMetadataResource : IJsonModel<VmInstanceHybridIdentityMetadataData>
     {
+        private static VmInstanceHybridIdentityMetadataData s_dataDeserializationInstance;
+        private static VmInstanceHybridIdentityMetadataData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<VmInstanceHybridIdentityMetadataData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<VmInstanceHybridIdentityMetadataData>)Data).Write(writer, options);
 
-        VmInstanceHybridIdentityMetadataData IJsonModel<VmInstanceHybridIdentityMetadataData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<VmInstanceHybridIdentityMetadataData>)Data).Create(ref reader, options);
+        VmInstanceHybridIdentityMetadataData IJsonModel<VmInstanceHybridIdentityMetadataData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<VmInstanceHybridIdentityMetadataData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<VmInstanceHybridIdentityMetadataData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<VmInstanceHybridIdentityMetadataData>(Data, options, AzureResourceManagerConnectedVMwarevSphereContext.Default);
 
         VmInstanceHybridIdentityMetadataData IPersistableModel<VmInstanceHybridIdentityMetadataData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<VmInstanceHybridIdentityMetadataData>(data, options, AzureResourceManagerConnectedVMwarevSphereContext.Default);
 
-        string IPersistableModel<VmInstanceHybridIdentityMetadataData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<VmInstanceHybridIdentityMetadataData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<VmInstanceHybridIdentityMetadataData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<VmInstanceHybridIdentityMetadataData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Advisor
 {
     public partial class ResourceRecommendationBaseResource : IJsonModel<ResourceRecommendationBaseData>
     {
+        private static ResourceRecommendationBaseData s_dataDeserializationInstance;
+        private static ResourceRecommendationBaseData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<ResourceRecommendationBaseData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ResourceRecommendationBaseData>)Data).Write(writer, options);
 
-        ResourceRecommendationBaseData IJsonModel<ResourceRecommendationBaseData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ResourceRecommendationBaseData>)Data).Create(ref reader, options);
+        ResourceRecommendationBaseData IJsonModel<ResourceRecommendationBaseData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ResourceRecommendationBaseData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<ResourceRecommendationBaseData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ResourceRecommendationBaseData>(Data, options, AzureResourceManagerAdvisorContext.Default);
 
         ResourceRecommendationBaseData IPersistableModel<ResourceRecommendationBaseData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ResourceRecommendationBaseData>(data, options, AzureResourceManagerAdvisorContext.Default);
 
-        string IPersistableModel<ResourceRecommendationBaseData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ResourceRecommendationBaseData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<ResourceRecommendationBaseData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ResourceRecommendationBaseData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }
