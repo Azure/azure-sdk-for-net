@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.SecurityCenter
 {
     public partial class IotSecuritySolutionResource : IJsonModel<IotSecuritySolutionData>
     {
+        private static IotSecuritySolutionData s_dataDeserializationInstance;
+        private static IotSecuritySolutionData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<IotSecuritySolutionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<IotSecuritySolutionData>)Data).Write(writer, options);
 
-        IotSecuritySolutionData IJsonModel<IotSecuritySolutionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<IotSecuritySolutionData>)Data).Create(ref reader, options);
+        IotSecuritySolutionData IJsonModel<IotSecuritySolutionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<IotSecuritySolutionData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<IotSecuritySolutionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<IotSecuritySolutionData>(Data, options, AzureResourceManagerSecurityCenterContext.Default);
 
         IotSecuritySolutionData IPersistableModel<IotSecuritySolutionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<IotSecuritySolutionData>(data, options, AzureResourceManagerSecurityCenterContext.Default);
 
-        string IPersistableModel<IotSecuritySolutionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<IotSecuritySolutionData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<IotSecuritySolutionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<IotSecuritySolutionData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

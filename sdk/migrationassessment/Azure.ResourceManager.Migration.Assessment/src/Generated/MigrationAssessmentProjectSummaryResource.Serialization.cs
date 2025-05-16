@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Migration.Assessment
 {
     public partial class MigrationAssessmentProjectSummaryResource : IJsonModel<MigrationAssessmentProjectSummaryData>
     {
+        private static MigrationAssessmentProjectSummaryData s_dataDeserializationInstance;
+        private static MigrationAssessmentProjectSummaryData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<MigrationAssessmentProjectSummaryData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<MigrationAssessmentProjectSummaryData>)Data).Write(writer, options);
 
-        MigrationAssessmentProjectSummaryData IJsonModel<MigrationAssessmentProjectSummaryData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MigrationAssessmentProjectSummaryData>)Data).Create(ref reader, options);
+        MigrationAssessmentProjectSummaryData IJsonModel<MigrationAssessmentProjectSummaryData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MigrationAssessmentProjectSummaryData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<MigrationAssessmentProjectSummaryData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<MigrationAssessmentProjectSummaryData>(Data, options, AzureResourceManagerMigrationAssessmentContext.Default);
 
         MigrationAssessmentProjectSummaryData IPersistableModel<MigrationAssessmentProjectSummaryData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MigrationAssessmentProjectSummaryData>(data, options, AzureResourceManagerMigrationAssessmentContext.Default);
 
-        string IPersistableModel<MigrationAssessmentProjectSummaryData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MigrationAssessmentProjectSummaryData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<MigrationAssessmentProjectSummaryData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MigrationAssessmentProjectSummaryData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

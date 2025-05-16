@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.DurableTask
 {
     public partial class DurableTaskHubResource : IJsonModel<DurableTaskHubData>
     {
+        private static DurableTaskHubData s_dataDeserializationInstance;
+        private static DurableTaskHubData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<DurableTaskHubData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DurableTaskHubData>)Data).Write(writer, options);
 
-        DurableTaskHubData IJsonModel<DurableTaskHubData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DurableTaskHubData>)Data).Create(ref reader, options);
+        DurableTaskHubData IJsonModel<DurableTaskHubData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DurableTaskHubData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<DurableTaskHubData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DurableTaskHubData>(Data, options, AzureResourceManagerDurableTaskContext.Default);
 
         DurableTaskHubData IPersistableModel<DurableTaskHubData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DurableTaskHubData>(data, options, AzureResourceManagerDurableTaskContext.Default);
 
-        string IPersistableModel<DurableTaskHubData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DurableTaskHubData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<DurableTaskHubData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DurableTaskHubData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

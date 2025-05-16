@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.DeviceRegistry
 {
     public partial class DeviceRegistryAssetEndpointProfileResource : IJsonModel<DeviceRegistryAssetEndpointProfileData>
     {
+        private static DeviceRegistryAssetEndpointProfileData s_dataDeserializationInstance;
+        private static DeviceRegistryAssetEndpointProfileData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<DeviceRegistryAssetEndpointProfileData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DeviceRegistryAssetEndpointProfileData>)Data).Write(writer, options);
 
-        DeviceRegistryAssetEndpointProfileData IJsonModel<DeviceRegistryAssetEndpointProfileData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DeviceRegistryAssetEndpointProfileData>)Data).Create(ref reader, options);
+        DeviceRegistryAssetEndpointProfileData IJsonModel<DeviceRegistryAssetEndpointProfileData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DeviceRegistryAssetEndpointProfileData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<DeviceRegistryAssetEndpointProfileData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DeviceRegistryAssetEndpointProfileData>(Data, options, AzureResourceManagerDeviceRegistryContext.Default);
 
         DeviceRegistryAssetEndpointProfileData IPersistableModel<DeviceRegistryAssetEndpointProfileData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DeviceRegistryAssetEndpointProfileData>(data, options, AzureResourceManagerDeviceRegistryContext.Default);
 
-        string IPersistableModel<DeviceRegistryAssetEndpointProfileData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DeviceRegistryAssetEndpointProfileData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<DeviceRegistryAssetEndpointProfileData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DeviceRegistryAssetEndpointProfileData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

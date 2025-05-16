@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
 {
     public partial class LocalRulestackPrefixResource : IJsonModel<LocalRulestackPrefixData>
     {
+        private static LocalRulestackPrefixData s_dataDeserializationInstance;
+        private static LocalRulestackPrefixData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<LocalRulestackPrefixData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<LocalRulestackPrefixData>)Data).Write(writer, options);
 
-        LocalRulestackPrefixData IJsonModel<LocalRulestackPrefixData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<LocalRulestackPrefixData>)Data).Create(ref reader, options);
+        LocalRulestackPrefixData IJsonModel<LocalRulestackPrefixData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<LocalRulestackPrefixData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<LocalRulestackPrefixData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<LocalRulestackPrefixData>(Data, options, AzureResourceManagerPaloAltoNetworksNgfwContext.Default);
 
         LocalRulestackPrefixData IPersistableModel<LocalRulestackPrefixData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<LocalRulestackPrefixData>(data, options, AzureResourceManagerPaloAltoNetworksNgfwContext.Default);
 
-        string IPersistableModel<LocalRulestackPrefixData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<LocalRulestackPrefixData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<LocalRulestackPrefixData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<LocalRulestackPrefixData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

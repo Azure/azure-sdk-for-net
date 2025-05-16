@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.DataFactory
 {
     public partial class DataFactoryManagedVirtualNetworkResource : IJsonModel<DataFactoryManagedVirtualNetworkData>
     {
+        private static DataFactoryManagedVirtualNetworkData s_dataDeserializationInstance;
+        private static DataFactoryManagedVirtualNetworkData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<DataFactoryManagedVirtualNetworkData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DataFactoryManagedVirtualNetworkData>)Data).Write(writer, options);
 
-        DataFactoryManagedVirtualNetworkData IJsonModel<DataFactoryManagedVirtualNetworkData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DataFactoryManagedVirtualNetworkData>)Data).Create(ref reader, options);
+        DataFactoryManagedVirtualNetworkData IJsonModel<DataFactoryManagedVirtualNetworkData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DataFactoryManagedVirtualNetworkData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<DataFactoryManagedVirtualNetworkData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DataFactoryManagedVirtualNetworkData>(Data, options, AzureResourceManagerDataFactoryContext.Default);
 
         DataFactoryManagedVirtualNetworkData IPersistableModel<DataFactoryManagedVirtualNetworkData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DataFactoryManagedVirtualNetworkData>(data, options, AzureResourceManagerDataFactoryContext.Default);
 
-        string IPersistableModel<DataFactoryManagedVirtualNetworkData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DataFactoryManagedVirtualNetworkData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<DataFactoryManagedVirtualNetworkData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DataFactoryManagedVirtualNetworkData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

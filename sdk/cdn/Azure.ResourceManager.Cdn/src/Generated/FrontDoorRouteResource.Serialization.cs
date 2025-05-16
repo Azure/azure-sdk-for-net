@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Cdn
 {
     public partial class FrontDoorRouteResource : IJsonModel<FrontDoorRouteData>
     {
+        private static FrontDoorRouteData s_dataDeserializationInstance;
+        private static FrontDoorRouteData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<FrontDoorRouteData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<FrontDoorRouteData>)Data).Write(writer, options);
 
-        FrontDoorRouteData IJsonModel<FrontDoorRouteData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<FrontDoorRouteData>)Data).Create(ref reader, options);
+        FrontDoorRouteData IJsonModel<FrontDoorRouteData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<FrontDoorRouteData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<FrontDoorRouteData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<FrontDoorRouteData>(Data, options, AzureResourceManagerCdnContext.Default);
 
         FrontDoorRouteData IPersistableModel<FrontDoorRouteData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<FrontDoorRouteData>(data, options, AzureResourceManagerCdnContext.Default);
 
-        string IPersistableModel<FrontDoorRouteData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<FrontDoorRouteData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<FrontDoorRouteData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<FrontDoorRouteData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

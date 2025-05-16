@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
 {
     public partial class PostgreSqlFlexibleServerFirewallRuleResource : IJsonModel<PostgreSqlFlexibleServerFirewallRuleData>
     {
+        private static PostgreSqlFlexibleServerFirewallRuleData s_dataDeserializationInstance;
+        private static PostgreSqlFlexibleServerFirewallRuleData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<PostgreSqlFlexibleServerFirewallRuleData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<PostgreSqlFlexibleServerFirewallRuleData>)Data).Write(writer, options);
 
-        PostgreSqlFlexibleServerFirewallRuleData IJsonModel<PostgreSqlFlexibleServerFirewallRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PostgreSqlFlexibleServerFirewallRuleData>)Data).Create(ref reader, options);
+        PostgreSqlFlexibleServerFirewallRuleData IJsonModel<PostgreSqlFlexibleServerFirewallRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PostgreSqlFlexibleServerFirewallRuleData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<PostgreSqlFlexibleServerFirewallRuleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<PostgreSqlFlexibleServerFirewallRuleData>(Data, options, AzureResourceManagerPostgreSqlContext.Default);
 
         PostgreSqlFlexibleServerFirewallRuleData IPersistableModel<PostgreSqlFlexibleServerFirewallRuleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PostgreSqlFlexibleServerFirewallRuleData>(data, options, AzureResourceManagerPostgreSqlContext.Default);
 
-        string IPersistableModel<PostgreSqlFlexibleServerFirewallRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PostgreSqlFlexibleServerFirewallRuleData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<PostgreSqlFlexibleServerFirewallRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PostgreSqlFlexibleServerFirewallRuleData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }
