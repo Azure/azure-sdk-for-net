@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.HybridContainerService
 {
     public partial class KubernetesVersionProfileResource : IJsonModel<KubernetesVersionProfileData>
     {
+        private static KubernetesVersionProfileData s_dataDeserializationInstance;
+        private static KubernetesVersionProfileData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<KubernetesVersionProfileData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<KubernetesVersionProfileData>)Data).Write(writer, options);
 
-        KubernetesVersionProfileData IJsonModel<KubernetesVersionProfileData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<KubernetesVersionProfileData>)Data).Create(ref reader, options);
+        KubernetesVersionProfileData IJsonModel<KubernetesVersionProfileData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<KubernetesVersionProfileData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<KubernetesVersionProfileData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<KubernetesVersionProfileData>(Data, options, AzureResourceManagerHybridContainerServiceContext.Default);
 
         KubernetesVersionProfileData IPersistableModel<KubernetesVersionProfileData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<KubernetesVersionProfileData>(data, options, AzureResourceManagerHybridContainerServiceContext.Default);
 
-        string IPersistableModel<KubernetesVersionProfileData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<KubernetesVersionProfileData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<KubernetesVersionProfileData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<KubernetesVersionProfileData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }
