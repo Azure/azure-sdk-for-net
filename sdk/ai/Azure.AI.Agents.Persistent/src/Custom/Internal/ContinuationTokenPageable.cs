@@ -11,6 +11,7 @@ using Azure.Core;
 using System.Threading.Tasks;
 using System.Text.Json;
 using System.Runtime.CompilerServices;
+using Azure.AI.Agents.Persistent.Telemetry;
 
 namespace Azure.AI.Agents.Persistent
 {
@@ -26,7 +27,8 @@ namespace Azure.AI.Agents.Persistent
             RequestContext requestContext,
             string itemPropertyName = "data",
             string hasMoreField = "has_more",
-            string continuationTokenName = "last_id"
+            string continuationTokenName = "last_id",
+            OpenTelemetryScope scope = null
         )
         {
             _impl = new(
@@ -35,6 +37,7 @@ namespace Azure.AI.Agents.Persistent
                 pipeline: pipeline,
                 clientDiagnostics: clientDiagnostics,
                 scopeName: scopeName,
+                scope: scope,
                 requestContext: requestContext,
                 itemPropertyName: itemPropertyName,
                 hasMoreField: hasMoreField,
@@ -57,7 +60,8 @@ namespace Azure.AI.Agents.Persistent
             RequestContext requestContext,
             string itemPropertyName = "data",
             string hasMoreField = "has_more",
-            string continuationTokenName = "last_id"
+            string continuationTokenName = "last_id",
+            OpenTelemetryScope scope = null
         )
         {
             _impl = new(
@@ -66,6 +70,7 @@ namespace Azure.AI.Agents.Persistent
                 pipeline: pipeline,
                 clientDiagnostics: clientDiagnostics,
                 scopeName: scopeName,
+                scope: scope,
                 requestContext: requestContext,
                 itemPropertyName: itemPropertyName,
                 hasMoreField: hasMoreField,
@@ -84,6 +89,7 @@ namespace Azure.AI.Agents.Persistent
         private readonly Func<int?, string, HttpMessage> _createPageRequest;
         private readonly HttpPipeline _pipeline;
         private readonly ClientDiagnostics _clientDiagnostics;
+        private readonly OpenTelemetryScope _scope;
         private readonly Func<JsonElement, T> _valueFactory;
         private readonly string _scopeName;
         private readonly CancellationToken _cancellationToken;
@@ -101,7 +107,8 @@ namespace Azure.AI.Agents.Persistent
             RequestContext requestContext,
             string itemPropertyName,
             string hasMoreField,
-            string continuationTokenName
+            string continuationTokenName,
+            OpenTelemetryScope scope = null
         )
         {
             _createPageRequest = createPageRequest;
@@ -109,6 +116,7 @@ namespace Azure.AI.Agents.Persistent
             _pipeline = pipeline;
             _clientDiagnostics = clientDiagnostics;
             _scopeName = scopeName;
+            _scope = scope;
             _cancellationToken = requestContext?.CancellationToken ?? default;
             _errorOptions = requestContext?.ErrorOptions ?? ErrorOptions.Default;
             _itemPropertyName = itemPropertyName;
@@ -161,6 +169,7 @@ namespace Azure.AI.Agents.Persistent
                 {
                     yield break;
                 }
+                _scope?.RecordPagedResponse(response);
                 yield return CreatePage(response, out continuationToken);
             } while (!string.IsNullOrEmpty(continuationToken));
         }
@@ -174,6 +183,7 @@ namespace Azure.AI.Agents.Persistent
                 {
                     yield break;
                 }
+                _scope?.RecordPagedResponse(response);
                 yield return CreatePage(response, out continuationToken);
             } while (!string.IsNullOrEmpty(continuationToken));
         }
