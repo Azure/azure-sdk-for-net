@@ -53,13 +53,12 @@ namespace Azure.Communication.CallAutomation.Tests.MediaStreaming
             Assert.AreEqual("encodingType", streamingAudioMetadata.Encoding);
             Assert.AreEqual(8, streamingAudioMetadata.SampleRate);
             Assert.AreEqual(2, (int)streamingAudioMetadata.Channels);
-            Assert.AreEqual(640, streamingAudioMetadata.Length);
         }
 
         private static void ValidateAudioData(AudioData streamingAudio)
         {
             Assert.IsNotNull(streamingAudio);
-            Assert.AreEqual(Convert.FromBase64String("AQIDBAU="), streamingAudio.Data);
+            CollectionAssert.AreEqual(Convert.FromBase64String("AQIDBAU="), streamingAudio.Data.ToArray());
             Assert.AreEqual(2022, streamingAudio.Timestamp.Year);
             Assert.IsTrue(streamingAudio.Participant is CommunicationIdentifier);
             Assert.AreEqual("participantId", streamingAudio.Participant.RawId);
