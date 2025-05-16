@@ -89,8 +89,9 @@ namespace Azure.Generator.Visitors
             if (method is ScmMethodProvider scmMethod && scmMethod.IsLroMethod())
             {
                 var waitUntil = scmMethod.Signature.Parameters[0];
-                var pipelineProperty = scmMethod.EnclosingType.Properties.First(p => p.Type.Equals(typeof(HttpPipeline)));
-                var diagnosticsProperty = scmMethod.EnclosingType.Properties.First(p => p.Type.Equals(typeof(ClientDiagnostics)));
+                var client = (ClientProvider)scmMethod.EnclosingType;
+                var pipelineProperty = client.GetPipelineProperty();
+                var diagnosticsProperty = client.GetClientDiagnosticProperty();
                 var scopeName = scmMethod.GetScopeName();
                 var serviceMethod = scmMethod.ServiceMethod!;
                 if (scmMethod.IsProtocolMethod && serviceMethod.Response.Type == null)

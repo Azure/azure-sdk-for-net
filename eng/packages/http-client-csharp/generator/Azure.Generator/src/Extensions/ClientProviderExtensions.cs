@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Linq;
+using Azure.Core.Pipeline;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Providers;
@@ -22,7 +23,13 @@ namespace Azure.Generator
         public static PropertyProvider GetClientDiagnosticProperty(this ClientProvider client)
         {
             return client.CanonicalView.Properties
-                .First(p => p.Name == ClientDiagnosticsPropertyName || p.OriginalName?.Equals(ClientDiagnosticsPropertyName) == true);
+                .First(p => p.Type.Equals(typeof(ClientDiagnostics)));
+        }
+
+        public static PropertyProvider GetPipelineProperty(this ClientProvider client)
+        {
+            return client.CanonicalView.Properties
+                .First(p => p.Type.Equals(typeof(HttpPipeline)));
         }
     }
 }
