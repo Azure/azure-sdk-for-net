@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.OracleDatabase
 {
     public partial class OracleDBSystemShapeResource : IJsonModel<OracleDBSystemShapeData>
     {
+        private static OracleDBSystemShapeData s_dataDeserializationInstance;
+        private static OracleDBSystemShapeData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<OracleDBSystemShapeData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<OracleDBSystemShapeData>)Data).Write(writer, options);
 
-        OracleDBSystemShapeData IJsonModel<OracleDBSystemShapeData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<OracleDBSystemShapeData>)Data).Create(ref reader, options);
+        OracleDBSystemShapeData IJsonModel<OracleDBSystemShapeData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<OracleDBSystemShapeData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<OracleDBSystemShapeData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<OracleDBSystemShapeData>(Data, options, AzureResourceManagerOracleDatabaseContext.Default);
 
         OracleDBSystemShapeData IPersistableModel<OracleDBSystemShapeData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<OracleDBSystemShapeData>(data, options, AzureResourceManagerOracleDatabaseContext.Default);
 
-        string IPersistableModel<OracleDBSystemShapeData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<OracleDBSystemShapeData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<OracleDBSystemShapeData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<OracleDBSystemShapeData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

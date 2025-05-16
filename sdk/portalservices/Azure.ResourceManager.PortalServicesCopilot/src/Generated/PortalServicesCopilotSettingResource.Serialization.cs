@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.PortalServicesCopilot
 {
     public partial class PortalServicesCopilotSettingResource : IJsonModel<PortalServicesCopilotSettingData>
     {
+        private static PortalServicesCopilotSettingData s_dataDeserializationInstance;
+        private static PortalServicesCopilotSettingData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<PortalServicesCopilotSettingData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<PortalServicesCopilotSettingData>)Data).Write(writer, options);
 
-        PortalServicesCopilotSettingData IJsonModel<PortalServicesCopilotSettingData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PortalServicesCopilotSettingData>)Data).Create(ref reader, options);
+        PortalServicesCopilotSettingData IJsonModel<PortalServicesCopilotSettingData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PortalServicesCopilotSettingData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<PortalServicesCopilotSettingData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<PortalServicesCopilotSettingData>(Data, options, AzureResourceManagerPortalServicesCopilotContext.Default);
 
         PortalServicesCopilotSettingData IPersistableModel<PortalServicesCopilotSettingData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PortalServicesCopilotSettingData>(data, options, AzureResourceManagerPortalServicesCopilotContext.Default);
 
-        string IPersistableModel<PortalServicesCopilotSettingData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PortalServicesCopilotSettingData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<PortalServicesCopilotSettingData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PortalServicesCopilotSettingData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

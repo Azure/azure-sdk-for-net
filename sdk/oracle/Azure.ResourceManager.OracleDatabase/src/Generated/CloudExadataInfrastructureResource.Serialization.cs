@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.OracleDatabase
 {
     public partial class CloudExadataInfrastructureResource : IJsonModel<CloudExadataInfrastructureData>
     {
+        private static CloudExadataInfrastructureData s_dataDeserializationInstance;
+        private static CloudExadataInfrastructureData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<CloudExadataInfrastructureData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<CloudExadataInfrastructureData>)Data).Write(writer, options);
 
-        CloudExadataInfrastructureData IJsonModel<CloudExadataInfrastructureData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<CloudExadataInfrastructureData>)Data).Create(ref reader, options);
+        CloudExadataInfrastructureData IJsonModel<CloudExadataInfrastructureData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<CloudExadataInfrastructureData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<CloudExadataInfrastructureData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<CloudExadataInfrastructureData>(Data, options, AzureResourceManagerOracleDatabaseContext.Default);
 
         CloudExadataInfrastructureData IPersistableModel<CloudExadataInfrastructureData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CloudExadataInfrastructureData>(data, options, AzureResourceManagerOracleDatabaseContext.Default);
 
-        string IPersistableModel<CloudExadataInfrastructureData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<CloudExadataInfrastructureData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<CloudExadataInfrastructureData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<CloudExadataInfrastructureData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

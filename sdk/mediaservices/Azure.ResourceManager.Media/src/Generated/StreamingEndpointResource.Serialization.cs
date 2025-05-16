@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Media
 {
     public partial class StreamingEndpointResource : IJsonModel<StreamingEndpointData>
     {
+        private static StreamingEndpointData s_dataDeserializationInstance;
+        private static StreamingEndpointData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<StreamingEndpointData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<StreamingEndpointData>)Data).Write(writer, options);
 
-        StreamingEndpointData IJsonModel<StreamingEndpointData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<StreamingEndpointData>)Data).Create(ref reader, options);
+        StreamingEndpointData IJsonModel<StreamingEndpointData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<StreamingEndpointData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<StreamingEndpointData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<StreamingEndpointData>(Data, options, AzureResourceManagerMediaContext.Default);
 
         StreamingEndpointData IPersistableModel<StreamingEndpointData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<StreamingEndpointData>(data, options, AzureResourceManagerMediaContext.Default);
 
-        string IPersistableModel<StreamingEndpointData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<StreamingEndpointData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<StreamingEndpointData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<StreamingEndpointData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Monitor
 {
     public partial class ActivityLogAlertResource : IJsonModel<ActivityLogAlertData>
     {
+        private static ActivityLogAlertData s_dataDeserializationInstance;
+        private static ActivityLogAlertData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<ActivityLogAlertData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ActivityLogAlertData>)Data).Write(writer, options);
 
-        ActivityLogAlertData IJsonModel<ActivityLogAlertData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ActivityLogAlertData>)Data).Create(ref reader, options);
+        ActivityLogAlertData IJsonModel<ActivityLogAlertData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ActivityLogAlertData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<ActivityLogAlertData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ActivityLogAlertData>(Data, options, AzureResourceManagerMonitorContext.Default);
 
         ActivityLogAlertData IPersistableModel<ActivityLogAlertData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ActivityLogAlertData>(data, options, AzureResourceManagerMonitorContext.Default);
 
-        string IPersistableModel<ActivityLogAlertData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ActivityLogAlertData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<ActivityLogAlertData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ActivityLogAlertData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }
