@@ -198,7 +198,7 @@ The code below shows some Deployments operations, which allow you to enumerate t
 
 ```C# Snippet:AI_Projects_DeploymentExampleSync
 var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
-var deploymentName = System.Environment.GetEnvironmentVariable("DEPLOYMENT_NAME");
+var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
 var modelPublisher = System.Environment.GetEnvironmentVariable("MODEL_PUBLISHER");
 AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
 Deployments deployments = projectClient.GetDeploymentsClient();
@@ -215,8 +215,8 @@ foreach (var deployment in deployments.GetDeployments(modelPublisher: modelPubli
     Console.WriteLine(deployment);
 }
 
-Console.WriteLine($"Get a single deployment named `{deploymentName}`:");
-var deploymentDetails = deployments.GetDeployment(deploymentName);
+Console.WriteLine($"Get a single deployment named `{modelDeploymentName}`:");
+var deploymentDetails = deployments.GetDeployment(modelDeploymentName);
 Console.WriteLine(deploymentDetails);
 ```
 
