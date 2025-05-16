@@ -14,7 +14,7 @@ This sample demonstrates how to use the synchronous and asynchronous `.deploymen
 
 ```C# Snippet:AI_Projects_DeploymentExampleSync
 var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
-var deploymentName = System.Environment.GetEnvironmentVariable("DEPLOYMENT_NAME");
+var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
 var modelPublisher = System.Environment.GetEnvironmentVariable("MODEL_PUBLISHER");
 AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
 Deployments deployments = projectClient.GetDeploymentsClient();
@@ -31,8 +31,8 @@ foreach (var deployment in deployments.GetDeployments(modelPublisher: modelPubli
     Console.WriteLine(deployment);
 }
 
-Console.WriteLine($"Get a single deployment named `{deploymentName}`:");
-var deploymentDetails = deployments.GetDeployment(deploymentName);
+Console.WriteLine($"Get a single deployment named `{modelDeploymentName}`:");
+var deploymentDetails = deployments.GetDeployment(modelDeploymentName);
 Console.WriteLine(deploymentDetails);
 ```
 
@@ -40,7 +40,7 @@ Console.WriteLine(deploymentDetails);
 
 ```C# Snippet:AI_Projects_DeploymentExampleAsync
 var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
-var deploymentName = System.Environment.GetEnvironmentVariable("DEPLOYMENT_NAME");
+var modelDeploymentName = System.Environment.GetEnvironmentVariable("DEPLOYMENT_NAME");
 var modelPublisher = System.Environment.GetEnvironmentVariable("MODEL_PUBLISHER");
 AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
 Deployments deployments = projectClient.GetDeploymentsClient();
@@ -57,7 +57,7 @@ await foreach (var deployment in deployments.GetDeploymentsAsync(modelPublisher:
     Console.WriteLine(deployment);
 }
 
-Console.WriteLine($"Get a single deployment named `{deploymentName}`:");
-var deploymentDetails = deployments.GetDeploymentAsync(deploymentName);
+Console.WriteLine($"Get a single deployment named `{modelDeploymentName}`:");
+var deploymentDetails = deployments.GetDeploymentAsync(modelDeploymentName);
 Console.WriteLine(deploymentDetails);
 ```
