@@ -2,7 +2,10 @@
 
 Use the AI Agents client library to:
 
-* **Develop Agents using the Azure AI Agents Service**, leveraging an extensive ecosystem of models, tools, and capabilities from OpenAI, Microsoft, and other LLM providers. The Azure AI Agents Service enables the building of Agents for a wide range of generative AI use cases. The package is currently in preview.
+* **Develop Agents using the Azure AI Agents Service**, leveraging an extensive ecosystem of models, tools, and capabilities from OpenAI, Microsoft, and other LLM providers. The Azure AI Agents Service enables the building of Agents for a wide range of generative AI use cases.
+* **Note:** While this package can be used independently, we recommend using the Azure AI Projects client library (Azure.AI.Projects) for an enhanced experience. 
+The Projects library provides simplified access to advanced functionality, such as creating and managing agents, enumerating AI models, working with datasets and 
+managing search indexes, evaluating generative AI performance, and enabling OpenTelemetry tracing.
 
 [Product documentation][product_doc]
 | [Samples][samples]
@@ -909,8 +912,8 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 <!-- LINKS -->
 [RequestFailedException]: https://learn.microsoft.com/dotnet/api/azure.requestfailedexception?view=azure-dotnet
 [samples]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/ai/Azure.AI.Agents.Persistent/tests/Samples
-[api_ref_docs]: https://learn.microsoft.com/dotnet/api/azure.ai.projects?view=azure-dotnet-preview
-[nuget]: https://www.nuget.org/packages/Azure.AI.Projects
+[api_ref_docs]: https://learn.microsoft.com/dotnet/api/overview/azure/ai.agents.persistent-readme
+[nuget]: https://www.nuget.org/packages/Azure.AI.Agents.Persistent/
 [source_code]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/ai/Azure.AI.Agents.Persistent
 [product_doc]: https://learn.microsoft.com/azure/ai-studio/
 [azure_identity]: https://learn.microsoft.com/dotnet/api/overview/azure/identity-readme?view=azure-dotnet

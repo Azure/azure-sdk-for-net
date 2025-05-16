@@ -3,9 +3,555 @@
  "name": "SpecialWords",
  "apiVersions": [],
  "enums": [],
- "models": [
+ "constants": [
   {
    "$id": "2",
+   "kind": "constant",
+   "name": "withAndContentType",
+   "namespace": "",
+   "usage": "None",
+   "valueType": {
+    "$id": "3",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "value": "application/json",
+   "decorators": []
+  },
+  {
+   "$id": "4",
+   "kind": "constant",
+   "name": "withAsContentType",
+   "namespace": "",
+   "usage": "None",
+   "valueType": {
+    "$id": "5",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "value": "application/json",
+   "decorators": []
+  },
+  {
+   "$id": "6",
+   "kind": "constant",
+   "name": "withAssertContentType",
+   "namespace": "",
+   "usage": "None",
+   "valueType": {
+    "$id": "7",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "value": "application/json",
+   "decorators": []
+  },
+  {
+   "$id": "8",
+   "kind": "constant",
+   "name": "withAsyncContentType",
+   "namespace": "",
+   "usage": "None",
+   "valueType": {
+    "$id": "9",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "value": "application/json",
+   "decorators": []
+  },
+  {
+   "$id": "10",
+   "kind": "constant",
+   "name": "withAwaitContentType",
+   "namespace": "",
+   "usage": "None",
+   "valueType": {
+    "$id": "11",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "value": "application/json",
+   "decorators": []
+  },
+  {
+   "$id": "12",
+   "kind": "constant",
+   "name": "withBreakContentType",
+   "namespace": "",
+   "usage": "None",
+   "valueType": {
+    "$id": "13",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "value": "application/json",
+   "decorators": []
+  },
+  {
+   "$id": "14",
+   "kind": "constant",
+   "name": "withClassContentType",
+   "namespace": "",
+   "usage": "None",
+   "valueType": {
+    "$id": "15",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "value": "application/json",
+   "decorators": []
+  },
+  {
+   "$id": "16",
+   "kind": "constant",
+   "name": "withConstructorContentType",
+   "namespace": "",
+   "usage": "None",
+   "valueType": {
+    "$id": "17",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "value": "application/json",
+   "decorators": []
+  },
+  {
+   "$id": "18",
+   "kind": "constant",
+   "name": "withContinueContentType",
+   "namespace": "",
+   "usage": "None",
+   "valueType": {
+    "$id": "19",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "value": "application/json",
+   "decorators": []
+  },
+  {
+   "$id": "20",
+   "kind": "constant",
+   "name": "withDefContentType",
+   "namespace": "",
+   "usage": "None",
+   "valueType": {
+    "$id": "21",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "value": "application/json",
+   "decorators": []
+  },
+  {
+   "$id": "22",
+   "kind": "constant",
+   "name": "withDelContentType",
+   "namespace": "",
+   "usage": "None",
+   "valueType": {
+    "$id": "23",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "value": "application/json",
+   "decorators": []
+  },
+  {
+   "$id": "24",
+   "kind": "constant",
+   "name": "withElifContentType",
+   "namespace": "",
+   "usage": "None",
+   "valueType": {
+    "$id": "25",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "value": "application/json",
+   "decorators": []
+  },
+  {
+   "$id": "26",
+   "kind": "constant",
+   "name": "withElseContentType",
+   "namespace": "",
+   "usage": "None",
+   "valueType": {
+    "$id": "27",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "value": "application/json",
+   "decorators": []
+  },
+  {
+   "$id": "28",
+   "kind": "constant",
+   "name": "withExceptContentType",
+   "namespace": "",
+   "usage": "None",
+   "valueType": {
+    "$id": "29",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "value": "application/json",
+   "decorators": []
+  },
+  {
+   "$id": "30",
+   "kind": "constant",
+   "name": "withExecContentType",
+   "namespace": "",
+   "usage": "None",
+   "valueType": {
+    "$id": "31",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "value": "application/json",
+   "decorators": []
+  },
+  {
+   "$id": "32",
+   "kind": "constant",
+   "name": "withFinallyContentType",
+   "namespace": "",
+   "usage": "None",
+   "valueType": {
+    "$id": "33",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "value": "application/json",
+   "decorators": []
+  },
+  {
+   "$id": "34",
+   "kind": "constant",
+   "name": "withForContentType",
+   "namespace": "",
+   "usage": "None",
+   "valueType": {
+    "$id": "35",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "value": "application/json",
+   "decorators": []
+  },
+  {
+   "$id": "36",
+   "kind": "constant",
+   "name": "withFromContentType",
+   "namespace": "",
+   "usage": "None",
+   "valueType": {
+    "$id": "37",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "value": "application/json",
+   "decorators": []
+  },
+  {
+   "$id": "38",
+   "kind": "constant",
+   "name": "withGlobalContentType",
+   "namespace": "",
+   "usage": "None",
+   "valueType": {
+    "$id": "39",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "value": "application/json",
+   "decorators": []
+  },
+  {
+   "$id": "40",
+   "kind": "constant",
+   "name": "withIfContentType",
+   "namespace": "",
+   "usage": "None",
+   "valueType": {
+    "$id": "41",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "value": "application/json",
+   "decorators": []
+  },
+  {
+   "$id": "42",
+   "kind": "constant",
+   "name": "withImportContentType",
+   "namespace": "",
+   "usage": "None",
+   "valueType": {
+    "$id": "43",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "value": "application/json",
+   "decorators": []
+  },
+  {
+   "$id": "44",
+   "kind": "constant",
+   "name": "withInContentType",
+   "namespace": "",
+   "usage": "None",
+   "valueType": {
+    "$id": "45",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "value": "application/json",
+   "decorators": []
+  },
+  {
+   "$id": "46",
+   "kind": "constant",
+   "name": "withIsContentType",
+   "namespace": "",
+   "usage": "None",
+   "valueType": {
+    "$id": "47",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "value": "application/json",
+   "decorators": []
+  },
+  {
+   "$id": "48",
+   "kind": "constant",
+   "name": "withLambdaContentType",
+   "namespace": "",
+   "usage": "None",
+   "valueType": {
+    "$id": "49",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "value": "application/json",
+   "decorators": []
+  },
+  {
+   "$id": "50",
+   "kind": "constant",
+   "name": "withNotContentType",
+   "namespace": "",
+   "usage": "None",
+   "valueType": {
+    "$id": "51",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "value": "application/json",
+   "decorators": []
+  },
+  {
+   "$id": "52",
+   "kind": "constant",
+   "name": "withOrContentType",
+   "namespace": "",
+   "usage": "None",
+   "valueType": {
+    "$id": "53",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "value": "application/json",
+   "decorators": []
+  },
+  {
+   "$id": "54",
+   "kind": "constant",
+   "name": "withPassContentType",
+   "namespace": "",
+   "usage": "None",
+   "valueType": {
+    "$id": "55",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "value": "application/json",
+   "decorators": []
+  },
+  {
+   "$id": "56",
+   "kind": "constant",
+   "name": "withRaiseContentType",
+   "namespace": "",
+   "usage": "None",
+   "valueType": {
+    "$id": "57",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "value": "application/json",
+   "decorators": []
+  },
+  {
+   "$id": "58",
+   "kind": "constant",
+   "name": "withReturnContentType",
+   "namespace": "",
+   "usage": "None",
+   "valueType": {
+    "$id": "59",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "value": "application/json",
+   "decorators": []
+  },
+  {
+   "$id": "60",
+   "kind": "constant",
+   "name": "withTryContentType",
+   "namespace": "",
+   "usage": "None",
+   "valueType": {
+    "$id": "61",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "value": "application/json",
+   "decorators": []
+  },
+  {
+   "$id": "62",
+   "kind": "constant",
+   "name": "withWhileContentType",
+   "namespace": "",
+   "usage": "None",
+   "valueType": {
+    "$id": "63",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "value": "application/json",
+   "decorators": []
+  },
+  {
+   "$id": "64",
+   "kind": "constant",
+   "name": "withWithContentType",
+   "namespace": "",
+   "usage": "None",
+   "valueType": {
+    "$id": "65",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "value": "application/json",
+   "decorators": []
+  },
+  {
+   "$id": "66",
+   "kind": "constant",
+   "name": "withYieldContentType",
+   "namespace": "",
+   "usage": "None",
+   "valueType": {
+    "$id": "67",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "value": "application/json",
+   "decorators": []
+  },
+  {
+   "$id": "68",
+   "kind": "constant",
+   "name": "sameAsModelContentType",
+   "namespace": "",
+   "usage": "None",
+   "valueType": {
+    "$id": "69",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "value": "application/json",
+   "decorators": []
+  }
+ ],
+ "models": [
+  {
+   "$id": "70",
    "kind": "model",
    "name": "and",
    "namespace": "SpecialWords.Models",
@@ -14,12 +560,12 @@
    "decorators": [],
    "properties": [
     {
-     "$id": "3",
+     "$id": "71",
      "kind": "property",
      "name": "name",
      "serializedName": "name",
      "type": {
-      "$id": "4",
+      "$id": "72",
       "kind": "string",
       "name": "string",
       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -32,9 +578,9 @@
      "decorators": [],
      "crossLanguageDefinitionId": "SpecialWords.Models.and.name",
      "serializationOptions": {
-      "$id": "5",
+      "$id": "73",
       "json": {
-       "$id": "6",
+       "$id": "74",
        "name": "name"
       }
      }
@@ -42,7 +588,7 @@
    ]
   },
   {
-   "$id": "7",
+   "$id": "75",
    "kind": "model",
    "name": "as",
    "namespace": "SpecialWords.Models",
@@ -51,12 +597,12 @@
    "decorators": [],
    "properties": [
     {
-     "$id": "8",
+     "$id": "76",
      "kind": "property",
      "name": "name",
      "serializedName": "name",
      "type": {
-      "$id": "9",
+      "$id": "77",
       "kind": "string",
       "name": "string",
       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -69,9 +615,9 @@
      "decorators": [],
      "crossLanguageDefinitionId": "SpecialWords.Models.as.name",
      "serializationOptions": {
-      "$id": "10",
+      "$id": "78",
       "json": {
-       "$id": "11",
+       "$id": "79",
        "name": "name"
       }
      }
@@ -79,7 +625,7 @@
    ]
   },
   {
-   "$id": "12",
+   "$id": "80",
    "kind": "model",
    "name": "assert",
    "namespace": "SpecialWords.Models",
@@ -88,12 +634,12 @@
    "decorators": [],
    "properties": [
     {
-     "$id": "13",
+     "$id": "81",
      "kind": "property",
      "name": "name",
      "serializedName": "name",
      "type": {
-      "$id": "14",
+      "$id": "82",
       "kind": "string",
       "name": "string",
       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -106,9 +652,9 @@
      "decorators": [],
      "crossLanguageDefinitionId": "SpecialWords.Models.assert.name",
      "serializationOptions": {
-      "$id": "15",
+      "$id": "83",
       "json": {
-       "$id": "16",
+       "$id": "84",
        "name": "name"
       }
      }
@@ -116,7 +662,7 @@
    ]
   },
   {
-   "$id": "17",
+   "$id": "85",
    "kind": "model",
    "name": "async",
    "namespace": "SpecialWords.Models",
@@ -125,12 +671,12 @@
    "decorators": [],
    "properties": [
     {
-     "$id": "18",
+     "$id": "86",
      "kind": "property",
      "name": "name",
      "serializedName": "name",
      "type": {
-      "$id": "19",
+      "$id": "87",
       "kind": "string",
       "name": "string",
       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -143,9 +689,9 @@
      "decorators": [],
      "crossLanguageDefinitionId": "SpecialWords.Models.async.name",
      "serializationOptions": {
-      "$id": "20",
+      "$id": "88",
       "json": {
-       "$id": "21",
+       "$id": "89",
        "name": "name"
       }
      }
@@ -153,7 +699,7 @@
    ]
   },
   {
-   "$id": "22",
+   "$id": "90",
    "kind": "model",
    "name": "await",
    "namespace": "SpecialWords.Models",
@@ -162,12 +708,12 @@
    "decorators": [],
    "properties": [
     {
-     "$id": "23",
+     "$id": "91",
      "kind": "property",
      "name": "name",
      "serializedName": "name",
      "type": {
-      "$id": "24",
+      "$id": "92",
       "kind": "string",
       "name": "string",
       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -180,9 +726,9 @@
      "decorators": [],
      "crossLanguageDefinitionId": "SpecialWords.Models.await.name",
      "serializationOptions": {
-      "$id": "25",
+      "$id": "93",
       "json": {
-       "$id": "26",
+       "$id": "94",
        "name": "name"
       }
      }
@@ -190,7 +736,7 @@
    ]
   },
   {
-   "$id": "27",
+   "$id": "95",
    "kind": "model",
    "name": "break",
    "namespace": "SpecialWords.Models",
@@ -199,12 +745,12 @@
    "decorators": [],
    "properties": [
     {
-     "$id": "28",
+     "$id": "96",
      "kind": "property",
      "name": "name",
      "serializedName": "name",
      "type": {
-      "$id": "29",
+      "$id": "97",
       "kind": "string",
       "name": "string",
       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -217,9 +763,9 @@
      "decorators": [],
      "crossLanguageDefinitionId": "SpecialWords.Models.break.name",
      "serializationOptions": {
-      "$id": "30",
+      "$id": "98",
       "json": {
-       "$id": "31",
+       "$id": "99",
        "name": "name"
       }
      }
@@ -227,7 +773,7 @@
    ]
   },
   {
-   "$id": "32",
+   "$id": "100",
    "kind": "model",
    "name": "class",
    "namespace": "SpecialWords.Models",
@@ -236,12 +782,12 @@
    "decorators": [],
    "properties": [
     {
-     "$id": "33",
+     "$id": "101",
      "kind": "property",
      "name": "name",
      "serializedName": "name",
      "type": {
-      "$id": "34",
+      "$id": "102",
       "kind": "string",
       "name": "string",
       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -254,9 +800,9 @@
      "decorators": [],
      "crossLanguageDefinitionId": "SpecialWords.Models.class.name",
      "serializationOptions": {
-      "$id": "35",
+      "$id": "103",
       "json": {
-       "$id": "36",
+       "$id": "104",
        "name": "name"
       }
      }
@@ -264,7 +810,7 @@
    ]
   },
   {
-   "$id": "37",
+   "$id": "105",
    "kind": "model",
    "name": "constructor",
    "namespace": "SpecialWords.Models",
@@ -273,12 +819,12 @@
    "decorators": [],
    "properties": [
     {
-     "$id": "38",
+     "$id": "106",
      "kind": "property",
      "name": "name",
      "serializedName": "name",
      "type": {
-      "$id": "39",
+      "$id": "107",
       "kind": "string",
       "name": "string",
       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -291,9 +837,9 @@
      "decorators": [],
      "crossLanguageDefinitionId": "SpecialWords.Models.constructor.name",
      "serializationOptions": {
-      "$id": "40",
+      "$id": "108",
       "json": {
-       "$id": "41",
+       "$id": "109",
        "name": "name"
       }
      }
@@ -301,7 +847,7 @@
    ]
   },
   {
-   "$id": "42",
+   "$id": "110",
    "kind": "model",
    "name": "continue",
    "namespace": "SpecialWords.Models",
@@ -310,12 +856,12 @@
    "decorators": [],
    "properties": [
     {
-     "$id": "43",
+     "$id": "111",
      "kind": "property",
      "name": "name",
      "serializedName": "name",
      "type": {
-      "$id": "44",
+      "$id": "112",
       "kind": "string",
       "name": "string",
       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -328,9 +874,9 @@
      "decorators": [],
      "crossLanguageDefinitionId": "SpecialWords.Models.continue.name",
      "serializationOptions": {
-      "$id": "45",
+      "$id": "113",
       "json": {
-       "$id": "46",
+       "$id": "114",
        "name": "name"
       }
      }
@@ -338,7 +884,7 @@
    ]
   },
   {
-   "$id": "47",
+   "$id": "115",
    "kind": "model",
    "name": "def",
    "namespace": "SpecialWords.Models",
@@ -347,12 +893,12 @@
    "decorators": [],
    "properties": [
     {
-     "$id": "48",
+     "$id": "116",
      "kind": "property",
      "name": "name",
      "serializedName": "name",
      "type": {
-      "$id": "49",
+      "$id": "117",
       "kind": "string",
       "name": "string",
       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -365,9 +911,9 @@
      "decorators": [],
      "crossLanguageDefinitionId": "SpecialWords.Models.def.name",
      "serializationOptions": {
-      "$id": "50",
+      "$id": "118",
       "json": {
-       "$id": "51",
+       "$id": "119",
        "name": "name"
       }
      }
@@ -375,7 +921,7 @@
    ]
   },
   {
-   "$id": "52",
+   "$id": "120",
    "kind": "model",
    "name": "del",
    "namespace": "SpecialWords.Models",
@@ -384,12 +930,12 @@
    "decorators": [],
    "properties": [
     {
-     "$id": "53",
+     "$id": "121",
      "kind": "property",
      "name": "name",
      "serializedName": "name",
      "type": {
-      "$id": "54",
+      "$id": "122",
       "kind": "string",
       "name": "string",
       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -402,9 +948,9 @@
      "decorators": [],
      "crossLanguageDefinitionId": "SpecialWords.Models.del.name",
      "serializationOptions": {
-      "$id": "55",
+      "$id": "123",
       "json": {
-       "$id": "56",
+       "$id": "124",
        "name": "name"
       }
      }
@@ -412,7 +958,7 @@
    ]
   },
   {
-   "$id": "57",
+   "$id": "125",
    "kind": "model",
    "name": "elif",
    "namespace": "SpecialWords.Models",
@@ -421,12 +967,12 @@
    "decorators": [],
    "properties": [
     {
-     "$id": "58",
+     "$id": "126",
      "kind": "property",
      "name": "name",
      "serializedName": "name",
      "type": {
-      "$id": "59",
+      "$id": "127",
       "kind": "string",
       "name": "string",
       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -439,9 +985,9 @@
      "decorators": [],
      "crossLanguageDefinitionId": "SpecialWords.Models.elif.name",
      "serializationOptions": {
-      "$id": "60",
+      "$id": "128",
       "json": {
-       "$id": "61",
+       "$id": "129",
        "name": "name"
       }
      }
@@ -449,7 +995,7 @@
    ]
   },
   {
-   "$id": "62",
+   "$id": "130",
    "kind": "model",
    "name": "else",
    "namespace": "SpecialWords.Models",
@@ -458,12 +1004,12 @@
    "decorators": [],
    "properties": [
     {
-     "$id": "63",
+     "$id": "131",
      "kind": "property",
      "name": "name",
      "serializedName": "name",
      "type": {
-      "$id": "64",
+      "$id": "132",
       "kind": "string",
       "name": "string",
       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -476,9 +1022,9 @@
      "decorators": [],
      "crossLanguageDefinitionId": "SpecialWords.Models.else.name",
      "serializationOptions": {
-      "$id": "65",
+      "$id": "133",
       "json": {
-       "$id": "66",
+       "$id": "134",
        "name": "name"
       }
      }
@@ -486,7 +1032,7 @@
    ]
   },
   {
-   "$id": "67",
+   "$id": "135",
    "kind": "model",
    "name": "except",
    "namespace": "SpecialWords.Models",
@@ -495,12 +1041,12 @@
    "decorators": [],
    "properties": [
     {
-     "$id": "68",
+     "$id": "136",
      "kind": "property",
      "name": "name",
      "serializedName": "name",
      "type": {
-      "$id": "69",
+      "$id": "137",
       "kind": "string",
       "name": "string",
       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -513,9 +1059,9 @@
      "decorators": [],
      "crossLanguageDefinitionId": "SpecialWords.Models.except.name",
      "serializationOptions": {
-      "$id": "70",
+      "$id": "138",
       "json": {
-       "$id": "71",
+       "$id": "139",
        "name": "name"
       }
      }
@@ -523,7 +1069,7 @@
    ]
   },
   {
-   "$id": "72",
+   "$id": "140",
    "kind": "model",
    "name": "exec",
    "namespace": "SpecialWords.Models",
@@ -532,12 +1078,12 @@
    "decorators": [],
    "properties": [
     {
-     "$id": "73",
+     "$id": "141",
      "kind": "property",
      "name": "name",
      "serializedName": "name",
      "type": {
-      "$id": "74",
+      "$id": "142",
       "kind": "string",
       "name": "string",
       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -550,9 +1096,9 @@
      "decorators": [],
      "crossLanguageDefinitionId": "SpecialWords.Models.exec.name",
      "serializationOptions": {
-      "$id": "75",
+      "$id": "143",
       "json": {
-       "$id": "76",
+       "$id": "144",
        "name": "name"
       }
      }
@@ -560,7 +1106,7 @@
    ]
   },
   {
-   "$id": "77",
+   "$id": "145",
    "kind": "model",
    "name": "finally",
    "namespace": "SpecialWords.Models",
@@ -569,12 +1115,12 @@
    "decorators": [],
    "properties": [
     {
-     "$id": "78",
+     "$id": "146",
      "kind": "property",
      "name": "name",
      "serializedName": "name",
      "type": {
-      "$id": "79",
+      "$id": "147",
       "kind": "string",
       "name": "string",
       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -587,9 +1133,9 @@
      "decorators": [],
      "crossLanguageDefinitionId": "SpecialWords.Models.finally.name",
      "serializationOptions": {
-      "$id": "80",
+      "$id": "148",
       "json": {
-       "$id": "81",
+       "$id": "149",
        "name": "name"
       }
      }
@@ -597,7 +1143,7 @@
    ]
   },
   {
-   "$id": "82",
+   "$id": "150",
    "kind": "model",
    "name": "for",
    "namespace": "SpecialWords.Models",
@@ -606,12 +1152,12 @@
    "decorators": [],
    "properties": [
     {
-     "$id": "83",
+     "$id": "151",
      "kind": "property",
      "name": "name",
      "serializedName": "name",
      "type": {
-      "$id": "84",
+      "$id": "152",
       "kind": "string",
       "name": "string",
       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -624,9 +1170,9 @@
      "decorators": [],
      "crossLanguageDefinitionId": "SpecialWords.Models.for.name",
      "serializationOptions": {
-      "$id": "85",
+      "$id": "153",
       "json": {
-       "$id": "86",
+       "$id": "154",
        "name": "name"
       }
      }
@@ -634,7 +1180,7 @@
    ]
   },
   {
-   "$id": "87",
+   "$id": "155",
    "kind": "model",
    "name": "from",
    "namespace": "SpecialWords.Models",
@@ -643,12 +1189,12 @@
    "decorators": [],
    "properties": [
     {
-     "$id": "88",
+     "$id": "156",
      "kind": "property",
      "name": "name",
      "serializedName": "name",
      "type": {
-      "$id": "89",
+      "$id": "157",
       "kind": "string",
       "name": "string",
       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -661,9 +1207,9 @@
      "decorators": [],
      "crossLanguageDefinitionId": "SpecialWords.Models.from.name",
      "serializationOptions": {
-      "$id": "90",
+      "$id": "158",
       "json": {
-       "$id": "91",
+       "$id": "159",
        "name": "name"
       }
      }
@@ -671,7 +1217,7 @@
    ]
   },
   {
-   "$id": "92",
+   "$id": "160",
    "kind": "model",
    "name": "global",
    "namespace": "SpecialWords.Models",
@@ -680,12 +1226,12 @@
    "decorators": [],
    "properties": [
     {
-     "$id": "93",
+     "$id": "161",
      "kind": "property",
      "name": "name",
      "serializedName": "name",
      "type": {
-      "$id": "94",
+      "$id": "162",
       "kind": "string",
       "name": "string",
       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -698,9 +1244,9 @@
      "decorators": [],
      "crossLanguageDefinitionId": "SpecialWords.Models.global.name",
      "serializationOptions": {
-      "$id": "95",
+      "$id": "163",
       "json": {
-       "$id": "96",
+       "$id": "164",
        "name": "name"
       }
      }
@@ -708,7 +1254,7 @@
    ]
   },
   {
-   "$id": "97",
+   "$id": "165",
    "kind": "model",
    "name": "if",
    "namespace": "SpecialWords.Models",
@@ -717,12 +1263,12 @@
    "decorators": [],
    "properties": [
     {
-     "$id": "98",
+     "$id": "166",
      "kind": "property",
      "name": "name",
      "serializedName": "name",
      "type": {
-      "$id": "99",
+      "$id": "167",
       "kind": "string",
       "name": "string",
       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -735,9 +1281,9 @@
      "decorators": [],
      "crossLanguageDefinitionId": "SpecialWords.Models.if.name",
      "serializationOptions": {
-      "$id": "100",
+      "$id": "168",
       "json": {
-       "$id": "101",
+       "$id": "169",
        "name": "name"
       }
      }
@@ -745,7 +1291,7 @@
    ]
   },
   {
-   "$id": "102",
+   "$id": "170",
    "kind": "model",
    "name": "import",
    "namespace": "SpecialWords.Models",
@@ -754,12 +1300,12 @@
    "decorators": [],
    "properties": [
     {
-     "$id": "103",
+     "$id": "171",
      "kind": "property",
      "name": "name",
      "serializedName": "name",
      "type": {
-      "$id": "104",
+      "$id": "172",
       "kind": "string",
       "name": "string",
       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -772,9 +1318,9 @@
      "decorators": [],
      "crossLanguageDefinitionId": "SpecialWords.Models.import.name",
      "serializationOptions": {
-      "$id": "105",
+      "$id": "173",
       "json": {
-       "$id": "106",
+       "$id": "174",
        "name": "name"
       }
      }
@@ -782,7 +1328,7 @@
    ]
   },
   {
-   "$id": "107",
+   "$id": "175",
    "kind": "model",
    "name": "in",
    "namespace": "SpecialWords.Models",
@@ -791,12 +1337,12 @@
    "decorators": [],
    "properties": [
     {
-     "$id": "108",
+     "$id": "176",
      "kind": "property",
      "name": "name",
      "serializedName": "name",
      "type": {
-      "$id": "109",
+      "$id": "177",
       "kind": "string",
       "name": "string",
       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -809,9 +1355,9 @@
      "decorators": [],
      "crossLanguageDefinitionId": "SpecialWords.Models.in.name",
      "serializationOptions": {
-      "$id": "110",
+      "$id": "178",
       "json": {
-       "$id": "111",
+       "$id": "179",
        "name": "name"
       }
      }
@@ -819,7 +1365,7 @@
    ]
   },
   {
-   "$id": "112",
+   "$id": "180",
    "kind": "model",
    "name": "is",
    "namespace": "SpecialWords.Models",
@@ -828,12 +1374,12 @@
    "decorators": [],
    "properties": [
     {
-     "$id": "113",
+     "$id": "181",
      "kind": "property",
      "name": "name",
      "serializedName": "name",
      "type": {
-      "$id": "114",
+      "$id": "182",
       "kind": "string",
       "name": "string",
       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -846,9 +1392,9 @@
      "decorators": [],
      "crossLanguageDefinitionId": "SpecialWords.Models.is.name",
      "serializationOptions": {
-      "$id": "115",
+      "$id": "183",
       "json": {
-       "$id": "116",
+       "$id": "184",
        "name": "name"
       }
      }
@@ -856,7 +1402,7 @@
    ]
   },
   {
-   "$id": "117",
+   "$id": "185",
    "kind": "model",
    "name": "lambda",
    "namespace": "SpecialWords.Models",
@@ -865,12 +1411,12 @@
    "decorators": [],
    "properties": [
     {
-     "$id": "118",
+     "$id": "186",
      "kind": "property",
      "name": "name",
      "serializedName": "name",
      "type": {
-      "$id": "119",
+      "$id": "187",
       "kind": "string",
       "name": "string",
       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -883,9 +1429,9 @@
      "decorators": [],
      "crossLanguageDefinitionId": "SpecialWords.Models.lambda.name",
      "serializationOptions": {
-      "$id": "120",
+      "$id": "188",
       "json": {
-       "$id": "121",
+       "$id": "189",
        "name": "name"
       }
      }
@@ -893,7 +1439,7 @@
    ]
   },
   {
-   "$id": "122",
+   "$id": "190",
    "kind": "model",
    "name": "not",
    "namespace": "SpecialWords.Models",
@@ -902,12 +1448,12 @@
    "decorators": [],
    "properties": [
     {
-     "$id": "123",
+     "$id": "191",
      "kind": "property",
      "name": "name",
      "serializedName": "name",
      "type": {
-      "$id": "124",
+      "$id": "192",
       "kind": "string",
       "name": "string",
       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -920,9 +1466,9 @@
      "decorators": [],
      "crossLanguageDefinitionId": "SpecialWords.Models.not.name",
      "serializationOptions": {
-      "$id": "125",
+      "$id": "193",
       "json": {
-       "$id": "126",
+       "$id": "194",
        "name": "name"
       }
      }
@@ -930,7 +1476,7 @@
    ]
   },
   {
-   "$id": "127",
+   "$id": "195",
    "kind": "model",
    "name": "or",
    "namespace": "SpecialWords.Models",
@@ -939,12 +1485,12 @@
    "decorators": [],
    "properties": [
     {
-     "$id": "128",
+     "$id": "196",
      "kind": "property",
      "name": "name",
      "serializedName": "name",
      "type": {
-      "$id": "129",
+      "$id": "197",
       "kind": "string",
       "name": "string",
       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -957,9 +1503,9 @@
      "decorators": [],
      "crossLanguageDefinitionId": "SpecialWords.Models.or.name",
      "serializationOptions": {
-      "$id": "130",
+      "$id": "198",
       "json": {
-       "$id": "131",
+       "$id": "199",
        "name": "name"
       }
      }
@@ -967,7 +1513,7 @@
    ]
   },
   {
-   "$id": "132",
+   "$id": "200",
    "kind": "model",
    "name": "pass",
    "namespace": "SpecialWords.Models",
@@ -976,12 +1522,12 @@
    "decorators": [],
    "properties": [
     {
-     "$id": "133",
+     "$id": "201",
      "kind": "property",
      "name": "name",
      "serializedName": "name",
      "type": {
-      "$id": "134",
+      "$id": "202",
       "kind": "string",
       "name": "string",
       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -994,9 +1540,9 @@
      "decorators": [],
      "crossLanguageDefinitionId": "SpecialWords.Models.pass.name",
      "serializationOptions": {
-      "$id": "135",
+      "$id": "203",
       "json": {
-       "$id": "136",
+       "$id": "204",
        "name": "name"
       }
      }
@@ -1004,7 +1550,7 @@
    ]
   },
   {
-   "$id": "137",
+   "$id": "205",
    "kind": "model",
    "name": "raise",
    "namespace": "SpecialWords.Models",
@@ -1013,12 +1559,12 @@
    "decorators": [],
    "properties": [
     {
-     "$id": "138",
+     "$id": "206",
      "kind": "property",
      "name": "name",
      "serializedName": "name",
      "type": {
-      "$id": "139",
+      "$id": "207",
       "kind": "string",
       "name": "string",
       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -1031,9 +1577,9 @@
      "decorators": [],
      "crossLanguageDefinitionId": "SpecialWords.Models.raise.name",
      "serializationOptions": {
-      "$id": "140",
+      "$id": "208",
       "json": {
-       "$id": "141",
+       "$id": "209",
        "name": "name"
       }
      }
@@ -1041,7 +1587,7 @@
    ]
   },
   {
-   "$id": "142",
+   "$id": "210",
    "kind": "model",
    "name": "return",
    "namespace": "SpecialWords.Models",
@@ -1050,12 +1596,12 @@
    "decorators": [],
    "properties": [
     {
-     "$id": "143",
+     "$id": "211",
      "kind": "property",
      "name": "name",
      "serializedName": "name",
      "type": {
-      "$id": "144",
+      "$id": "212",
       "kind": "string",
       "name": "string",
       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -1068,9 +1614,9 @@
      "decorators": [],
      "crossLanguageDefinitionId": "SpecialWords.Models.return.name",
      "serializationOptions": {
-      "$id": "145",
+      "$id": "213",
       "json": {
-       "$id": "146",
+       "$id": "214",
        "name": "name"
       }
      }
@@ -1078,7 +1624,7 @@
    ]
   },
   {
-   "$id": "147",
+   "$id": "215",
    "kind": "model",
    "name": "try",
    "namespace": "SpecialWords.Models",
@@ -1087,12 +1633,12 @@
    "decorators": [],
    "properties": [
     {
-     "$id": "148",
+     "$id": "216",
      "kind": "property",
      "name": "name",
      "serializedName": "name",
      "type": {
-      "$id": "149",
+      "$id": "217",
       "kind": "string",
       "name": "string",
       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -1105,9 +1651,9 @@
      "decorators": [],
      "crossLanguageDefinitionId": "SpecialWords.Models.try.name",
      "serializationOptions": {
-      "$id": "150",
+      "$id": "218",
       "json": {
-       "$id": "151",
+       "$id": "219",
        "name": "name"
       }
      }
@@ -1115,7 +1661,7 @@
    ]
   },
   {
-   "$id": "152",
+   "$id": "220",
    "kind": "model",
    "name": "while",
    "namespace": "SpecialWords.Models",
@@ -1124,12 +1670,12 @@
    "decorators": [],
    "properties": [
     {
-     "$id": "153",
+     "$id": "221",
      "kind": "property",
      "name": "name",
      "serializedName": "name",
      "type": {
-      "$id": "154",
+      "$id": "222",
       "kind": "string",
       "name": "string",
       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -1142,9 +1688,9 @@
      "decorators": [],
      "crossLanguageDefinitionId": "SpecialWords.Models.while.name",
      "serializationOptions": {
-      "$id": "155",
+      "$id": "223",
       "json": {
-       "$id": "156",
+       "$id": "224",
        "name": "name"
       }
      }
@@ -1152,7 +1698,7 @@
    ]
   },
   {
-   "$id": "157",
+   "$id": "225",
    "kind": "model",
    "name": "with",
    "namespace": "SpecialWords.Models",
@@ -1161,12 +1707,12 @@
    "decorators": [],
    "properties": [
     {
-     "$id": "158",
+     "$id": "226",
      "kind": "property",
      "name": "name",
      "serializedName": "name",
      "type": {
-      "$id": "159",
+      "$id": "227",
       "kind": "string",
       "name": "string",
       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -1179,9 +1725,9 @@
      "decorators": [],
      "crossLanguageDefinitionId": "SpecialWords.Models.with.name",
      "serializationOptions": {
-      "$id": "160",
+      "$id": "228",
       "json": {
-       "$id": "161",
+       "$id": "229",
        "name": "name"
       }
      }
@@ -1189,7 +1735,7 @@
    ]
   },
   {
-   "$id": "162",
+   "$id": "230",
    "kind": "model",
    "name": "yield",
    "namespace": "SpecialWords.Models",
@@ -1198,12 +1744,12 @@
    "decorators": [],
    "properties": [
     {
-     "$id": "163",
+     "$id": "231",
      "kind": "property",
      "name": "name",
      "serializedName": "name",
      "type": {
-      "$id": "164",
+      "$id": "232",
       "kind": "string",
       "name": "string",
       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -1216,9 +1762,9 @@
      "decorators": [],
      "crossLanguageDefinitionId": "SpecialWords.Models.yield.name",
      "serializationOptions": {
-      "$id": "165",
+      "$id": "233",
       "json": {
-       "$id": "166",
+       "$id": "234",
        "name": "name"
       }
      }
@@ -1226,7 +1772,7 @@
    ]
   },
   {
-   "$id": "167",
+   "$id": "235",
    "kind": "model",
    "name": "SameAsModel",
    "namespace": "SpecialWords.ModelProperties",
@@ -1235,12 +1781,12 @@
    "decorators": [],
    "properties": [
     {
-     "$id": "168",
+     "$id": "236",
      "kind": "property",
      "name": "SameAsModel",
      "serializedName": "SameAsModel",
      "type": {
-      "$id": "169",
+      "$id": "237",
       "kind": "string",
       "name": "string",
       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -1253,9 +1799,9 @@
      "decorators": [],
      "crossLanguageDefinitionId": "SpecialWords.ModelProperties.SameAsModel.SameAsModel",
      "serializationOptions": {
-      "$id": "170",
+      "$id": "238",
       "json": {
-       "$id": "171",
+       "$id": "239",
        "name": "SameAsModel"
       }
      }
@@ -1265,7 +1811,7 @@
  ],
  "clients": [
   {
-   "$id": "172",
+   "$id": "240",
    "kind": "client",
    "name": "SpecialWordsClient",
    "namespace": "SpecialWords",
@@ -1273,12 +1819,12 @@
    "methods": [],
    "parameters": [
     {
-     "$id": "173",
+     "$id": "241",
      "name": "endpoint",
      "nameInRequest": "endpoint",
      "doc": "Service host",
      "type": {
-      "$id": "174",
+      "$id": "242",
       "kind": "url",
       "name": "url",
       "crossLanguageDefinitionId": "TypeSpec.url"
@@ -1292,9 +1838,9 @@
      "explode": false,
      "kind": "Client",
      "defaultValue": {
-      "$id": "175",
+      "$id": "243",
       "type": {
-       "$id": "176",
+       "$id": "244",
        "kind": "string",
        "name": "string",
        "crossLanguageDefinitionId": "TypeSpec.string"
@@ -1308,41 +1854,31 @@
    "apiVersions": [],
    "children": [
     {
-     "$id": "177",
+     "$id": "245",
      "kind": "client",
      "name": "Models",
      "namespace": "SpecialWords.Models",
      "doc": "Verify model names",
      "methods": [
       {
-       "$id": "178",
+       "$id": "246",
        "kind": "basic",
        "name": "withAnd",
        "accessibility": "public",
        "apiVersions": [],
        "operation": {
-        "$id": "179",
+        "$id": "247",
         "name": "withAnd",
         "resourceName": "Models",
         "accessibility": "public",
         "parameters": [
          {
-          "$id": "180",
+          "$id": "248",
           "name": "contentType",
           "nameInRequest": "Content-Type",
           "doc": "Body parameter's content type. Known values are application/json",
           "type": {
-           "$id": "181",
-           "kind": "constant",
-           "valueType": {
-            "$id": "182",
-            "kind": "string",
-            "name": "string",
-            "crossLanguageDefinitionId": "TypeSpec.string",
-            "decorators": []
-           },
-           "value": "application/json",
-           "decorators": []
+           "$ref": "2"
           },
           "location": "Header",
           "isApiVersion": false,
@@ -1355,11 +1891,11 @@
           "skipUrlEncoding": false
          },
          {
-          "$id": "183",
+          "$id": "249",
           "name": "body",
           "nameInRequest": "body",
           "type": {
-           "$ref": "2"
+           "$ref": "70"
           },
           "location": "Body",
           "isApiVersion": false,
@@ -1374,7 +1910,7 @@
         ],
         "responses": [
          {
-          "$id": "184",
+          "$id": "250",
           "statusCodes": [
            204
           ],
@@ -1396,11 +1932,11 @@
        },
        "parameters": [
         {
-         "$id": "185",
+         "$id": "251",
          "name": "body",
          "nameInRequest": "body",
          "type": {
-          "$ref": "2"
+          "$ref": "70"
          },
          "location": "Body",
          "isApiVersion": false,
@@ -1413,12 +1949,12 @@
          "skipUrlEncoding": false
         },
         {
-         "$id": "186",
+         "$id": "252",
          "name": "contentType",
          "nameInRequest": "contentType",
          "doc": "Body parameter's content type. Known values are application/json",
          "type": {
-          "$ref": "181"
+          "$ref": "2"
          },
          "location": "Header",
          "isApiVersion": false,
@@ -1432,7 +1968,7 @@
         }
        ],
        "response": {
-        "$id": "187"
+        "$id": "253"
        },
        "isOverride": false,
        "generateConvenient": true,
@@ -1440,34 +1976,24 @@
        "crossLanguageDefinitionId": "SpecialWords.Models.withAnd"
       },
       {
-       "$id": "188",
+       "$id": "254",
        "kind": "basic",
        "name": "withAs",
        "accessibility": "public",
        "apiVersions": [],
        "operation": {
-        "$id": "189",
+        "$id": "255",
         "name": "withAs",
         "resourceName": "Models",
         "accessibility": "public",
         "parameters": [
          {
-          "$id": "190",
+          "$id": "256",
           "name": "contentType",
           "nameInRequest": "Content-Type",
           "doc": "Body parameter's content type. Known values are application/json",
           "type": {
-           "$id": "191",
-           "kind": "constant",
-           "valueType": {
-            "$id": "192",
-            "kind": "string",
-            "name": "string",
-            "crossLanguageDefinitionId": "TypeSpec.string",
-            "decorators": []
-           },
-           "value": "application/json",
-           "decorators": []
+           "$ref": "4"
           },
           "location": "Header",
           "isApiVersion": false,
@@ -1480,11 +2006,11 @@
           "skipUrlEncoding": false
          },
          {
-          "$id": "193",
+          "$id": "257",
           "name": "body",
           "nameInRequest": "body",
           "type": {
-           "$ref": "7"
+           "$ref": "75"
           },
           "location": "Body",
           "isApiVersion": false,
@@ -1499,7 +2025,7 @@
         ],
         "responses": [
          {
-          "$id": "194",
+          "$id": "258",
           "statusCodes": [
            204
           ],
@@ -1521,11 +2047,11 @@
        },
        "parameters": [
         {
-         "$id": "195",
+         "$id": "259",
          "name": "body",
          "nameInRequest": "body",
          "type": {
-          "$ref": "7"
+          "$ref": "75"
          },
          "location": "Body",
          "isApiVersion": false,
@@ -1538,12 +2064,12 @@
          "skipUrlEncoding": false
         },
         {
-         "$id": "196",
+         "$id": "260",
          "name": "contentType",
          "nameInRequest": "contentType",
          "doc": "Body parameter's content type. Known values are application/json",
          "type": {
-          "$ref": "191"
+          "$ref": "4"
          },
          "location": "Header",
          "isApiVersion": false,
@@ -1557,7 +2083,7 @@
         }
        ],
        "response": {
-        "$id": "197"
+        "$id": "261"
        },
        "isOverride": false,
        "generateConvenient": true,
@@ -1565,34 +2091,24 @@
        "crossLanguageDefinitionId": "SpecialWords.Models.withAs"
       },
       {
-       "$id": "198",
+       "$id": "262",
        "kind": "basic",
        "name": "withAssert",
        "accessibility": "public",
        "apiVersions": [],
        "operation": {
-        "$id": "199",
+        "$id": "263",
         "name": "withAssert",
         "resourceName": "Models",
         "accessibility": "public",
         "parameters": [
          {
-          "$id": "200",
+          "$id": "264",
           "name": "contentType",
           "nameInRequest": "Content-Type",
           "doc": "Body parameter's content type. Known values are application/json",
           "type": {
-           "$id": "201",
-           "kind": "constant",
-           "valueType": {
-            "$id": "202",
-            "kind": "string",
-            "name": "string",
-            "crossLanguageDefinitionId": "TypeSpec.string",
-            "decorators": []
-           },
-           "value": "application/json",
-           "decorators": []
+           "$ref": "6"
           },
           "location": "Header",
           "isApiVersion": false,
@@ -1605,11 +2121,11 @@
           "skipUrlEncoding": false
          },
          {
-          "$id": "203",
+          "$id": "265",
           "name": "body",
           "nameInRequest": "body",
           "type": {
-           "$ref": "12"
+           "$ref": "80"
           },
           "location": "Body",
           "isApiVersion": false,
@@ -1624,7 +2140,7 @@
         ],
         "responses": [
          {
-          "$id": "204",
+          "$id": "266",
           "statusCodes": [
            204
           ],
@@ -1646,11 +2162,11 @@
        },
        "parameters": [
         {
-         "$id": "205",
+         "$id": "267",
          "name": "body",
          "nameInRequest": "body",
          "type": {
-          "$ref": "12"
+          "$ref": "80"
          },
          "location": "Body",
          "isApiVersion": false,
@@ -1663,12 +2179,12 @@
          "skipUrlEncoding": false
         },
         {
-         "$id": "206",
+         "$id": "268",
          "name": "contentType",
          "nameInRequest": "contentType",
          "doc": "Body parameter's content type. Known values are application/json",
          "type": {
-          "$ref": "201"
+          "$ref": "6"
          },
          "location": "Header",
          "isApiVersion": false,
@@ -1682,7 +2198,7 @@
         }
        ],
        "response": {
-        "$id": "207"
+        "$id": "269"
        },
        "isOverride": false,
        "generateConvenient": true,
@@ -1690,784 +2206,24 @@
        "crossLanguageDefinitionId": "SpecialWords.Models.withAssert"
       },
       {
-       "$id": "208",
+       "$id": "270",
        "kind": "basic",
        "name": "withAsync",
        "accessibility": "public",
        "apiVersions": [],
        "operation": {
-        "$id": "209",
+        "$id": "271",
         "name": "withAsync",
         "resourceName": "Models",
         "accessibility": "public",
         "parameters": [
          {
-          "$id": "210",
+          "$id": "272",
           "name": "contentType",
           "nameInRequest": "Content-Type",
           "doc": "Body parameter's content type. Known values are application/json",
           "type": {
-           "$id": "211",
-           "kind": "constant",
-           "valueType": {
-            "$id": "212",
-            "kind": "string",
-            "name": "string",
-            "crossLanguageDefinitionId": "TypeSpec.string",
-            "decorators": []
-           },
-           "value": "application/json",
-           "decorators": []
-          },
-          "location": "Header",
-          "isApiVersion": false,
-          "isContentType": true,
-          "isEndpoint": false,
-          "explode": false,
-          "isRequired": true,
-          "kind": "Constant",
-          "decorators": [],
-          "skipUrlEncoding": false
-         },
-         {
-          "$id": "213",
-          "name": "body",
-          "nameInRequest": "body",
-          "type": {
-           "$ref": "17"
-          },
-          "location": "Body",
-          "isApiVersion": false,
-          "isContentType": false,
-          "isEndpoint": false,
-          "explode": false,
-          "isRequired": true,
-          "kind": "Method",
-          "decorators": [],
-          "skipUrlEncoding": false
-         }
-        ],
-        "responses": [
-         {
-          "$id": "214",
-          "statusCodes": [
-           204
-          ],
-          "headers": [],
-          "isErrorResponse": false
-         }
-        ],
-        "httpMethod": "POST",
-        "uri": "{endpoint}",
-        "path": "/special-words/models/async",
-        "requestMediaTypes": [
-         "application/json"
-        ],
-        "bufferResponse": true,
-        "generateProtocolMethod": true,
-        "generateConvenienceMethod": true,
-        "crossLanguageDefinitionId": "SpecialWords.Models.withAsync",
-        "decorators": []
-       },
-       "parameters": [
-        {
-         "$id": "215",
-         "name": "body",
-         "nameInRequest": "body",
-         "type": {
-          "$ref": "17"
-         },
-         "location": "Body",
-         "isApiVersion": false,
-         "isContentType": false,
-         "isEndpoint": false,
-         "explode": false,
-         "isRequired": true,
-         "kind": "Method",
-         "decorators": [],
-         "skipUrlEncoding": false
-        },
-        {
-         "$id": "216",
-         "name": "contentType",
-         "nameInRequest": "contentType",
-         "doc": "Body parameter's content type. Known values are application/json",
-         "type": {
-          "$ref": "211"
-         },
-         "location": "Header",
-         "isApiVersion": false,
-         "isContentType": false,
-         "isEndpoint": false,
-         "explode": false,
-         "isRequired": true,
-         "kind": "Constant",
-         "decorators": [],
-         "skipUrlEncoding": false
-        }
-       ],
-       "response": {
-        "$id": "217"
-       },
-       "isOverride": false,
-       "generateConvenient": true,
-       "generateProtocol": true,
-       "crossLanguageDefinitionId": "SpecialWords.Models.withAsync"
-      },
-      {
-       "$id": "218",
-       "kind": "basic",
-       "name": "withAwait",
-       "accessibility": "public",
-       "apiVersions": [],
-       "operation": {
-        "$id": "219",
-        "name": "withAwait",
-        "resourceName": "Models",
-        "accessibility": "public",
-        "parameters": [
-         {
-          "$id": "220",
-          "name": "contentType",
-          "nameInRequest": "Content-Type",
-          "doc": "Body parameter's content type. Known values are application/json",
-          "type": {
-           "$id": "221",
-           "kind": "constant",
-           "valueType": {
-            "$id": "222",
-            "kind": "string",
-            "name": "string",
-            "crossLanguageDefinitionId": "TypeSpec.string",
-            "decorators": []
-           },
-           "value": "application/json",
-           "decorators": []
-          },
-          "location": "Header",
-          "isApiVersion": false,
-          "isContentType": true,
-          "isEndpoint": false,
-          "explode": false,
-          "isRequired": true,
-          "kind": "Constant",
-          "decorators": [],
-          "skipUrlEncoding": false
-         },
-         {
-          "$id": "223",
-          "name": "body",
-          "nameInRequest": "body",
-          "type": {
-           "$ref": "22"
-          },
-          "location": "Body",
-          "isApiVersion": false,
-          "isContentType": false,
-          "isEndpoint": false,
-          "explode": false,
-          "isRequired": true,
-          "kind": "Method",
-          "decorators": [],
-          "skipUrlEncoding": false
-         }
-        ],
-        "responses": [
-         {
-          "$id": "224",
-          "statusCodes": [
-           204
-          ],
-          "headers": [],
-          "isErrorResponse": false
-         }
-        ],
-        "httpMethod": "POST",
-        "uri": "{endpoint}",
-        "path": "/special-words/models/await",
-        "requestMediaTypes": [
-         "application/json"
-        ],
-        "bufferResponse": true,
-        "generateProtocolMethod": true,
-        "generateConvenienceMethod": true,
-        "crossLanguageDefinitionId": "SpecialWords.Models.withAwait",
-        "decorators": []
-       },
-       "parameters": [
-        {
-         "$id": "225",
-         "name": "body",
-         "nameInRequest": "body",
-         "type": {
-          "$ref": "22"
-         },
-         "location": "Body",
-         "isApiVersion": false,
-         "isContentType": false,
-         "isEndpoint": false,
-         "explode": false,
-         "isRequired": true,
-         "kind": "Method",
-         "decorators": [],
-         "skipUrlEncoding": false
-        },
-        {
-         "$id": "226",
-         "name": "contentType",
-         "nameInRequest": "contentType",
-         "doc": "Body parameter's content type. Known values are application/json",
-         "type": {
-          "$ref": "221"
-         },
-         "location": "Header",
-         "isApiVersion": false,
-         "isContentType": false,
-         "isEndpoint": false,
-         "explode": false,
-         "isRequired": true,
-         "kind": "Constant",
-         "decorators": [],
-         "skipUrlEncoding": false
-        }
-       ],
-       "response": {
-        "$id": "227"
-       },
-       "isOverride": false,
-       "generateConvenient": true,
-       "generateProtocol": true,
-       "crossLanguageDefinitionId": "SpecialWords.Models.withAwait"
-      },
-      {
-       "$id": "228",
-       "kind": "basic",
-       "name": "withBreak",
-       "accessibility": "public",
-       "apiVersions": [],
-       "operation": {
-        "$id": "229",
-        "name": "withBreak",
-        "resourceName": "Models",
-        "accessibility": "public",
-        "parameters": [
-         {
-          "$id": "230",
-          "name": "contentType",
-          "nameInRequest": "Content-Type",
-          "doc": "Body parameter's content type. Known values are application/json",
-          "type": {
-           "$id": "231",
-           "kind": "constant",
-           "valueType": {
-            "$id": "232",
-            "kind": "string",
-            "name": "string",
-            "crossLanguageDefinitionId": "TypeSpec.string",
-            "decorators": []
-           },
-           "value": "application/json",
-           "decorators": []
-          },
-          "location": "Header",
-          "isApiVersion": false,
-          "isContentType": true,
-          "isEndpoint": false,
-          "explode": false,
-          "isRequired": true,
-          "kind": "Constant",
-          "decorators": [],
-          "skipUrlEncoding": false
-         },
-         {
-          "$id": "233",
-          "name": "body",
-          "nameInRequest": "body",
-          "type": {
-           "$ref": "27"
-          },
-          "location": "Body",
-          "isApiVersion": false,
-          "isContentType": false,
-          "isEndpoint": false,
-          "explode": false,
-          "isRequired": true,
-          "kind": "Method",
-          "decorators": [],
-          "skipUrlEncoding": false
-         }
-        ],
-        "responses": [
-         {
-          "$id": "234",
-          "statusCodes": [
-           204
-          ],
-          "headers": [],
-          "isErrorResponse": false
-         }
-        ],
-        "httpMethod": "POST",
-        "uri": "{endpoint}",
-        "path": "/special-words/models/break",
-        "requestMediaTypes": [
-         "application/json"
-        ],
-        "bufferResponse": true,
-        "generateProtocolMethod": true,
-        "generateConvenienceMethod": true,
-        "crossLanguageDefinitionId": "SpecialWords.Models.withBreak",
-        "decorators": []
-       },
-       "parameters": [
-        {
-         "$id": "235",
-         "name": "body",
-         "nameInRequest": "body",
-         "type": {
-          "$ref": "27"
-         },
-         "location": "Body",
-         "isApiVersion": false,
-         "isContentType": false,
-         "isEndpoint": false,
-         "explode": false,
-         "isRequired": true,
-         "kind": "Method",
-         "decorators": [],
-         "skipUrlEncoding": false
-        },
-        {
-         "$id": "236",
-         "name": "contentType",
-         "nameInRequest": "contentType",
-         "doc": "Body parameter's content type. Known values are application/json",
-         "type": {
-          "$ref": "231"
-         },
-         "location": "Header",
-         "isApiVersion": false,
-         "isContentType": false,
-         "isEndpoint": false,
-         "explode": false,
-         "isRequired": true,
-         "kind": "Constant",
-         "decorators": [],
-         "skipUrlEncoding": false
-        }
-       ],
-       "response": {
-        "$id": "237"
-       },
-       "isOverride": false,
-       "generateConvenient": true,
-       "generateProtocol": true,
-       "crossLanguageDefinitionId": "SpecialWords.Models.withBreak"
-      },
-      {
-       "$id": "238",
-       "kind": "basic",
-       "name": "withClass",
-       "accessibility": "public",
-       "apiVersions": [],
-       "operation": {
-        "$id": "239",
-        "name": "withClass",
-        "resourceName": "Models",
-        "accessibility": "public",
-        "parameters": [
-         {
-          "$id": "240",
-          "name": "contentType",
-          "nameInRequest": "Content-Type",
-          "doc": "Body parameter's content type. Known values are application/json",
-          "type": {
-           "$id": "241",
-           "kind": "constant",
-           "valueType": {
-            "$id": "242",
-            "kind": "string",
-            "name": "string",
-            "crossLanguageDefinitionId": "TypeSpec.string",
-            "decorators": []
-           },
-           "value": "application/json",
-           "decorators": []
-          },
-          "location": "Header",
-          "isApiVersion": false,
-          "isContentType": true,
-          "isEndpoint": false,
-          "explode": false,
-          "isRequired": true,
-          "kind": "Constant",
-          "decorators": [],
-          "skipUrlEncoding": false
-         },
-         {
-          "$id": "243",
-          "name": "body",
-          "nameInRequest": "body",
-          "type": {
-           "$ref": "32"
-          },
-          "location": "Body",
-          "isApiVersion": false,
-          "isContentType": false,
-          "isEndpoint": false,
-          "explode": false,
-          "isRequired": true,
-          "kind": "Method",
-          "decorators": [],
-          "skipUrlEncoding": false
-         }
-        ],
-        "responses": [
-         {
-          "$id": "244",
-          "statusCodes": [
-           204
-          ],
-          "headers": [],
-          "isErrorResponse": false
-         }
-        ],
-        "httpMethod": "POST",
-        "uri": "{endpoint}",
-        "path": "/special-words/models/class",
-        "requestMediaTypes": [
-         "application/json"
-        ],
-        "bufferResponse": true,
-        "generateProtocolMethod": true,
-        "generateConvenienceMethod": true,
-        "crossLanguageDefinitionId": "SpecialWords.Models.withClass",
-        "decorators": []
-       },
-       "parameters": [
-        {
-         "$id": "245",
-         "name": "body",
-         "nameInRequest": "body",
-         "type": {
-          "$ref": "32"
-         },
-         "location": "Body",
-         "isApiVersion": false,
-         "isContentType": false,
-         "isEndpoint": false,
-         "explode": false,
-         "isRequired": true,
-         "kind": "Method",
-         "decorators": [],
-         "skipUrlEncoding": false
-        },
-        {
-         "$id": "246",
-         "name": "contentType",
-         "nameInRequest": "contentType",
-         "doc": "Body parameter's content type. Known values are application/json",
-         "type": {
-          "$ref": "241"
-         },
-         "location": "Header",
-         "isApiVersion": false,
-         "isContentType": false,
-         "isEndpoint": false,
-         "explode": false,
-         "isRequired": true,
-         "kind": "Constant",
-         "decorators": [],
-         "skipUrlEncoding": false
-        }
-       ],
-       "response": {
-        "$id": "247"
-       },
-       "isOverride": false,
-       "generateConvenient": true,
-       "generateProtocol": true,
-       "crossLanguageDefinitionId": "SpecialWords.Models.withClass"
-      },
-      {
-       "$id": "248",
-       "kind": "basic",
-       "name": "withConstructor",
-       "accessibility": "public",
-       "apiVersions": [],
-       "operation": {
-        "$id": "249",
-        "name": "withConstructor",
-        "resourceName": "Models",
-        "accessibility": "public",
-        "parameters": [
-         {
-          "$id": "250",
-          "name": "contentType",
-          "nameInRequest": "Content-Type",
-          "doc": "Body parameter's content type. Known values are application/json",
-          "type": {
-           "$id": "251",
-           "kind": "constant",
-           "valueType": {
-            "$id": "252",
-            "kind": "string",
-            "name": "string",
-            "crossLanguageDefinitionId": "TypeSpec.string",
-            "decorators": []
-           },
-           "value": "application/json",
-           "decorators": []
-          },
-          "location": "Header",
-          "isApiVersion": false,
-          "isContentType": true,
-          "isEndpoint": false,
-          "explode": false,
-          "isRequired": true,
-          "kind": "Constant",
-          "decorators": [],
-          "skipUrlEncoding": false
-         },
-         {
-          "$id": "253",
-          "name": "body",
-          "nameInRequest": "body",
-          "type": {
-           "$ref": "37"
-          },
-          "location": "Body",
-          "isApiVersion": false,
-          "isContentType": false,
-          "isEndpoint": false,
-          "explode": false,
-          "isRequired": true,
-          "kind": "Method",
-          "decorators": [],
-          "skipUrlEncoding": false
-         }
-        ],
-        "responses": [
-         {
-          "$id": "254",
-          "statusCodes": [
-           204
-          ],
-          "headers": [],
-          "isErrorResponse": false
-         }
-        ],
-        "httpMethod": "POST",
-        "uri": "{endpoint}",
-        "path": "/special-words/models/constructor",
-        "requestMediaTypes": [
-         "application/json"
-        ],
-        "bufferResponse": true,
-        "generateProtocolMethod": true,
-        "generateConvenienceMethod": true,
-        "crossLanguageDefinitionId": "SpecialWords.Models.withConstructor",
-        "decorators": []
-       },
-       "parameters": [
-        {
-         "$id": "255",
-         "name": "body",
-         "nameInRequest": "body",
-         "type": {
-          "$ref": "37"
-         },
-         "location": "Body",
-         "isApiVersion": false,
-         "isContentType": false,
-         "isEndpoint": false,
-         "explode": false,
-         "isRequired": true,
-         "kind": "Method",
-         "decorators": [],
-         "skipUrlEncoding": false
-        },
-        {
-         "$id": "256",
-         "name": "contentType",
-         "nameInRequest": "contentType",
-         "doc": "Body parameter's content type. Known values are application/json",
-         "type": {
-          "$ref": "251"
-         },
-         "location": "Header",
-         "isApiVersion": false,
-         "isContentType": false,
-         "isEndpoint": false,
-         "explode": false,
-         "isRequired": true,
-         "kind": "Constant",
-         "decorators": [],
-         "skipUrlEncoding": false
-        }
-       ],
-       "response": {
-        "$id": "257"
-       },
-       "isOverride": false,
-       "generateConvenient": true,
-       "generateProtocol": true,
-       "crossLanguageDefinitionId": "SpecialWords.Models.withConstructor"
-      },
-      {
-       "$id": "258",
-       "kind": "basic",
-       "name": "withContinue",
-       "accessibility": "public",
-       "apiVersions": [],
-       "operation": {
-        "$id": "259",
-        "name": "withContinue",
-        "resourceName": "Models",
-        "accessibility": "public",
-        "parameters": [
-         {
-          "$id": "260",
-          "name": "contentType",
-          "nameInRequest": "Content-Type",
-          "doc": "Body parameter's content type. Known values are application/json",
-          "type": {
-           "$id": "261",
-           "kind": "constant",
-           "valueType": {
-            "$id": "262",
-            "kind": "string",
-            "name": "string",
-            "crossLanguageDefinitionId": "TypeSpec.string",
-            "decorators": []
-           },
-           "value": "application/json",
-           "decorators": []
-          },
-          "location": "Header",
-          "isApiVersion": false,
-          "isContentType": true,
-          "isEndpoint": false,
-          "explode": false,
-          "isRequired": true,
-          "kind": "Constant",
-          "decorators": [],
-          "skipUrlEncoding": false
-         },
-         {
-          "$id": "263",
-          "name": "body",
-          "nameInRequest": "body",
-          "type": {
-           "$ref": "42"
-          },
-          "location": "Body",
-          "isApiVersion": false,
-          "isContentType": false,
-          "isEndpoint": false,
-          "explode": false,
-          "isRequired": true,
-          "kind": "Method",
-          "decorators": [],
-          "skipUrlEncoding": false
-         }
-        ],
-        "responses": [
-         {
-          "$id": "264",
-          "statusCodes": [
-           204
-          ],
-          "headers": [],
-          "isErrorResponse": false
-         }
-        ],
-        "httpMethod": "POST",
-        "uri": "{endpoint}",
-        "path": "/special-words/models/continue",
-        "requestMediaTypes": [
-         "application/json"
-        ],
-        "bufferResponse": true,
-        "generateProtocolMethod": true,
-        "generateConvenienceMethod": true,
-        "crossLanguageDefinitionId": "SpecialWords.Models.withContinue",
-        "decorators": []
-       },
-       "parameters": [
-        {
-         "$id": "265",
-         "name": "body",
-         "nameInRequest": "body",
-         "type": {
-          "$ref": "42"
-         },
-         "location": "Body",
-         "isApiVersion": false,
-         "isContentType": false,
-         "isEndpoint": false,
-         "explode": false,
-         "isRequired": true,
-         "kind": "Method",
-         "decorators": [],
-         "skipUrlEncoding": false
-        },
-        {
-         "$id": "266",
-         "name": "contentType",
-         "nameInRequest": "contentType",
-         "doc": "Body parameter's content type. Known values are application/json",
-         "type": {
-          "$ref": "261"
-         },
-         "location": "Header",
-         "isApiVersion": false,
-         "isContentType": false,
-         "isEndpoint": false,
-         "explode": false,
-         "isRequired": true,
-         "kind": "Constant",
-         "decorators": [],
-         "skipUrlEncoding": false
-        }
-       ],
-       "response": {
-        "$id": "267"
-       },
-       "isOverride": false,
-       "generateConvenient": true,
-       "generateProtocol": true,
-       "crossLanguageDefinitionId": "SpecialWords.Models.withContinue"
-      },
-      {
-       "$id": "268",
-       "kind": "basic",
-       "name": "withDef",
-       "accessibility": "public",
-       "apiVersions": [],
-       "operation": {
-        "$id": "269",
-        "name": "withDef",
-        "resourceName": "Models",
-        "accessibility": "public",
-        "parameters": [
-         {
-          "$id": "270",
-          "name": "contentType",
-          "nameInRequest": "Content-Type",
-          "doc": "Body parameter's content type. Known values are application/json",
-          "type": {
-           "$id": "271",
-           "kind": "constant",
-           "valueType": {
-            "$id": "272",
-            "kind": "string",
-            "name": "string",
-            "crossLanguageDefinitionId": "TypeSpec.string",
-            "decorators": []
-           },
-           "value": "application/json",
-           "decorators": []
+           "$ref": "8"
           },
           "location": "Header",
           "isApiVersion": false,
@@ -2484,7 +2240,7 @@
           "name": "body",
           "nameInRequest": "body",
           "type": {
-           "$ref": "47"
+           "$ref": "85"
           },
           "location": "Body",
           "isApiVersion": false,
@@ -2509,14 +2265,14 @@
         ],
         "httpMethod": "POST",
         "uri": "{endpoint}",
-        "path": "/special-words/models/def",
+        "path": "/special-words/models/async",
         "requestMediaTypes": [
          "application/json"
         ],
         "bufferResponse": true,
         "generateProtocolMethod": true,
         "generateConvenienceMethod": true,
-        "crossLanguageDefinitionId": "SpecialWords.Models.withDef",
+        "crossLanguageDefinitionId": "SpecialWords.Models.withAsync",
         "decorators": []
        },
        "parameters": [
@@ -2525,7 +2281,7 @@
          "name": "body",
          "nameInRequest": "body",
          "type": {
-          "$ref": "47"
+          "$ref": "85"
          },
          "location": "Body",
          "isApiVersion": false,
@@ -2543,7 +2299,7 @@
          "nameInRequest": "contentType",
          "doc": "Body parameter's content type. Known values are application/json",
          "type": {
-          "$ref": "271"
+          "$ref": "8"
          },
          "location": "Header",
          "isApiVersion": false,
@@ -2562,17 +2318,17 @@
        "isOverride": false,
        "generateConvenient": true,
        "generateProtocol": true,
-       "crossLanguageDefinitionId": "SpecialWords.Models.withDef"
+       "crossLanguageDefinitionId": "SpecialWords.Models.withAsync"
       },
       {
        "$id": "278",
        "kind": "basic",
-       "name": "withDel",
+       "name": "withAwait",
        "accessibility": "public",
        "apiVersions": [],
        "operation": {
         "$id": "279",
-        "name": "withDel",
+        "name": "withAwait",
         "resourceName": "Models",
         "accessibility": "public",
         "parameters": [
@@ -2582,17 +2338,7 @@
           "nameInRequest": "Content-Type",
           "doc": "Body parameter's content type. Known values are application/json",
           "type": {
-           "$id": "281",
-           "kind": "constant",
-           "valueType": {
-            "$id": "282",
-            "kind": "string",
-            "name": "string",
-            "crossLanguageDefinitionId": "TypeSpec.string",
-            "decorators": []
-           },
-           "value": "application/json",
-           "decorators": []
+           "$ref": "10"
           },
           "location": "Header",
           "isApiVersion": false,
@@ -2605,11 +2351,11 @@
           "skipUrlEncoding": false
          },
          {
-          "$id": "283",
+          "$id": "281",
           "name": "body",
           "nameInRequest": "body",
           "type": {
-           "$ref": "52"
+           "$ref": "90"
           },
           "location": "Body",
           "isApiVersion": false,
@@ -2624,7 +2370,7 @@
         ],
         "responses": [
          {
-          "$id": "284",
+          "$id": "282",
           "statusCodes": [
            204
           ],
@@ -2634,23 +2380,23 @@
         ],
         "httpMethod": "POST",
         "uri": "{endpoint}",
-        "path": "/special-words/models/del",
+        "path": "/special-words/models/await",
         "requestMediaTypes": [
          "application/json"
         ],
         "bufferResponse": true,
         "generateProtocolMethod": true,
         "generateConvenienceMethod": true,
-        "crossLanguageDefinitionId": "SpecialWords.Models.withDel",
+        "crossLanguageDefinitionId": "SpecialWords.Models.withAwait",
         "decorators": []
        },
        "parameters": [
         {
-         "$id": "285",
+         "$id": "283",
          "name": "body",
          "nameInRequest": "body",
          "type": {
-          "$ref": "52"
+          "$ref": "90"
          },
          "location": "Body",
          "isApiVersion": false,
@@ -2663,12 +2409,12 @@
          "skipUrlEncoding": false
         },
         {
-         "$id": "286",
+         "$id": "284",
          "name": "contentType",
          "nameInRequest": "contentType",
          "doc": "Body parameter's content type. Known values are application/json",
          "type": {
-          "$ref": "281"
+          "$ref": "10"
          },
          "location": "Header",
          "isApiVersion": false,
@@ -2682,74 +2428,64 @@
         }
        ],
        "response": {
-        "$id": "287"
+        "$id": "285"
        },
        "isOverride": false,
        "generateConvenient": true,
        "generateProtocol": true,
-       "crossLanguageDefinitionId": "SpecialWords.Models.withDel"
+       "crossLanguageDefinitionId": "SpecialWords.Models.withAwait"
       },
       {
-       "$id": "288",
+       "$id": "286",
        "kind": "basic",
-       "name": "withElif",
+       "name": "withBreak",
        "accessibility": "public",
        "apiVersions": [],
        "operation": {
-        "$id": "289",
-        "name": "withElif",
+        "$id": "287",
+        "name": "withBreak",
         "resourceName": "Models",
         "accessibility": "public",
         "parameters": [
+         {
+          "$id": "288",
+          "name": "contentType",
+          "nameInRequest": "Content-Type",
+          "doc": "Body parameter's content type. Known values are application/json",
+          "type": {
+           "$ref": "12"
+          },
+          "location": "Header",
+          "isApiVersion": false,
+          "isContentType": true,
+          "isEndpoint": false,
+          "explode": false,
+          "isRequired": true,
+          "kind": "Constant",
+          "decorators": [],
+          "skipUrlEncoding": false
+         },
+         {
+          "$id": "289",
+          "name": "body",
+          "nameInRequest": "body",
+          "type": {
+           "$ref": "95"
+          },
+          "location": "Body",
+          "isApiVersion": false,
+          "isContentType": false,
+          "isEndpoint": false,
+          "explode": false,
+          "isRequired": true,
+          "kind": "Method",
+          "decorators": [],
+          "skipUrlEncoding": false
+         }
+        ],
+        "responses": [
          {
           "$id": "290",
-          "name": "contentType",
-          "nameInRequest": "Content-Type",
-          "doc": "Body parameter's content type. Known values are application/json",
-          "type": {
-           "$id": "291",
-           "kind": "constant",
-           "valueType": {
-            "$id": "292",
-            "kind": "string",
-            "name": "string",
-            "crossLanguageDefinitionId": "TypeSpec.string",
-            "decorators": []
-           },
-           "value": "application/json",
-           "decorators": []
-          },
-          "location": "Header",
-          "isApiVersion": false,
-          "isContentType": true,
-          "isEndpoint": false,
-          "explode": false,
-          "isRequired": true,
-          "kind": "Constant",
-          "decorators": [],
-          "skipUrlEncoding": false
-         },
-         {
-          "$id": "293",
-          "name": "body",
-          "nameInRequest": "body",
-          "type": {
-           "$ref": "57"
-          },
-          "location": "Body",
-          "isApiVersion": false,
-          "isContentType": false,
-          "isEndpoint": false,
-          "explode": false,
-          "isRequired": true,
-          "kind": "Method",
-          "decorators": [],
-          "skipUrlEncoding": false
-         }
-        ],
-        "responses": [
-         {
-          "$id": "294",
           "statusCodes": [
            204
           ],
@@ -2759,23 +2495,23 @@
         ],
         "httpMethod": "POST",
         "uri": "{endpoint}",
-        "path": "/special-words/models/elif",
+        "path": "/special-words/models/break",
         "requestMediaTypes": [
          "application/json"
         ],
         "bufferResponse": true,
         "generateProtocolMethod": true,
         "generateConvenienceMethod": true,
-        "crossLanguageDefinitionId": "SpecialWords.Models.withElif",
+        "crossLanguageDefinitionId": "SpecialWords.Models.withBreak",
         "decorators": []
        },
        "parameters": [
         {
-         "$id": "295",
+         "$id": "291",
          "name": "body",
          "nameInRequest": "body",
          "type": {
-          "$ref": "57"
+          "$ref": "95"
          },
          "location": "Body",
          "isApiVersion": false,
@@ -2788,12 +2524,12 @@
          "skipUrlEncoding": false
         },
         {
-         "$id": "296",
+         "$id": "292",
          "name": "contentType",
          "nameInRequest": "contentType",
          "doc": "Body parameter's content type. Known values are application/json",
          "type": {
-          "$ref": "291"
+          "$ref": "12"
          },
          "location": "Header",
          "isApiVersion": false,
@@ -2807,42 +2543,32 @@
         }
        ],
        "response": {
-        "$id": "297"
+        "$id": "293"
        },
        "isOverride": false,
        "generateConvenient": true,
        "generateProtocol": true,
-       "crossLanguageDefinitionId": "SpecialWords.Models.withElif"
+       "crossLanguageDefinitionId": "SpecialWords.Models.withBreak"
       },
       {
-       "$id": "298",
+       "$id": "294",
        "kind": "basic",
-       "name": "withElse",
+       "name": "withClass",
        "accessibility": "public",
        "apiVersions": [],
        "operation": {
-        "$id": "299",
-        "name": "withElse",
+        "$id": "295",
+        "name": "withClass",
         "resourceName": "Models",
         "accessibility": "public",
         "parameters": [
          {
-          "$id": "300",
+          "$id": "296",
           "name": "contentType",
           "nameInRequest": "Content-Type",
           "doc": "Body parameter's content type. Known values are application/json",
           "type": {
-           "$id": "301",
-           "kind": "constant",
-           "valueType": {
-            "$id": "302",
-            "kind": "string",
-            "name": "string",
-            "crossLanguageDefinitionId": "TypeSpec.string",
-            "decorators": []
-           },
-           "value": "application/json",
-           "decorators": []
+           "$ref": "14"
           },
           "location": "Header",
           "isApiVersion": false,
@@ -2855,11 +2581,11 @@
           "skipUrlEncoding": false
          },
          {
-          "$id": "303",
+          "$id": "297",
           "name": "body",
           "nameInRequest": "body",
           "type": {
-           "$ref": "62"
+           "$ref": "100"
           },
           "location": "Body",
           "isApiVersion": false,
@@ -2873,8 +2599,123 @@
          }
         ],
         "responses": [
+         {
+          "$id": "298",
+          "statusCodes": [
+           204
+          ],
+          "headers": [],
+          "isErrorResponse": false
+         }
+        ],
+        "httpMethod": "POST",
+        "uri": "{endpoint}",
+        "path": "/special-words/models/class",
+        "requestMediaTypes": [
+         "application/json"
+        ],
+        "bufferResponse": true,
+        "generateProtocolMethod": true,
+        "generateConvenienceMethod": true,
+        "crossLanguageDefinitionId": "SpecialWords.Models.withClass",
+        "decorators": []
+       },
+       "parameters": [
+        {
+         "$id": "299",
+         "name": "body",
+         "nameInRequest": "body",
+         "type": {
+          "$ref": "100"
+         },
+         "location": "Body",
+         "isApiVersion": false,
+         "isContentType": false,
+         "isEndpoint": false,
+         "explode": false,
+         "isRequired": true,
+         "kind": "Method",
+         "decorators": [],
+         "skipUrlEncoding": false
+        },
+        {
+         "$id": "300",
+         "name": "contentType",
+         "nameInRequest": "contentType",
+         "doc": "Body parameter's content type. Known values are application/json",
+         "type": {
+          "$ref": "14"
+         },
+         "location": "Header",
+         "isApiVersion": false,
+         "isContentType": false,
+         "isEndpoint": false,
+         "explode": false,
+         "isRequired": true,
+         "kind": "Constant",
+         "decorators": [],
+         "skipUrlEncoding": false
+        }
+       ],
+       "response": {
+        "$id": "301"
+       },
+       "isOverride": false,
+       "generateConvenient": true,
+       "generateProtocol": true,
+       "crossLanguageDefinitionId": "SpecialWords.Models.withClass"
+      },
+      {
+       "$id": "302",
+       "kind": "basic",
+       "name": "withConstructor",
+       "accessibility": "public",
+       "apiVersions": [],
+       "operation": {
+        "$id": "303",
+        "name": "withConstructor",
+        "resourceName": "Models",
+        "accessibility": "public",
+        "parameters": [
          {
           "$id": "304",
+          "name": "contentType",
+          "nameInRequest": "Content-Type",
+          "doc": "Body parameter's content type. Known values are application/json",
+          "type": {
+           "$ref": "16"
+          },
+          "location": "Header",
+          "isApiVersion": false,
+          "isContentType": true,
+          "isEndpoint": false,
+          "explode": false,
+          "isRequired": true,
+          "kind": "Constant",
+          "decorators": [],
+          "skipUrlEncoding": false
+         },
+         {
+          "$id": "305",
+          "name": "body",
+          "nameInRequest": "body",
+          "type": {
+           "$ref": "105"
+          },
+          "location": "Body",
+          "isApiVersion": false,
+          "isContentType": false,
+          "isEndpoint": false,
+          "explode": false,
+          "isRequired": true,
+          "kind": "Method",
+          "decorators": [],
+          "skipUrlEncoding": false
+         }
+        ],
+        "responses": [
+         {
+          "$id": "306",
           "statusCodes": [
            204
           ],
@@ -2884,23 +2725,23 @@
         ],
         "httpMethod": "POST",
         "uri": "{endpoint}",
-        "path": "/special-words/models/else",
+        "path": "/special-words/models/constructor",
         "requestMediaTypes": [
          "application/json"
         ],
         "bufferResponse": true,
         "generateProtocolMethod": true,
         "generateConvenienceMethod": true,
-        "crossLanguageDefinitionId": "SpecialWords.Models.withElse",
+        "crossLanguageDefinitionId": "SpecialWords.Models.withConstructor",
         "decorators": []
        },
        "parameters": [
         {
-         "$id": "305",
+         "$id": "307",
          "name": "body",
          "nameInRequest": "body",
          "type": {
-          "$ref": "62"
+          "$ref": "105"
          },
          "location": "Body",
          "isApiVersion": false,
@@ -2913,12 +2754,12 @@
          "skipUrlEncoding": false
         },
         {
-         "$id": "306",
+         "$id": "308",
          "name": "contentType",
          "nameInRequest": "contentType",
          "doc": "Body parameter's content type. Known values are application/json",
          "type": {
-          "$ref": "301"
+          "$ref": "16"
          },
          "location": "Header",
          "isApiVersion": false,
@@ -2932,42 +2773,32 @@
         }
        ],
        "response": {
-        "$id": "307"
+        "$id": "309"
        },
        "isOverride": false,
        "generateConvenient": true,
        "generateProtocol": true,
-       "crossLanguageDefinitionId": "SpecialWords.Models.withElse"
+       "crossLanguageDefinitionId": "SpecialWords.Models.withConstructor"
       },
       {
-       "$id": "308",
+       "$id": "310",
        "kind": "basic",
-       "name": "withExcept",
+       "name": "withContinue",
        "accessibility": "public",
        "apiVersions": [],
        "operation": {
-        "$id": "309",
-        "name": "withExcept",
+        "$id": "311",
+        "name": "withContinue",
         "resourceName": "Models",
         "accessibility": "public",
         "parameters": [
          {
-          "$id": "310",
+          "$id": "312",
           "name": "contentType",
           "nameInRequest": "Content-Type",
           "doc": "Body parameter's content type. Known values are application/json",
           "type": {
-           "$id": "311",
-           "kind": "constant",
-           "valueType": {
-            "$id": "312",
-            "kind": "string",
-            "name": "string",
-            "crossLanguageDefinitionId": "TypeSpec.string",
-            "decorators": []
-           },
-           "value": "application/json",
-           "decorators": []
+           "$ref": "18"
           },
           "location": "Header",
           "isApiVersion": false,
@@ -2984,7 +2815,7 @@
           "name": "body",
           "nameInRequest": "body",
           "type": {
-           "$ref": "67"
+           "$ref": "110"
           },
           "location": "Body",
           "isApiVersion": false,
@@ -3009,14 +2840,14 @@
         ],
         "httpMethod": "POST",
         "uri": "{endpoint}",
-        "path": "/special-words/models/except",
+        "path": "/special-words/models/continue",
         "requestMediaTypes": [
          "application/json"
         ],
         "bufferResponse": true,
         "generateProtocolMethod": true,
         "generateConvenienceMethod": true,
-        "crossLanguageDefinitionId": "SpecialWords.Models.withExcept",
+        "crossLanguageDefinitionId": "SpecialWords.Models.withContinue",
         "decorators": []
        },
        "parameters": [
@@ -3025,7 +2856,7 @@
          "name": "body",
          "nameInRequest": "body",
          "type": {
-          "$ref": "67"
+          "$ref": "110"
          },
          "location": "Body",
          "isApiVersion": false,
@@ -3043,7 +2874,7 @@
          "nameInRequest": "contentType",
          "doc": "Body parameter's content type. Known values are application/json",
          "type": {
-          "$ref": "311"
+          "$ref": "18"
          },
          "location": "Header",
          "isApiVersion": false,
@@ -3062,17 +2893,17 @@
        "isOverride": false,
        "generateConvenient": true,
        "generateProtocol": true,
-       "crossLanguageDefinitionId": "SpecialWords.Models.withExcept"
+       "crossLanguageDefinitionId": "SpecialWords.Models.withContinue"
       },
       {
        "$id": "318",
        "kind": "basic",
-       "name": "withExec",
+       "name": "withDef",
        "accessibility": "public",
        "apiVersions": [],
        "operation": {
         "$id": "319",
-        "name": "withExec",
+        "name": "withDef",
         "resourceName": "Models",
         "accessibility": "public",
         "parameters": [
@@ -3082,17 +2913,7 @@
           "nameInRequest": "Content-Type",
           "doc": "Body parameter's content type. Known values are application/json",
           "type": {
-           "$id": "321",
-           "kind": "constant",
-           "valueType": {
-            "$id": "322",
-            "kind": "string",
-            "name": "string",
-            "crossLanguageDefinitionId": "TypeSpec.string",
-            "decorators": []
-           },
-           "value": "application/json",
-           "decorators": []
+           "$ref": "20"
           },
           "location": "Header",
           "isApiVersion": false,
@@ -3105,11 +2926,11 @@
           "skipUrlEncoding": false
          },
          {
-          "$id": "323",
+          "$id": "321",
           "name": "body",
           "nameInRequest": "body",
           "type": {
-           "$ref": "72"
+           "$ref": "115"
           },
           "location": "Body",
           "isApiVersion": false,
@@ -3124,7 +2945,7 @@
         ],
         "responses": [
          {
-          "$id": "324",
+          "$id": "322",
           "statusCodes": [
            204
           ],
@@ -3134,23 +2955,23 @@
         ],
         "httpMethod": "POST",
         "uri": "{endpoint}",
-        "path": "/special-words/models/exec",
+        "path": "/special-words/models/def",
         "requestMediaTypes": [
          "application/json"
         ],
         "bufferResponse": true,
         "generateProtocolMethod": true,
         "generateConvenienceMethod": true,
-        "crossLanguageDefinitionId": "SpecialWords.Models.withExec",
+        "crossLanguageDefinitionId": "SpecialWords.Models.withDef",
         "decorators": []
        },
        "parameters": [
         {
-         "$id": "325",
+         "$id": "323",
          "name": "body",
          "nameInRequest": "body",
          "type": {
-          "$ref": "72"
+          "$ref": "115"
          },
          "location": "Body",
          "isApiVersion": false,
@@ -3163,12 +2984,12 @@
          "skipUrlEncoding": false
         },
         {
-         "$id": "326",
+         "$id": "324",
          "name": "contentType",
          "nameInRequest": "contentType",
          "doc": "Body parameter's content type. Known values are application/json",
          "type": {
-          "$ref": "321"
+          "$ref": "20"
          },
          "location": "Header",
          "isApiVersion": false,
@@ -3182,74 +3003,64 @@
         }
        ],
        "response": {
-        "$id": "327"
+        "$id": "325"
        },
        "isOverride": false,
        "generateConvenient": true,
        "generateProtocol": true,
-       "crossLanguageDefinitionId": "SpecialWords.Models.withExec"
+       "crossLanguageDefinitionId": "SpecialWords.Models.withDef"
       },
       {
-       "$id": "328",
+       "$id": "326",
        "kind": "basic",
-       "name": "withFinally",
+       "name": "withDel",
        "accessibility": "public",
        "apiVersions": [],
        "operation": {
-        "$id": "329",
-        "name": "withFinally",
+        "$id": "327",
+        "name": "withDel",
         "resourceName": "Models",
         "accessibility": "public",
         "parameters": [
+         {
+          "$id": "328",
+          "name": "contentType",
+          "nameInRequest": "Content-Type",
+          "doc": "Body parameter's content type. Known values are application/json",
+          "type": {
+           "$ref": "22"
+          },
+          "location": "Header",
+          "isApiVersion": false,
+          "isContentType": true,
+          "isEndpoint": false,
+          "explode": false,
+          "isRequired": true,
+          "kind": "Constant",
+          "decorators": [],
+          "skipUrlEncoding": false
+         },
+         {
+          "$id": "329",
+          "name": "body",
+          "nameInRequest": "body",
+          "type": {
+           "$ref": "120"
+          },
+          "location": "Body",
+          "isApiVersion": false,
+          "isContentType": false,
+          "isEndpoint": false,
+          "explode": false,
+          "isRequired": true,
+          "kind": "Method",
+          "decorators": [],
+          "skipUrlEncoding": false
+         }
+        ],
+        "responses": [
          {
           "$id": "330",
-          "name": "contentType",
-          "nameInRequest": "Content-Type",
-          "doc": "Body parameter's content type. Known values are application/json",
-          "type": {
-           "$id": "331",
-           "kind": "constant",
-           "valueType": {
-            "$id": "332",
-            "kind": "string",
-            "name": "string",
-            "crossLanguageDefinitionId": "TypeSpec.string",
-            "decorators": []
-           },
-           "value": "application/json",
-           "decorators": []
-          },
-          "location": "Header",
-          "isApiVersion": false,
-          "isContentType": true,
-          "isEndpoint": false,
-          "explode": false,
-          "isRequired": true,
-          "kind": "Constant",
-          "decorators": [],
-          "skipUrlEncoding": false
-         },
-         {
-          "$id": "333",
-          "name": "body",
-          "nameInRequest": "body",
-          "type": {
-           "$ref": "77"
-          },
-          "location": "Body",
-          "isApiVersion": false,
-          "isContentType": false,
-          "isEndpoint": false,
-          "explode": false,
-          "isRequired": true,
-          "kind": "Method",
-          "decorators": [],
-          "skipUrlEncoding": false
-         }
-        ],
-        "responses": [
-         {
-          "$id": "334",
           "statusCodes": [
            204
           ],
@@ -3259,23 +3070,23 @@
         ],
         "httpMethod": "POST",
         "uri": "{endpoint}",
-        "path": "/special-words/models/finally",
+        "path": "/special-words/models/del",
         "requestMediaTypes": [
          "application/json"
         ],
         "bufferResponse": true,
         "generateProtocolMethod": true,
         "generateConvenienceMethod": true,
-        "crossLanguageDefinitionId": "SpecialWords.Models.withFinally",
+        "crossLanguageDefinitionId": "SpecialWords.Models.withDel",
         "decorators": []
        },
        "parameters": [
         {
-         "$id": "335",
+         "$id": "331",
          "name": "body",
          "nameInRequest": "body",
          "type": {
-          "$ref": "77"
+          "$ref": "120"
          },
          "location": "Body",
          "isApiVersion": false,
@@ -3288,12 +3099,12 @@
          "skipUrlEncoding": false
         },
         {
-         "$id": "336",
+         "$id": "332",
          "name": "contentType",
          "nameInRequest": "contentType",
          "doc": "Body parameter's content type. Known values are application/json",
          "type": {
-          "$ref": "331"
+          "$ref": "22"
          },
          "location": "Header",
          "isApiVersion": false,
@@ -3307,42 +3118,32 @@
         }
        ],
        "response": {
-        "$id": "337"
+        "$id": "333"
        },
        "isOverride": false,
        "generateConvenient": true,
        "generateProtocol": true,
-       "crossLanguageDefinitionId": "SpecialWords.Models.withFinally"
+       "crossLanguageDefinitionId": "SpecialWords.Models.withDel"
       },
       {
-       "$id": "338",
+       "$id": "334",
        "kind": "basic",
-       "name": "withFor",
+       "name": "withElif",
        "accessibility": "public",
        "apiVersions": [],
        "operation": {
-        "$id": "339",
-        "name": "withFor",
+        "$id": "335",
+        "name": "withElif",
         "resourceName": "Models",
         "accessibility": "public",
         "parameters": [
          {
-          "$id": "340",
+          "$id": "336",
           "name": "contentType",
           "nameInRequest": "Content-Type",
           "doc": "Body parameter's content type. Known values are application/json",
           "type": {
-           "$id": "341",
-           "kind": "constant",
-           "valueType": {
-            "$id": "342",
-            "kind": "string",
-            "name": "string",
-            "crossLanguageDefinitionId": "TypeSpec.string",
-            "decorators": []
-           },
-           "value": "application/json",
-           "decorators": []
+           "$ref": "24"
           },
           "location": "Header",
           "isApiVersion": false,
@@ -3355,11 +3156,11 @@
           "skipUrlEncoding": false
          },
          {
-          "$id": "343",
+          "$id": "337",
           "name": "body",
           "nameInRequest": "body",
           "type": {
-           "$ref": "82"
+           "$ref": "125"
           },
           "location": "Body",
           "isApiVersion": false,
@@ -3373,8 +3174,123 @@
          }
         ],
         "responses": [
+         {
+          "$id": "338",
+          "statusCodes": [
+           204
+          ],
+          "headers": [],
+          "isErrorResponse": false
+         }
+        ],
+        "httpMethod": "POST",
+        "uri": "{endpoint}",
+        "path": "/special-words/models/elif",
+        "requestMediaTypes": [
+         "application/json"
+        ],
+        "bufferResponse": true,
+        "generateProtocolMethod": true,
+        "generateConvenienceMethod": true,
+        "crossLanguageDefinitionId": "SpecialWords.Models.withElif",
+        "decorators": []
+       },
+       "parameters": [
+        {
+         "$id": "339",
+         "name": "body",
+         "nameInRequest": "body",
+         "type": {
+          "$ref": "125"
+         },
+         "location": "Body",
+         "isApiVersion": false,
+         "isContentType": false,
+         "isEndpoint": false,
+         "explode": false,
+         "isRequired": true,
+         "kind": "Method",
+         "decorators": [],
+         "skipUrlEncoding": false
+        },
+        {
+         "$id": "340",
+         "name": "contentType",
+         "nameInRequest": "contentType",
+         "doc": "Body parameter's content type. Known values are application/json",
+         "type": {
+          "$ref": "24"
+         },
+         "location": "Header",
+         "isApiVersion": false,
+         "isContentType": false,
+         "isEndpoint": false,
+         "explode": false,
+         "isRequired": true,
+         "kind": "Constant",
+         "decorators": [],
+         "skipUrlEncoding": false
+        }
+       ],
+       "response": {
+        "$id": "341"
+       },
+       "isOverride": false,
+       "generateConvenient": true,
+       "generateProtocol": true,
+       "crossLanguageDefinitionId": "SpecialWords.Models.withElif"
+      },
+      {
+       "$id": "342",
+       "kind": "basic",
+       "name": "withElse",
+       "accessibility": "public",
+       "apiVersions": [],
+       "operation": {
+        "$id": "343",
+        "name": "withElse",
+        "resourceName": "Models",
+        "accessibility": "public",
+        "parameters": [
          {
           "$id": "344",
+          "name": "contentType",
+          "nameInRequest": "Content-Type",
+          "doc": "Body parameter's content type. Known values are application/json",
+          "type": {
+           "$ref": "26"
+          },
+          "location": "Header",
+          "isApiVersion": false,
+          "isContentType": true,
+          "isEndpoint": false,
+          "explode": false,
+          "isRequired": true,
+          "kind": "Constant",
+          "decorators": [],
+          "skipUrlEncoding": false
+         },
+         {
+          "$id": "345",
+          "name": "body",
+          "nameInRequest": "body",
+          "type": {
+           "$ref": "130"
+          },
+          "location": "Body",
+          "isApiVersion": false,
+          "isContentType": false,
+          "isEndpoint": false,
+          "explode": false,
+          "isRequired": true,
+          "kind": "Method",
+          "decorators": [],
+          "skipUrlEncoding": false
+         }
+        ],
+        "responses": [
+         {
+          "$id": "346",
           "statusCodes": [
            204
           ],
@@ -3384,23 +3300,23 @@
         ],
         "httpMethod": "POST",
         "uri": "{endpoint}",
-        "path": "/special-words/models/for",
+        "path": "/special-words/models/else",
         "requestMediaTypes": [
          "application/json"
         ],
         "bufferResponse": true,
         "generateProtocolMethod": true,
         "generateConvenienceMethod": true,
-        "crossLanguageDefinitionId": "SpecialWords.Models.withFor",
+        "crossLanguageDefinitionId": "SpecialWords.Models.withElse",
         "decorators": []
        },
        "parameters": [
         {
-         "$id": "345",
+         "$id": "347",
          "name": "body",
          "nameInRequest": "body",
          "type": {
-          "$ref": "82"
+          "$ref": "130"
          },
          "location": "Body",
          "isApiVersion": false,
@@ -3413,12 +3329,12 @@
          "skipUrlEncoding": false
         },
         {
-         "$id": "346",
+         "$id": "348",
          "name": "contentType",
          "nameInRequest": "contentType",
          "doc": "Body parameter's content type. Known values are application/json",
          "type": {
-          "$ref": "341"
+          "$ref": "26"
          },
          "location": "Header",
          "isApiVersion": false,
@@ -3432,42 +3348,32 @@
         }
        ],
        "response": {
-        "$id": "347"
+        "$id": "349"
        },
        "isOverride": false,
        "generateConvenient": true,
        "generateProtocol": true,
-       "crossLanguageDefinitionId": "SpecialWords.Models.withFor"
+       "crossLanguageDefinitionId": "SpecialWords.Models.withElse"
       },
       {
-       "$id": "348",
+       "$id": "350",
        "kind": "basic",
-       "name": "withFrom",
+       "name": "withExcept",
        "accessibility": "public",
        "apiVersions": [],
        "operation": {
-        "$id": "349",
-        "name": "withFrom",
+        "$id": "351",
+        "name": "withExcept",
         "resourceName": "Models",
         "accessibility": "public",
         "parameters": [
          {
-          "$id": "350",
+          "$id": "352",
           "name": "contentType",
           "nameInRequest": "Content-Type",
           "doc": "Body parameter's content type. Known values are application/json",
           "type": {
-           "$id": "351",
-           "kind": "constant",
-           "valueType": {
-            "$id": "352",
-            "kind": "string",
-            "name": "string",
-            "crossLanguageDefinitionId": "TypeSpec.string",
-            "decorators": []
-           },
-           "value": "application/json",
-           "decorators": []
+           "$ref": "28"
           },
           "location": "Header",
           "isApiVersion": false,
@@ -3484,7 +3390,7 @@
           "name": "body",
           "nameInRequest": "body",
           "type": {
-           "$ref": "87"
+           "$ref": "135"
           },
           "location": "Body",
           "isApiVersion": false,
@@ -3509,14 +3415,14 @@
         ],
         "httpMethod": "POST",
         "uri": "{endpoint}",
-        "path": "/special-words/models/from",
+        "path": "/special-words/models/except",
         "requestMediaTypes": [
          "application/json"
         ],
         "bufferResponse": true,
         "generateProtocolMethod": true,
         "generateConvenienceMethod": true,
-        "crossLanguageDefinitionId": "SpecialWords.Models.withFrom",
+        "crossLanguageDefinitionId": "SpecialWords.Models.withExcept",
         "decorators": []
        },
        "parameters": [
@@ -3525,7 +3431,7 @@
          "name": "body",
          "nameInRequest": "body",
          "type": {
-          "$ref": "87"
+          "$ref": "135"
          },
          "location": "Body",
          "isApiVersion": false,
@@ -3543,7 +3449,7 @@
          "nameInRequest": "contentType",
          "doc": "Body parameter's content type. Known values are application/json",
          "type": {
-          "$ref": "351"
+          "$ref": "28"
          },
          "location": "Header",
          "isApiVersion": false,
@@ -3562,17 +3468,17 @@
        "isOverride": false,
        "generateConvenient": true,
        "generateProtocol": true,
-       "crossLanguageDefinitionId": "SpecialWords.Models.withFrom"
+       "crossLanguageDefinitionId": "SpecialWords.Models.withExcept"
       },
       {
        "$id": "358",
        "kind": "basic",
-       "name": "withGlobal",
+       "name": "withExec",
        "accessibility": "public",
        "apiVersions": [],
        "operation": {
         "$id": "359",
-        "name": "withGlobal",
+        "name": "withExec",
         "resourceName": "Models",
         "accessibility": "public",
         "parameters": [
@@ -3582,17 +3488,7 @@
           "nameInRequest": "Content-Type",
           "doc": "Body parameter's content type. Known values are application/json",
           "type": {
-           "$id": "361",
-           "kind": "constant",
-           "valueType": {
-            "$id": "362",
-            "kind": "string",
-            "name": "string",
-            "crossLanguageDefinitionId": "TypeSpec.string",
-            "decorators": []
-           },
-           "value": "application/json",
-           "decorators": []
+           "$ref": "30"
           },
           "location": "Header",
           "isApiVersion": false,
@@ -3605,11 +3501,11 @@
           "skipUrlEncoding": false
          },
          {
-          "$id": "363",
+          "$id": "361",
           "name": "body",
           "nameInRequest": "body",
           "type": {
-           "$ref": "92"
+           "$ref": "140"
           },
           "location": "Body",
           "isApiVersion": false,
@@ -3624,7 +3520,7 @@
         ],
         "responses": [
          {
-          "$id": "364",
+          "$id": "362",
           "statusCodes": [
            204
           ],
@@ -3634,23 +3530,23 @@
         ],
         "httpMethod": "POST",
         "uri": "{endpoint}",
-        "path": "/special-words/models/global",
+        "path": "/special-words/models/exec",
         "requestMediaTypes": [
          "application/json"
         ],
         "bufferResponse": true,
         "generateProtocolMethod": true,
         "generateConvenienceMethod": true,
-        "crossLanguageDefinitionId": "SpecialWords.Models.withGlobal",
+        "crossLanguageDefinitionId": "SpecialWords.Models.withExec",
         "decorators": []
        },
        "parameters": [
         {
-         "$id": "365",
+         "$id": "363",
          "name": "body",
          "nameInRequest": "body",
          "type": {
-          "$ref": "92"
+          "$ref": "140"
          },
          "location": "Body",
          "isApiVersion": false,
@@ -3663,12 +3559,12 @@
          "skipUrlEncoding": false
         },
         {
-         "$id": "366",
+         "$id": "364",
          "name": "contentType",
          "nameInRequest": "contentType",
          "doc": "Body parameter's content type. Known values are application/json",
          "type": {
-          "$ref": "361"
+          "$ref": "30"
          },
          "location": "Header",
          "isApiVersion": false,
@@ -3682,74 +3578,64 @@
         }
        ],
        "response": {
-        "$id": "367"
+        "$id": "365"
        },
        "isOverride": false,
        "generateConvenient": true,
        "generateProtocol": true,
-       "crossLanguageDefinitionId": "SpecialWords.Models.withGlobal"
+       "crossLanguageDefinitionId": "SpecialWords.Models.withExec"
       },
       {
-       "$id": "368",
+       "$id": "366",
        "kind": "basic",
-       "name": "withIf",
+       "name": "withFinally",
        "accessibility": "public",
        "apiVersions": [],
        "operation": {
-        "$id": "369",
-        "name": "withIf",
+        "$id": "367",
+        "name": "withFinally",
         "resourceName": "Models",
         "accessibility": "public",
         "parameters": [
+         {
+          "$id": "368",
+          "name": "contentType",
+          "nameInRequest": "Content-Type",
+          "doc": "Body parameter's content type. Known values are application/json",
+          "type": {
+           "$ref": "32"
+          },
+          "location": "Header",
+          "isApiVersion": false,
+          "isContentType": true,
+          "isEndpoint": false,
+          "explode": false,
+          "isRequired": true,
+          "kind": "Constant",
+          "decorators": [],
+          "skipUrlEncoding": false
+         },
+         {
+          "$id": "369",
+          "name": "body",
+          "nameInRequest": "body",
+          "type": {
+           "$ref": "145"
+          },
+          "location": "Body",
+          "isApiVersion": false,
+          "isContentType": false,
+          "isEndpoint": false,
+          "explode": false,
+          "isRequired": true,
+          "kind": "Method",
+          "decorators": [],
+          "skipUrlEncoding": false
+         }
+        ],
+        "responses": [
          {
           "$id": "370",
-          "name": "contentType",
-          "nameInRequest": "Content-Type",
-          "doc": "Body parameter's content type. Known values are application/json",
-          "type": {
-           "$id": "371",
-           "kind": "constant",
-           "valueType": {
-            "$id": "372",
-            "kind": "string",
-            "name": "string",
-            "crossLanguageDefinitionId": "TypeSpec.string",
-            "decorators": []
-           },
-           "value": "application/json",
-           "decorators": []
-          },
-          "location": "Header",
-          "isApiVersion": false,
-          "isContentType": true,
-          "isEndpoint": false,
-          "explode": false,
-          "isRequired": true,
-          "kind": "Constant",
-          "decorators": [],
-          "skipUrlEncoding": false
-         },
-         {
-          "$id": "373",
-          "name": "body",
-          "nameInRequest": "body",
-          "type": {
-           "$ref": "97"
-          },
-          "location": "Body",
-          "isApiVersion": false,
-          "isContentType": false,
-          "isEndpoint": false,
-          "explode": false,
-          "isRequired": true,
-          "kind": "Method",
-          "decorators": [],
-          "skipUrlEncoding": false
-         }
-        ],
-        "responses": [
-         {
-          "$id": "374",
           "statusCodes": [
            204
           ],
@@ -3759,23 +3645,23 @@
         ],
         "httpMethod": "POST",
         "uri": "{endpoint}",
-        "path": "/special-words/models/if",
+        "path": "/special-words/models/finally",
         "requestMediaTypes": [
          "application/json"
         ],
         "bufferResponse": true,
         "generateProtocolMethod": true,
         "generateConvenienceMethod": true,
-        "crossLanguageDefinitionId": "SpecialWords.Models.withIf",
+        "crossLanguageDefinitionId": "SpecialWords.Models.withFinally",
         "decorators": []
        },
        "parameters": [
         {
-         "$id": "375",
+         "$id": "371",
          "name": "body",
          "nameInRequest": "body",
          "type": {
-          "$ref": "97"
+          "$ref": "145"
          },
          "location": "Body",
          "isApiVersion": false,
@@ -3788,12 +3674,12 @@
          "skipUrlEncoding": false
         },
         {
-         "$id": "376",
+         "$id": "372",
          "name": "contentType",
          "nameInRequest": "contentType",
          "doc": "Body parameter's content type. Known values are application/json",
          "type": {
-          "$ref": "371"
+          "$ref": "32"
          },
          "location": "Header",
          "isApiVersion": false,
@@ -3807,42 +3693,32 @@
         }
        ],
        "response": {
-        "$id": "377"
+        "$id": "373"
        },
        "isOverride": false,
        "generateConvenient": true,
        "generateProtocol": true,
-       "crossLanguageDefinitionId": "SpecialWords.Models.withIf"
+       "crossLanguageDefinitionId": "SpecialWords.Models.withFinally"
       },
       {
-       "$id": "378",
+       "$id": "374",
        "kind": "basic",
-       "name": "withImport",
+       "name": "withFor",
        "accessibility": "public",
        "apiVersions": [],
        "operation": {
-        "$id": "379",
-        "name": "withImport",
+        "$id": "375",
+        "name": "withFor",
         "resourceName": "Models",
         "accessibility": "public",
         "parameters": [
          {
-          "$id": "380",
+          "$id": "376",
           "name": "contentType",
           "nameInRequest": "Content-Type",
           "doc": "Body parameter's content type. Known values are application/json",
           "type": {
-           "$id": "381",
-           "kind": "constant",
-           "valueType": {
-            "$id": "382",
-            "kind": "string",
-            "name": "string",
-            "crossLanguageDefinitionId": "TypeSpec.string",
-            "decorators": []
-           },
-           "value": "application/json",
-           "decorators": []
+           "$ref": "34"
           },
           "location": "Header",
           "isApiVersion": false,
@@ -3855,11 +3731,11 @@
           "skipUrlEncoding": false
          },
          {
-          "$id": "383",
+          "$id": "377",
           "name": "body",
           "nameInRequest": "body",
           "type": {
-           "$ref": "102"
+           "$ref": "150"
           },
           "location": "Body",
           "isApiVersion": false,
@@ -3873,8 +3749,123 @@
          }
         ],
         "responses": [
+         {
+          "$id": "378",
+          "statusCodes": [
+           204
+          ],
+          "headers": [],
+          "isErrorResponse": false
+         }
+        ],
+        "httpMethod": "POST",
+        "uri": "{endpoint}",
+        "path": "/special-words/models/for",
+        "requestMediaTypes": [
+         "application/json"
+        ],
+        "bufferResponse": true,
+        "generateProtocolMethod": true,
+        "generateConvenienceMethod": true,
+        "crossLanguageDefinitionId": "SpecialWords.Models.withFor",
+        "decorators": []
+       },
+       "parameters": [
+        {
+         "$id": "379",
+         "name": "body",
+         "nameInRequest": "body",
+         "type": {
+          "$ref": "150"
+         },
+         "location": "Body",
+         "isApiVersion": false,
+         "isContentType": false,
+         "isEndpoint": false,
+         "explode": false,
+         "isRequired": true,
+         "kind": "Method",
+         "decorators": [],
+         "skipUrlEncoding": false
+        },
+        {
+         "$id": "380",
+         "name": "contentType",
+         "nameInRequest": "contentType",
+         "doc": "Body parameter's content type. Known values are application/json",
+         "type": {
+          "$ref": "34"
+         },
+         "location": "Header",
+         "isApiVersion": false,
+         "isContentType": false,
+         "isEndpoint": false,
+         "explode": false,
+         "isRequired": true,
+         "kind": "Constant",
+         "decorators": [],
+         "skipUrlEncoding": false
+        }
+       ],
+       "response": {
+        "$id": "381"
+       },
+       "isOverride": false,
+       "generateConvenient": true,
+       "generateProtocol": true,
+       "crossLanguageDefinitionId": "SpecialWords.Models.withFor"
+      },
+      {
+       "$id": "382",
+       "kind": "basic",
+       "name": "withFrom",
+       "accessibility": "public",
+       "apiVersions": [],
+       "operation": {
+        "$id": "383",
+        "name": "withFrom",
+        "resourceName": "Models",
+        "accessibility": "public",
+        "parameters": [
          {
           "$id": "384",
+          "name": "contentType",
+          "nameInRequest": "Content-Type",
+          "doc": "Body parameter's content type. Known values are application/json",
+          "type": {
+           "$ref": "36"
+          },
+          "location": "Header",
+          "isApiVersion": false,
+          "isContentType": true,
+          "isEndpoint": false,
+          "explode": false,
+          "isRequired": true,
+          "kind": "Constant",
+          "decorators": [],
+          "skipUrlEncoding": false
+         },
+         {
+          "$id": "385",
+          "name": "body",
+          "nameInRequest": "body",
+          "type": {
+           "$ref": "155"
+          },
+          "location": "Body",
+          "isApiVersion": false,
+          "isContentType": false,
+          "isEndpoint": false,
+          "explode": false,
+          "isRequired": true,
+          "kind": "Method",
+          "decorators": [],
+          "skipUrlEncoding": false
+         }
+        ],
+        "responses": [
+         {
+          "$id": "386",
           "statusCodes": [
            204
           ],
@@ -3884,23 +3875,23 @@
         ],
         "httpMethod": "POST",
         "uri": "{endpoint}",
-        "path": "/special-words/models/import",
+        "path": "/special-words/models/from",
         "requestMediaTypes": [
          "application/json"
         ],
         "bufferResponse": true,
         "generateProtocolMethod": true,
         "generateConvenienceMethod": true,
-        "crossLanguageDefinitionId": "SpecialWords.Models.withImport",
+        "crossLanguageDefinitionId": "SpecialWords.Models.withFrom",
         "decorators": []
        },
        "parameters": [
         {
-         "$id": "385",
+         "$id": "387",
          "name": "body",
          "nameInRequest": "body",
          "type": {
-          "$ref": "102"
+          "$ref": "155"
          },
          "location": "Body",
          "isApiVersion": false,
@@ -3913,12 +3904,12 @@
          "skipUrlEncoding": false
         },
         {
-         "$id": "386",
+         "$id": "388",
          "name": "contentType",
          "nameInRequest": "contentType",
          "doc": "Body parameter's content type. Known values are application/json",
          "type": {
-          "$ref": "381"
+          "$ref": "36"
          },
          "location": "Header",
          "isApiVersion": false,
@@ -3932,42 +3923,32 @@
         }
        ],
        "response": {
-        "$id": "387"
+        "$id": "389"
        },
        "isOverride": false,
        "generateConvenient": true,
        "generateProtocol": true,
-       "crossLanguageDefinitionId": "SpecialWords.Models.withImport"
+       "crossLanguageDefinitionId": "SpecialWords.Models.withFrom"
       },
       {
-       "$id": "388",
+       "$id": "390",
        "kind": "basic",
-       "name": "withIn",
+       "name": "withGlobal",
        "accessibility": "public",
        "apiVersions": [],
        "operation": {
-        "$id": "389",
-        "name": "withIn",
+        "$id": "391",
+        "name": "withGlobal",
         "resourceName": "Models",
         "accessibility": "public",
         "parameters": [
          {
-          "$id": "390",
+          "$id": "392",
           "name": "contentType",
           "nameInRequest": "Content-Type",
           "doc": "Body parameter's content type. Known values are application/json",
           "type": {
-           "$id": "391",
-           "kind": "constant",
-           "valueType": {
-            "$id": "392",
-            "kind": "string",
-            "name": "string",
-            "crossLanguageDefinitionId": "TypeSpec.string",
-            "decorators": []
-           },
-           "value": "application/json",
-           "decorators": []
+           "$ref": "38"
           },
           "location": "Header",
           "isApiVersion": false,
@@ -3984,7 +3965,7 @@
           "name": "body",
           "nameInRequest": "body",
           "type": {
-           "$ref": "107"
+           "$ref": "160"
           },
           "location": "Body",
           "isApiVersion": false,
@@ -4009,14 +3990,14 @@
         ],
         "httpMethod": "POST",
         "uri": "{endpoint}",
-        "path": "/special-words/models/in",
+        "path": "/special-words/models/global",
         "requestMediaTypes": [
          "application/json"
         ],
         "bufferResponse": true,
         "generateProtocolMethod": true,
         "generateConvenienceMethod": true,
-        "crossLanguageDefinitionId": "SpecialWords.Models.withIn",
+        "crossLanguageDefinitionId": "SpecialWords.Models.withGlobal",
         "decorators": []
        },
        "parameters": [
@@ -4025,7 +4006,7 @@
          "name": "body",
          "nameInRequest": "body",
          "type": {
-          "$ref": "107"
+          "$ref": "160"
          },
          "location": "Body",
          "isApiVersion": false,
@@ -4043,7 +4024,7 @@
          "nameInRequest": "contentType",
          "doc": "Body parameter's content type. Known values are application/json",
          "type": {
-          "$ref": "391"
+          "$ref": "38"
          },
          "location": "Header",
          "isApiVersion": false,
@@ -4062,17 +4043,17 @@
        "isOverride": false,
        "generateConvenient": true,
        "generateProtocol": true,
-       "crossLanguageDefinitionId": "SpecialWords.Models.withIn"
+       "crossLanguageDefinitionId": "SpecialWords.Models.withGlobal"
       },
       {
        "$id": "398",
        "kind": "basic",
-       "name": "withIs",
+       "name": "withIf",
        "accessibility": "public",
        "apiVersions": [],
        "operation": {
         "$id": "399",
-        "name": "withIs",
+        "name": "withIf",
         "resourceName": "Models",
         "accessibility": "public",
         "parameters": [
@@ -4082,17 +4063,7 @@
           "nameInRequest": "Content-Type",
           "doc": "Body parameter's content type. Known values are application/json",
           "type": {
-           "$id": "401",
-           "kind": "constant",
-           "valueType": {
-            "$id": "402",
-            "kind": "string",
-            "name": "string",
-            "crossLanguageDefinitionId": "TypeSpec.string",
-            "decorators": []
-           },
-           "value": "application/json",
-           "decorators": []
+           "$ref": "40"
           },
           "location": "Header",
           "isApiVersion": false,
@@ -4105,11 +4076,11 @@
           "skipUrlEncoding": false
          },
          {
-          "$id": "403",
+          "$id": "401",
           "name": "body",
           "nameInRequest": "body",
           "type": {
-           "$ref": "112"
+           "$ref": "165"
           },
           "location": "Body",
           "isApiVersion": false,
@@ -4124,7 +4095,352 @@
         ],
         "responses": [
          {
-          "$id": "404",
+          "$id": "402",
+          "statusCodes": [
+           204
+          ],
+          "headers": [],
+          "isErrorResponse": false
+         }
+        ],
+        "httpMethod": "POST",
+        "uri": "{endpoint}",
+        "path": "/special-words/models/if",
+        "requestMediaTypes": [
+         "application/json"
+        ],
+        "bufferResponse": true,
+        "generateProtocolMethod": true,
+        "generateConvenienceMethod": true,
+        "crossLanguageDefinitionId": "SpecialWords.Models.withIf",
+        "decorators": []
+       },
+       "parameters": [
+        {
+         "$id": "403",
+         "name": "body",
+         "nameInRequest": "body",
+         "type": {
+          "$ref": "165"
+         },
+         "location": "Body",
+         "isApiVersion": false,
+         "isContentType": false,
+         "isEndpoint": false,
+         "explode": false,
+         "isRequired": true,
+         "kind": "Method",
+         "decorators": [],
+         "skipUrlEncoding": false
+        },
+        {
+         "$id": "404",
+         "name": "contentType",
+         "nameInRequest": "contentType",
+         "doc": "Body parameter's content type. Known values are application/json",
+         "type": {
+          "$ref": "40"
+         },
+         "location": "Header",
+         "isApiVersion": false,
+         "isContentType": false,
+         "isEndpoint": false,
+         "explode": false,
+         "isRequired": true,
+         "kind": "Constant",
+         "decorators": [],
+         "skipUrlEncoding": false
+        }
+       ],
+       "response": {
+        "$id": "405"
+       },
+       "isOverride": false,
+       "generateConvenient": true,
+       "generateProtocol": true,
+       "crossLanguageDefinitionId": "SpecialWords.Models.withIf"
+      },
+      {
+       "$id": "406",
+       "kind": "basic",
+       "name": "withImport",
+       "accessibility": "public",
+       "apiVersions": [],
+       "operation": {
+        "$id": "407",
+        "name": "withImport",
+        "resourceName": "Models",
+        "accessibility": "public",
+        "parameters": [
+         {
+          "$id": "408",
+          "name": "contentType",
+          "nameInRequest": "Content-Type",
+          "doc": "Body parameter's content type. Known values are application/json",
+          "type": {
+           "$ref": "42"
+          },
+          "location": "Header",
+          "isApiVersion": false,
+          "isContentType": true,
+          "isEndpoint": false,
+          "explode": false,
+          "isRequired": true,
+          "kind": "Constant",
+          "decorators": [],
+          "skipUrlEncoding": false
+         },
+         {
+          "$id": "409",
+          "name": "body",
+          "nameInRequest": "body",
+          "type": {
+           "$ref": "170"
+          },
+          "location": "Body",
+          "isApiVersion": false,
+          "isContentType": false,
+          "isEndpoint": false,
+          "explode": false,
+          "isRequired": true,
+          "kind": "Method",
+          "decorators": [],
+          "skipUrlEncoding": false
+         }
+        ],
+        "responses": [
+         {
+          "$id": "410",
+          "statusCodes": [
+           204
+          ],
+          "headers": [],
+          "isErrorResponse": false
+         }
+        ],
+        "httpMethod": "POST",
+        "uri": "{endpoint}",
+        "path": "/special-words/models/import",
+        "requestMediaTypes": [
+         "application/json"
+        ],
+        "bufferResponse": true,
+        "generateProtocolMethod": true,
+        "generateConvenienceMethod": true,
+        "crossLanguageDefinitionId": "SpecialWords.Models.withImport",
+        "decorators": []
+       },
+       "parameters": [
+        {
+         "$id": "411",
+         "name": "body",
+         "nameInRequest": "body",
+         "type": {
+          "$ref": "170"
+         },
+         "location": "Body",
+         "isApiVersion": false,
+         "isContentType": false,
+         "isEndpoint": false,
+         "explode": false,
+         "isRequired": true,
+         "kind": "Method",
+         "decorators": [],
+         "skipUrlEncoding": false
+        },
+        {
+         "$id": "412",
+         "name": "contentType",
+         "nameInRequest": "contentType",
+         "doc": "Body parameter's content type. Known values are application/json",
+         "type": {
+          "$ref": "42"
+         },
+         "location": "Header",
+         "isApiVersion": false,
+         "isContentType": false,
+         "isEndpoint": false,
+         "explode": false,
+         "isRequired": true,
+         "kind": "Constant",
+         "decorators": [],
+         "skipUrlEncoding": false
+        }
+       ],
+       "response": {
+        "$id": "413"
+       },
+       "isOverride": false,
+       "generateConvenient": true,
+       "generateProtocol": true,
+       "crossLanguageDefinitionId": "SpecialWords.Models.withImport"
+      },
+      {
+       "$id": "414",
+       "kind": "basic",
+       "name": "withIn",
+       "accessibility": "public",
+       "apiVersions": [],
+       "operation": {
+        "$id": "415",
+        "name": "withIn",
+        "resourceName": "Models",
+        "accessibility": "public",
+        "parameters": [
+         {
+          "$id": "416",
+          "name": "contentType",
+          "nameInRequest": "Content-Type",
+          "doc": "Body parameter's content type. Known values are application/json",
+          "type": {
+           "$ref": "44"
+          },
+          "location": "Header",
+          "isApiVersion": false,
+          "isContentType": true,
+          "isEndpoint": false,
+          "explode": false,
+          "isRequired": true,
+          "kind": "Constant",
+          "decorators": [],
+          "skipUrlEncoding": false
+         },
+         {
+          "$id": "417",
+          "name": "body",
+          "nameInRequest": "body",
+          "type": {
+           "$ref": "175"
+          },
+          "location": "Body",
+          "isApiVersion": false,
+          "isContentType": false,
+          "isEndpoint": false,
+          "explode": false,
+          "isRequired": true,
+          "kind": "Method",
+          "decorators": [],
+          "skipUrlEncoding": false
+         }
+        ],
+        "responses": [
+         {
+          "$id": "418",
+          "statusCodes": [
+           204
+          ],
+          "headers": [],
+          "isErrorResponse": false
+         }
+        ],
+        "httpMethod": "POST",
+        "uri": "{endpoint}",
+        "path": "/special-words/models/in",
+        "requestMediaTypes": [
+         "application/json"
+        ],
+        "bufferResponse": true,
+        "generateProtocolMethod": true,
+        "generateConvenienceMethod": true,
+        "crossLanguageDefinitionId": "SpecialWords.Models.withIn",
+        "decorators": []
+       },
+       "parameters": [
+        {
+         "$id": "419",
+         "name": "body",
+         "nameInRequest": "body",
+         "type": {
+          "$ref": "175"
+         },
+         "location": "Body",
+         "isApiVersion": false,
+         "isContentType": false,
+         "isEndpoint": false,
+         "explode": false,
+         "isRequired": true,
+         "kind": "Method",
+         "decorators": [],
+         "skipUrlEncoding": false
+        },
+        {
+         "$id": "420",
+         "name": "contentType",
+         "nameInRequest": "contentType",
+         "doc": "Body parameter's content type. Known values are application/json",
+         "type": {
+          "$ref": "44"
+         },
+         "location": "Header",
+         "isApiVersion": false,
+         "isContentType": false,
+         "isEndpoint": false,
+         "explode": false,
+         "isRequired": true,
+         "kind": "Constant",
+         "decorators": [],
+         "skipUrlEncoding": false
+        }
+       ],
+       "response": {
+        "$id": "421"
+       },
+       "isOverride": false,
+       "generateConvenient": true,
+       "generateProtocol": true,
+       "crossLanguageDefinitionId": "SpecialWords.Models.withIn"
+      },
+      {
+       "$id": "422",
+       "kind": "basic",
+       "name": "withIs",
+       "accessibility": "public",
+       "apiVersions": [],
+       "operation": {
+        "$id": "423",
+        "name": "withIs",
+        "resourceName": "Models",
+        "accessibility": "public",
+        "parameters": [
+         {
+          "$id": "424",
+          "name": "contentType",
+          "nameInRequest": "Content-Type",
+          "doc": "Body parameter's content type. Known values are application/json",
+          "type": {
+           "$ref": "46"
+          },
+          "location": "Header",
+          "isApiVersion": false,
+          "isContentType": true,
+          "isEndpoint": false,
+          "explode": false,
+          "isRequired": true,
+          "kind": "Constant",
+          "decorators": [],
+          "skipUrlEncoding": false
+         },
+         {
+          "$id": "425",
+          "name": "body",
+          "nameInRequest": "body",
+          "type": {
+           "$ref": "180"
+          },
+          "location": "Body",
+          "isApiVersion": false,
+          "isContentType": false,
+          "isEndpoint": false,
+          "explode": false,
+          "isRequired": true,
+          "kind": "Method",
+          "decorators": [],
+          "skipUrlEncoding": false
+         }
+        ],
+        "responses": [
+         {
+          "$id": "426",
           "statusCodes": [
            204
           ],
@@ -4146,11 +4462,11 @@
        },
        "parameters": [
         {
-         "$id": "405",
+         "$id": "427",
          "name": "body",
          "nameInRequest": "body",
          "type": {
-          "$ref": "112"
+          "$ref": "180"
          },
          "location": "Body",
          "isApiVersion": false,
@@ -4163,12 +4479,12 @@
          "skipUrlEncoding": false
         },
         {
-         "$id": "406",
+         "$id": "428",
          "name": "contentType",
          "nameInRequest": "contentType",
          "doc": "Body parameter's content type. Known values are application/json",
          "type": {
-          "$ref": "401"
+          "$ref": "46"
          },
          "location": "Header",
          "isApiVersion": false,
@@ -4182,7 +4498,7 @@
         }
        ],
        "response": {
-        "$id": "407"
+        "$id": "429"
        },
        "isOverride": false,
        "generateConvenient": true,
@@ -4190,284 +4506,24 @@
        "crossLanguageDefinitionId": "SpecialWords.Models.withIs"
       },
       {
-       "$id": "408",
+       "$id": "430",
        "kind": "basic",
        "name": "withLambda",
        "accessibility": "public",
        "apiVersions": [],
        "operation": {
-        "$id": "409",
+        "$id": "431",
         "name": "withLambda",
         "resourceName": "Models",
         "accessibility": "public",
         "parameters": [
          {
-          "$id": "410",
+          "$id": "432",
           "name": "contentType",
           "nameInRequest": "Content-Type",
           "doc": "Body parameter's content type. Known values are application/json",
           "type": {
-           "$id": "411",
-           "kind": "constant",
-           "valueType": {
-            "$id": "412",
-            "kind": "string",
-            "name": "string",
-            "crossLanguageDefinitionId": "TypeSpec.string",
-            "decorators": []
-           },
-           "value": "application/json",
-           "decorators": []
-          },
-          "location": "Header",
-          "isApiVersion": false,
-          "isContentType": true,
-          "isEndpoint": false,
-          "explode": false,
-          "isRequired": true,
-          "kind": "Constant",
-          "decorators": [],
-          "skipUrlEncoding": false
-         },
-         {
-          "$id": "413",
-          "name": "body",
-          "nameInRequest": "body",
-          "type": {
-           "$ref": "117"
-          },
-          "location": "Body",
-          "isApiVersion": false,
-          "isContentType": false,
-          "isEndpoint": false,
-          "explode": false,
-          "isRequired": true,
-          "kind": "Method",
-          "decorators": [],
-          "skipUrlEncoding": false
-         }
-        ],
-        "responses": [
-         {
-          "$id": "414",
-          "statusCodes": [
-           204
-          ],
-          "headers": [],
-          "isErrorResponse": false
-         }
-        ],
-        "httpMethod": "POST",
-        "uri": "{endpoint}",
-        "path": "/special-words/models/lambda",
-        "requestMediaTypes": [
-         "application/json"
-        ],
-        "bufferResponse": true,
-        "generateProtocolMethod": true,
-        "generateConvenienceMethod": true,
-        "crossLanguageDefinitionId": "SpecialWords.Models.withLambda",
-        "decorators": []
-       },
-       "parameters": [
-        {
-         "$id": "415",
-         "name": "body",
-         "nameInRequest": "body",
-         "type": {
-          "$ref": "117"
-         },
-         "location": "Body",
-         "isApiVersion": false,
-         "isContentType": false,
-         "isEndpoint": false,
-         "explode": false,
-         "isRequired": true,
-         "kind": "Method",
-         "decorators": [],
-         "skipUrlEncoding": false
-        },
-        {
-         "$id": "416",
-         "name": "contentType",
-         "nameInRequest": "contentType",
-         "doc": "Body parameter's content type. Known values are application/json",
-         "type": {
-          "$ref": "411"
-         },
-         "location": "Header",
-         "isApiVersion": false,
-         "isContentType": false,
-         "isEndpoint": false,
-         "explode": false,
-         "isRequired": true,
-         "kind": "Constant",
-         "decorators": [],
-         "skipUrlEncoding": false
-        }
-       ],
-       "response": {
-        "$id": "417"
-       },
-       "isOverride": false,
-       "generateConvenient": true,
-       "generateProtocol": true,
-       "crossLanguageDefinitionId": "SpecialWords.Models.withLambda"
-      },
-      {
-       "$id": "418",
-       "kind": "basic",
-       "name": "withNot",
-       "accessibility": "public",
-       "apiVersions": [],
-       "operation": {
-        "$id": "419",
-        "name": "withNot",
-        "resourceName": "Models",
-        "accessibility": "public",
-        "parameters": [
-         {
-          "$id": "420",
-          "name": "contentType",
-          "nameInRequest": "Content-Type",
-          "doc": "Body parameter's content type. Known values are application/json",
-          "type": {
-           "$id": "421",
-           "kind": "constant",
-           "valueType": {
-            "$id": "422",
-            "kind": "string",
-            "name": "string",
-            "crossLanguageDefinitionId": "TypeSpec.string",
-            "decorators": []
-           },
-           "value": "application/json",
-           "decorators": []
-          },
-          "location": "Header",
-          "isApiVersion": false,
-          "isContentType": true,
-          "isEndpoint": false,
-          "explode": false,
-          "isRequired": true,
-          "kind": "Constant",
-          "decorators": [],
-          "skipUrlEncoding": false
-         },
-         {
-          "$id": "423",
-          "name": "body",
-          "nameInRequest": "body",
-          "type": {
-           "$ref": "122"
-          },
-          "location": "Body",
-          "isApiVersion": false,
-          "isContentType": false,
-          "isEndpoint": false,
-          "explode": false,
-          "isRequired": true,
-          "kind": "Method",
-          "decorators": [],
-          "skipUrlEncoding": false
-         }
-        ],
-        "responses": [
-         {
-          "$id": "424",
-          "statusCodes": [
-           204
-          ],
-          "headers": [],
-          "isErrorResponse": false
-         }
-        ],
-        "httpMethod": "POST",
-        "uri": "{endpoint}",
-        "path": "/special-words/models/not",
-        "requestMediaTypes": [
-         "application/json"
-        ],
-        "bufferResponse": true,
-        "generateProtocolMethod": true,
-        "generateConvenienceMethod": true,
-        "crossLanguageDefinitionId": "SpecialWords.Models.withNot",
-        "decorators": []
-       },
-       "parameters": [
-        {
-         "$id": "425",
-         "name": "body",
-         "nameInRequest": "body",
-         "type": {
-          "$ref": "122"
-         },
-         "location": "Body",
-         "isApiVersion": false,
-         "isContentType": false,
-         "isEndpoint": false,
-         "explode": false,
-         "isRequired": true,
-         "kind": "Method",
-         "decorators": [],
-         "skipUrlEncoding": false
-        },
-        {
-         "$id": "426",
-         "name": "contentType",
-         "nameInRequest": "contentType",
-         "doc": "Body parameter's content type. Known values are application/json",
-         "type": {
-          "$ref": "421"
-         },
-         "location": "Header",
-         "isApiVersion": false,
-         "isContentType": false,
-         "isEndpoint": false,
-         "explode": false,
-         "isRequired": true,
-         "kind": "Constant",
-         "decorators": [],
-         "skipUrlEncoding": false
-        }
-       ],
-       "response": {
-        "$id": "427"
-       },
-       "isOverride": false,
-       "generateConvenient": true,
-       "generateProtocol": true,
-       "crossLanguageDefinitionId": "SpecialWords.Models.withNot"
-      },
-      {
-       "$id": "428",
-       "kind": "basic",
-       "name": "withOr",
-       "accessibility": "public",
-       "apiVersions": [],
-       "operation": {
-        "$id": "429",
-        "name": "withOr",
-        "resourceName": "Models",
-        "accessibility": "public",
-        "parameters": [
-         {
-          "$id": "430",
-          "name": "contentType",
-          "nameInRequest": "Content-Type",
-          "doc": "Body parameter's content type. Known values are application/json",
-          "type": {
-           "$id": "431",
-           "kind": "constant",
-           "valueType": {
-            "$id": "432",
-            "kind": "string",
-            "name": "string",
-            "crossLanguageDefinitionId": "TypeSpec.string",
-            "decorators": []
-           },
-           "value": "application/json",
-           "decorators": []
+           "$ref": "48"
           },
           "location": "Header",
           "isApiVersion": false,
@@ -4484,7 +4540,7 @@
           "name": "body",
           "nameInRequest": "body",
           "type": {
-           "$ref": "127"
+           "$ref": "185"
           },
           "location": "Body",
           "isApiVersion": false,
@@ -4509,14 +4565,14 @@
         ],
         "httpMethod": "POST",
         "uri": "{endpoint}",
-        "path": "/special-words/models/or",
+        "path": "/special-words/models/lambda",
         "requestMediaTypes": [
          "application/json"
         ],
         "bufferResponse": true,
         "generateProtocolMethod": true,
         "generateConvenienceMethod": true,
-        "crossLanguageDefinitionId": "SpecialWords.Models.withOr",
+        "crossLanguageDefinitionId": "SpecialWords.Models.withLambda",
         "decorators": []
        },
        "parameters": [
@@ -4525,7 +4581,7 @@
          "name": "body",
          "nameInRequest": "body",
          "type": {
-          "$ref": "127"
+          "$ref": "185"
          },
          "location": "Body",
          "isApiVersion": false,
@@ -4543,7 +4599,7 @@
          "nameInRequest": "contentType",
          "doc": "Body parameter's content type. Known values are application/json",
          "type": {
-          "$ref": "431"
+          "$ref": "48"
          },
          "location": "Header",
          "isApiVersion": false,
@@ -4562,17 +4618,17 @@
        "isOverride": false,
        "generateConvenient": true,
        "generateProtocol": true,
-       "crossLanguageDefinitionId": "SpecialWords.Models.withOr"
+       "crossLanguageDefinitionId": "SpecialWords.Models.withLambda"
       },
       {
        "$id": "438",
        "kind": "basic",
-       "name": "withPass",
+       "name": "withNot",
        "accessibility": "public",
        "apiVersions": [],
        "operation": {
         "$id": "439",
-        "name": "withPass",
+        "name": "withNot",
         "resourceName": "Models",
         "accessibility": "public",
         "parameters": [
@@ -4582,17 +4638,7 @@
           "nameInRequest": "Content-Type",
           "doc": "Body parameter's content type. Known values are application/json",
           "type": {
-           "$id": "441",
-           "kind": "constant",
-           "valueType": {
-            "$id": "442",
-            "kind": "string",
-            "name": "string",
-            "crossLanguageDefinitionId": "TypeSpec.string",
-            "decorators": []
-           },
-           "value": "application/json",
-           "decorators": []
+           "$ref": "50"
           },
           "location": "Header",
           "isApiVersion": false,
@@ -4605,11 +4651,11 @@
           "skipUrlEncoding": false
          },
          {
-          "$id": "443",
+          "$id": "441",
           "name": "body",
           "nameInRequest": "body",
           "type": {
-           "$ref": "132"
+           "$ref": "190"
           },
           "location": "Body",
           "isApiVersion": false,
@@ -4624,7 +4670,237 @@
         ],
         "responses": [
          {
-          "$id": "444",
+          "$id": "442",
+          "statusCodes": [
+           204
+          ],
+          "headers": [],
+          "isErrorResponse": false
+         }
+        ],
+        "httpMethod": "POST",
+        "uri": "{endpoint}",
+        "path": "/special-words/models/not",
+        "requestMediaTypes": [
+         "application/json"
+        ],
+        "bufferResponse": true,
+        "generateProtocolMethod": true,
+        "generateConvenienceMethod": true,
+        "crossLanguageDefinitionId": "SpecialWords.Models.withNot",
+        "decorators": []
+       },
+       "parameters": [
+        {
+         "$id": "443",
+         "name": "body",
+         "nameInRequest": "body",
+         "type": {
+          "$ref": "190"
+         },
+         "location": "Body",
+         "isApiVersion": false,
+         "isContentType": false,
+         "isEndpoint": false,
+         "explode": false,
+         "isRequired": true,
+         "kind": "Method",
+         "decorators": [],
+         "skipUrlEncoding": false
+        },
+        {
+         "$id": "444",
+         "name": "contentType",
+         "nameInRequest": "contentType",
+         "doc": "Body parameter's content type. Known values are application/json",
+         "type": {
+          "$ref": "50"
+         },
+         "location": "Header",
+         "isApiVersion": false,
+         "isContentType": false,
+         "isEndpoint": false,
+         "explode": false,
+         "isRequired": true,
+         "kind": "Constant",
+         "decorators": [],
+         "skipUrlEncoding": false
+        }
+       ],
+       "response": {
+        "$id": "445"
+       },
+       "isOverride": false,
+       "generateConvenient": true,
+       "generateProtocol": true,
+       "crossLanguageDefinitionId": "SpecialWords.Models.withNot"
+      },
+      {
+       "$id": "446",
+       "kind": "basic",
+       "name": "withOr",
+       "accessibility": "public",
+       "apiVersions": [],
+       "operation": {
+        "$id": "447",
+        "name": "withOr",
+        "resourceName": "Models",
+        "accessibility": "public",
+        "parameters": [
+         {
+          "$id": "448",
+          "name": "contentType",
+          "nameInRequest": "Content-Type",
+          "doc": "Body parameter's content type. Known values are application/json",
+          "type": {
+           "$ref": "52"
+          },
+          "location": "Header",
+          "isApiVersion": false,
+          "isContentType": true,
+          "isEndpoint": false,
+          "explode": false,
+          "isRequired": true,
+          "kind": "Constant",
+          "decorators": [],
+          "skipUrlEncoding": false
+         },
+         {
+          "$id": "449",
+          "name": "body",
+          "nameInRequest": "body",
+          "type": {
+           "$ref": "195"
+          },
+          "location": "Body",
+          "isApiVersion": false,
+          "isContentType": false,
+          "isEndpoint": false,
+          "explode": false,
+          "isRequired": true,
+          "kind": "Method",
+          "decorators": [],
+          "skipUrlEncoding": false
+         }
+        ],
+        "responses": [
+         {
+          "$id": "450",
+          "statusCodes": [
+           204
+          ],
+          "headers": [],
+          "isErrorResponse": false
+         }
+        ],
+        "httpMethod": "POST",
+        "uri": "{endpoint}",
+        "path": "/special-words/models/or",
+        "requestMediaTypes": [
+         "application/json"
+        ],
+        "bufferResponse": true,
+        "generateProtocolMethod": true,
+        "generateConvenienceMethod": true,
+        "crossLanguageDefinitionId": "SpecialWords.Models.withOr",
+        "decorators": []
+       },
+       "parameters": [
+        {
+         "$id": "451",
+         "name": "body",
+         "nameInRequest": "body",
+         "type": {
+          "$ref": "195"
+         },
+         "location": "Body",
+         "isApiVersion": false,
+         "isContentType": false,
+         "isEndpoint": false,
+         "explode": false,
+         "isRequired": true,
+         "kind": "Method",
+         "decorators": [],
+         "skipUrlEncoding": false
+        },
+        {
+         "$id": "452",
+         "name": "contentType",
+         "nameInRequest": "contentType",
+         "doc": "Body parameter's content type. Known values are application/json",
+         "type": {
+          "$ref": "52"
+         },
+         "location": "Header",
+         "isApiVersion": false,
+         "isContentType": false,
+         "isEndpoint": false,
+         "explode": false,
+         "isRequired": true,
+         "kind": "Constant",
+         "decorators": [],
+         "skipUrlEncoding": false
+        }
+       ],
+       "response": {
+        "$id": "453"
+       },
+       "isOverride": false,
+       "generateConvenient": true,
+       "generateProtocol": true,
+       "crossLanguageDefinitionId": "SpecialWords.Models.withOr"
+      },
+      {
+       "$id": "454",
+       "kind": "basic",
+       "name": "withPass",
+       "accessibility": "public",
+       "apiVersions": [],
+       "operation": {
+        "$id": "455",
+        "name": "withPass",
+        "resourceName": "Models",
+        "accessibility": "public",
+        "parameters": [
+         {
+          "$id": "456",
+          "name": "contentType",
+          "nameInRequest": "Content-Type",
+          "doc": "Body parameter's content type. Known values are application/json",
+          "type": {
+           "$ref": "54"
+          },
+          "location": "Header",
+          "isApiVersion": false,
+          "isContentType": true,
+          "isEndpoint": false,
+          "explode": false,
+          "isRequired": true,
+          "kind": "Constant",
+          "decorators": [],
+          "skipUrlEncoding": false
+         },
+         {
+          "$id": "457",
+          "name": "body",
+          "nameInRequest": "body",
+          "type": {
+           "$ref": "200"
+          },
+          "location": "Body",
+          "isApiVersion": false,
+          "isContentType": false,
+          "isEndpoint": false,
+          "explode": false,
+          "isRequired": true,
+          "kind": "Method",
+          "decorators": [],
+          "skipUrlEncoding": false
+         }
+        ],
+        "responses": [
+         {
+          "$id": "458",
           "statusCodes": [
            204
           ],
@@ -4646,11 +4922,11 @@
        },
        "parameters": [
         {
-         "$id": "445",
+         "$id": "459",
          "name": "body",
          "nameInRequest": "body",
          "type": {
-          "$ref": "132"
+          "$ref": "200"
          },
          "location": "Body",
          "isApiVersion": false,
@@ -4663,12 +4939,12 @@
          "skipUrlEncoding": false
         },
         {
-         "$id": "446",
+         "$id": "460",
          "name": "contentType",
          "nameInRequest": "contentType",
          "doc": "Body parameter's content type. Known values are application/json",
          "type": {
-          "$ref": "441"
+          "$ref": "54"
          },
          "location": "Header",
          "isApiVersion": false,
@@ -4682,7 +4958,7 @@
         }
        ],
        "response": {
-        "$id": "447"
+        "$id": "461"
        },
        "isOverride": false,
        "generateConvenient": true,
@@ -4690,34 +4966,24 @@
        "crossLanguageDefinitionId": "SpecialWords.Models.withPass"
       },
       {
-       "$id": "448",
+       "$id": "462",
        "kind": "basic",
        "name": "withRaise",
        "accessibility": "public",
        "apiVersions": [],
        "operation": {
-        "$id": "449",
+        "$id": "463",
         "name": "withRaise",
         "resourceName": "Models",
         "accessibility": "public",
         "parameters": [
          {
-          "$id": "450",
+          "$id": "464",
           "name": "contentType",
           "nameInRequest": "Content-Type",
           "doc": "Body parameter's content type. Known values are application/json",
           "type": {
-           "$id": "451",
-           "kind": "constant",
-           "valueType": {
-            "$id": "452",
-            "kind": "string",
-            "name": "string",
-            "crossLanguageDefinitionId": "TypeSpec.string",
-            "decorators": []
-           },
-           "value": "application/json",
-           "decorators": []
+           "$ref": "56"
           },
           "location": "Header",
           "isApiVersion": false,
@@ -4730,11 +4996,11 @@
           "skipUrlEncoding": false
          },
          {
-          "$id": "453",
+          "$id": "465",
           "name": "body",
           "nameInRequest": "body",
           "type": {
-           "$ref": "137"
+           "$ref": "205"
           },
           "location": "Body",
           "isApiVersion": false,
@@ -4749,7 +5015,7 @@
         ],
         "responses": [
          {
-          "$id": "454",
+          "$id": "466",
           "statusCodes": [
            204
           ],
@@ -4771,11 +5037,11 @@
        },
        "parameters": [
         {
-         "$id": "455",
+         "$id": "467",
          "name": "body",
          "nameInRequest": "body",
          "type": {
-          "$ref": "137"
+          "$ref": "205"
          },
          "location": "Body",
          "isApiVersion": false,
@@ -4788,12 +5054,12 @@
          "skipUrlEncoding": false
         },
         {
-         "$id": "456",
+         "$id": "468",
          "name": "contentType",
          "nameInRequest": "contentType",
          "doc": "Body parameter's content type. Known values are application/json",
          "type": {
-          "$ref": "451"
+          "$ref": "56"
          },
          "location": "Header",
          "isApiVersion": false,
@@ -4807,7 +5073,7 @@
         }
        ],
        "response": {
-        "$id": "457"
+        "$id": "469"
        },
        "isOverride": false,
        "generateConvenient": true,
@@ -4815,159 +5081,24 @@
        "crossLanguageDefinitionId": "SpecialWords.Models.withRaise"
       },
       {
-       "$id": "458",
+       "$id": "470",
        "kind": "basic",
        "name": "withReturn",
        "accessibility": "public",
        "apiVersions": [],
        "operation": {
-        "$id": "459",
+        "$id": "471",
         "name": "withReturn",
         "resourceName": "Models",
         "accessibility": "public",
         "parameters": [
          {
-          "$id": "460",
+          "$id": "472",
           "name": "contentType",
           "nameInRequest": "Content-Type",
           "doc": "Body parameter's content type. Known values are application/json",
           "type": {
-           "$id": "461",
-           "kind": "constant",
-           "valueType": {
-            "$id": "462",
-            "kind": "string",
-            "name": "string",
-            "crossLanguageDefinitionId": "TypeSpec.string",
-            "decorators": []
-           },
-           "value": "application/json",
-           "decorators": []
-          },
-          "location": "Header",
-          "isApiVersion": false,
-          "isContentType": true,
-          "isEndpoint": false,
-          "explode": false,
-          "isRequired": true,
-          "kind": "Constant",
-          "decorators": [],
-          "skipUrlEncoding": false
-         },
-         {
-          "$id": "463",
-          "name": "body",
-          "nameInRequest": "body",
-          "type": {
-           "$ref": "142"
-          },
-          "location": "Body",
-          "isApiVersion": false,
-          "isContentType": false,
-          "isEndpoint": false,
-          "explode": false,
-          "isRequired": true,
-          "kind": "Method",
-          "decorators": [],
-          "skipUrlEncoding": false
-         }
-        ],
-        "responses": [
-         {
-          "$id": "464",
-          "statusCodes": [
-           204
-          ],
-          "headers": [],
-          "isErrorResponse": false
-         }
-        ],
-        "httpMethod": "POST",
-        "uri": "{endpoint}",
-        "path": "/special-words/models/return",
-        "requestMediaTypes": [
-         "application/json"
-        ],
-        "bufferResponse": true,
-        "generateProtocolMethod": true,
-        "generateConvenienceMethod": true,
-        "crossLanguageDefinitionId": "SpecialWords.Models.withReturn",
-        "decorators": []
-       },
-       "parameters": [
-        {
-         "$id": "465",
-         "name": "body",
-         "nameInRequest": "body",
-         "type": {
-          "$ref": "142"
-         },
-         "location": "Body",
-         "isApiVersion": false,
-         "isContentType": false,
-         "isEndpoint": false,
-         "explode": false,
-         "isRequired": true,
-         "kind": "Method",
-         "decorators": [],
-         "skipUrlEncoding": false
-        },
-        {
-         "$id": "466",
-         "name": "contentType",
-         "nameInRequest": "contentType",
-         "doc": "Body parameter's content type. Known values are application/json",
-         "type": {
-          "$ref": "461"
-         },
-         "location": "Header",
-         "isApiVersion": false,
-         "isContentType": false,
-         "isEndpoint": false,
-         "explode": false,
-         "isRequired": true,
-         "kind": "Constant",
-         "decorators": [],
-         "skipUrlEncoding": false
-        }
-       ],
-       "response": {
-        "$id": "467"
-       },
-       "isOverride": false,
-       "generateConvenient": true,
-       "generateProtocol": true,
-       "crossLanguageDefinitionId": "SpecialWords.Models.withReturn"
-      },
-      {
-       "$id": "468",
-       "kind": "basic",
-       "name": "withTry",
-       "accessibility": "public",
-       "apiVersions": [],
-       "operation": {
-        "$id": "469",
-        "name": "withTry",
-        "resourceName": "Models",
-        "accessibility": "public",
-        "parameters": [
-         {
-          "$id": "470",
-          "name": "contentType",
-          "nameInRequest": "Content-Type",
-          "doc": "Body parameter's content type. Known values are application/json",
-          "type": {
-           "$id": "471",
-           "kind": "constant",
-           "valueType": {
-            "$id": "472",
-            "kind": "string",
-            "name": "string",
-            "crossLanguageDefinitionId": "TypeSpec.string",
-            "decorators": []
-           },
-           "value": "application/json",
-           "decorators": []
+           "$ref": "58"
           },
           "location": "Header",
           "isApiVersion": false,
@@ -4984,7 +5115,7 @@
           "name": "body",
           "nameInRequest": "body",
           "type": {
-           "$ref": "147"
+           "$ref": "210"
           },
           "location": "Body",
           "isApiVersion": false,
@@ -5009,14 +5140,14 @@
         ],
         "httpMethod": "POST",
         "uri": "{endpoint}",
-        "path": "/special-words/models/try",
+        "path": "/special-words/models/return",
         "requestMediaTypes": [
          "application/json"
         ],
         "bufferResponse": true,
         "generateProtocolMethod": true,
         "generateConvenienceMethod": true,
-        "crossLanguageDefinitionId": "SpecialWords.Models.withTry",
+        "crossLanguageDefinitionId": "SpecialWords.Models.withReturn",
         "decorators": []
        },
        "parameters": [
@@ -5025,7 +5156,7 @@
          "name": "body",
          "nameInRequest": "body",
          "type": {
-          "$ref": "147"
+          "$ref": "210"
          },
          "location": "Body",
          "isApiVersion": false,
@@ -5043,7 +5174,7 @@
          "nameInRequest": "contentType",
          "doc": "Body parameter's content type. Known values are application/json",
          "type": {
-          "$ref": "471"
+          "$ref": "58"
          },
          "location": "Header",
          "isApiVersion": false,
@@ -5062,17 +5193,17 @@
        "isOverride": false,
        "generateConvenient": true,
        "generateProtocol": true,
-       "crossLanguageDefinitionId": "SpecialWords.Models.withTry"
+       "crossLanguageDefinitionId": "SpecialWords.Models.withReturn"
       },
       {
        "$id": "478",
        "kind": "basic",
-       "name": "withWhile",
+       "name": "withTry",
        "accessibility": "public",
        "apiVersions": [],
        "operation": {
         "$id": "479",
-        "name": "withWhile",
+        "name": "withTry",
         "resourceName": "Models",
         "accessibility": "public",
         "parameters": [
@@ -5082,17 +5213,7 @@
           "nameInRequest": "Content-Type",
           "doc": "Body parameter's content type. Known values are application/json",
           "type": {
-           "$id": "481",
-           "kind": "constant",
-           "valueType": {
-            "$id": "482",
-            "kind": "string",
-            "name": "string",
-            "crossLanguageDefinitionId": "TypeSpec.string",
-            "decorators": []
-           },
-           "value": "application/json",
-           "decorators": []
+           "$ref": "60"
           },
           "location": "Header",
           "isApiVersion": false,
@@ -5105,11 +5226,11 @@
           "skipUrlEncoding": false
          },
          {
-          "$id": "483",
+          "$id": "481",
           "name": "body",
           "nameInRequest": "body",
           "type": {
-           "$ref": "152"
+           "$ref": "215"
           },
           "location": "Body",
           "isApiVersion": false,
@@ -5124,7 +5245,122 @@
         ],
         "responses": [
          {
-          "$id": "484",
+          "$id": "482",
+          "statusCodes": [
+           204
+          ],
+          "headers": [],
+          "isErrorResponse": false
+         }
+        ],
+        "httpMethod": "POST",
+        "uri": "{endpoint}",
+        "path": "/special-words/models/try",
+        "requestMediaTypes": [
+         "application/json"
+        ],
+        "bufferResponse": true,
+        "generateProtocolMethod": true,
+        "generateConvenienceMethod": true,
+        "crossLanguageDefinitionId": "SpecialWords.Models.withTry",
+        "decorators": []
+       },
+       "parameters": [
+        {
+         "$id": "483",
+         "name": "body",
+         "nameInRequest": "body",
+         "type": {
+          "$ref": "215"
+         },
+         "location": "Body",
+         "isApiVersion": false,
+         "isContentType": false,
+         "isEndpoint": false,
+         "explode": false,
+         "isRequired": true,
+         "kind": "Method",
+         "decorators": [],
+         "skipUrlEncoding": false
+        },
+        {
+         "$id": "484",
+         "name": "contentType",
+         "nameInRequest": "contentType",
+         "doc": "Body parameter's content type. Known values are application/json",
+         "type": {
+          "$ref": "60"
+         },
+         "location": "Header",
+         "isApiVersion": false,
+         "isContentType": false,
+         "isEndpoint": false,
+         "explode": false,
+         "isRequired": true,
+         "kind": "Constant",
+         "decorators": [],
+         "skipUrlEncoding": false
+        }
+       ],
+       "response": {
+        "$id": "485"
+       },
+       "isOverride": false,
+       "generateConvenient": true,
+       "generateProtocol": true,
+       "crossLanguageDefinitionId": "SpecialWords.Models.withTry"
+      },
+      {
+       "$id": "486",
+       "kind": "basic",
+       "name": "withWhile",
+       "accessibility": "public",
+       "apiVersions": [],
+       "operation": {
+        "$id": "487",
+        "name": "withWhile",
+        "resourceName": "Models",
+        "accessibility": "public",
+        "parameters": [
+         {
+          "$id": "488",
+          "name": "contentType",
+          "nameInRequest": "Content-Type",
+          "doc": "Body parameter's content type. Known values are application/json",
+          "type": {
+           "$ref": "62"
+          },
+          "location": "Header",
+          "isApiVersion": false,
+          "isContentType": true,
+          "isEndpoint": false,
+          "explode": false,
+          "isRequired": true,
+          "kind": "Constant",
+          "decorators": [],
+          "skipUrlEncoding": false
+         },
+         {
+          "$id": "489",
+          "name": "body",
+          "nameInRequest": "body",
+          "type": {
+           "$ref": "220"
+          },
+          "location": "Body",
+          "isApiVersion": false,
+          "isContentType": false,
+          "isEndpoint": false,
+          "explode": false,
+          "isRequired": true,
+          "kind": "Method",
+          "decorators": [],
+          "skipUrlEncoding": false
+         }
+        ],
+        "responses": [
+         {
+          "$id": "490",
           "statusCodes": [
            204
           ],
@@ -5146,11 +5382,11 @@
        },
        "parameters": [
         {
-         "$id": "485",
+         "$id": "491",
          "name": "body",
          "nameInRequest": "body",
          "type": {
-          "$ref": "152"
+          "$ref": "220"
          },
          "location": "Body",
          "isApiVersion": false,
@@ -5163,12 +5399,12 @@
          "skipUrlEncoding": false
         },
         {
-         "$id": "486",
+         "$id": "492",
          "name": "contentType",
          "nameInRequest": "contentType",
          "doc": "Body parameter's content type. Known values are application/json",
          "type": {
-          "$ref": "481"
+          "$ref": "62"
          },
          "location": "Header",
          "isApiVersion": false,
@@ -5182,7 +5418,7 @@
         }
        ],
        "response": {
-        "$id": "487"
+        "$id": "493"
        },
        "isOverride": false,
        "generateConvenient": true,
@@ -5190,34 +5426,24 @@
        "crossLanguageDefinitionId": "SpecialWords.Models.withWhile"
       },
       {
-       "$id": "488",
+       "$id": "494",
        "kind": "basic",
        "name": "withWith",
        "accessibility": "public",
        "apiVersions": [],
        "operation": {
-        "$id": "489",
+        "$id": "495",
         "name": "withWith",
         "resourceName": "Models",
         "accessibility": "public",
         "parameters": [
          {
-          "$id": "490",
+          "$id": "496",
           "name": "contentType",
           "nameInRequest": "Content-Type",
           "doc": "Body parameter's content type. Known values are application/json",
           "type": {
-           "$id": "491",
-           "kind": "constant",
-           "valueType": {
-            "$id": "492",
-            "kind": "string",
-            "name": "string",
-            "crossLanguageDefinitionId": "TypeSpec.string",
-            "decorators": []
-           },
-           "value": "application/json",
-           "decorators": []
+           "$ref": "64"
           },
           "location": "Header",
           "isApiVersion": false,
@@ -5230,11 +5456,11 @@
           "skipUrlEncoding": false
          },
          {
-          "$id": "493",
+          "$id": "497",
           "name": "body",
           "nameInRequest": "body",
           "type": {
-           "$ref": "157"
+           "$ref": "225"
           },
           "location": "Body",
           "isApiVersion": false,
@@ -5249,7 +5475,7 @@
         ],
         "responses": [
          {
-          "$id": "494",
+          "$id": "498",
           "statusCodes": [
            204
           ],
@@ -5271,11 +5497,11 @@
        },
        "parameters": [
         {
-         "$id": "495",
+         "$id": "499",
          "name": "body",
          "nameInRequest": "body",
          "type": {
-          "$ref": "157"
+          "$ref": "225"
          },
          "location": "Body",
          "isApiVersion": false,
@@ -5288,12 +5514,12 @@
          "skipUrlEncoding": false
         },
         {
-         "$id": "496",
+         "$id": "500",
          "name": "contentType",
          "nameInRequest": "contentType",
          "doc": "Body parameter's content type. Known values are application/json",
          "type": {
-          "$ref": "491"
+          "$ref": "64"
          },
          "location": "Header",
          "isApiVersion": false,
@@ -5307,7 +5533,7 @@
         }
        ],
        "response": {
-        "$id": "497"
+        "$id": "501"
        },
        "isOverride": false,
        "generateConvenient": true,
@@ -5315,34 +5541,24 @@
        "crossLanguageDefinitionId": "SpecialWords.Models.withWith"
       },
       {
-       "$id": "498",
+       "$id": "502",
        "kind": "basic",
        "name": "withYield",
        "accessibility": "public",
        "apiVersions": [],
        "operation": {
-        "$id": "499",
+        "$id": "503",
         "name": "withYield",
         "resourceName": "Models",
         "accessibility": "public",
         "parameters": [
          {
-          "$id": "500",
+          "$id": "504",
           "name": "contentType",
           "nameInRequest": "Content-Type",
           "doc": "Body parameter's content type. Known values are application/json",
           "type": {
-           "$id": "501",
-           "kind": "constant",
-           "valueType": {
-            "$id": "502",
-            "kind": "string",
-            "name": "string",
-            "crossLanguageDefinitionId": "TypeSpec.string",
-            "decorators": []
-           },
-           "value": "application/json",
-           "decorators": []
+           "$ref": "66"
           },
           "location": "Header",
           "isApiVersion": false,
@@ -5355,11 +5571,11 @@
           "skipUrlEncoding": false
          },
          {
-          "$id": "503",
+          "$id": "505",
           "name": "body",
           "nameInRequest": "body",
           "type": {
-           "$ref": "162"
+           "$ref": "230"
           },
           "location": "Body",
           "isApiVersion": false,
@@ -5374,7 +5590,7 @@
         ],
         "responses": [
          {
-          "$id": "504",
+          "$id": "506",
           "statusCodes": [
            204
           ],
@@ -5396,11 +5612,11 @@
        },
        "parameters": [
         {
-         "$id": "505",
+         "$id": "507",
          "name": "body",
          "nameInRequest": "body",
          "type": {
-          "$ref": "162"
+          "$ref": "230"
          },
          "location": "Body",
          "isApiVersion": false,
@@ -5413,12 +5629,12 @@
          "skipUrlEncoding": false
         },
         {
-         "$id": "506",
+         "$id": "508",
          "name": "contentType",
          "nameInRequest": "contentType",
          "doc": "Body parameter's content type. Known values are application/json",
          "type": {
-          "$ref": "501"
+          "$ref": "66"
          },
          "location": "Header",
          "isApiVersion": false,
@@ -5432,7 +5648,7 @@
         }
        ],
        "response": {
-        "$id": "507"
+        "$id": "509"
        },
        "isOverride": false,
        "generateConvenient": true,
@@ -5442,12 +5658,12 @@
      ],
      "parameters": [
       {
-       "$id": "508",
+       "$id": "510",
        "name": "endpoint",
        "nameInRequest": "endpoint",
        "doc": "Service host",
        "type": {
-        "$id": "509",
+        "$id": "511",
         "kind": "url",
         "name": "url",
         "crossLanguageDefinitionId": "TypeSpec.url"
@@ -5461,9 +5677,9 @@
        "explode": false,
        "kind": "Client",
        "defaultValue": {
-        "$id": "510",
+        "$id": "512",
         "type": {
-         "$id": "511",
+         "$id": "513",
          "kind": "string",
          "name": "string",
          "crossLanguageDefinitionId": "TypeSpec.string"
@@ -5476,45 +5692,35 @@
      "crossLanguageDefinitionId": "SpecialWords.Models",
      "apiVersions": [],
      "parent": {
-      "$ref": "172"
+      "$ref": "240"
      }
     },
     {
-     "$id": "512",
+     "$id": "514",
      "kind": "client",
      "name": "ModelProperties",
      "namespace": "SpecialWords.ModelProperties",
      "doc": "Verify model names",
      "methods": [
       {
-       "$id": "513",
+       "$id": "515",
        "kind": "basic",
        "name": "sameAsModel",
        "accessibility": "public",
        "apiVersions": [],
        "operation": {
-        "$id": "514",
+        "$id": "516",
         "name": "sameAsModel",
         "resourceName": "ModelProperties",
         "accessibility": "public",
         "parameters": [
          {
-          "$id": "515",
+          "$id": "517",
           "name": "contentType",
           "nameInRequest": "Content-Type",
           "doc": "Body parameter's content type. Known values are application/json",
           "type": {
-           "$id": "516",
-           "kind": "constant",
-           "valueType": {
-            "$id": "517",
-            "kind": "string",
-            "name": "string",
-            "crossLanguageDefinitionId": "TypeSpec.string",
-            "decorators": []
-           },
-           "value": "application/json",
-           "decorators": []
+           "$ref": "68"
           },
           "location": "Header",
           "isApiVersion": false,
@@ -5531,7 +5737,7 @@
           "name": "body",
           "nameInRequest": "body",
           "type": {
-           "$ref": "167"
+           "$ref": "235"
           },
           "location": "Body",
           "isApiVersion": false,
@@ -5572,7 +5778,7 @@
          "name": "body",
          "nameInRequest": "body",
          "type": {
-          "$ref": "167"
+          "$ref": "235"
          },
          "location": "Body",
          "isApiVersion": false,
@@ -5590,7 +5796,7 @@
          "nameInRequest": "contentType",
          "doc": "Body parameter's content type. Known values are application/json",
          "type": {
-          "$ref": "516"
+          "$ref": "68"
          },
          "location": "Header",
          "isApiVersion": false,
@@ -5648,7 +5854,7 @@
      "crossLanguageDefinitionId": "SpecialWords.ModelProperties",
      "apiVersions": [],
      "parent": {
-      "$ref": "172"
+      "$ref": "240"
      }
     },
     {
@@ -7015,7 +7221,7 @@
      "crossLanguageDefinitionId": "SpecialWords.Operations",
      "apiVersions": [],
      "parent": {
-      "$ref": "172"
+      "$ref": "240"
      }
     },
     {
@@ -9918,7 +10124,7 @@
      "crossLanguageDefinitionId": "SpecialWords.Parameters",
      "apiVersions": [],
      "parent": {
-      "$ref": "172"
+      "$ref": "240"
      }
     }
    ]
