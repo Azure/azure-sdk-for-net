@@ -104,7 +104,19 @@ namespace Azure.ResourceManager.DnsResolver
         /// <summary> The priority of the DNS security rule. </summary>
         public int Priority { get; set; }
         /// <summary> The action to take on DNS requests that match the DNS security rule. </summary>
-        public DnsSecurityRuleAction Action { get; set; }
+        internal DnsSecurityRuleAction Action { get; set; }
+        /// <summary> The type of action to take. </summary>
+        public DnsSecurityRuleActionType? ActionType
+        {
+            get => Action is null ? default : Action.ActionType;
+            set
+            {
+                if (Action is null)
+                    Action = new DnsSecurityRuleAction();
+                Action.ActionType = value;
+            }
+        }
+
         /// <summary> DNS resolver policy domains lists that the DNS security rule applies to. </summary>
         public IList<WritableSubResource> DnsResolverDomainLists { get; }
         /// <summary> The state of DNS security rule. </summary>

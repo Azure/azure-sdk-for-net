@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.DnsResolver.Tests
         private ResourceIdentifier _outboundEndpointId;
         private string _dnsForwardingRulesetName;
 
-        public VirtualNetworkLinkTests(bool async) : base(async)//, RecordedTestMode.Record)
+        public VirtualNetworkLinkTests(bool async) : base(async) // RecordedTestMode.Record)
         {
         }
 
