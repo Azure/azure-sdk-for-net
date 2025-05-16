@@ -3,9 +3,27 @@
  "name": "Authentication.OAuth2",
  "apiVersions": [],
  "enums": [],
- "models": [
+ "constants": [
   {
    "$id": "2",
+   "kind": "constant",
+   "name": "invalidContentType",
+   "namespace": "",
+   "usage": "None",
+   "valueType": {
+    "$id": "3",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "value": "application/json",
+   "decorators": []
+  }
+ ],
+ "models": [
+  {
+   "$id": "4",
    "kind": "model",
    "name": "InvalidAuth",
    "namespace": "Authentication.OAuth2",
@@ -14,12 +32,12 @@
    "decorators": [],
    "properties": [
     {
-     "$id": "3",
+     "$id": "5",
      "kind": "property",
      "name": "error",
      "serializedName": "error",
      "type": {
-      "$id": "4",
+      "$id": "6",
       "kind": "string",
       "name": "string",
       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -32,9 +50,9 @@
      "decorators": [],
      "crossLanguageDefinitionId": "Authentication.OAuth2.InvalidAuth.error",
      "serializationOptions": {
-      "$id": "5",
+      "$id": "7",
       "json": {
-       "$id": "6",
+       "$id": "8",
        "name": "error"
       }
      }
@@ -44,21 +62,21 @@
  ],
  "clients": [
   {
-   "$id": "7",
+   "$id": "9",
    "kind": "client",
    "name": "OAuth2Client",
    "namespace": "Authentication.OAuth2",
    "doc": "Illustrates clients generated with OAuth2 authentication.",
    "methods": [
     {
-     "$id": "8",
+     "$id": "10",
      "kind": "basic",
      "name": "valid",
      "accessibility": "public",
      "apiVersions": [],
      "doc": "Check whether client is authenticated",
      "operation": {
-      "$id": "9",
+      "$id": "11",
       "name": "valid",
       "resourceName": "OAuth2",
       "doc": "Check whether client is authenticated",
@@ -66,7 +84,7 @@
       "parameters": [],
       "responses": [
        {
-        "$id": "10",
+        "$id": "12",
         "statusCodes": [
          204
         ],
@@ -85,7 +103,7 @@
      },
      "parameters": [],
      "response": {
-      "$id": "11"
+      "$id": "13"
      },
      "isOverride": false,
      "generateConvenient": true,
@@ -93,35 +111,25 @@
      "crossLanguageDefinitionId": "Authentication.OAuth2.valid"
     },
     {
-     "$id": "12",
+     "$id": "14",
      "kind": "basic",
      "name": "invalid",
      "accessibility": "public",
      "apiVersions": [],
      "doc": "Check whether client is authenticated. Will return an invalid bearer error.",
      "operation": {
-      "$id": "13",
+      "$id": "15",
       "name": "invalid",
       "resourceName": "OAuth2",
       "doc": "Check whether client is authenticated. Will return an invalid bearer error.",
       "accessibility": "public",
       "parameters": [
        {
-        "$id": "14",
+        "$id": "16",
         "name": "accept",
         "nameInRequest": "Accept",
         "type": {
-         "$id": "15",
-         "kind": "constant",
-         "valueType": {
-          "$id": "16",
-          "kind": "string",
-          "name": "string",
-          "crossLanguageDefinitionId": "TypeSpec.string",
-          "decorators": []
-         },
-         "value": "application/json",
-         "decorators": []
+         "$ref": "2"
         },
         "location": "Header",
         "isApiVersion": false,
@@ -159,7 +167,7 @@
        "name": "accept",
        "nameInRequest": "accept",
        "type": {
-        "$ref": "15"
+        "$ref": "2"
        },
        "location": "Header",
        "isApiVersion": false,

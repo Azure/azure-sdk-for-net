@@ -3,6 +3,7 @@
  "name": "Server.Versions.NotVersioned",
  "apiVersions": [],
  "enums": [],
+ "constants": [],
  "models": [],
  "clients": [
   {

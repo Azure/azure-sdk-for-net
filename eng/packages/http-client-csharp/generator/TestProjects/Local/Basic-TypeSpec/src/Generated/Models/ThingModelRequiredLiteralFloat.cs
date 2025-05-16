@@ -11,7 +11,7 @@ using System.Globalization;
 
 namespace BasicTypeSpec
 {
-    /// <summary> The ThingModel_requiredLiteralFloat. </summary>
+    /// <summary> The ThingModelRequiredLiteralFloat. </summary>
     public readonly partial struct ThingModelRequiredLiteralFloat : IEquatable<ThingModelRequiredLiteralFloat>
     {
         private readonly float _value;
