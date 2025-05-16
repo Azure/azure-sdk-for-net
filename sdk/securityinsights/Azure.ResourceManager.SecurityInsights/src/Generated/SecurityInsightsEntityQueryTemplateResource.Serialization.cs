@@ -8,19 +8,23 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
+using Azure.ResourceManager.SecurityInsights.Models;
 
 namespace Azure.ResourceManager.SecurityInsights
 {
     public partial class SecurityInsightsEntityQueryTemplateResource : IJsonModel<SecurityInsightsEntityQueryTemplateData>
     {
+        private static UnknownEntityQueryTemplate s_dataDeserializationInstance;
+        private static UnknownEntityQueryTemplate DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<SecurityInsightsEntityQueryTemplateData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SecurityInsightsEntityQueryTemplateData>)Data).Write(writer, options);
 
-        SecurityInsightsEntityQueryTemplateData IJsonModel<SecurityInsightsEntityQueryTemplateData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SecurityInsightsEntityQueryTemplateData>)Data).Create(ref reader, options);
+        SecurityInsightsEntityQueryTemplateData IJsonModel<SecurityInsightsEntityQueryTemplateData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SecurityInsightsEntityQueryTemplateData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<SecurityInsightsEntityQueryTemplateData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SecurityInsightsEntityQueryTemplateData>(Data, options, AzureResourceManagerSecurityInsightsContext.Default);
 
         SecurityInsightsEntityQueryTemplateData IPersistableModel<SecurityInsightsEntityQueryTemplateData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SecurityInsightsEntityQueryTemplateData>(data, options, AzureResourceManagerSecurityInsightsContext.Default);
 
-        string IPersistableModel<SecurityInsightsEntityQueryTemplateData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SecurityInsightsEntityQueryTemplateData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<SecurityInsightsEntityQueryTemplateData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SecurityInsightsEntityQueryTemplateData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }
