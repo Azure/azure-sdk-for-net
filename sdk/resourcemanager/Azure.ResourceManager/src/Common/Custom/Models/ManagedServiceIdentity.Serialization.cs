@@ -11,6 +11,7 @@ using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 
 [assembly: CodeGenSuppressType("ManagedServiceIdentity")]
 namespace Azure.ResourceManager.Models
@@ -27,7 +28,7 @@ namespace Azure.ResourceManager.Models
             }
 
             writer.WriteStartObject();
-            JsonSerializer.Serialize(writer, ManagedServiceIdentityType, jOptions);
+            JsonSerializer.Serialize(writer, ManagedServiceIdentityType, ManagedServiceIdentityJsonContext.Default.ManagedServiceIdentityType);
             if (options.Format != "W" && Optional.IsDefined(PrincipalId))
             {
                 writer.WritePropertyName("principalId"u8);
@@ -45,7 +46,7 @@ namespace Azure.ResourceManager.Models
                 foreach (var item in UserAssignedIdentities)
                 {
                     writer.WritePropertyName(item.Key);
-                    JsonSerializer.Serialize(writer, item.Value);
+                    JsonSerializer.Serialize(writer, item.Value, ManagedServiceIdentityJsonContext.Default.UserAssignedIdentity);
                 }
                 writer.WriteEndObject();
             }
@@ -202,7 +203,7 @@ namespace Azure.ResourceManager.Models
                 }
                 if (property.NameEquals("type"u8))
                 {
-                    type = JsonSerializer.Deserialize<ManagedServiceIdentityType>($"{{{property}}}", jOptions);
+                    type = JsonSerializer.Deserialize<ManagedServiceIdentityType>($"{{{property}}}", ManagedServiceIdentityJsonContext.Default.ManagedServiceIdentityType);
                     continue;
                 }
                 if (property.NameEquals("userAssignedIdentities"u8))
@@ -214,7 +215,7 @@ namespace Azure.ResourceManager.Models
                     Dictionary<ResourceIdentifier, UserAssignedIdentity> dictionary = new Dictionary<ResourceIdentifier, UserAssignedIdentity>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(new ResourceIdentifier(property0.Name), JsonSerializer.Deserialize<UserAssignedIdentity>(property0.Value.GetRawText()));
+                        dictionary.Add(new ResourceIdentifier(property0.Name), JsonSerializer.Deserialize<UserAssignedIdentity>(property0.Value.GetRawText(), ManagedServiceIdentityJsonContext.Default.UserAssignedIdentity));
                     }
                     userAssignedIdentities = dictionary;
                     continue;
