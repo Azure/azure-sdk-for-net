@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.DeviceUpdate
 {
     public partial class DeviceUpdatePrivateEndpointConnectionResource : IJsonModel<DeviceUpdatePrivateEndpointConnectionData>
     {
+        private static DeviceUpdatePrivateEndpointConnectionData s_dataDeserializationInstance;
+        private static DeviceUpdatePrivateEndpointConnectionData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<DeviceUpdatePrivateEndpointConnectionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DeviceUpdatePrivateEndpointConnectionData>)Data).Write(writer, options);
 
-        DeviceUpdatePrivateEndpointConnectionData IJsonModel<DeviceUpdatePrivateEndpointConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DeviceUpdatePrivateEndpointConnectionData>)Data).Create(ref reader, options);
+        DeviceUpdatePrivateEndpointConnectionData IJsonModel<DeviceUpdatePrivateEndpointConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DeviceUpdatePrivateEndpointConnectionData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<DeviceUpdatePrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DeviceUpdatePrivateEndpointConnectionData>(Data, options, AzureResourceManagerDeviceUpdateContext.Default);
 
         DeviceUpdatePrivateEndpointConnectionData IPersistableModel<DeviceUpdatePrivateEndpointConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DeviceUpdatePrivateEndpointConnectionData>(data, options, AzureResourceManagerDeviceUpdateContext.Default);
 
-        string IPersistableModel<DeviceUpdatePrivateEndpointConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DeviceUpdatePrivateEndpointConnectionData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<DeviceUpdatePrivateEndpointConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DeviceUpdatePrivateEndpointConnectionData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

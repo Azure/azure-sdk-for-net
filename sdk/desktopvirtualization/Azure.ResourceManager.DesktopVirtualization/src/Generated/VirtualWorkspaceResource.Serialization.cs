@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.DesktopVirtualization
 {
     public partial class VirtualWorkspaceResource : IJsonModel<VirtualWorkspaceData>
     {
+        private static VirtualWorkspaceData s_dataDeserializationInstance;
+        private static VirtualWorkspaceData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<VirtualWorkspaceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<VirtualWorkspaceData>)Data).Write(writer, options);
 
-        VirtualWorkspaceData IJsonModel<VirtualWorkspaceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<VirtualWorkspaceData>)Data).Create(ref reader, options);
+        VirtualWorkspaceData IJsonModel<VirtualWorkspaceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<VirtualWorkspaceData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<VirtualWorkspaceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<VirtualWorkspaceData>(Data, options, AzureResourceManagerDesktopVirtualizationContext.Default);
 
         VirtualWorkspaceData IPersistableModel<VirtualWorkspaceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<VirtualWorkspaceData>(data, options, AzureResourceManagerDesktopVirtualizationContext.Default);
 
-        string IPersistableModel<VirtualWorkspaceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<VirtualWorkspaceData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<VirtualWorkspaceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<VirtualWorkspaceData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

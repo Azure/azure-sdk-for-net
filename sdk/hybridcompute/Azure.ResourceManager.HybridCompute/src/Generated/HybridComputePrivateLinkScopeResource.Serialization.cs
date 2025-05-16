@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.HybridCompute
 {
     public partial class HybridComputePrivateLinkScopeResource : IJsonModel<HybridComputePrivateLinkScopeData>
     {
+        private static HybridComputePrivateLinkScopeData s_dataDeserializationInstance;
+        private static HybridComputePrivateLinkScopeData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<HybridComputePrivateLinkScopeData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<HybridComputePrivateLinkScopeData>)Data).Write(writer, options);
 
-        HybridComputePrivateLinkScopeData IJsonModel<HybridComputePrivateLinkScopeData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<HybridComputePrivateLinkScopeData>)Data).Create(ref reader, options);
+        HybridComputePrivateLinkScopeData IJsonModel<HybridComputePrivateLinkScopeData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<HybridComputePrivateLinkScopeData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<HybridComputePrivateLinkScopeData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<HybridComputePrivateLinkScopeData>(Data, options, AzureResourceManagerHybridComputeContext.Default);
 
         HybridComputePrivateLinkScopeData IPersistableModel<HybridComputePrivateLinkScopeData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<HybridComputePrivateLinkScopeData>(data, options, AzureResourceManagerHybridComputeContext.Default);
 
-        string IPersistableModel<HybridComputePrivateLinkScopeData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<HybridComputePrivateLinkScopeData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<HybridComputePrivateLinkScopeData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<HybridComputePrivateLinkScopeData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

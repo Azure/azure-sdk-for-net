@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Compute
 {
     public partial class VirtualMachineScaleSetVmExtensionResource : IJsonModel<VirtualMachineScaleSetVmExtensionData>
     {
+        private static VirtualMachineScaleSetVmExtensionData s_dataDeserializationInstance;
+        private static VirtualMachineScaleSetVmExtensionData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<VirtualMachineScaleSetVmExtensionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<VirtualMachineScaleSetVmExtensionData>)Data).Write(writer, options);
 
-        VirtualMachineScaleSetVmExtensionData IJsonModel<VirtualMachineScaleSetVmExtensionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<VirtualMachineScaleSetVmExtensionData>)Data).Create(ref reader, options);
+        VirtualMachineScaleSetVmExtensionData IJsonModel<VirtualMachineScaleSetVmExtensionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<VirtualMachineScaleSetVmExtensionData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<VirtualMachineScaleSetVmExtensionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<VirtualMachineScaleSetVmExtensionData>(Data, options, AzureResourceManagerComputeContext.Default);
 
         VirtualMachineScaleSetVmExtensionData IPersistableModel<VirtualMachineScaleSetVmExtensionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<VirtualMachineScaleSetVmExtensionData>(data, options, AzureResourceManagerComputeContext.Default);
 
-        string IPersistableModel<VirtualMachineScaleSetVmExtensionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<VirtualMachineScaleSetVmExtensionData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<VirtualMachineScaleSetVmExtensionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<VirtualMachineScaleSetVmExtensionData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

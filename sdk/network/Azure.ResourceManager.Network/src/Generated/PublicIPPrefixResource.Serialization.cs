@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Network
 {
     public partial class PublicIPPrefixResource : IJsonModel<PublicIPPrefixData>
     {
+        private static PublicIPPrefixData s_dataDeserializationInstance;
+        private static PublicIPPrefixData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<PublicIPPrefixData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<PublicIPPrefixData>)Data).Write(writer, options);
 
-        PublicIPPrefixData IJsonModel<PublicIPPrefixData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PublicIPPrefixData>)Data).Create(ref reader, options);
+        PublicIPPrefixData IJsonModel<PublicIPPrefixData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PublicIPPrefixData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<PublicIPPrefixData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<PublicIPPrefixData>(Data, options, AzureResourceManagerNetworkContext.Default);
 
         PublicIPPrefixData IPersistableModel<PublicIPPrefixData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PublicIPPrefixData>(data, options, AzureResourceManagerNetworkContext.Default);
 
-        string IPersistableModel<PublicIPPrefixData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PublicIPPrefixData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<PublicIPPrefixData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PublicIPPrefixData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }
