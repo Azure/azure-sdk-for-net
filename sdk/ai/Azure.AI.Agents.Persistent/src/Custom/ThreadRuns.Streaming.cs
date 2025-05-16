@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.AI.Agents.Persistent.Telemetry;
 using Azure.Core;
 
 namespace Azure.AI.Agents.Persistent
@@ -139,6 +140,8 @@ namespace Azure.AI.Agents.Persistent
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
             Argument.AssertNotNull(agentId, nameof(agentId));
 
+            var scope = OpenTelemetryScope.StartCreateRunStreaming(threadId, agentId, _endpoint);
+
             CreateRunRequest createRunRequest = new CreateRunRequest(
                 agentId,
                 overrideModelName,
@@ -160,7 +163,7 @@ namespace Azure.AI.Agents.Persistent
             RequestContext context = FromCancellationToken(cancellationToken);
 
             Response sendRequest() => CreateRunStreaming(threadId, createRunRequest.ToRequestContent(), context);
-            return new StreamingUpdateCollection(sendRequest, cancellationToken);
+            return new StreamingUpdateCollection(sendRequest, cancellationToken, scope: scope);
         }
         /// <summary> Submits outputs from tools as requested by tool calls in a stream. Stream updates that need submitted tool outputs will have a status of 'RunStatus.RequiresAction'. </summary>
         /// <param name="run"> The <see cref="ThreadRun"/> that the tool outputs should be submitted to. </param>

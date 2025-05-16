@@ -28,5 +28,20 @@ namespace Azure.AI.Agents.Persistent.Telemetry
         {
             _recordContent = recordContent;
         }
+
+        public List<StreamingMessage>? StreamingMessages { get; set; } = null;
+
+        internal void AddStreamingMessage(StreamingMessage message)
+        {
+            if (StreamingMessages == null)
+            {
+                StreamingMessages = new List<StreamingMessage>();
+            }
+            if (message != null)
+            {
+                StreamingMessages.Add(message);
+                // Optionally: emit/log/trace here
+            }
+        }
     }
 }

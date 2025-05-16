@@ -21,6 +21,35 @@ using System.Reflection;
 
 namespace Azure.AI.Agents.Persistent.Telemetry
 {
+    internal class StreamingMessage
+    {
+        public string MessageId { get; set; }
+        public string ThreadId { get; set; }
+        public string AgentId { get; set; }
+        public string RunId { get; set; }
+        public string Role { get; set; }
+        public string Status { get; set; }
+        public int? InputTokens { get; set; }
+        public int? OutputTokens { get; set; }
+        public StringBuilder MessageText { get; } = new StringBuilder();
+
+        public string GetEventContentJson()
+        {
+            var content = new
+            {
+                content = new
+                {
+                    text = new
+                    {
+                        value = MessageText.ToString()
+                    }
+                },
+                role = Role
+            };
+            return System.Text.Json.JsonSerializer.Serialize(content);
+        }
+    }
+
     internal class OpenTelemetryScope : IDisposable
     {
         internal enum OpenTelemetryScopeType
@@ -71,6 +100,8 @@ namespace Azure.AI.Agents.Persistent.Telemetry
 
         private int _hasEnded = 0;
         private readonly OpenTelemetryScopeType _scopeType;
+        // In your handler class:
+        private StreamingMessage _currentStreamingMessage;
 
         /// <summary>
         /// Create the instance of OpenTelemetryScope for agent creation.
@@ -171,10 +202,10 @@ namespace Azure.AI.Agents.Persistent.Telemetry
         }
 
         /// <summary>
-        /// Create the instance of OpenTelemetryScope for message creation.
+        /// Create the instance of OpenTelemetryScope for run creation.
         /// This constructor logs request and starts the execution timer.
         /// </summary>
-        /// <param name="threadId">The id of the thread to which the message is created.</param>
+        /// <param name="threadId">The id of the thread that is processed with the run.</param>
         /// <param name="content">The request options used in the call.</param>
         /// <param name="endpoint">The endpoint being called.</param>
         public static OpenTelemetryScope StartCreateRun(string threadId, RequestContent content, Uri endpoint)
@@ -189,6 +220,27 @@ namespace Azure.AI.Agents.Persistent.Telemetry
             var scope = new OpenTelemetryScope(OperationNameValueStartThreadRun, endpoint);
             scope.SetTagMaybe(GenAiThreadIdKey, threadId);
             var agentId = createRunRequest.AssistantId;
+            scope.SetTagMaybe(GenAiAgentIdKey, agentId);
+
+            return scope;
+        }
+
+        /// <summary>
+        /// Create the instance of OpenTelemetryScope for streaming a run.
+        /// This constructor logs request and starts the execution timer.
+        /// </summary>
+        /// <param name="threadId">The id of the thread that is processed as part of this run.</param>
+        /// <param name="agentId">The id of the agent that will process the run.</param>
+        /// <param name="endpoint">The endpoint being called.</param>
+        public static OpenTelemetryScope StartCreateRunStreaming(string threadId, string agentId, Uri endpoint)
+        {
+            if (!s_enableTelemetry)
+            {
+                return null;
+            }
+
+            var scope = new OpenTelemetryScope(OperationNameValueStartThreadRun, endpoint);
+            scope.SetTagMaybe(GenAiThreadIdKey, threadId);
             scope.SetTagMaybe(GenAiAgentIdKey, agentId);
 
             return scope;
@@ -595,6 +647,52 @@ namespace Azure.AI.Agents.Persistent.Telemetry
             }
         }
 
+        public void RecordStreamingUpdate(StreamingUpdate update)
+        {
+            if (update == null || !s_enableTelemetry)
+                return;
+
+            if (_response == null)
+                _response = new RecordedResponse(s_traceContent);
+
+            switch (update)
+            {
+                case MessageContentUpdate contentUpdate:
+                    if (_currentStreamingMessage == null)
+                        _currentStreamingMessage = new StreamingMessage();
+
+                    if (!string.IsNullOrEmpty(contentUpdate.Text))
+                        _currentStreamingMessage.MessageText.Append(contentUpdate.Text);
+
+                    // Optionally set role/messageId if not already set
+                    if (string.IsNullOrEmpty(_currentStreamingMessage.Role) && contentUpdate.Role.HasValue)
+                        _currentStreamingMessage.Role = contentUpdate.Role.Value.ToString();
+                    if (string.IsNullOrEmpty(_currentStreamingMessage.MessageId))
+                        _currentStreamingMessage.MessageId = contentUpdate.MessageId;
+                    break;
+
+                case MessageStatusUpdate statusUpdate:
+                    var value = statusUpdate.Value;
+                    var status = value.Status.ToString();
+                    if (status == "completed" || status == "failed")
+                    {
+                        if (_currentStreamingMessage == null)
+                            _currentStreamingMessage = new StreamingMessage();
+
+                        _currentStreamingMessage.Status = status;
+                        _currentStreamingMessage.MessageId = value.Id;
+                        _currentStreamingMessage.ThreadId = value.ThreadId;
+                        _currentStreamingMessage.AgentId = value.AssistantId;
+                        _currentStreamingMessage.RunId = value.RunId;
+                        _currentStreamingMessage.Role = value.Role.ToString();
+
+                        _response.AddStreamingMessage(_currentStreamingMessage);
+                        _currentStreamingMessage = null;
+                    }
+                    break;
+            }
+        }
+
         /// <summary>
         /// Log the error.
         /// </summary>
@@ -689,6 +787,32 @@ namespace Azure.AI.Agents.Persistent.Telemetry
             {
                 foreach (PersistentThreadMessage threadMessage in _response.Messages)
                 {
+                    RecordThreadMessageEventAttributes(threadMessage);
+                }
+            }
+
+            if (_response.StreamingMessages != null)
+            {
+                foreach (StreamingMessage streamingMessage in _response.StreamingMessages)
+                {
+                    var jsonDocument = JsonDocument.Parse($@"
+                        {{
+                            ""id"": ""{streamingMessage.MessageId}"",
+                            ""thread_id"": ""{streamingMessage.ThreadId}"",
+                            ""assistant_id"": ""{streamingMessage.AgentId}"",
+                            ""run_id"": ""{streamingMessage.RunId}"",
+                            ""role"": ""{streamingMessage.Role}"",
+                            ""contentItems"": [
+                                {{
+                                    ""type"": ""text"",
+                                    ""text"": {{
+                                        ""value"": {JsonSerializer.Serialize(streamingMessage.MessageText.ToString())}
+                                    }}
+                                }}
+                            ]
+                        }}").RootElement;
+                    // With the following code:
+                    var threadMessage = PersistentThreadMessage.DeserializePersistentThreadMessage(jsonDocument);
                     RecordThreadMessageEventAttributes(threadMessage);
                 }
             }
