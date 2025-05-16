@@ -3,6 +3,7 @@
  "name": "SpecialHeaders.ConditionalRequest",
  "apiVersions": [],
  "enums": [],
+ "constants": [],
  "models": [],
  "clients": [
   {

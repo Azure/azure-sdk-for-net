@@ -301,7 +301,7 @@
     <PackageReference Update="ApprovalTests" Version="3.0.22" />
     <PackageReference Update="ApprovalUtilities" Version="3.0.22" />
     <PackageReference Update="Azure.Core" Version="1.46.1" />
-    <PackageReference Update="Azure.Identity" Version="1.13.1" />
+    <PackageReference Update="Azure.Identity" Version="1.14.0" />
     <PackageReference Update="Azure.Messaging.EventGrid" Version="4.17.0" />
     <PackageReference Update="Azure.Messaging.EventHubs.Processor" Version="5.12.0" />
     <PackageReference Update="Azure.Messaging.ServiceBus" Version="7.19.0" />
@@ -439,7 +439,7 @@
 
   <PropertyGroup>
     <TestProxyVersion>1.0.0-dev.20250501.1</TestProxyVersion>
-    <UnbrandedGeneratorVersion>1.0.0-alpha.20250509.1</UnbrandedGeneratorVersion>
+    <UnbrandedGeneratorVersion>1.0.0-alpha.20250514.1</UnbrandedGeneratorVersion>
     <AzureGeneratorVersion>1.0.0-alpha.20250514.1</AzureGeneratorVersion>
   </PropertyGroup>
 </Project>
