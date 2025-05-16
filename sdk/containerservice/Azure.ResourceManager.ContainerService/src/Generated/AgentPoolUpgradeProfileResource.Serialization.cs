@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.ContainerService
 {
     public partial class AgentPoolUpgradeProfileResource : IJsonModel<AgentPoolUpgradeProfileData>
     {
+        private static AgentPoolUpgradeProfileData s_dataDeserializationInstance;
+        private static AgentPoolUpgradeProfileData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<AgentPoolUpgradeProfileData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<AgentPoolUpgradeProfileData>)Data).Write(writer, options);
 
-        AgentPoolUpgradeProfileData IJsonModel<AgentPoolUpgradeProfileData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AgentPoolUpgradeProfileData>)Data).Create(ref reader, options);
+        AgentPoolUpgradeProfileData IJsonModel<AgentPoolUpgradeProfileData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AgentPoolUpgradeProfileData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<AgentPoolUpgradeProfileData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AgentPoolUpgradeProfileData>(Data, options, AzureResourceManagerContainerServiceContext.Default);
 
         AgentPoolUpgradeProfileData IPersistableModel<AgentPoolUpgradeProfileData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AgentPoolUpgradeProfileData>(data, options, AzureResourceManagerContainerServiceContext.Default);
 
-        string IPersistableModel<AgentPoolUpgradeProfileData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AgentPoolUpgradeProfileData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<AgentPoolUpgradeProfileData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AgentPoolUpgradeProfileData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }
