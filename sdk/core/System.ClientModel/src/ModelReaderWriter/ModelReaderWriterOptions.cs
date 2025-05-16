@@ -40,7 +40,7 @@ public class ModelReaderWriterOptions
         IsCoreOwned = true;
     }
 
-    internal bool HasProxies => _proxies is not null;
+    internal bool HasProxies => _proxies?.Count > 0;
 
     internal bool IsCoreOwned { get; }
 
