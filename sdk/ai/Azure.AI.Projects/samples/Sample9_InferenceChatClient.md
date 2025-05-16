@@ -11,7 +11,7 @@ This sample demonstrates how to use the synchronous and asynchronous `GetChatCom
 
 ## Synchronous Sample
 
-```C# Snippet:ChatClientSync
+```C# Snippet:AI_Projects_ChatClientSync
 var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
 var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
 AIProjectClient client = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
@@ -31,7 +31,7 @@ Console.WriteLine(response.Value.Content);
 ```
 ## Asynchronous Sample
 
-```C# Snippet:ChatClientAsync
+```C# Snippet:AI_Projects_ChatClientAsync
 var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
 var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
 AIProjectClient client = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());

@@ -14,7 +14,7 @@ This sample demonstrates how to use the synchronous and asynchronous `.indexes` 
 
 ## Synchronous Sample
 
-```C# Snippet:IndexesExampleSync
+```C# Snippet:AI_Projects_IndexesExampleSync
 var endpoint = Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
 var indexName = Environment.GetEnvironmentVariable("INDEX_NAME") ?? "my-index";
 var indexVersion = Environment.GetEnvironmentVariable("INDEX_VERSION") ?? "1.0";

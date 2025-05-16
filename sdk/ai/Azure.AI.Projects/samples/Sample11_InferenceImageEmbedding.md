@@ -11,7 +11,7 @@ This sample demonstrates how to use the synchronous and asynchronous `GetImageEm
 
 ## Synchronous Sample
 
-```C# Snippet:ImageEmbeddingSync
+```C# Snippet:AI_Projects_ImageEmbeddingSync
 var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
 var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
 AIProjectClient client = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
@@ -36,7 +36,7 @@ foreach (EmbeddingItem item in response.Value.Data)
 ```
 ## Asynchronous Sample
 
-```C# Snippet:ImageEmbeddingAsync
+```C# Snippet:AI_Projects_ImageEmbeddingAsync
 var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
 var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
 AIProjectClient client = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());

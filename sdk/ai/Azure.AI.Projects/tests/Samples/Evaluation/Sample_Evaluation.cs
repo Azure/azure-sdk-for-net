@@ -19,7 +19,7 @@ public class Sample_Evaluations : SamplesBase<AIProjectsTestEnvironment>
     [SyncOnly]
     public void EvaluationsExampleSync()
     {
-        #region Snippet:EvaluationsExampleSync
+        #region Snippet:AI_Projects_EvaluationsExampleSync
 #if SNIPPET
         var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
         var datasetName = System.Environment.GetEnvironmentVariable("DATASET_NAME");
@@ -73,7 +73,7 @@ public class Sample_Evaluations : SamplesBase<AIProjectsTestEnvironment>
     [AsyncOnly]
     public async Task EvaluationsExampleAsync()
     {
-        #region Snippet:EvaluationsExampleAsync
+        #region Snippet:AI_Projects_EvaluationsExampleAsync
 #if SNIPPET
         var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
         var datasetName = System.Environment.GetEnvironmentVariable("DATASET_NAME");

@@ -12,7 +12,7 @@ This sample demonstrates how to use the synchronous and asynchronous `.deploymen
 
 ## Synchronous Sample
 
-```C# Snippet:DeploymentExampleSync
+```C# Snippet:AI_Projects_DeploymentExampleSync
 var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
 var deploymentName = System.Environment.GetEnvironmentVariable("DEPLOYMENT_NAME");
 var modelPublisher = System.Environment.GetEnvironmentVariable("MODEL_PUBLISHER");
@@ -38,7 +38,7 @@ Console.WriteLine(deploymentDetails);
 
 ## Asynchronous Sample
 
-```C# Snippet:DeploymentExampleAsync
+```C# Snippet:AI_Projects_DeploymentExampleAsync
 var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
 var deploymentName = System.Environment.GetEnvironmentVariable("DEPLOYMENT_NAME");
 var modelPublisher = System.Environment.GetEnvironmentVariable("MODEL_PUBLISHER");

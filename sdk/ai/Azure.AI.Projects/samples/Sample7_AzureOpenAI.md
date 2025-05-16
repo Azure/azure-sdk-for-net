@@ -11,7 +11,7 @@ This sample demonstrates how to use the synchronous and asynchronous `Azure Open
 
 ## Synchronous Sample
 
-```C# Snippet:AzureOpenAISync
+```C# Snippet:AI_Projects_AzureOpenAISync
 var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
 var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
 AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
@@ -22,7 +22,7 @@ Console.WriteLine(result.Content[0].Text);
 ```
 
 ## Asynchronous Sample
-```C# Snippet:AzureOpenAIAsync
+```C# Snippet:AI_Projects_AzureOpenAIAsync
 var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
 var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
 AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());

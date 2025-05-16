@@ -16,7 +16,7 @@ namespace Azure.AI.Projects.Tests
         [SyncOnly]
         public void ConnectionsExample()
         {
-            #region Snippet:ConnectionsExampleSync
+            #region Snippet:AI_Projects_ConnectionsExampleSync
 #if SNIPPET
             var endpoint = Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
             var connectionName = Environment.GetEnvironmentVariable("CONNECTION_NAME");
@@ -62,7 +62,7 @@ namespace Azure.AI.Projects.Tests
         [AsyncOnly]
         public async Task ConnectionsExampleAsync()
         {
-            #region Snippet:ConnectionsExampleAsync
+            #region Snippet:AI_Projects_ConnectionsExampleAsync
 #if SNIPPET
             var endpoint = Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
             var connectionName = Environment.GetEnvironmentVariable("CONNECTION_NAME");

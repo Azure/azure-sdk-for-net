@@ -11,7 +11,7 @@ This sample demonstrates how to use the synchronous and asynchronous `GetEmbeddi
 
 ## Synchronous Sample
 
-```C# Snippet:EmbeddingSync
+```C# Snippet:AI_Projects_EmbeddingSync
 var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
 var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
 AIProjectClient client = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
@@ -32,7 +32,7 @@ foreach (EmbeddingItem item in response.Value.Data)
 ```
 ## Asynchronous Sample
 
-```C# Snippet:EmbeddingAsync
+```C# Snippet:AI_Projects_EmbeddingAsync
 var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
 var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
 AIProjectClient client = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
