@@ -102,41 +102,47 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
             string directoryPath,
             TransferPropertiesTestType propertiesTestType = default)
         {
-            ShareFileStorageResourceOptions options = default;
+            // Blob to Share File does not require checking if the destination requires NFS
+            ShareFileStorageResourceOptions options = new()
+            {
+                SkipProtocolValidation = true,
+            };
             if (propertiesTestType == TransferPropertiesTestType.NewProperties)
             {
-                options = new ShareFileStorageResourceOptions
+                options = new ShareFileStorageResourceOptions()
                 {
-                    ContentDisposition = _defaultContentDisposition,
-                    ContentLanguage = _defaultContentLanguageShare,
-                    CacheControl = _defaultCacheControl,
                     ContentType = _defaultContentType,
+                    ContentLanguage = _defaultContentLanguageShare,
+                    ContentDisposition = _defaultContentDisposition,
+                    CacheControl = _defaultCacheControl,
                     FileMetadata = _defaultMetadata,
-                    FileAttributes = _defaultFileAttributes,
                     FileCreatedOn = _defaultFileCreatedOn,
+                    FileLastWrittenOn = _defaultFileLastWrittenOn,
                     FileChangedOn = _defaultFileChangedOn,
-                    FileLastWrittenOn = _defaultFileLastWrittenOn
-                };
-            }
-            else if (propertiesTestType == TransferPropertiesTestType.NoPreserve)
-            {
-                options = new ShareFileStorageResourceOptions
-                {
-                    ContentDisposition = default,
-                    ContentLanguage = default,
-                    CacheControl = default,
-                    ContentType = default,
-                    FileMetadata = default,
-                    FileAttributes = default,
-                    FileCreatedOn = default,
-                    FileLastWrittenOn = default,
+                    SkipProtocolValidation = true,
                 };
             }
             else if (propertiesTestType == TransferPropertiesTestType.Preserve)
             {
-                options = new ShareFileStorageResourceOptions
+                options = new ShareFileStorageResourceOptions()
                 {
-                    FilePermissions = true
+                    FilePermissions = true,
+                    SkipProtocolValidation = true,
+                };
+            }
+            else if (propertiesTestType == TransferPropertiesTestType.NoPreserve)
+            {
+                options = new ShareFileStorageResourceOptions()
+                {
+                    ContentType = default,
+                    ContentLanguage = default,
+                    ContentDisposition = default,
+                    CacheControl = default,
+                    FileMetadata = default,
+                    FileCreatedOn = default,
+                    FileLastWrittenOn = default,
+                    FileChangedOn = default,
+                    SkipProtocolValidation = true,
                 };
             }
             // Authorize with SAS when performing operations
