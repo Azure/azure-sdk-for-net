@@ -40,7 +40,7 @@ public partial class Sample_PersistentAgents_Vector_Store_Batch_Enterprise_File_
             name: "sample_vector_store"
         );
 
-        VectorStoreFileBatch vctFile = await client.VectorStoreFileBatches.CreateVectorStoreFileBatchAsync(
+        VectorStoreFileBatch vctFile = await client.VectorStores.CreateVectorStoreFileBatchAsync(
             vectorStoreId: vectorStore.Id,
             dataSources: [ ds ]
         );
@@ -89,7 +89,7 @@ public partial class Sample_PersistentAgents_Vector_Store_Batch_Enterprise_File_
         ).ToListAsync();
         // Build the map of file IDs to file names.
         Dictionary<string, string> dtFiles = [];
-        AsyncPageable<VectorStoreFile> storeFiles = client.VectorStoreFiles.GetVectorStoreFilesAsync(
+        AsyncPageable<VectorStoreFile> storeFiles = client.VectorStores.GetVectorStoreFilesAsync(
             vectorStoreId: vectorStore.Id
         );
         await foreach (VectorStoreFile fle in storeFiles)
@@ -140,7 +140,7 @@ public partial class Sample_PersistentAgents_Vector_Store_Batch_Enterprise_File_
             name: "sample_vector_store"
         );
 
-        VectorStoreFileBatch vctFile = client.VectorStoreFileBatches.CreateVectorStoreFileBatch(
+        VectorStoreFileBatch vctFile = client.VectorStores.CreateVectorStoreFileBatch(
             vectorStoreId: vectorStore.Id,
             dataSources: [ds]
         );
@@ -189,7 +189,7 @@ public partial class Sample_PersistentAgents_Vector_Store_Batch_Enterprise_File_
         );
         // Build the map of file IDs to file names.
         Dictionary<string, string> dtFiles = [];
-        Pageable<VectorStoreFile> storeFiles = client.VectorStoreFiles.GetVectorStoreFiles(
+        Pageable<VectorStoreFile> storeFiles = client.VectorStores.GetVectorStoreFiles(
                 vectorStoreId: vectorStore.Id
         );
         foreach (VectorStoreFile fle in storeFiles)

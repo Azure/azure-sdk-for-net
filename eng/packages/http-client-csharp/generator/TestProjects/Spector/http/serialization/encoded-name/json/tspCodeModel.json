@@ -3,9 +3,43 @@
  "name": "Serialization.EncodedName.Json",
  "apiVersions": [],
  "enums": [],
- "models": [
+ "constants": [
   {
    "$id": "2",
+   "kind": "constant",
+   "name": "sendContentType",
+   "namespace": "",
+   "usage": "None",
+   "valueType": {
+    "$id": "3",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "value": "application/json",
+   "decorators": []
+  },
+  {
+   "$id": "4",
+   "kind": "constant",
+   "name": "getContentType",
+   "namespace": "",
+   "usage": "None",
+   "valueType": {
+    "$id": "5",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "value": "application/json",
+   "decorators": []
+  }
+ ],
+ "models": [
+  {
+   "$id": "6",
    "kind": "model",
    "name": "JsonEncodedNameModel",
    "namespace": "Serialization.EncodedName.Json.Property",
@@ -14,13 +48,13 @@
    "decorators": [],
    "properties": [
     {
-     "$id": "3",
+     "$id": "7",
      "kind": "property",
      "name": "defaultName",
      "serializedName": "wireName",
      "doc": "Pass in true",
      "type": {
-      "$id": "4",
+      "$id": "8",
       "kind": "boolean",
       "name": "boolean",
       "crossLanguageDefinitionId": "TypeSpec.boolean",
@@ -33,9 +67,9 @@
      "decorators": [],
      "crossLanguageDefinitionId": "Serialization.EncodedName.Json.Property.JsonEncodedNameModel.defaultName",
      "serializationOptions": {
-      "$id": "5",
+      "$id": "9",
       "json": {
-       "$id": "6",
+       "$id": "10",
        "name": "wireName"
       }
      }
@@ -45,7 +79,7 @@
  ],
  "clients": [
   {
-   "$id": "7",
+   "$id": "11",
    "kind": "client",
    "name": "JsonClient",
    "namespace": "Serialization.EncodedName.Json",
@@ -53,12 +87,12 @@
    "methods": [],
    "parameters": [
     {
-     "$id": "8",
+     "$id": "12",
      "name": "endpoint",
      "nameInRequest": "endpoint",
      "doc": "Service host",
      "type": {
-      "$id": "9",
+      "$id": "13",
       "kind": "url",
       "name": "url",
       "crossLanguageDefinitionId": "TypeSpec.url"
@@ -72,9 +106,9 @@
      "explode": false,
      "kind": "Client",
      "defaultValue": {
-      "$id": "10",
+      "$id": "14",
       "type": {
-       "$id": "11",
+       "$id": "15",
        "kind": "string",
        "name": "string",
        "crossLanguageDefinitionId": "TypeSpec.string"
@@ -88,40 +122,30 @@
    "apiVersions": [],
    "children": [
     {
-     "$id": "12",
+     "$id": "16",
      "kind": "client",
      "name": "Property",
      "namespace": "Serialization.EncodedName.Json.Property",
      "methods": [
       {
-       "$id": "13",
+       "$id": "17",
        "kind": "basic",
        "name": "send",
        "accessibility": "public",
        "apiVersions": [],
        "operation": {
-        "$id": "14",
+        "$id": "18",
         "name": "send",
         "resourceName": "Property",
         "accessibility": "public",
         "parameters": [
          {
-          "$id": "15",
+          "$id": "19",
           "name": "contentType",
           "nameInRequest": "Content-Type",
           "doc": "Body parameter's content type. Known values are application/json",
           "type": {
-           "$id": "16",
-           "kind": "constant",
-           "valueType": {
-            "$id": "17",
-            "kind": "string",
-            "name": "string",
-            "crossLanguageDefinitionId": "TypeSpec.string",
-            "decorators": []
-           },
-           "value": "application/json",
-           "decorators": []
+           "$ref": "2"
           },
           "location": "Header",
           "isApiVersion": false,
@@ -134,11 +158,11 @@
           "skipUrlEncoding": false
          },
          {
-          "$id": "18",
+          "$id": "20",
           "name": "body",
           "nameInRequest": "body",
           "type": {
-           "$ref": "2"
+           "$ref": "6"
           },
           "location": "Body",
           "isApiVersion": false,
@@ -153,7 +177,7 @@
         ],
         "responses": [
          {
-          "$id": "19",
+          "$id": "21",
           "statusCodes": [
            204
           ],
@@ -175,11 +199,11 @@
        },
        "parameters": [
         {
-         "$id": "20",
+         "$id": "22",
          "name": "body",
          "nameInRequest": "body",
          "type": {
-          "$ref": "2"
+          "$ref": "6"
          },
          "location": "Body",
          "isApiVersion": false,
@@ -192,12 +216,12 @@
          "skipUrlEncoding": false
         },
         {
-         "$id": "21",
+         "$id": "23",
          "name": "contentType",
          "nameInRequest": "contentType",
          "doc": "Body parameter's content type. Known values are application/json",
          "type": {
-          "$ref": "16"
+          "$ref": "2"
          },
          "location": "Header",
          "isApiVersion": false,
@@ -211,7 +235,7 @@
         }
        ],
        "response": {
-        "$id": "22"
+        "$id": "24"
        },
        "isOverride": false,
        "generateConvenient": true,
@@ -219,33 +243,23 @@
        "crossLanguageDefinitionId": "Serialization.EncodedName.Json.Property.send"
       },
       {
-       "$id": "23",
+       "$id": "25",
        "kind": "basic",
        "name": "get",
        "accessibility": "public",
        "apiVersions": [],
        "operation": {
-        "$id": "24",
+        "$id": "26",
         "name": "get",
         "resourceName": "Property",
         "accessibility": "public",
         "parameters": [
          {
-          "$id": "25",
+          "$id": "27",
           "name": "accept",
           "nameInRequest": "Accept",
           "type": {
-           "$id": "26",
-           "kind": "constant",
-           "valueType": {
-            "$id": "27",
-            "kind": "string",
-            "name": "string",
-            "crossLanguageDefinitionId": "TypeSpec.string",
-            "decorators": []
-           },
-           "value": "application/json",
-           "decorators": []
+           "$ref": "4"
           },
           "location": "Header",
           "isApiVersion": false,
@@ -265,7 +279,7 @@
            200
           ],
           "bodyType": {
-           "$ref": "2"
+           "$ref": "6"
           },
           "headers": [],
           "isErrorResponse": false,
@@ -289,7 +303,7 @@
          "name": "accept",
          "nameInRequest": "accept",
          "type": {
-          "$ref": "26"
+          "$ref": "4"
          },
          "location": "Header",
          "isApiVersion": false,
@@ -305,7 +319,7 @@
        "response": {
         "$id": "30",
         "type": {
-         "$ref": "2"
+         "$ref": "6"
         }
        },
        "isOverride": false,
@@ -350,7 +364,7 @@
      "crossLanguageDefinitionId": "Serialization.EncodedName.Json.Property",
      "apiVersions": [],
      "parent": {
-      "$ref": "7"
+      "$ref": "11"
      }
     }
    ]

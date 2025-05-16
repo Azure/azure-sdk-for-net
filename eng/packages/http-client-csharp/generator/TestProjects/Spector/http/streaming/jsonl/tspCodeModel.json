@@ -2,11 +2,14 @@
  "$id": "1",
  "name": "Streaming.Jsonl",
  "apiVersions": [],
- "enums": [
+ "enums": [],
+ "constants": [
   {
    "$id": "2",
-   "kind": "enum",
-   "name": "JsonlStreamInfo_content-type",
+   "kind": "constant",
+   "name": "SendRequestContentType",
+   "namespace": "",
+   "usage": "None",
    "valueType": {
     "$id": "3",
     "kind": "string",
@@ -14,33 +17,61 @@
     "crossLanguageDefinitionId": "TypeSpec.string",
     "decorators": []
    },
-   "values": [
-    {
-     "$id": "4",
-     "kind": "enumvalue",
-     "name": "application/jsonl",
-     "value": "application/jsonl",
-     "doc": "application/jsonl",
-     "valueType": {
-      "$ref": "3"
-     },
-     "enumType": {
-      "$ref": "2"
-     }
-    }
-   ],
-   "crossLanguageDefinitionId": "",
+   "value": "application/jsonl",
+   "decorators": []
+  },
+  {
+   "$id": "4",
+   "kind": "constant",
+   "name": "JsonlStreamInfoContentType",
    "namespace": "TypeSpec.Http.Streams",
-   "doc": "The JsonlStreamInfo_content-type",
-   "isFixed": false,
-   "isFlags": false,
    "usage": "None",
+   "valueType": {
+    "$id": "5",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "value": "application/jsonl",
+   "decorators": []
+  },
+  {
+   "$id": "6",
+   "kind": "constant",
+   "name": "receiveContentType",
+   "namespace": "",
+   "usage": "None",
+   "valueType": {
+    "$id": "7",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "value": "application/jsonl",
+   "decorators": []
+  },
+  {
+   "$id": "8",
+   "kind": "constant",
+   "name": "SendRequestContentType1",
+   "namespace": "",
+   "usage": "None",
+   "valueType": {
+    "$id": "9",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "value": "application/jsonl",
    "decorators": []
   }
  ],
  "models": [
   {
-   "$id": "5",
+   "$id": "10",
    "kind": "model",
    "name": "JsonlStreamInfo",
    "namespace": "TypeSpec.Http.Streams",
@@ -50,18 +81,12 @@
    "decorators": [],
    "properties": [
     {
-     "$id": "6",
+     "$id": "11",
      "kind": "header",
      "name": "contentType",
      "serializedName": "content-type",
      "type": {
-      "$id": "7",
-      "kind": "constant",
-      "valueType": {
-       "$ref": "2"
-      },
-      "value": "application/jsonl",
-      "decorators": []
+      "$ref": "4"
      },
      "optional": false,
      "readOnly": false,
@@ -75,7 +100,7 @@
  ],
  "clients": [
   {
-   "$id": "8",
+   "$id": "12",
    "kind": "client",
    "name": "JsonlClient",
    "namespace": "Streaming.Jsonl",
@@ -83,12 +108,12 @@
    "methods": [],
    "parameters": [
     {
-     "$id": "9",
+     "$id": "13",
      "name": "endpoint",
      "nameInRequest": "endpoint",
      "doc": "Service host",
      "type": {
-      "$id": "10",
+      "$id": "14",
       "kind": "url",
       "name": "url",
       "crossLanguageDefinitionId": "TypeSpec.url"
@@ -102,9 +127,9 @@
      "explode": false,
      "kind": "Client",
      "defaultValue": {
-      "$id": "11",
+      "$id": "15",
       "type": {
-       "$id": "12",
+       "$id": "16",
        "kind": "string",
        "name": "string",
        "crossLanguageDefinitionId": "TypeSpec.string"
@@ -118,39 +143,29 @@
    "apiVersions": [],
    "children": [
     {
-     "$id": "13",
+     "$id": "17",
      "kind": "client",
      "name": "Basic",
      "namespace": "Streaming.Jsonl.Basic",
      "methods": [
       {
-       "$id": "14",
+       "$id": "18",
        "kind": "basic",
        "name": "send",
        "accessibility": "public",
        "apiVersions": [],
        "operation": {
-        "$id": "15",
+        "$id": "19",
         "name": "send",
         "resourceName": "Basic",
         "accessibility": "public",
         "parameters": [
          {
-          "$id": "16",
+          "$id": "20",
           "name": "contentType",
           "nameInRequest": "Content-Type",
           "type": {
-           "$id": "17",
-           "kind": "constant",
-           "valueType": {
-            "$id": "18",
-            "kind": "string",
-            "name": "string",
-            "crossLanguageDefinitionId": "TypeSpec.string",
-            "decorators": []
-           },
-           "value": "application/jsonl",
-           "decorators": []
+           "$ref": "2"
           },
           "location": "Header",
           "isApiVersion": false,
@@ -163,11 +178,11 @@
           "skipUrlEncoding": false
          },
          {
-          "$id": "19",
+          "$id": "21",
           "name": "body",
           "nameInRequest": "body",
           "type": {
-           "$id": "20",
+           "$id": "22",
            "kind": "bytes",
            "name": "bytes",
            "crossLanguageDefinitionId": "",
@@ -186,7 +201,7 @@
         ],
         "responses": [
          {
-          "$id": "21",
+          "$id": "23",
           "statusCodes": [
            204
           ],
@@ -208,11 +223,11 @@
        },
        "parameters": [
         {
-         "$id": "22",
+         "$id": "24",
          "name": "stream",
          "nameInRequest": "stream",
          "type": {
-          "$ref": "5"
+          "$ref": "10"
          },
          "location": "",
          "isApiVersion": false,
@@ -226,7 +241,7 @@
         }
        ],
        "response": {
-        "$id": "23"
+        "$id": "25"
        },
        "isOverride": false,
        "generateConvenient": true,
@@ -234,33 +249,23 @@
        "crossLanguageDefinitionId": "Streaming.Jsonl.Basic.send"
       },
       {
-       "$id": "24",
+       "$id": "26",
        "kind": "basic",
        "name": "receive",
        "accessibility": "public",
        "apiVersions": [],
        "operation": {
-        "$id": "25",
+        "$id": "27",
         "name": "receive",
         "resourceName": "Basic",
         "accessibility": "public",
         "parameters": [
          {
-          "$id": "26",
+          "$id": "28",
           "name": "accept",
           "nameInRequest": "Accept",
           "type": {
-           "$id": "27",
-           "kind": "constant",
-           "valueType": {
-            "$id": "28",
-            "kind": "string",
-            "name": "string",
-            "crossLanguageDefinitionId": "TypeSpec.string",
-            "decorators": []
-           },
-           "value": "application/jsonl",
-           "decorators": []
+           "$ref": "6"
           },
           "location": "Header",
           "isApiVersion": false,
@@ -292,17 +297,7 @@
             "name": "contentType",
             "nameInResponse": "content-type",
             "type": {
-             "$id": "32",
-             "kind": "constant",
-             "valueType": {
-              "$id": "33",
-              "kind": "string",
-              "name": "string",
-              "crossLanguageDefinitionId": "TypeSpec.string",
-              "decorators": []
-             },
-             "value": "application/jsonl",
-             "decorators": []
+             "$ref": "8"
             }
            }
           ],
@@ -323,11 +318,11 @@
        },
        "parameters": [
         {
-         "$id": "34",
+         "$id": "32",
          "name": "accept",
          "nameInRequest": "accept",
          "type": {
-          "$ref": "27"
+          "$ref": "6"
          },
          "location": "Header",
          "isApiVersion": false,
@@ -341,7 +336,7 @@
         }
        ],
        "response": {
-        "$id": "35",
+        "$id": "33",
         "type": {
          "$ref": "30"
         }
@@ -354,12 +349,12 @@
      ],
      "parameters": [
       {
-       "$id": "36",
+       "$id": "34",
        "name": "endpoint",
        "nameInRequest": "endpoint",
        "doc": "Service host",
        "type": {
-        "$id": "37",
+        "$id": "35",
         "kind": "url",
         "name": "url",
         "crossLanguageDefinitionId": "TypeSpec.url"
@@ -373,9 +368,9 @@
        "explode": false,
        "kind": "Client",
        "defaultValue": {
-        "$id": "38",
+        "$id": "36",
         "type": {
-         "$id": "39",
+         "$id": "37",
          "kind": "string",
          "name": "string",
          "crossLanguageDefinitionId": "TypeSpec.string"
@@ -388,7 +383,7 @@
      "crossLanguageDefinitionId": "Streaming.Jsonl.Basic",
      "apiVersions": [],
      "parent": {
-      "$ref": "8"
+      "$ref": "12"
      }
     }
    ]

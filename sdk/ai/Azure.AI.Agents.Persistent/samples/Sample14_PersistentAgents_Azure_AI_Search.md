@@ -19,7 +19,7 @@ var connectionID = System.Environment.GetEnvironmentVariable("AZURE_AI_CONNECTIO
 
 Synchronous sample:
 ```C# Snippet:AgentsCreateAgentWithAzureAISearchTool_Sync
-AzureAISearchResource searchResource = new(
+AzureAISearchToolResource searchResource = new(
     connectionID,
     "sample_index",
     5,
@@ -43,7 +43,7 @@ PersistentAgent agent = client.Administration.CreateAgent(
 
 Asynchronous sample:
 ```C# Snippet:AgentsCreateAgentWithAzureAISearchTool
-AzureAISearchResource searchResource = new(
+AzureAISearchToolResource searchResource = new(
     connectionID,
     "sample_index",
     5,

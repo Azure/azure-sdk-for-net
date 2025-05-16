@@ -89,7 +89,7 @@
     <PackageReference Update="System.ClientModel" Version="1.4.1" />
     <PackageReference Update="System.IO.Hashing" Version="8.0.0" />
     <PackageReference Update="System.Memory" Version="4.5.5" />
-    <PackageReference Update="System.Memory.Data" Version="6.0.1" />
+    <PackageReference Update="System.Memory.Data" Version="8.0.1" />
     <PackageReference Update="System.Numerics.Vectors" Version="4.5.0" />
     <PackageReference Update="System.Net.Http" Version="4.3.4" />
     <PackageReference Update="System.Diagnostics.DiagnosticSource" Version="8.0.1" />
@@ -277,7 +277,7 @@
     All should have PrivateAssets="All" set so they don't become package dependencies
   -->
   <ItemGroup>
-    <PackageReference Update="Microsoft.Azure.AutoRest.CSharp" Version="3.0.0-beta.20250512.2" PrivateAssets="All" />
+    <PackageReference Update="Microsoft.Azure.AutoRest.CSharp" Version="3.0.0-beta.20250514.2" PrivateAssets="All" />
     <PackageReference Update="Azure.ClientSdk.Analyzers" Version="0.1.1-dev.20250422.1" PrivateAssets="All" />
     <PackageReference Update="coverlet.collector" Version="3.2.0" PrivateAssets="All" />
     <!-- Note: Upgrading the .NET SDK version needs to be synchronized with the autorest.csharp repository -->
@@ -301,7 +301,7 @@
     <PackageReference Update="ApprovalTests" Version="3.0.22" />
     <PackageReference Update="ApprovalUtilities" Version="3.0.22" />
     <PackageReference Update="Azure.Core" Version="1.46.1" />
-    <PackageReference Update="Azure.Identity" Version="1.13.1" />
+    <PackageReference Update="Azure.Identity" Version="1.14.0" />
     <PackageReference Update="Azure.Messaging.EventGrid" Version="4.17.0" />
     <PackageReference Update="Azure.Messaging.EventHubs.Processor" Version="5.12.0" />
     <PackageReference Update="Azure.Messaging.ServiceBus" Version="7.19.0" />
@@ -416,7 +416,7 @@
     <PackageReference Update="System.IO.Compression" Version="4.3.0" />
     <PackageReference Update="System.IO.Pipelines" Version="4.5.1" />
     <PackageReference Update="System.Linq.Async" Version="5.0.0" />
-    <PackageReference Update="System.Memory.Data" Version="6.0.1" />
+    <PackageReference Update="System.Memory.Data" Version="8.0.1" />
     <PackageReference Update="System.Net.WebSockets.Client" Version="4.3.2" />
     <PackageReference Update="System.Reflection.Emit" Version="4.7.0" />
     <PackageReference Update="System.Runtime.InteropServices" Version="4.3.0" />
@@ -439,7 +439,7 @@
 
   <PropertyGroup>
     <TestProxyVersion>1.0.0-dev.20250501.1</TestProxyVersion>
-    <UnbrandedGeneratorVersion>1.0.0-alpha.20250509.1</UnbrandedGeneratorVersion>
-    <AzureGeneratorVersion>1.0.0-alpha.20250508.1</AzureGeneratorVersion>
+    <UnbrandedGeneratorVersion>1.0.0-alpha.20250514.1</UnbrandedGeneratorVersion>
+    <AzureGeneratorVersion>1.0.0-alpha.20250515.2</AzureGeneratorVersion>
   </PropertyGroup>
 </Project>
