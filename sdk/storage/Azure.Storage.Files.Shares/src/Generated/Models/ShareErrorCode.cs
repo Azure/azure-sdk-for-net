@@ -91,6 +91,7 @@ namespace Azure.Storage.Files.Shares.Models
         private const string AuthorizationServiceMismatchValue = "AuthorizationServiceMismatch";
         private const string AuthorizationResourceTypeMismatchValue = "AuthorizationResourceTypeMismatch";
         private const string FeatureVersionMismatchValue = "FeatureVersionMismatch";
+        private const string ShareSnapshotNotFoundValue = "ShareSnapshotNotFound";
 
         /// <summary> AccountAlreadyExists. </summary>
         public static ShareErrorCode AccountAlreadyExists { get; } = new ShareErrorCode(AccountAlreadyExistsValue);
@@ -230,6 +231,8 @@ namespace Azure.Storage.Files.Shares.Models
         public static ShareErrorCode AuthorizationResourceTypeMismatch { get; } = new ShareErrorCode(AuthorizationResourceTypeMismatchValue);
         /// <summary> FeatureVersionMismatch. </summary>
         public static ShareErrorCode FeatureVersionMismatch { get; } = new ShareErrorCode(FeatureVersionMismatchValue);
+        /// <summary> ShareSnapshotNotFound. </summary>
+        public static ShareErrorCode ShareSnapshotNotFound { get; } = new ShareErrorCode(ShareSnapshotNotFoundValue);
         /// <summary> Determines if two <see cref="ShareErrorCode"/> values are the same. </summary>
         public static bool operator ==(ShareErrorCode left, ShareErrorCode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ShareErrorCode"/> values are not the same. </summary>

@@ -157,6 +157,7 @@ namespace Azure.Storage.Files.Shares
             V2025_01_05 = 25,
             V2025_05_05 = 26,
             V2025_07_05 = 27,
+            V2025_11_05 = 28,
         }
     }
     public partial class ShareDirectoryClient
@@ -820,6 +821,7 @@ namespace Azure.Storage.Files.Shares.Models
         public static Azure.Storage.Files.Shares.Models.ShareErrorCode ShareNotFound { get { throw null; } }
         public static Azure.Storage.Files.Shares.Models.ShareErrorCode ShareSnapshotCountExceeded { get { throw null; } }
         public static Azure.Storage.Files.Shares.Models.ShareErrorCode ShareSnapshotInProgress { get { throw null; } }
+        public static Azure.Storage.Files.Shares.Models.ShareErrorCode ShareSnapshotNotFound { get { throw null; } }
         public static Azure.Storage.Files.Shares.Models.ShareErrorCode ShareSnapshotOperationNotSupported { get { throw null; } }
         public static Azure.Storage.Files.Shares.Models.ShareErrorCode SharingViolation { get { throw null; } }
         public static Azure.Storage.Files.Shares.Models.ShareErrorCode UnsupportedHeader { get { throw null; } }
