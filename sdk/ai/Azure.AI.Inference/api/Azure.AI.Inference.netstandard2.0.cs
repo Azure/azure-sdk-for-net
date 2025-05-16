@@ -854,6 +854,15 @@ namespace Azure.AI.Inference
         public int ToolCallIndex { get { throw null; } }
     }
 }
+namespace Microsoft.Extensions.AI
+{
+    public static partial class AzureAIInferenceExtensions
+    {
+        public static Microsoft.Extensions.AI.IChatClient AsIChatClient(this Azure.AI.Inference.ChatCompletionsClient chatCompletionsClient, string? modelId = null) { throw null; }
+        public static Microsoft.Extensions.AI.IEmbeddingGenerator<string, Microsoft.Extensions.AI.Embedding<float>> AsIEmbeddingGenerator(this Azure.AI.Inference.EmbeddingsClient embeddingsClient, string? defaultModelId = null, int? defaultModelDimensions = default(int?)) { throw null; }
+        public static Microsoft.Extensions.AI.IEmbeddingGenerator<Microsoft.Extensions.AI.DataContent, Microsoft.Extensions.AI.Embedding<float>> AsIEmbeddingGenerator(this Azure.AI.Inference.ImageEmbeddingsClient imageEmbeddingsClient, string? defaultModelId = null, int? defaultModelDimensions = default(int?)) { throw null; }
+    }
+}
 namespace Microsoft.Extensions.Azure
 {
     public static partial class AIInferenceClientBuilderExtensions
