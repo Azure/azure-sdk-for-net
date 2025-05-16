@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="configurationPolicyGroupAssociations"> List of Configuration Policy Groups that this P2SConnectionConfiguration is attached to. </param>
         /// <param name="previousConfigurationPolicyGroupAssociations"> List of previous Configuration Policy Groups that this P2SConnectionConfiguration was attached to. </param>
         /// <param name="provisioningState"> The provisioning state of the P2SConnectionConfiguration resource. </param>
-        internal P2SConnectionConfiguration(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, VirtualNetworkAddressSpace vpnClientAddressPool, RoutingConfiguration routingConfiguration, bool? enableInternetSecurity, IReadOnlyList<WritableSubResource> configurationPolicyGroupAssociations, IReadOnlyList<VpnServerConfigurationPolicyGroupData> previousConfigurationPolicyGroupAssociations, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, serializedAdditionalRawData)
+        internal P2SConnectionConfiguration(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, VirtualNetworkAddressSpace vpnClientAddressPool, RoutingConfiguration routingConfiguration, bool? enableInternetSecurity, IList<WritableSubResource> configurationPolicyGroupAssociations, IReadOnlyList<VpnServerConfigurationPolicyGroupData> previousConfigurationPolicyGroupAssociations, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, serializedAdditionalRawData)
         {
             ETag = etag;
             VpnClientAddressPool = vpnClientAddressPool;
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Flag indicating whether the enable internet security flag is turned on for the P2S Connections or not. </summary>
         public bool? EnableInternetSecurity { get; set; }
         /// <summary> List of Configuration Policy Groups that this P2SConnectionConfiguration is attached to. </summary>
-        public IReadOnlyList<WritableSubResource> ConfigurationPolicyGroupAssociations { get; }
+        public IList<WritableSubResource> ConfigurationPolicyGroupAssociations { get; }
         /// <summary> List of previous Configuration Policy Groups that this P2SConnectionConfiguration was attached to. </summary>
         public IReadOnlyList<VpnServerConfigurationPolicyGroupData> PreviousConfigurationPolicyGroupAssociations { get; }
         /// <summary> The provisioning state of the P2SConnectionConfiguration resource. </summary>

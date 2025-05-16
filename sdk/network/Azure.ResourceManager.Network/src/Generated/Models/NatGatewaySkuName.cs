@@ -23,9 +23,12 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         private const string StandardValue = "Standard";
+        private const string StandardV2Value = "StandardV2";
 
         /// <summary> Standard. </summary>
         public static NatGatewaySkuName Standard { get; } = new NatGatewaySkuName(StandardValue);
+        /// <summary> StandardV2. </summary>
+        public static NatGatewaySkuName StandardV2 { get; } = new NatGatewaySkuName(StandardV2Value);
         /// <summary> Determines if two <see cref="NatGatewaySkuName"/> values are the same. </summary>
         public static bool operator ==(NatGatewaySkuName left, NatGatewaySkuName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NatGatewaySkuName"/> values are not the same. </summary>

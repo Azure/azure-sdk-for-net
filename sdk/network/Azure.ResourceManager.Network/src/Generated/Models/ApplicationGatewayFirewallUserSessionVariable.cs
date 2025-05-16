@@ -25,6 +25,8 @@ namespace Azure.ResourceManager.Network.Models
         private const string ClientAddrValue = "ClientAddr";
         private const string GeoLocationValue = "GeoLocation";
         private const string NoneValue = "None";
+        private const string ClientAddrXFFHeaderValue = "ClientAddrXFFHeader";
+        private const string GeoLocationXFFHeaderValue = "GeoLocationXFFHeader";
 
         /// <summary> ClientAddr. </summary>
         public static ApplicationGatewayFirewallUserSessionVariable ClientAddr { get; } = new ApplicationGatewayFirewallUserSessionVariable(ClientAddrValue);
@@ -32,6 +34,10 @@ namespace Azure.ResourceManager.Network.Models
         public static ApplicationGatewayFirewallUserSessionVariable GeoLocation { get; } = new ApplicationGatewayFirewallUserSessionVariable(GeoLocationValue);
         /// <summary> None. </summary>
         public static ApplicationGatewayFirewallUserSessionVariable None { get; } = new ApplicationGatewayFirewallUserSessionVariable(NoneValue);
+        /// <summary> ClientAddrXFFHeader. </summary>
+        public static ApplicationGatewayFirewallUserSessionVariable ClientAddrXFFHeader { get; } = new ApplicationGatewayFirewallUserSessionVariable(ClientAddrXFFHeaderValue);
+        /// <summary> GeoLocationXFFHeader. </summary>
+        public static ApplicationGatewayFirewallUserSessionVariable GeoLocationXFFHeader { get; } = new ApplicationGatewayFirewallUserSessionVariable(GeoLocationXFFHeaderValue);
         /// <summary> Determines if two <see cref="ApplicationGatewayFirewallUserSessionVariable"/> values are the same. </summary>
         public static bool operator ==(ApplicationGatewayFirewallUserSessionVariable left, ApplicationGatewayFirewallUserSessionVariable right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ApplicationGatewayFirewallUserSessionVariable"/> values are not the same. </summary>

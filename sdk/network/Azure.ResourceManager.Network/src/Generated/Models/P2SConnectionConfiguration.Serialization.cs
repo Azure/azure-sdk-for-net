@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("enableInternetSecurity"u8);
                 writer.WriteBooleanValue(EnableInternetSecurity.Value);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ConfigurationPolicyGroupAssociations))
+            if (Optional.IsCollectionDefined(ConfigurationPolicyGroupAssociations))
             {
                 writer.WritePropertyName("configurationPolicyGroupAssociations"u8);
                 writer.WriteStartArray();
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Network.Models
             VirtualNetworkAddressSpace vpnClientAddressPool = default;
             RoutingConfiguration routingConfiguration = default;
             bool? enableInternetSecurity = default;
-            IReadOnlyList<WritableSubResource> configurationPolicyGroupAssociations = default;
+            IList<WritableSubResource> configurationPolicyGroupAssociations = default;
             IReadOnlyList<VpnServerConfigurationPolicyGroupData> previousConfigurationPolicyGroupAssociations = default;
             NetworkProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
