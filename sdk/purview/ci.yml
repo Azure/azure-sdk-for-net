@@ -58,3 +58,16 @@ extends:
       safeName: AzureAnalyticsPurviewScanning
       triggeringPaths:
       - Azure.Analytics.Purview.Shared
+    ExpectedAOTWarnings:
+    - ArtifactName: Azure.Analytics.Purview.Sharing
+      ExpectedWarningsFilepath: Azure.Analytics.Purview.Sharing/tests/compatibility/ExpectedWarnings.txt
+    - ArtifactName: Azure.Analytics.Purview.Workflows
+      ExpectedWarningsFilepath: Azure.Analytics.Purview.Workflows/tests/compatibility/ExpectedWarnings.txt
+    - ArtifactName: Azure.Analytics.Purview.Account
+      ExpectedWarningsFilepath: Azure.Analytics.Purview.Account/tests/compatibility/ExpectedWarnings.txt
+    - ArtifactName: Azure.Analytics.Purview.Catalog
+      ExpectedWarningsFilepath: Azure.Analytics.Purview.Catalog/tests/compatibility/ExpectedWarnings.txt
+    - ArtifactName: Azure.Analytics.Purview.DataMap
+      ExpectedWarningsFilepath: Azure.Analytics.Purview.DataMap/tests/compatibility/ExpectedWarnings.txt
+    - ArtifactName: Azure.Analytics.Purview.Scanning
+      ExpectedWarningsFilepath: Azure.Analytics.Purview.Scanning/tests/compatibility/ExpectedWarnings.txt

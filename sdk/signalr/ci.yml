@@ -34,3 +34,6 @@ extends:
     Artifacts:
     - name: Microsoft.Azure.WebJobs.Extensions.SignalRService
       safeName: MicrosoftAzureWebJobsExtensionsSignalRService
+    ExpectedAOTWarnings:
+    - ArtifactName: Microsoft.Azure.WebJobs.Extensions.SignalRService
+      ExpectedWarningsFilepath: Microsoft.Azure.WebJobs.Extensions.SignalRService/tests/compatibility/ExpectedWarnings.txt

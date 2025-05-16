@@ -61,3 +61,6 @@ extends:
       safeName: AzureAnalyticsSynapseMonitoring
       triggeringPaths:
       - Azure.Analytics.Synapse.Shared
+    ExpectedAOTWarnings:
+    - ArtifactName: Azure.Analytics.Synapse.AccessControl
+      ExpectedWarningsFilepath: Azure.Analytics.Synapse.AccessControl/tests/compatibility/ExpectedWarnings.txt

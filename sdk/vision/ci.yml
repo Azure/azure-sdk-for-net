@@ -33,3 +33,6 @@ extends:
     Artifacts:
     - name: Azure.AI.Vision.ImageAnalysis
       safeName: AzureAIVisionImageAnalysis
+    ExpectedAOTWarnings:
+    - ArtifactName: Azure.AI.Vision.ImageAnalysis
+      ExpectedWarningsFilepath: Azure.AI.Vision.ImageAnalysis/tests/compatibility/ExpectedWarnings.txt

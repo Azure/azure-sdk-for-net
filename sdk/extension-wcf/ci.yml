@@ -34,3 +34,6 @@ extends:
     CheckAOTCompat: false
     TestSetupSteps:
     - template: /sdk/storage/tests-install-azurite.yml
+    ExpectedAOTWarnings:
+    - ArtifactName: Microsoft.WCF.Azure.StorageQueues
+      ExpectedWarningsFilepath: "Microsoft.WCF.Azure.StorageQueues/tests/compatibility/ExpectedWarnings.txt"

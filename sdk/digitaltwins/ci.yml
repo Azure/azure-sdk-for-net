@@ -32,3 +32,6 @@ extends:
     Artifacts:
     - name: Azure.DigitalTwins.Core
       safeName: AzureDigitalTwinsCore
+    ExpectedAOTWarnings:
+    - ArtifactName: Azure.DigitalTwins.Core
+      ExpectedWarningsFilepath: "Azure.DigitalTwins.Core/tests/compatibility/ExpectedWarnings.txt"

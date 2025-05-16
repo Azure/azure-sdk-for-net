@@ -36,3 +36,14 @@ extends:
       safeName: AzureAILanguageConversations
     - name: Azure.AI.Language.QuestionAnswering
       safeName: AzureAILanguageQuestionAnswering
+    ExpectedAOTWarnings:
+    - ArtifactName: Azure.AIT.Language.Text.Authoring
+      ExpectedWarningsFilepath: "Azure.AI.Language.Text.Authoring/tests/compatibility/ExpectedWarnings.txt"
+    - ArtifactName: Azure.AI.Language.Conversations.Authoring
+      ExpectedWarningsFilepath: "Azure.AI.Language.Conversations.Authoring/tests/compatibility/ExpectedWarnings.txt"
+    - ArtifactName: Azure.AI.Language.Text
+      ExpectedWarningsFilepath: "Azure.AI.Language.Text/tests/compatibility/ExpectedWarnings.txt"
+    - ArtifactName: Azure.AI.Language.Conversations
+      ExpectedWarningsFilepath: "Azure.AI.Language.Conversations/tests/compatibility/ExpectedWarnings.txt"
+    - ArtifactName: Azure.AI.Language.QuestionAnswering
+      ExpectedWarningsFilepath: "Azure.AI.Language.QuestionAnswering/tests/compatibility/ExpectedWarnings.txt"

@@ -47,3 +47,8 @@ extends:
       safeName: AzureSecurityKeyVaultSecrets
       triggeringPaths:
       - Azure.Security.Keyvault.Shared
+    ExpectedAOTWarnings:
+    - ArtifactName: Azure.Security.KeyVault.Certificates
+      ExpectedWarningsFilepath: "Azure.Security.KeyVault.Certificates/tests/compatibility/ExpectedWarnings.txt"
+    - ArtifactName: Azure.Security.KeyVault.Keys
+      ExpectedWarningsFilepath: "Azure.Security.KeyVault.Keys/tests/compatibility/ExpectedWarnings.txt"

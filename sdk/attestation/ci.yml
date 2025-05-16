@@ -33,3 +33,6 @@ extends:
     Artifacts:
     - name: Azure.Security.Attestation
       safeName: AzureSecurityAttestation
+    ExpectedAOTWarnings:
+    - ArtifactName: Azure.Security.Attestation
+      ExpectedWarningsFilepath: "Azure.Security.Attestation/tests/compatibility/ExpectedWarnings.txt"

@@ -73,3 +73,12 @@ extends:
       skipSmokeTests: true
     TestSetupSteps:
     - template: /sdk/storage/tests-install-azurite.yml
+    ExpectedAOTWarnings:
+    - ArtifactName: Azure.Storage.Files.Shares
+      ExpectedWarningsFilepath: Azure.Storage.Files.Shares/tests/compatibility/ExpectedWarnings.txt
+    - ArtifactName: Azure.Storage.Files.DataLake
+      ExpectedWarningsFilepath: Azure.Storage.Files.DataLake/tests/compatibility/ExpectedWarnings.txt
+    - ArtifactName: Azure.Storage.Queues
+      ExpectedWarningsFilepath: Azure.Storage.Queues/tests/compatibility/ExpectedWarnings.txt
+    - ArtifactName: Azure.Storage.Blobs.ChangeFeed
+      ExpectedWarningsFilepath: Azure.Storage.Blobs.ChangeFeed/tests/compatibility/ExpectedWarnings.txt

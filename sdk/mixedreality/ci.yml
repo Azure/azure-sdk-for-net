@@ -32,3 +32,6 @@ extends:
     Artifacts:
     - name: Azure.MixedReality.Authentication
       safeName: AzureMixedRealityAuthentication
+    ExpectedAOTWarnings:
+    - ArtifactName: Azure.MixedReality.Authentication
+      ExpectedWarningsFilepath: Azure.MixedReality.Authentication/tests/compatibility/ExpectedWarnings.txt

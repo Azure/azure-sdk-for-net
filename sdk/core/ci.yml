@@ -66,9 +66,13 @@ extends:
       safeName: AzureCoreAmqp
     - name: System.ClientModel
       safeName: SystemClientModel
-    AOTTestInputs:
+    ExpectedAOTWarnings:
     - ArtifactName: Azure.Core
       ExpectedWarningsFilepath: /Azure.Core/tests/compatibility/ExpectedAotWarnings.txt
+    - ArtifactName: Azure.Core.Expressions.DataFactory
+      ExpectedWarningsFilepath: /Azure.Core.Expressions.DataFactory/tests/compatibility/ExpectedAotWarnings.txt
+    - ArtifactName: Microsoft.Azure.Core.NewtonsoftJson
+      ExpectedWarningsFilepath: /Microsoft.Azure.Core.NewtonsoftJson/tests/compatibility/ExpectedAotWarnings.txt
 
     TestSetupSteps:
     - template: /sdk/storage/tests-install-azurite.yml

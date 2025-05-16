@@ -30,3 +30,8 @@ extends:
       safeName: AzureDataSchemaRegistry
     - name: Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
       safeName: MicrosoftAzureDataSchemaRegistryApacheAvro
+    ExpectedAOTWarnings:
+    - ArtifactName: Azure.Data.SchemaRegistry
+      ExpectedWarningsFilepath: Azure.Data.SchemaRegistry/tests/compatibility/ExpectedWarnings.txt
+    - ArtifactName: Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
+      ExpectedWarningsFilepath: Microsoft.Azure.Data.SchemaRegistry.ApacheAvro/tests/compatibility/ExpectedWarnings.txt

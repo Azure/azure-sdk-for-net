@@ -30,3 +30,6 @@ extends:
     Artifacts:
     - name: Azure.AI.FormRecognizer
       safeName: AzureAIFormRecognizer
+    ExpectedAOTWarnings:
+    - ArtifactName: Azure.AI.FormRecognizer
+      ExpectedWarningsFilepath: "Azure.AI.FormRecognizer/tests/compatibility/ExpectedWarnings.txt"

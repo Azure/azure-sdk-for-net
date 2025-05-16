@@ -50,3 +50,6 @@ extends:
       - /doc
       - /eng
       - /samples
+  ExpectedAOTWarnings:
+  - ArtifactName: Azure.Template
+    ExpectedWarningsFilepath: Azure.Template/tests/compatibility/ExpectedWarnings.txt

@@ -52,5 +52,10 @@ extends:
       # the MSDocs issue is fixed.
       # https://github.com/Azure/azure-sdk-for-net/issues/45032
       skipPublishDocMs: true
-
-
+    ExpectedAOTWarnings:
+    - ArtifactName: Azure.Messaging.EventGrid.Namespaces
+      ExpectedWarningsFilepath: "Azure.Messaging.EventGrid.Namespaces/tests/compatibility/ExpectedWarnings.txt"
+    - ArtifactName: Azure.Messaging.EventGrid.SystemEvents
+      ExpectedWarningsFilepath: "Azure.Messaging.EventGrid.SystemEvents/tests/compatibility/ExpectedWarnings.txt"
+    - ArtifactName: Microsoft.Azure.Messaging.EventGrid.CloudNativeCloudEvents
+      ExpectedWarningsFilepath: "Microsoft.Azure.Messaging.EventGrid.CloudNativeCloudEvents/tests/compatibility/ExpectedWarnings.txt"

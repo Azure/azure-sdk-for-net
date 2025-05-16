@@ -28,3 +28,6 @@ extends:
     Artifacts:
     - name: Azure.MixedReality.RemoteRendering
       safeName: AzureMixedRealityRemoteRendering
+    ExpectedAOTWarnings:
+    - ArtifactName: Azure.MixedReality.RemoteRendering
+      ExpectedWarningsFilepath: Azure.MixedReality.RemoteRendering/tests/compatibility/ExpectedWarnings.txt

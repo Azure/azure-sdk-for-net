@@ -28,3 +28,6 @@ extends:
     Artifacts:
     - name: Azure.IoT.TimeSeriesInsights
       safeName: AzureTimeSeriesInsights
+    ExpectedAOTWarnings:
+    - ArtifactName: Azure.IoT.TimeSeriesInsights
+      ExpectedWarningsFilepath: Azure.IoT.TimeSeriesInsights/tests/compatibility/ExpectedWarnings.txt

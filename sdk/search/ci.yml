@@ -34,3 +34,6 @@ extends:
     Artifacts:
     - name: Azure.Search.Documents
       safeName: AzureSearchDocuments
+    ExpectedAOTWarnings:
+    - ArtifactName: Azure.Search.Documents
+      ExpectedWarningsFilepath: Azure.Search.Documents/tests/compatibility/ExpectedWarnings.txt

@@ -33,3 +33,6 @@ extends:
     Artifacts:
     - name: Azure.Developer.LoadTesting
       safeName: AzureDeveloperLoadTesting
+    ExpectedAOTWarnings:
+    - ArtifactName: Azure.Developer.LoadTesting
+      ExpectedWarningsFilepath: "Azure.Developer.LoadTesting/tests/compatibility/ExpectedWarnings.txt"

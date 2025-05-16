@@ -45,3 +45,16 @@ extends:
       safeName: MicrosoftAzureFunctionsWorkerExtensionsWebPubSub
     - name: Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO
       safeName: MicrosoftAzureWebJobsExtensionsWebPubSubForSocketIO
+    ExpectedAOTWarnings:
+    - ArtifactName: Azure.Messaging.WebPubSub
+      ExpectedWarningsFilepath: Azure.Messaging.WebPubSub/tests/compatibility/ExpectedWarnings.txt
+    - ArtifactName: Microsoft.Azure.WebJobs.Extensions.WebPubSub
+      ExpectedWarningsFilepath: Microsoft.Azure.WebJobs.Extensions.WebPubSub/tests/compatibility/ExpectedWarnings.txt
+    - ArtifactName: Microsoft.Azure.WebPubSub.AspNetCore
+      ExpectedWarningsFilepath: Microsoft.Azure.WebPubSub.AspNetCore/tests/compatibility/ExpectedWarnings.txt
+    - ArtifactName: Microsoft.Azure.WebPubSub.Common
+      ExpectedWarningsFilepath: Microsoft.Azure.WebPubSub.Common/tests/compatibility/ExpectedWarnings.txt
+    - ArtifactName: Microsoft.Azure.Functions.Worker.Extensions.WebPubSub
+      ExpectedWarningsFilepath: Microsoft.Azure.Functions.Worker.Extensions.WebPubSub/tests/compatibility/ExpectedWarnings.txt
+    - ArtifactName: Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO
+      ExpectedWarningsFilepath: Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO/tests/compatibility/ExpectedWarnings.txt

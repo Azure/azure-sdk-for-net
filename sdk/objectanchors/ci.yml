@@ -28,3 +28,6 @@ extends:
     Artifacts:
     - name: Azure.MixedReality.ObjectAnchors.Conversion
       safeName: AzureMixedRealityObjectAnchorsConversion
+    ExpectedAOTWarnings:
+    - ArtifactName: Azure.MixedReality.ObjectAnchors.Conversion
+      ExpectedWarningsFilepath: Azure.MixedReality.ObjectAnchors.Conversion/tests/compatibility/ExpectedWarnings.txt

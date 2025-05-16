@@ -29,3 +29,6 @@ extends:
     Artifacts:
     - name: Azure.Analytics.Defender.Easm
       safeName: AzureAnalyticsDefenderEasm
+    ExpectedAOTWarnings:
+    - ArtifactName: Azure.Analytics.Defender.Easm
+      ExpectedWarningsFilepath: "Azure.Analytics.Defender.Easm/tests/compatibility/ExpectedWarnings.txt"

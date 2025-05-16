@@ -40,3 +40,6 @@ extends:
     Artifacts:
     - name: Azure.Health.Deidentification
       safeName: AzureHealthDeidentification
+    ExpectedAOTWarnings:
+    - ArtifactName: Azure.Health.Deidentification
+      ExpectedWarningsFilepath: "Azure.Health.Deidentification/tests/compatibility/ExpectedWarnings.txt"

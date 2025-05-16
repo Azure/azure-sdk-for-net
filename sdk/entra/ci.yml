@@ -30,3 +30,6 @@ extends:
     Artifacts:
     - name: Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
       safeName: MicrosoftAzureWebJobsExtensionsAuthenticationEvents
+    ExpectedAOTWarnings:
+    - ArtifactName: Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
+      ExpectedWarningsFilepath: "Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents/tests/compatibility/ExpectedWarnings.txt"

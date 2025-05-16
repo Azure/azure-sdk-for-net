@@ -35,3 +35,6 @@ extends:
       safeName: AzureConfidentialLedger
     - name: Azure.Security.CodeTransparency
       safeName: AzureCodeTransparency
+    ExpectedAOTWarnings:
+    - ArtifactName: Azure.Security.CodeTransparency
+      ExpectedWarningsFilepath: "Azure.Security.CodeTransparency/tests/compatibility/ExpectedWarnings.txt"

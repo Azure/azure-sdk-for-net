@@ -47,3 +47,10 @@ extends:
       safeName: AzureMonitorQuery
     - name: Azure.Monitor.Ingestion
       safeName: AzureMonitorIngestion
+    ExpectedAOTWarnings:
+    - ArtifactName: Azure.Monitor.Ingestion
+      ExpectedWarningsFilepath: Azure.Monitor.Ingestion/tests/compatibility/ExpectedWarnings.txt
+    - ArtifactName: Azure.Monitor.Query
+      ExpectedWarningsFilepath: Azure.Monitor.Query/tests/compatibility/ExpectedWarnings.txt
+    - ArtifactName: Azure.Monitor.OpenTelemetry.AspNetCore
+      ExpectedWarningsFilepath: Azure.Monitor.OpenTelemetry.AspNetCore/tests/compatibility/ExpectedWarnings.txt
