@@ -5,45 +5,20 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
 using Azure;
 using Azure.Core.Foundations;
 using _Specs_.Azure.Core.Lro.Standard;
 
 namespace Azure.Core
 {
-    /// <summary> Provides status details for long running operations. </summary>
-    internal partial class ResourceOperationStatusUserExportedUserError
+    public partial class ResourceOperationStatusUserExportedUserError
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        public string Id => throw null;
 
-        internal ResourceOperationStatusUserExportedUserError(string id, OperationState status)
-        {
-            Id = id;
-            Status = status;
-        }
+        public Foundations.OperationState Status => throw null;
 
-        internal ResourceOperationStatusUserExportedUserError(string id, OperationState status, ResponseError error, ExportedUser result, IDictionary<string, BinaryData> additionalBinaryDataProperties)
-        {
-            Id = id;
-            Status = status;
-            Error = error;
-            Result = result;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
-        }
+        public ResponseError Error => throw null;
 
-        /// <summary> The unique ID of the operation. </summary>
-        public string Id { get; }
-
-        /// <summary> The status of the operation. </summary>
-        public OperationState Status { get; }
-
-        /// <summary> Error object that describes the error when status is "Failed". </summary>
-        public ResponseError Error { get; }
-
-        /// <summary> The result of the operation. </summary>
-        public ExportedUser Result { get; }
+        public ExportedUser Result => throw null;
     }
 }

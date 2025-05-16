@@ -5,31 +5,16 @@
 
 #nullable disable
 
-using System;
 using Azure.Core;
 
 namespace _Specs_.Azure.Core.Lro.Standard
 {
-    /// <summary> Client options for <see cref="StandardClient"/>. </summary>
     public partial class StandardClientOptions : ClientOptions
     {
         private const ServiceVersion LatestVersion = ServiceVersion.V2022_12_01_Preview;
 
-        /// <summary> Initializes a new instance of StandardClientOptions. </summary>
-        /// <param name="version"> The service version. </param>
-        public StandardClientOptions(ServiceVersion version = LatestVersion)
-        {
-            Version = version switch
-            {
-                ServiceVersion.V2022_12_01_Preview => "2022-12-01-preview",
-                _ => throw new NotSupportedException()
-            };
-        }
+        public StandardClientOptions(ServiceVersion version = LatestVersion) => throw null;
 
-        /// <summary> Gets the Version. </summary>
-        internal string Version { get; }
-
-        /// <summary> The version of the service to use. </summary>
         public enum ServiceVersion
         {
             /// <summary> The 2022-12-01-preview version. </summary>

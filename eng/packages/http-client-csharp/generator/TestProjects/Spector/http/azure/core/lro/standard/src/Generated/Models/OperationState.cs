@@ -7,76 +7,39 @@
 
 using System;
 using System.ComponentModel;
-using _Specs_.Azure.Core.Lro.Standard;
 
 namespace Azure.Core.Foundations
 {
-    /// <summary> Enum describing allowed operation states. </summary>
     public readonly partial struct OperationState : IEquatable<OperationState>
     {
-        private readonly string _value;
-        /// <summary> The operation has not started. </summary>
-        private const string NotStartedValue = "NotStarted";
-        /// <summary> The operation is in progress. </summary>
-        private const string RunningValue = "Running";
-        /// <summary> The operation has completed successfully. </summary>
-        private const string SucceededValue = "Succeeded";
-        /// <summary> The operation has failed. </summary>
-        private const string FailedValue = "Failed";
-        /// <summary> The operation has been canceled by the user. </summary>
-        private const string CanceledValue = "Canceled";
+        public OperationState(string value) => throw null;
 
-        /// <summary> Initializes a new instance of <see cref="OperationState"/>. </summary>
-        /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public OperationState(string value)
-        {
-            Argument.AssertNotNull(value, nameof(value));
+        public static OperationState NotStarted => throw null;
 
-            _value = value;
-        }
+        public static OperationState Running => throw null;
 
-        /// <summary> The operation has not started. </summary>
-        public static OperationState NotStarted { get; } = new OperationState(NotStartedValue);
+        public static OperationState Succeeded => throw null;
 
-        /// <summary> The operation is in progress. </summary>
-        public static OperationState Running { get; } = new OperationState(RunningValue);
+        public static OperationState Failed => throw null;
 
-        /// <summary> The operation has completed successfully. </summary>
-        public static OperationState Succeeded { get; } = new OperationState(SucceededValue);
+        public static OperationState Canceled => throw null;
 
-        /// <summary> The operation has failed. </summary>
-        public static OperationState Failed { get; } = new OperationState(FailedValue);
+        public static bool operator ==(OperationState left, OperationState right) => throw null;
 
-        /// <summary> The operation has been canceled by the user. </summary>
-        public static OperationState Canceled { get; } = new OperationState(CanceledValue);
-
-        /// <summary> Determines if two <see cref="OperationState"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(OperationState left, OperationState right) => left.Equals(right);
-
-        /// <summary> Determines if two <see cref="OperationState"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(OperationState left, OperationState right) => !left.Equals(right);
+        public static bool operator !=(OperationState left, OperationState right) => throw null;
 
         /// <summary> Converts a string to a <see cref="OperationState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator OperationState(string value) => new OperationState(value);
+        public static implicit operator OperationState(string value) => throw null;
 
-        /// <param name="obj"> The object to compare. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is OperationState other && Equals(other);
+        public override bool Equals(object obj) => throw null;
 
-        /// <param name="other"> The instance to compare. </param>
-        public bool Equals(OperationState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(OperationState other) => throw null;
 
-        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        public override int GetHashCode() => throw null;
 
-        /// <inheritdoc/>
-        public override string ToString() => _value;
+        public override string ToString() => throw null;
     }
 }

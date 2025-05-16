@@ -10,322 +10,36 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
-using Azure.Core.Foundations;
 using Azure.Core.Pipeline;
 
 namespace _Specs_.Azure.Core.Lro.Standard
 {
-    /// <summary> Illustrates bodies templated with Azure Core with long-running operation. </summary>
     public partial class StandardClient
     {
-        private readonly Uri _endpoint;
-        private readonly string _apiVersion;
+        public StandardClient() : this(new Uri("http://localhost:3000"), new StandardClientOptions()) => throw null;
 
-        /// <summary> Initializes a new instance of StandardClient. </summary>
-        public StandardClient() : this(new Uri("http://localhost:3000"), new StandardClientOptions())
-        {
-        }
+        public StandardClient(Uri endpoint, StandardClientOptions options) => throw null;
 
-        /// <summary> Initializes a new instance of StandardClient. </summary>
-        /// <param name="endpoint"> Service endpoint. </param>
-        /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
-        public StandardClient(Uri endpoint, StandardClientOptions options)
-        {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
+        public virtual HttpPipeline Pipeline => throw null;
 
-            options ??= new StandardClientOptions();
+        public virtual Operation<BinaryData> CreateOrReplace(WaitUntil waitUntil, string name, RequestContent content, RequestContext context = null) => throw null;
 
-            _endpoint = endpoint;
-            Pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>());
-            _apiVersion = options.Version;
-            ClientDiagnostics = new ClientDiagnostics(options, true);
-        }
+        public virtual Task<Operation<BinaryData>> CreateOrReplaceAsync(WaitUntil waitUntil, string name, RequestContent content, RequestContext context = null) => throw null;
 
-        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
-        public HttpPipeline Pipeline { get; }
+        public virtual Operation<User> CreateOrReplace(WaitUntil waitUntil, string name, User resource, CancellationToken cancellationToken = default) => throw null;
 
-        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
-        internal ClientDiagnostics ClientDiagnostics { get; }
+        public virtual Task<Operation<User>> CreateOrReplaceAsync(WaitUntil waitUntil, string name, User resource, CancellationToken cancellationToken = default) => throw null;
 
-        /// <summary>
-        /// [Protocol Method] Creates or replaces a User
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="name"> The name of user. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual Operation<BinaryData> CreateOrReplace(WaitUntil waitUntil, string name, RequestContent content, RequestContext context = null)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("StandardClient.CreateOrReplace");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNull(name, nameof(name));
-                Argument.AssertNotNull(content, nameof(content));
+        public virtual Operation Delete(WaitUntil waitUntil, string name, RequestContext context = null) => throw null;
 
-                using HttpMessage message = CreateCreateOrReplaceRequest(name, content, context);
-                return Pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
+        public virtual Task<Operation> DeleteAsync(WaitUntil waitUntil, string name, RequestContext context = null) => throw null;
 
-        /// <summary>
-        /// [Protocol Method] Creates or replaces a User
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="name"> The name of user. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Operation<BinaryData>> CreateOrReplaceAsync(WaitUntil waitUntil, string name, RequestContent content, RequestContext context = null)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("StandardClient.CreateOrReplace");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNull(name, nameof(name));
-                Argument.AssertNotNull(content, nameof(content));
+        public virtual Operation<BinaryData> Export(WaitUntil waitUntil, string name, string format, RequestContext context) => throw null;
 
-                using HttpMessage message = CreateCreateOrReplaceRequest(name, content, context);
-                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
+        public virtual Task<Operation<BinaryData>> ExportAsync(WaitUntil waitUntil, string name, string format, RequestContext context) => throw null;
 
-        /// <summary> Creates or replaces a User. </summary>
-        /// <param name="name"> The name of user. </param>
-        /// <param name="resource"> The resource instance. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="resource"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Operation<User> CreateOrReplace(WaitUntil waitUntil, string name, User resource, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(resource, nameof(resource));
+        public virtual Operation<ExportedUser> Export(WaitUntil waitUntil, string name, string format, CancellationToken cancellationToken = default) => throw null;
 
-            Response result = this.CreateOrReplace(name, resource, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
-            return Response.FromValue((User)result, result);
-        }
-
-        /// <summary> Creates or replaces a User. </summary>
-        /// <param name="name"> The name of user. </param>
-        /// <param name="resource"> The resource instance. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="resource"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Operation<User>> CreateOrReplaceAsync(WaitUntil waitUntil, string name, User resource, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(resource, nameof(resource));
-
-            Response result = await this.CreateOrReplaceAsync(name, resource, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
-            return Response.FromValue((User)result, result);
-        }
-
-        /// <summary>
-        /// [Protocol Method] Deletes a User
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="name"> The name of user. </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual Response Delete(string name, RequestContext context)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("StandardClient.Delete");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNull(name, nameof(name));
-
-                using HttpMessage message = CreateDeleteRequest(name, context);
-                return Pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Deletes a User
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="name"> The name of user. </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> DeleteAsync(string name, RequestContext context)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("StandardClient.Delete");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNull(name, nameof(name));
-
-                using HttpMessage message = CreateDeleteRequest(name, context);
-                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Deletes a User. </summary>
-        /// <param name="name"> The name of user. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<OperationStatusError> Delete(string name, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(name, nameof(name));
-
-            Response result = Delete(name, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
-            return Response.FromValue((OperationStatusError)result, result);
-        }
-
-        /// <summary> Deletes a User. </summary>
-        /// <param name="name"> The name of user. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<OperationStatusError>> DeleteAsync(string name, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(name, nameof(name));
-
-            Response result = await DeleteAsync(name, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
-            return Response.FromValue((OperationStatusError)result, result);
-        }
-
-        /// <summary>
-        /// [Protocol Method] Exports a User
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="name"> The name of user. </param>
-        /// <param name="format"> The format of the data. </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="format"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual Operation<BinaryData> Export(WaitUntil waitUntil, string name, string format, RequestContext context)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("StandardClient.Export");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNull(name, nameof(name));
-                Argument.AssertNotNull(format, nameof(format));
-
-                using HttpMessage message = CreateExportRequest(name, format, context);
-                return Pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Exports a User
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="name"> The name of user. </param>
-        /// <param name="format"> The format of the data. </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="format"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Operation<BinaryData>> ExportAsync(WaitUntil waitUntil, string name, string format, RequestContext context)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("StandardClient.Export");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNull(name, nameof(name));
-                Argument.AssertNotNull(format, nameof(format));
-
-                using HttpMessage message = CreateExportRequest(name, format, context);
-                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Exports a User. </summary>
-        /// <param name="name"> The name of user. </param>
-        /// <param name="format"> The format of the data. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="format"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Operation<ExportedUser> Export(WaitUntil waitUntil, string name, string format, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(format, nameof(format));
-
-            Response result = this.Export(name, format, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
-            return Response.FromValue((ResourceOperationStatusUserExportedUserError)result, result);
-        }
-
-        /// <summary> Exports a User. </summary>
-        /// <param name="name"> The name of user. </param>
-        /// <param name="format"> The format of the data. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="format"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Operation<ExportedUser>> ExportAsync(WaitUntil waitUntil, string name, string format, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(format, nameof(format));
-
-            Response result = await this.ExportAsync(name, format, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
-            return Response.FromValue((ResourceOperationStatusUserExportedUserError)result, result);
-        }
+        public virtual Task<Operation<ExportedUser>> ExportAsync(WaitUntil waitUntil, string name, string format, CancellationToken cancellationToken = default) => throw null;
     }
 }

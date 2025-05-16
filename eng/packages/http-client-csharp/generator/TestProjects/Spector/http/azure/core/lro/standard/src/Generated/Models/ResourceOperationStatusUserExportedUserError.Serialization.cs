@@ -7,186 +7,36 @@
 
 using System;
 using System.ClientModel.Primitives;
-using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
-using Azure.Core.Foundations;
-using _Specs_.Azure.Core.Lro.Standard;
 
 namespace Azure.Core
 {
-    /// <summary></summary>
-    internal partial class ResourceOperationStatusUserExportedUserError : IJsonModel<ResourceOperationStatusUserExportedUserError>
+    public partial class ResourceOperationStatusUserExportedUserError : IJsonModel<ResourceOperationStatusUserExportedUserError>
     {
-        internal ResourceOperationStatusUserExportedUserError()
-        {
-        }
+        internal ResourceOperationStatusUserExportedUserError() => throw null;
 
-        void IJsonModel<ResourceOperationStatusUserExportedUserError>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-        {
-            writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
-            writer.WriteEndObject();
-        }
+        void IJsonModel<ResourceOperationStatusUserExportedUserError>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ResourceOperationStatusUserExportedUserError>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
-            {
-                throw new FormatException($"The model {nameof(ResourceOperationStatusUserExportedUserError)} does not support writing '{format}' format.");
-            }
-            writer.WritePropertyName("id"u8);
-            writer.WriteStringValue(Id);
-            writer.WritePropertyName("status"u8);
-            writer.WriteStringValue(Status.ToString());
-            if (Optional.IsDefined(Error))
-            {
-                writer.WritePropertyName("error"u8);
-                JsonSerializer.Serialize(writer, Error);
-            }
-            if (Optional.IsDefined(Result))
-            {
-                writer.WritePropertyName("result"u8);
-                writer.WriteObjectValue(Result, options);
-            }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
-            {
-                foreach (var item in _additionalBinaryDataProperties)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
-        }
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
-        ResourceOperationStatusUserExportedUserError IJsonModel<ResourceOperationStatusUserExportedUserError>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ResourceOperationStatusUserExportedUserError IJsonModel<ResourceOperationStatusUserExportedUserError>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ResourceOperationStatusUserExportedUserError JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ResourceOperationStatusUserExportedUserError>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
-            {
-                throw new FormatException($"The model {nameof(ResourceOperationStatusUserExportedUserError)} does not support reading '{format}' format.");
-            }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeResourceOperationStatusUserExportedUserError(document.RootElement, options);
-        }
+        protected virtual ResourceOperationStatusUserExportedUserError JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
-        internal static ResourceOperationStatusUserExportedUserError DeserializeResourceOperationStatusUserExportedUserError(JsonElement element, ModelReaderWriterOptions options)
-        {
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            string id = default;
-            OperationState status = default;
-            ResponseError error = default;
-            ExportedUser result = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
-            {
-                if (prop.NameEquals("id"u8))
-                {
-                    id = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("status"u8))
-                {
-                    status = new OperationState(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("error"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    error = JsonSerializer.Deserialize<ResponseError>(prop.Value.GetRawText());
-                    continue;
-                }
-                if (prop.NameEquals("result"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    result = ExportedUser.DeserializeExportedUser(prop.Value, options);
-                    continue;
-                }
-                if (options.Format != "W")
-                {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
-                }
-            }
-            return new ResourceOperationStatusUserExportedUserError(id, status, error, result, additionalBinaryDataProperties);
-        }
+        BinaryData IPersistableModel<ResourceOperationStatusUserExportedUserError>.Write(ModelReaderWriterOptions options) => throw null;
 
-        BinaryData IPersistableModel<ResourceOperationStatusUserExportedUserError>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ResourceOperationStatusUserExportedUserError>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options);
-                default:
-                    throw new FormatException($"The model {nameof(ResourceOperationStatusUserExportedUserError)} does not support writing '{options.Format}' format.");
-            }
-        }
+        ResourceOperationStatusUserExportedUserError IPersistableModel<ResourceOperationStatusUserExportedUserError>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        ResourceOperationStatusUserExportedUserError IPersistableModel<ResourceOperationStatusUserExportedUserError>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        protected virtual ResourceOperationStatusUserExportedUserError PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ResourceOperationStatusUserExportedUserError PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ResourceOperationStatusUserExportedUserError>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
-                    {
-                        return DeserializeResourceOperationStatusUserExportedUserError(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ResourceOperationStatusUserExportedUserError)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<ResourceOperationStatusUserExportedUserError>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ResourceOperationStatusUserExportedUserError>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
         /// <param name="resourceOperationStatusUserExportedUserError"> The <see cref="ResourceOperationStatusUserExportedUserError"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(ResourceOperationStatusUserExportedUserError resourceOperationStatusUserExportedUserError)
-        {
-            if (resourceOperationStatusUserExportedUserError == null)
-            {
-                return null;
-            }
-            Utf8JsonBinaryContent content = new Utf8JsonBinaryContent();
-            content.JsonWriter.WriteObjectValue(resourceOperationStatusUserExportedUserError, ModelSerializationExtensions.WireOptions);
-            return content;
-        }
+        public static implicit operator RequestContent(ResourceOperationStatusUserExportedUserError resourceOperationStatusUserExportedUserError) => throw null;
 
-        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="ResourceOperationStatusUserExportedUserError"/> from. </param>
-        public static explicit operator ResourceOperationStatusUserExportedUserError(Response result)
-        {
-            using Response response = result;
-            using JsonDocument document = JsonDocument.Parse(response.Content);
-            return DeserializeResourceOperationStatusUserExportedUserError(document.RootElement, ModelSerializationExtensions.WireOptions);
-        }
+        public static explicit operator ResourceOperationStatusUserExportedUserError(Response result) => throw null;
     }
 }

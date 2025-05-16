@@ -5,39 +5,16 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
 using Azure;
 
 namespace Azure.Core.Foundations
 {
-    /// <summary> Provides status details for long running operations. </summary>
     public partial class OperationStatusError
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        public string Id => throw null;
 
-        internal OperationStatusError(string id, OperationState status)
-        {
-            Id = id;
-            Status = status;
-        }
+        public OperationState Status => throw null;
 
-        internal OperationStatusError(string id, OperationState status, ResponseError error, IDictionary<string, BinaryData> additionalBinaryDataProperties)
-        {
-            Id = id;
-            Status = status;
-            Error = error;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
-        }
-
-        /// <summary> The unique ID of the operation. </summary>
-        public string Id { get; }
-
-        /// <summary> The status of the operation. </summary>
-        public OperationState Status { get; }
-
-        /// <summary> Error object that describes the error when status is "Failed". </summary>
-        public ResponseError Error { get; }
+        public ResponseError Error => throw null;
     }
 }

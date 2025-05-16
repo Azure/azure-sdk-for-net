@@ -5,33 +5,18 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
-
 namespace _Specs_.Azure.Core.Lro.Standard
 {
-    /// <summary> Details about a user. </summary>
     public partial class User
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        public User(string role) => throw null;
 
-        internal User(string role)
+        public string Name => throw null;
+
+        public string Role
         {
-            Role = role;
+            get => throw null;
+            set => throw null;
         }
-
-        internal User(string name, string role, IDictionary<string, BinaryData> additionalBinaryDataProperties)
-        {
-            Name = name;
-            Role = role;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
-        }
-
-        /// <summary> The name of user. </summary>
-        public string Name { get; }
-
-        /// <summary> The role of user. </summary>
-        public string Role { get; }
     }
 }

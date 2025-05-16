@@ -6,45 +6,26 @@
 #nullable disable
 
 using System.Collections.Generic;
-using System.Linq;
 using Azure;
 using Azure.Core;
 using Azure.Core.Foundations;
 
 namespace _Specs_.Azure.Core.Lro.Standard
 {
-    /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class _Specs_AzureCoreLroStandardModelFactory
     {
-        /// <summary> Details about a user. </summary>
-        /// <param name="name"> The name of user. </param>
-        /// <param name="role"> The role of user. </param>
-        /// <returns> A new <see cref="Standard.User"/> instance for mocking. </returns>
-        public static User User(string name = default, string role = default)
-        {
+        public static User User(string name = default, string role = default) => throw null;
 
-            return new User(name, role, additionalBinaryDataProperties: null);
-        }
+        public static ExportedUser ExportedUser(string name = default, string resourceUri = default) => throw null;
 
-        /// <summary> The exported user data. </summary>
-        /// <param name="name"> The name of user. </param>
-        /// <param name="resourceUri"> The exported URI. </param>
-        /// <returns> A new <see cref="Standard.ExportedUser"/> instance for mocking. </returns>
-        public static ExportedUser ExportedUser(string name = default, string resourceUri = default)
-        {
+        public static OperationStatusError OperationStatusError(string id = default, global::Azure.Core.Foundations.OperationState status = default, ResponseError error = default) => throw null;
 
-            return new ExportedUser(name, resourceUri, additionalBinaryDataProperties: null);
-        }
+        public static Error Error(string code = default, string message = default, string target = default, IEnumerable<ResponseError> details = default, InnerError innererror = default) => throw null;
 
-        /// <summary> Provides status details for long running operations. </summary>
-        /// <param name="id"> The unique ID of the operation. </param>
-        /// <param name="status"> The status of the operation. </param>
-        /// <param name="error"> Error object that describes the error when status is "Failed". </param>
-        /// <returns> A new <see cref="global::Azure.Core.Foundations.OperationStatusError"/> instance for mocking. </returns>
-        public static OperationStatusError OperationStatusError(string id = default, OperationState status = default, ResponseError error = default)
-        {
+        public static InnerError InnerError(string code = default, InnerError innererror = default) => throw null;
 
-            return new OperationStatusError(id, status, error, additionalBinaryDataProperties: null);
-        }
+        public static ResourceOperationStatusUserExportedUserError ResourceOperationStatusUserExportedUserError(string id = default, global::Azure.Core.Foundations.OperationState status = default, ResponseError error = default, ExportedUser result = default) => throw null;
+
+        public static OperationStatusExportedUserError OperationStatusExportedUserError(string id = default, global::Azure.Core.Foundations.OperationState status = default, ResponseError error = default, ExportedUser result = default) => throw null;
     }
 }

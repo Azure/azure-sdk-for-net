@@ -77,6 +77,17 @@ namespace Azure.Generator
             return base.CreateCSharpTypeCore(inputType);
         }
 
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="inputType"></param>
+        /// <param name="typeProvider"></param>
+        /// <returns></returns>
+        protected override IReadOnlyList<TypeProvider> CreateSerializationsCore(InputType inputType, TypeProvider typeProvider)
+        {
+            return base.CreateSerializationsCore(inputType, typeProvider);
+        }
+
         private CSharpType? CreateKnownPrimitiveType(InputPrimitiveType inputType)
         {
             InputPrimitiveType? primitiveType = inputType;

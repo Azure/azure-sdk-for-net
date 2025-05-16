@@ -8,14 +8,13 @@ using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Generator.Primitives;
 using Azure.Generator.Providers;
 using Microsoft.TypeSpec.Generator.ClientModel;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 using Microsoft.TypeSpec.Generator.Expressions;
-using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
-using Microsoft.TypeSpec.Generator.Snippets;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 
 namespace Azure.Generator.Visitors
@@ -27,6 +26,8 @@ namespace Azure.Generator.Visitors
             if (method.IsLroMethod())
             {
                 var responseType = method.ServiceMethod!.Response.Type;
+
+                // No convenience method is needed for an LRO method that doesn't return a response type
                 if (responseType == null && !method.IsProtocolMethod)
                 {
                     return null;
@@ -38,7 +39,6 @@ namespace Azure.Generator.Visitors
                     (not null, true) => new CSharpType(typeof(Operation), typeof(BinaryData)),
                     _ => new CSharpType(typeof(Operation<>), AzureClientGenerator.Instance.TypeFactory.CreateCSharpType(responseType!)!),
                 };
-
                 var isAsync = method.Signature.ReturnType!.GetGenericTypeDefinition().Equals(typeof(Task<>));
 
                 // Update the method signature
@@ -52,6 +52,12 @@ namespace Azure.Generator.Visitors
                         "For more information on long-running operations, please see " +
                         "<see href=\"https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md\"> " +
                         "Azure.Core Long-Running Operation samples</see>.")));
+
+                if (method.IsProtocolMethod && responseType == null)
+                {
+                    // Make the requestContext parameter optional as there is no corresponding convenience method to worry about ambiguous calls
+                    parameters[^1] = KnownAzureParameters.OptionalRequestContext;
+                }
                 method.Signature.Update(
                     parameters: parameters,
                     returnType: isAsync
@@ -65,7 +71,8 @@ namespace Azure.Generator.Visitors
             return method;
         }
 
-        protected override ValueExpression? VisitAssignmentExpression(AssignmentExpression expression, MethodProvider method)
+        protected override ValueExpression? VisitAssignmentExpression(AssignmentExpression expression,
+            MethodProvider method)
         {
             if (method is ScmMethodProvider scmMethod && scmMethod.IsLroMethod() && !scmMethod.IsProtocolMethod &&
                 expression.Value is AzureClientResponseProvider)
@@ -86,6 +93,24 @@ namespace Azure.Generator.Visitors
                 var diagnosticsProperty = scmMethod.EnclosingType.Properties.First(p => p.Type.Equals(typeof(ClientDiagnostics)));
                 var scopeName = scmMethod.GetScopeName();
                 var serviceMethod = scmMethod.ServiceMethod!;
+                if (scmMethod.IsProtocolMethod && serviceMethod.Response.Type == null)
+                {
+                    // Make the requestContext parameter optional as there is no corresponding convenience method to worry about ambiguous calls
+                    // update any args to use the optional request context
+                    var newArgs = new List<ValueExpression>();
+                    foreach (var arg in expression.Arguments)
+                    {
+                        if (arg is VariableExpression variableExpression && variableExpression.Type.Equals(typeof(RequestContext)))
+                        {
+                            newArgs.Add(KnownAzureParameters.OptionalRequestContext);
+                        }
+                        else
+                        {
+                            newArgs.Add(arg);
+                        }
+                    }
+                    expression.Update(arguments: newArgs);
+                }
 
                 // Update the process call to call the operation helper method
                 if (expression.MethodName?.StartsWith("Process") == true)

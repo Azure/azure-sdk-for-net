@@ -7,158 +7,37 @@
 
 using System;
 using System.ClientModel.Primitives;
-using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
 
 namespace _Specs_.Azure.Core.Lro.Standard
 {
-    /// <summary></summary>
     public partial class User : IJsonModel<User>
     {
-        internal User()
-        {
-        }
+        internal User() => throw null;
 
-        void IJsonModel<User>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-        {
-            writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
-            writer.WriteEndObject();
-        }
+        void IJsonModel<User>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<User>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
-            {
-                throw new FormatException($"The model {nameof(User)} does not support writing '{format}' format.");
-            }
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(Name);
-            }
-            writer.WritePropertyName("role"u8);
-            writer.WriteStringValue(Role);
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
-            {
-                foreach (var item in _additionalBinaryDataProperties)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
-        }
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
-        User IJsonModel<User>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        User IJsonModel<User>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual User JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<User>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
-            {
-                throw new FormatException($"The model {nameof(User)} does not support reading '{format}' format.");
-            }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUser(document.RootElement, options);
-        }
+        protected virtual User JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
-        internal static User DeserializeUser(JsonElement element, ModelReaderWriterOptions options)
-        {
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            string name = default;
-            string role = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
-            {
-                if (prop.NameEquals("name"u8))
-                {
-                    name = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("role"u8))
-                {
-                    role = prop.Value.GetString();
-                    continue;
-                }
-                if (options.Format != "W")
-                {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
-                }
-            }
-            return new User(name, role, additionalBinaryDataProperties);
-        }
+        BinaryData IPersistableModel<User>.Write(ModelReaderWriterOptions options) => throw null;
 
-        BinaryData IPersistableModel<User>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<User>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options);
-                default:
-                    throw new FormatException($"The model {nameof(User)} does not support writing '{options.Format}' format.");
-            }
-        }
+        User IPersistableModel<User>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        User IPersistableModel<User>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        protected virtual User PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual User PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<User>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
-                    {
-                        return DeserializeUser(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(User)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<User>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<User>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
         /// <param name="user"> The <see cref="User"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(User user)
-        {
-            if (user == null)
-            {
-                return null;
-            }
-            Utf8JsonBinaryContent content = new Utf8JsonBinaryContent();
-            content.JsonWriter.WriteObjectValue(user, ModelSerializationExtensions.WireOptions);
-            return content;
-        }
+        public static implicit operator RequestContent(User user) => throw null;
 
-        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="User"/> from. </param>
-        public static explicit operator User(Response result)
-        {
-            using Response response = result;
-            using JsonDocument document = JsonDocument.Parse(response.Content);
-            return DeserializeUser(document.RootElement, ModelSerializationExtensions.WireOptions);
-        }
+        public static explicit operator User(Response result) => throw null;
     }
 }
