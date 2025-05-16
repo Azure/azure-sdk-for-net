@@ -30,7 +30,14 @@ namespace Azure.ResourceManager.Network.Models
         {
             if (property.Value.ValueKind != JsonValueKind.Null)
             {
-                keyVaultUri = String.IsNullOrEmpty(property.Value.GetString()) ? new Uri("", UriKind.Relative) : new Uri(property.Value.GetString());
+                if (Uri.TryCreate(property.Value.GetString(), UriKind.Absolute, out keyVaultUri))
+                {
+                    keyVaultUri = new Uri(property.Value.GetString(), UriKind.Absolute);
+                }
+                else
+                {
+                    keyVaultUri = new Uri(property.Value.GetString(), UriKind.Relative);
+                }
             }
         }
     }
