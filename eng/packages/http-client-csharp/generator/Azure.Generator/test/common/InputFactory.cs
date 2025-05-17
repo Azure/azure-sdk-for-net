@@ -379,6 +379,55 @@ namespace Azure.Generator.Tests.Common
         }
 
         /// <summary>
+        /// Construct paging service method
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="operation"></param>
+        /// <param name="access"></param>
+        /// <param name="parameters"></param>
+        /// <param name="response"></param>
+        /// <param name="exception"></param>
+        /// <param name="longRunningServiceMetadata"></param>
+        /// <returns></returns>
+        public static InputLongRunningServiceMethod LongRunningServiceMethod(
+            string name,
+            InputOperation operation,
+            string access = "public",
+            IReadOnlyList<InputParameter>? parameters = null,
+            InputServiceMethodResponse? response = null,
+            InputServiceMethodResponse? exception = null,
+            InputLongRunningServiceMetadata? longRunningServiceMetadata = null)
+        {
+            return new InputLongRunningServiceMethod(
+                name,
+                access,
+                [],
+                null,
+                null,
+                operation,
+                parameters ?? [],
+                response ?? ServiceMethodResponse(null, null),
+                exception,
+                false,
+                true,
+                true,
+                string.Empty,
+                longRunningServiceMetadata ?? LongRunningServiceMetadata(1, OperationResponse(), null));
+        }
+
+        /// <summary>
+        /// Construct paging metadata
+        /// </summary>
+        /// <param name="finalState"></param>
+        /// <param name="finalResponse"></param>
+        /// <param name="resultPath"></param>
+        /// <returns></returns>
+        public static InputLongRunningServiceMetadata LongRunningServiceMetadata(int finalState, InputOperationResponse finalResponse, string? resultPath)
+        {
+            return new InputLongRunningServiceMetadata(finalState, finalResponse, resultPath);
+        }
+
+        /// <summary>
         /// Construct input operation
         /// </summary>
         /// <param name="name"></param>
