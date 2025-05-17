@@ -14,10 +14,17 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class AcsChatThreadPropertiesUpdatedPerUserEventData : AcsChatThreadEventBaseProperties
     {
         /// <summary> Initializes a new instance of <see cref="AcsChatThreadPropertiesUpdatedPerUserEventData"/>. </summary>
-        internal AcsChatThreadPropertiesUpdatedPerUserEventData()
+        /// <param name="editedByCommunicationIdentifier"> The communication identifier of the user who updated the thread properties. </param>
+        /// <param name="properties"> The updated thread properties. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="editedByCommunicationIdentifier"/> or <paramref name="properties"/> is null. </exception>
+        internal AcsChatThreadPropertiesUpdatedPerUserEventData(CommunicationIdentifierModel editedByCommunicationIdentifier, IReadOnlyDictionary<string, object> properties)
         {
+            Argument.AssertNotNull(editedByCommunicationIdentifier, nameof(editedByCommunicationIdentifier));
+            Argument.AssertNotNull(properties, nameof(properties));
+
+            EditedByCommunicationIdentifier = editedByCommunicationIdentifier;
             Metadata = new ChangeTrackingDictionary<string, string>();
-            Properties = new ChangeTrackingDictionary<string, object>();
+            Properties = properties;
         }
 
         /// <summary> Initializes a new instance of <see cref="AcsChatThreadPropertiesUpdatedPerUserEventData"/>. </summary>

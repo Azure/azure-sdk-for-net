@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -14,11 +15,20 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class AcsChatThreadCreatedWithUserEventData : AcsChatThreadEventBaseProperties
     {
         /// <summary> Initializes a new instance of <see cref="AcsChatThreadCreatedWithUserEventData"/>. </summary>
-        internal AcsChatThreadCreatedWithUserEventData()
+        /// <param name="createdByCommunicationIdentifier"> The communication identifier of the user who created the thread. </param>
+        /// <param name="properties"> The thread properties. </param>
+        /// <param name="participants"> The list of properties of participants who are part of the thread. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="createdByCommunicationIdentifier"/>, <paramref name="properties"/> or <paramref name="participants"/> is null. </exception>
+        internal AcsChatThreadCreatedWithUserEventData(CommunicationIdentifierModel createdByCommunicationIdentifier, IReadOnlyDictionary<string, object> properties, IEnumerable<AcsChatThreadParticipantProperties> participants)
         {
-            Properties = new ChangeTrackingDictionary<string, object>();
+            Argument.AssertNotNull(createdByCommunicationIdentifier, nameof(createdByCommunicationIdentifier));
+            Argument.AssertNotNull(properties, nameof(properties));
+            Argument.AssertNotNull(participants, nameof(participants));
+
+            CreatedByCommunicationIdentifier = createdByCommunicationIdentifier;
+            Properties = properties;
             Metadata = new ChangeTrackingDictionary<string, string>();
-            Participants = new ChangeTrackingList<AcsChatThreadParticipantProperties>();
+            Participants = participants.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="AcsChatThreadCreatedWithUserEventData"/>. </summary>
