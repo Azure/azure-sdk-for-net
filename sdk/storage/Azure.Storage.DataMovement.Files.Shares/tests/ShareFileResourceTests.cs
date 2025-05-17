@@ -39,6 +39,10 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
         private readonly DateTimeOffset DefaultFileCreatedOn = new DateTimeOffset(2024, 4, 1, 9, 5, 55, default);
         private readonly DateTimeOffset DefaultLastWrittenOn = new DateTimeOffset(2024, 4, 1, 12, 16, 6, default);
         private readonly DateTimeOffset DefaultFileChangedOn = new DateTimeOffset(2024, 4, 1, 13, 30, 3, default);
+        private readonly string DefaultSourceOwner = "345";
+        private readonly string DefaultSourceGroup = "123";
+        private readonly NfsFileMode DefaultSourceFileMode = NfsFileMode.ParseOctalFileMode("1777");
+        private readonly NfsFileType DefaultFileType = NfsFileType.Regular;
         private readonly Dictionary<string,string> DefaultFileMetadata = new(StringComparer.OrdinalIgnoreCase)
         {
             { "fkey", "fvalue" },
@@ -467,7 +471,10 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 { DataMovementConstants.ResourceProperties.CreationTime, DefaultFileCreatedOn },
                 { DataMovementConstants.ResourceProperties.LastWrittenOn, DefaultLastWrittenOn },
                 { DataMovementConstants.ResourceProperties.ChangedOnTime, DefaultFileChangedOn },
-                { DataMovementConstants.ResourceProperties.Metadata, DefaultFileMetadata }
+                { DataMovementConstants.ResourceProperties.Metadata, DefaultFileMetadata },
+                { DataMovementConstants.ResourceProperties.Owner, DefaultSourceOwner },
+                { DataMovementConstants.ResourceProperties.Group, DefaultSourceGroup },
+                { DataMovementConstants.ResourceProperties.FileMode,  DefaultSourceFileMode }
             };
 
             Mock<ShareFileClient> mock = await CopyFromStreamPreserveProperties_Internal(
@@ -497,7 +504,81 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                     option.SmbProperties.FileCreatedOn == DefaultFileCreatedOn &&
                     option.SmbProperties.FileLastWrittenOn == DefaultLastWrittenOn &&
                     option.SmbProperties.FileChangedOn == DefaultFileChangedOn &&
-                    option.SmbProperties.FilePermissionKey == DefaultDestinationFilePermissionKey),
+                    option.SmbProperties.FilePermissionKey == DefaultDestinationFilePermissionKey &&
+                    option.PosixProperties.Owner == null &&
+                    option.PosixProperties.Group == null &&
+                    option.PosixProperties.FileMode == null &&
+                    option.PosixProperties.FileType == null),
+                It.IsAny<ShareFileRequestConditions>(),
+                It.IsAny<CancellationToken>()),
+                Times.Once());
+            mock.Verify(b => b.ExistsAsync(
+                It.IsAny<CancellationToken>()),
+                Times.Once());
+            mock.VerifyNoOtherCalls();
+        }
+
+        [Test]
+        public async Task CopyFromStreamAsync_NfsPropertiesPreserve()
+        {
+            // Arrange
+            int length = 1024;
+            var data = GetRandomBuffer(length);
+            using var stream = new MemoryStream(data);
+
+            // Act
+            Dictionary<string, object> sourceProperties = new()
+            {
+                { DataMovementConstants.ResourceProperties.ContentType, DefaultContentType },
+                { DataMovementConstants.ResourceProperties.ContentEncoding, DefaultContentEncoding },
+                { DataMovementConstants.ResourceProperties.ContentLanguage, DefaultContentLanguage },
+                { DataMovementConstants.ResourceProperties.ContentDisposition, DefaultContentDisposition },
+                { DataMovementConstants.ResourceProperties.CacheControl, DefaultCacheControl },
+                { DataMovementConstants.ResourceProperties.FileAttributes, DefaultFileAttributes },
+                { DataMovementConstants.ResourceProperties.SourceFilePermissionKey, DefaultFilePermissionKey },
+                { DataMovementConstants.ResourceProperties.DestinationFilePermissionKey, DefaultDestinationFilePermissionKey },
+                { DataMovementConstants.ResourceProperties.CreationTime, DefaultFileCreatedOn },
+                { DataMovementConstants.ResourceProperties.LastWrittenOn, DefaultLastWrittenOn },
+                { DataMovementConstants.ResourceProperties.ChangedOnTime, DefaultFileChangedOn },
+                { DataMovementConstants.ResourceProperties.Metadata, DefaultFileMetadata },
+                { DataMovementConstants.ResourceProperties.Owner, DefaultSourceOwner },
+                { DataMovementConstants.ResourceProperties.Group, DefaultSourceGroup },
+                { DataMovementConstants.ResourceProperties.FileMode,  DefaultSourceFileMode }
+            };
+
+            Mock<ShareFileClient> mock = await CopyFromStreamPreserveProperties_Internal(
+                stream: stream,
+                length: length,
+                resourceOptions: new ShareFileStorageResourceOptions()
+                {
+                    FilePermissions = true,
+                    ShareProtocol = ShareProtocols.Nfs,
+                },
+                sourceProperties: sourceProperties);
+
+            mock.Verify(b => b.UploadRangeAsync(
+                new HttpRange(0, length),
+                stream,
+                It.Is<ShareFileUploadRangeOptions>(options =>
+                    options.FileLastWrittenMode == FileLastWrittenMode.Preserve),
+                It.IsAny<CancellationToken>()),
+                Times.Once());
+            mock.Verify(b => b.CreateAsync(
+                length,
+                It.Is<ShareFileCreateOptions>(option =>
+                    option.HttpHeaders.CacheControl == DefaultCacheControl &&
+                    option.HttpHeaders.ContentDisposition == DefaultContentDisposition &&
+                    option.HttpHeaders.ContentEncoding == DefaultContentEncoding &&
+                    option.HttpHeaders.ContentType == DefaultContentType &&
+                    option.Metadata == DefaultFileMetadata &&
+                    option.SmbProperties.FileCreatedOn == DefaultFileCreatedOn &&
+                    option.SmbProperties.FileLastWrittenOn == DefaultLastWrittenOn &&
+                    option.SmbProperties.FileChangedOn == null &&
+                    option.SmbProperties.FilePermissionKey == null &&
+                    option.PosixProperties.Owner == DefaultSourceOwner &&
+                    option.PosixProperties.Group == DefaultSourceGroup &&
+                    option.PosixProperties.FileMode == DefaultSourceFileMode &&
+                    option.PosixProperties.FileType == DefaultFileType),
                 It.IsAny<ShareFileRequestConditions>(),
                 It.IsAny<CancellationToken>()),
                 Times.Once());
