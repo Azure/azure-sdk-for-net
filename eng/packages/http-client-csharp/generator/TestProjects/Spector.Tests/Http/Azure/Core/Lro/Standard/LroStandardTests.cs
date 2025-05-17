@@ -20,7 +20,7 @@ namespace TestProjects.Spector.Tests.Http.Azure.Core.Lro.Standard
                 new User("contributor"));
             var user = operation.Value;
 
-            Assert.AreEqual("madge", user);
+            Assert.AreEqual("madge", user.Name);
             Assert.AreEqual("contributor", user.Role);
         });
 

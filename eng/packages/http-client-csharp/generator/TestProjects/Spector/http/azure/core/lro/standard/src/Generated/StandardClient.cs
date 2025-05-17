@@ -30,9 +30,13 @@ namespace _Specs_.Azure.Core.Lro.Standard
 
         public virtual Task<Operation<User>> CreateOrReplaceAsync(WaitUntil waitUntil, string name, User resource, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Operation Delete(WaitUntil waitUntil, string name, RequestContext context = null) => throw null;
+        public virtual Operation Delete(WaitUntil waitUntil, string name, RequestContext context) => throw null;
 
-        public virtual Task<Operation> DeleteAsync(WaitUntil waitUntil, string name, RequestContext context = null) => throw null;
+        public virtual Task<Operation> DeleteAsync(WaitUntil waitUntil, string name, RequestContext context) => throw null;
+
+        public virtual Operation Delete(WaitUntil waitUntil, string name, CancellationToken cancellationToken = default) => throw null;
+
+        public virtual Task<Operation> DeleteAsync(WaitUntil waitUntil, string name, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Operation<BinaryData> Export(WaitUntil waitUntil, string name, string format, RequestContext context) => throw null;
 

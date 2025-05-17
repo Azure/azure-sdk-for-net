@@ -7,35 +7,71 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Azure.Core;
-using Azure.Core.Pipeline;
-using Azure.Generator.Primitives;
 using Azure.Generator.Providers;
 using Microsoft.TypeSpec.Generator.ClientModel;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 using Microsoft.TypeSpec.Generator.Expressions;
+using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
+using Microsoft.TypeSpec.Generator.Statements;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 
 namespace Azure.Generator.Visitors
 {
     internal class LroVisitor : ScmLibraryVisitor
     {
+        protected override ScmMethodProviderCollection? Visit(
+            InputServiceMethod serviceMethod,
+            ClientProvider client,
+            ScmMethodProviderCollection? methods)
+        {
+            if (serviceMethod is InputLongRunningServiceMethod { Response.Type: InputModelType responseModel } lroServiceMethod)
+            {
+                // Update the explicit cast from response in LRO models to use the result path
+                var model = AzureClientGenerator.Instance.TypeFactory.CreateModel(responseModel);
+                if (model == null)
+                {
+                    return methods;
+                }
+
+                var explicitOperator = model.SerializationProviders[0].Methods
+                    .FirstOrDefault(m => m.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Explicit) &&
+                                         m.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Operator));
+
+                var resultSegment = lroServiceMethod.LongRunningServiceMetadata.ResultPath;
+                if (explicitOperator == null || string.IsNullOrEmpty(resultSegment))
+                {
+                    return methods;
+                }
+
+                foreach (var statement in explicitOperator.BodyStatements!)
+                {
+                    if (statement is ExpressionStatement { Expression: KeywordExpression
+                            { Keyword: "return", Expression: InvokeMethodExpression invokeMethodExpression } })
+                    {
+                        invokeMethodExpression.Update(
+                            arguments:
+                            [
+                                invokeMethodExpression.Arguments[0]
+                                    .Invoke("GetProperty", Literal(resultSegment)),
+                                ..invokeMethodExpression.Arguments.Skip(1)
+                            ]);
+                    }
+                }
+            }
+
+            return methods;
+        }
         protected override ScmMethodProvider? VisitMethod(ScmMethodProvider method)
         {
             if (method.IsLroMethod())
             {
                 var responseType = method.ServiceMethod!.Response.Type;
 
-                // No convenience method is needed for an LRO method that doesn't return a response type
-                if (responseType == null && !method.IsProtocolMethod)
-                {
-                    return null;
-                }
-
                 var returnType = (responseType, method.IsProtocolMethod) switch
                 {
-                    (null, true) => typeof(Operation),
+                    (null, _) => typeof(Operation),
                     (not null, true) => new CSharpType(typeof(Operation), typeof(BinaryData)),
                     _ => new CSharpType(typeof(Operation<>), AzureClientGenerator.Instance.TypeFactory.CreateCSharpType(responseType!)!),
                 };
@@ -53,11 +89,6 @@ namespace Azure.Generator.Visitors
                         "<see href=\"https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md\"> " +
                         "Azure.Core Long-Running Operation samples</see>.")));
 
-                if (method.IsProtocolMethod && responseType == null)
-                {
-                    // Make the requestContext parameter optional as there is no corresponding convenience method to worry about ambiguous calls
-                    parameters[^1] = KnownAzureParameters.OptionalRequestContext;
-                }
                 method.Signature.Update(
                     parameters: parameters,
                     returnType: isAsync
@@ -77,11 +108,36 @@ namespace Azure.Generator.Visitors
             if (method is ScmMethodProvider scmMethod && scmMethod.IsLroMethod() && !scmMethod.IsProtocolMethod &&
                 expression.Value is AzureClientResponseProvider)
             {
-                (expression.Variable as DeclarationExpression)?.Variable.Update(
-                    type: new CSharpType(typeof(Operation), typeof(BinaryData)));
+                var resultVariable = (expression.Variable as DeclarationExpression)?.Variable!;
+                if (scmMethod.ServiceMethod!.Response.Type != null)
+                {
+                    resultVariable.Update(type: new CSharpType(typeof(Operation), typeof(BinaryData)));
+                }
+                else
+                {
+                    // Return the result of the protocol method directly
+                    return new KeywordExpression("return", expression.Value);
+                }
             }
 
             return expression;
+        }
+
+        protected override MethodBodyStatement? VisitExpressionStatement(ExpressionStatement expressionStatement,
+            MethodProvider method)
+        {
+            // Delete the extraneous return statement for convenience methods that return an Operation.
+            // This is because we are already updating the previous statement that calls the protocol method to return an Operation directly.
+            if (method is ScmMethodProvider scmMethodProvider && scmMethodProvider.IsLroMethod() &&
+                scmMethodProvider.ServiceMethod!.Response.Type == null && !scmMethodProvider.IsProtocolMethod &&
+                expressionStatement.Expression is KeywordExpression
+                {
+                    Keyword: "return", Expression: InvokeMethodExpression { MethodName: "FromValue" }
+                })
+            {
+                return null;
+            }
+            return expressionStatement;
         }
 
         protected override ValueExpression? VisitInvokeMethodExpression(InvokeMethodExpression expression, MethodProvider method)
@@ -93,26 +149,9 @@ namespace Azure.Generator.Visitors
                 var pipelineProperty = client.GetPipelineProperty();
                 var diagnosticsProperty = client.GetClientDiagnosticProperty();
                 var scopeName = scmMethod.GetScopeName();
-                var serviceMethod = scmMethod.ServiceMethod!;
-                if (scmMethod.IsProtocolMethod && serviceMethod.Response.Type == null)
-                {
-                    // Make the requestContext parameter optional as there is no corresponding convenience method to worry about ambiguous calls
-                    // update any args to use the optional request context
-                    var newArgs = new List<ValueExpression>(expression.Arguments.Count);
-                    foreach (var arg in expression.Arguments)
-                    {
-                        if (arg is VariableExpression variableExpression && variableExpression.Type.Equals(typeof(RequestContext)))
-                        {
-                            newArgs.Add(KnownAzureParameters.OptionalRequestContext);
-                        }
-                        else
-                        {
-                            newArgs.Add(arg);
-                        }
-                    }
-                    expression.Update(arguments: newArgs);
-                }
-
+                var serviceMethod = scmMethod.ServiceMethod as InputLongRunningServiceMethod;
+                var finalStateVia = (OperationFinalStateVia) serviceMethod!.LongRunningServiceMetadata.FinalStateVia;
+                var finalStateEnumName = Enum.GetName(typeof(OperationFinalStateVia), finalStateVia);
                 // Update the process call to call the operation helper method
                 if (expression.MethodName?.StartsWith("Process") == true)
                 {
@@ -124,7 +163,7 @@ namespace Azure.Generator.Visitors
                             expression.Arguments[0],
                             diagnosticsProperty,
                             Literal(scopeName),
-                            Static(typeof(OperationFinalStateVia)).Property("OriginalUri"),
+                            Static(typeof(OperationFinalStateVia)).Property(finalStateEnumName!),
                             expression.Arguments[1],
                             waitUntil
                         ]);
@@ -143,7 +182,7 @@ namespace Azure.Generator.Visitors
                     return expression;
                 }
 
-                if (expression.MethodName == "FromValue")
+                if (expression.MethodName == "FromValue" && serviceMethod.Response.Type != null)
                 {
                     var response = new VariableExpression(typeof(Response), "response");
                     var responseType = AzureClientGenerator.Instance.TypeFactory.CreateCSharpType(serviceMethod.Response.Type!)!;
