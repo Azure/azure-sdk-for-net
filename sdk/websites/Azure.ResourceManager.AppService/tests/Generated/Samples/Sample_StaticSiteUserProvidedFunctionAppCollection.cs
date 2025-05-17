@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.AppService.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_RegisterAUserProvidedFunctionAppWithAStaticSite()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-04-01/examples/RegisterUserProvidedFunctionAppWithStaticSite.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-11-01/examples/RegisterUserProvidedFunctionAppWithStaticSite.json
             // this example is just showing the usage of "StaticSites_RegisterUserProvidedFunctionAppWithStaticSite" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.AppService.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetDetailsOfTheUserProvidedFunctionAppRegisteredWithAStaticSite()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-04-01/examples/GetUserProvidedFunctionAppForStaticSite.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-11-01/examples/GetUserProvidedFunctionAppForStaticSite.json
             // this example is just showing the usage of "StaticSites_GetUserProvidedFunctionAppForStaticSite" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.AppService.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_GetDetailsOfTheUserProvidedFunctionAppsRegisteredWithAStaticSite()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-04-01/examples/GetUserProvidedFunctionAppsForStaticSite.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-11-01/examples/GetUserProvidedFunctionAppsForStaticSite.json
             // this example is just showing the usage of "StaticSites_GetUserProvidedFunctionAppsForStaticSite" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.AppService.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetDetailsOfTheUserProvidedFunctionAppRegisteredWithAStaticSite()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-04-01/examples/GetUserProvidedFunctionAppForStaticSite.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-11-01/examples/GetUserProvidedFunctionAppForStaticSite.json
             // this example is just showing the usage of "StaticSites_GetUserProvidedFunctionAppForStaticSite" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.AppService.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetDetailsOfTheUserProvidedFunctionAppRegisteredWithAStaticSite()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-04-01/examples/GetUserProvidedFunctionAppForStaticSite.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-11-01/examples/GetUserProvidedFunctionAppForStaticSite.json
             // this example is just showing the usage of "StaticSites_GetUserProvidedFunctionAppForStaticSite" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

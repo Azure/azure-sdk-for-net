@@ -17,14 +17,14 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.AppService
 {
     /// <summary>
-    /// A Class representing an AppCertificate along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="AppCertificateResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetAppCertificateResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetAppCertificate method.
+    /// A Class representing a Certificate along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="CertificateResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetCertificateResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetCertificate method.
     /// </summary>
-    public partial class AppCertificateResource : ArmResource
+    public partial class CertificateResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="AppCertificateResource"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="CertificateResource"/> instance. </summary>
         /// <param name="subscriptionId"> The subscriptionId. </param>
         /// <param name="resourceGroupName"> The resourceGroupName. </param>
         /// <param name="name"> The name. </param>
@@ -34,35 +34,35 @@ namespace Azure.ResourceManager.AppService
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _appCertificateCertificatesClientDiagnostics;
-        private readonly CertificatesRestOperations _appCertificateCertificatesRestClient;
+        private readonly ClientDiagnostics _certificateClientDiagnostics;
+        private readonly CertificatesRestOperations _certificateRestClient;
         private readonly AppCertificateData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Web/certificates";
 
-        /// <summary> Initializes a new instance of the <see cref="AppCertificateResource"/> class for mocking. </summary>
-        protected AppCertificateResource()
+        /// <summary> Initializes a new instance of the <see cref="CertificateResource"/> class for mocking. </summary>
+        protected CertificateResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="AppCertificateResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="CertificateResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal AppCertificateResource(ArmClient client, AppCertificateData data) : this(client, data.Id)
+        internal CertificateResource(ArmClient client, AppCertificateData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="AppCertificateResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="CertificateResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal AppCertificateResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal CertificateResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _appCertificateCertificatesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string appCertificateCertificatesApiVersion);
-            _appCertificateCertificatesRestClient = new CertificatesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, appCertificateCertificatesApiVersion);
+            _certificateClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string certificateApiVersion);
+            _certificateRestClient = new CertificatesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, certificateApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -102,25 +102,25 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="AppCertificateResource"/></description>
+        /// <description><see cref="CertificateResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<AppCertificateResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CertificateResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _appCertificateCertificatesClientDiagnostics.CreateScope("AppCertificateResource.Get");
+            using var scope = _certificateClientDiagnostics.CreateScope("CertificateResource.Get");
             scope.Start();
             try
             {
-                var response = await _appCertificateCertificatesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _certificateRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AppCertificateResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new CertificateResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -142,25 +142,25 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="AppCertificateResource"/></description>
+        /// <description><see cref="CertificateResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<AppCertificateResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<CertificateResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _appCertificateCertificatesClientDiagnostics.CreateScope("AppCertificateResource.Get");
+            using var scope = _certificateClientDiagnostics.CreateScope("CertificateResource.Get");
             scope.Start();
             try
             {
-                var response = _appCertificateCertificatesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var response = _certificateRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AppCertificateResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new CertificateResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -182,11 +182,11 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="AppCertificateResource"/></description>
+        /// <description><see cref="CertificateResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -194,12 +194,12 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _appCertificateCertificatesClientDiagnostics.CreateScope("AppCertificateResource.Delete");
+            using var scope = _certificateClientDiagnostics.CreateScope("CertificateResource.Delete");
             scope.Start();
             try
             {
-                var response = await _appCertificateCertificatesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var uri = _appCertificateCertificatesRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+                var response = await _certificateRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var uri = _certificateRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
                 var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
                 var operation = new AppServiceArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
@@ -226,11 +226,11 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="AppCertificateResource"/></description>
+        /// <description><see cref="CertificateResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -238,12 +238,12 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _appCertificateCertificatesClientDiagnostics.CreateScope("AppCertificateResource.Delete");
+            using var scope = _certificateClientDiagnostics.CreateScope("CertificateResource.Delete");
             scope.Start();
             try
             {
-                var response = _appCertificateCertificatesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var uri = _appCertificateCertificatesRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+                var response = _certificateRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var uri = _certificateRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
                 var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
                 var operation = new AppServiceArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
@@ -270,27 +270,27 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="AppCertificateResource"/></description>
+        /// <description><see cref="CertificateResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="patch"> Details of certificate, if it exists already. </param>
+        /// <param name="certificateEnvelope"> Details of certificate, if it exists already. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<Response<AppCertificateResource>> UpdateAsync(AppCertificatePatch patch, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="certificateEnvelope"/> is null. </exception>
+        public virtual async Task<Response<CertificateResource>> UpdateAsync(CertificatePatchResource certificateEnvelope, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            Argument.AssertNotNull(certificateEnvelope, nameof(certificateEnvelope));
 
-            using var scope = _appCertificateCertificatesClientDiagnostics.CreateScope("AppCertificateResource.Update");
+            using var scope = _certificateClientDiagnostics.CreateScope("CertificateResource.Update");
             scope.Start();
             try
             {
-                var response = await _appCertificateCertificatesRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new AppCertificateResource(Client, response.Value), response.GetRawResponse());
+                var response = await _certificateRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, certificateEnvelope, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new CertificateResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -312,27 +312,27 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="AppCertificateResource"/></description>
+        /// <description><see cref="CertificateResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="patch"> Details of certificate, if it exists already. </param>
+        /// <param name="certificateEnvelope"> Details of certificate, if it exists already. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual Response<AppCertificateResource> Update(AppCertificatePatch patch, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="certificateEnvelope"/> is null. </exception>
+        public virtual Response<CertificateResource> Update(CertificatePatchResource certificateEnvelope, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            Argument.AssertNotNull(certificateEnvelope, nameof(certificateEnvelope));
 
-            using var scope = _appCertificateCertificatesClientDiagnostics.CreateScope("AppCertificateResource.Update");
+            using var scope = _certificateClientDiagnostics.CreateScope("CertificateResource.Update");
             scope.Start();
             try
             {
-                var response = _appCertificateCertificatesRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
-                return Response.FromValue(new AppCertificateResource(Client, response.Value), response.GetRawResponse());
+                var response = _certificateRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, certificateEnvelope, cancellationToken);
+                return Response.FromValue(new CertificateResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

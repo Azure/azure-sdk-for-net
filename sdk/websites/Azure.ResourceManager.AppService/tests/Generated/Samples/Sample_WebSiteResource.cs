@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.AppService.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetWebApp()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-04-01/examples/GetWebApp.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-11-01/examples/GetWebApp.json
             // this example is just showing the usage of "WebApps_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.AppService.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteWebApp()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-04-01/examples/DeleteWebApp.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-11-01/examples/DeleteWebApp.json
             // this example is just showing the usage of "WebApps_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.AppService.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateWebApp()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-04-01/examples/UpdateWebApp.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-11-01/examples/UpdateWebApp.json
             // this example is just showing the usage of "WebApps_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.AppService.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task AnalyzeCustomHostname_AnalyzeCustomHostnameForWebapp()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-04-01/examples/AnalyzeCustomHostName.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-11-01/examples/AnalyzeCustomHostName.json
             // this example is just showing the usage of "WebApps_AnalyzeCustomHostname" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.AppService.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task ApplySlotConfigToProduction_ApplyWebAppSlotConfig()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-04-01/examples/ApplySlotConfig.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-11-01/examples/ApplySlotConfig.json
             // this example is just showing the usage of "WebApps_ApplySlotConfigToProduction" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.AppService.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Backup_BackupWebApp()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-04-01/examples/BackupWebApp.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-11-01/examples/BackupWebApp.json
             // this example is just showing the usage of "WebApps_Backup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -212,7 +212,7 @@ ConnectionString = "DSN=data-source-name[;SERVER=value] [;PWD=value] [;UID=value
         [Ignore("Only validating compilation of examples")]
         public async Task GetAllConfigurationData_ListWebAppConfigurations()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-04-01/examples/ListWebAppConfigurations.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-11-01/examples/ListWebAppConfigurations.json
             // this example is just showing the usage of "WebApps_ListConfigurations" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -242,7 +242,7 @@ ConnectionString = "DSN=data-source-name[;SERVER=value] [;PWD=value] [;UID=value
         [Ignore("Only validating compilation of examples")]
         public async Task UpdateApplicationSettings_UpdateAppSettings()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-04-01/examples/UpdateAppSettings.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-11-01/examples/UpdateAppSettings.json
             // this example is just showing the usage of "WebApps_UpdateApplicationSettings" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -276,7 +276,7 @@ ConnectionString = "DSN=data-source-name[;SERVER=value] [;PWD=value] [;UID=value
         [Ignore("Only validating compilation of examples")]
         public async Task GetApplicationSettings_ListAppSettings()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-04-01/examples/ListAppSettings.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-11-01/examples/ListAppSettings.json
             // this example is just showing the usage of "WebApps_ListApplicationSettings" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -302,7 +302,7 @@ ConnectionString = "DSN=data-source-name[;SERVER=value] [;PWD=value] [;UID=value
         [Ignore("Only validating compilation of examples")]
         public async Task UpdateAuthSettings_UpdateAuthSettings()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-04-01/examples/UpdateAuthSettings.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-11-01/examples/UpdateAuthSettings.json
             // this example is just showing the usage of "WebApps_UpdateAuthSettings" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -339,7 +339,7 @@ ConnectionString = "DSN=data-source-name[;SERVER=value] [;PWD=value] [;UID=value
         [Ignore("Only validating compilation of examples")]
         public async Task GetAuthSettings_ListAuthSettings()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-04-01/examples/ListAuthSettings.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-11-01/examples/ListAuthSettings.json
             // this example is just showing the usage of "WebApps_GetAuthSettings" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -365,7 +365,7 @@ ConnectionString = "DSN=data-source-name[;SERVER=value] [;PWD=value] [;UID=value
         [Ignore("Only validating compilation of examples")]
         public async Task GetAuthSettingsV2WithoutSecrets_ListAuthSettingsWithoutSecrets()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-04-01/examples/GetAuthSettingsV2WithoutSecrets.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-11-01/examples/GetAuthSettingsV2WithoutSecrets.json
             // this example is just showing the usage of "WebApps_GetAuthSettingsV2WithoutSecrets" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -391,7 +391,7 @@ ConnectionString = "DSN=data-source-name[;SERVER=value] [;PWD=value] [;UID=value
         [Ignore("Only validating compilation of examples")]
         public async Task UpdateAuthSettingsV2_UpdateAuthSettingsV2()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-04-01/examples/UpdateAuthSettingsV2.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-11-01/examples/UpdateAuthSettingsV2.json
             // this example is just showing the usage of "WebApps_UpdateAuthSettingsV2" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -478,7 +478,7 @@ ConnectionString = "DSN=data-source-name[;SERVER=value] [;PWD=value] [;UID=value
         [Ignore("Only validating compilation of examples")]
         public async Task GetAuthSettingsV2_ListAuthSettingsV2()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-04-01/examples/ListAuthSettingsV2.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-11-01/examples/ListAuthSettingsV2.json
             // this example is just showing the usage of "WebApps_GetAuthSettingsV2" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -504,7 +504,7 @@ ConnectionString = "DSN=data-source-name[;SERVER=value] [;PWD=value] [;UID=value
         [Ignore("Only validating compilation of examples")]
         public async Task UpdateAzureStorageAccounts_UpdateAzureStorageAccounts()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-04-01/examples/UpdateAzureStorageAccounts.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-11-01/examples/UpdateAzureStorageAccounts.json
             // this example is just showing the usage of "WebApps_UpdateAzureStorageAccounts" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -544,7 +544,7 @@ MountPath = "/mounts/a/files",
         [Ignore("Only validating compilation of examples")]
         public async Task GetProductionSiteDeploymentStatuses_ListDeploymentStatus()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-04-01/examples/ListSiteDeploymentStatus.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-11-01/examples/ListSiteDeploymentStatus.json
             // this example is just showing the usage of "WebApps_ListProductionSiteDeploymentStatuses" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -573,7 +573,7 @@ MountPath = "/mounts/a/files",
         [Ignore("Only validating compilation of examples")]
         public async Task GetProductionSiteDeploymentStatus_GetDeploymentStatus()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-04-01/examples/GetSiteDeploymentStatus.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-11-01/examples/GetSiteDeploymentStatus.json
             // this example is just showing the usage of "WebApps_GetProductionSiteDeploymentStatus" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -601,7 +601,7 @@ MountPath = "/mounts/a/files",
         [Ignore("Only validating compilation of examples")]
         public async Task GetAllSiteBackupData_ListBackups()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-04-01/examples/ListSlotBackups.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-11-01/examples/ListSlotBackups.json
             // this example is just showing the usage of "WebApps_ListSiteBackups" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -631,7 +631,7 @@ MountPath = "/mounts/a/files",
         [Ignore("Only validating compilation of examples")]
         public async Task UpdateMachineKey_UpdatesTheMachineKeyForASite()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-04-01/examples/UpdateMachineKey.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-11-01/examples/UpdateMachineKey.json
             // this example is just showing the usage of "WebApps_UpdateMachineKey" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -657,7 +657,7 @@ MountPath = "/mounts/a/files",
         [Ignore("Only validating compilation of examples")]
         public async Task GetNetworkTraceOperation_GetTheCurrentStatusOfANetworkTraceOperationForASite()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-04-01/examples/GetWebSiteNetworkTraceOperation.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-11-01/examples/GetWebSiteNetworkTraceOperation.json
             // this example is just showing the usage of "WebApps_GetNetworkTraceOperation" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -687,7 +687,7 @@ MountPath = "/mounts/a/files",
         [Ignore("Only validating compilation of examples")]
         public async Task StartWebSiteNetworkTraceOperation_StartANewNetworkTraceOperationForASite()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-04-01/examples/StartWebSiteNetworkTraceOperation.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-11-01/examples/StartWebSiteNetworkTraceOperation.json
             // this example is just showing the usage of "WebApps_StartWebSiteNetworkTraceOperation" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -715,7 +715,7 @@ MountPath = "/mounts/a/files",
         [Ignore("Only validating compilation of examples")]
         public async Task StopWebSiteNetworkTrace_StopACurrentlyRunningNetworkTraceOperationForASite()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-04-01/examples/StopWebSiteNetworkTrace.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-11-01/examples/StopWebSiteNetworkTrace.json
             // this example is just showing the usage of "WebApps_StopWebSiteNetworkTrace" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -741,7 +741,7 @@ MountPath = "/mounts/a/files",
         [Ignore("Only validating compilation of examples")]
         public async Task GetNetworkTraces_GetNetworkTracesForASite()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-04-01/examples/GetWebSiteNetworkTraces.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-11-01/examples/GetWebSiteNetworkTraces.json
             // this example is just showing the usage of "WebApps_GetNetworkTraces" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -771,7 +771,7 @@ MountPath = "/mounts/a/files",
         [Ignore("Only validating compilation of examples")]
         public async Task GetNetworkTraceOperationV2_GetTheCurrentStatusOfANetworkTraceOperationForASite()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-04-01/examples/GetWebSiteNetworkTraceOperation.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-11-01/examples/GetWebSiteNetworkTraceOperation.json
             // this example is just showing the usage of "WebApps_GetNetworkTraceOperationV2" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -801,7 +801,7 @@ MountPath = "/mounts/a/files",
         [Ignore("Only validating compilation of examples")]
         public async Task GetNetworkTracesV2_GetNetworkTracesForASite()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-04-01/examples/GetWebSiteNetworkTraces.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-11-01/examples/GetWebSiteNetworkTraces.json
             // this example is just showing the usage of "WebApps_GetNetworkTracesV2" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -831,7 +831,7 @@ MountPath = "/mounts/a/files",
         [Ignore("Only validating compilation of examples")]
         public async Task GetPrivateLinkResources_GetPrivateLinkResourcesOfASite()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-04-01/examples/GetSitePrivateLinkResources.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-11-01/examples/GetSitePrivateLinkResources.json
             // this example is just showing the usage of "WebApps_GetPrivateLinkResources" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -860,7 +860,7 @@ MountPath = "/mounts/a/files",
         [Ignore("Only validating compilation of examples")]
         public async Task StartNetworkTrace_StartANewNetworkTraceOperationForASite()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-04-01/examples/StartWebSiteNetworkTraceOperation.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-11-01/examples/StartWebSiteNetworkTraceOperation.json
             // this example is just showing the usage of "WebApps_StartNetworkTrace" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -888,7 +888,7 @@ MountPath = "/mounts/a/files",
         [Ignore("Only validating compilation of examples")]
         public async Task StopNetworkTrace_StopACurrentlyRunningNetworkTraceOperationForASite()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-04-01/examples/StopWebSiteNetworkTrace.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-11-01/examples/StopWebSiteNetworkTrace.json
             // this example is just showing the usage of "WebApps_StopNetworkTrace" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -914,7 +914,7 @@ MountPath = "/mounts/a/files",
         [Ignore("Only validating compilation of examples")]
         public async Task DeployWorkflowArtifacts_DeleteWorkflowArtifacts()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-04-01/examples/DeleteDeployWorkflowArtifacts.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-11-01/examples/DeleteDeployWorkflowArtifacts.json
             // this example is just showing the usage of "WebApps_DeployWorkflowArtifacts" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -944,7 +944,7 @@ MountPath = "/mounts/a/files",
         [Ignore("Only validating compilation of examples")]
         public async Task DeployWorkflowArtifacts_DeploysWorkflowArtifacts()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-04-01/examples/PostDeployWorkflowArtifacts.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-11-01/examples/PostDeployWorkflowArtifacts.json
             // this example is just showing the usage of "WebApps_DeployWorkflowArtifacts" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1031,7 +1031,7 @@ kind = "Stateful",
         [Ignore("Only validating compilation of examples")]
         public async Task GetWorkflowsConnections_ListTheInstanceWorkflowsConfigurationConnections()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-04-01/examples/ListWorkflowsConfigurationConnections.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-11-01/examples/ListWorkflowsConfigurationConnections.json
             // this example is just showing the usage of "WebApps_ListWorkflowsConnections" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1058,7 +1058,7 @@ kind = "Stateful",
         [Ignore("Only validating compilation of examples")]
         public async Task RegenerateAccessKeyWorkflow_RegenerateTheCallbackURLAccessKeyForRequestTriggers()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-04-01/examples/Workflows_RegenerateAccessKey.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-11-01/examples/Workflows_RegenerateAccessKey.json
             // this example is just showing the usage of "Workflows_RegenerateAccessKey" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1089,7 +1089,7 @@ kind = "Stateful",
         [Ignore("Only validating compilation of examples")]
         public async Task ValidateWorkflow_ValidateAWorkflow()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-04-01/examples/Workflows_Validate.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-11-01/examples/Workflows_Validate.json
             // this example is just showing the usage of "Workflows_Validate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
