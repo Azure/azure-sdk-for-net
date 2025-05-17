@@ -394,7 +394,7 @@
     <PackageReference Update="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="4.8.0" />
     <PackageReference Update="Microsoft.CSharp" Version="4.7.0" />
     <PackageReference Update="Microsoft.Data.SqlClient" Version="5.2.2" />
-    <PackageReference Update="Microsoft.Extensions.AI" Version="9.5.0" /> <!-- Approved for Azure.AI.Inference.Tests -->
+    <PackageReference Update="Microsoft.Extensions.AI" Version="9.5.0" /> <!-- 9.x approved for test project use, as there is no 8.x version available. -->
     <PackageReference Update="Microsoft.Extensions.Azure" Version="1.12.0" />
     <PackageReference Update="Microsoft.Extensions.Caching.Memory" Version="9.0.4" />
     <PackageReference Update="Microsoft.Extensions.Configuration.Abstractions" Version="8.0.0" />
