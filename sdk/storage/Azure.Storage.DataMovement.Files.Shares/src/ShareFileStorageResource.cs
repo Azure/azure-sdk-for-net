@@ -250,7 +250,6 @@ namespace Azure.Storage.DataMovement.Files.Shares
             {
                 ResourceProperties = response.Value.ToStorageResourceItemProperties();
             }
-            ResourceProperties.Uri = Uri;
             return ResourceProperties;
         }
 
@@ -272,12 +271,13 @@ namespace Azure.Storage.DataMovement.Files.Shares
             StorageResourceItemProperties sourceProperties,
             CancellationToken cancellationToken = default)
         {
-            // Copy transfer
             if (sourceResource is ShareFileStorageResource)
             {
                 ShareFileStorageResource sourceShareFile = (ShareFileStorageResource)sourceResource;
                 // both source and destination must be SMB and destination FilePermission option must be set.
-                if ((!sourceShareFile._options?.IsNfs ?? true) && (!_options?.IsNfs ?? true) && (_options?.FilePermissions ?? false))
+                if (((sourceShareFile._options?.ShareProtocol ?? ShareProtocols.Smb) == ShareProtocols.Smb)
+                    && ((_options?.ShareProtocol ?? ShareProtocols.Smb) == ShareProtocols.Smb)
+                    && (_options?.FilePermissions ?? false))
                 {
                     string permissionsValue = sourceProperties?.RawProperties?.GetPermission();
                     string destinationPermissionKey = sourceProperties?.RawProperties?.GetDestinationPermissionKey();
@@ -348,6 +348,35 @@ namespace Azure.Storage.DataMovement.Files.Shares
                 directoryMetadata: _options?.DirectoryMetadata);
         }
 
+        protected override async Task<bool> ValidateItemTransferAsync(
+            StorageResourceItem destItem,
+            CancellationToken cancellationToken = default)
+        {
+            CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
+
+            StorageResourceItemProperties sourceProperties = await GetPropertiesAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
+            NfsFileType FileType = sourceProperties?.RawProperties?.TryGetValue(DataMovementConstants.ResourceProperties.FileType, out object fileType) == true
+                    ? (NfsFileType)fileType
+                    : default;
+            if (FileType == NfsFileType.SymLink)
+            {
+                DataMovementFileShareEventSource.Singleton.SymLinkDetected(Uri.AbsoluteUri);
+                return false;
+            }
+            else if (FileType == NfsFileType.Regular)
+            {
+                long LinkCount = sourceProperties?.RawProperties?.TryGetValue(DataMovementConstants.ResourceProperties.LinkCount, out object linkCount) == true
+                        ? (long)linkCount
+                        : default;
+                // Hardlink detected
+                if (LinkCount > 1)
+                {
+                    DataMovementFileShareEventSource.Singleton.HardLinkDetected(Uri.AbsoluteUri);
+                }
+            }
+            return true;
+        }
+
         protected override async Task ValidateTransferAsync(
             string transferId,
             StorageResource sourceResource,
@@ -355,10 +384,12 @@ namespace Azure.Storage.DataMovement.Files.Shares
         {
             CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
 
+            // ShareFile to ShareFile Copy transfer
             if (sourceResource is ShareFileStorageResource sourceShareFileResource)
             {
                 // Ensure the transfer is supported (NFS -> NFS and SMB -> SMB)
-                if ((_options?.IsNfs ?? false) != (sourceShareFileResource._options?.IsNfs ?? false))
+                if ((_options?.ShareProtocol ?? ShareProtocols.Smb)
+                    != (sourceShareFileResource._options?.ShareProtocol ?? ShareProtocols.Smb))
                 {
                     throw Errors.ShareTransferNotSupported();
                 }
@@ -371,16 +402,16 @@ namespace Azure.Storage.DataMovement.Files.Shares
                     "source",
                     sourceResource.Uri.AbsoluteUri,
                     cancellationToken).ConfigureAwait(false);
-            }
 
-            // Validate the destination protocol
-            await DataMovementSharesExtensions.ValidateProtocolAsync(
-                ShareFileClient.GetParentShareClient(),
-                _options,
-                transferId,
-                "destination",
-                Uri.AbsoluteUri,
-                cancellationToken).ConfigureAwait(false);
+                // Validate the destination protocol
+                await DataMovementSharesExtensions.ValidateProtocolAsync(
+                    ShareFileClient.GetParentShareClient(),
+                    _options,
+                    transferId,
+                    "destination",
+                    Uri.AbsoluteUri,
+                    cancellationToken).ConfigureAwait(false);
+            }
         }
     }
 

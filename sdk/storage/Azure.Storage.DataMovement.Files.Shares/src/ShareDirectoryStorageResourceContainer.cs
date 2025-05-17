@@ -66,7 +66,8 @@ namespace Azure.Storage.DataMovement.Files.Shares
                     = destinationContainer as ShareDirectoryStorageResourceContainer;
                 ShareFileStorageResourceOptions destinationOptions = destinationStorageResourceContainer.ResourceOptions;
                 // both source and destination must be SMB
-                if ((!ResourceOptions?.IsNfs ?? true) && (!destinationOptions?.IsNfs ?? true))
+                if (((ResourceOptions?.ShareProtocol ?? ShareProtocols.Smb) == ShareProtocols.Smb)
+                    && ((destinationOptions?.ShareProtocol ?? ShareProtocols.Smb) == ShareProtocols.Smb))
                 {
                     traits = ShareFileTraits.Attributes;
                     if (destinationOptions?.FilePermissions ?? false)
@@ -151,7 +152,6 @@ namespace Azure.Storage.DataMovement.Files.Shares
             {
                 ResourceProperties = response.Value.ToStorageResourceContainerProperties();
             }
-            ResourceProperties.Uri = Uri;
             return ResourceProperties;
         }
 
@@ -184,10 +184,12 @@ namespace Azure.Storage.DataMovement.Files.Shares
         {
             CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
 
+            // ShareDirectory to ShareDirectory Copy transfer
             if (sourceResource is ShareDirectoryStorageResourceContainer sourceShareDirectoryResource)
             {
                 // Ensure the transfer is supported (NFS -> NFS and SMB -> SMB)
-                if ((ResourceOptions?.IsNfs ?? false) != (sourceShareDirectoryResource.ResourceOptions?.IsNfs ?? false))
+                if ((ResourceOptions?.ShareProtocol ?? ShareProtocols.Smb)
+                    != (sourceShareDirectoryResource.ResourceOptions?.ShareProtocol ?? ShareProtocols.Smb))
                 {
                     throw Errors.ShareTransferNotSupported();
                 }
@@ -200,16 +202,16 @@ namespace Azure.Storage.DataMovement.Files.Shares
                     "source",
                     sourceResource.Uri.AbsoluteUri,
                     cancellationToken).ConfigureAwait(false);
-            }
 
-            // Validate the destination protocol
-            await DataMovementSharesExtensions.ValidateProtocolAsync(
-                ShareDirectoryClient.GetParentShareClient(),
-                ResourceOptions,
-                transferId,
-                "destination",
-                Uri.AbsoluteUri,
-                cancellationToken).ConfigureAwait(false);
+                // Validate the destination protocol
+                await DataMovementSharesExtensions.ValidateProtocolAsync(
+                    ShareDirectoryClient.GetParentShareClient(),
+                    ResourceOptions,
+                    transferId,
+                    "destination",
+                    Uri.AbsoluteUri,
+                    cancellationToken).ConfigureAwait(false);
+            }
         }
     }
 }
