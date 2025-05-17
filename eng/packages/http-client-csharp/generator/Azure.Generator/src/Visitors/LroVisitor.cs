@@ -28,13 +28,13 @@ namespace Azure.Generator.Visitors
         {
             if (serviceMethod is InputLongRunningServiceMethod { Response.Type: InputModelType responseModel } lroServiceMethod)
             {
-                // Update the explicit cast from response in LRO models to use the result path
                 var model = AzureClientGenerator.Instance.TypeFactory.CreateModel(responseModel);
                 if (model == null)
                 {
                     return methods;
                 }
 
+                // Update the explicit cast from response in LRO models to use the result path
                 var explicitOperator = model.SerializationProviders[0].Methods
                     .FirstOrDefault(m => m.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Explicit) &&
                                          m.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Operator));
