@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Models
     [JsonConverter(typeof(ManagedServiceIdentityConverter))]
     public partial class ManagedServiceIdentity : IJsonModel<ManagedServiceIdentity>
     {
-        internal void Write(Utf8JsonWriter writer, ModelReaderWriterOptions options, JsonSerializerOptions jOptions = default)
+        internal void Write(Utf8JsonWriter writer, ModelReaderWriterOptions options, JsonSerializerOptions jOptions = null)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ManagedServiceIdentity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -28,7 +28,11 @@ namespace Azure.ResourceManager.Models
             }
 
             writer.WriteStartObject();
-            JsonSerializer.Serialize(writer, ManagedServiceIdentityType, ManagedServiceIdentityJsonContext.Default.ManagedServiceIdentityType);
+            var jsonContext = jOptions is null
+                ? ManagedServiceIdentityJsonContext.Default
+                : new ManagedServiceIdentityJsonContext(jOptions);
+
+            JsonSerializer.Serialize(writer, ManagedServiceIdentityType, jsonContext.ManagedServiceIdentityType);
             if (options.Format != "W" && Optional.IsDefined(PrincipalId))
             {
                 writer.WritePropertyName("principalId"u8);
@@ -46,7 +50,7 @@ namespace Azure.ResourceManager.Models
                 foreach (var item in UserAssignedIdentities)
                 {
                     writer.WritePropertyName(item.Key);
-                    JsonSerializer.Serialize(writer, item.Value, ManagedServiceIdentityJsonContext.Default.UserAssignedIdentity);
+                    JsonSerializer.Serialize(writer, item.Value, jsonContext.UserAssignedIdentity);
                 }
                 writer.WriteEndObject();
             }
