@@ -13,67 +13,67 @@ using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Caching.Memory;
 using NUnit.Framework;
 
-namespace Microsoft.Extensions.AI;
-
-public class AzureAIInferenceImageEmbeddingGeneratorTests
+namespace Microsoft.Extensions.AI
 {
-    [RecordedTest]
-    public void AsIEmbeddingGenerator_InvalidArgs_Throws()
+    public class AzureAIInferenceImageEmbeddingGeneratorTests
     {
-        var ex = Assert.Throws<ArgumentNullException>(() => ((ImageEmbeddingsClient)null!).AsIEmbeddingGenerator());
-        Assert.That(ex!.ParamName, Is.EqualTo("imageEmbeddingsClient"));
+        [RecordedTest]
+        public void AsIEmbeddingGenerator_InvalidArgs_Throws()
+        {
+            var ex = Assert.Throws<ArgumentNullException>(() => ((ImageEmbeddingsClient)null!).AsIEmbeddingGenerator());
+            Assert.That(ex!.ParamName, Is.EqualTo("imageEmbeddingsClient"));
 
-        ImageEmbeddingsClient client = new(new("http://somewhere"), new AzureKeyCredential("key"));
-        var ex2 = Assert.Throws<ArgumentException>(() => client.AsIEmbeddingGenerator("   "));
-        Assert.That(ex2!.ParamName, Is.EqualTo("defaultModelId"));
+            ImageEmbeddingsClient client = new(new("http://somewhere"), new AzureKeyCredential("key"));
+            var ex2 = Assert.Throws<ArgumentException>(() => client.AsIEmbeddingGenerator("   "));
+            Assert.That(ex2!.ParamName, Is.EqualTo("defaultModelId"));
 
-        client.AsIEmbeddingGenerator(null);
-    }
+            client.AsIEmbeddingGenerator(null);
+        }
 
-    [RecordedTest]
-    public void AsIEmbeddingGenerator_OpenAIClient_ProducesExpectedMetadata()
-    {
-        Uri endpoint = new("http://localhost/some/endpoint");
-        string model = "amazingModel";
+        [RecordedTest]
+        public void AsIEmbeddingGenerator_OpenAIClient_ProducesExpectedMetadata()
+        {
+            Uri endpoint = new("http://localhost/some/endpoint");
+            string model = "amazingModel";
 
-        ImageEmbeddingsClient client = new(endpoint, new AzureKeyCredential("key"));
+            ImageEmbeddingsClient client = new(endpoint, new AzureKeyCredential("key"));
 
-        IEmbeddingGenerator<DataContent, Embedding<float>> embeddingGenerator = client.AsIEmbeddingGenerator(model);
-        var metadata = embeddingGenerator.GetService<EmbeddingGeneratorMetadata>();
-        Assert.That(metadata?.ProviderName, Is.EqualTo("az.ai.inference"));
-        Assert.That(metadata?.ProviderUri, Is.EqualTo(endpoint));
-        Assert.That(metadata?.DefaultModelId, Is.EqualTo(model));
-    }
+            IEmbeddingGenerator<DataContent, Embedding<float>> embeddingGenerator = client.AsIEmbeddingGenerator(model);
+            var metadata = embeddingGenerator.GetService<EmbeddingGeneratorMetadata>();
+            Assert.That(metadata?.ProviderName, Is.EqualTo("az.ai.inference"));
+            Assert.That(metadata?.ProviderUri, Is.EqualTo(endpoint));
+            Assert.That(metadata?.DefaultModelId, Is.EqualTo(model));
+        }
 
-    [RecordedTest]
-    public void GetService_SuccessfullyReturnsUnderlyingClient()
-    {
-        var client = new ImageEmbeddingsClient(new("http://somewhere"), new AzureKeyCredential("key"));
-        var embeddingGenerator = client.AsIEmbeddingGenerator("model");
+        [RecordedTest]
+        public void GetService_SuccessfullyReturnsUnderlyingClient()
+        {
+            var client = new ImageEmbeddingsClient(new("http://somewhere"), new AzureKeyCredential("key"));
+            var embeddingGenerator = client.AsIEmbeddingGenerator("model");
 
-        Assert.That(embeddingGenerator.GetService<IEmbeddingGenerator<DataContent, Embedding<float>>>(), Is.SameAs(embeddingGenerator));
-        Assert.That(embeddingGenerator.GetService<ImageEmbeddingsClient>(), Is.SameAs(client));
+            Assert.That(embeddingGenerator.GetService<IEmbeddingGenerator<DataContent, Embedding<float>>>(), Is.SameAs(embeddingGenerator));
+            Assert.That(embeddingGenerator.GetService<ImageEmbeddingsClient>(), Is.SameAs(client));
 
-        using IEmbeddingGenerator<DataContent, Embedding<float>> pipeline = embeddingGenerator
-            .AsBuilder()
-            .UseOpenTelemetry()
-            .UseDistributedCache(new MemoryDistributedCache(Options.Options.Create(new MemoryDistributedCacheOptions())))
-            .Build();
+            using IEmbeddingGenerator<DataContent, Embedding<float>> pipeline = embeddingGenerator
+                .AsBuilder()
+                .UseOpenTelemetry()
+                .UseDistributedCache(new MemoryDistributedCache(Options.Options.Create(new MemoryDistributedCacheOptions())))
+                .Build();
 
-        Assert.That(pipeline.GetService<DistributedCachingEmbeddingGenerator<DataContent, Embedding<float>>>(), Is.Not.Null);
-        Assert.That(pipeline.GetService<CachingEmbeddingGenerator<DataContent, Embedding<float>>>(), Is.Not.Null);
-        Assert.That(pipeline.GetService<OpenTelemetryEmbeddingGenerator<DataContent, Embedding<float>>>(), Is.Not.Null);
+            Assert.That(pipeline.GetService<DistributedCachingEmbeddingGenerator<DataContent, Embedding<float>>>(), Is.Not.Null);
+            Assert.That(pipeline.GetService<CachingEmbeddingGenerator<DataContent, Embedding<float>>>(), Is.Not.Null);
+            Assert.That(pipeline.GetService<OpenTelemetryEmbeddingGenerator<DataContent, Embedding<float>>>(), Is.Not.Null);
 
-        Assert.That(pipeline.GetService<ImageEmbeddingsClient>(), Is.SameAs(client));
-        Assert.That(pipeline.GetService<IEmbeddingGenerator<DataContent, Embedding<float>>>(), Is.TypeOf<OpenTelemetryEmbeddingGenerator<DataContent, Embedding<float>>>());
-    }
+            Assert.That(pipeline.GetService<ImageEmbeddingsClient>(), Is.SameAs(client));
+            Assert.That(pipeline.GetService<IEmbeddingGenerator<DataContent, Embedding<float>>>(), Is.TypeOf<OpenTelemetryEmbeddingGenerator<DataContent, Embedding<float>>>());
+        }
 
-    [RecordedTest]
-    public async Task GenerateAsync_ExpectedRequestResponse()
-    {
-        DataContent dotnetPng = new(GetImageDataUri());
+        [RecordedTest]
+        public async Task GenerateAsync_ExpectedRequestResponse()
+        {
+            DataContent dotnetPng = new(GetImageDataUri());
 
-        const string Input = """
+            const string Input = """
             {
                 "input":[{"image":"data:image/png;base64,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"}],
                 "encoding_format":"base64",
@@ -81,7 +81,7 @@ public class AzureAIInferenceImageEmbeddingGeneratorTests
             }
             """;
 
-        const string Output = """
+            const string Output = """
             {
                 "id":"9da7c0f0-4b9d-46d9-9323-f10f46977493",
                 "object":"list",
@@ -103,37 +103,37 @@ public class AzureAIInferenceImageEmbeddingGeneratorTests
             }
             """;
 
-        using VerbatimHttpHandler handler = new(Input, Output);
-        using HttpClient httpClient = new(handler);
-        using IEmbeddingGenerator<DataContent, Embedding<float>> generator = new ImageEmbeddingsClient(
-            new("https://somwhere"), new AzureKeyCredential("key"), new()
+            using VerbatimHttpHandler handler = new(Input, Output);
+            using HttpClient httpClient = new(handler);
+            using IEmbeddingGenerator<DataContent, Embedding<float>> generator = new ImageEmbeddingsClient(
+                new("https://somwhere"), new AzureKeyCredential("key"), new()
+                {
+                    Transport = new HttpClientTransport(httpClient),
+                }).AsIEmbeddingGenerator("embed-v-4-0");
+
+            var response = await generator.GenerateAsync([dotnetPng]);
+            Assert.That(response, Is.Not.Null);
+            Assert.That(response.Count, Is.EqualTo(1));
+
+            Assert.That(response.Usage, Is.Not.Null);
+            Assert.That(response.Usage!.InputTokenCount, Is.EqualTo(1012));
+            Assert.That(response.Usage.TotalTokenCount, Is.EqualTo(1012));
+
+            foreach (Embedding<float> e in response)
             {
-                Transport = new HttpClientTransport(httpClient),
-            }).AsIEmbeddingGenerator("embed-v-4-0");
-
-        var response = await generator.GenerateAsync([dotnetPng]);
-        Assert.That(response, Is.Not.Null);
-        Assert.That(response.Count, Is.EqualTo(1));
-
-        Assert.That(response.Usage, Is.Not.Null);
-        Assert.That(response.Usage!.InputTokenCount, Is.EqualTo(1012));
-        Assert.That(response.Usage.TotalTokenCount, Is.EqualTo(1012));
-
-        foreach (Embedding<float> e in response)
-        {
-            Assert.That(e.ModelId, Is.EqualTo("embed-v4.0"));
-            Assert.That(e.CreatedAt, Is.Not.Null);
-            Assert.That(e.Vector.Length, Is.EqualTo(1536));
-            Assert.That(e.Vector.ToArray(), Has.Some.Not.EqualTo(0));
+                Assert.That(e.ModelId, Is.EqualTo("embed-v4.0"));
+                Assert.That(e.CreatedAt, Is.Not.Null);
+                Assert.That(e.Vector.Length, Is.EqualTo(1536));
+                Assert.That(e.Vector.ToArray(), Has.Some.Not.EqualTo(0));
+            }
         }
-    }
 
-    [RecordedTest]
-    public async Task EmbeddingGenerationOptions_DoNotOverwrite_NotNullPropertiesInRawRepresentation()
-    {
-        DataContent dotnetPng = new(GetImageDataUri());
+        [RecordedTest]
+        public async Task EmbeddingGenerationOptions_DoNotOverwrite_NotNullPropertiesInRawRepresentation()
+        {
+            DataContent dotnetPng = new(GetImageDataUri());
 
-        const string Input = """
+            const string Input = """
             {
                 "input":[{"image":"data:image/png;base64,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"}],
                 "dimensions":1536,
@@ -142,7 +142,7 @@ public class AzureAIInferenceImageEmbeddingGeneratorTests
             }
             """;
 
-        const string Output = """
+            const string Output = """
             {
                 "id":"9da7c0f0-4b9d-46d9-9323-f10f46977493",
                 "object":"list",
@@ -164,43 +164,44 @@ public class AzureAIInferenceImageEmbeddingGeneratorTests
             }
             """;
 
-        using VerbatimHttpHandler handler = new(Input, Output);
-        using HttpClient httpClient = new(handler);
-        using IEmbeddingGenerator<DataContent, Embedding<float>> generator = new ImageEmbeddingsClient(
-            new("https://somwhere"), new AzureKeyCredential("key"), new()
-            {
-                Transport = new HttpClientTransport(httpClient),
-            }).AsIEmbeddingGenerator("text-embedding-004");
-
-        var response = await generator.GenerateAsync([dotnetPng],
-            new EmbeddingGenerationOptions
-            {
-                Dimensions = 768,
-                RawRepresentationFactory = (e) => new ImageEmbeddingsOptions(input: [])
+            using VerbatimHttpHandler handler = new(Input, Output);
+            using HttpClient httpClient = new(handler);
+            using IEmbeddingGenerator<DataContent, Embedding<float>> generator = new ImageEmbeddingsClient(
+                new("https://somwhere"), new AzureKeyCredential("key"), new()
                 {
-                    Dimensions = 1536,
-                    Model = "embed-v-4-0",
-                    EncodingFormat = EmbeddingEncodingFormat.Single, // this will be overwritten, we only support base64.
-                }
-            });
+                    Transport = new HttpClientTransport(httpClient),
+                }).AsIEmbeddingGenerator("text-embedding-004");
 
-        Assert.That(response, Is.Not.Null);
+            var response = await generator.GenerateAsync([dotnetPng],
+                new EmbeddingGenerationOptions
+                {
+                    Dimensions = 768,
+                    RawRepresentationFactory = (e) => new ImageEmbeddingsOptions(input: [])
+                    {
+                        Dimensions = 1536,
+                        Model = "embed-v-4-0",
+                        EncodingFormat = EmbeddingEncodingFormat.Single, // this will be overwritten, we only support base64.
+                    }
+                });
 
-        foreach (Embedding<float> e in response)
-        {
-            Assert.That(e.ModelId, Is.EqualTo("embed-v4.0"));
-            Assert.That(e.CreatedAt, Is.Not.Null);
-            Assert.That(e.Vector.Length, Is.EqualTo(1536));
-            Assert.That(e.Vector.ToArray(), Has.Some.Not.EqualTo(0));
+            Assert.That(response, Is.Not.Null);
+
+            foreach (Embedding<float> e in response)
+            {
+                Assert.That(e.ModelId, Is.EqualTo("embed-v4.0"));
+                Assert.That(e.CreatedAt, Is.Not.Null);
+                Assert.That(e.Vector.Length, Is.EqualTo(1536));
+                Assert.That(e.Vector.ToArray(), Has.Some.Not.EqualTo(0));
+            }
         }
-    }
 
-    private Uri GetImageDataUri()
-    {
-        using Stream s = GetType().Assembly.GetManifestResourceStream("Azure.AI.Inference.Tests.Data.juggling_balls.png");
-        Assert.That(s, Is.Not.Null);
-        using MemoryStream ms = new();
-        s!.CopyTo(ms);
-        return new Uri($"data:image/png;base64,{Convert.ToBase64String(ms.ToArray())}");
+        private Uri GetImageDataUri()
+        {
+            using Stream s = GetType().Assembly.GetManifestResourceStream("Azure.AI.Inference.Tests.Data.juggling_balls.png");
+            Assert.That(s, Is.Not.Null);
+            using MemoryStream ms = new();
+            s!.CopyTo(ms);
+            return new Uri($"data:image/png;base64,{Convert.ToBase64String(ms.ToArray())}");
+        }
     }
 }

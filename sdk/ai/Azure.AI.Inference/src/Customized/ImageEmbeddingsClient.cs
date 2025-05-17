@@ -5,13 +5,10 @@
 
 using System;
 using System.Diagnostics.CodeAnalysis;
-using Azure.Core.Pipeline;
-using Azure.Core;
-using System.Threading.Tasks;
-using System.Collections.Generic;
 using System.Threading;
-using System.Linq;
-using Azure.AI.Inference.Telemetry;
+using System.Threading.Tasks;
+using Azure.Core;
+using Azure.Core.Pipeline;
 
 namespace Azure.AI.Inference
 {

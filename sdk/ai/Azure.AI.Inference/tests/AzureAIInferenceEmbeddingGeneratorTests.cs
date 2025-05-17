@@ -12,69 +12,69 @@ using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Caching.Memory;
 using NUnit.Framework;
 
-namespace Microsoft.Extensions.AI;
-
-public class AzureAIInferenceEmbeddingGeneratorTests
+namespace Microsoft.Extensions.AI
 {
-    [RecordedTest]
-    public void AsIEmbeddingGenerator_InvalidArgs_Throws()
+    public class AzureAIInferenceEmbeddingGeneratorTests
     {
-        var ex = Assert.Throws<ArgumentNullException>(() => ((EmbeddingsClient)null!).AsIEmbeddingGenerator());
-        Assert.That(ex!.ParamName, Is.EqualTo("embeddingsClient"));
+        [RecordedTest]
+        public void AsIEmbeddingGenerator_InvalidArgs_Throws()
+        {
+            var ex = Assert.Throws<ArgumentNullException>(() => ((EmbeddingsClient)null!).AsIEmbeddingGenerator());
+            Assert.That(ex!.ParamName, Is.EqualTo("embeddingsClient"));
 
-        EmbeddingsClient client = new(new("http://somewhere"), new AzureKeyCredential("key"));
-        var ex2 = Assert.Throws<ArgumentException>(() => client.AsIEmbeddingGenerator("   "));
-        Assert.That(ex2!.ParamName, Is.EqualTo("defaultModelId"));
+            EmbeddingsClient client = new(new("http://somewhere"), new AzureKeyCredential("key"));
+            var ex2 = Assert.Throws<ArgumentException>(() => client.AsIEmbeddingGenerator("   "));
+            Assert.That(ex2!.ParamName, Is.EqualTo("defaultModelId"));
 
-        client.AsIEmbeddingGenerator(null);
-    }
+            client.AsIEmbeddingGenerator(null);
+        }
 
-    [RecordedTest]
-    public void AsIEmbeddingGenerator_AzureAIClient_ProducesExpectedMetadata()
-    {
-        Uri endpoint = new("http://localhost/some/endpoint");
-        string model = "amazingModel";
+        [RecordedTest]
+        public void AsIEmbeddingGenerator_AzureAIClient_ProducesExpectedMetadata()
+        {
+            Uri endpoint = new("http://localhost/some/endpoint");
+            string model = "amazingModel";
 
-        EmbeddingsClient client = new(endpoint, new AzureKeyCredential("key"));
+            EmbeddingsClient client = new(endpoint, new AzureKeyCredential("key"));
 
-        IEmbeddingGenerator<string, Embedding<float>> embeddingGenerator = client.AsIEmbeddingGenerator(model);
-        var metadata = embeddingGenerator.GetService<EmbeddingGeneratorMetadata>();
-        Assert.That(metadata?.ProviderName, Is.EqualTo("az.ai.inference"));
-        Assert.That(metadata?.ProviderUri, Is.EqualTo(endpoint));
-        Assert.That(metadata?.DefaultModelId, Is.EqualTo(model));
-    }
+            IEmbeddingGenerator<string, Embedding<float>> embeddingGenerator = client.AsIEmbeddingGenerator(model);
+            var metadata = embeddingGenerator.GetService<EmbeddingGeneratorMetadata>();
+            Assert.That(metadata?.ProviderName, Is.EqualTo("az.ai.inference"));
+            Assert.That(metadata?.ProviderUri, Is.EqualTo(endpoint));
+            Assert.That(metadata?.DefaultModelId, Is.EqualTo(model));
+        }
 
-    [RecordedTest]
-    public void GetService_SuccessfullyReturnsUnderlyingClient()
-    {
-        var client = new EmbeddingsClient(new("http://somewhere"), new AzureKeyCredential("key"));
-        var embeddingGenerator = client.AsIEmbeddingGenerator("model");
+        [RecordedTest]
+        public void GetService_SuccessfullyReturnsUnderlyingClient()
+        {
+            var client = new EmbeddingsClient(new("http://somewhere"), new AzureKeyCredential("key"));
+            var embeddingGenerator = client.AsIEmbeddingGenerator("model");
 
-        Assert.That(embeddingGenerator, Is.SameAs(embeddingGenerator.GetService<IEmbeddingGenerator<string, Embedding<float>>>()));
-        Assert.That(embeddingGenerator.GetService<EmbeddingsClient>(), Is.SameAs(client));
+            Assert.That(embeddingGenerator, Is.SameAs(embeddingGenerator.GetService<IEmbeddingGenerator<string, Embedding<float>>>()));
+            Assert.That(embeddingGenerator.GetService<EmbeddingsClient>(), Is.SameAs(client));
 
-        using IEmbeddingGenerator<string, Embedding<float>> pipeline = embeddingGenerator
-            .AsBuilder()
-            .UseOpenTelemetry()
-            .UseDistributedCache(new MemoryDistributedCache(Options.Options.Create(new MemoryDistributedCacheOptions())))
-            .Build();
+            using IEmbeddingGenerator<string, Embedding<float>> pipeline = embeddingGenerator
+                .AsBuilder()
+                .UseOpenTelemetry()
+                .UseDistributedCache(new MemoryDistributedCache(Options.Options.Create(new MemoryDistributedCacheOptions())))
+                .Build();
 
-        Assert.That(pipeline.GetService<DistributedCachingEmbeddingGenerator<string, Embedding<float>>>(), Is.Not.Null);
-        Assert.That(pipeline.GetService<CachingEmbeddingGenerator<string, Embedding<float>>>(), Is.Not.Null);
-        Assert.That(pipeline.GetService<OpenTelemetryEmbeddingGenerator<string, Embedding<float>>>(), Is.Not.Null);
+            Assert.That(pipeline.GetService<DistributedCachingEmbeddingGenerator<string, Embedding<float>>>(), Is.Not.Null);
+            Assert.That(pipeline.GetService<CachingEmbeddingGenerator<string, Embedding<float>>>(), Is.Not.Null);
+            Assert.That(pipeline.GetService<OpenTelemetryEmbeddingGenerator<string, Embedding<float>>>(), Is.Not.Null);
 
-        Assert.That(pipeline.GetService<EmbeddingsClient>(), Is.SameAs(client));
-        Assert.That(pipeline.GetService<IEmbeddingGenerator<string, Embedding<float>>>(), Is.TypeOf<OpenTelemetryEmbeddingGenerator<string, Embedding<float>>>());
-    }
+            Assert.That(pipeline.GetService<EmbeddingsClient>(), Is.SameAs(client));
+            Assert.That(pipeline.GetService<IEmbeddingGenerator<string, Embedding<float>>>(), Is.TypeOf<OpenTelemetryEmbeddingGenerator<string, Embedding<float>>>());
+        }
 
-    [RecordedTest]
-    public async Task GenerateAsync_ExpectedRequestResponse()
-    {
-        const string Input = """
+        [RecordedTest]
+        public async Task GenerateAsync_ExpectedRequestResponse()
+        {
+            const string Input = """
             {"input":["hello, world!","red, white, blue"],"encoding_format":"base64","model":"text-embedding-3-small"}
             """;
 
-        const string Output = """
+            const string Output = """
             {
               "object": "list",
               "data": [
@@ -97,37 +97,37 @@ public class AzureAIInferenceEmbeddingGeneratorTests
             }
             """;
 
-        using VerbatimHttpHandler handler = new(Input, Output);
-        using HttpClient httpClient = new(handler);
-        using IEmbeddingGenerator<string, Embedding<float>> generator = new EmbeddingsClient(new("http://somewhere"), new AzureKeyCredential("key"), new()
-        {
-            Transport = new HttpClientTransport(httpClient),
-        }).AsIEmbeddingGenerator("text-embedding-3-small");
+            using VerbatimHttpHandler handler = new(Input, Output);
+            using HttpClient httpClient = new(handler);
+            using IEmbeddingGenerator<string, Embedding<float>> generator = new EmbeddingsClient(new("http://somewhere"), new AzureKeyCredential("key"), new()
+            {
+                Transport = new HttpClientTransport(httpClient),
+            }).AsIEmbeddingGenerator("text-embedding-3-small");
 
-        var response = await generator.GenerateAsync([
-            "hello, world!",
+            var response = await generator.GenerateAsync([
+                "hello, world!",
             "red, white, blue",
         ]);
-        Assert.That(response, Is.Not.Null);
-        Assert.That(response.Count, Is.EqualTo(2));
+            Assert.That(response, Is.Not.Null);
+            Assert.That(response.Count, Is.EqualTo(2));
 
-        Assert.That(response.Usage, Is.Not.Null);
-        Assert.That(response.Usage!.InputTokenCount, Is.EqualTo(9));
-        Assert.That(response.Usage.TotalTokenCount, Is.EqualTo(9));
+            Assert.That(response.Usage, Is.Not.Null);
+            Assert.That(response.Usage!.InputTokenCount, Is.EqualTo(9));
+            Assert.That(response.Usage.TotalTokenCount, Is.EqualTo(9));
 
-        foreach (Embedding<float> e in response)
-        {
-            Assert.That(e.ModelId, Is.EqualTo("text-embedding-3-small"));
-            Assert.That(e.CreatedAt, Is.Not.Null);
-            Assert.That(e.Vector.Length, Is.EqualTo(1536));
-            Assert.That(e.Vector.ToArray(), Has.Some.Not.EqualTo(0f));
+            foreach (Embedding<float> e in response)
+            {
+                Assert.That(e.ModelId, Is.EqualTo("text-embedding-3-small"));
+                Assert.That(e.CreatedAt, Is.Not.Null);
+                Assert.That(e.Vector.Length, Is.EqualTo(1536));
+                Assert.That(e.Vector.ToArray(), Has.Some.Not.EqualTo(0f));
+            }
         }
-    }
 
-    [RecordedTest]
-    public async Task EmbeddingGenerationOptions_DoNotOverwrite_NotNullPropertiesInRawRepresentation()
-    {
-        const string Input = """
+        [RecordedTest]
+        public async Task EmbeddingGenerationOptions_DoNotOverwrite_NotNullPropertiesInRawRepresentation()
+        {
+            const string Input = """
             {
               "input":["hello, world!","red, white, blue"],
               "dimensions":1536,
@@ -136,7 +136,7 @@ public class AzureAIInferenceEmbeddingGeneratorTests
             }
             """;
 
-        const string Output = """
+            const string Output = """
             {
               "object": "list",
               "data": [
@@ -155,15 +155,15 @@ public class AzureAIInferenceEmbeddingGeneratorTests
             }
             """;
 
-        using VerbatimHttpHandler handler = new(Input, Output);
-        using HttpClient httpClient = new(handler);
-        using IEmbeddingGenerator<string, Embedding<float>> generator = new EmbeddingsClient(new("http://somewhere"), new AzureKeyCredential("key"), new()
-        {
-            Transport = new HttpClientTransport(httpClient),
-        }).AsIEmbeddingGenerator("text-embedding-3-large");
+            using VerbatimHttpHandler handler = new(Input, Output);
+            using HttpClient httpClient = new(handler);
+            using IEmbeddingGenerator<string, Embedding<float>> generator = new EmbeddingsClient(new("http://somewhere"), new AzureKeyCredential("key"), new()
+            {
+                Transport = new HttpClientTransport(httpClient),
+            }).AsIEmbeddingGenerator("text-embedding-3-large");
 
-        var response = await generator.GenerateAsync([
-            "hello, world!",
+            var response = await generator.GenerateAsync([
+                "hello, world!",
             "red, white, blue",
         ], new EmbeddingGenerationOptions
         {
@@ -176,14 +176,15 @@ public class AzureAIInferenceEmbeddingGeneratorTests
             }
         });
 
-        Assert.That(response, Is.Not.Null);
+            Assert.That(response, Is.Not.Null);
 
-        foreach (Embedding<float> e in response)
-        {
-            Assert.That(e.ModelId, Is.EqualTo("text-embedding-3-small"));
-            Assert.That(e.CreatedAt, Is.Not.Null);
-            Assert.That(e.Vector.Length, Is.EqualTo(1536));
-            Assert.That(e.Vector.ToArray(), Has.Some.Not.EqualTo(0f));
+            foreach (Embedding<float> e in response)
+            {
+                Assert.That(e.ModelId, Is.EqualTo("text-embedding-3-small"));
+                Assert.That(e.CreatedAt, Is.Not.Null);
+                Assert.That(e.Vector.Length, Is.EqualTo(1536));
+                Assert.That(e.Vector.ToArray(), Has.Some.Not.EqualTo(0f));
+            }
         }
     }
 }
