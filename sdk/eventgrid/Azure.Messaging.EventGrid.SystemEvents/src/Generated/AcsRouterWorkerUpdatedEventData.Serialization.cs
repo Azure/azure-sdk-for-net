@@ -39,20 +39,26 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 writer.WritePropertyName("workerId"u8);
                 writer.WriteStringValue(WorkerId);
             }
-            writer.WritePropertyName("queueAssignments"u8);
-            writer.WriteStartArray();
-            foreach (var item in QueueAssignments)
+            if (options.Format != "W")
             {
-                writer.WriteObjectValue(item, options);
+                writer.WritePropertyName("queueAssignments"u8);
+                writer.WriteStartArray();
+                foreach (var item in QueueAssignments)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
             }
-            writer.WriteEndArray();
-            writer.WritePropertyName("channelConfigurations"u8);
-            writer.WriteStartArray();
-            foreach (var item in ChannelConfigurations)
+            if (options.Format != "W")
             {
-                writer.WriteObjectValue(item, options);
+                writer.WritePropertyName("channelConfigurations"u8);
+                writer.WriteStartArray();
+                foreach (var item in ChannelConfigurations)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
             }
-            writer.WriteEndArray();
             if (Optional.IsDefined(TotalCapacity))
             {
                 writer.WritePropertyName("totalCapacity"u8);
@@ -74,13 +80,16 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 writer.WriteStringValue(item.Value);
             }
             writer.WriteEndObject();
-            writer.WritePropertyName("updatedWorkerProperties"u8);
-            writer.WriteStartArray();
-            foreach (var item in UpdatedWorkerProperties)
+            if (options.Format != "W")
             {
-                writer.WriteStringValue(item.ToString());
+                writer.WritePropertyName("updatedWorkerProperties"u8);
+                writer.WriteStartArray();
+                foreach (var item in UpdatedWorkerProperties)
+                {
+                    writer.WriteStringValue(item.ToString());
+                }
+                writer.WriteEndArray();
             }
-            writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
