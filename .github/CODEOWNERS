@@ -1091,6 +1091,12 @@
 # ServiceLabel: %Pinecone %Mgmt
 # ServiceOwners:                                                   @aggarwalsw
 
+# PRLabel: %PureStorage
+/sdk/purestorageblock/Azure.ResourceManager.*/                     @deepakmauryams
+
+# ServiceLabel: %PureStorage %Mgmt
+# ServiceOwners:                                                   @deepakmauryams
+
 # PRLabel: %Quota
 /sdk/quota/Azure.ResourceManager.*/                                @tejasm-microsoft
 
