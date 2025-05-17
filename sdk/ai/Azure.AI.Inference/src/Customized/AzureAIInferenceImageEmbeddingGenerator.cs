@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#nullable enable
+#nullable disable
 
 using System;
 using System.Collections.Generic;
@@ -37,7 +37,7 @@ internal sealed class AzureAIInferenceImageEmbeddingGenerator :
     /// <exception cref="ArgumentException"><paramref name="defaultModelId"/> is empty or composed entirely of whitespace.</exception>
     /// <exception cref="ArgumentOutOfRangeException"><paramref name="defaultModelDimensions"/> is not positive.</exception>
     public AzureAIInferenceImageEmbeddingGenerator(
-        ImageEmbeddingsClient imageEmbeddingsClient, string? defaultModelId = null, int? defaultModelDimensions = null)
+        ImageEmbeddingsClient imageEmbeddingsClient, string defaultModelId = null, int? defaultModelDimensions = null)
     {
         Argument.AssertNotNull(imageEmbeddingsClient, nameof(imageEmbeddingsClient));
 
@@ -57,7 +57,7 @@ internal sealed class AzureAIInferenceImageEmbeddingGenerator :
     }
 
     /// <inheritdoc />
-    object? IEmbeddingGenerator.GetService(Type serviceType, object? serviceKey)
+    object IEmbeddingGenerator.GetService(Type serviceType, object serviceKey)
     {
         Argument.AssertNotNull(serviceType, nameof(serviceType));
 
@@ -71,7 +71,7 @@ internal sealed class AzureAIInferenceImageEmbeddingGenerator :
 
     /// <inheritdoc />
     public async Task<GeneratedEmbeddings<Embedding<float>>> GenerateAsync(
-        IEnumerable<DataContent> values, EmbeddingGenerationOptions? options = null, CancellationToken cancellationToken = default)
+        IEnumerable<DataContent> values, EmbeddingGenerationOptions options = null, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNull(values, nameof(values));
 
@@ -105,7 +105,7 @@ internal sealed class AzureAIInferenceImageEmbeddingGenerator :
     }
 
     /// <summary>Converts an extensions options instance to an Azure.AI.Inference options instance.</summary>
-    private ImageEmbeddingsOptions ToAzureAIOptions(IEnumerable<DataContent> inputs, EmbeddingGenerationOptions? options)
+    private ImageEmbeddingsOptions ToAzureAIOptions(IEnumerable<DataContent> inputs, EmbeddingGenerationOptions options)
     {
         IEnumerable<ImageEmbeddingInput> imageEmbeddingInputs = inputs.Select(dc => new ImageEmbeddingInput(dc.Uri));
         if (options?.RawRepresentationFactory?.Invoke(this) is not ImageEmbeddingsOptions result)

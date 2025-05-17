@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#nullable enable
+#nullable disable
 
 using System;
 using System.Collections.Generic;
@@ -44,7 +44,7 @@ internal sealed partial class AzureAIInferenceChatClient : IChatClient
     /// <param name="defaultModelId">The ID of the model to use. If <see langword="null"/>, it can be provided per request via <see cref="ChatOptions.ModelId"/>.</param>
     /// <exception cref="ArgumentNullException"><paramref name="chatCompletionsClient"/> is <see langword="null"/>.</exception>
     /// <exception cref="ArgumentNullException"><paramref name="defaultModelId"/> is empty or composed entirely of whitespace.</exception>
-    public AzureAIInferenceChatClient(ChatCompletionsClient chatCompletionsClient, string? defaultModelId = null)
+    public AzureAIInferenceChatClient(ChatCompletionsClient chatCompletionsClient, string defaultModelId = null)
     {
         Argument.AssertNotNull(chatCompletionsClient, nameof(chatCompletionsClient));
 
@@ -58,7 +58,7 @@ internal sealed partial class AzureAIInferenceChatClient : IChatClient
     }
 
     /// <inheritdoc />
-    object? IChatClient.GetService(Type serviceType, object? serviceKey)
+    object IChatClient.GetService(Type serviceType, object serviceKey)
     {
         Argument.AssertNotNull(serviceType, nameof(serviceType));
 
@@ -72,7 +72,7 @@ internal sealed partial class AzureAIInferenceChatClient : IChatClient
 
     /// <inheritdoc />
     public async Task<ChatResponse> GetResponseAsync(
-        IEnumerable<ChatMessage> messages, ChatOptions? options = null, CancellationToken cancellationToken = default)
+        IEnumerable<ChatMessage> messages, ChatOptions options = null, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNull(messages, nameof(messages));
 
@@ -102,7 +102,7 @@ internal sealed partial class AzureAIInferenceChatClient : IChatClient
             }
         }
 
-        UsageDetails? usage = null;
+        UsageDetails usage = null;
         if (response.Usage is CompletionsUsage completionsUsage)
         {
             usage = new()
@@ -127,16 +127,16 @@ internal sealed partial class AzureAIInferenceChatClient : IChatClient
 
     /// <inheritdoc />
     public async IAsyncEnumerable<ChatResponseUpdate> GetStreamingResponseAsync(
-        IEnumerable<ChatMessage> messages, ChatOptions? options = null, [EnumeratorCancellation] CancellationToken cancellationToken = default)
+        IEnumerable<ChatMessage> messages, ChatOptions options = null, [EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNull(messages, nameof(messages));
 
-        Dictionary<string, FunctionCallInfo>? functionCallInfos = null;
+        Dictionary<string, FunctionCallInfo> functionCallInfos = null;
         ChatRole? streamedRole = default;
         ChatFinishReason? finishReason = default;
-        string? responseId = null;
+        string responseId = null;
         DateTimeOffset? createdAt = null;
-        string? modelId = null;
+        string modelId = null;
         string lastCallId = string.Empty;
 
         // Process each update as it arrives
@@ -184,7 +184,7 @@ internal sealed partial class AzureAIInferenceChatClient : IChatClient
                 }
 
                 functionCallInfos ??= [];
-                if (!functionCallInfos.TryGetValue(lastCallId, out FunctionCallInfo? existing))
+                if (!functionCallInfos.TryGetValue(lastCallId, out FunctionCallInfo existing))
                 {
                     functionCallInfos[lastCallId] = existing = new();
                 }
@@ -249,8 +249,8 @@ internal sealed partial class AzureAIInferenceChatClient : IChatClient
     /// <summary>POCO representing function calling info. Used to concatenation information for a single function call from across multiple streaming updates.</summary>
     private sealed class FunctionCallInfo
     {
-        public string? Name;
-        public StringBuilder? Arguments;
+        public string Name;
+        public StringBuilder Arguments;
     }
 
     /// <summary>Converts an AzureAI role to an Extensions role.</summary>
@@ -271,7 +271,7 @@ internal sealed partial class AzureAIInferenceChatClient : IChatClient
         finishReason == CompletionsFinishReason.ToolCalls ? ChatFinishReason.ToolCalls :
         new(s);
 
-    private ChatCompletionsOptions CreateAzureAIOptions(IEnumerable<ChatMessage> chatContents, ChatOptions? options) =>
+    private ChatCompletionsOptions CreateAzureAIOptions(IEnumerable<ChatMessage> chatContents, ChatOptions options) =>
         new(ToAzureAIInferenceChatMessages(chatContents))
         {
             Model = options?.ModelId ?? _metadata.DefaultModelId ??
@@ -279,7 +279,7 @@ internal sealed partial class AzureAIInferenceChatClient : IChatClient
         };
 
     /// <summary>Converts an extensions options instance to an Azure.AI.Inference options instance.</summary>
-    private ChatCompletionsOptions ToAzureAIOptions(IEnumerable<ChatMessage> chatContents, ChatOptions? options)
+    private ChatCompletionsOptions ToAzureAIOptions(IEnumerable<ChatMessage> chatContents, ChatOptions options)
     {
         if (options is null)
         {
@@ -432,7 +432,7 @@ internal sealed partial class AzureAIInferenceChatClient : IChatClient
                 {
                     if (item is FunctionResultContent resultContent)
                     {
-                        string? result = resultContent.Result as string;
+                        string result = resultContent.Result as string;
                         if (result is null && resultContent.Result is not null)
                         {
                             try

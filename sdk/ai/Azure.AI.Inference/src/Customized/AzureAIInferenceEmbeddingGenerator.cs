@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#nullable enable
+#nullable disable
 
 using System;
 using System.Buffers;
@@ -41,7 +41,7 @@ internal sealed class AzureAIInferenceEmbeddingGenerator :
     /// <exception cref="ArgumentException"><paramref name="defaultModelId"/> is empty or composed entirely of whitespace.</exception>
     /// <exception cref="ArgumentOutOfRangeException"><paramref name="defaultModelDimensions"/> is not positive.</exception>
     public AzureAIInferenceEmbeddingGenerator(
-        EmbeddingsClient embeddingsClient, string? defaultModelId = null, int? defaultModelDimensions = null)
+        EmbeddingsClient embeddingsClient, string defaultModelId = null, int? defaultModelDimensions = null)
     {
         Argument.AssertNotNull(embeddingsClient, nameof(embeddingsClient));
 
@@ -61,7 +61,7 @@ internal sealed class AzureAIInferenceEmbeddingGenerator :
     }
 
     /// <inheritdoc />
-    object? IEmbeddingGenerator.GetService(Type serviceType, object? serviceKey)
+    object IEmbeddingGenerator.GetService(Type serviceType, object serviceKey)
     {
         Argument.AssertNotNull(serviceType, nameof(serviceType));
 
@@ -75,7 +75,7 @@ internal sealed class AzureAIInferenceEmbeddingGenerator :
 
     /// <inheritdoc />
     public async Task<GeneratedEmbeddings<Embedding<float>>> GenerateAsync(
-        IEnumerable<string> values, EmbeddingGenerationOptions? options = null, CancellationToken cancellationToken = default)
+        IEnumerable<string> values, EmbeddingGenerationOptions options = null, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNull(values, nameof(values));
 
@@ -152,7 +152,7 @@ internal sealed class AzureAIInferenceEmbeddingGenerator :
     }
 
     /// <summary>Converts an extensions options instance to an Azure.AI.Inference options instance.</summary>
-    private EmbeddingsOptions ToAzureAIOptions(IEnumerable<string> inputs, EmbeddingGenerationOptions? options)
+    private EmbeddingsOptions ToAzureAIOptions(IEnumerable<string> inputs, EmbeddingGenerationOptions options)
     {
         if (options?.RawRepresentationFactory?.Invoke(this) is not EmbeddingsOptions result)
         {

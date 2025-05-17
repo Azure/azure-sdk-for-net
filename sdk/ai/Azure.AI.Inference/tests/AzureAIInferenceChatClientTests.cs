@@ -1,8 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#nullable enable
-
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -1131,7 +1129,7 @@ public class AzureAIInferenceChatClientTests
 
         List<ChatMessage> messages =
         [
-            new(ChatRole.Assistant, (string?)null),
+            new(ChatRole.Assistant, (string)null),
             new(ChatRole.User, "hello!"),
         ];
 
@@ -1271,7 +1269,7 @@ public class AzureAIInferenceChatClientTests
         Assert.That(aiContent, Is.InstanceOf<FunctionCallContent>());
         var fcc = (FunctionCallContent)aiContent;
         Assert.That(fcc.Name, Is.EqualTo("GetPersonAge"));
-        AssertExtensions.EqualFunctionCallParameters(new Dictionary<string, object?> { ["personName"] = "Alice" }, fcc.Arguments);
+        AssertExtensions.EqualFunctionCallParameters(new Dictionary<string, object> { ["personName"] = "Alice" }, fcc.Arguments);
     }
 
     [RecordedTest]
@@ -1367,7 +1365,7 @@ public class AzureAIInferenceChatClientTests
 
         Assert.That(fcc.CallId, Is.EqualTo("call_F9ZaqPWo69u0urxAhVt8meDW"));
         Assert.That(fcc.Name, Is.EqualTo("GetPersonAge"));
-        AssertExtensions.EqualFunctionCallParameters(new Dictionary<string, object?> { ["personName"] = "Alice" }, fcc.Arguments);
+        AssertExtensions.EqualFunctionCallParameters(new Dictionary<string, object> { ["personName"] = "Alice" }, fcc.Arguments);
     }
 
     private static IChatClient CreateChatClient(HttpClient httpClient, string modelId) =>
@@ -1383,9 +1381,9 @@ public class AzureAIInferenceChatClientTests
         /// Asserts that the two function call parameters are equal, up to JSON equivalence.
         /// </summary>
         public static void EqualFunctionCallParameters(
-            IDictionary<string, object?>? expected,
-            IDictionary<string, object?>? actual,
-            JsonSerializerOptions? options = null)
+            IDictionary<string, object> expected,
+            IDictionary<string, object> actual,
+            JsonSerializerOptions options = null)
         {
             if (expected is null || actual is null)
             {
@@ -1395,7 +1393,7 @@ public class AzureAIInferenceChatClientTests
 
             foreach (var expectedEntry in expected)
             {
-                if (!actual.TryGetValue(expectedEntry.Key, out object? actualValue))
+                if (!actual.TryGetValue(expectedEntry.Key, out object actualValue))
                 {
                     throw new AssertionException($"Expected parameter '{expectedEntry.Key}' not found in actual value.");
                 }
@@ -1414,7 +1412,7 @@ public class AzureAIInferenceChatClientTests
             }
         }
 
-        private static void AreJsonEquivalentValues(object? expected, object? actual, JsonSerializerOptions? options, string? propertyName = null)
+        private static void AreJsonEquivalentValues(object expected, object actual, JsonSerializerOptions options, string propertyName = null)
         {
             options ??= AIJsonUtilities.DefaultOptions;
             JsonElement expectedElement = NormalizeToElement(expected, options);
@@ -1430,7 +1428,7 @@ public class AzureAIInferenceChatClientTests
                 throw new AssertionException(message);
             }
 
-            static JsonElement NormalizeToElement(object? value, JsonSerializerOptions options)
+            static JsonElement NormalizeToElement(object value, JsonSerializerOptions options)
                 => value is JsonElement e ? e : JsonSerializer.SerializeToElement(value, options);
         }
     }

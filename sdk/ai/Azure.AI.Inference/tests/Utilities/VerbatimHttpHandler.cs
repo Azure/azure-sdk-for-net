@@ -1,8 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#nullable enable
-
 using System;
 using System.Net.Http;
 using System.Text;
@@ -25,7 +23,7 @@ public sealed class VerbatimHttpHandler(string expectedInput, string expectedOut
     {
         Assert.That(request.Content, Is.Not.Null);
 
-        string? actualInput = await request.Content!.ReadAsStringAsync().ConfigureAwait(false);
+        string actualInput = await request.Content!.ReadAsStringAsync().ConfigureAwait(false);
 
         Assert.That(actualInput, Is.Not.Null);
         AssertEqualNormalized(expectedInput, actualInput);
@@ -41,7 +39,7 @@ public sealed class VerbatimHttpHandler(string expectedInput, string expectedOut
             request.Content = newContent;
 
             using var response = await base.SendAsync(request, cancellationToken).ConfigureAwait(false);
-            string? actualOutput = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+            string actualOutput = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
 
             Assert.That(actualOutput, Is.Not.Null);
             AssertEqualNormalized(expectedOutput, actualOutput);
@@ -50,15 +48,15 @@ public sealed class VerbatimHttpHandler(string expectedInput, string expectedOut
         return new() { Content = new StringContent(expectedOutput) };
     }
 
-    public static string? RemoveWhiteSpace(string? text) =>
+    public static string RemoveWhiteSpace(string text) =>
         text is null ? null :
         Regex.Replace(text, @"\s*", string.Empty);
 
     private static void AssertEqualNormalized(string expected, string actual)
     {
         // First try to compare as JSON.
-        JsonNode? expectedNode = null;
-        JsonNode? actualNode = null;
+        JsonNode expectedNode = null;
+        JsonNode actualNode = null;
         try
         {
             expectedNode = JsonNode.Parse(expected);

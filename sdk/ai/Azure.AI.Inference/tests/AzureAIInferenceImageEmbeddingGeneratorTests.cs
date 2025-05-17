@@ -1,8 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#nullable enable
-
 using System;
 using System.IO;
 using System.Net.Http;
@@ -199,7 +197,7 @@ public class AzureAIInferenceImageEmbeddingGeneratorTests
 
     private Uri GetImageDataUri()
     {
-        using Stream? s = GetType().Assembly.GetManifestResourceStream("Azure.AI.Inference.Tests.Data.juggling_balls.png");
+        using Stream s = GetType().Assembly.GetManifestResourceStream("Azure.AI.Inference.Tests.Data.juggling_balls.png");
         Assert.That(s, Is.Not.Null);
         using MemoryStream ms = new();
         s!.CopyTo(ms);
