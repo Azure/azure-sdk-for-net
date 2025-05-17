@@ -5,13 +5,10 @@
 
 using System;
 using System.Diagnostics.CodeAnalysis;
-using Azure.Core.Pipeline;
-using Azure.Core;
-using System.Threading.Tasks;
-using System.Collections.Generic;
 using System.Threading;
-using System.Linq;
-using Azure.AI.Inference.Telemetry;
+using System.Threading.Tasks;
+using Azure.Core;
+using Azure.Core.Pipeline;
 
 namespace Azure.AI.Inference
 {
@@ -20,6 +17,8 @@ namespace Azure.AI.Inference
     [CodeGenSuppress("EmbedAsync", typeof(ImageEmbeddingsOptions), typeof(ExtraParameters?), typeof(CancellationToken))]
     public partial class ImageEmbeddingsClient
     {
+        internal Uri Endpoint => _endpoint;
+
         /// <summary> Initializes a new instance of ImageEmbeddingsClient. </summary>
         /// <param name="endpoint"> Service host. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
