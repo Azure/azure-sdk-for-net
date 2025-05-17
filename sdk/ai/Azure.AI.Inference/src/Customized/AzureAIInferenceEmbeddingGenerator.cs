@@ -137,10 +137,10 @@ namespace Microsoft.Extensions.AI
 #if NET
                 BinaryPrimitives.ReverseEndianness(ints, ints);
 #else
-            for (int i = 0; i < ints.Length; i++)
-            {
-                ints[i] = BinaryPrimitives.ReverseEndianness(ints[i]);
-            }
+                for (int i = 0; i < ints.Length; i++)
+                {
+                    ints[i] = BinaryPrimitives.ReverseEndianness(ints[i]);
+                }
 #endif
             }
 

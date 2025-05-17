@@ -89,15 +89,17 @@ namespace Microsoft.Extensions.AI
             Assert.That(pipeline.GetService<string>("key"), Is.Null);
         }
 
+        // language=json
         private const string BasicInputNonStreaming = """
         {
-            "messages": [{"role":"user", "content":"hello"}],
-            "max_tokens":10,
-            "temperature":0.5,
-            "model":"gpt-4o-mini"
+            "messages": [{ "role": "user", "content": "hello" }],
+            "max_tokens": 10,
+            "temperature": 0.5,
+            "model": "gpt-4o-mini"
         }
         """;
 
+        // language=json
         private const string BasicOutputNonStreaming = """
         {
             "id": "chatcmpl-ADx3PvAnCwJg0woha4pYsBTi3ZpOI",
@@ -105,27 +107,27 @@ namespace Microsoft.Extensions.AI
             "created": 1727888631,
             "model": "gpt-4o-mini-2024-07-18",
             "choices": [
-            {
-                "index": 0,
-                "message": {
-                "role": "assistant",
-                "content": "Hello! How can I assist you today?",
-                "refusal": null
-                },
-                "logprobs": null,
-                "finish_reason": "stop"
-            }
+                {
+                    "index": 0,
+                    "message": {
+                        "role": "assistant",
+                        "content": "Hello! How can I assist you today?",
+                        "refusal": null
+                    },
+                    "logprobs": null,
+                    "finish_reason": "stop"
+                }
             ],
             "usage": {
-            "prompt_tokens": 8,
-            "completion_tokens": 9,
-            "total_tokens": 17,
-            "prompt_tokens_details": {
-                "cached_tokens": 0
-            },
-            "completion_tokens_details": {
-                "reasoning_tokens": 0
-            }
+                "prompt_tokens": 8,
+                "completion_tokens": 9,
+                "total_tokens": 17,
+                "prompt_tokens_details": {
+                    "cached_tokens": 0
+                },
+                "completion_tokens_details": {
+                    "reasoning_tokens": 0
+                }
             },
             "system_fingerprint": "fp_f85bea6784"
         }
@@ -166,43 +168,46 @@ namespace Microsoft.Extensions.AI
             Assert.That(response.Usage.TotalTokenCount, Is.EqualTo(17));
         }
 
+        // language=json
         private const string BasicInputStreaming = """
         {
-            "messages": [{"role":"user", "content":"hello"}],
-            "max_tokens":20,
-            "temperature":0.5,
-            "stream":true,
-            "model":"gpt-4o-mini"}
+            "messages": [{ "role": "user", "content": "hello" }],
+            "max_tokens": 20,
+            "temperature": 0.5,
+            "stream": true,
+            "model": "gpt-4o-mini"
+        }
         """;
 
+        // The output format is a stream of JSON objects separated by newlines
+        // language=json
         private const string BasicOutputStreaming = """
-        data: {"id":"chatcmpl-ADxFKtX6xIwdWRN42QvBj2u1RZpCK","object":"chat.completion.chunk","created":1727889370,"model":"gpt-4o-mini-2024-07-18","system_fingerprint":"fp_f85bea6784","choices":[{"index":0,"delta":{"role":"assistant","content":"","refusal":null},"logprobs":null,"finish_reason":null}],"usage":null}
+            data: {"id":"chatcmpl-ADxFKtX6xIwdWRN42QvBj2u1RZpCK","object":"chat.completion.chunk","created":1727889370,"model":"gpt-4o-mini-2024-07-18","system_fingerprint":"fp_f85bea6784","choices":[{"index":0,"delta":{"role":"assistant","content":"","refusal":null},"logprobs":null,"finish_reason":null}],"usage":null}
 
-        data: {"id":"chatcmpl-ADxFKtX6xIwdWRN42QvBj2u1RZpCK","object":"chat.completion.chunk","created":1727889370,"model":"gpt-4o-mini-2024-07-18","system_fingerprint":"fp_f85bea6784","choices":[{"index":0,"delta":{"content":"Hello"},"logprobs":null,"finish_reason":null}],"usage":null}
+            data: {"id":"chatcmpl-ADxFKtX6xIwdWRN42QvBj2u1RZpCK","object":"chat.completion.chunk","created":1727889370,"model":"gpt-4o-mini-2024-07-18","system_fingerprint":"fp_f85bea6784","choices":[{"index":0,"delta":{"content":"Hello"},"logprobs":null,"finish_reason":null}],"usage":null}
 
-        data: {"id":"chatcmpl-ADxFKtX6xIwdWRN42QvBj2u1RZpCK","object":"chat.completion.chunk","created":1727889370,"model":"gpt-4o-mini-2024-07-18","system_fingerprint":"fp_f85bea6784","choices":[{"index":0,"delta":{"content":"!"},"logprobs":null,"finish_reason":null}],"usage":null}
+            data: {"id":"chatcmpl-ADxFKtX6xIwdWRN42QvBj2u1RZpCK","object":"chat.completion.chunk","created":1727889370,"model":"gpt-4o-mini-2024-07-18","system_fingerprint":"fp_f85bea6784","choices":[{"index":0,"delta":{"content":"!"},"logprobs":null,"finish_reason":null}],"usage":null}
 
-        data: {"id":"chatcmpl-ADxFKtX6xIwdWRN42QvBj2u1RZpCK","object":"chat.completion.chunk","created":1727889370,"model":"gpt-4o-mini-2024-07-18","system_fingerprint":"fp_f85bea6784","choices":[{"index":0,"delta":{"content":" How"},"logprobs":null,"finish_reason":null}],"usage":null}
+            data: {"id":"chatcmpl-ADxFKtX6xIwdWRN42QvBj2u1RZpCK","object":"chat.completion.chunk","created":1727889370,"model":"gpt-4o-mini-2024-07-18","system_fingerprint":"fp_f85bea6784","choices":[{"index":0,"delta":{"content":" How"},"logprobs":null,"finish_reason":null}],"usage":null}
 
-        data: {"id":"chatcmpl-ADxFKtX6xIwdWRN42QvBj2u1RZpCK","object":"chat.completion.chunk","created":1727889370,"model":"gpt-4o-mini-2024-07-18","system_fingerprint":"fp_f85bea6784","choices":[{"index":0,"delta":{"content":" can"},"logprobs":null,"finish_reason":null}],"usage":null}
+            data: {"id":"chatcmpl-ADxFKtX6xIwdWRN42QvBj2u1RZpCK","object":"chat.completion.chunk","created":1727889370,"model":"gpt-4o-mini-2024-07-18","system_fingerprint":"fp_f85bea6784","choices":[{"index":0,"delta":{"content":" can"},"logprobs":null,"finish_reason":null}],"usage":null}
 
-        data: {"id":"chatcmpl-ADxFKtX6xIwdWRN42QvBj2u1RZpCK","object":"chat.completion.chunk","created":1727889370,"model":"gpt-4o-mini-2024-07-18","system_fingerprint":"fp_f85bea6784","choices":[{"index":0,"delta":{"content":" I"},"logprobs":null,"finish_reason":null}],"usage":null}
+            data: {"id":"chatcmpl-ADxFKtX6xIwdWRN42QvBj2u1RZpCK","object":"chat.completion.chunk","created":1727889370,"model":"gpt-4o-mini-2024-07-18","system_fingerprint":"fp_f85bea6784","choices":[{"index":0,"delta":{"content":" I"},"logprobs":null,"finish_reason":null}],"usage":null}
 
-        data: {"id":"chatcmpl-ADxFKtX6xIwdWRN42QvBj2u1RZpCK","object":"chat.completion.chunk","created":1727889370,"model":"gpt-4o-mini-2024-07-18","system_fingerprint":"fp_f85bea6784","choices":[{"index":0,"delta":{"content":" assist"},"logprobs":null,"finish_reason":null}],"usage":null}
+            data: {"id":"chatcmpl-ADxFKtX6xIwdWRN42QvBj2u1RZpCK","object":"chat.completion.chunk","created":1727889370,"model":"gpt-4o-mini-2024-07-18","system_fingerprint":"fp_f85bea6784","choices":[{"index":0,"delta":{"content":" assist"},"logprobs":null,"finish_reason":null}],"usage":null}
 
-        data: {"id":"chatcmpl-ADxFKtX6xIwdWRN42QvBj2u1RZpCK","object":"chat.completion.chunk","created":1727889370,"model":"gpt-4o-mini-2024-07-18","system_fingerprint":"fp_f85bea6784","choices":[{"index":0,"delta":{"content":" you"},"logprobs":null,"finish_reason":null}],"usage":null}
+            data: {"id":"chatcmpl-ADxFKtX6xIwdWRN42QvBj2u1RZpCK","object":"chat.completion.chunk","created":1727889370,"model":"gpt-4o-mini-2024-07-18","system_fingerprint":"fp_f85bea6784","choices":[{"index":0,"delta":{"content":" you"},"logprobs":null,"finish_reason":null}],"usage":null}
 
-        data: {"id":"chatcmpl-ADxFKtX6xIwdWRN42QvBj2u1RZpCK","object":"chat.completion.chunk","created":1727889370,"model":"gpt-4o-mini-2024-07-18","system_fingerprint":"fp_f85bea6784","choices":[{"index":0,"delta":{"content":" today"},"logprobs":null,"finish_reason":null}],"usage":null}
+            data: {"id":"chatcmpl-ADxFKtX6xIwdWRN42QvBj2u1RZpCK","object":"chat.completion.chunk","created":1727889370,"model":"gpt-4o-mini-2024-07-18","system_fingerprint":"fp_f85bea6784","choices":[{"index":0,"delta":{"content":" today"},"logprobs":null,"finish_reason":null}],"usage":null}
 
-        data: {"id":"chatcmpl-ADxFKtX6xIwdWRN42QvBj2u1RZpCK","object":"chat.completion.chunk","created":1727889370,"model":"gpt-4o-mini-2024-07-18","system_fingerprint":"fp_f85bea6784","choices":[{"index":0,"delta":{"content":"?"},"logprobs":null,"finish_reason":null}],"usage":null}
+            data: {"id":"chatcmpl-ADxFKtX6xIwdWRN42QvBj2u1RZpCK","object":"chat.completion.chunk","created":1727889370,"model":"gpt-4o-mini-2024-07-18","system_fingerprint":"fp_f85bea6784","choices":[{"index":0,"delta":{"content":"?"},"logprobs":null,"finish_reason":null}],"usage":null}
 
-        data: {"id":"chatcmpl-ADxFKtX6xIwdWRN42QvBj2u1RZpCK","object":"chat.completion.chunk","created":1727889370,"model":"gpt-4o-mini-2024-07-18","system_fingerprint":"fp_f85bea6784","choices":[{"index":0,"delta":{},"logprobs":null,"finish_reason":"stop"}],"usage":null}
+            data: {"id":"chatcmpl-ADxFKtX6xIwdWRN42QvBj2u1RZpCK","object":"chat.completion.chunk","created":1727889370,"model":"gpt-4o-mini-2024-07-18","system_fingerprint":"fp_f85bea6784","choices":[{"index":0,"delta":{},"logprobs":null,"finish_reason":"stop"}],"usage":null}
 
-        data: {"id":"chatcmpl-ADxFKtX6xIwdWRN42QvBj2u1RZpCK","object":"chat.completion.chunk","created":1727889370,"model":"gpt-4o-mini-2024-07-18","system_fingerprint":"fp_f85bea6784","choices":[],"usage":{"prompt_tokens":8,"completion_tokens":9,"total_tokens":17,"prompt_tokens_details":{"cached_tokens":0},"completion_tokens_details":{"reasoning_tokens":0}}}
+            data: {"id":"chatcmpl-ADxFKtX6xIwdWRN42QvBj2u1RZpCK","object":"chat.completion.chunk","created":1727889370,"model":"gpt-4o-mini-2024-07-18","system_fingerprint":"fp_f85bea6784","choices":[],"usage":{"prompt_tokens":8,"completion_tokens":9,"total_tokens":17,"prompt_tokens_details":{"cached_tokens":0},"completion_tokens_details":{"reasoning_tokens":0}}}
 
-        data: [DONE]
-
-        """;
+            data: [DONE]
+            """;
 
         [RecordedTest]
         [TestCase(false)]
@@ -284,40 +289,42 @@ namespace Microsoft.Extensions.AI
         [RecordedTest]
         public async Task ChatOptions_DoNotOverwrite_NotNullPropertiesInRawRepresentation_NonStreaming()
         {
+            // language=json
             const string Input = """
             {
-              "messages":[{"role":"user","content":"hello"}],
-              "model":"gpt-4o-mini",
-              "frequency_penalty":0.75,
-              "max_tokens":10,
-              "top_p":0.5,
-              "presence_penalty":0.5,
-              "temperature":0.5,
-              "seed":42,
-              "stop":["hello","world"],
-              "response_format":{"type":"text"},
-              "tools":[
-                  {"type":"function","function":{"name":"GetPersonAge","description":"Gets the age of the specified person.","parameters":{"type":"object","required":["personName"],"properties":{"personName":{"description":"The person whose age is being requested","type":"string"}}}}},
-                  {"type":"function","function":{"name":"GetPersonAge","description":"Gets the age of the specified person.","parameters":{"type": "object","required": ["personName"],"properties": {"personName": {"description": "The person whose age is being requested","type": "string"}}}}}
+                "messages": [{ "role": "user", "content": "hello" }],
+                "model": "gpt-4o-mini",
+                "frequency_penalty": 0.75,
+                "max_tokens": 10,
+                "top_p": 0.5,
+                "presence_penalty": 0.5,
+                "temperature": 0.5,
+                "seed": 42,
+                "stop": ["hello", "world"],
+                "response_format": { "type": "text" },
+                "tools": [
+                    { "type": "function", "function": { "name": "GetPersonAge", "description": "Gets the age of the specified person.", "parameters": { "type": "object", "required": ["personName"], "properties": { "personName": { "description": "The person whose age is being requested", "type": "string" }}}}},
+                    { "type": "function", "function": { "name": "GetPersonAge", "description": "Gets the age of the specified person.", "parameters": { "type": "object", "required": ["personName"], "properties": { "personName": { "description": "The person whose age is being requested", "type": "string" }}}}}
                 ],
-              "tool_choice":"auto",
-              "additional_property_from_raw_representation":42,
-              "additional_property_from_MEAI_options":42
+                "tool_choice": "auto",
+                "additional_property_from_raw_representation": 42,
+                "additional_property_from_MEAI_options": 42
             }
             """;
 
+            // language=json
             const string Output = """
             {
-              "id": "chatcmpl-ADx3PvAnCwJg0woha4pYsBTi3ZpOI",
-              "object": "chat.completion",
-              "choices": [
-                {
-                  "message": {
-                    "role": "assistant",
-                    "content": "Hello! How can I assist you today?"
-                  }
-                }
-              ]
+                "id": "chatcmpl-ADx3PvAnCwJg0woha4pYsBTi3ZpOI",
+                "object": "chat.completion",
+                "choices": [
+                    {
+                        "message": {
+                            "role": "assistant",
+                            "content": "Hello! How can I assist you today?"
+                        }
+                    }
+                ]
             }
             """;
 
@@ -372,38 +379,41 @@ namespace Microsoft.Extensions.AI
         [RecordedTest]
         public async Task ChatOptions_DoNotOverwrite_NotNullPropertiesInRawRepresentation_Streaming()
         {
+            // language=json
             const string Input = """
             {
-              "messages":[{"role":"user","content":"hello"}],
-              "model":"gpt-4o-mini",
-              "frequency_penalty":0.75,
-              "max_tokens":10,
-              "top_p":0.5,
-              "presence_penalty":0.5,
-              "temperature":0.5,
-              "seed":42,
-              "stop":["hello","world"],
-              "response_format":{"type":"text"},
-              "tools":[
-                  {"type":"function","function":{"name":"GetPersonAge","description":"Gets the age of the specified person.","parameters":{"type":"object","required":["personName"],"properties":{"personName":{"description":"The person whose age is being requested","type":"string"}}}}},
-                  {"type":"function","function":{"name":"GetPersonAge","description":"Gets the age of the specified person.","parameters":{"type": "object","required": ["personName"],"properties": {"personName": {"description": "The person whose age is being requested","type": "string"}}}}}
+                "messages": [{ "role": "user", "content": "hello" }],
+                "model": "gpt-4o-mini",
+                "frequency_penalty": 0.75,
+                "max_tokens": 10,
+                "top_p": 0.5,
+                "presence_penalty": 0.5,
+                "temperature": 0.5,
+                "seed": 42,
+                "stop": ["hello", "world"],
+                "response_format": { "type": "text" },
+                "tools": [
+                    { "type": "function", "function": { "name": "GetPersonAge", "description": "Gets the age of the specified person.", "parameters": { "type": "object", "required": ["personName"], "properties": { "personName": { "description": "The person whose age is being requested", "type": "string" }}}}},
+                    { "type": "function", "function": { "name": "GetPersonAge", "description": "Gets the age of the specified person.", "parameters": { "type": "object", "required": ["personName"], "properties": { "personName": { "description": "The person whose age is being requested", "type": "string" }}}}}
                 ],
-              "tool_choice":"auto",
-              "additional_property_from_raw_representation":42,
-              "additional_property_from_MEAI_options":42,
-              "stream":true
+                "tool_choice": "auto",
+                "additional_property_from_raw_representation": 42,
+                "additional_property_from_MEAI_options": 42,
+                "stream": true
             }
             """;
 
+            // The output format is a stream of JSON objects separated by newlines
+            // language=json
             const string Output = """
-            data: {"id":"chatcmpl-ADx3PvAnCwJg0woha4pYsBTi3ZpOI","object":"chat.completion.chunk","choices":[{"delta":{"role":"assistant","content":"Hello! "}}]}
+                data: {"id":"chatcmpl-ADx3PvAnCwJg0woha4pYsBTi3ZpOI","object":"chat.completion.chunk","choices":[{"delta":{"role":"assistant","content":"Hello! "}}]}
             
-            data: {"id":"chatcmpl-ADx3PvAnCwJg0woha4pYsBTi3ZpOI","object":"chat.completion.chunk","choices":[{"delta":{"content":"How can I assist you today?"}}]}
+                data: {"id":"chatcmpl-ADx3PvAnCwJg0woha4pYsBTi3ZpOI","object":"chat.completion.chunk","choices":[{"delta":{"content":"How can I assist you today?"}}]}
             
-            data: {"id":"chatcmpl-ADx3PvAnCwJg0woha4pYsBTi3ZpOI","object":"chat.completion.chunk","choices":[{"delta":{},"finish_reason":"stop"}]}
+                data: {"id":"chatcmpl-ADx3PvAnCwJg0woha4pYsBTi3ZpOI","object":"chat.completion.chunk","choices":[{"delta":{},"finish_reason":"stop"}]}
             
-            data: [DONE]
-            """;
+                data: [DONE]
+                """;
 
             using VerbatimHttpHandler handler = new(Input, Output);
             using HttpClient httpClient = new(handler);
@@ -460,37 +470,39 @@ namespace Microsoft.Extensions.AI
         [RecordedTest]
         public async Task ChatOptions_Overwrite_NullPropertiesInRawRepresentation_NonStreaming()
         {
+            // language=json
             const string Input = """
             {
-              "messages":[{"role":"user","content":"hello"}],
-              "model":"gpt-4o-mini",
-              "frequency_penalty":0.125,
-              "max_tokens":1,
-              "top_p":0.125,
-              "presence_penalty":0.125,
-              "temperature":0.125,
-              "seed":1,
-              "stop":["world"],
-              "response_format":{"type":"json_object"},
-              "tools":[
-                  {"type":"function","function":{"name":"GetPersonAge","description":"Gets the age of the specified person.","parameters":{"type":"object","required":["personName"],"properties":{"personName":{"description":"The person whose age is being requested","type":"string"}}}}}
+                "messages": [{ "role": "user", "content": "hello" }],
+                "model": "gpt-4o-mini",
+                "frequency_penalty": 0.125,
+                "max_tokens": 1,
+                "top_p": 0.125,
+                "presence_penalty": 0.125,
+                "temperature": 0.125,
+                "seed": 1,
+                "stop": ["world"],
+                "response_format": { "type": "json_object" },
+                "tools": [
+                    { "type": "function", "function": { "name": "GetPersonAge", "description": "Gets the age of the specified person.", "parameters": { "type": "object", "required": ["personName"], "properties": { "personName": { "description": "The person whose age is being requested", "type": "string" }}}}}
                 ],
-              "tool_choice":"none"
+                "tool_choice": "none"
             }
             """;
 
+            // language=json
             const string Output = """
             {
-              "id": "chatcmpl-ADx3PvAnCwJg0woha4pYsBTi3ZpOI",
-              "object": "chat.completion",
-              "choices": [
-                {
-                  "message": {
-                    "role": "assistant",
-                    "content": "Hello! How can I assist you today?"
-                  }
-                }
-              ]
+                "id": "chatcmpl-ADx3PvAnCwJg0woha4pYsBTi3ZpOI",
+                "object": "chat.completion",
+                "choices": [
+                    {
+                        "message": {
+                            "role": "assistant",
+                            "content": "Hello! How can I assist you today?"
+                        }
+                    }
+                ]
             }
             """;
 
@@ -539,35 +551,38 @@ namespace Microsoft.Extensions.AI
         [RecordedTest]
         public async Task ChatOptions_Overwrite_NullPropertiesInRawRepresentation_Streaming()
         {
+            // language=json
             const string Input = """
             {
-              "messages":[{"role":"user","content":"hello"}],
-              "model":"gpt-4o-mini",
-              "frequency_penalty":0.125,
-              "max_tokens":1,
-              "top_p":0.125,
-              "presence_penalty":0.125,
-              "temperature":0.125,
-              "seed":1,
-              "stop":["world"],
-              "response_format":{"type":"json_object"},
-              "tools":[
-                  {"type":"function","function":{"name":"GetPersonAge","description":"Gets the age of the specified person.","parameters":{"type":"object","required":["personName"],"properties":{"personName":{"description":"The person whose age is being requested","type":"string"}}}}}
+                "messages": [{ "role": "user", "content": "hello" }],
+                "model": "gpt-4o-mini",
+                "frequency_penalty": 0.125,
+                "max_tokens": 1,
+                "top_p": 0.125,
+                "presence_penalty": 0.125,
+                "temperature": 0.125,
+                "seed": 1,
+                "stop": ["world"],
+                "response_format": { "type": "json_object" },
+                "tools": [
+                    { "type": "function", "function": { "name": "GetPersonAge", "description": "Gets the age of the specified person.", "parameters": { "type": "object", "required": ["personName"], "properties": { "personName": { "description": "The person whose age is being requested", "type": "string" }}}}}
                 ],
-              "tool_choice":"none",
-              "stream":true
+                "tool_choice": "none",
+                "stream": true
             }
             """;
 
+            // The output format is a stream of JSON objects separated by newlines
+            // language=json
             const string Output = """
-            data: {"id":"chatcmpl-ADx3PvAnCwJg0woha4pYsBTi3ZpOI","object":"chat.completion.chunk","choices":[{"delta":{"role":"assistant","content":"Hello! "}}]}
+                data: {"id":"chatcmpl-ADx3PvAnCwJg0woha4pYsBTi3ZpOI","object":"chat.completion.chunk","choices":[{"delta":{"role":"assistant","content":"Hello! "}}]}
             
-            data: {"id":"chatcmpl-ADx3PvAnCwJg0woha4pYsBTi3ZpOI","object":"chat.completion.chunk","choices":[{"delta":{"content":"How can I assist you today?"}}]}
+                data: {"id":"chatcmpl-ADx3PvAnCwJg0woha4pYsBTi3ZpOI","object":"chat.completion.chunk","choices":[{"delta":{"content":"How can I assist you today?"}}]}
             
-            data: {"id":"chatcmpl-ADx3PvAnCwJg0woha4pYsBTi3ZpOI","object":"chat.completion.chunk","choices":[{"delta":{},"finish_reason":"stop"}]}
+                data: {"id":"chatcmpl-ADx3PvAnCwJg0woha4pYsBTi3ZpOI","object":"chat.completion.chunk","choices":[{"delta":{},"finish_reason":"stop"}]}
             
-            data: [DONE]
-            """;
+                data: [DONE]
+                """;
 
             using VerbatimHttpHandler handler = new(Input, Output);
             using HttpClient httpClient = new(handler);
@@ -646,18 +661,18 @@ namespace Microsoft.Extensions.AI
         {
             const string Input = """
             {
-                "messages":[{"role":"user", "content":"hello"}],
-                "max_tokens":10,
-                "temperature":0.5,
-                "top_p":0.5,
-                "stop":["yes","no"],
-                "presence_penalty":0.5,
-                "frequency_penalty":0.75,
-                "seed":42,
-                "model":"gpt-4o-mini",
-                "top_k":40,
-                "something_else":"value1",
-                "and_something_further":123
+                "messages": [{ "role": "user", "content": "hello" }],
+                "max_tokens": 10,
+                "temperature": 0.5,
+                "top_p": 0.5,
+                "stop": ["yes", "no"],
+                "presence_penalty": 0.5,
+                "frequency_penalty": 0.75,
+                "seed": 42,
+                "model": "gpt-4o-mini",
+                "top_k": 40,
+                "something_else": "value1",
+                "and_something_further": 123
             }
             """;
 
@@ -703,35 +718,37 @@ namespace Microsoft.Extensions.AI
         [RecordedTest]
         public async Task TopK_DoNotOverwrite_NonStreaming()
         {
+            // language=json
             const string Input = """
             {
-                "messages":[{"role":"user", "content":"hello"}],
-                "max_tokens":10,
-                "temperature":0.5,
-                "top_p":0.5,
-                "stop":["yes","no"],
-                "presence_penalty":0.5,
-                "frequency_penalty":0.75,
-                "seed":42,
-                "model":"gpt-4o-mini",
-                "top_k":40,
-                "something_else":"value1",
-                "and_something_further":123
+                "messages":[{ "role": "user", "content": "hello" }],
+                "max_tokens": 10,
+                "temperature": 0.5,
+                "top_p": 0.5,
+                "stop": ["yes", "no"],
+                "presence_penalty": 0.5,
+                "frequency_penalty": 0.75,
+                "seed": 42,
+                "model": "gpt-4o-mini",
+                "top_k": 40,
+                "something_else": "value1",
+                "and_something_further": 123
             }
             """;
 
+            // language=json
             const string Output = """
             {
-              "id": "chatcmpl-ADx3PvAnCwJg0woha4pYsBTi3ZpOI",
-              "object": "chat.completion",
-              "choices": [
-                {
-                  "message": {
-                    "role": "assistant",
-                    "content": "Hello! How can I assist you today?"
-                  }
-                }
-              ]
+                "id": "chatcmpl-ADx3PvAnCwJg0woha4pYsBTi3ZpOI",
+                "object": "chat.completion",
+                "choices": [
+                    {
+                        "message": {
+                            "role": "assistant",
+                            "content": "Hello! How can I assist you today?"
+                        }
+                    }
+                ]
             }
             """;
 
@@ -763,26 +780,28 @@ namespace Microsoft.Extensions.AI
         [RecordedTest]
         public async Task ResponseFormat_Text_NonStreaming()
         {
+            // language=json
             const string Input = """
             {
-                "messages":[{"role":"user", "content":"hello"}],
-                "model":"gpt-4o-mini",
-                "response_format":{"type":"text"}
+                "messages": [{ "role": "user", "content": "hello" }],
+                "model": "gpt-4o-mini",
+                "response_format": { "type": "text" }
             }
             """;
 
+            // language=json
             const string Output = """
             {
-              "id": "chatcmpl-ADx3PvAnCwJg0woha4pYsBTi3ZpOI",
-              "object": "chat.completion",
-              "choices": [
-                {
-                  "message": {
-                    "role": "assistant",
-                    "content": "Hello! How can I assist you today?"
-                  }
-                }
-              ]
+                "id": "chatcmpl-ADx3PvAnCwJg0woha4pYsBTi3ZpOI",
+                "object": "chat.completion",
+                "choices": [
+                    {
+                        "message": {
+                            "role": "assistant",
+                            "content": "Hello! How can I assist you today?"
+                        }
+                    }
+                ]
             }
             """;
 
@@ -799,26 +818,28 @@ namespace Microsoft.Extensions.AI
         [RecordedTest]
         public async Task ResponseFormat_Json_NonStreaming()
         {
+            // language=json
             const string Input = """
             {
-                "messages":[{"role":"user", "content":"hello"}],
-                "model":"gpt-4o-mini",
-                "response_format":{"type":"json_object"}
+                "messages": [{ "role": "user", "content": "hello" }],
+                "model": "gpt-4o-mini",
+                "response_format": { "type": "json_object" }
             }
             """;
 
+            // language=json
             const string Output = """
             {
-              "id": "chatcmpl-ADx3PvAnCwJg0woha4pYsBTi3ZpOI",
-              "object": "chat.completion",
-              "choices": [
-                {
-                  "message": {
-                    "role": "assistant",
-                    "content": "Hello! How can I assist you today?"
-                  }
-                }
-              ]
+                "id": "chatcmpl-ADx3PvAnCwJg0woha4pYsBTi3ZpOI",
+                "object": "chat.completion",
+                "choices": [
+                    {
+                        "message": {
+                            "role": "assistant",
+                            "content": "Hello! How can I assist you today?"
+                        }
+                    }
+                ]
             }
             """;
 
@@ -835,47 +856,44 @@ namespace Microsoft.Extensions.AI
         [RecordedTest]
         public async Task ResponseFormat_JsonSchema_NonStreaming()
         {
+            // language=json
             const string Input = """
             {
-                "messages":[{"role":"user", "content":"hello"}],
-                "model":"gpt-4o-mini",
-                "response_format":
-                {
-                    "type":"json_schema",
-                    "json_schema":
-                    {
+                "messages": [{ "role": "user", "content": "hello" }],
+                "model": "gpt-4o-mini",
+                "response_format": {
+                    "type": "json_schema",
+                    "json_schema": {
                         "name": "DescribedObject",
-                        "schema":
-                        {
-                            "type":"object",
-                            "properties":
-                            {
-                                "description":
-                                {
-                                    "type":"string"
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "description": {
+                                    "type": "string"
                                 }
                             },
-                            "required":["description"],
-                            "additionalProperties":false
-                         },
-                         "description":"An object with a description"
+                            "required": ["description"],
+                            "additionalProperties": false
+                        },
+                        "description": "An object with a description"
                     }
                 }
             }
             """;
 
+            // language=json
             const string Output = """
             {
-              "id": "chatcmpl-ADx3PvAnCwJg0woha4pYsBTi3ZpOI",
-              "object": "chat.completion",
-              "choices": [
-                {
-                  "message": {
-                    "role": "assistant",
-                    "content": "Hello! How can I assist you today?"
-                  }
-                }
-              ]
+                "id": "chatcmpl-ADx3PvAnCwJg0woha4pYsBTi3ZpOI",
+                "object": "chat.completion",
+                "choices": [
+                    {
+                        "message": {
+                            "role": "assistant",
+                            "content": "Hello! How can I assist you today?"
+                        }
+                    }
+                ]
             }
             """;
 
@@ -885,23 +903,29 @@ namespace Microsoft.Extensions.AI
 
             Assert.That(await client.GetResponseAsync("hello", new()
             {
-                ResponseFormat = ChatResponseFormat.ForJsonSchema(JsonSerializer.Deserialize<JsonElement>("""
-                {
-                  "type": "object",
-                  "properties": {
-                    "description": {
-                      "type": "string"
-                    }
-                  },
-                  "required": ["description"]
-                }
-                """), "DescribedObject", "An object with a description"),
+                ResponseFormat = ChatResponseFormat.ForJsonSchema(
+                    JsonSerializer.Deserialize<JsonElement>(
+                        // language=json
+                        """
+                        {
+                            "type": "object",
+                            "properties": {
+                                "description": {
+                                    "type": "string"
+                                }
+                            },
+                            "required": ["description"]
+                        }
+                        """
+                    ),
+                    "DescribedObject", "An object with a description"),
             }), Is.Not.Null);
         }
 
         [RecordedTest]
         public async Task MultipleMessages_NonStreaming()
         {
+            // language=json
             const string Input = """
             {
                 "messages": [
@@ -924,7 +948,7 @@ namespace Microsoft.Extensions.AI
                     {
                         "role": "assistant",
                         "content": "",
-                        "tool_calls": [{"id":"abcd123","type":"function","function":{"name":"GetMood","arguments":"null"}}]
+                        "tool_calls": [{ "id": "abcd123", "type": "function", "function": { "name": "GetMood", "arguments": "null" }}]
                     },
                     {
                         "role": "tool",
@@ -943,36 +967,37 @@ namespace Microsoft.Extensions.AI
             }
             """;
 
+            // language=json
             const string Output = """
             {
-              "id": "chatcmpl-ADyV17bXeSm5rzUx3n46O7m3M0o3P",
-              "object": "chat.completion",
-              "created": 1727894187,
-              "model": "gpt-4o-mini-2024-07-18",
-              "choices": [
-                {
-                  "index": 0,
-                  "message": {
-                    "role": "assistant",
-                    "content": "I'm doing well, thank you! What's on your mind today?",
-                    "refusal": null
-                  },
-                  "logprobs": null,
-                  "finish_reason": "stop"
-                }
-              ],
-              "usage": {
-                "prompt_tokens": 42,
-                "completion_tokens": 15,
-                "total_tokens": 57,
-                "prompt_tokens_details": {
-                  "cached_tokens": 0
+                "id": "chatcmpl-ADyV17bXeSm5rzUx3n46O7m3M0o3P",
+                "object": "chat.completion",
+                "created": 1727894187,
+                "model": "gpt-4o-mini-2024-07-18",
+                "choices": [
+                    {
+                        "index": 0,
+                        "message": {
+                            "role": "assistant",
+                            "content": "I'm doing well, thank you! What's on your mind today?",
+                            "refusal": null
+                        },
+                        "logprobs": null,
+                        "finish_reason": "stop"
+                    }
+                ],
+                "usage": {
+                    "prompt_tokens": 42,
+                    "completion_tokens": 15,
+                    "total_tokens": 57,
+                    "prompt_tokens_details": {
+                        "cached_tokens": 0
+                    },
+                    "completion_tokens_details": {
+                        "reasoning_tokens": 0
+                    }
                 },
-                "completion_tokens_details": {
-                  "reasoning_tokens": 0
-                }
-              },
-              "system_fingerprint": "fp_f85bea6784"
+                "system_fingerprint": "fp_f85bea6784"
             }
             """;
 
@@ -983,12 +1008,12 @@ namespace Microsoft.Extensions.AI
             List<ChatMessage> messages =
             [
                 new(ChatRole.System, "You are a really nice friend."),
-            new(ChatRole.User, "hello!"),
-            new(ChatRole.Assistant, "hi, how are you?"),
-            new(ChatRole.User, "i'm good. how are you?"),
-            new(ChatRole.Assistant, [new FunctionCallContent("abcd123", "GetMood")]),
-            new(ChatRole.Tool, [new FunctionResultContent("abcd123", "happy")]),
-        ];
+                new(ChatRole.User, "hello!"),
+                new(ChatRole.Assistant, "hi, how are you?"),
+                new(ChatRole.User, "i'm good. how are you?"),
+                new(ChatRole.Assistant, [new FunctionCallContent("abcd123", "GetMood")]),
+                new(ChatRole.Tool, [new FunctionResultContent("abcd123", "happy")]),
+            ];
 
             var response = await client.GetResponseAsync(messages, new()
             {
@@ -1018,22 +1043,20 @@ namespace Microsoft.Extensions.AI
         [RecordedTest]
         public async Task MultipleContent_NonStreaming()
         {
+            // language=json
             const string Input = """
             {
-                "messages":
-                [
+                "messages": [
                     {
                         "role": "user",
-                        "content":
-                        [
+                        "content": [
                             {
                                 "type": "text",
                                 "text": "Describe this picture."
                             },
                             {
                                 "type": "image_url",
-                                "image_url":
-                                {
+                                "image_url": {
                                     "url": "http://dot.net/someimage.png"
                                 }
                             }
@@ -1044,18 +1067,19 @@ namespace Microsoft.Extensions.AI
             }
             """;
 
+            // language=json
             const string Output = """
             {
-              "id": "chatcmpl-ADyV17bXeSm5rzUx3n46O7m3M0o3P",
-              "object": "chat.completion",
-              "choices": [
-                {
-                  "message": {
-                    "role": "assistant",
-                    "content": "A picture of a dog."
-                  }
-                }
-              ]
+                "id": "chatcmpl-ADyV17bXeSm5rzUx3n46O7m3M0o3P",
+                "object": "chat.completion",
+                "choices": [
+                    {
+                        "message": {
+                            "role": "assistant",
+                            "content": "A picture of a dog."
+                        }
+                    }
+                ]
             }
             """;
 
@@ -1063,16 +1087,19 @@ namespace Microsoft.Extensions.AI
             using HttpClient httpClient = new(handler);
             using IChatClient client = CreateChatClient(httpClient, "gpt-4o-mini");
 
-            Assert.That(await client.GetResponseAsync([new(ChatRole.User,
-        [
-            new TextContent("Describe this picture."),
-            new UriContent("http://dot.net/someimage.png", mediaType: "image/*"),
-        ])]), Is.Not.Null);
+            Assert.That(await client.GetResponseAsync([
+                new(ChatRole.User,
+                [
+                    new TextContent("Describe this picture."),
+                    new UriContent("http://dot.net/someimage.png", mediaType: "image/*"),
+                ])
+            ]), Is.Not.Null);
         }
 
         [RecordedTest]
         public async Task NullAssistantText_ContentEmpty_NonStreaming()
         {
+            // language=json
             const string Input = """
             {
                 "messages": [
@@ -1089,36 +1116,37 @@ namespace Microsoft.Extensions.AI
             }
             """;
 
+            // language=json
             const string Output = """
             {
-              "id": "chatcmpl-ADyV17bXeSm5rzUx3n46O7m3M0o3P",
-              "object": "chat.completion",
-              "created": 1727894187,
-              "model": "gpt-4o-mini-2024-07-18",
-              "choices": [
-                {
-                  "index": 0,
-                  "message": {
-                    "role": "assistant",
-                    "content": "Hello.",
-                    "refusal": null
-                  },
-                  "logprobs": null,
-                  "finish_reason": "stop"
-                }
-              ],
-              "usage": {
-                "prompt_tokens": 42,
-                "completion_tokens": 15,
-                "total_tokens": 57,
-                "prompt_tokens_details": {
-                  "cached_tokens": 0
+                "id": "chatcmpl-ADyV17bXeSm5rzUx3n46O7m3M0o3P",
+                "object": "chat.completion",
+                "created": 1727894187,
+                "model": "gpt-4o-mini-2024-07-18",
+                "choices": [
+                    {
+                        "index": 0,
+                        "message": {
+                            "role": "assistant",
+                            "content": "Hello.",
+                            "refusal": null
+                        },
+                        "logprobs": null,
+                        "finish_reason": "stop"
+                    }
+                ],
+                "usage": {
+                    "prompt_tokens": 42,
+                    "completion_tokens": 15,
+                    "total_tokens": 57,
+                    "prompt_tokens_details": {
+                        "cached_tokens": 0
+                    },
+                    "completion_tokens_details": {
+                        "reasoning_tokens": 0
+                    }
                 },
-                "completion_tokens_details": {
-                  "reasoning_tokens": 0
-                }
-              },
-              "system_fingerprint": "fp_f85bea6784"
+                "system_fingerprint": "fp_f85bea6784"
             }
             """;
 
@@ -1161,6 +1189,7 @@ namespace Microsoft.Extensions.AI
         [TestCaseSource(nameof(FunctionCallContent_NonStreaming_MemberData))]
         public async Task FunctionCallContent_NonStreaming(ChatToolMode mode)
         {
+            // language=json
             string input = $$"""
             {
                 "messages": [
@@ -1190,54 +1219,54 @@ namespace Microsoft.Extensions.AI
                     }
                 ],
                 "tool_choice": {{(
-                        mode is NoneChatToolMode ? "\"none\"" :
-                        mode is AutoChatToolMode ? "\"auto\"" :
-                        mode is RequiredChatToolMode { RequiredFunctionName: not null } f ? "{\"type\":\"function\",\"function\":{\"name\":\"GetPersonAge\"}}" :
-                        "\"required\""
-                        )}}
+                    mode is NoneChatToolMode ? "\"none\"" :
+                    mode is AutoChatToolMode ? "\"auto\"" :
+                    mode is RequiredChatToolMode { RequiredFunctionName: not null } f ? """{ "type": "function", "function": { "name": "GetPersonAge" }}""" : "\"required\""
+                )}}
             }
             """;
 
+            // language=json
             const string Output = """
             {
-              "id": "chatcmpl-ADydKhrSKEBWJ8gy0KCIU74rN3Hmk",
-              "object": "chat.completion",
-              "created": 1727894702,
-              "model": "gpt-4o-mini-2024-07-18",
-              "choices": [
-                {
-                  "index": 0,
-                  "message": {
-                    "role": "assistant",
-                    "content": null,
-                    "tool_calls": [
-                      {
-                        "id": "call_8qbINM045wlmKZt9bVJgwAym",
-                        "type": "function",
-                        "function": {
-                          "name": "GetPersonAge",
-                          "arguments": "{\"personName\":\"Alice\"}"
-                        }
-                      }
-                    ],
-                    "refusal": null
-                  },
-                  "logprobs": null,
-                  "finish_reason": "tool_calls"
-                }
-              ],
-              "usage": {
-                "prompt_tokens": 61,
-                "completion_tokens": 16,
-                "total_tokens": 77,
-                "prompt_tokens_details": {
-                  "cached_tokens": 0
+                "id": "chatcmpl-ADydKhrSKEBWJ8gy0KCIU74rN3Hmk",
+                "object": "chat.completion",
+                "created": 1727894702,
+                "model": "gpt-4o-mini-2024-07-18",
+                "choices": [
+                    {
+                        "index": 0,
+                        "message": {
+                            "role": "assistant",
+                            "content": null,
+                            "tool_calls": [
+                                {
+                                    "id": "call_8qbINM045wlmKZt9bVJgwAym",
+                                    "type": "function",
+                                    "function": {
+                                        "name": "GetPersonAge",
+                                        "arguments": "{ \"personName\": \"Alice\" }"
+                                    }
+                                }
+                            ],
+                            "refusal": null
+                        },
+                        "logprobs": null,
+                        "finish_reason": "tool_calls"
+                    }
+                ],
+                "usage": {
+                    "prompt_tokens": 61,
+                    "completion_tokens": 16,
+                    "total_tokens": 77,
+                    "prompt_tokens_details": {
+                        "cached_tokens": 0
+                    },
+                    "completion_tokens_details": {
+                        "reasoning_tokens": 0
+                    }
                 },
-                "completion_tokens_details": {
-                  "reasoning_tokens": 0
-                }
-              },
-              "system_fingerprint": "fp_f85bea6784"
+                "system_fingerprint": "fp_f85bea6784"
             }
             """;
 
@@ -1274,6 +1303,7 @@ namespace Microsoft.Extensions.AI
         [RecordedTest]
         public async Task FunctionCallContent_Streaming()
         {
+            // language=json
             const string Input = """
             {
                 "messages": [
@@ -1307,28 +1337,29 @@ namespace Microsoft.Extensions.AI
             }
             """;
 
+            // The output format is a stream of JSON objects separated by newlines
+            // language=json
             const string Output = """
-            data: {"id":"chatcmpl-ADymNiWWeqCJqHNFXiI1QtRcLuXcl","object":"chat.completion.chunk","created":1727895263,"model":"gpt-4o-mini-2024-07-18","system_fingerprint":"fp_f85bea6784","choices":[{"index":0,"delta":{"role":"assistant","content":null,"tool_calls":[{"index":0,"id":"call_F9ZaqPWo69u0urxAhVt8meDW","type":"function","function":{"name":"GetPersonAge","arguments":""}}],"refusal":null},"logprobs":null,"finish_reason":null}],"usage":null}
+                data: {"id":"chatcmpl-ADymNiWWeqCJqHNFXiI1QtRcLuXcl","object":"chat.completion.chunk","created":1727895263,"model":"gpt-4o-mini-2024-07-18","system_fingerprint":"fp_f85bea6784","choices":[{"index":0,"delta":{"role":"assistant","content":null,"tool_calls":[{"index":0,"id":"call_F9ZaqPWo69u0urxAhVt8meDW","type":"function","function":{"name":"GetPersonAge","arguments":""}}],"refusal":null},"logprobs":null,"finish_reason":null}],"usage":null}
 
-            data: {"id":"chatcmpl-ADymNiWWeqCJqHNFXiI1QtRcLuXcl","object":"chat.completion.chunk","created":1727895263,"model":"gpt-4o-mini-2024-07-18","system_fingerprint":"fp_f85bea6784","choices":[{"index":0,"delta":{"tool_calls":[{"index":0,"function":{"arguments":"{\""}}]},"logprobs":null,"finish_reason":null}],"usage":null}
+                data: {"id":"chatcmpl-ADymNiWWeqCJqHNFXiI1QtRcLuXcl","object":"chat.completion.chunk","created":1727895263,"model":"gpt-4o-mini-2024-07-18","system_fingerprint":"fp_f85bea6784","choices":[{"index":0,"delta":{"tool_calls":[{"index":0,"function":{"arguments":"{\""}}]},"logprobs":null,"finish_reason":null}],"usage":null}
 
-            data: {"id":"chatcmpl-ADymNiWWeqCJqHNFXiI1QtRcLuXcl","object":"chat.completion.chunk","created":1727895263,"model":"gpt-4o-mini-2024-07-18","system_fingerprint":"fp_f85bea6784","choices":[{"index":0,"delta":{"tool_calls":[{"index":0,"function":{"arguments":"person"}}]},"logprobs":null,"finish_reason":null}],"usage":null}
+                data: {"id":"chatcmpl-ADymNiWWeqCJqHNFXiI1QtRcLuXcl","object":"chat.completion.chunk","created":1727895263,"model":"gpt-4o-mini-2024-07-18","system_fingerprint":"fp_f85bea6784","choices":[{"index":0,"delta":{"tool_calls":[{"index":0,"function":{"arguments":"person"}}]},"logprobs":null,"finish_reason":null}],"usage":null}
 
-            data: {"id":"chatcmpl-ADymNiWWeqCJqHNFXiI1QtRcLuXcl","object":"chat.completion.chunk","created":1727895263,"model":"gpt-4o-mini-2024-07-18","system_fingerprint":"fp_f85bea6784","choices":[{"index":0,"delta":{"tool_calls":[{"index":0,"function":{"arguments":"Name"}}]},"logprobs":null,"finish_reason":null}],"usage":null}
+                data: {"id":"chatcmpl-ADymNiWWeqCJqHNFXiI1QtRcLuXcl","object":"chat.completion.chunk","created":1727895263,"model":"gpt-4o-mini-2024-07-18","system_fingerprint":"fp_f85bea6784","choices":[{"index":0,"delta":{"tool_calls":[{"index":0,"function":{"arguments":"Name"}}]},"logprobs":null,"finish_reason":null}],"usage":null}
 
-            data: {"id":"chatcmpl-ADymNiWWeqCJqHNFXiI1QtRcLuXcl","object":"chat.completion.chunk","created":1727895263,"model":"gpt-4o-mini-2024-07-18","system_fingerprint":"fp_f85bea6784","choices":[{"index":0,"delta":{"tool_calls":[{"index":0,"function":{"arguments":"\":\""}}]},"logprobs":null,"finish_reason":null}],"usage":null}
+                data: {"id":"chatcmpl-ADymNiWWeqCJqHNFXiI1QtRcLuXcl","object":"chat.completion.chunk","created":1727895263,"model":"gpt-4o-mini-2024-07-18","system_fingerprint":"fp_f85bea6784","choices":[{"index":0,"delta":{"tool_calls":[{"index":0,"function":{"arguments":"\":\""}}]},"logprobs":null,"finish_reason":null}],"usage":null}
 
-            data: {"id":"chatcmpl-ADymNiWWeqCJqHNFXiI1QtRcLuXcl","object":"chat.completion.chunk","created":1727895263,"model":"gpt-4o-mini-2024-07-18","system_fingerprint":"fp_f85bea6784","choices":[{"index":0,"delta":{"tool_calls":[{"index":0,"function":{"arguments":"Alice"}}]},"logprobs":null,"finish_reason":null}],"usage":null}
+                data: {"id":"chatcmpl-ADymNiWWeqCJqHNFXiI1QtRcLuXcl","object":"chat.completion.chunk","created":1727895263,"model":"gpt-4o-mini-2024-07-18","system_fingerprint":"fp_f85bea6784","choices":[{"index":0,"delta":{"tool_calls":[{"index":0,"function":{"arguments":"Alice"}}]},"logprobs":null,"finish_reason":null}],"usage":null}
 
-            data: {"id":"chatcmpl-ADymNiWWeqCJqHNFXiI1QtRcLuXcl","object":"chat.completion.chunk","created":1727895263,"model":"gpt-4o-mini-2024-07-18","system_fingerprint":"fp_f85bea6784","choices":[{"index":0,"delta":{"tool_calls":[{"index":0,"function":{"arguments":"\"}"}}]},"logprobs":null,"finish_reason":null}],"usage":null}
+                data: {"id":"chatcmpl-ADymNiWWeqCJqHNFXiI1QtRcLuXcl","object":"chat.completion.chunk","created":1727895263,"model":"gpt-4o-mini-2024-07-18","system_fingerprint":"fp_f85bea6784","choices":[{"index":0,"delta":{"tool_calls":[{"index":0,"function":{"arguments":"\"}"}}]},"logprobs":null,"finish_reason":null}],"usage":null}
 
-            data: {"id":"chatcmpl-ADymNiWWeqCJqHNFXiI1QtRcLuXcl","object":"chat.completion.chunk","created":1727895263,"model":"gpt-4o-mini-2024-07-18","system_fingerprint":"fp_f85bea6784","choices":[{"index":0,"delta":{},"logprobs":null,"finish_reason":"tool_calls"}],"usage":null}
+                data: {"id":"chatcmpl-ADymNiWWeqCJqHNFXiI1QtRcLuXcl","object":"chat.completion.chunk","created":1727895263,"model":"gpt-4o-mini-2024-07-18","system_fingerprint":"fp_f85bea6784","choices":[{"index":0,"delta":{},"logprobs":null,"finish_reason":"tool_calls"}],"usage":null}
 
-            data: {"id":"chatcmpl-ADymNiWWeqCJqHNFXiI1QtRcLuXcl","object":"chat.completion.chunk","created":1727895263,"model":"gpt-4o-mini-2024-07-18","system_fingerprint":"fp_f85bea6784","choices":[],"usage":{"prompt_tokens":61,"completion_tokens":16,"total_tokens":77,"prompt_tokens_details":{"cached_tokens":0},"completion_tokens_details":{"reasoning_tokens":0}}}
+                data: {"id":"chatcmpl-ADymNiWWeqCJqHNFXiI1QtRcLuXcl","object":"chat.completion.chunk","created":1727895263,"model":"gpt-4o-mini-2024-07-18","system_fingerprint":"fp_f85bea6784","choices":[],"usage":{"prompt_tokens":61,"completion_tokens":16,"total_tokens":77,"prompt_tokens_details":{"cached_tokens":0},"completion_tokens_details":{"reasoning_tokens":0}}}
 
-            data: [DONE]
-
-            """;
+                data: [DONE]
+                """;
 
             using VerbatimHttpHandler handler = new(Input, Output);
             using HttpClient httpClient = new(handler);
