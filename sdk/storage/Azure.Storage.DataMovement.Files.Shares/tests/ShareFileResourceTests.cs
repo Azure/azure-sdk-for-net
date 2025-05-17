@@ -2533,5 +2533,95 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 Times.Once());
             mockDestination.VerifyNoOtherCalls();
         }
+
+        [Test]
+        public async Task CreateAsync_NfsPropertiesPermissionsPreserve()
+        {
+            // Arrange
+            int length = 1024;
+            Mock<ShareFileClient> mockDestination = new(
+                new Uri("https://storageaccount.file.core.windows.net/container/destinationfile"),
+                new ShareClientOptions());
+
+            mockDestination.Setup(b => b.ExistsAsync(It.IsAny<CancellationToken>()))
+                .Returns(Task.FromResult(Response.FromValue(false, new MockResponse(200))));
+            mockDestination.Setup(b => b.CreateAsync(It.IsAny<long>(), It.IsAny<ShareFileCreateOptions>(), It.IsAny<ShareFileRequestConditions>(), It.IsAny<CancellationToken>()))
+                .Returns(Task.FromResult(Response.FromValue(
+                    FilesModelFactory.StorageFileInfo(
+                        eTag: new ETag("eTag"),
+                        lastModified: DateTimeOffset.UtcNow,
+                        isServerEncrypted: false,
+                        fileCreationTime: DateTimeOffset.UtcNow,
+                        fileLastWriteTime: DateTimeOffset.UtcNow,
+                        owner: DefaultSourceOwner,
+                        group: DefaultSourceGroup,
+                        nfsFileMode: DefaultSourceFileMode,
+                        fileId: "48903841",
+                        fileParentId: "93024923"),
+                    new MockResponse(200))));
+            ShareFileStorageResource destinationResource = new ShareFileStorageResource(
+                mockDestination.Object,
+                new()
+                {
+                    FilePermissions = true,
+                    ShareProtocol = ShareProtocols.Nfs
+                });
+            StorageResourceItemProperties properties = new()
+            {
+                ResourceLength = 1024,
+                ETag = new("etag"),
+                LastModifiedTime = DateTimeOffset.UtcNow,
+                RawProperties = new Dictionary<string, object>
+                {
+                    { DataMovementConstants.ResourceProperties.ContentType, DefaultContentType },
+                    { DataMovementConstants.ResourceProperties.ContentEncoding, DefaultContentEncoding },
+                    { DataMovementConstants.ResourceProperties.ContentLanguage, DefaultContentLanguage },
+                    { DataMovementConstants.ResourceProperties.ContentDisposition, DefaultContentDisposition },
+                    { DataMovementConstants.ResourceProperties.CacheControl, DefaultCacheControl },
+                    { DataMovementConstants.ResourceProperties.FileAttributes, DefaultFileAttributes },
+                    { DataMovementConstants.ResourceProperties.SourceFilePermissionKey, DefaultFilePermissionKey },
+                    { DataMovementConstants.ResourceProperties.DestinationFilePermissionKey, DefaultDestinationFilePermissionKey },
+                    { DataMovementConstants.ResourceProperties.CreationTime, DefaultFileCreatedOn },
+                    { DataMovementConstants.ResourceProperties.LastWrittenOn, DefaultLastWrittenOn },
+                    { DataMovementConstants.ResourceProperties.ChangedOnTime, DefaultFileChangedOn },
+                    { DataMovementConstants.ResourceProperties.Metadata, DefaultFileMetadata },
+                    { DataMovementConstants.ResourceProperties.Owner, DefaultSourceOwner },
+                    { DataMovementConstants.ResourceProperties.Group, DefaultSourceGroup },
+                    { DataMovementConstants.ResourceProperties.FileMode,  DefaultSourceFileMode }
+                }
+            };
+
+            // Act
+            await destinationResource.CreateAsync(
+                overwrite: false,
+                maxSize: length,
+                properties: properties,
+                cancellationToken: CancellationToken.None);
+
+            mockDestination.Verify(b => b.CreateAsync(
+                length,
+                It.Is<ShareFileCreateOptions>(option =>
+                    option.HttpHeaders.CacheControl == DefaultCacheControl &&
+                    option.HttpHeaders.ContentDisposition == DefaultContentDisposition &&
+                    option.HttpHeaders.ContentEncoding == DefaultContentEncoding &&
+                    option.HttpHeaders.ContentType == DefaultContentType &&
+                    option.Metadata == DefaultFileMetadata &&
+                    option.SmbProperties.FileCreatedOn == DefaultFileCreatedOn &&
+                    option.SmbProperties.FileLastWrittenOn == DefaultLastWrittenOn &&
+                    option.SmbProperties.FileChangedOn == null &&
+                    option.SmbProperties.FileAttributes == null &&
+                    option.SmbProperties.FilePermissionKey == null &&
+                    option.PosixProperties.Owner == DefaultSourceOwner &&
+                    option.PosixProperties.Group == DefaultSourceGroup &&
+                    option.PosixProperties.FileMode == DefaultSourceFileMode &&
+                    option.PosixProperties.FileType == DefaultFileType),
+                It.IsAny<ShareFileRequestConditions>(),
+                It.IsAny<CancellationToken>()),
+                Times.Once());
+            mockDestination.Verify(b => b.ExistsAsync(
+                It.IsAny<CancellationToken>()),
+                Times.Once());
+            mockDestination.VerifyNoOtherCalls();
+        }
     }
 }
