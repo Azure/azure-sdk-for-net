@@ -31,10 +31,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 if (property.NameEquals("deletedByCommunicationIdentifier"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     deletedByCommunicationIdentifier = CommunicationIdentifierModel.DeserializeCommunicationIdentifierModel(property.Value);
                     continue;
                 }
