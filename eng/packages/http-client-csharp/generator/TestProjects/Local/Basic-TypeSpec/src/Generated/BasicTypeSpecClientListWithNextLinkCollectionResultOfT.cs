@@ -45,7 +45,7 @@ namespace BasicTypeSpec
                     yield break;
                 }
                 ListWithNextLinkResponse items = (ListWithNextLinkResponse)response;
-                yield return Page<ThingModel>.FromValues(items.Things.ToList(), items.Next, response);
+                yield return Page<ThingModel>.FromValues(items.Things.AsReadOnly(), items.Next.ToString(), response);
             }
             while (!string.IsNullOrEmpty(nextLink));
         }

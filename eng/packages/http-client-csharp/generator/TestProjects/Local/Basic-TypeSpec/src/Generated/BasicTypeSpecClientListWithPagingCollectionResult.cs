@@ -33,6 +33,7 @@ namespace BasicTypeSpec
         /// <returns> The pages of BasicTypeSpecClientListWithPagingCollectionResult as an enumerable collection. </returns>
         public override IEnumerable<Page<BinaryData>> AsPages(string continuationToken, int? pageSizeHint)
         {
+            string nextLink = continuationToken;
             return null;
         }
 
