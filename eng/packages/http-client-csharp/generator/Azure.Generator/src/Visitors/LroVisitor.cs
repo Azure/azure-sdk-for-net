@@ -28,13 +28,13 @@ namespace Azure.Generator.Visitors
         {
             if (serviceMethod is InputLongRunningServiceMethod { Response.Type: InputModelType responseModel } lroServiceMethod)
             {
-                UpdateExplicitOperatorMethod(methods, responseModel, lroServiceMethod);
+                UpdateExplicitOperatorMethod(responseModel, lroServiceMethod);
             }
 
             return methods;
         }
 
-        private static void UpdateExplicitOperatorMethod(ScmMethodProviderCollection? methods,
+        private static void UpdateExplicitOperatorMethod(
             InputModelType responseModel,
             InputLongRunningServiceMethod lroServiceMethod)
         {
@@ -89,7 +89,7 @@ namespace Azure.Generator.Visitors
             {
                 (null, _) => typeof(Operation),
                 (not null, true) => new CSharpType(typeof(Operation), typeof(BinaryData)),
-                _ => new CSharpType(typeof(Operation<>), AzureClientGenerator.Instance.TypeFactory.CreateCSharpType(responseType!)!),
+                _ => new CSharpType(typeof(Operation<>), AzureClientGenerator.Instance.TypeFactory.CreateCSharpType(responseType)!),
             };
             var isAsync = method.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Async);
 
@@ -133,17 +133,9 @@ namespace Azure.Generator.Visitors
         {
             var expression = expressionStatement.Expression;
             var serviceMethod = scmMethod.ServiceMethod!;
-            if (expression is AssignmentExpression { Value: AzureClientResponseProvider responseProvider } assignmentExpression)
+            if (expression is AssignmentExpression { Value: AzureClientResponseProvider } assignmentExpression)
             {
-                var waitUntil = scmMethod.Signature.Parameters[0];
                 var resultVariable = (assignmentExpression.Variable as DeclarationExpression)?.Variable!;
-                var resultValue = responseProvider.Original as InvokeMethodExpression;
-                resultValue!.Update(
-                    arguments:
-                    [
-                        waitUntil,
-                        ..resultValue.Arguments
-                    ]);
                 if (serviceMethod.Response.Type != null)
                 {
                     resultVariable.Update(type: new CSharpType(typeof(Operation), typeof(BinaryData)));
@@ -163,7 +155,7 @@ namespace Azure.Generator.Visitors
                 }
 
                 var response = new VariableExpression(typeof(Response), "response");
-                var responseType = AzureClientGenerator.Instance.TypeFactory.CreateCSharpType(serviceMethod.Response.Type!)!;
+                var responseType = AzureClientGenerator.Instance.TypeFactory.CreateCSharpType(serviceMethod.Response.Type)!;
                 var client = (ClientProvider)scmMethod.EnclosingType;
                 var diagnosticsProperty = client.GetClientDiagnosticProperty();
                 var scopeName = scmMethod.GetScopeName();
