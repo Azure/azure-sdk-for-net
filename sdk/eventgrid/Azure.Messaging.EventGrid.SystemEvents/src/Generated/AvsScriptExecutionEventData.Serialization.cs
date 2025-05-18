@@ -38,7 +38,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             writer.WriteStringValue(OperationId);
             writer.WritePropertyName("cmdletId"u8);
             writer.WriteStringValue(CmdletId);
-            if (Optional.IsCollectionDefined(Output))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Output))
             {
                 writer.WritePropertyName("output"u8);
                 writer.WriteStartArray();
