@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
-using Azure.Core.TestFramework;
+using Azure.Identity;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -16,7 +16,7 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Keys.Tests
             public void ConfigureServices(IServiceCollection services)
             {
                 services.AddDataProtection()
-                    .ProtectKeysWithAzureKeyVault(new Uri("<Key-ID>"), new MockCredential());
+                        .ProtectKeysWithAzureKeyVault(new Uri("<Key-ID>"), new DefaultAzureCredential());
             }
             #endregion
         }
