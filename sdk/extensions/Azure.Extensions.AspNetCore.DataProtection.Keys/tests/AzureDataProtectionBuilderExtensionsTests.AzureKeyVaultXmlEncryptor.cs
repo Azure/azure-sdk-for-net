@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using Azure.Core.TestFramework;
 using Azure.Identity;
 using Azure.Security.KeyVault.Keys.Cryptography;
 using Microsoft.AspNetCore.DataProtection;
@@ -22,7 +23,7 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Keys.Tests
             var builder = serviceCollection.AddDataProtection();
 
             // Act
-            builder.ProtectKeysWithAzureKeyVault("http://www.example.com/dummyKey", new DefaultAzureCredential());
+            builder.ProtectKeysWithAzureKeyVault("http://www.example.com/dummyKey", new MockCredential());
             var services = serviceCollection.BuildServiceProvider();
 
             // Assert
@@ -54,7 +55,7 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Keys.Tests
             var builder = serviceCollection.AddDataProtection();
 
             // Act
-            builder.ProtectKeysWithAzureKeyVault("http://www.example.com/dummyKey", _ => new DefaultAzureCredential());
+            builder.ProtectKeysWithAzureKeyVault("http://www.example.com/dummyKey", _ => new MockCredential());
             var services = serviceCollection.BuildServiceProvider();
 
             // Assert
@@ -70,7 +71,7 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Keys.Tests
             var builder = serviceCollection.AddDataProtection();
 
             // Act
-            builder.ProtectKeysWithAzureKeyVault(new Uri("http://www.example.com/dummyKey"), new KeyResolver(new DefaultAzureCredential()));
+            builder.ProtectKeysWithAzureKeyVault(new Uri("http://www.example.com/dummyKey"), new KeyResolver(new MockCredential()));
             var services = serviceCollection.BuildServiceProvider();
 
             // Assert
@@ -86,7 +87,7 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Keys.Tests
             var builder = serviceCollection.AddDataProtection();
 
             // Act
-            builder.ProtectKeysWithAzureKeyVault("http://www.example.com/dummyKey", new KeyResolver(new DefaultAzureCredential()));
+            builder.ProtectKeysWithAzureKeyVault("http://www.example.com/dummyKey", new KeyResolver(new MockCredential()));
             var services = serviceCollection.BuildServiceProvider();
 
             // Assert
@@ -102,7 +103,7 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Keys.Tests
             var builder = serviceCollection.AddDataProtection();
 
             // Act
-            builder.ProtectKeysWithAzureKeyVault(new Uri("http://www.example.com/dummyKey"), _ => new DefaultAzureCredential());
+            builder.ProtectKeysWithAzureKeyVault(new Uri("http://www.example.com/dummyKey"), _ => new MockCredential());
             var services = serviceCollection.BuildServiceProvider();
 
             // Assert
@@ -118,7 +119,7 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Keys.Tests
             var builder = serviceCollection.AddDataProtection();
 
             // Act
-            builder.ProtectKeysWithAzureKeyVault(_ => "http://www.example.com/dummyKey", _ => new DefaultAzureCredential());
+            builder.ProtectKeysWithAzureKeyVault(_ => "http://www.example.com/dummyKey", _ => new MockCredential());
             var services = serviceCollection.BuildServiceProvider();
 
             // Assert
@@ -134,7 +135,7 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Keys.Tests
             var builder = serviceCollection.AddDataProtection();
 
             // Act
-            builder.ProtectKeysWithAzureKeyVault(_ => new Uri("http://www.example.com/dummyKey"), _ => new DefaultAzureCredential());
+            builder.ProtectKeysWithAzureKeyVault(_ => new Uri("http://www.example.com/dummyKey"), _ => new MockCredential());
             var services = serviceCollection.BuildServiceProvider();
 
             // Assert
@@ -150,7 +151,7 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Keys.Tests
             var builder = serviceCollection.AddDataProtection();
 
             // Act
-            builder.ProtectKeysWithAzureKeyVault("http://www.example.com/dummyKey", _ => new KeyResolver(new DefaultAzureCredential()));
+            builder.ProtectKeysWithAzureKeyVault("http://www.example.com/dummyKey", _ => new KeyResolver(new MockCredential()));
             var services = serviceCollection.BuildServiceProvider();
 
             // Assert
@@ -166,7 +167,7 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Keys.Tests
             var builder = serviceCollection.AddDataProtection();
 
             // Act
-            builder.ProtectKeysWithAzureKeyVault(new Uri("http://www.example.com/dummyKey"), _ => new KeyResolver(new DefaultAzureCredential()));
+            builder.ProtectKeysWithAzureKeyVault(new Uri("http://www.example.com/dummyKey"), _ => new KeyResolver(new MockCredential()));
             var services = serviceCollection.BuildServiceProvider();
 
             // Assert

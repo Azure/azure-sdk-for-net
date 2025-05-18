@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using Azure.Core.TestFramework;
 using Azure.Identity;
 using Azure.Security.KeyVault.Keys.Cryptography;
 using Microsoft.AspNetCore.DataProtection;
@@ -20,7 +21,7 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Keys.Tests
             var builder = serviceCollection.AddDataProtection();
 
             // Act
-            TestDelegate action = () => builder.ProtectKeysWithAzureKeyVault((string)null, new DefaultAzureCredential());
+            TestDelegate action = () => builder.ProtectKeysWithAzureKeyVault((string)null, new MockCredential());
 
             // Assert
             var ex = Assert.Throws<ArgumentNullException>(action);
@@ -36,7 +37,7 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Keys.Tests
             var builder = serviceCollection.AddDataProtection();
 
             // Act
-            TestDelegate action = () => builder.ProtectKeysWithAzureKeyVault((Uri)null, new DefaultAzureCredential());
+            TestDelegate action = () => builder.ProtectKeysWithAzureKeyVault((Uri)null, new MockCredential());
 
             // Assert
             var ex = Assert.Throws<ArgumentNullException>(action);
@@ -52,7 +53,7 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Keys.Tests
             var builder = serviceCollection.AddDataProtection();
 
             // Act
-            TestDelegate action = () => builder.ProtectKeysWithAzureKeyVault((string)null, _ => new DefaultAzureCredential());
+            TestDelegate action = () => builder.ProtectKeysWithAzureKeyVault((string)null, _ => new MockCredential());
 
             // Assert
             var ex = Assert.Throws<ArgumentNullException>(action);
@@ -68,7 +69,7 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Keys.Tests
             var builder = serviceCollection.AddDataProtection();
 
             // Act
-            TestDelegate action = () => builder.ProtectKeysWithAzureKeyVault((Uri)null, new KeyResolver(new DefaultAzureCredential()));
+            TestDelegate action = () => builder.ProtectKeysWithAzureKeyVault((Uri)null, new KeyResolver(new MockCredential()));
 
             // Assert
             var ex = Assert.Throws<ArgumentNullException>(action);
@@ -84,7 +85,7 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Keys.Tests
             var builder = serviceCollection.AddDataProtection();
 
             // Act
-            TestDelegate action = () => builder.ProtectKeysWithAzureKeyVault((string)null, new KeyResolver(new DefaultAzureCredential()));
+            TestDelegate action = () => builder.ProtectKeysWithAzureKeyVault((string)null, new KeyResolver(new MockCredential()));
 
             // Assert
             var ex = Assert.Throws<ArgumentNullException>(action);
@@ -100,7 +101,7 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Keys.Tests
             var builder = serviceCollection.AddDataProtection();
 
             // Act
-            TestDelegate action = () => builder.ProtectKeysWithAzureKeyVault((Uri)null, _ => new DefaultAzureCredential());
+            TestDelegate action = () => builder.ProtectKeysWithAzureKeyVault((Uri)null, _ => new MockCredential());
 
             // Assert
             var ex = Assert.Throws<ArgumentNullException>(action);
@@ -116,7 +117,7 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Keys.Tests
             var builder = serviceCollection.AddDataProtection();
 
             // Act
-            TestDelegate action = () => builder.ProtectKeysWithAzureKeyVault((Func<IServiceProvider, string>)null, _ => new DefaultAzureCredential());
+            TestDelegate action = () => builder.ProtectKeysWithAzureKeyVault((Func<IServiceProvider, string>)null, _ => new MockCredential());
 
             // Assert
             var ex = Assert.Throws<ArgumentNullException>(action);
@@ -132,7 +133,7 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Keys.Tests
             var builder = serviceCollection.AddDataProtection();
 
             // Act
-            TestDelegate action = () => builder.ProtectKeysWithAzureKeyVault((Func<IServiceProvider, Uri>)null, _ => new DefaultAzureCredential());
+            TestDelegate action = () => builder.ProtectKeysWithAzureKeyVault((Func<IServiceProvider, Uri>)null, _ => new MockCredential());
 
             // Assert
             var ex = Assert.Throws<ArgumentNullException>(action);
@@ -148,7 +149,7 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Keys.Tests
             var builder = serviceCollection.AddDataProtection();
 
             // Act
-            TestDelegate action = () => builder.ProtectKeysWithAzureKeyVault((string)null, _ => new KeyResolver(new DefaultAzureCredential()));
+            TestDelegate action = () => builder.ProtectKeysWithAzureKeyVault((string)null, _ => new KeyResolver(new MockCredential()));
 
             // Assert
             var ex = Assert.Throws<ArgumentNullException>(action);
@@ -164,7 +165,7 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Keys.Tests
             var builder = serviceCollection.AddDataProtection();
 
             // Act
-            TestDelegate action = () => builder.ProtectKeysWithAzureKeyVault((Uri)null, _ => new KeyResolver(new DefaultAzureCredential()));
+            TestDelegate action = () => builder.ProtectKeysWithAzureKeyVault((Uri)null, _ => new KeyResolver(new MockCredential()));
 
             // Assert
             var ex = Assert.Throws<ArgumentNullException>(action);
