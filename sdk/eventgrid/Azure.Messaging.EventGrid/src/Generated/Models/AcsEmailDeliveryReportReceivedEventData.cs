@@ -13,8 +13,22 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class AcsEmailDeliveryReportReceivedEventData
     {
         /// <summary> Initializes a new instance of <see cref="AcsEmailDeliveryReportReceivedEventData"/>. </summary>
-        internal AcsEmailDeliveryReportReceivedEventData()
+        /// <param name="sender"> The Sender Email Address. </param>
+        /// <param name="recipient"> The recipient Email Address. </param>
+        /// <param name="internetMessageId"> The Internet Message Id of the email been sent. </param>
+        /// <param name="deliveryStatusDetails"> Detailed information about the status if any. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sender"/>, <paramref name="recipient"/>, <paramref name="internetMessageId"/> or <paramref name="deliveryStatusDetails"/> is null. </exception>
+        internal AcsEmailDeliveryReportReceivedEventData(string sender, string recipient, string internetMessageId, AcsEmailDeliveryReportStatusDetails deliveryStatusDetails)
         {
+            Argument.AssertNotNull(sender, nameof(sender));
+            Argument.AssertNotNull(recipient, nameof(recipient));
+            Argument.AssertNotNull(internetMessageId, nameof(internetMessageId));
+            Argument.AssertNotNull(deliveryStatusDetails, nameof(deliveryStatusDetails));
+
+            Sender = sender;
+            Recipient = recipient;
+            InternetMessageId = internetMessageId;
+            DeliveryStatusDetails = deliveryStatusDetails;
         }
 
         /// <summary> Initializes a new instance of <see cref="AcsEmailDeliveryReportReceivedEventData"/>. </summary>

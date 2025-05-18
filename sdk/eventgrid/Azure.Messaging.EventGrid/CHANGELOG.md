@@ -1,14 +1,12 @@
 # Release History
 
-## 4.31.0-beta.1 (Unreleased)
+## 4.31.0 (2025-05-19)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Added new communication events.
+- Added new API management events.
+- Add `EdgeSolutionVersionPublishedEventData` Edge event.
 
 ## 4.30.0 (2025-02-14)
 
