@@ -420,7 +420,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
         /// <param name="avs"> AVS-specific volume information. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <returns> A new <see cref="Models.PureStorageVolumeProperties"/> instance for mocking. </returns>
-        public static PureStorageVolumeProperties PureStorageVolumeProperties(string storagePoolInternalId = null, ResourceIdentifier storagePoolResourceId = null, string volumeInternalId = null, string displayName = null, PureStorageSpaceUsage space = null, PureStorageSoftDeletionState softDeletion = null, string createdTimestamp = null, long? provisionedSize = null, PureStorageAvsVmVolumeType? volumeType = null, PureStorageAvsDiskDetails avs = null, PureStorageProvisioningState? provisioningState = null)
+        public static PureStorageVolumeProperties PureStorageVolumeProperties(string storagePoolInternalId = null, ResourceIdentifier storagePoolResourceId = null, string volumeInternalId = null, string displayName = null, PureStorageSpaceUsage space = null, PureStorageSoftDeletionState softDeletion = null, string createdTimestamp = null, long? provisionedSize = null, PureStorageAvsVmVolumeType? volumeType = null, PureStorageAvsDiskDetails avs = null, PureStorageResourceProvisioningState? provisioningState = null)
         {
             return new PureStorageVolumeProperties(
                 storagePoolInternalId,
@@ -488,7 +488,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
         /// <param name="space"> Contains properties related to used Flash space. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <returns> A new <see cref="Models.PureStorageAvsVmProperties"/> instance for mocking. </returns>
-        public static PureStorageAvsVmProperties PureStorageAvsVmProperties(string storagePoolInternalId = null, ResourceIdentifier storagePoolResourceId = null, string displayName = null, DateTimeOffset? createdOn = null, PureStorageSoftDeletionState softDeletion = null, PureStorageAvsVmVolumeContainerType? volumeContainerType = null, PureStorageAvsVmDetails avs = null, PureStorageSpaceUsage space = null, PureStorageProvisioningState? provisioningState = null)
+        public static PureStorageAvsVmProperties PureStorageAvsVmProperties(string storagePoolInternalId = null, ResourceIdentifier storagePoolResourceId = null, string displayName = null, DateTimeOffset? createdOn = null, PureStorageSoftDeletionState softDeletion = null, PureStorageAvsVmVolumeContainerType? volumeContainerType = null, PureStorageAvsVmDetails avs = null, PureStorageSpaceUsage space = null, PureStorageResourceProvisioningState? provisioningState = null)
         {
             return new PureStorageAvsVmProperties(
                 storagePoolInternalId,

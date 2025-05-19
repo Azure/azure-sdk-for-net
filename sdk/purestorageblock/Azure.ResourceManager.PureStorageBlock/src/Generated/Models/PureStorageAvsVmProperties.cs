@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
         /// <param name="space"> Contains properties related to used Flash space. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PureStorageAvsVmProperties(string storagePoolInternalId, ResourceIdentifier storagePoolResourceId, string displayName, DateTimeOffset? createdOn, PureStorageSoftDeletionState softDeletion, PureStorageAvsVmVolumeContainerType? volumeContainerType, PureStorageAvsVmDetails avs, PureStorageSpaceUsage space, PureStorageProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PureStorageAvsVmProperties(string storagePoolInternalId, ResourceIdentifier storagePoolResourceId, string displayName, DateTimeOffset? createdOn, PureStorageSoftDeletionState softDeletion, PureStorageAvsVmVolumeContainerType? volumeContainerType, PureStorageAvsVmDetails avs, PureStorageSpaceUsage space, PureStorageResourceProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             StoragePoolInternalId = storagePoolInternalId;
             StoragePoolResourceId = storagePoolResourceId;
@@ -93,6 +93,6 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
         /// <summary> Contains properties related to used Flash space. </summary>
         public PureStorageSpaceUsage Space { get; }
         /// <summary> Provisioning state of the resource. </summary>
-        public PureStorageProvisioningState? ProvisioningState { get; }
+        public PureStorageResourceProvisioningState? ProvisioningState { get; }
     }
 }

@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
         /// <param name="avs"> AVS-specific volume information. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PureStorageVolumeProperties(string storagePoolInternalId, ResourceIdentifier storagePoolResourceId, string volumeInternalId, string displayName, PureStorageSpaceUsage space, PureStorageSoftDeletionState softDeletion, string createdTimestamp, long? provisionedSize, PureStorageAvsVmVolumeType? volumeType, PureStorageAvsDiskDetails avs, PureStorageProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PureStorageVolumeProperties(string storagePoolInternalId, ResourceIdentifier storagePoolResourceId, string volumeInternalId, string displayName, PureStorageSpaceUsage space, PureStorageSoftDeletionState softDeletion, string createdTimestamp, long? provisionedSize, PureStorageAvsVmVolumeType? volumeType, PureStorageAvsDiskDetails avs, PureStorageResourceProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             StoragePoolInternalId = storagePoolInternalId;
             StoragePoolResourceId = storagePoolResourceId;
@@ -111,6 +111,6 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
         /// <summary> AVS-specific volume information. </summary>
         public PureStorageAvsDiskDetails Avs { get; }
         /// <summary> Provisioning state of the resource. </summary>
-        public PureStorageProvisioningState? ProvisioningState { get; }
+        public PureStorageResourceProvisioningState? ProvisioningState { get; }
     }
 }

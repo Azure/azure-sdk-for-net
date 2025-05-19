@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
             PureStorageAvsVmVolumeContainerType? volumeContainerType = default;
             PureStorageAvsVmDetails avs = default;
             PureStorageSpaceUsage space = default;
-            PureStorageProvisioningState? provisioningState = default;
+            PureStorageResourceProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
                     {
                         continue;
                     }
-                    provisioningState = new PureStorageProvisioningState(property.Value.GetString());
+                    provisioningState = new PureStorageResourceProvisioningState(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
