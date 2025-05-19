@@ -25,6 +25,7 @@ namespace Azure.Generator.Management.Tests.TestHelpers
             Func<InputApiKeyAuth>? apiKeyAuth = null,
             Func<InputOAuth2Auth>? oauth2Auth = null,
             Func<IReadOnlyList<string>>? apiVersions = null,
+            Func<IReadOnlyList<InputLiteralType>>? inputLiterals = null,
             Func<IReadOnlyList<InputEnumType>>? inputEnums = null,
             Func<IReadOnlyList<InputModelType>>? inputModels = null,
             Func<IReadOnlyList<InputClient>>? clients = null,
@@ -33,6 +34,7 @@ namespace Azure.Generator.Management.Tests.TestHelpers
             HttpMessageApi? httpMessageApi = null)
         {
             IReadOnlyList<string> inputNsApiVersions = apiVersions?.Invoke() ?? [];
+            IReadOnlyList<InputLiteralType> inputNsLiterals = inputLiterals?.Invoke() ?? [];
             IReadOnlyList<InputEnumType> inputNsEnums = inputEnums?.Invoke() ?? [];
             IReadOnlyList<InputClient> inputNsClients = clients?.Invoke() ?? [];
             IReadOnlyList<InputModelType> inputNsModels = inputModels?.Invoke() ?? [];
@@ -41,6 +43,7 @@ namespace Azure.Generator.Management.Tests.TestHelpers
             var mockInputNs = new Mock<InputNamespace>(
                 "Samples",
                 inputNsApiVersions,
+                inputNsLiterals,
                 inputNsEnums,
                 inputNsModels,
                 inputNsClients,

@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Automanage
 {
     public partial class AutomanageBestPracticeResource : IJsonModel<AutomanageBestPracticeData>
     {
+        private static AutomanageBestPracticeData s_dataDeserializationInstance;
+        private static AutomanageBestPracticeData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<AutomanageBestPracticeData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<AutomanageBestPracticeData>)Data).Write(writer, options);
 
-        AutomanageBestPracticeData IJsonModel<AutomanageBestPracticeData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AutomanageBestPracticeData>)Data).Create(ref reader, options);
+        AutomanageBestPracticeData IJsonModel<AutomanageBestPracticeData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AutomanageBestPracticeData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<AutomanageBestPracticeData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AutomanageBestPracticeData>(Data, options, AzureResourceManagerAutomanageContext.Default);
 
         AutomanageBestPracticeData IPersistableModel<AutomanageBestPracticeData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AutomanageBestPracticeData>(data, options, AzureResourceManagerAutomanageContext.Default);
 
-        string IPersistableModel<AutomanageBestPracticeData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AutomanageBestPracticeData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<AutomanageBestPracticeData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AutomanageBestPracticeData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

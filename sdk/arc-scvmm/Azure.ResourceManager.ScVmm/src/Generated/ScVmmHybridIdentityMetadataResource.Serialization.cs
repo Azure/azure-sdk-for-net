@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.ScVmm
 {
     public partial class ScVmmHybridIdentityMetadataResource : IJsonModel<ScVmmHybridIdentityMetadataData>
     {
+        private static ScVmmHybridIdentityMetadataData s_dataDeserializationInstance;
+        private static ScVmmHybridIdentityMetadataData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<ScVmmHybridIdentityMetadataData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ScVmmHybridIdentityMetadataData>)Data).Write(writer, options);
 
-        ScVmmHybridIdentityMetadataData IJsonModel<ScVmmHybridIdentityMetadataData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ScVmmHybridIdentityMetadataData>)Data).Create(ref reader, options);
+        ScVmmHybridIdentityMetadataData IJsonModel<ScVmmHybridIdentityMetadataData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ScVmmHybridIdentityMetadataData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<ScVmmHybridIdentityMetadataData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ScVmmHybridIdentityMetadataData>(Data, options, AzureResourceManagerScVmmContext.Default);
 
         ScVmmHybridIdentityMetadataData IPersistableModel<ScVmmHybridIdentityMetadataData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ScVmmHybridIdentityMetadataData>(data, options, AzureResourceManagerScVmmContext.Default);
 
-        string IPersistableModel<ScVmmHybridIdentityMetadataData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ScVmmHybridIdentityMetadataData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<ScVmmHybridIdentityMetadataData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ScVmmHybridIdentityMetadataData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

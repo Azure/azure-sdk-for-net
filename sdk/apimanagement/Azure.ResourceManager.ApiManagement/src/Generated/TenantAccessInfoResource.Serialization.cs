@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.ApiManagement
 {
     public partial class TenantAccessInfoResource : IJsonModel<TenantAccessInfoData>
     {
+        private static TenantAccessInfoData s_dataDeserializationInstance;
+        private static TenantAccessInfoData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<TenantAccessInfoData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<TenantAccessInfoData>)Data).Write(writer, options);
 
-        TenantAccessInfoData IJsonModel<TenantAccessInfoData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<TenantAccessInfoData>)Data).Create(ref reader, options);
+        TenantAccessInfoData IJsonModel<TenantAccessInfoData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<TenantAccessInfoData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<TenantAccessInfoData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<TenantAccessInfoData>(Data, options, AzureResourceManagerApiManagementContext.Default);
 
         TenantAccessInfoData IPersistableModel<TenantAccessInfoData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<TenantAccessInfoData>(data, options, AzureResourceManagerApiManagementContext.Default);
 
-        string IPersistableModel<TenantAccessInfoData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<TenantAccessInfoData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<TenantAccessInfoData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<TenantAccessInfoData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

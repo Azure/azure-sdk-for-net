@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.SecurityCenter
 {
     public partial class SecurityHealthReportResource : IJsonModel<SecurityHealthReportData>
     {
+        private static SecurityHealthReportData s_dataDeserializationInstance;
+        private static SecurityHealthReportData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<SecurityHealthReportData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SecurityHealthReportData>)Data).Write(writer, options);
 
-        SecurityHealthReportData IJsonModel<SecurityHealthReportData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SecurityHealthReportData>)Data).Create(ref reader, options);
+        SecurityHealthReportData IJsonModel<SecurityHealthReportData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SecurityHealthReportData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<SecurityHealthReportData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SecurityHealthReportData>(Data, options, AzureResourceManagerSecurityCenterContext.Default);
 
         SecurityHealthReportData IPersistableModel<SecurityHealthReportData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SecurityHealthReportData>(data, options, AzureResourceManagerSecurityCenterContext.Default);
 
-        string IPersistableModel<SecurityHealthReportData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SecurityHealthReportData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<SecurityHealthReportData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SecurityHealthReportData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

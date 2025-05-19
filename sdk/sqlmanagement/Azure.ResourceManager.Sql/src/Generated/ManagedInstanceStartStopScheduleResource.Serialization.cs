@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Sql
 {
     public partial class ManagedInstanceStartStopScheduleResource : IJsonModel<ManagedInstanceStartStopScheduleData>
     {
+        private static ManagedInstanceStartStopScheduleData s_dataDeserializationInstance;
+        private static ManagedInstanceStartStopScheduleData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<ManagedInstanceStartStopScheduleData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ManagedInstanceStartStopScheduleData>)Data).Write(writer, options);
 
-        ManagedInstanceStartStopScheduleData IJsonModel<ManagedInstanceStartStopScheduleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ManagedInstanceStartStopScheduleData>)Data).Create(ref reader, options);
+        ManagedInstanceStartStopScheduleData IJsonModel<ManagedInstanceStartStopScheduleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ManagedInstanceStartStopScheduleData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<ManagedInstanceStartStopScheduleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ManagedInstanceStartStopScheduleData>(Data, options, AzureResourceManagerSqlContext.Default);
 
         ManagedInstanceStartStopScheduleData IPersistableModel<ManagedInstanceStartStopScheduleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ManagedInstanceStartStopScheduleData>(data, options, AzureResourceManagerSqlContext.Default);
 
-        string IPersistableModel<ManagedInstanceStartStopScheduleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ManagedInstanceStartStopScheduleData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<ManagedInstanceStartStopScheduleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ManagedInstanceStartStopScheduleData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

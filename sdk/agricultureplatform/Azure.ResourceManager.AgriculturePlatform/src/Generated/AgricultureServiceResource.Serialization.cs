@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.AgriculturePlatform
 {
     public partial class AgricultureServiceResource : IJsonModel<AgricultureServiceData>
     {
+        private static AgricultureServiceData s_dataDeserializationInstance;
+        private static AgricultureServiceData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<AgricultureServiceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<AgricultureServiceData>)Data).Write(writer, options);
 
-        AgricultureServiceData IJsonModel<AgricultureServiceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AgricultureServiceData>)Data).Create(ref reader, options);
+        AgricultureServiceData IJsonModel<AgricultureServiceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AgricultureServiceData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<AgricultureServiceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AgricultureServiceData>(Data, options, AzureResourceManagerAgriculturePlatformContext.Default);
 
         AgricultureServiceData IPersistableModel<AgricultureServiceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AgricultureServiceData>(data, options, AzureResourceManagerAgriculturePlatformContext.Default);
 
-        string IPersistableModel<AgricultureServiceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AgricultureServiceData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<AgricultureServiceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AgricultureServiceData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

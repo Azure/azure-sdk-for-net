@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Network
 {
     public partial class SecurityPartnerProviderResource : IJsonModel<SecurityPartnerProviderData>
     {
+        private static SecurityPartnerProviderData s_dataDeserializationInstance;
+        private static SecurityPartnerProviderData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<SecurityPartnerProviderData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SecurityPartnerProviderData>)Data).Write(writer, options);
 
-        SecurityPartnerProviderData IJsonModel<SecurityPartnerProviderData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SecurityPartnerProviderData>)Data).Create(ref reader, options);
+        SecurityPartnerProviderData IJsonModel<SecurityPartnerProviderData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SecurityPartnerProviderData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<SecurityPartnerProviderData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SecurityPartnerProviderData>(Data, options, AzureResourceManagerNetworkContext.Default);
 
         SecurityPartnerProviderData IPersistableModel<SecurityPartnerProviderData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SecurityPartnerProviderData>(data, options, AzureResourceManagerNetworkContext.Default);
 
-        string IPersistableModel<SecurityPartnerProviderData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SecurityPartnerProviderData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<SecurityPartnerProviderData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SecurityPartnerProviderData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

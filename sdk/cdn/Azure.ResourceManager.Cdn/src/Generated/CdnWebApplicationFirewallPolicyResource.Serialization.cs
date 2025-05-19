@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Cdn
 {
     public partial class CdnWebApplicationFirewallPolicyResource : IJsonModel<CdnWebApplicationFirewallPolicyData>
     {
+        private static CdnWebApplicationFirewallPolicyData s_dataDeserializationInstance;
+        private static CdnWebApplicationFirewallPolicyData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<CdnWebApplicationFirewallPolicyData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<CdnWebApplicationFirewallPolicyData>)Data).Write(writer, options);
 
-        CdnWebApplicationFirewallPolicyData IJsonModel<CdnWebApplicationFirewallPolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<CdnWebApplicationFirewallPolicyData>)Data).Create(ref reader, options);
+        CdnWebApplicationFirewallPolicyData IJsonModel<CdnWebApplicationFirewallPolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<CdnWebApplicationFirewallPolicyData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<CdnWebApplicationFirewallPolicyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<CdnWebApplicationFirewallPolicyData>(Data, options, AzureResourceManagerCdnContext.Default);
 
         CdnWebApplicationFirewallPolicyData IPersistableModel<CdnWebApplicationFirewallPolicyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CdnWebApplicationFirewallPolicyData>(data, options, AzureResourceManagerCdnContext.Default);
 
-        string IPersistableModel<CdnWebApplicationFirewallPolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<CdnWebApplicationFirewallPolicyData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<CdnWebApplicationFirewallPolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<CdnWebApplicationFirewallPolicyData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

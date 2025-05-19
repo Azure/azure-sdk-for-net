@@ -4,7 +4,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 
 ``` yaml
 title: EventGridClient
-require: https://github.com/Azure/azure-rest-api-specs/blob/8af03db33a90581edffb8a32fea562f36b7c61a8/specification/eventgrid/data-plane/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/90041e31d04e686567849f27d8641a5d61110508/specification/eventgrid/data-plane/readme.md
 generation1-convenience-client: true
 model-factory-for-hlc:
 - MediaJobOutputAsset
@@ -184,6 +184,14 @@ directive:
       if (path.includes("StorageLifecyclePolicyRunSummary"))
       {
           $[path]["properties"]["completionStatus"]["x-namespace"] = namespace;
+      }
+      if (path.includes("AcsCallEndedByProperties"))
+      {
+          $[path]["properties"]["type"]["x-namespace"] = namespace;
+      }
+      if (path.includes("AcsCallParticipantProperties"))
+      {
+          $[path]["properties"]["role"]["x-namespace"] = namespace;
       }
     }
 ```

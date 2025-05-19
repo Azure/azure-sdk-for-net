@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 {
     public partial class ReplicationEligibilityResultResource : IJsonModel<ReplicationEligibilityResultData>
     {
+        private static ReplicationEligibilityResultData s_dataDeserializationInstance;
+        private static ReplicationEligibilityResultData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<ReplicationEligibilityResultData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ReplicationEligibilityResultData>)Data).Write(writer, options);
 
-        ReplicationEligibilityResultData IJsonModel<ReplicationEligibilityResultData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ReplicationEligibilityResultData>)Data).Create(ref reader, options);
+        ReplicationEligibilityResultData IJsonModel<ReplicationEligibilityResultData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ReplicationEligibilityResultData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<ReplicationEligibilityResultData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ReplicationEligibilityResultData>(Data, options, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
 
         ReplicationEligibilityResultData IPersistableModel<ReplicationEligibilityResultData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ReplicationEligibilityResultData>(data, options, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
 
-        string IPersistableModel<ReplicationEligibilityResultData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ReplicationEligibilityResultData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<ReplicationEligibilityResultData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ReplicationEligibilityResultData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

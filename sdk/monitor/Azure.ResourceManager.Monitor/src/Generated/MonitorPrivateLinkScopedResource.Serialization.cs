@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Monitor
 {
     public partial class MonitorPrivateLinkScopedResource : IJsonModel<MonitorPrivateLinkScopedResourceData>
     {
+        private static MonitorPrivateLinkScopedResourceData s_dataDeserializationInstance;
+        private static MonitorPrivateLinkScopedResourceData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<MonitorPrivateLinkScopedResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<MonitorPrivateLinkScopedResourceData>)Data).Write(writer, options);
 
-        MonitorPrivateLinkScopedResourceData IJsonModel<MonitorPrivateLinkScopedResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MonitorPrivateLinkScopedResourceData>)Data).Create(ref reader, options);
+        MonitorPrivateLinkScopedResourceData IJsonModel<MonitorPrivateLinkScopedResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MonitorPrivateLinkScopedResourceData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<MonitorPrivateLinkScopedResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<MonitorPrivateLinkScopedResourceData>(Data, options, AzureResourceManagerMonitorContext.Default);
 
         MonitorPrivateLinkScopedResourceData IPersistableModel<MonitorPrivateLinkScopedResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MonitorPrivateLinkScopedResourceData>(data, options, AzureResourceManagerMonitorContext.Default);
 
-        string IPersistableModel<MonitorPrivateLinkScopedResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MonitorPrivateLinkScopedResourceData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<MonitorPrivateLinkScopedResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MonitorPrivateLinkScopedResourceData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

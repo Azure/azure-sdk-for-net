@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.AppContainers
 {
     public partial class ContainerAppConnectedEnvironmentStorageResource : IJsonModel<ContainerAppConnectedEnvironmentStorageData>
     {
+        private static ContainerAppConnectedEnvironmentStorageData s_dataDeserializationInstance;
+        private static ContainerAppConnectedEnvironmentStorageData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<ContainerAppConnectedEnvironmentStorageData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ContainerAppConnectedEnvironmentStorageData>)Data).Write(writer, options);
 
-        ContainerAppConnectedEnvironmentStorageData IJsonModel<ContainerAppConnectedEnvironmentStorageData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ContainerAppConnectedEnvironmentStorageData>)Data).Create(ref reader, options);
+        ContainerAppConnectedEnvironmentStorageData IJsonModel<ContainerAppConnectedEnvironmentStorageData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ContainerAppConnectedEnvironmentStorageData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<ContainerAppConnectedEnvironmentStorageData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ContainerAppConnectedEnvironmentStorageData>(Data, options, AzureResourceManagerAppContainersContext.Default);
 
         ContainerAppConnectedEnvironmentStorageData IPersistableModel<ContainerAppConnectedEnvironmentStorageData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ContainerAppConnectedEnvironmentStorageData>(data, options, AzureResourceManagerAppContainersContext.Default);
 
-        string IPersistableModel<ContainerAppConnectedEnvironmentStorageData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ContainerAppConnectedEnvironmentStorageData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<ContainerAppConnectedEnvironmentStorageData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ContainerAppConnectedEnvironmentStorageData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

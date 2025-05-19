@@ -3,6 +3,7 @@
  "name": "Azure.SpecialHeaders.XmsClientRequestId",
  "apiVersions": [],
  "enums": [],
+ "constants": [],
  "models": [],
  "clients": [
   {

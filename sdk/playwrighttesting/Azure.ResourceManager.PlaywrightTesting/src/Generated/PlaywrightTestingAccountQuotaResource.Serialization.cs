@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.PlaywrightTesting
 {
     public partial class PlaywrightTestingAccountQuotaResource : IJsonModel<PlaywrightTestingAccountQuotaData>
     {
+        private static PlaywrightTestingAccountQuotaData s_dataDeserializationInstance;
+        private static PlaywrightTestingAccountQuotaData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<PlaywrightTestingAccountQuotaData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<PlaywrightTestingAccountQuotaData>)Data).Write(writer, options);
 
-        PlaywrightTestingAccountQuotaData IJsonModel<PlaywrightTestingAccountQuotaData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PlaywrightTestingAccountQuotaData>)Data).Create(ref reader, options);
+        PlaywrightTestingAccountQuotaData IJsonModel<PlaywrightTestingAccountQuotaData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PlaywrightTestingAccountQuotaData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<PlaywrightTestingAccountQuotaData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<PlaywrightTestingAccountQuotaData>(Data, options, AzureResourceManagerPlaywrightTestingContext.Default);
 
         PlaywrightTestingAccountQuotaData IPersistableModel<PlaywrightTestingAccountQuotaData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PlaywrightTestingAccountQuotaData>(data, options, AzureResourceManagerPlaywrightTestingContext.Default);
 
-        string IPersistableModel<PlaywrightTestingAccountQuotaData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PlaywrightTestingAccountQuotaData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<PlaywrightTestingAccountQuotaData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PlaywrightTestingAccountQuotaData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

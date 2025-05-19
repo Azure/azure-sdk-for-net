@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.SecurityDevOps
 {
     public partial class GitHubRepoResource : IJsonModel<GitHubRepoData>
     {
+        private static GitHubRepoData s_dataDeserializationInstance;
+        private static GitHubRepoData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<GitHubRepoData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<GitHubRepoData>)Data).Write(writer, options);
 
-        GitHubRepoData IJsonModel<GitHubRepoData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<GitHubRepoData>)Data).Create(ref reader, options);
+        GitHubRepoData IJsonModel<GitHubRepoData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<GitHubRepoData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<GitHubRepoData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<GitHubRepoData>(Data, options, AzureResourceManagerSecurityDevOpsContext.Default);
 
         GitHubRepoData IPersistableModel<GitHubRepoData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<GitHubRepoData>(data, options, AzureResourceManagerSecurityDevOpsContext.Default);
 
-        string IPersistableModel<GitHubRepoData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<GitHubRepoData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<GitHubRepoData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<GitHubRepoData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

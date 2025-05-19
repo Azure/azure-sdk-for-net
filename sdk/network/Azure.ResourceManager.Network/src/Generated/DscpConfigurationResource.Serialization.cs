@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Network
 {
     public partial class DscpConfigurationResource : IJsonModel<DscpConfigurationData>
     {
+        private static DscpConfigurationData s_dataDeserializationInstance;
+        private static DscpConfigurationData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<DscpConfigurationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DscpConfigurationData>)Data).Write(writer, options);
 
-        DscpConfigurationData IJsonModel<DscpConfigurationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DscpConfigurationData>)Data).Create(ref reader, options);
+        DscpConfigurationData IJsonModel<DscpConfigurationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DscpConfigurationData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<DscpConfigurationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DscpConfigurationData>(Data, options, AzureResourceManagerNetworkContext.Default);
 
         DscpConfigurationData IPersistableModel<DscpConfigurationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DscpConfigurationData>(data, options, AzureResourceManagerNetworkContext.Default);
 
-        string IPersistableModel<DscpConfigurationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DscpConfigurationData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<DscpConfigurationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DscpConfigurationData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

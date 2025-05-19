@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.DataMigration
 {
     public partial class ProjectResource : IJsonModel<ProjectData>
     {
+        private static ProjectData s_dataDeserializationInstance;
+        private static ProjectData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<ProjectData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ProjectData>)Data).Write(writer, options);
 
-        ProjectData IJsonModel<ProjectData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ProjectData>)Data).Create(ref reader, options);
+        ProjectData IJsonModel<ProjectData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ProjectData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<ProjectData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ProjectData>(Data, options, AzureResourceManagerDataMigrationContext.Default);
 
         ProjectData IPersistableModel<ProjectData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ProjectData>(data, options, AzureResourceManagerDataMigrationContext.Default);
 
-        string IPersistableModel<ProjectData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ProjectData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<ProjectData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ProjectData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

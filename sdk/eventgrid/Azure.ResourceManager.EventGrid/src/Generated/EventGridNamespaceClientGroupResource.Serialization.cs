@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.EventGrid
 {
     public partial class EventGridNamespaceClientGroupResource : IJsonModel<EventGridNamespaceClientGroupData>
     {
+        private static EventGridNamespaceClientGroupData s_dataDeserializationInstance;
+        private static EventGridNamespaceClientGroupData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<EventGridNamespaceClientGroupData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<EventGridNamespaceClientGroupData>)Data).Write(writer, options);
 
-        EventGridNamespaceClientGroupData IJsonModel<EventGridNamespaceClientGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<EventGridNamespaceClientGroupData>)Data).Create(ref reader, options);
+        EventGridNamespaceClientGroupData IJsonModel<EventGridNamespaceClientGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<EventGridNamespaceClientGroupData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<EventGridNamespaceClientGroupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<EventGridNamespaceClientGroupData>(Data, options, AzureResourceManagerEventGridContext.Default);
 
         EventGridNamespaceClientGroupData IPersistableModel<EventGridNamespaceClientGroupData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<EventGridNamespaceClientGroupData>(data, options, AzureResourceManagerEventGridContext.Default);
 
-        string IPersistableModel<EventGridNamespaceClientGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<EventGridNamespaceClientGroupData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<EventGridNamespaceClientGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<EventGridNamespaceClientGroupData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }
