@@ -176,11 +176,15 @@ namespace Azure.ResourceManager.Models
         internal static ManagedServiceIdentity DeserializeManagedServiceIdentity(JsonElement element, ModelReaderWriterOptions options, JsonSerializerOptions jOptions)
         {
             options ??= new ModelReaderWriterOptions("W");
+            var jsonContext = jOptions is null
+                ? ManagedServiceIdentityJsonContext.Default
+                : new ManagedServiceIdentityJsonContext(new(jOptions));
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
+
             Guid? principalId = default;
             Guid? tenantId = default;
             ManagedServiceIdentityType type = default;
@@ -207,7 +211,7 @@ namespace Azure.ResourceManager.Models
                 }
                 if (property.NameEquals("type"u8))
                 {
-                    type = JsonSerializer.Deserialize<ManagedServiceIdentityType>($"{{{property}}}", ManagedServiceIdentityJsonContext.Default.ManagedServiceIdentityType);
+                    type = JsonSerializer.Deserialize<ManagedServiceIdentityType>($"{{{property}}}", jsonContext);
                     continue;
                 }
                 if (property.NameEquals("userAssignedIdentities"u8))
