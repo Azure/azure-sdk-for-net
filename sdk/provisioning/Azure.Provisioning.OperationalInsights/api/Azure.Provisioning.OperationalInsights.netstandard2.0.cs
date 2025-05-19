@@ -22,6 +22,7 @@ namespace Azure.Provisioning.OperationalInsights
         {
             public static readonly string V2019_09_01;
             public static readonly string V2023_09_01;
+            public static readonly string V2025_02_01;
         }
     }
     public partial class LogAnalyticsQueryPack : Azure.Provisioning.Primitives.ProvisionableResource
@@ -42,6 +43,7 @@ namespace Azure.Provisioning.OperationalInsights
         {
             public static readonly string V2019_09_01;
             public static readonly string V2023_09_01;
+            public static readonly string V2025_02_01;
         }
     }
     public partial class LogAnalyticsQueryRelatedMetadata : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -95,6 +97,7 @@ namespace Azure.Provisioning.OperationalInsights
             public static readonly string V2021_06_01;
             public static readonly string V2022_10_01;
             public static readonly string V2023_09_01;
+            public static readonly string V2025_02_01;
         }
     }
     public partial class OperationalInsightsClusterAssociatedWorkspace : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -201,6 +204,7 @@ namespace Azure.Provisioning.OperationalInsights
         {
             public static readonly string V2020_08_01;
             public static readonly string V2023_09_01;
+            public static readonly string V2025_02_01;
         }
     }
     public enum OperationalInsightsDataExportDestinationType
@@ -234,6 +238,7 @@ namespace Azure.Provisioning.OperationalInsights
         {
             public static readonly string V2020_08_01;
             public static readonly string V2023_09_01;
+            public static readonly string V2025_02_01;
         }
     }
     public enum OperationalInsightsDataSourceKind
@@ -306,6 +311,7 @@ namespace Azure.Provisioning.OperationalInsights
         {
             public static readonly string V2020_08_01;
             public static readonly string V2023_09_01;
+            public static readonly string V2025_02_01;
         }
     }
     public enum OperationalInsightsLinkedServiceEntityStatus
@@ -330,6 +336,7 @@ namespace Azure.Provisioning.OperationalInsights
         {
             public static readonly string V2020_08_01;
             public static readonly string V2023_09_01;
+            public static readonly string V2025_02_01;
         }
     }
     public partial class OperationalInsightsPrivateLinkScopedResourceInfo : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -369,6 +376,7 @@ namespace Azure.Provisioning.OperationalInsights
             public static readonly string V2021_06_01;
             public static readonly string V2022_10_01;
             public static readonly string V2023_09_01;
+            public static readonly string V2025_02_01;
         }
     }
     public partial class OperationalInsightsSchema : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -420,6 +428,7 @@ namespace Azure.Provisioning.OperationalInsights
             public static readonly string V2020_08_01;
             public static readonly string V2022_10_01;
             public static readonly string V2023_09_01;
+            public static readonly string V2025_02_01;
         }
     }
     public enum OperationalInsightsTableCreator
@@ -526,6 +535,7 @@ namespace Azure.Provisioning.OperationalInsights
             public static readonly string V2021_06_01;
             public static readonly string V2022_10_01;
             public static readonly string V2023_09_01;
+            public static readonly string V2025_02_01;
         }
     }
     public enum OperationalInsightsWorkspaceCapacityReservationLevel
@@ -627,6 +637,7 @@ namespace Azure.Provisioning.OperationalInsights
             public static readonly string V2015_03_20;
             public static readonly string V2020_08_01;
             public static readonly string V2023_09_01;
+            public static readonly string V2025_02_01;
         }
     }
     public enum StorageInsightState

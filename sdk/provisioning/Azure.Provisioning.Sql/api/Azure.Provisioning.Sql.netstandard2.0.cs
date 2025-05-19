@@ -28,6 +28,7 @@ namespace Azure.Provisioning.Sql
         public static partial class ResourceVersions
         {
             public static readonly string V2021_11_01;
+            public static readonly string V2023_08_01;
         }
     }
     public enum BlobAuditingPolicyName
@@ -72,6 +73,7 @@ namespace Azure.Provisioning.Sql
         public static partial class ResourceVersions
         {
             public static readonly string V2021_11_01;
+            public static readonly string V2023_08_01;
         }
     }
     public partial class DatabaseIdentity : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -123,6 +125,7 @@ namespace Azure.Provisioning.Sql
             public static readonly string V2014_01_01;
             public static readonly string V2014_04_01;
             public static readonly string V2021_11_01;
+            public static readonly string V2023_08_01;
         }
     }
     public enum DataMaskingState
@@ -152,6 +155,7 @@ namespace Azure.Provisioning.Sql
         public static partial class ResourceVersions
         {
             public static readonly string V2021_11_01;
+            public static readonly string V2023_08_01;
         }
     }
     public enum DistributedAvailabilityGroupReplicationMode
@@ -196,6 +200,7 @@ namespace Azure.Provisioning.Sql
             public static readonly string V2014_04_01;
             public static readonly string V2015_05_01;
             public static readonly string V2021_11_01;
+            public static readonly string V2023_08_01;
         }
     }
     public enum ElasticPoolLicenseType
@@ -236,6 +241,7 @@ namespace Azure.Provisioning.Sql
         public static partial class ResourceVersions
         {
             public static readonly string V2021_11_01;
+            public static readonly string V2023_08_01;
         }
     }
     public enum EncryptionProtectorName
@@ -269,6 +275,7 @@ namespace Azure.Provisioning.Sql
             public static readonly string V2014_04_01;
             public static readonly string V2015_01_01;
             public static readonly string V2021_11_01;
+            public static readonly string V2023_08_01;
         }
     }
     public partial class ExtendedServerBlobAuditingPolicy : Azure.Provisioning.Primitives.ProvisionableResource
@@ -295,6 +302,7 @@ namespace Azure.Provisioning.Sql
         public static partial class ResourceVersions
         {
             public static readonly string V2021_11_01;
+            public static readonly string V2023_08_01;
         }
     }
     public enum ExternalGovernanceStatus
@@ -324,6 +332,7 @@ namespace Azure.Provisioning.Sql
         public static partial class ResourceVersions
         {
             public static readonly string V2021_11_01;
+            public static readonly string V2023_08_01;
         }
     }
     public partial class FailoverGroupReadOnlyEndpoint : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -368,6 +377,7 @@ namespace Azure.Provisioning.Sql
             public static readonly string V2014_01_01;
             public static readonly string V2014_04_01;
             public static readonly string V2021_11_01;
+            public static readonly string V2023_08_01;
         }
     }
     public enum GeoBackupPolicyName
@@ -402,6 +412,7 @@ namespace Azure.Provisioning.Sql
         public static partial class ResourceVersions
         {
             public static readonly string V2021_11_01;
+            public static readonly string V2023_08_01;
         }
     }
     public partial class InstanceFailoverGroupReadWriteEndpoint : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -435,6 +446,7 @@ namespace Azure.Provisioning.Sql
         public static partial class ResourceVersions
         {
             public static readonly string V2021_11_01;
+            public static readonly string V2023_08_01;
         }
     }
     public enum InstancePoolLicenseType
@@ -457,6 +469,7 @@ namespace Azure.Provisioning.Sql
             public static readonly string V2014_01_01;
             public static readonly string V2014_04_01;
             public static readonly string V2021_11_01;
+            public static readonly string V2023_08_01;
         }
     }
     public enum JobAgentState
@@ -578,6 +591,7 @@ namespace Azure.Provisioning.Sql
         public static partial class ResourceVersions
         {
             public static readonly string V2021_11_01;
+            public static readonly string V2023_08_01;
         }
     }
     public enum LedgerDigestUploadsName
@@ -604,6 +618,7 @@ namespace Azure.Provisioning.Sql
         {
             public static readonly string V2014_04_01;
             public static readonly string V2021_11_01;
+            public static readonly string V2023_08_01;
         }
     }
     public partial class LongTermRetentionPolicy : Azure.Provisioning.Primitives.ProvisionableResource
@@ -624,6 +639,7 @@ namespace Azure.Provisioning.Sql
         public static partial class ResourceVersions
         {
             public static readonly string V2021_11_01;
+            public static readonly string V2023_08_01;
         }
     }
     public enum LongTermRetentionPolicyName
@@ -644,6 +660,7 @@ namespace Azure.Provisioning.Sql
         public static partial class ResourceVersions
         {
             public static readonly string V2021_11_01;
+            public static readonly string V2023_08_01;
         }
     }
     public partial class ManagedDatabase : Azure.Provisioning.Primitives.ProvisionableResource
@@ -682,6 +699,7 @@ namespace Azure.Provisioning.Sql
         public static partial class ResourceVersions
         {
             public static readonly string V2021_11_01;
+            public static readonly string V2023_08_01;
         }
     }
     public partial class ManagedDatabaseAdvancedThreatProtection : Azure.Provisioning.Primitives.ProvisionableResource
@@ -697,7 +715,7 @@ namespace Azure.Provisioning.Sql
         public static Azure.Provisioning.Sql.ManagedDatabaseAdvancedThreatProtection FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
-            public static readonly string V2021_11_01;
+            public static readonly string V2023_08_01;
         }
     }
     public enum ManagedDatabaseCreateMode
@@ -728,6 +746,7 @@ namespace Azure.Provisioning.Sql
         public static partial class ResourceVersions
         {
             public static readonly string V2021_11_01;
+            public static readonly string V2023_08_01;
         }
     }
     public partial class ManagedDatabaseSensitivityLabel : Azure.Provisioning.Primitives.ProvisionableResource
@@ -782,6 +801,7 @@ namespace Azure.Provisioning.Sql
         public static partial class ResourceVersions
         {
             public static readonly string V2021_11_01;
+            public static readonly string V2023_08_01;
         }
     }
     public partial class ManagedDatabaseVulnerabilityAssessmentRuleBaseline : Azure.Provisioning.Primitives.ProvisionableResource
@@ -840,6 +860,7 @@ namespace Azure.Provisioning.Sql
         public static partial class ResourceVersions
         {
             public static readonly string V2021_11_01;
+            public static readonly string V2023_08_01;
         }
     }
     public partial class ManagedInstanceAdministrator : Azure.Provisioning.Primitives.ProvisionableResource
@@ -858,6 +879,7 @@ namespace Azure.Provisioning.Sql
         public static partial class ResourceVersions
         {
             public static readonly string V2021_11_01;
+            public static readonly string V2023_08_01;
         }
     }
     public enum ManagedInstanceAdministratorType
@@ -877,7 +899,7 @@ namespace Azure.Provisioning.Sql
         public static Azure.Provisioning.Sql.ManagedInstanceAdvancedThreatProtection FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
-            public static readonly string V2021_11_01;
+            public static readonly string V2023_08_01;
         }
     }
     public partial class ManagedInstanceAzureADOnlyAuthentication : Azure.Provisioning.Primitives.ProvisionableResource
@@ -893,6 +915,7 @@ namespace Azure.Provisioning.Sql
         public static partial class ResourceVersions
         {
             public static readonly string V2021_11_01;
+            public static readonly string V2023_08_01;
         }
     }
     public partial class ManagedInstanceDtc : Azure.Provisioning.Primitives.ProvisionableResource
@@ -912,6 +935,7 @@ namespace Azure.Provisioning.Sql
         public static partial class ResourceVersions
         {
             public static readonly string V2021_11_01;
+            public static readonly string V2023_08_01;
         }
     }
     public partial class ManagedInstanceDtcSecuritySettings : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -950,6 +974,7 @@ namespace Azure.Provisioning.Sql
         public static partial class ResourceVersions
         {
             public static readonly string V2021_11_01;
+            public static readonly string V2023_08_01;
         }
     }
     public partial class ManagedInstanceExternalAdministrator : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -981,6 +1006,7 @@ namespace Azure.Provisioning.Sql
         public static partial class ResourceVersions
         {
             public static readonly string V2021_11_01;
+            public static readonly string V2023_08_01;
         }
     }
     public enum ManagedInstanceLicenseType
@@ -1004,6 +1030,7 @@ namespace Azure.Provisioning.Sql
         public static partial class ResourceVersions
         {
             public static readonly string V2021_11_01;
+            public static readonly string V2023_08_01;
         }
     }
     public enum ManagedInstanceLongTermRetentionPolicyName
@@ -1040,6 +1067,7 @@ namespace Azure.Provisioning.Sql
         public static partial class ResourceVersions
         {
             public static readonly string V2021_11_01;
+            public static readonly string V2023_08_01;
         }
     }
     public partial class ManagedInstancePrivateEndpointConnectionProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -1096,6 +1124,7 @@ namespace Azure.Provisioning.Sql
         public static partial class ResourceVersions
         {
             public static readonly string V2021_11_01;
+            public static readonly string V2023_08_01;
         }
     }
     public enum ManagedInstanceServerConfigurationOptionName
@@ -1118,6 +1147,7 @@ namespace Azure.Provisioning.Sql
         public static partial class ResourceVersions
         {
             public static readonly string V2021_11_01;
+            public static readonly string V2023_08_01;
         }
     }
     public partial class ManagedInstanceStartStopSchedule : Azure.Provisioning.Primitives.ProvisionableResource
@@ -1137,6 +1167,7 @@ namespace Azure.Provisioning.Sql
         public static partial class ResourceVersions
         {
             public static readonly string V2021_11_01;
+            public static readonly string V2023_08_01;
         }
     }
     public enum ManagedInstanceStartStopScheduleName
@@ -1160,6 +1191,7 @@ namespace Azure.Provisioning.Sql
         public static partial class ResourceVersions
         {
             public static readonly string V2021_11_01;
+            public static readonly string V2023_08_01;
         }
     }
     public partial class ManagedLedgerDigestUpload : Azure.Provisioning.Primitives.ProvisionableResource
@@ -1175,7 +1207,7 @@ namespace Azure.Provisioning.Sql
         public static Azure.Provisioning.Sql.ManagedLedgerDigestUpload FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
-            public static readonly string V2021_11_01;
+            public static readonly string V2023_08_01;
         }
     }
     public enum ManagedLedgerDigestUploadsName
@@ -1218,6 +1250,7 @@ namespace Azure.Provisioning.Sql
         public static partial class ResourceVersions
         {
             public static readonly string V2021_11_01;
+            public static readonly string V2023_08_01;
         }
     }
     public partial class ManagedServerSecurityAlertPolicy : Azure.Provisioning.Primitives.ProvisionableResource
@@ -1240,6 +1273,7 @@ namespace Azure.Provisioning.Sql
         public static partial class ResourceVersions
         {
             public static readonly string V2021_11_01;
+            public static readonly string V2023_08_01;
         }
     }
     public enum ManagedShortTermRetentionPolicyName
@@ -1260,6 +1294,7 @@ namespace Azure.Provisioning.Sql
         public static partial class ResourceVersions
         {
             public static readonly string V2021_11_01;
+            public static readonly string V2023_08_01;
         }
     }
     public partial class OutboundFirewallRule : Azure.Provisioning.Primitives.ProvisionableResource
@@ -1277,6 +1312,7 @@ namespace Azure.Provisioning.Sql
             public static readonly string V2014_01_01;
             public static readonly string V2014_04_01;
             public static readonly string V2021_11_01;
+            public static readonly string V2023_08_01;
         }
     }
     public partial class PartnerRegionInfo : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -1356,6 +1392,7 @@ namespace Azure.Provisioning.Sql
         public static partial class ResourceVersions
         {
             public static readonly string V2021_11_01;
+            public static readonly string V2023_08_01;
         }
     }
     public enum ServerConnectionType
@@ -1433,6 +1470,7 @@ namespace Azure.Provisioning.Sql
         {
             public static readonly string V2018_06_01;
             public static readonly string V2021_11_01;
+            public static readonly string V2023_08_01;
         }
     }
     public enum SqlAgentConfigurationPropertiesState
@@ -1562,6 +1600,7 @@ namespace Azure.Provisioning.Sql
             public static readonly string V2014_04_01;
             public static readonly string V2015_01_01;
             public static readonly string V2021_11_01;
+            public static readonly string V2023_08_01;
         }
     }
     public partial class SqlDatabaseBlobAuditingPolicy : Azure.Provisioning.Primitives.ProvisionableResource
@@ -1587,6 +1626,7 @@ namespace Azure.Provisioning.Sql
         public static partial class ResourceVersions
         {
             public static readonly string V2021_11_01;
+            public static readonly string V2023_08_01;
         }
     }
     public enum SqlDatabaseCreateMode
@@ -1637,6 +1677,7 @@ namespace Azure.Provisioning.Sql
             public static readonly string V2014_01_01;
             public static readonly string V2014_04_01;
             public static readonly string V2021_11_01;
+            public static readonly string V2023_08_01;
         }
     }
     public partial class SqlDatabaseSensitivityLabel : Azure.Provisioning.Primitives.ProvisionableResource
@@ -1724,6 +1765,7 @@ namespace Azure.Provisioning.Sql
         public static partial class ResourceVersions
         {
             public static readonly string V2021_11_01;
+            public static readonly string V2023_08_01;
         }
     }
     public partial class SqlDatabaseVulnerabilityAssessmentRuleBaseline : Azure.Provisioning.Primitives.ProvisionableResource
@@ -1763,6 +1805,7 @@ namespace Azure.Provisioning.Sql
             public static readonly string V2014_01_01;
             public static readonly string V2014_04_01;
             public static readonly string V2021_11_01;
+            public static readonly string V2023_08_01;
         }
     }
     public enum SqlMinimalTlsVersion
@@ -1796,6 +1839,7 @@ namespace Azure.Provisioning.Sql
             public static readonly string V2014_01_01;
             public static readonly string V2014_04_01;
             public static readonly string V2021_11_01;
+            public static readonly string V2023_08_01;
         }
     }
     public enum SqlPrivateEndpointProvisioningState
@@ -1875,6 +1919,7 @@ namespace Azure.Provisioning.Sql
             public static readonly string V2014_01_01;
             public static readonly string V2014_04_01;
             public static readonly string V2021_11_01;
+            public static readonly string V2023_08_01;
         }
     }
     public partial class SqlServerAzureADAdministrator : Azure.Provisioning.Primitives.ProvisionableResource
@@ -1895,6 +1940,7 @@ namespace Azure.Provisioning.Sql
             public static readonly string V2014_01_01;
             public static readonly string V2014_04_01;
             public static readonly string V2021_11_01;
+            public static readonly string V2023_08_01;
         }
     }
     public partial class SqlServerAzureADOnlyAuthentication : Azure.Provisioning.Primitives.ProvisionableResource
@@ -1912,6 +1958,7 @@ namespace Azure.Provisioning.Sql
             public static readonly string V2014_01_01;
             public static readonly string V2014_04_01;
             public static readonly string V2021_11_01;
+            public static readonly string V2023_08_01;
         }
     }
     public partial class SqlServerBlobAuditingPolicy : Azure.Provisioning.Primitives.ProvisionableResource
@@ -1937,6 +1984,7 @@ namespace Azure.Provisioning.Sql
         public static partial class ResourceVersions
         {
             public static readonly string V2021_11_01;
+            public static readonly string V2023_08_01;
         }
     }
     public partial class SqlServerCommunicationLink : Azure.Provisioning.Primitives.ProvisionableResource
@@ -1975,6 +2023,7 @@ namespace Azure.Provisioning.Sql
             public static readonly string V2014_01_01;
             public static readonly string V2014_04_01;
             public static readonly string V2021_11_01;
+            public static readonly string V2023_08_01;
         }
     }
     public partial class SqlServerDatabaseRestorePoint : Azure.Provisioning.Primitives.ProvisionableResource
@@ -1997,6 +2046,7 @@ namespace Azure.Provisioning.Sql
             public static readonly string V2014_04_01;
             public static readonly string V2015_01_01;
             public static readonly string V2021_11_01;
+            public static readonly string V2023_08_01;
         }
     }
     public partial class SqlServerDevOpsAuditingSetting : Azure.Provisioning.Primitives.ProvisionableResource
@@ -2017,6 +2067,7 @@ namespace Azure.Provisioning.Sql
         public static partial class ResourceVersions
         {
             public static readonly string V2021_11_01;
+            public static readonly string V2023_08_01;
         }
     }
     public partial class SqlServerDnsAlias : Azure.Provisioning.Primitives.ProvisionableResource
@@ -2032,6 +2083,7 @@ namespace Azure.Provisioning.Sql
         public static partial class ResourceVersions
         {
             public static readonly string V2021_11_01;
+            public static readonly string V2023_08_01;
         }
     }
     public partial class SqlServerJob : Azure.Provisioning.Primitives.ProvisionableResource
@@ -2049,6 +2101,7 @@ namespace Azure.Provisioning.Sql
         public static partial class ResourceVersions
         {
             public static readonly string V2021_11_01;
+            public static readonly string V2023_08_01;
         }
     }
     public partial class SqlServerJobAgent : Azure.Provisioning.Primitives.ProvisionableResource
@@ -2068,6 +2121,7 @@ namespace Azure.Provisioning.Sql
         public static partial class ResourceVersions
         {
             public static readonly string V2021_11_01;
+            public static readonly string V2023_08_01;
         }
     }
     public partial class SqlServerJobCredential : Azure.Provisioning.Primitives.ProvisionableResource
@@ -2084,6 +2138,7 @@ namespace Azure.Provisioning.Sql
         public static partial class ResourceVersions
         {
             public static readonly string V2021_11_01;
+            public static readonly string V2023_08_01;
         }
     }
     public partial class SqlServerJobExecution : Azure.Provisioning.Primitives.ProvisionableResource
@@ -2111,6 +2166,7 @@ namespace Azure.Provisioning.Sql
         public static partial class ResourceVersions
         {
             public static readonly string V2021_11_01;
+            public static readonly string V2023_08_01;
         }
     }
     public partial class SqlServerJobSchedule : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -2146,6 +2202,7 @@ namespace Azure.Provisioning.Sql
         public static partial class ResourceVersions
         {
             public static readonly string V2021_11_01;
+            public static readonly string V2023_08_01;
         }
     }
     public partial class SqlServerJobTargetGroup : Azure.Provisioning.Primitives.ProvisionableResource
@@ -2161,6 +2218,7 @@ namespace Azure.Provisioning.Sql
         public static partial class ResourceVersions
         {
             public static readonly string V2021_11_01;
+            public static readonly string V2023_08_01;
         }
     }
     public partial class SqlServerKey : Azure.Provisioning.Primitives.ProvisionableResource
@@ -2183,6 +2241,7 @@ namespace Azure.Provisioning.Sql
         public static partial class ResourceVersions
         {
             public static readonly string V2021_11_01;
+            public static readonly string V2023_08_01;
         }
     }
     public enum SqlServerKeyType
@@ -2223,6 +2282,7 @@ namespace Azure.Provisioning.Sql
         public static partial class ResourceVersions
         {
             public static readonly string V2021_11_01;
+            public static readonly string V2023_08_01;
         }
     }
     public partial class SqlServerSqlVulnerabilityAssessment : Azure.Provisioning.Primitives.ProvisionableResource
@@ -2237,9 +2297,7 @@ namespace Azure.Provisioning.Sql
         public static Azure.Provisioning.Sql.SqlServerSqlVulnerabilityAssessment FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
-            public static readonly string V2014_01_01;
-            public static readonly string V2014_04_01;
-            public static readonly string V2021_11_01;
+            public static readonly string V2023_08_01;
         }
     }
     public partial class SqlServerSqlVulnerabilityAssessmentBaseline : Azure.Provisioning.Primitives.ProvisionableResource
@@ -2255,9 +2313,7 @@ namespace Azure.Provisioning.Sql
         public static Azure.Provisioning.Sql.SqlServerSqlVulnerabilityAssessmentBaseline FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
-            public static readonly string V2014_01_01;
-            public static readonly string V2014_04_01;
-            public static readonly string V2021_11_01;
+            public static readonly string V2023_08_01;
         }
     }
     public partial class SqlServerSqlVulnerabilityAssessmentBaselineRule : Azure.Provisioning.Primitives.ProvisionableResource
@@ -2273,9 +2329,7 @@ namespace Azure.Provisioning.Sql
         public static Azure.Provisioning.Sql.SqlServerSqlVulnerabilityAssessmentBaselineRule FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
-            public static readonly string V2014_01_01;
-            public static readonly string V2014_04_01;
-            public static readonly string V2021_11_01;
+            public static readonly string V2023_08_01;
         }
     }
     public partial class SqlServerTrustGroup : Azure.Provisioning.Primitives.ProvisionableResource
@@ -2291,6 +2345,7 @@ namespace Azure.Provisioning.Sql
         public static partial class ResourceVersions
         {
             public static readonly string V2021_11_01;
+            public static readonly string V2023_08_01;
         }
     }
     public partial class SqlServerVirtualNetworkRule : Azure.Provisioning.Primitives.ProvisionableResource
@@ -2308,6 +2363,7 @@ namespace Azure.Provisioning.Sql
         public static partial class ResourceVersions
         {
             public static readonly string V2021_11_01;
+            public static readonly string V2023_08_01;
         }
     }
     public enum SqlServerVirtualNetworkRuleState
@@ -2335,6 +2391,7 @@ namespace Azure.Provisioning.Sql
         public static partial class ResourceVersions
         {
             public static readonly string V2021_11_01;
+            public static readonly string V2023_08_01;
         }
     }
     public partial class SqlServicePrincipal : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -2389,6 +2446,7 @@ namespace Azure.Provisioning.Sql
         public static partial class ResourceVersions
         {
             public static readonly string V2021_11_01;
+            public static readonly string V2023_08_01;
         }
     }
     public enum SyncAgentState
@@ -2435,6 +2493,7 @@ namespace Azure.Provisioning.Sql
         public static partial class ResourceVersions
         {
             public static readonly string V2021_11_01;
+            public static readonly string V2023_08_01;
         }
     }
     public partial class SyncGroupSchema : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -2491,6 +2550,7 @@ namespace Azure.Provisioning.Sql
         public static partial class ResourceVersions
         {
             public static readonly string V2021_11_01;
+            public static readonly string V2023_08_01;
         }
     }
     public enum SyncMemberDbType
@@ -2567,6 +2627,7 @@ namespace Azure.Provisioning.Sql
         public static partial class ResourceVersions
         {
             public static readonly string V2021_11_01;
+            public static readonly string V2023_08_01;
         }
     }
     public partial class WorkloadGroup : Azure.Provisioning.Primitives.ProvisionableResource
@@ -2587,6 +2648,7 @@ namespace Azure.Provisioning.Sql
         public static partial class ResourceVersions
         {
             public static readonly string V2021_11_01;
+            public static readonly string V2023_08_01;
         }
     }
 }

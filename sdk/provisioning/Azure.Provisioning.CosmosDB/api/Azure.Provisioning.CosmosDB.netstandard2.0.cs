@@ -101,6 +101,8 @@ namespace Azure.Provisioning.CosmosDB
             public static readonly string V2023_11_15;
             public static readonly string V2024_05_15;
             public static readonly string V2024_08_15;
+            public static readonly string V2024_11_15;
+            public static readonly string V2025_04_15;
         }
     }
     public partial class CassandraClusterBackupSchedule : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -183,6 +185,8 @@ namespace Azure.Provisioning.CosmosDB
             public static readonly string V2023_11_15;
             public static readonly string V2024_05_15;
             public static readonly string V2024_08_15;
+            public static readonly string V2024_11_15;
+            public static readonly string V2025_04_15;
         }
     }
     public partial class CassandraDataCenterProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -263,6 +267,8 @@ namespace Azure.Provisioning.CosmosDB
             public static readonly string V2023_11_15;
             public static readonly string V2024_05_15;
             public static readonly string V2024_08_15;
+            public static readonly string V2024_11_15;
+            public static readonly string V2025_04_15;
         }
     }
     public partial class CassandraKeyspacePropertiesConfig : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -312,6 +318,8 @@ namespace Azure.Provisioning.CosmosDB
             public static readonly string V2023_11_15;
             public static readonly string V2024_05_15;
             public static readonly string V2024_08_15;
+            public static readonly string V2024_11_15;
+            public static readonly string V2025_04_15;
         }
     }
     public partial class CassandraPartitionKey : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -378,6 +386,8 @@ namespace Azure.Provisioning.CosmosDB
             public static readonly string V2023_11_15;
             public static readonly string V2024_05_15;
             public static readonly string V2024_08_15;
+            public static readonly string V2024_11_15;
+            public static readonly string V2025_04_15;
         }
     }
     public partial class CassandraTablePropertiesConfig : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -436,6 +446,8 @@ namespace Azure.Provisioning.CosmosDB
             public static readonly string V2023_11_15;
             public static readonly string V2024_05_15;
             public static readonly string V2024_08_15;
+            public static readonly string V2024_11_15;
+            public static readonly string V2025_04_15;
         }
     }
     public partial class CassandraViewGetPropertiesOptions : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -494,6 +506,8 @@ namespace Azure.Provisioning.CosmosDB
             public static readonly string V2023_11_15;
             public static readonly string V2024_05_15;
             public static readonly string V2024_08_15;
+            public static readonly string V2024_11_15;
+            public static readonly string V2025_04_15;
         }
     }
     public partial class CassandraViewResource : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -543,6 +557,8 @@ namespace Azure.Provisioning.CosmosDB
             public static readonly string V2023_11_15;
             public static readonly string V2024_05_15;
             public static readonly string V2024_08_15;
+            public static readonly string V2024_11_15;
+            public static readonly string V2025_04_15;
         }
     }
     public enum CompositePathSortOrder
@@ -690,6 +706,8 @@ namespace Azure.Provisioning.CosmosDB
             public static readonly string V2023_11_15;
             public static readonly string V2024_05_15;
             public static readonly string V2024_08_15;
+            public static readonly string V2024_11_15;
+            public static readonly string V2025_04_15;
         }
     }
     public partial class CosmosDBAccountBackupPolicy : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -983,6 +1001,8 @@ namespace Azure.Provisioning.CosmosDB
             public static readonly string V2023_11_15;
             public static readonly string V2024_05_15;
             public static readonly string V2024_08_15;
+            public static readonly string V2024_11_15;
+            public static readonly string V2025_04_15;
         }
     }
     public partial class CosmosDBPrivateEndpointConnectionData : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -1071,6 +1091,8 @@ namespace Azure.Provisioning.CosmosDB
             public static readonly string V2023_11_15;
             public static readonly string V2024_05_15;
             public static readonly string V2024_08_15;
+            public static readonly string V2024_11_15;
+            public static readonly string V2025_04_15;
         }
     }
     public partial class CosmosDBServiceProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -1153,6 +1175,8 @@ namespace Azure.Provisioning.CosmosDB
             public static readonly string V2023_11_15;
             public static readonly string V2024_05_15;
             public static readonly string V2024_08_15;
+            public static readonly string V2024_11_15;
+            public static readonly string V2025_04_15;
         }
     }
     public partial class CosmosDBSqlClientEncryptionKeyProperties : Azure.Provisioning.CosmosDB.CosmosDBSqlClientEncryptionKeyResourceInfo
@@ -1213,6 +1237,8 @@ namespace Azure.Provisioning.CosmosDB
             public static readonly string V2023_11_15;
             public static readonly string V2024_05_15;
             public static readonly string V2024_08_15;
+            public static readonly string V2024_11_15;
+            public static readonly string V2025_04_15;
         }
     }
     public partial class CosmosDBSqlContainerPropertiesConfig : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -1279,6 +1305,8 @@ namespace Azure.Provisioning.CosmosDB
             public static readonly string V2023_11_15;
             public static readonly string V2024_05_15;
             public static readonly string V2024_08_15;
+            public static readonly string V2024_11_15;
+            public static readonly string V2025_04_15;
         }
     }
     public partial class CosmosDBSqlDatabase : Azure.Provisioning.Primitives.ProvisionableResource
@@ -1322,6 +1350,8 @@ namespace Azure.Provisioning.CosmosDB
             public static readonly string V2023_11_15;
             public static readonly string V2024_05_15;
             public static readonly string V2024_08_15;
+            public static readonly string V2024_11_15;
+            public static readonly string V2025_04_15;
         }
     }
     public partial class CosmosDBSqlDatabasePropertiesConfig : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -1379,6 +1409,8 @@ namespace Azure.Provisioning.CosmosDB
             public static readonly string V2023_11_15;
             public static readonly string V2024_05_15;
             public static readonly string V2024_08_15;
+            public static readonly string V2024_11_15;
+            public static readonly string V2025_04_15;
         }
     }
     public partial class CosmosDBSqlRoleAssignment : Azure.Provisioning.Primitives.ProvisionableResource
@@ -1420,6 +1452,8 @@ namespace Azure.Provisioning.CosmosDB
             public static readonly string V2023_11_15;
             public static readonly string V2024_05_15;
             public static readonly string V2024_08_15;
+            public static readonly string V2024_11_15;
+            public static readonly string V2025_04_15;
         }
     }
     public partial class CosmosDBSqlRoleDefinition : Azure.Provisioning.Primitives.ProvisionableResource
@@ -1462,6 +1496,8 @@ namespace Azure.Provisioning.CosmosDB
             public static readonly string V2023_11_15;
             public static readonly string V2024_05_15;
             public static readonly string V2024_08_15;
+            public static readonly string V2024_11_15;
+            public static readonly string V2025_04_15;
         }
     }
     public enum CosmosDBSqlRoleDefinitionType
@@ -1517,6 +1553,8 @@ namespace Azure.Provisioning.CosmosDB
             public static readonly string V2023_11_15;
             public static readonly string V2024_05_15;
             public static readonly string V2024_08_15;
+            public static readonly string V2024_11_15;
+            public static readonly string V2025_04_15;
         }
     }
     public partial class CosmosDBSqlStoredProcedureResourceInfo : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -1567,6 +1605,8 @@ namespace Azure.Provisioning.CosmosDB
             public static readonly string V2023_11_15;
             public static readonly string V2024_05_15;
             public static readonly string V2024_08_15;
+            public static readonly string V2024_11_15;
+            public static readonly string V2025_04_15;
         }
     }
     public enum CosmosDBSqlTriggerOperation
@@ -1632,6 +1672,8 @@ namespace Azure.Provisioning.CosmosDB
             public static readonly string V2023_11_15;
             public static readonly string V2024_05_15;
             public static readonly string V2024_08_15;
+            public static readonly string V2024_11_15;
+            public static readonly string V2025_04_15;
         }
     }
     public partial class CosmosDBSqlUserDefinedFunctionResourceInfo : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -1694,6 +1736,8 @@ namespace Azure.Provisioning.CosmosDB
             public static readonly string V2023_11_15;
             public static readonly string V2024_05_15;
             public static readonly string V2024_08_15;
+            public static readonly string V2024_11_15;
+            public static readonly string V2025_04_15;
         }
     }
     public partial class CosmosDBTablePropertiesOptions : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -1816,6 +1860,8 @@ namespace Azure.Provisioning.CosmosDB
             public static readonly string V2023_11_15;
             public static readonly string V2024_05_15;
             public static readonly string V2024_08_15;
+            public static readonly string V2024_11_15;
+            public static readonly string V2025_04_15;
         }
     }
     public partial class DatabaseAccountKeysMetadata : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -1887,6 +1933,8 @@ namespace Azure.Provisioning.CosmosDB
             public static readonly string V2023_11_15;
             public static readonly string V2024_05_15;
             public static readonly string V2024_08_15;
+            public static readonly string V2024_11_15;
+            public static readonly string V2025_04_15;
         }
     }
     public enum DataTransferJobMode
@@ -2113,6 +2161,8 @@ namespace Azure.Provisioning.CosmosDB
             public static readonly string V2023_11_15;
             public static readonly string V2024_05_15;
             public static readonly string V2024_08_15;
+            public static readonly string V2024_11_15;
+            public static readonly string V2025_04_15;
         }
     }
     public partial class GremlinDatabase : Azure.Provisioning.Primitives.ProvisionableResource
@@ -2156,6 +2206,8 @@ namespace Azure.Provisioning.CosmosDB
             public static readonly string V2023_11_15;
             public static readonly string V2024_05_15;
             public static readonly string V2024_08_15;
+            public static readonly string V2024_11_15;
+            public static readonly string V2025_04_15;
         }
     }
     public partial class GremlinDatabasePropertiesConfig : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -2220,6 +2272,8 @@ namespace Azure.Provisioning.CosmosDB
             public static readonly string V2023_11_15;
             public static readonly string V2024_05_15;
             public static readonly string V2024_08_15;
+            public static readonly string V2024_11_15;
+            public static readonly string V2025_04_15;
         }
     }
     public partial class GremlinGraph : Azure.Provisioning.Primitives.ProvisionableResource
@@ -2263,6 +2317,8 @@ namespace Azure.Provisioning.CosmosDB
             public static readonly string V2023_11_15;
             public static readonly string V2024_05_15;
             public static readonly string V2024_08_15;
+            public static readonly string V2024_11_15;
+            public static readonly string V2025_04_15;
         }
     }
     public partial class GremlinGraphPropertiesConfig : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -2326,6 +2382,8 @@ namespace Azure.Provisioning.CosmosDB
             public static readonly string V2023_11_15;
             public static readonly string V2024_05_15;
             public static readonly string V2024_08_15;
+            public static readonly string V2024_11_15;
+            public static readonly string V2025_04_15;
         }
     }
     public partial class MaterializedViewDefinition : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -2433,6 +2491,8 @@ namespace Azure.Provisioning.CosmosDB
             public static readonly string V2023_11_15;
             public static readonly string V2024_05_15;
             public static readonly string V2024_08_15;
+            public static readonly string V2024_11_15;
+            public static readonly string V2025_04_15;
         }
     }
     public partial class MongoDBCollectionPropertiesConfig : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -2493,6 +2553,8 @@ namespace Azure.Provisioning.CosmosDB
             public static readonly string V2023_11_15;
             public static readonly string V2024_05_15;
             public static readonly string V2024_08_15;
+            public static readonly string V2024_11_15;
+            public static readonly string V2025_04_15;
         }
     }
     public partial class MongoDBDatabase : Azure.Provisioning.Primitives.ProvisionableResource
@@ -2536,6 +2598,8 @@ namespace Azure.Provisioning.CosmosDB
             public static readonly string V2023_11_15;
             public static readonly string V2024_05_15;
             public static readonly string V2024_08_15;
+            public static readonly string V2024_11_15;
+            public static readonly string V2025_04_15;
         }
     }
     public partial class MongoDBDatabasePropertiesConfig : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -2593,6 +2657,8 @@ namespace Azure.Provisioning.CosmosDB
             public static readonly string V2023_11_15;
             public static readonly string V2024_05_15;
             public static readonly string V2024_08_15;
+            public static readonly string V2024_11_15;
+            public static readonly string V2025_04_15;
         }
     }
     public partial class MongoDBIndex : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -2671,6 +2737,8 @@ namespace Azure.Provisioning.CosmosDB
             public static readonly string V2023_11_15;
             public static readonly string V2024_05_15;
             public static readonly string V2024_08_15;
+            public static readonly string V2024_11_15;
+            public static readonly string V2025_04_15;
         }
     }
     public enum MongoDBRoleDefinitionType
@@ -2720,6 +2788,8 @@ namespace Azure.Provisioning.CosmosDB
             public static readonly string V2023_11_15;
             public static readonly string V2024_05_15;
             public static readonly string V2024_08_15;
+            public static readonly string V2024_11_15;
+            public static readonly string V2025_04_15;
         }
     }
     public enum NetworkAclBypass

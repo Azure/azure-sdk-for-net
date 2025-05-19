@@ -52,6 +52,7 @@ namespace Azure.Provisioning.AppConfiguration
             public static readonly string V2022_05_01;
             public static readonly string V2023_03_01;
             public static readonly string V2024_05_01;
+            public static readonly string V2024_06_01;
         }
     }
     public partial class AppConfigurationKeyVaultProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -80,6 +81,7 @@ namespace Azure.Provisioning.AppConfiguration
             public static readonly string V2022_05_01;
             public static readonly string V2023_03_01;
             public static readonly string V2024_05_01;
+            public static readonly string V2024_06_01;
         }
     }
     public partial class AppConfigurationPrivateEndpointConnectionReference : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -140,6 +142,7 @@ namespace Azure.Provisioning.AppConfiguration
         {
             public static readonly string V2023_03_01;
             public static readonly string V2024_05_01;
+            public static readonly string V2024_06_01;
         }
     }
     public enum AppConfigurationReplicaProvisioningState
@@ -184,6 +187,7 @@ namespace Azure.Provisioning.AppConfiguration
             public static readonly string V2022_05_01;
             public static readonly string V2023_03_01;
             public static readonly string V2024_05_01;
+            public static readonly string V2024_06_01;
         }
     }
     public partial class AppConfigurationStoreApiKey : Azure.Provisioning.Primitives.ProvisionableConstruct

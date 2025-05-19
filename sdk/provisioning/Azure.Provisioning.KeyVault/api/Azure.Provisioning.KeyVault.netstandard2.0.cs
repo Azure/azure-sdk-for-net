@@ -248,6 +248,7 @@ namespace Azure.Provisioning.KeyVault
             public static readonly string V2023_02_01;
             public static readonly string V2023_07_01;
             public static readonly string V2023_08_01_PREVIEW;
+            public static readonly string V2024_11_01;
         }
     }
     public partial class KeyVaultPrivateEndpointConnectionItemData : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -337,6 +338,7 @@ namespace Azure.Provisioning.KeyVault
             public static readonly string V2023_02_01;
             public static readonly string V2023_07_01;
             public static readonly string V2023_08_01_PREVIEW;
+            public static readonly string V2024_11_01;
         }
     }
     public partial class KeyVaultService : Azure.Provisioning.Primitives.ProvisionableResource
@@ -366,6 +368,7 @@ namespace Azure.Provisioning.KeyVault
             public static readonly string V2023_02_01;
             public static readonly string V2023_07_01;
             public static readonly string V2023_08_01_PREVIEW;
+            public static readonly string V2024_11_01;
         }
     }
     public partial class KeyVaultSku : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -413,6 +416,7 @@ namespace Azure.Provisioning.KeyVault
             public static readonly string V2023_02_01;
             public static readonly string V2023_07_01;
             public static readonly string V2023_08_01_PREVIEW;
+            public static readonly string V2024_11_01;
         }
     }
     public enum ManagedHsmActionsRequiredMessage
@@ -492,6 +496,7 @@ namespace Azure.Provisioning.KeyVault
             public static readonly string V2023_02_01;
             public static readonly string V2023_07_01;
             public static readonly string V2023_08_01_PREVIEW;
+            public static readonly string V2024_11_01;
         }
     }
     public partial class ManagedHsmPrivateEndpointConnectionItemData : Azure.Provisioning.Primitives.ProvisionableConstruct

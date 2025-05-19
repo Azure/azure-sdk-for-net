@@ -93,6 +93,7 @@ namespace Azure.Provisioning.Search
             public static readonly string V2023_11_01;
             public static readonly string V2024_03_01_Preview;
             public static readonly string V2024_06_01_Preview;
+            public static readonly string V2025_02_01_Preview;
         }
     }
     public partial class SearchPrivateEndpointConnectionData : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -170,6 +171,7 @@ namespace Azure.Provisioning.Search
             public static readonly string V2023_11_01;
             public static readonly string V2024_03_01_Preview;
             public static readonly string V2024_06_01_Preview;
+            public static readonly string V2025_02_01_Preview;
         }
     }
     public enum SearchServiceHostingMode
@@ -301,6 +303,7 @@ namespace Azure.Provisioning.Search
             public static readonly string V2023_11_01;
             public static readonly string V2024_03_01_Preview;
             public static readonly string V2024_06_01_Preview;
+            public static readonly string V2025_02_01_Preview;
         }
     }
     public partial class SharedSearchServicePrivateLinkResourceData : Azure.Provisioning.Primitives.ProvisionableConstruct

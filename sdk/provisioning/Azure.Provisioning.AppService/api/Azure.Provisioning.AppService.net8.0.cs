@@ -62,6 +62,7 @@ namespace Azure.Provisioning.AppService
             public static readonly string V2023_01_01;
             public static readonly string V2023_12_01;
             public static readonly string V2024_04_01;
+            public static readonly string V2024_11_01;
         }
     }
     public partial class AppDaprConfig : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -181,6 +182,7 @@ namespace Azure.Provisioning.AppService
             public static readonly string V2023_01_01;
             public static readonly string V2023_12_01;
             public static readonly string V2024_04_01;
+            public static readonly string V2024_11_01;
         }
     }
     public partial class AppServiceCertificateDetails : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -252,6 +254,7 @@ namespace Azure.Provisioning.AppService
             public static readonly string V2023_01_01;
             public static readonly string V2023_12_01;
             public static readonly string V2024_04_01;
+            public static readonly string V2024_11_01;
         }
     }
     public partial class AppServiceCertificateProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -324,6 +327,7 @@ namespace Azure.Provisioning.AppService
             public static readonly string V2023_01_01;
             public static readonly string V2023_12_01;
             public static readonly string V2024_04_01;
+            public static readonly string V2024_11_01;
         }
     }
     public enum AppServiceDomainStatus
@@ -414,6 +418,7 @@ namespace Azure.Provisioning.AppService
             public static readonly string V2023_01_01;
             public static readonly string V2023_12_01;
             public static readonly string V2024_04_01;
+            public static readonly string V2024_11_01;
         }
     }
     public enum AppServiceEnvironmentUpgradeAvailability
@@ -559,6 +564,7 @@ namespace Azure.Provisioning.AppService
             public static readonly string V2023_01_01;
             public static readonly string V2023_12_01;
             public static readonly string V2024_04_01;
+            public static readonly string V2024_11_01;
         }
     }
     public enum AppServicePlanStatus
@@ -656,6 +662,7 @@ namespace Azure.Provisioning.AppService
             public static readonly string V2023_01_01;
             public static readonly string V2023_12_01;
             public static readonly string V2024_04_01;
+            public static readonly string V2024_11_01;
         }
     }
     public partial class AppServiceStorageAccessInfo : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -846,6 +853,7 @@ namespace Azure.Provisioning.AppService
             public static readonly string V2023_01_01;
             public static readonly string V2023_12_01;
             public static readonly string V2024_04_01;
+            public static readonly string V2024_11_01;
         }
     }
     public partial class AseV3NetworkingConfigurationData : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -1044,6 +1052,7 @@ namespace Azure.Provisioning.AppService
             public static readonly string V2023_01_01;
             public static readonly string V2023_12_01;
             public static readonly string V2024_04_01;
+            public static readonly string V2024_11_01;
         }
     }
     public partial class CustomDnsSuffixConfigurationData : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -1118,6 +1127,7 @@ namespace Azure.Provisioning.AppService
             public static readonly string V2023_01_01;
             public static readonly string V2023_12_01;
             public static readonly string V2024_04_01;
+            public static readonly string V2024_11_01;
         }
     }
     public partial class DomainPurchaseConsent : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -1301,6 +1311,7 @@ namespace Azure.Provisioning.AppService
             public static readonly string V2023_01_01;
             public static readonly string V2023_12_01;
             public static readonly string V2024_04_01;
+            public static readonly string V2024_11_01;
         }
     }
     public partial class HostingEnvironmentPrivateEndpointConnection : Azure.Provisioning.Primitives.ProvisionableResource
@@ -1350,6 +1361,7 @@ namespace Azure.Provisioning.AppService
             public static readonly string V2023_01_01;
             public static readonly string V2023_12_01;
             public static readonly string V2024_04_01;
+            public static readonly string V2024_11_01;
         }
     }
     public partial class HostingEnvironmentProfile : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -1415,6 +1427,7 @@ namespace Azure.Provisioning.AppService
             public static readonly string V2023_01_01;
             public static readonly string V2023_12_01;
             public static readonly string V2024_04_01;
+            public static readonly string V2024_11_01;
         }
     }
     public enum HostNameBindingSslState
@@ -1482,6 +1495,8 @@ namespace Azure.Provisioning.AppService
         public static partial class ResourceVersions
         {
             public static readonly string V2021_03_01;
+            public static readonly string V2024_04_01;
+            public static readonly string V2024_11_01;
         }
     }
     public partial class KubeEnvironmentProfile : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -1567,6 +1582,7 @@ namespace Azure.Provisioning.AppService
             public static readonly string V2023_01_01;
             public static readonly string V2023_12_01;
             public static readonly string V2024_04_01;
+            public static readonly string V2024_11_01;
         }
     }
     public partial class LogsSiteSlotConfig : Azure.Provisioning.Primitives.ProvisionableResource
@@ -1616,6 +1632,7 @@ namespace Azure.Provisioning.AppService
             public static readonly string V2023_01_01;
             public static readonly string V2023_12_01;
             public static readonly string V2024_04_01;
+            public static readonly string V2024_11_01;
         }
     }
     public enum ManagedPipelineMode
@@ -1716,6 +1733,7 @@ namespace Azure.Provisioning.AppService
             public static readonly string V2023_01_01;
             public static readonly string V2023_12_01;
             public static readonly string V2024_04_01;
+            public static readonly string V2024_11_01;
         }
     }
     public partial class RampUpRule : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -1845,6 +1863,7 @@ namespace Azure.Provisioning.AppService
             public static readonly string V2023_01_01;
             public static readonly string V2023_12_01;
             public static readonly string V2024_04_01;
+            public static readonly string V2024_11_01;
         }
     }
     public partial class ScmSiteSlotBasicPublishingCredentialsPolicy : Azure.Provisioning.Primitives.ProvisionableResource
@@ -1891,6 +1910,7 @@ namespace Azure.Provisioning.AppService
             public static readonly string V2023_01_01;
             public static readonly string V2023_12_01;
             public static readonly string V2024_04_01;
+            public static readonly string V2024_11_01;
         }
     }
     public enum ScmType
@@ -2043,6 +2063,7 @@ namespace Azure.Provisioning.AppService
             public static readonly string V2023_01_01;
             public static readonly string V2023_12_01;
             public static readonly string V2024_04_01;
+            public static readonly string V2024_11_01;
         }
     }
     public enum SiteContainerAuthType
@@ -2117,6 +2138,7 @@ namespace Azure.Provisioning.AppService
             public static readonly string V2023_01_01;
             public static readonly string V2023_12_01;
             public static readonly string V2024_04_01;
+            public static readonly string V2024_11_01;
         }
     }
     public partial class SiteDnsConfig : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -2174,6 +2196,7 @@ namespace Azure.Provisioning.AppService
             public static readonly string V2023_01_01;
             public static readonly string V2023_12_01;
             public static readonly string V2024_04_01;
+            public static readonly string V2024_11_01;
         }
     }
     public partial class SiteExtension : Azure.Provisioning.Primitives.ProvisionableResource
@@ -2231,6 +2254,7 @@ namespace Azure.Provisioning.AppService
             public static readonly string V2023_01_01;
             public static readonly string V2023_12_01;
             public static readonly string V2024_04_01;
+            public static readonly string V2024_11_01;
         }
     }
     public enum SiteExtensionType
@@ -2294,6 +2318,7 @@ namespace Azure.Provisioning.AppService
             public static readonly string V2023_01_01;
             public static readonly string V2023_12_01;
             public static readonly string V2024_04_01;
+            public static readonly string V2024_11_01;
         }
     }
     public partial class SiteHostNameBinding : Azure.Provisioning.Primitives.ProvisionableResource
@@ -2341,6 +2366,7 @@ namespace Azure.Provisioning.AppService
             public static readonly string V2023_01_01;
             public static readonly string V2023_12_01;
             public static readonly string V2024_04_01;
+            public static readonly string V2024_11_01;
         }
     }
     public partial class SiteHybridConnectionNamespaceRelay : Azure.Provisioning.Primitives.ProvisionableResource
@@ -2447,6 +2473,7 @@ namespace Azure.Provisioning.AppService
             public static readonly string V2023_01_01;
             public static readonly string V2023_12_01;
             public static readonly string V2024_04_01;
+            public static readonly string V2024_11_01;
         }
     }
     public partial class SitePrivateEndpointConnection : Azure.Provisioning.Primitives.ProvisionableResource
@@ -2498,6 +2525,7 @@ namespace Azure.Provisioning.AppService
             public static readonly string V2023_01_01;
             public static readonly string V2023_12_01;
             public static readonly string V2024_04_01;
+            public static readonly string V2024_11_01;
         }
     }
     public partial class SitePublicCertificate : Azure.Provisioning.Primitives.ProvisionableResource
@@ -2546,6 +2574,7 @@ namespace Azure.Provisioning.AppService
             public static readonly string V2023_01_01;
             public static readonly string V2023_12_01;
             public static readonly string V2024_04_01;
+            public static readonly string V2024_11_01;
         }
     }
     public partial class SiteSlotDeployment : Azure.Provisioning.Primitives.ProvisionableResource
@@ -2599,6 +2628,7 @@ namespace Azure.Provisioning.AppService
             public static readonly string V2023_01_01;
             public static readonly string V2023_12_01;
             public static readonly string V2024_04_01;
+            public static readonly string V2024_11_01;
         }
     }
     public partial class SiteSlotDomainOwnershipIdentifier : Azure.Provisioning.Primitives.ProvisionableResource
@@ -2645,6 +2675,7 @@ namespace Azure.Provisioning.AppService
             public static readonly string V2023_01_01;
             public static readonly string V2023_12_01;
             public static readonly string V2024_04_01;
+            public static readonly string V2024_11_01;
         }
     }
     public partial class SiteSlotExtension : Azure.Provisioning.Primitives.ProvisionableResource
@@ -2702,6 +2733,7 @@ namespace Azure.Provisioning.AppService
             public static readonly string V2023_01_01;
             public static readonly string V2023_12_01;
             public static readonly string V2024_04_01;
+            public static readonly string V2024_11_01;
         }
     }
     public partial class SiteSlotFunction : Azure.Provisioning.Primitives.ProvisionableResource
@@ -2760,6 +2792,7 @@ namespace Azure.Provisioning.AppService
             public static readonly string V2023_01_01;
             public static readonly string V2023_12_01;
             public static readonly string V2024_04_01;
+            public static readonly string V2024_11_01;
         }
     }
     public partial class SiteSlotHostNameBinding : Azure.Provisioning.Primitives.ProvisionableResource
@@ -2807,6 +2840,7 @@ namespace Azure.Provisioning.AppService
             public static readonly string V2023_01_01;
             public static readonly string V2023_12_01;
             public static readonly string V2024_04_01;
+            public static readonly string V2024_11_01;
         }
     }
     public partial class SiteSlotHybridConnectionNamespaceRelay : Azure.Provisioning.Primitives.ProvisionableResource
@@ -2887,6 +2921,7 @@ namespace Azure.Provisioning.AppService
             public static readonly string V2023_01_01;
             public static readonly string V2023_12_01;
             public static readonly string V2024_04_01;
+            public static readonly string V2024_11_01;
         }
     }
     public partial class SiteSlotPrivateEndpointConnection : Azure.Provisioning.Primitives.ProvisionableResource
@@ -2936,6 +2971,7 @@ namespace Azure.Provisioning.AppService
             public static readonly string V2023_01_01;
             public static readonly string V2023_12_01;
             public static readonly string V2024_04_01;
+            public static readonly string V2024_11_01;
         }
     }
     public partial class SiteSlotSiteContainer : Azure.Provisioning.Primitives.ProvisionableResource
@@ -2993,6 +3029,7 @@ namespace Azure.Provisioning.AppService
             public static readonly string V2023_01_01;
             public static readonly string V2023_12_01;
             public static readonly string V2024_04_01;
+            public static readonly string V2024_11_01;
         }
     }
     public partial class SiteSlotVirtualNetworkConnection : Azure.Provisioning.Primitives.ProvisionableResource
@@ -3045,6 +3082,7 @@ namespace Azure.Provisioning.AppService
             public static readonly string V2023_01_01;
             public static readonly string V2023_12_01;
             public static readonly string V2024_04_01;
+            public static readonly string V2024_11_01;
         }
     }
     public partial class SiteSlotVirtualNetworkConnectionGateway : Azure.Provisioning.Primitives.ProvisionableResource
@@ -3092,6 +3130,7 @@ namespace Azure.Provisioning.AppService
             public static readonly string V2023_01_01;
             public static readonly string V2023_12_01;
             public static readonly string V2024_04_01;
+            public static readonly string V2024_11_01;
         }
     }
     public partial class SiteVirtualNetworkConnection : Azure.Provisioning.Primitives.ProvisionableResource
@@ -3144,6 +3183,7 @@ namespace Azure.Provisioning.AppService
             public static readonly string V2023_01_01;
             public static readonly string V2023_12_01;
             public static readonly string V2024_04_01;
+            public static readonly string V2024_11_01;
         }
     }
     public partial class SiteVirtualNetworkConnectionGateway : Azure.Provisioning.Primitives.ProvisionableResource
@@ -3191,6 +3231,7 @@ namespace Azure.Provisioning.AppService
             public static readonly string V2023_01_01;
             public static readonly string V2023_12_01;
             public static readonly string V2024_04_01;
+            public static readonly string V2024_11_01;
         }
     }
     public partial class SlotConfigNames : Azure.Provisioning.Primitives.ProvisionableResource
@@ -3239,6 +3280,7 @@ namespace Azure.Provisioning.AppService
             public static readonly string V2023_01_01;
             public static readonly string V2023_12_01;
             public static readonly string V2024_04_01;
+            public static readonly string V2024_11_01;
         }
     }
     public partial class SlotSwapStatus : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -3310,6 +3352,7 @@ namespace Azure.Provisioning.AppService
             public static readonly string V2023_01_01;
             public static readonly string V2023_12_01;
             public static readonly string V2024_04_01;
+            public static readonly string V2024_11_01;
         }
     }
     public enum StaticSiteBasicAuthName
@@ -3348,6 +3391,7 @@ namespace Azure.Provisioning.AppService
             public static readonly string V2023_01_01;
             public static readonly string V2023_12_01;
             public static readonly string V2024_04_01;
+            public static readonly string V2024_11_01;
         }
     }
     public partial class StaticSiteBuildDatabaseConnection : Azure.Provisioning.Primitives.ProvisionableResource
@@ -3380,6 +3424,7 @@ namespace Azure.Provisioning.AppService
             public static readonly string V2023_01_01;
             public static readonly string V2023_12_01;
             public static readonly string V2024_04_01;
+            public static readonly string V2024_11_01;
         }
     }
     public partial class StaticSiteBuildLinkedBackend : Azure.Provisioning.Primitives.ProvisionableResource
@@ -3411,6 +3456,7 @@ namespace Azure.Provisioning.AppService
             public static readonly string V2023_01_01;
             public static readonly string V2023_12_01;
             public static readonly string V2024_04_01;
+            public static readonly string V2024_11_01;
         }
     }
     public partial class StaticSiteBuildProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -3450,6 +3496,7 @@ namespace Azure.Provisioning.AppService
             public static readonly string V2023_01_01;
             public static readonly string V2023_12_01;
             public static readonly string V2024_04_01;
+            public static readonly string V2024_11_01;
         }
     }
     public partial class StaticSiteCustomDomainOverview : Azure.Provisioning.Primitives.ProvisionableResource
@@ -3484,6 +3531,7 @@ namespace Azure.Provisioning.AppService
             public static readonly string V2023_01_01;
             public static readonly string V2023_12_01;
             public static readonly string V2024_04_01;
+            public static readonly string V2024_11_01;
         }
     }
     public partial class StaticSiteDatabaseConnection : Azure.Provisioning.Primitives.ProvisionableResource
@@ -3517,6 +3565,7 @@ namespace Azure.Provisioning.AppService
             public static readonly string V2023_01_01;
             public static readonly string V2023_12_01;
             public static readonly string V2024_04_01;
+            public static readonly string V2024_11_01;
         }
     }
     public partial class StaticSiteDatabaseConnectionConfigurationFileOverview : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -3567,6 +3616,7 @@ namespace Azure.Provisioning.AppService
             public static readonly string V2023_01_01;
             public static readonly string V2023_12_01;
             public static readonly string V2024_04_01;
+            public static readonly string V2024_11_01;
         }
     }
     public partial class StaticSiteLinkedBackendInfo : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -3608,6 +3658,7 @@ namespace Azure.Provisioning.AppService
             public static readonly string V2023_01_01;
             public static readonly string V2023_12_01;
             public static readonly string V2024_04_01;
+            public static readonly string V2024_11_01;
         }
     }
     public partial class StaticSiteTemplate : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -3645,6 +3696,7 @@ namespace Azure.Provisioning.AppService
             public static readonly string V2023_01_01;
             public static readonly string V2023_12_01;
             public static readonly string V2024_04_01;
+            public static readonly string V2024_11_01;
         }
     }
     public partial class StaticSiteUserProvidedFunctionAppData : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -3823,6 +3875,7 @@ namespace Azure.Provisioning.AppService
             public static readonly string V2023_01_01;
             public static readonly string V2023_12_01;
             public static readonly string V2024_04_01;
+            public static readonly string V2024_11_01;
         }
     }
     public enum WebSiteAvailabilityState
@@ -3946,6 +3999,7 @@ namespace Azure.Provisioning.AppService
             public static readonly string V2023_01_01;
             public static readonly string V2023_12_01;
             public static readonly string V2024_04_01;
+            public static readonly string V2024_11_01;
         }
     }
     public partial class WebSiteExtension : Azure.Provisioning.Primitives.ProvisionableResource
@@ -4011,6 +4065,7 @@ namespace Azure.Provisioning.AppService
             public static readonly string V2023_01_01;
             public static readonly string V2023_12_01;
             public static readonly string V2024_04_01;
+            public static readonly string V2024_11_01;
         }
     }
     public partial class WebSiteFtpPublishingCredentialsPolicy : Azure.Provisioning.Primitives.ProvisionableResource
@@ -4057,6 +4112,7 @@ namespace Azure.Provisioning.AppService
             public static readonly string V2023_01_01;
             public static readonly string V2023_12_01;
             public static readonly string V2024_04_01;
+            public static readonly string V2024_11_01;
         }
     }
     public partial class WebSiteHybridConnection : Azure.Provisioning.Primitives.ProvisionableResource
@@ -4108,6 +4164,7 @@ namespace Azure.Provisioning.AppService
             public static readonly string V2023_01_01;
             public static readonly string V2023_12_01;
             public static readonly string V2024_04_01;
+            public static readonly string V2024_11_01;
         }
     }
     public partial class WebSitePremierAddon : Azure.Provisioning.Primitives.ProvisionableResource
@@ -4151,6 +4208,7 @@ namespace Azure.Provisioning.AppService
             public static readonly string V2023_01_01;
             public static readonly string V2023_12_01;
             public static readonly string V2024_04_01;
+            public static readonly string V2024_11_01;
         }
     }
     public partial class WebSitePrivateAccess : Azure.Provisioning.Primitives.ProvisionableResource
@@ -4198,6 +4256,7 @@ namespace Azure.Provisioning.AppService
             public static readonly string V2023_01_01;
             public static readonly string V2023_12_01;
             public static readonly string V2024_04_01;
+            public static readonly string V2024_11_01;
         }
     }
     public partial class WebSiteSlot : Azure.Provisioning.Primitives.ProvisionableResource
@@ -4301,6 +4360,7 @@ namespace Azure.Provisioning.AppService
             public static readonly string V2023_01_01;
             public static readonly string V2023_12_01;
             public static readonly string V2024_04_01;
+            public static readonly string V2024_11_01;
         }
     }
     public partial class WebSiteSlotConfig : Azure.Provisioning.Primitives.ProvisionableResource
@@ -4418,6 +4478,7 @@ namespace Azure.Provisioning.AppService
             public static readonly string V2023_01_01;
             public static readonly string V2023_12_01;
             public static readonly string V2024_04_01;
+            public static readonly string V2024_11_01;
         }
     }
     public partial class WebSiteSlotExtension : Azure.Provisioning.Primitives.ProvisionableResource
@@ -4483,6 +4544,7 @@ namespace Azure.Provisioning.AppService
             public static readonly string V2023_01_01;
             public static readonly string V2023_12_01;
             public static readonly string V2024_04_01;
+            public static readonly string V2024_11_01;
         }
     }
     public partial class WebSiteSlotFtpPublishingCredentialsPolicy : Azure.Provisioning.Primitives.ProvisionableResource
@@ -4529,6 +4591,7 @@ namespace Azure.Provisioning.AppService
             public static readonly string V2023_01_01;
             public static readonly string V2023_12_01;
             public static readonly string V2024_04_01;
+            public static readonly string V2024_11_01;
         }
     }
     public partial class WebSiteSlotHybridConnection : Azure.Provisioning.Primitives.ProvisionableResource
@@ -4580,6 +4643,7 @@ namespace Azure.Provisioning.AppService
             public static readonly string V2023_01_01;
             public static readonly string V2023_12_01;
             public static readonly string V2024_04_01;
+            public static readonly string V2024_11_01;
         }
     }
     public partial class WebSiteSlotPremierAddOn : Azure.Provisioning.Primitives.ProvisionableResource
@@ -4632,6 +4696,7 @@ namespace Azure.Provisioning.AppService
             public static readonly string V2023_01_01;
             public static readonly string V2023_12_01;
             public static readonly string V2024_04_01;
+            public static readonly string V2024_11_01;
         }
     }
     public partial class WebSiteSlotPrivateAccess : Azure.Provisioning.Primitives.ProvisionableResource
@@ -4679,6 +4744,7 @@ namespace Azure.Provisioning.AppService
             public static readonly string V2023_01_01;
             public static readonly string V2023_12_01;
             public static readonly string V2024_04_01;
+            public static readonly string V2024_11_01;
         }
     }
     public partial class WebSiteSlotPublicCertificate : Azure.Provisioning.Primitives.ProvisionableResource
@@ -4727,6 +4793,7 @@ namespace Azure.Provisioning.AppService
             public static readonly string V2023_01_01;
             public static readonly string V2023_12_01;
             public static readonly string V2024_04_01;
+            public static readonly string V2024_11_01;
         }
     }
     public partial class WebSiteSlotSourceControl : Azure.Provisioning.Primitives.ProvisionableResource
@@ -4779,6 +4846,7 @@ namespace Azure.Provisioning.AppService
             public static readonly string V2023_01_01;
             public static readonly string V2023_12_01;
             public static readonly string V2024_04_01;
+            public static readonly string V2024_11_01;
         }
     }
     public partial class WebSiteSourceControl : Azure.Provisioning.Primitives.ProvisionableResource
@@ -4831,6 +4899,7 @@ namespace Azure.Provisioning.AppService
             public static readonly string V2023_01_01;
             public static readonly string V2023_12_01;
             public static readonly string V2024_04_01;
+            public static readonly string V2024_11_01;
         }
     }
 }
