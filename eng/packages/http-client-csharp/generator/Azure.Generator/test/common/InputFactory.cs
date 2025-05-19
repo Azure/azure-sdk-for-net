@@ -40,11 +40,10 @@ namespace Azure.Generator.Tests.Common
             /// </summary>
             /// <param name="name"></param>
             /// <param name="value"></param>
-            /// <param name="enumType"></param>
             /// <returns></returns>
-            public static InputEnumTypeValue Int32(string name, int value, InputEnumType enumType)
+            public static InputEnumTypeValue Int32(string name, int value)
             {
-                return new InputEnumTypeValue(name, value, InputPrimitiveType.Int32, enumType, "", $"{name} description");
+                return new InputEnumTypeValue(name, value, InputPrimitiveType.Int32, "", $"{name} description");
             }
 
             /// <summary>
@@ -52,11 +51,10 @@ namespace Azure.Generator.Tests.Common
             /// </summary>
             /// <param name="name"></param>
             /// <param name="value"></param>
-            /// <param name="enumType"></param>
             /// <returns></returns>
-            public static InputEnumTypeValue Float32(string name, float value, InputEnumType enumType)
+            public static InputEnumTypeValue Float32(string name, float value)
             {
-                return new InputEnumTypeValue(name, value, InputPrimitiveType.Float32, enumType, "", $"{name} description");
+                return new InputEnumTypeValue(name, value, InputPrimitiveType.Float32, "", $"{name} description");
             }
 
             /// <summary>
@@ -64,11 +62,10 @@ namespace Azure.Generator.Tests.Common
             /// </summary>
             /// <param name="name"></param>
             /// <param name="value"></param>
-            /// <param name="enumType"></param>
             /// <returns></returns>
-            public static InputEnumTypeValue String(string name, string value, InputEnumType enumType)
+            public static InputEnumTypeValue String(string name, string value)
             {
-                return new InputEnumTypeValue(name, value, InputPrimitiveType.String, enumType, "", $"{name} description");
+                return new InputEnumTypeValue(name, value, InputPrimitiveType.String, "", $"{name} description");
             }
         }
 
@@ -376,6 +373,55 @@ namespace Azure.Generator.Tests.Common
         public static InputPagingServiceMetadata PagingMetadata(IReadOnlyList<string> itemPropertySegments, InputNextLink? nextLink, InputContinuationToken? continuationToken)
         {
             return new InputPagingServiceMetadata(itemPropertySegments, nextLink, continuationToken);
+        }
+
+        /// <summary>
+        /// Construct paging service method
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="operation"></param>
+        /// <param name="access"></param>
+        /// <param name="parameters"></param>
+        /// <param name="response"></param>
+        /// <param name="exception"></param>
+        /// <param name="longRunningServiceMetadata"></param>
+        /// <returns></returns>
+        public static InputLongRunningServiceMethod LongRunningServiceMethod(
+            string name,
+            InputOperation operation,
+            string access = "public",
+            IReadOnlyList<InputParameter>? parameters = null,
+            InputServiceMethodResponse? response = null,
+            InputServiceMethodResponse? exception = null,
+            InputLongRunningServiceMetadata? longRunningServiceMetadata = null)
+        {
+            return new InputLongRunningServiceMethod(
+                name,
+                access,
+                [],
+                null,
+                null,
+                operation,
+                parameters ?? [],
+                response ?? ServiceMethodResponse(null, null),
+                exception,
+                false,
+                true,
+                true,
+                string.Empty,
+                longRunningServiceMetadata ?? LongRunningServiceMetadata(1, OperationResponse(), null));
+        }
+
+        /// <summary>
+        /// Construct paging metadata
+        /// </summary>
+        /// <param name="finalState"></param>
+        /// <param name="finalResponse"></param>
+        /// <param name="resultPath"></param>
+        /// <returns></returns>
+        public static InputLongRunningServiceMetadata LongRunningServiceMetadata(int finalState, InputOperationResponse finalResponse, string? resultPath)
+        {
+            return new InputLongRunningServiceMetadata(finalState, finalResponse, resultPath);
         }
 
         /// <summary>
