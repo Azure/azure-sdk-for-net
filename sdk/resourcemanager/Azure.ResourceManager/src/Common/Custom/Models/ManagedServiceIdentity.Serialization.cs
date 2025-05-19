@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Models
             writer.WriteStartObject();
             var jsonContext = jOptions is null
                 ? ManagedServiceIdentityJsonContext.Default
-                : new ManagedServiceIdentityJsonContext(jOptions);
+                : new ManagedServiceIdentityJsonContext(new(jOptions));
 
             JsonSerializer.Serialize(writer, ManagedServiceIdentityType, jsonContext.ManagedServiceIdentityType);
             if (options.Format != "W" && Optional.IsDefined(PrincipalId))
