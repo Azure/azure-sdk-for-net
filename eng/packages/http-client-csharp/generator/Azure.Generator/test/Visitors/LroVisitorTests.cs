@@ -13,6 +13,7 @@ using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
+using Microsoft.TypeSpec.Generator.Statements;
 using NUnit.Framework;
 
 namespace Azure.Generator.Tests.Visitors
@@ -169,6 +170,39 @@ namespace Azure.Generator.Tests.Visitors
             Assert.AreEqual(Helpers.GetExpectedFromFile(), explicitOperator!.BodyStatements!.ToDisplayString());
         }
 
+        [Test]
+        public void UpdatesConvenienceMethodBody()
+        {
+            var visitor = new TestLroVisitor();
+            List<InputParameter> parameters =
+            [
+                InputFactory.Parameter(
+                    "p1",
+                    InputPrimitiveType.String,
+                    kind: InputParameterKind.Method)
+            ];
+            var lro = InputFactory.Operation(
+                "foo",
+                parameters: parameters);
+            var responseModel = InputFactory.Model("foo");
+            var lroServiceMethod = InputFactory.LongRunningServiceMethod(
+                "foo",
+                lro, parameters: parameters,
+                response: InputFactory.ServiceMethodResponse(responseModel, ["result"]));
+            var inputClient = InputFactory.Client("TestClient", methods: [lroServiceMethod]);
+            var plugin = MockHelpers.LoadMockPlugin(clients: () => [inputClient]);
+            plugin.Object.AddVisitor(visitor);
+
+            var clientProvider = AzureClientGenerator.Instance.TypeFactory.CreateClient(inputClient);
+            Assert.IsNotNull(clientProvider);
+            var convenienceMethod = clientProvider!.Methods
+                .FirstOrDefault(m => m.Signature.Parameters.All(p => p.Name != "context"));
+
+            Assert.IsNotNull(convenienceMethod);
+            var actual = convenienceMethod!.BodyStatements!.ToDisplayString();
+            Assert.AreEqual(Helpers.GetExpectedFromFile(), actual);
+        }
+
         private class TestLroVisitor : LroVisitor
         {
             public MethodProvider? InvokeVisitMethod(MethodProvider method)
@@ -182,6 +216,11 @@ namespace Azure.Generator.Tests.Visitors
                 ScmMethodProviderCollection? methodCollection)
             {
                 return base.Visit(serviceMethod, client, methodCollection);
+            }
+
+            public MethodBodyStatement? InvokeVisitExpressionStatement(ExpressionStatement expressionStatement, MethodProvider method)
+            {
+                return base.VisitExpressionStatement(expressionStatement, method);
             }
         }
     }

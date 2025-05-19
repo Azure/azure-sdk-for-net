@@ -133,42 +133,45 @@ namespace Azure.Generator.Visitors
         {
             var expression = expressionStatement.Expression;
             var serviceMethod = scmMethod.ServiceMethod!;
-            if (expression is AssignmentExpression { Value: AzureClientResponseProvider } assignmentExpression)
+            switch (expression)
             {
-                var resultVariable = (assignmentExpression.Variable as DeclarationExpression)?.Variable!;
-                if (serviceMethod.Response.Type != null)
+                case AssignmentExpression { Value: AzureClientResponseProvider } assignmentExpression:
                 {
-                    resultVariable.Update(type: new CSharpType(typeof(Operation), typeof(BinaryData)));
-                }
-                else
-                {
-                    // Return the result of the protocol method directly for convenience methods having no response body
-                    return new KeywordExpression("return", assignmentExpression.Value).Terminate();
-                }
-            }
-            else if (expression is KeywordExpression { Keyword: "return", Expression: InvokeMethodExpression { MethodName: "FromValue" } invokeMethodExpression })
-            {
-                // Remove the extra return statement for convenience methods having no response body
-                if (serviceMethod.Response.Type == null)
-                {
-                    return null;
-                }
+                    var resultVariable = (assignmentExpression.Variable as DeclarationExpression)?.Variable!;
+                    if (serviceMethod.Response.Type != null)
+                    {
+                        resultVariable.Update(type: new CSharpType(typeof(Operation), typeof(BinaryData)));
+                    }
+                    else
+                    {
+                        // Return the result of the protocol method directly for convenience methods having no response body
+                        return new KeywordExpression("return", assignmentExpression.Value).Terminate();
+                    }
 
-                var response = new VariableExpression(typeof(Response), "response");
-                var responseType = AzureClientGenerator.Instance.TypeFactory.CreateCSharpType(serviceMethod.Response.Type)!;
-                var client = (ClientProvider)scmMethod.EnclosingType;
-                var diagnosticsProperty = client.GetClientDiagnosticProperty();
-                var scopeName = scmMethod.GetScopeName();
-                invokeMethodExpression.Update(
-                    instanceReference: Static(typeof(ProtocolOperationHelpers)),
-                    methodName: "Convert",
-                    arguments:
-                    [
-                        (invokeMethodExpression.Arguments[0] as CastExpression)!.Inner,
-                        new FuncExpression([response.Declaration], new CastExpression(response, responseType)),
-                        diagnosticsProperty,
-                        Literal(scopeName),
-                    ]);
+                    break;
+                }
+                // Remove the extra return statement for convenience methods having no response body
+                case KeywordExpression { Keyword: "return", Expression: InvokeMethodExpression { MethodName: "FromValue" } } when serviceMethod.Response.Type == null:
+                    return null;
+                case KeywordExpression { Keyword: "return", Expression: InvokeMethodExpression { MethodName: "FromValue" } invokeMethodExpression }:
+                {
+                    var response = new VariableExpression(typeof(Response), "response");
+                    var responseType = AzureClientGenerator.Instance.TypeFactory.CreateCSharpType(serviceMethod.Response.Type)!;
+                    var client = (ClientProvider)scmMethod.EnclosingType;
+                    var diagnosticsProperty = client.GetClientDiagnosticProperty();
+                    var scopeName = scmMethod.GetScopeName();
+                    invokeMethodExpression.Update(
+                        instanceReference: Static(typeof(ProtocolOperationHelpers)),
+                        methodName: "Convert",
+                        arguments:
+                        [
+                            (invokeMethodExpression.Arguments[0] as CastExpression)!.Inner,
+                            new FuncExpression([response.Declaration], new CastExpression(response, responseType)),
+                            diagnosticsProperty,
+                            Literal(scopeName),
+                        ]);
+                    break;
+                }
             }
 
             return expressionStatement;
@@ -176,40 +179,59 @@ namespace Azure.Generator.Visitors
 
         protected override InvokeMethodExpression? VisitInvokeMethodExpression(InvokeMethodExpression expression, MethodProvider method)
         {
-            if (method is ScmMethodProvider scmMethod && scmMethod.IsLroMethod() && scmMethod.IsProtocolMethod)
+            if (method is ScmMethodProvider scmMethod && scmMethod.IsLroMethod())
             {
-                return UpdateProtocolMethod(expression, scmMethod);
+                if (scmMethod.IsProtocolMethod)
+                {
+                    return UpdateProcessCall(expression, scmMethod);
+                }
+
+                return UpdateProtocolMethodCall(expression, scmMethod);
             }
 
             return expression;
         }
 
-        private static InvokeMethodExpression UpdateProtocolMethod(
+        private static InvokeMethodExpression UpdateProcessCall(
             InvokeMethodExpression expression,
             ScmMethodProvider scmMethod)
         {
-            var waitUntil = scmMethod.Signature.Parameters[0];
-            var client = (ClientProvider)scmMethod.EnclosingType;
-            var pipelineProperty = client.GetPipelineProperty();
-            var diagnosticsProperty = client.GetClientDiagnosticProperty();
-            var scopeName = scmMethod.GetScopeName();
-            var serviceMethod = scmMethod.ServiceMethod as InputLongRunningServiceMethod;
-            var finalStateVia = (OperationFinalStateVia) serviceMethod!.LongRunningServiceMetadata.FinalStateVia;
-            var finalStateEnumName = Enum.GetName(typeof(OperationFinalStateVia), finalStateVia);
             // Update the process call to call the operation helper method
             if (expression.MethodName?.StartsWith("Process") == true)
             {
+                var client = (ClientProvider)scmMethod.EnclosingType;
+                var serviceMethod = scmMethod.ServiceMethod as InputLongRunningServiceMethod;
+                var finalStateVia = (OperationFinalStateVia) serviceMethod!.LongRunningServiceMetadata.FinalStateVia;
+                var finalStateEnumName = Enum.GetName(typeof(OperationFinalStateVia), finalStateVia);
+
                 expression.Update(
                     instanceReference: Static(typeof(ProtocolOperationHelpers)),
                     arguments:
                     [
-                        pipelineProperty,
+                        client.GetPipelineProperty(),
                         expression.Arguments[0],
-                        diagnosticsProperty,
-                        Literal(scopeName),
+                        client.GetClientDiagnosticProperty(),
+                        Literal(scmMethod.GetScopeName()),
                         Static(typeof(OperationFinalStateVia)).Property(finalStateEnumName!),
                         expression.Arguments[1],
-                        waitUntil
+                        scmMethod.Signature.Parameters[0]
+                    ]);
+            }
+
+            return expression;
+        }
+
+        private static InvokeMethodExpression UpdateProtocolMethodCall(
+            InvokeMethodExpression expression,
+            ScmMethodProvider scmMethod)
+        {
+            if (scmMethod.Signature.Name == expression.MethodName || scmMethod.Signature.Name == expression.MethodSignature?.Name)
+            {
+                expression.Update(
+                    arguments:
+                    [
+                        scmMethod.Signature.Parameters[0],
+                        ..expression.Arguments,
                     ]);
             }
 
