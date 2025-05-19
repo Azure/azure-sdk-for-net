@@ -358,7 +358,7 @@ rename-mapping:
   MigrateResult.id: ResourceId
   IsDeviceMatchValue: IsDeviceMatchConditionMatchValue
   KeyVaultSigningKeyParametersType: KeyVaultSigningKeyType
-  RequestMethodMatchValue: RequestMethodMatchConditionType
+  RequestMethodMatchValue: RequestMethodMatchConditionMatchValue
   RequestSchemeMatchValue: RequestSchemeMatchConditionMatchValue
   KeyVaultSigningKeyParametersType.KeyVaultSigningKeyParameters: KeyVaultSigningKey
 

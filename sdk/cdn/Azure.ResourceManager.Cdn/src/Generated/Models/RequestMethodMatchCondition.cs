@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Cdn.Models
         {
             RequestMethodOperator = requestMethodOperator;
             Transforms = new ChangeTrackingList<PreTransformCategory>();
-            MatchValues = new ChangeTrackingList<RequestMethodMatchConditionType>();
+            MatchValues = new ChangeTrackingList<RequestMethodMatchConditionMatchValue>();
             TypeName = DeliveryRuleConditionParametersType.DeliveryRuleRequestMethodConditionParameters;
         }
 
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// The match value for the condition of the delivery rule
         /// Serialized Name: RequestMethodMatchConditionParameters.matchValues
         /// </param>
-        internal RequestMethodMatchCondition(DeliveryRuleConditionParametersType typeName, IDictionary<string, BinaryData> serializedAdditionalRawData, RequestMethodOperator requestMethodOperator, bool? negateCondition, IList<PreTransformCategory> transforms, IList<RequestMethodMatchConditionType> matchValues) : base(typeName, serializedAdditionalRawData)
+        internal RequestMethodMatchCondition(DeliveryRuleConditionParametersType typeName, IDictionary<string, BinaryData> serializedAdditionalRawData, RequestMethodOperator requestMethodOperator, bool? negateCondition, IList<PreTransformCategory> transforms, IList<RequestMethodMatchConditionMatchValue> matchValues) : base(typeName, serializedAdditionalRawData)
         {
             RequestMethodOperator = requestMethodOperator;
             NegateCondition = negateCondition;
@@ -81,6 +81,6 @@ namespace Azure.ResourceManager.Cdn.Models
         /// The match value for the condition of the delivery rule
         /// Serialized Name: RequestMethodMatchConditionParameters.matchValues
         /// </summary>
-        public IList<RequestMethodMatchConditionType> MatchValues { get; }
+        public IList<RequestMethodMatchConditionMatchValue> MatchValues { get; }
     }
 }
