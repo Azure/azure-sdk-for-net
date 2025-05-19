@@ -6,7 +6,7 @@
 
 Thank you to our developer community members who helped to make the Event Hubs client libraries better with their contributions to this release:
 
-- danielmarbach _([GitHub](https://github.com/danielmarbach))_
+- Daniel Marbach _([GitHub](https://github.com/danielmarbach))_
 
 ### Features Added
 
