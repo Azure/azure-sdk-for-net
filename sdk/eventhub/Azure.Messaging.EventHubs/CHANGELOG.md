@@ -2,6 +2,12 @@
 
 ## 5.13.0-beta.1 (Unreleased)
 
+### Acknowledgments
+
+Thank you to our developer community members who helped to make the Event Hubs client libraries better with their contributions to this release:
+
+- Daniel Marbach _([GitHub](https://github.com/danielmarbach))_
+
 ### Features Added
 
 ### Breaking Changes
@@ -9,6 +15,8 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+- Significantly improved the performance of the Jenkins3 hash computation used for partition key resolution. Across various input sizes, the updated implementation achieves up to 39% faster hash calculation, with the most notable gains seen for smaller keys (8–32 bytes), and consistent improvements across all sizes. The new approach maintains the exact bit-for-bit hash output while reducing overhead.  _(A community contribution, courtesy of [danielmarbach](https://github.com/danielmarbach))_
 
 ## 5.12.1 (2025-04-09)
 
