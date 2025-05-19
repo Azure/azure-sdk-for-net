@@ -8,7 +8,6 @@ import { CompilerOptions, EmitContext, Program } from "@typespec/compiler";
 import { createTestHost, TestHost } from "@typespec/compiler/testing";
 import {
   CSharpEmitterContext,
-  CSharpEmitterOptions,
   createCSharpEmitterContext,
   Logger,
   LoggerLevel,

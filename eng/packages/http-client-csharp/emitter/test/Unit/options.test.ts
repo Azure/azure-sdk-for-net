@@ -23,7 +23,7 @@ describe("Configuration tests", async () => {
       const actual = await importOriginal<typeof import("@typespec/http-client-csharp")>();
       return {
         ...actual,
-        $onEmit: async (context: any) => {
+        $onEmit: async () => {
           // do nothing
         }
       };
@@ -70,6 +70,14 @@ describe("Configuration tests", async () => {
     const context = createEmitterContext(program);
     $onEmit(context);
     strictEqual(program.diagnostics.length, 0);
+    strictEqual(context.options["package-name"], undefined);
+  });
+  it("doesn't add package-name key if namespace is undefined", async () => {
+    const context = createEmitterContext(program);
+    $onEmit(context);
+    strictEqual(program.diagnostics.length, 0);
+    // key should not be added if namespace is undefined
+    // and package-name is not set
     strictEqual(context.options["package-name"], undefined);
   });
   it("package-name value used if set", async () => {
