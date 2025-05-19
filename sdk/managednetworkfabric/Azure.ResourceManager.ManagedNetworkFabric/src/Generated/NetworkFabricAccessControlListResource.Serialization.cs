@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
 {
     public partial class NetworkFabricAccessControlListResource : IJsonModel<NetworkFabricAccessControlListData>
     {
+        private static NetworkFabricAccessControlListData s_dataDeserializationInstance;
+        private static NetworkFabricAccessControlListData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<NetworkFabricAccessControlListData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<NetworkFabricAccessControlListData>)Data).Write(writer, options);
 
-        NetworkFabricAccessControlListData IJsonModel<NetworkFabricAccessControlListData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetworkFabricAccessControlListData>)Data).Create(ref reader, options);
+        NetworkFabricAccessControlListData IJsonModel<NetworkFabricAccessControlListData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetworkFabricAccessControlListData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<NetworkFabricAccessControlListData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<NetworkFabricAccessControlListData>(Data, options, AzureResourceManagerManagedNetworkFabricContext.Default);
 
         NetworkFabricAccessControlListData IPersistableModel<NetworkFabricAccessControlListData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetworkFabricAccessControlListData>(data, options, AzureResourceManagerManagedNetworkFabricContext.Default);
 
-        string IPersistableModel<NetworkFabricAccessControlListData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetworkFabricAccessControlListData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<NetworkFabricAccessControlListData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetworkFabricAccessControlListData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

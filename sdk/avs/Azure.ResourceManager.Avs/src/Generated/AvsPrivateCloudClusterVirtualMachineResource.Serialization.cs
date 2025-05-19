@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Avs
 {
     public partial class AvsPrivateCloudClusterVirtualMachineResource : IJsonModel<AvsPrivateCloudClusterVirtualMachineData>
     {
+        private static AvsPrivateCloudClusterVirtualMachineData s_dataDeserializationInstance;
+        private static AvsPrivateCloudClusterVirtualMachineData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<AvsPrivateCloudClusterVirtualMachineData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<AvsPrivateCloudClusterVirtualMachineData>)Data).Write(writer, options);
 
-        AvsPrivateCloudClusterVirtualMachineData IJsonModel<AvsPrivateCloudClusterVirtualMachineData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AvsPrivateCloudClusterVirtualMachineData>)Data).Create(ref reader, options);
+        AvsPrivateCloudClusterVirtualMachineData IJsonModel<AvsPrivateCloudClusterVirtualMachineData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AvsPrivateCloudClusterVirtualMachineData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<AvsPrivateCloudClusterVirtualMachineData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AvsPrivateCloudClusterVirtualMachineData>(Data, options, AzureResourceManagerAvsContext.Default);
 
         AvsPrivateCloudClusterVirtualMachineData IPersistableModel<AvsPrivateCloudClusterVirtualMachineData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AvsPrivateCloudClusterVirtualMachineData>(data, options, AzureResourceManagerAvsContext.Default);
 
-        string IPersistableModel<AvsPrivateCloudClusterVirtualMachineData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AvsPrivateCloudClusterVirtualMachineData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<AvsPrivateCloudClusterVirtualMachineData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AvsPrivateCloudClusterVirtualMachineData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

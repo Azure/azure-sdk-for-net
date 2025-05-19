@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.FrontDoor.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreatesSpecificPolicy()
         {
-            // Generated from example definition: specification/frontdoor/resource-manager/Microsoft.Network/stable/2024-02-01/examples/WafPolicyCreateOrUpdate.json
+            // Generated from example definition: specification/frontdoor/resource-manager/Microsoft.Network/stable/2025-03-01/examples/WafPolicyCreateOrUpdate.json
             // this example is just showing the usage of "Policies_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -53,6 +53,7 @@ namespace Azure.ResourceManager.FrontDoor.Samples
                     CustomBlockResponseBody = "PGh0bWw+CjxoZWFkZXI+PHRpdGxlPkhlbGxvPC90aXRsZT48L2hlYWRlcj4KPGJvZHk+CkhlbGxvIHdvcmxkCjwvYm9keT4KPC9odG1sPg==",
                     RequestBodyCheck = PolicyRequestBodyCheck.Disabled,
                     JavascriptChallengeExpirationInMinutes = 30,
+                    CaptchaExpirationInMinutes = 30,
                     State = WebApplicationFirewallScrubbingState.Enabled,
                     ScrubbingRules = {new WebApplicationFirewallScrubbingRules(ScrubbingRuleEntryMatchVariable.RequestIPAddress, ScrubbingRuleEntryMatchOperator.EqualsAny)
 {
@@ -78,6 +79,13 @@ Transforms = {WebApplicationRuleMatchTransformType.Lowercase},
 }, RuleMatchActionType.Block)
 {
 Name = "Rule2",
+}, new WebApplicationCustomRule(1, WebApplicationRuleType.RateLimitRule, new WebApplicationRuleMatchCondition[]
+{
+new WebApplicationRuleMatchCondition(WebApplicationRuleMatchVariable.RemoteAddr, new WebApplicationRuleMatchOperator("ServiceTagMatch"), new string[]{"AzureBackup", "AzureBotService"})
+}, RuleMatchActionType.Captcha)
+{
+Name = "Rule3",
+RateLimitThreshold = 1000,
 }},
                 ManagedRuleSets = {new ManagedRuleSet("DefaultRuleSet", "1.0")
 {
@@ -112,7 +120,7 @@ EnabledState = ManagedRuleEnabledState.Disabled,
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetPolicy()
         {
-            // Generated from example definition: specification/frontdoor/resource-manager/Microsoft.Network/stable/2024-02-01/examples/WafPolicyGet.json
+            // Generated from example definition: specification/frontdoor/resource-manager/Microsoft.Network/stable/2025-03-01/examples/WafPolicyGet.json
             // this example is just showing the usage of "Policies_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -145,7 +153,7 @@ EnabledState = ManagedRuleEnabledState.Disabled,
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_GetAllPoliciesInAResourceGroup()
         {
-            // Generated from example definition: specification/frontdoor/resource-manager/Microsoft.Network/stable/2024-02-01/examples/WafListPolicies.json
+            // Generated from example definition: specification/frontdoor/resource-manager/Microsoft.Network/stable/2025-03-01/examples/WafListPolicies.json
             // this example is just showing the usage of "Policies_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -180,7 +188,7 @@ EnabledState = ManagedRuleEnabledState.Disabled,
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetPolicy()
         {
-            // Generated from example definition: specification/frontdoor/resource-manager/Microsoft.Network/stable/2024-02-01/examples/WafPolicyGet.json
+            // Generated from example definition: specification/frontdoor/resource-manager/Microsoft.Network/stable/2025-03-01/examples/WafPolicyGet.json
             // this example is just showing the usage of "Policies_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -209,7 +217,7 @@ EnabledState = ManagedRuleEnabledState.Disabled,
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetPolicy()
         {
-            // Generated from example definition: specification/frontdoor/resource-manager/Microsoft.Network/stable/2024-02-01/examples/WafPolicyGet.json
+            // Generated from example definition: specification/frontdoor/resource-manager/Microsoft.Network/stable/2025-03-01/examples/WafPolicyGet.json
             // this example is just showing the usage of "Policies_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

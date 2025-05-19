@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.DeviceUpdate
 {
     public partial class DeviceUpdateInstanceResource : IJsonModel<DeviceUpdateInstanceData>
     {
+        private static DeviceUpdateInstanceData s_dataDeserializationInstance;
+        private static DeviceUpdateInstanceData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<DeviceUpdateInstanceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DeviceUpdateInstanceData>)Data).Write(writer, options);
 
-        DeviceUpdateInstanceData IJsonModel<DeviceUpdateInstanceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DeviceUpdateInstanceData>)Data).Create(ref reader, options);
+        DeviceUpdateInstanceData IJsonModel<DeviceUpdateInstanceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DeviceUpdateInstanceData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<DeviceUpdateInstanceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DeviceUpdateInstanceData>(Data, options, AzureResourceManagerDeviceUpdateContext.Default);
 
         DeviceUpdateInstanceData IPersistableModel<DeviceUpdateInstanceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DeviceUpdateInstanceData>(data, options, AzureResourceManagerDeviceUpdateContext.Default);
 
-        string IPersistableModel<DeviceUpdateInstanceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DeviceUpdateInstanceData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<DeviceUpdateInstanceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DeviceUpdateInstanceData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

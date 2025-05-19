@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Sql
 {
     public partial class SqlDatabaseAutomaticTuningResource : IJsonModel<SqlDatabaseAutomaticTuningData>
     {
+        private static SqlDatabaseAutomaticTuningData s_dataDeserializationInstance;
+        private static SqlDatabaseAutomaticTuningData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<SqlDatabaseAutomaticTuningData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SqlDatabaseAutomaticTuningData>)Data).Write(writer, options);
 
-        SqlDatabaseAutomaticTuningData IJsonModel<SqlDatabaseAutomaticTuningData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SqlDatabaseAutomaticTuningData>)Data).Create(ref reader, options);
+        SqlDatabaseAutomaticTuningData IJsonModel<SqlDatabaseAutomaticTuningData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SqlDatabaseAutomaticTuningData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<SqlDatabaseAutomaticTuningData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SqlDatabaseAutomaticTuningData>(Data, options, AzureResourceManagerSqlContext.Default);
 
         SqlDatabaseAutomaticTuningData IPersistableModel<SqlDatabaseAutomaticTuningData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SqlDatabaseAutomaticTuningData>(data, options, AzureResourceManagerSqlContext.Default);
 
-        string IPersistableModel<SqlDatabaseAutomaticTuningData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SqlDatabaseAutomaticTuningData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<SqlDatabaseAutomaticTuningData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SqlDatabaseAutomaticTuningData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

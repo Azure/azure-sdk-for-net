@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Network
 {
     public partial class VpnGatewayResource : IJsonModel<VpnGatewayData>
     {
+        private static VpnGatewayData s_dataDeserializationInstance;
+        private static VpnGatewayData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<VpnGatewayData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<VpnGatewayData>)Data).Write(writer, options);
 
-        VpnGatewayData IJsonModel<VpnGatewayData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<VpnGatewayData>)Data).Create(ref reader, options);
+        VpnGatewayData IJsonModel<VpnGatewayData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<VpnGatewayData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<VpnGatewayData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<VpnGatewayData>(Data, options, AzureResourceManagerNetworkContext.Default);
 
         VpnGatewayData IPersistableModel<VpnGatewayData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<VpnGatewayData>(data, options, AzureResourceManagerNetworkContext.Default);
 
-        string IPersistableModel<VpnGatewayData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<VpnGatewayData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<VpnGatewayData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<VpnGatewayData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

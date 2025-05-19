@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.KeyVault
 {
     public partial class KeyVaultResource : IJsonModel<KeyVaultData>
     {
+        private static KeyVaultData s_dataDeserializationInstance;
+        private static KeyVaultData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<KeyVaultData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<KeyVaultData>)Data).Write(writer, options);
 
-        KeyVaultData IJsonModel<KeyVaultData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<KeyVaultData>)Data).Create(ref reader, options);
+        KeyVaultData IJsonModel<KeyVaultData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<KeyVaultData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<KeyVaultData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<KeyVaultData>(Data, options, AzureResourceManagerKeyVaultContext.Default);
 
         KeyVaultData IPersistableModel<KeyVaultData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<KeyVaultData>(data, options, AzureResourceManagerKeyVaultContext.Default);
 
-        string IPersistableModel<KeyVaultData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<KeyVaultData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<KeyVaultData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<KeyVaultData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Migration.Assessment
 {
     public partial class MigrationAssessedSqlRecommendedEntityResource : IJsonModel<MigrationAssessedSqlRecommendedEntityData>
     {
+        private static MigrationAssessedSqlRecommendedEntityData s_dataDeserializationInstance;
+        private static MigrationAssessedSqlRecommendedEntityData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<MigrationAssessedSqlRecommendedEntityData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<MigrationAssessedSqlRecommendedEntityData>)Data).Write(writer, options);
 
-        MigrationAssessedSqlRecommendedEntityData IJsonModel<MigrationAssessedSqlRecommendedEntityData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MigrationAssessedSqlRecommendedEntityData>)Data).Create(ref reader, options);
+        MigrationAssessedSqlRecommendedEntityData IJsonModel<MigrationAssessedSqlRecommendedEntityData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MigrationAssessedSqlRecommendedEntityData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<MigrationAssessedSqlRecommendedEntityData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<MigrationAssessedSqlRecommendedEntityData>(Data, options, AzureResourceManagerMigrationAssessmentContext.Default);
 
         MigrationAssessedSqlRecommendedEntityData IPersistableModel<MigrationAssessedSqlRecommendedEntityData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MigrationAssessedSqlRecommendedEntityData>(data, options, AzureResourceManagerMigrationAssessmentContext.Default);
 
-        string IPersistableModel<MigrationAssessedSqlRecommendedEntityData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MigrationAssessedSqlRecommendedEntityData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<MigrationAssessedSqlRecommendedEntityData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MigrationAssessedSqlRecommendedEntityData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }
