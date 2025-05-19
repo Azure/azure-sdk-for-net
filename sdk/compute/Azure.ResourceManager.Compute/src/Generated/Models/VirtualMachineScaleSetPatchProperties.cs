@@ -67,8 +67,9 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="resiliencyPolicy"> Policy for Resiliency. </param>
         /// <param name="zonalPlatformFaultDomainAlignMode"> Specifies the align mode between Virtual Machine Scale Set compute and storage Fault Domain count. </param>
         /// <param name="skuProfile"> Specifies the sku profile for the virtual machine scale set. </param>
+        /// <param name="lifecycleHooksProfile"> Specifies the lifecycle hooks profile for the virtual machine scale set. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachineScaleSetPatchProperties(VirtualMachineScaleSetUpgradePolicy upgradePolicy, AutomaticRepairsPolicy automaticRepairsPolicy, VirtualMachineScaleSetUpdateVmProfile virtualMachineProfile, bool? overprovision, bool? doNotRunExtensionsOnOverprovisionedVms, bool? singlePlacementGroup, AdditionalCapabilities additionalCapabilities, ScaleInPolicy scaleInPolicy, WritableSubResource proximityPlacementGroup, VirtualMachineScaleSetPriorityMixPolicy priorityMixPolicy, SpotRestorePolicy spotRestorePolicy, ResiliencyPolicy resiliencyPolicy, ZonalPlatformFaultDomainAlignMode? zonalPlatformFaultDomainAlignMode, ComputeSkuProfile skuProfile, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal VirtualMachineScaleSetPatchProperties(VirtualMachineScaleSetUpgradePolicy upgradePolicy, AutomaticRepairsPolicy automaticRepairsPolicy, VirtualMachineScaleSetUpdateVmProfile virtualMachineProfile, bool? overprovision, bool? doNotRunExtensionsOnOverprovisionedVms, bool? singlePlacementGroup, AdditionalCapabilities additionalCapabilities, ScaleInPolicy scaleInPolicy, WritableSubResource proximityPlacementGroup, VirtualMachineScaleSetPriorityMixPolicy priorityMixPolicy, SpotRestorePolicy spotRestorePolicy, ResiliencyPolicy resiliencyPolicy, ZonalPlatformFaultDomainAlignMode? zonalPlatformFaultDomainAlignMode, ComputeSkuProfile skuProfile, LifecycleHooksProfile lifecycleHooksProfile, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             UpgradePolicy = upgradePolicy;
             AutomaticRepairsPolicy = automaticRepairsPolicy;
@@ -84,6 +85,7 @@ namespace Azure.ResourceManager.Compute.Models
             ResiliencyPolicy = resiliencyPolicy;
             ZonalPlatformFaultDomainAlignMode = zonalPlatformFaultDomainAlignMode;
             SkuProfile = skuProfile;
+            LifecycleHooksProfile = lifecycleHooksProfile;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -127,5 +129,17 @@ namespace Azure.ResourceManager.Compute.Models
         public ZonalPlatformFaultDomainAlignMode? ZonalPlatformFaultDomainAlignMode { get; set; }
         /// <summary> Specifies the sku profile for the virtual machine scale set. </summary>
         public ComputeSkuProfile SkuProfile { get; set; }
+        /// <summary> Specifies the lifecycle hooks profile for the virtual machine scale set. </summary>
+        internal LifecycleHooksProfile LifecycleHooksProfile { get; set; }
+        /// <summary> Specifies the lifecycle hooks configured for the virtual machine scale set. </summary>
+        public IList<LifecycleHook> LifecycleHooks
+        {
+            get
+            {
+                if (LifecycleHooksProfile is null)
+                    LifecycleHooksProfile = new LifecycleHooksProfile();
+                return LifecycleHooksProfile.LifecycleHooks;
+            }
+        }
     }
 }
