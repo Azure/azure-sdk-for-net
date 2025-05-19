@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Text.Json;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -34,7 +35,26 @@ namespace BasicTypeSpec
         public override IEnumerable<Page<BinaryData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             string nextLink = continuationToken;
-            return null;
+            do
+            {
+                Response response = GetNextResponse(pageSizeHint, nextLink);
+                if (response is null)
+                {
+                    yield break;
+                }
+                using JsonDocument jsonDoc = JsonDocument.Parse(response.Content.ToString());
+                JsonElement root = jsonDoc.RootElement;
+                List<BinaryData> items = new List<BinaryData>();
+                if (root.TryGetProperty("Items", out JsonElement itemsArray))
+                {
+                    foreach (var item in itemsArray.EnumerateArray())
+                    {
+                        items.Add(BinaryData.FromString(item.ToString()));
+                    }
+                }
+                yield return Page<BinaryData>.FromValues(items, nextLink, response);
+            }
+            while (!string.IsNullOrEmpty(nextLink));
         }
 
         /// <summary> Get response from next link. </summary>

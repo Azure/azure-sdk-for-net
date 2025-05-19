@@ -46,7 +46,8 @@ namespace BasicTypeSpec
                     yield break;
                 }
                 ListWithContinuationTokenHeaderResponseResponse items = (ListWithContinuationTokenHeaderResponseResponse)response;
-                yield return Page<ThingModel>.FromValues(items.Things.AsReadOnly(), (response.Headers.TryGetValue("next-token", out string value) ? value : null).ToString(), response);
+                nextLink = (response.Headers.TryGetValue("next-token", out string value) ? value : null).ToString();
+                yield return Page<ThingModel>.FromValues((IReadOnlyList<ThingModel>)items.Things, nextLink, response);
             }
             while (!string.IsNullOrEmpty(nextLink));
         }

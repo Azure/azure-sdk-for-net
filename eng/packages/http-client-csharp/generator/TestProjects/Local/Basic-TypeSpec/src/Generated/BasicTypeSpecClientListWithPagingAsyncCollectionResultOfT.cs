@@ -43,7 +43,8 @@ namespace BasicTypeSpec
                     yield break;
                 }
                 PageThingModel items = (PageThingModel)response;
-                yield return Page<ThingModel>.FromValues(items.Items.AsReadOnly(), null, response);
+                nextLink = null;
+                yield return Page<ThingModel>.FromValues((IReadOnlyList<ThingModel>)items.Items, nextLink, response);
             }
             while (!string.IsNullOrEmpty(nextLink));
         }
