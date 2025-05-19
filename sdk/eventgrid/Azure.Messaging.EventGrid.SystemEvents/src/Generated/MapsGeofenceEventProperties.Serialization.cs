@@ -34,27 +34,36 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 throw new FormatException($"The model {nameof(MapsGeofenceEventProperties)} does not support writing '{format}' format.");
             }
 
-            writer.WritePropertyName("expiredGeofenceGeometryId"u8);
-            writer.WriteStartArray();
-            foreach (var item in ExpiredGeofenceGeometryId)
+            if (options.Format != "W")
             {
-                writer.WriteStringValue(item);
+                writer.WritePropertyName("expiredGeofenceGeometryId"u8);
+                writer.WriteStartArray();
+                foreach (var item in ExpiredGeofenceGeometryId)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
             }
-            writer.WriteEndArray();
-            writer.WritePropertyName("geometries"u8);
-            writer.WriteStartArray();
-            foreach (var item in Geometries)
+            if (options.Format != "W")
             {
-                writer.WriteObjectValue(item, options);
+                writer.WritePropertyName("geometries"u8);
+                writer.WriteStartArray();
+                foreach (var item in Geometries)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
             }
-            writer.WriteEndArray();
-            writer.WritePropertyName("invalidPeriodGeofenceGeometryId"u8);
-            writer.WriteStartArray();
-            foreach (var item in InvalidPeriodGeofenceGeometryId)
+            if (options.Format != "W")
             {
-                writer.WriteStringValue(item);
+                writer.WritePropertyName("invalidPeriodGeofenceGeometryId"u8);
+                writer.WriteStartArray();
+                foreach (var item in InvalidPeriodGeofenceGeometryId)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
             }
-            writer.WriteEndArray();
             if (Optional.IsDefined(IsEventPublished))
             {
                 writer.WritePropertyName("isEventPublished"u8);

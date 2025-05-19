@@ -42,7 +42,7 @@ public class OAuth2BearerTokenAuthenticationPolicy : PipelinePolicy
         {
             throw new InvalidOperationException("Bearer token authentication is not permitted for non TLS protected (https) endpoints.");
         }
-        AccessToken token;
+        AuthenticationToken token;
         if (message.TryGetProperty(typeof(GetTokenOptions), out var rawContext) && rawContext is GetTokenOptions scopesContext)
         {
             var context = _flowContext.WithAdditionalScopes(scopesContext.Scopes);

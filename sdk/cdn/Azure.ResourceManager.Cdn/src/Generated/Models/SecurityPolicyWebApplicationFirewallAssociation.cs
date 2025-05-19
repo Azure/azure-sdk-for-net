@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> settings for security policy patterns to match. </summary>
+    /// <summary>
+    /// settings for security policy patterns to match
+    /// Serialized Name: SecurityPolicyWebApplicationFirewallAssociation
+    /// </summary>
     public partial class SecurityPolicyWebApplicationFirewallAssociation
     {
         /// <summary>
@@ -53,8 +56,14 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SecurityPolicyWebApplicationFirewallAssociation"/>. </summary>
-        /// <param name="domains"> List of domains. </param>
-        /// <param name="patternsToMatch"> List of paths. </param>
+        /// <param name="domains">
+        /// List of domains.
+        /// Serialized Name: SecurityPolicyWebApplicationFirewallAssociation.domains
+        /// </param>
+        /// <param name="patternsToMatch">
+        /// List of paths
+        /// Serialized Name: SecurityPolicyWebApplicationFirewallAssociation.patternsToMatch
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SecurityPolicyWebApplicationFirewallAssociation(IList<FrontDoorActivatedResourceInfo> domains, IList<string> patternsToMatch, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -63,9 +72,15 @@ namespace Azure.ResourceManager.Cdn.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> List of domains. </summary>
+        /// <summary>
+        /// List of domains.
+        /// Serialized Name: SecurityPolicyWebApplicationFirewallAssociation.domains
+        /// </summary>
         public IList<FrontDoorActivatedResourceInfo> Domains { get; }
-        /// <summary> List of paths. </summary>
+        /// <summary>
+        /// List of paths
+        /// Serialized Name: SecurityPolicyWebApplicationFirewallAssociation.patternsToMatch
+        /// </summary>
         public IList<string> PatternsToMatch { get; }
     }
 }

@@ -12,6 +12,7 @@ namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary>
     /// The JSON object that contains the properties to secure a custom domain.
+    /// Serialized Name: CustomDomainHttpsParameters
     /// Please note <see cref="CustomDomainHttpsContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="UserManagedHttpsContent"/> and <see cref="CdnManagedHttpsContent"/>.
     /// </summary>
@@ -50,16 +51,28 @@ namespace Azure.ResourceManager.Cdn.Models
         private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="CustomDomainHttpsContent"/>. </summary>
-        /// <param name="protocolType"> Defines the TLS extension protocol that is used for secure delivery. </param>
+        /// <param name="protocolType">
+        /// Defines the TLS extension protocol that is used for secure delivery.
+        /// Serialized Name: CustomDomainHttpsParameters.protocolType
+        /// </param>
         protected CustomDomainHttpsContent(SecureDeliveryProtocolType protocolType)
         {
             ProtocolType = protocolType;
         }
 
         /// <summary> Initializes a new instance of <see cref="CustomDomainHttpsContent"/>. </summary>
-        /// <param name="certificateSource"> Defines the source of the SSL certificate. </param>
-        /// <param name="protocolType"> Defines the TLS extension protocol that is used for secure delivery. </param>
-        /// <param name="minimumTlsVersion"> TLS protocol version that will be used for Https. </param>
+        /// <param name="certificateSource">
+        /// Defines the source of the SSL certificate.
+        /// Serialized Name: CustomDomainHttpsParameters.certificateSource
+        /// </param>
+        /// <param name="protocolType">
+        /// Defines the TLS extension protocol that is used for secure delivery.
+        /// Serialized Name: CustomDomainHttpsParameters.protocolType
+        /// </param>
+        /// <param name="minimumTlsVersion">
+        /// TLS protocol version that will be used for Https
+        /// Serialized Name: CustomDomainHttpsParameters.minimumTlsVersion
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal CustomDomainHttpsContent(CertificateSource certificateSource, SecureDeliveryProtocolType protocolType, CdnMinimumTlsVersion? minimumTlsVersion, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -74,11 +87,20 @@ namespace Azure.ResourceManager.Cdn.Models
         {
         }
 
-        /// <summary> Defines the source of the SSL certificate. </summary>
+        /// <summary>
+        /// Defines the source of the SSL certificate.
+        /// Serialized Name: CustomDomainHttpsParameters.certificateSource
+        /// </summary>
         internal CertificateSource CertificateSource { get; set; }
-        /// <summary> Defines the TLS extension protocol that is used for secure delivery. </summary>
+        /// <summary>
+        /// Defines the TLS extension protocol that is used for secure delivery.
+        /// Serialized Name: CustomDomainHttpsParameters.protocolType
+        /// </summary>
         public SecureDeliveryProtocolType ProtocolType { get; set; }
-        /// <summary> TLS protocol version that will be used for Https. </summary>
+        /// <summary>
+        /// TLS protocol version that will be used for Https
+        /// Serialized Name: CustomDomainHttpsParameters.minimumTlsVersion
+        /// </summary>
         public CdnMinimumTlsVersion? MinimumTlsVersion { get; set; }
     }
 }

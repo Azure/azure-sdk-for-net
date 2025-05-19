@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> The ResourcesResponseCustomDomainsItem. </summary>
+    /// <summary>
+    /// The ResourcesResponseCustomDomainsItem.
+    /// Serialized Name: ResourcesResponseCustomDomainsItem
+    /// </summary>
     public partial class ResourcesResponseCustomDomainsItem
     {
         /// <summary>
@@ -51,10 +54,10 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ResourcesResponseCustomDomainsItem"/>. </summary>
-        /// <param name="id"></param>
-        /// <param name="name"></param>
-        /// <param name="endpointId"></param>
-        /// <param name="history"></param>
+        /// <param name="id"> Serialized Name: ResourcesResponseCustomDomainsItem.id. </param>
+        /// <param name="name"> Serialized Name: ResourcesResponseCustomDomainsItem.name. </param>
+        /// <param name="endpointId"> Serialized Name: ResourcesResponseCustomDomainsItem.endpointId. </param>
+        /// <param name="history"> Serialized Name: ResourcesResponseCustomDomainsItem.history. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ResourcesResponseCustomDomainsItem(string id, string name, string endpointId, bool? history, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -65,13 +68,13 @@ namespace Azure.ResourceManager.Cdn.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets the id. </summary>
+        /// <summary> Serialized Name: ResourcesResponseCustomDomainsItem.id. </summary>
         public string Id { get; }
-        /// <summary> Gets the name. </summary>
+        /// <summary> Serialized Name: ResourcesResponseCustomDomainsItem.name. </summary>
         public string Name { get; }
-        /// <summary> Gets the endpoint id. </summary>
+        /// <summary> Serialized Name: ResourcesResponseCustomDomainsItem.endpointId. </summary>
         public string EndpointId { get; }
-        /// <summary> Gets the history. </summary>
+        /// <summary> Serialized Name: ResourcesResponseCustomDomainsItem.history. </summary>
         public bool? History { get; }
     }
 }
