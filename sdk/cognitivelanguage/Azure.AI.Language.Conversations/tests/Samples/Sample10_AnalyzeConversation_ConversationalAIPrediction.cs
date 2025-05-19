@@ -20,11 +20,10 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
         {
             ConversationAnalysisClient client = Client;
 
+            #region Snippet:ConversationAnalysis_AnalyzeAIConversation
             string projectName = TestEnvironment.ProjectName;
             string deploymentName = TestEnvironment.DeploymentName;
-            Console.WriteLine($"projectName xxxxxx " + projectName);
-            Console.WriteLine($"deploymentName  xxxxxxx" + deploymentName);
-            Console.WriteLine($"endpoint  xxxxxxx" + TestEnvironment.Endpoint);
+
             AnalyzeConversationInput data = new ConversationalAITask(
                 new ConversationalAIAnalysisInput(
                     conversations: new AIConversation[] {
@@ -123,6 +122,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                     Console.WriteLine();
                 }
             }
+            #endregion
         }
 
         [AsyncOnly]
@@ -156,7 +156,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                     StringIndexType = StringIndexType.Utf16CodeUnit,
                 });
 
-            #region Snippet:ConversationAnalysis_AnalyzeConversationAsync
+            #region Snippet:ConversationAnalysis_AnalyzeAIConversationAsync
             Response<AnalyzeConversationActionResult> response = await client.AnalyzeConversationAsync(data);
             ConversationalAITaskResult ConversationalAITaskResult = response.Value as ConversationalAITaskResult;
             #endregion
