@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.SecretsStoreExtension.Tests
 
             var patch = new SecretSyncPatch()
             {
-                Properties = new SecretSyncPatchProperties(
+                Properties = new SecretSyncUpdateProperties(
                     secretProviderClassName: props.SecretProviderClassName,
                     serviceAccountName: props.ServiceAccountName,
                     kubernetesSecretType: props.KubernetesSecretType,

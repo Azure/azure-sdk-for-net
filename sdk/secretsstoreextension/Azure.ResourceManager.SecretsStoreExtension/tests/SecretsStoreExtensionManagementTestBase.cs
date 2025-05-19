@@ -21,10 +21,21 @@ namespace Azure.ResourceManager.SecretsStoreExtension.Tests
         protected SecretsStoreExtensionManagementTestBase(bool isAsync)
             : base(isAsync)
         {
+            SanitizeTenant();
             SanitizeDisplayName();
             SanitizeSubscriptionId();
             SanitizeLocation();
             SanitizeKeyVault();
+        }
+
+        // Sanitizes the tenant ID.
+        private void SanitizeTenant()
+        {
+            HeaderRegexSanitizers.Add(new HeaderRegexSanitizer("x-ms-operation-identifier")
+            {
+                Regex = "^.*$",
+                Value = "Sanitized"
+            });
         }
 
         // Sanitizes the tenant display name.

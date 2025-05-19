@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.SecretsStoreExtension
 {
     public partial class SecretSyncResource : IJsonModel<SecretSyncData>
     {
+        private static SecretSyncData s_dataDeserializationInstance;
+        private static SecretSyncData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<SecretSyncData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SecretSyncData>)Data).Write(writer, options);
 
-        SecretSyncData IJsonModel<SecretSyncData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SecretSyncData>)Data).Create(ref reader, options);
+        SecretSyncData IJsonModel<SecretSyncData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SecretSyncData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<SecretSyncData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SecretSyncData>(Data, options, AzureResourceManagerSecretsStoreExtensionContext.Default);
 
         SecretSyncData IPersistableModel<SecretSyncData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SecretSyncData>(data, options, AzureResourceManagerSecretsStoreExtensionContext.Default);
 
-        string IPersistableModel<SecretSyncData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SecretSyncData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<SecretSyncData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SecretSyncData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

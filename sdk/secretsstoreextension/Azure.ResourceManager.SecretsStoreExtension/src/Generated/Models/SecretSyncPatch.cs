@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.SecretsStoreExtension.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SecretSyncPatch(IDictionary<string, string> tags, SecretSyncPatchProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SecretSyncPatch(IDictionary<string, string> tags, SecretSyncUpdateProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Tags = tags;
             Properties = properties;
@@ -65,6 +65,6 @@ namespace Azure.ResourceManager.SecretsStoreExtension.Models
         /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
         /// <summary> The resource-specific properties for this resource. </summary>
-        public SecretSyncPatchProperties Properties { get; set; }
+        public SecretSyncUpdateProperties Properties { get; set; }
     }
 }

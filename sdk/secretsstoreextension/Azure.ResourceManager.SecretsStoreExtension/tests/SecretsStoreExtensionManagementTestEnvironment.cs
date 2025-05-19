@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using Azure.Core.TestFramework;
 
 namespace Azure.ResourceManager.SecretsStoreExtension.Tests
@@ -18,12 +19,12 @@ namespace Azure.ResourceManager.SecretsStoreExtension.Tests
         public string SpcLocation => GetRecordedVariable("SPC_LOCATION", options => options.IsSecret());
 
         // Tenant which contains the cluster subscription.  The tests must be run while logged into this tenant.
-        public string SpcTenantId => GetRecordedVariable("SPC_TENANT_ID", options => options.IsSecret(NullGuid));
+        public Guid SpcTenantId => Guid.Parse(GetRecordedVariable("SPC_TENANT_ID", options => options.IsSecret(NullGuid)));
         // Subscription which contains the cluster resource group.
         public string SpcSubscriptionId => GetRecordedVariable("SPC_SUBSCRIPTION_ID", options => options.IsSecret(NullGuid));
 
         // UAMI which is used to retrieve the secrets from AKV.
-        public string SpcClientId => GetRecordedVariable("SPC_CLIENT_ID", options => options.IsSecret(NullGuid));
+        public Guid SpcClientId => Guid.Parse(GetRecordedVariable("SPC_CLIENT_ID", options => options.IsSecret(NullGuid)));
         // Key vault which stores the secrets to be synchronized to the cluster.
         public string SpcKeyVaultName => GetRecordedVariable("SPC_KEYVAULT_NAME", options => options.IsSecret());
     }

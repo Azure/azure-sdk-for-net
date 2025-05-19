@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecretsStoreExtension.Models
 {
-    public partial class SecretSyncPatchProperties : IUtf8JsonSerializable, IJsonModel<SecretSyncPatchProperties>
+    public partial class SecretSyncUpdateProperties : IUtf8JsonSerializable, IJsonModel<SecretSyncUpdateProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecretSyncPatchProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecretSyncUpdateProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<SecretSyncPatchProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<SecretSyncUpdateProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.SecretsStoreExtension.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SecretSyncPatchProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SecretSyncUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecretSyncPatchProperties)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(SecretSyncUpdateProperties)} does not support writing '{format}' format.");
             }
 
             if (Optional.IsDefined(SecretProviderClassName))
@@ -81,19 +81,19 @@ namespace Azure.ResourceManager.SecretsStoreExtension.Models
             }
         }
 
-        SecretSyncPatchProperties IJsonModel<SecretSyncPatchProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        SecretSyncUpdateProperties IJsonModel<SecretSyncUpdateProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SecretSyncPatchProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SecretSyncUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecretSyncPatchProperties)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(SecretSyncUpdateProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeSecretSyncPatchProperties(document.RootElement, options);
+            return DeserializeSecretSyncUpdateProperties(document.RootElement, options);
         }
 
-        internal static SecretSyncPatchProperties DeserializeSecretSyncPatchProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static SecretSyncUpdateProperties DeserializeSecretSyncUpdateProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.SecretsStoreExtension.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new SecretSyncPatchProperties(
+            return new SecretSyncUpdateProperties(
                 secretProviderClassName,
                 serviceAccountName,
                 kubernetesSecretType,
@@ -163,35 +163,35 @@ namespace Azure.ResourceManager.SecretsStoreExtension.Models
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<SecretSyncPatchProperties>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<SecretSyncUpdateProperties>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SecretSyncPatchProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SecretSyncUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerSecretsStoreExtensionContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(SecretSyncPatchProperties)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecretSyncUpdateProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
-        SecretSyncPatchProperties IPersistableModel<SecretSyncPatchProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        SecretSyncUpdateProperties IPersistableModel<SecretSyncUpdateProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SecretSyncPatchProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SecretSyncUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeSecretSyncPatchProperties(document.RootElement, options);
+                        return DeserializeSecretSyncUpdateProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SecretSyncPatchProperties)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecretSyncUpdateProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<SecretSyncPatchProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<SecretSyncUpdateProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

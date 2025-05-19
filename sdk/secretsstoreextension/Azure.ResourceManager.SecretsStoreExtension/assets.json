@@ -1,6 +1,6 @@
 {
   "AssetsRepo": "Azure/azure-sdk-assets",
   "AssetsRepoPrefixPath": "net",
-  "TagPrefix": "net/edgeworkloadsecurity/Azure.ResourceManager.SecretsStoreExtension",
-  "Tag": "net/edgeworkloadsecurity/Azure.ResourceManager.SecretsStoreExtension_9d3a9f4420"
+  "TagPrefix": "net/secretsstoreextension/Azure.ResourceManager.SecretsStoreExtension",
+  "Tag": "net/secretsstoreextension/Azure.ResourceManager.SecretsStoreExtension_c20d94f6bc"
 }

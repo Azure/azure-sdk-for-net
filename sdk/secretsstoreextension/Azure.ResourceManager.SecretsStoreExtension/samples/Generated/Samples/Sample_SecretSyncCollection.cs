@@ -46,11 +46,12 @@ namespace Azure.ResourceManager.SecretsStoreExtension.Samples
             {
                 Properties = new SecretSyncProperties("akvspc-ssc-example", "example-k8s-sa-name", KubernetesSecretType.Opaque, new KubernetesSecretObjectMapping[]
             {
-new KubernetesSecretObjectMapping("kv-secret-name/0", "kv-secret-name/0")
+new KubernetesSecretObjectMapping("my-secret-object", "my-secret-object")
             }),
                 ExtendedLocation = new ExtendedLocation
                 {
                     Name = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg-ssc-example/providers/Microsoft.ExtendedLocation/customLocations/example-custom-location",
+                    ExtendedLocationType = new("CustomLocation"),
                 },
                 Tags =
 {

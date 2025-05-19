@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.SecretsStoreExtension.Models
                 return null;
             }
             IDictionary<string, string> tags = default;
-            SecretSyncPatchProperties properties = default;
+            SecretSyncUpdateProperties properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.SecretsStoreExtension.Models
                     {
                         continue;
                     }
-                    properties = SecretSyncPatchProperties.DeserializeSecretSyncPatchProperties(property.Value, options);
+                    properties = SecretSyncUpdateProperties.DeserializeSecretSyncUpdateProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.SecretsStoreExtension
 {
     public partial class KeyVaultSecretProviderClassResource : IJsonModel<KeyVaultSecretProviderClassData>
     {
+        private static KeyVaultSecretProviderClassData s_dataDeserializationInstance;
+        private static KeyVaultSecretProviderClassData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<KeyVaultSecretProviderClassData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<KeyVaultSecretProviderClassData>)Data).Write(writer, options);
 
-        KeyVaultSecretProviderClassData IJsonModel<KeyVaultSecretProviderClassData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<KeyVaultSecretProviderClassData>)Data).Create(ref reader, options);
+        KeyVaultSecretProviderClassData IJsonModel<KeyVaultSecretProviderClassData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<KeyVaultSecretProviderClassData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<KeyVaultSecretProviderClassData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<KeyVaultSecretProviderClassData>(Data, options, AzureResourceManagerSecretsStoreExtensionContext.Default);
 
         KeyVaultSecretProviderClassData IPersistableModel<KeyVaultSecretProviderClassData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<KeyVaultSecretProviderClassData>(data, options, AzureResourceManagerSecretsStoreExtensionContext.Default);
 
-        string IPersistableModel<KeyVaultSecretProviderClassData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<KeyVaultSecretProviderClassData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<KeyVaultSecretProviderClassData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<KeyVaultSecretProviderClassData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }
