@@ -9,6 +9,7 @@ using Azure.Core.Pipeline;
 using Azure.Generator.Tests.Common;
 using Azure.Generator.Tests.TestHelpers;
 using Azure.Generator.Visitors;
+using Microsoft.TypeSpec.Generator;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Primitives;
@@ -191,15 +192,50 @@ namespace Azure.Generator.Tests.Visitors
                 response: InputFactory.ServiceMethodResponse(responseModel, ["result"]));
             var inputClient = InputFactory.Client("TestClient", methods: [lroServiceMethod]);
             var plugin = MockHelpers.LoadMockPlugin(clients: () => [inputClient]);
-            plugin.Object.AddVisitor(visitor);
+            var outputLibrary = plugin.Object.OutputLibrary;
+            visitor.InvokeVisitLibrary(outputLibrary);
 
-            var clientProvider = AzureClientGenerator.Instance.TypeFactory.CreateClient(inputClient);
+            var clientProvider = outputLibrary.TypeProviders.OfType<ClientProvider>().FirstOrDefault();
             Assert.IsNotNull(clientProvider);
             var convenienceMethod = clientProvider!.Methods
                 .FirstOrDefault(m => m.Signature.Parameters.All(p => p.Name != "context"));
 
             Assert.IsNotNull(convenienceMethod);
             var actual = convenienceMethod!.BodyStatements!.ToDisplayString();
+            Assert.AreEqual(Helpers.GetExpectedFromFile(), actual);
+        }
+
+        [Test]
+        public void UpdatesProtocolMethodBody()
+        {
+            var visitor = new TestLroVisitor();
+            List<InputParameter> parameters =
+            [
+                InputFactory.Parameter(
+                    "p1",
+                    InputPrimitiveType.String,
+                    kind: InputParameterKind.Method)
+            ];
+            var lro = InputFactory.Operation(
+                "foo",
+                parameters: parameters);
+            var responseModel = InputFactory.Model("foo");
+            var lroServiceMethod = InputFactory.LongRunningServiceMethod(
+                "foo",
+                lro, parameters: parameters,
+                response: InputFactory.ServiceMethodResponse(responseModel, ["result"]));
+            var inputClient = InputFactory.Client("TestClient", methods: [lroServiceMethod]);
+            var plugin = MockHelpers.LoadMockPlugin(clients: () => [inputClient]);
+            var outputLibrary = plugin.Object.OutputLibrary;
+            visitor.InvokeVisitLibrary(outputLibrary);
+
+            var clientProvider = outputLibrary.TypeProviders.OfType<ClientProvider>().FirstOrDefault();
+            Assert.IsNotNull(clientProvider);
+            var protocolMethod = clientProvider!.Methods
+                .FirstOrDefault(m => m.Signature.Parameters.Any(p => p.Name == "context"));
+
+            Assert.IsNotNull(protocolMethod);
+            var actual = protocolMethod!.BodyStatements!.ToDisplayString();
             Assert.AreEqual(Helpers.GetExpectedFromFile(), actual);
         }
 
@@ -218,9 +254,9 @@ namespace Azure.Generator.Tests.Visitors
                 return base.Visit(serviceMethod, client, methodCollection);
             }
 
-            public MethodBodyStatement? InvokeVisitExpressionStatement(ExpressionStatement expressionStatement, MethodProvider method)
+            public void InvokeVisitLibrary(OutputLibrary library)
             {
-                return base.VisitExpressionStatement(expressionStatement, method);
+                base.VisitLibrary(library);
             }
         }
     }
