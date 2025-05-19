@@ -1,6 +1,5 @@
 {
   "package-name": "_Specs_.Azure.Core.Lro.Standard",
-  "unreferenced-types-handling": "keepAll",
   "license": {
     "name": "MIT License",
     "company": "Microsoft Corporation",

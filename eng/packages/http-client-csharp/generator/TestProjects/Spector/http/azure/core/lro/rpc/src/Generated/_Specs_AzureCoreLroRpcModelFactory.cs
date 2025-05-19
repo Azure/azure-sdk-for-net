@@ -8,7 +8,6 @@
 using System.Collections.Generic;
 using Azure;
 using Azure.Core;
-using Azure.Core.Foundations;
 
 namespace _Specs_.Azure.Core.Lro.Rpc
 {
@@ -17,13 +16,5 @@ namespace _Specs_.Azure.Core.Lro.Rpc
         public static GenerationOptions GenerationOptions(string prompt = default) => throw null;
 
         public static GenerationResult GenerationResult(string data = default) => throw null;
-
-        public static ResourceOperationStatusGenerationResponseGenerationResultError ResourceOperationStatusGenerationResponseGenerationResultError(string id = default, global::Azure.Core.Foundations.OperationState status = default, ResponseError error = default, GenerationResult result = default) => throw null;
-
-        public static Error Error(string code = default, string message = default, string target = default, IEnumerable<ResponseError> details = default, InnerError innererror = default) => throw null;
-
-        public static InnerError InnerError(string code = default, InnerError innererror = default) => throw null;
-
-        public static OperationStatusGenerationResultError OperationStatusGenerationResultError(string id = default, global::Azure.Core.Foundations.OperationState status = default, ResponseError error = default, GenerationResult result = default) => throw null;
     }
 }

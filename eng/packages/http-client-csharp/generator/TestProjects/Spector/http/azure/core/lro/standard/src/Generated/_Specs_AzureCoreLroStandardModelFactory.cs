@@ -8,7 +8,6 @@
 using System.Collections.Generic;
 using Azure;
 using Azure.Core;
-using Azure.Core.Foundations;
 
 namespace _Specs_.Azure.Core.Lro.Standard
 {
@@ -17,15 +16,5 @@ namespace _Specs_.Azure.Core.Lro.Standard
         public static User User(string name = default, string role = default) => throw null;
 
         public static ExportedUser ExportedUser(string name = default, string resourceUri = default) => throw null;
-
-        public static OperationStatusError OperationStatusError(string id = default, global::Azure.Core.Foundations.OperationState status = default, ResponseError error = default) => throw null;
-
-        public static Error Error(string code = default, string message = default, string target = default, IEnumerable<ResponseError> details = default, InnerError innererror = default) => throw null;
-
-        public static InnerError InnerError(string code = default, InnerError innererror = default) => throw null;
-
-        public static ResourceOperationStatusUserExportedUserError ResourceOperationStatusUserExportedUserError(string id = default, global::Azure.Core.Foundations.OperationState status = default, ResponseError error = default, ExportedUser result = default) => throw null;
-
-        public static OperationStatusExportedUserError OperationStatusExportedUserError(string id = default, global::Azure.Core.Foundations.OperationState status = default, ResponseError error = default, ExportedUser result = default) => throw null;
     }
 }
