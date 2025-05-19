@@ -25,6 +25,15 @@ steps:
       packageType: sdk
       performMultiLevelLookup: true
       version: "8.0.x"
+  - task: UseDotNet@2 # Special 10 preview for AI library use of extension properties.
+    displayName: 'Use .NET 10.0 Preview SDK'
+    retryCountOnTaskFailure: 3
+    inputs:
+      # AspNetCore runtime pack can't be installed outside of SDK and we need it for integration tests
+      packageType: sdk
+      performMultiLevelLookup: true
+      version: "10.0.x"
+      includePreviewVersions: true
   - task: Cache@2
     inputs:
       key: 'nuget | "$(Agent.OS)" | $(Build.SourcesDirectory)/eng/Packages.Data.props | ${{parameters.NuGetCacheKey}}'
