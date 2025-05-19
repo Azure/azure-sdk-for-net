@@ -590,10 +590,10 @@
 # ServiceOwners:                                                   @Tanmayeekamath
 
 # PRLabel: %Load Test Service
-/sdk/loadtestservice/                                              @prativen @mitsha-microsoft @ninallam
+/sdk/loadtestservice/                                              @prativen @mitsha-microsoft @ninallam @puagarwa
 
 # ServiceLabel: %Load Test Service
-# ServiceOwners:                                                   @prativen @mitsha-microsoft @ninallam
+# ServiceOwners:                                                   @prativen @mitsha-microsoft @ninallam @puagarwa
 
 # ServiceLabel: %Logic App
 # ServiceOwners:                                                   @Azure/azure-logicapps-team
