@@ -1,14 +1,16 @@
 # Release History
 
-## 1.6.0-beta.1 (Unreleased)
+### Acknowledgments
+
+Thank you to our developer community members who helped to make the Event Hubs client libraries better with their contributions to this release:
+
+- Alex Batishchev _([GitHub](https://github.com/abatishchev))_
+
+## 1.6.0 (2025-05-19)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Overloads were added to accept a `Uri`-typed key identifier to all protection methods.  _(A community contribution, courtesy of [MattKotsenas](https://github.com/abatishchev))_
 
 ## 1.5.0 (2025-05-06)
 
