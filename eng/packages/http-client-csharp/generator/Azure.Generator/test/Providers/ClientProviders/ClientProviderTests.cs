@@ -14,7 +14,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
 
-namespace Azure.Generator.Tests.Providers
+namespace Azure.Generator.Tests.Providers.ClientProviders
 {
     internal class ClientProviderTests
     {
