@@ -14,6 +14,8 @@ Thank you to our developer community members who helped to make the Event Hubs c
 
 ### Bugs Fixed
 
+- Fixed a bug where the data types of broker-owned properties were being adjusted when an event was read by the client, causing the underlying AMQP data to be mutated.  This resulted in binary changes when the AMQP message was serialized and unintentionally altered the service contract.  Going forward, the original data types will be preserved on the AMQP representation of the message and type normalization only applied to the .NET `EventData` projection.
+
 ### Other Changes
 
 - Significantly improved the performance of the Jenkins3 hash computation used for partition key resolution. Across various input sizes, the updated implementation achieves up to 39% faster hash calculation, with the most notable gains seen for smaller keys (8–32 bytes), and consistent improvements across all sizes. The new approach maintains the exact bit-for-bit hash output while reducing overhead.  _(A community contribution, courtesy of [danielmarbach](https://github.com/danielmarbach))_
