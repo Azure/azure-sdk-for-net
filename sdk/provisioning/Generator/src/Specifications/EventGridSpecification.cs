@@ -26,6 +26,9 @@ public class EventGridSpecification() :
         AddNameRequirements<EventSubscriptionResource>(min: 3, max: 64, lower: true, upper: true, digits: true, hyphen: true);
         AddNameRequirements<EventGridTopicResource>(min: 3, max: 50, lower: true, upper: true, digits: true, hyphen: true);
 
+        // Patch models for backward compatibility
+        ModelNameMapping.Add("ClientAuthenticationSettings", new SimpleModel(this, null!, "ClientAuthenticationSettings"));
+
         // Roles
         Roles.Add(new Role("EventGridContributor", "1e241071-0855-49ea-94dc-649edcd759de", "Lets you manage EventGrid operations."));
         Roles.Add(new Role("EventGridDataSender", "d5a91429-5739-47e2-a06b-3470a27159e7", "Allows send access to event grid events."));

@@ -65,6 +65,14 @@ public abstract partial class Specification : ModelBase
         CustomizeProperty(ModelNameMapping.GetValueOrDefault(modelName) ??
             throw new InvalidOperationException($"Failed to find {modelName} to customize!"), propertyName, action);
 
+    protected void AddProperty(string modelName, string propertyName, Action<Property> action)
+    {
+        TypeModel model = ModelNameMapping.GetValueOrDefault(modelName) as TypeModel ??
+            throw new InvalidOperationException($"Failed to find {modelName} to add property!");
+        Property property = new Property(model, TypeRegistry.Get<BinaryData>()!, null, null);
+        model.Properties.Add(property);
+    }
+
     private static void CustomizeProperty(ModelBase model, string propertyName, Action<Property> action)
     {
         TypeModel typeModel = model as TypeModel ??
