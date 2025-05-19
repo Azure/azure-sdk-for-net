@@ -2484,7 +2484,8 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
                     TranscriptionOptions transcriptionOptions = new TranscriptionOptions(
                         new Uri(TestEnvironment.TransportUrl),
                         "en-CA",
-                        false);
+                        false,
+                        StreamingTransport.Websocket);
                     var result = await CreateAndAnswerCallWithMediaOrTranscriptionOptions(client, targetClient, target, uniqueId, true,
                           null, transcriptionOptions);
                     callConnectionId = result.CallerCallConnectionId;
@@ -2547,7 +2548,8 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
                     TranscriptionOptions transcriptionOptions = new TranscriptionOptions(
                         new Uri(TestEnvironment.TransportUrl),
                         "en-CA",
-                        false);
+                        false,
+                        StreamingTransport.Websocket);
                     var result = await CreateAndAnswerCallWithMediaOrTranscriptionOptions(client, targetClient, target, uniqueId, false,
                           null, transcriptionOptions);
                     callConnectionId = result.TargetCallConnectionId;

@@ -88,7 +88,8 @@ namespace Azure.Communication.CallAutomation.Tests.MediaStreaming
                     "\"subscriptionId\":\"subscriptionId\"," +
                     "\"locale\":\"en-US\"," +
                     "\"callConnectionId\":\"callConnectionId\"," +
-                    "\"correlationId\":\"correlationId\"" +
+                    "\"correlationId\":\"correlationId\"," +
+                    "\"speechRecognitionModelEndpointId\":\"speechRecognitionModelEndpointId\"" +
                 "}" +
             "}";
 
@@ -154,6 +155,7 @@ namespace Azure.Communication.CallAutomation.Tests.MediaStreaming
             Assert.AreEqual("en-US", transcriptionMetadata.Locale);
             Assert.AreEqual("callConnectionId", transcriptionMetadata.CallConnectionId);
             Assert.AreEqual("correlationId", transcriptionMetadata.CorrelationId);
+            Assert.AreEqual("speechRecognitionModelEndpointId", transcriptionMetadata.SpeechRecognitionModelEndpointId);
         }
 
         private static void ValidateTranscriptionDataWithWordsNull(TranscriptionData transcription)

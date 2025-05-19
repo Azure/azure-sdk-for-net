@@ -5,48 +5,36 @@ using System.Text.Json.Serialization;
 
 namespace Azure.Communication.CallAutomation
 {
-    /// <summary>
-    /// Metadata for Transcription Streaming.
-    /// </summary>
-    public class TranscriptionMetadata : StreamingData
+    internal class TranscriptionMetaDataInternal
     {
-        internal TranscriptionMetadata(TranscriptionMetaDataInternal metaData)
-        {
-            TranscriptionSubscriptionId = metaData.TranscriptionSubscriptionId;
-            Locale = metaData.Locale;
-            CallConnectionId = metaData.CallConnectionId;
-            CorrelationId = metaData.CorrelationId;
-            SpeechRecognitionModelEndpointId = metaData.SpeechRecognitionModelEndpointId;
-        }
-
         /// <summary>
         /// Transcription Subscription Id.
         /// </summary>
         [JsonPropertyName("subscriptionId")]
-        public string TranscriptionSubscriptionId { get; internal set; }
+        public string TranscriptionSubscriptionId { get; set; }
 
         /// <summary>
         /// The target locale in which the translated text needs to be
         /// </summary>
         [JsonPropertyName("locale")]
-        public string Locale { get; internal set; }
+        public string Locale { get; set; }
 
         /// <summary>
         /// call connection Id.
         /// </summary>
         [JsonPropertyName("callConnectionId")]
-        public string CallConnectionId { get; internal set; }
+        public string CallConnectionId { get; set; }
 
         /// <summary>
         /// correlation Id.
         /// </summary>
         [JsonPropertyName("correlationId")]
-        public string CorrelationId { get; internal set; }
+        public string CorrelationId { get; set; }
 
         /// <summary>
         /// The custom speech recognition model endpoint id
         /// </summary>
         [JsonPropertyName("speechRecognitionModelEndpointId")]
-        public string SpeechRecognitionModelEndpointId { get; internal set; }
+        public string SpeechRecognitionModelEndpointId { get; set; }
     }
 }
