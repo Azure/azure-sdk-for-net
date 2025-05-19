@@ -63,6 +63,7 @@ describe("Configuration tests", async () => {
     const context = createEmitterContext(program, options);
     $onEmit(context);
     strictEqual(program.diagnostics.length, 0);
+    strictEqual(context.options.namespace, "Test.Namespace");
     strictEqual(context.options["package-name"], "Test.Namespace");
   });
   it("package-name undefined if namespace and package-name not set", async () => {
@@ -79,6 +80,7 @@ describe("Configuration tests", async () => {
     const context = createEmitterContext(program, options);
     $onEmit(context);
     strictEqual(program.diagnostics.length, 0);
+    strictEqual(context.options.namespace, "Test.Namespace");
     strictEqual(context.options["package-name"], "Test.Package");
   });
 });

@@ -93,7 +93,7 @@ export async function typeSpecCompile(
 export function createEmitterContext(
   program: Program,
   options: AzureEmitterOptions = {}
-): EmitContext<CSharpEmitterOptions> {
+): EmitContext<AzureEmitterOptions> {
   return {
     program: program,
     emitterOutputDir: "./",
@@ -107,7 +107,7 @@ export function createEmitterContext(
       "generate-convenience-methods": true,
       "package-name": undefined
     }
-  } as EmitContext<CSharpEmitterOptions>;
+  } as EmitContext<AzureEmitterOptions>;
 }
 
 /* We always need to pass in the emitter name now that it is required so making a helper to do this. */
