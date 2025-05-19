@@ -2,7 +2,7 @@
 
 ### Acknowledgments
 
-Thank you to our developer community members who helped to make the Event Hubs client libraries better with their contributions to this release:
+Thank you to our developer community members who helped to make the Data Protection libraries better with their contributions to this release:
 
 - Alex Batishchev _([GitHub](https://github.com/abatishchev))_
 
@@ -16,7 +16,7 @@ Thank you to our developer community members who helped to make the Event Hubs c
 
 ### Acknowledgments
 
-Thank you to our developer community members who helped to make the Event Hubs client libraries better with their contributions to this release:
+Thank you to our developer community members who helped to make the Data Protection libraries better with their contributions to this release:
 
 - Matt Kotsenas _([GitHub](https://github.com/MattKotsenas))_
 
