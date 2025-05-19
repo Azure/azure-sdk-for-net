@@ -66,7 +66,8 @@ namespace Azure.Communication.CallAutomation
 
                 #region Transcription
                 case "TranscriptionMetadata":
-                    return JsonSerializer.Deserialize<TranscriptionMetadata>(streamingData.GetProperty("transcriptionMetadata").ToString());
+                    TranscriptionMetaDataInternal transcriptionMetadata = JsonSerializer.Deserialize<TranscriptionMetaDataInternal>(streamingData.GetProperty("transcriptionMetadata").ToString());
+                    return new TranscriptionMetadata(transcriptionMetadata);
 
                 case "TranscriptionData":
                     TranscriptionDataInternal transcriptionDataInternal = JsonSerializer.Deserialize<TranscriptionDataInternal>(

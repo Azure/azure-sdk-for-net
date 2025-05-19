@@ -115,6 +115,7 @@ namespace Azure.Communication.CallAutomation
         public CallAutomationClient(string connectionString) { }
         public CallAutomationClient(string connectionString, Azure.Communication.CallAutomation.CallAutomationClientOptions options) { }
         public CallAutomationClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Communication.CallAutomation.CallAutomationClientOptions options = null) { }
+        public CallAutomationClient(System.Uri pmaEndpoint, string connectionString, Azure.Communication.CallAutomation.CallAutomationClientOptions options = null) { }
         public Azure.Communication.CommunicationUserIdentifier Source { get { throw null; } }
         public virtual Azure.Response<Azure.Communication.CallAutomation.AnswerCallResult> AnswerCall(Azure.Communication.CallAutomation.AnswerCallOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Communication.CallAutomation.AnswerCallResult> AnswerCall(string incomingCallContext, System.Uri callbackUri, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1500,13 +1501,15 @@ namespace Azure.Communication.CallAutomation
     }
     public partial class TranscriptionMetadata : Azure.Communication.CallAutomation.StreamingData
     {
-        public TranscriptionMetadata() { }
+        internal TranscriptionMetadata() { }
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("callConnectionId")]
         public string CallConnectionId { get { throw null; } }
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("correlationId")]
         public string CorrelationId { get { throw null; } }
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("locale")]
         public string Locale { get { throw null; } }
+        [System.Text.Json.Serialization.JsonPropertyNameAttribute("speechRecognitionModelEndpointId")]
+        public string SpeechRecognitionModelEndpointId { get { throw null; } }
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("subscriptionId")]
         public string TranscriptionSubscriptionId { get { throw null; } }
     }
