@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Cdn.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_OriginGroupsCreate()
         {
-            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2024-02-01/examples/OriginGroups_Create.json
+            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2025-04-15/examples/OriginGroups_Create.json
             // this example is just showing the usage of "CdnOriginGroups_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -76,7 +76,7 @@ Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/RG/providers/Mi
         [Ignore("Only validating compilation of examples")]
         public async Task Get_OriginGroupsGet()
         {
-            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2024-02-01/examples/OriginGroups_Get.json
+            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2025-04-15/examples/OriginGroups_Get.json
             // this example is just showing the usage of "CdnOriginGroups_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -111,7 +111,7 @@ Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/RG/providers/Mi
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_OriginsGroupsListByEndpoint()
         {
-            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2024-02-01/examples/OriginGroups_ListByEndpoint.json
+            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2025-04-15/examples/OriginGroups_ListByEndpoint.json
             // this example is just showing the usage of "CdnOriginGroups_ListByEndpoint" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -148,7 +148,7 @@ Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/RG/providers/Mi
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_OriginGroupsGet()
         {
-            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2024-02-01/examples/OriginGroups_Get.json
+            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2025-04-15/examples/OriginGroups_Get.json
             // this example is just showing the usage of "CdnOriginGroups_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -179,7 +179,7 @@ Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/RG/providers/Mi
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_OriginGroupsGet()
         {
-            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2024-02-01/examples/OriginGroups_Get.json
+            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2025-04-15/examples/OriginGroups_Get.json
             // this example is just showing the usage of "CdnOriginGroups_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
