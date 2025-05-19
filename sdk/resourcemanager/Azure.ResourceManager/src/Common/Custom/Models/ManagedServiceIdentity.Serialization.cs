@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Models
             writer.WriteStartObject();
             var jsonContext = jOptions is null
                 ? ManagedServiceIdentityJsonContext.Default
-                : new ManagedServiceIdentityJsonContext(new(jOptions));
+                : new ManagedServiceIdentityJsonContext(new JsonSerializerOptions(jOptions));
 
             JsonSerializer.Serialize(writer, ManagedServiceIdentityType, jsonContext.ManagedServiceIdentityType);
             if (options.Format != "W" && Optional.IsDefined(PrincipalId))
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Models
             options ??= new ModelReaderWriterOptions("W");
             var jsonContext = jOptions is null
                 ? ManagedServiceIdentityJsonContext.Default
-                : new ManagedServiceIdentityJsonContext(new(jOptions));
+                : new ManagedServiceIdentityJsonContext(new JsonSerializerOptions(jOptions));
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.Models
                 }
                 if (property.NameEquals("type"u8))
                 {
-                    type = JsonSerializer.Deserialize<ManagedServiceIdentityType>($"{{{property}}}", jsonContext);
+                    type = JsonSerializer.Deserialize<ManagedServiceIdentityType>($"{{{property}}}", jsonContext.ManagedServiceIdentityType);
                     continue;
                 }
                 if (property.NameEquals("userAssignedIdentities"u8))
