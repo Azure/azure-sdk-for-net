@@ -10,6 +10,7 @@ using Azure.AI.Language.Conversations.Models;
 using Azure.Core;
 using Azure.Core.Serialization;
 using Azure.Core.TestFramework;
+using Microsoft.VisualBasic;
 using NUnit.Framework;
 
 namespace Azure.AI.Language.Conversations.Tests
@@ -196,7 +197,6 @@ namespace Azure.AI.Language.Conversations.Tests
                 },
                 kind = "Conversation",
             };
-
             Response response = await Client.AnalyzeConversationAsync(RequestContent.Create(data));
 
             // assert - main object
