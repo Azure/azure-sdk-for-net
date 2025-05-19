@@ -99,6 +99,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// </param>
         /// <param name="errors"> Serialized Name: CanMigrateResult.properties.errors. </param>
         /// <returns> A new <see cref="Models.CanMigrateResult"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static CanMigrateResult CanMigrateResult(string Id = null, string canMigrateResultType = null, bool? canMigrate = null, CanMigrateDefaultSku? defaultSku = null, IEnumerable<MigrationErrorType> errors = null)
         {
             var resourceId = Id != null ? new ResourceIdentifier(Id) : null;
@@ -124,6 +125,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// Serialized Name: MigrateResult.properties.migratedProfileResourceId
         /// </param>
         /// <returns> A new <see cref="Models.MigrateResult"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static MigrateResult MigrateResult(string Id = null, string migrateResultType = null, ResourceIdentifier migratedProfileResourceIdId = null)
         {
             var resourceId = Id != null ? new ResourceIdentifier(Id) : null;
