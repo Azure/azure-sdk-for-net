@@ -7,10 +7,10 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text.Json;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Samples.Models;
 
 namespace Samples
 {
@@ -35,37 +35,33 @@ namespace Samples
         }
 
         /// <summary> Gets the pages of CatClientgetCatsCollectionResult as an enumerable collection. </summary>
-        /// <param name="continuationToken"> The continuation token. </param>
-        /// <param name="pageSizeHint"> The page size hint. </param>
+        /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
+        /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of CatClientgetCatsCollectionResult as an enumerable collection. </returns>
         public override global::System.Collections.Generic.IEnumerable<global::Azure.Page<global::System.BinaryData>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            string nextLink = continuationToken;
             do
             {
-                global::Azure.Response response = this.GetNextResponse(pageSizeHint, nextLink);
+                global::Azure.Response response = this.GetNextResponse(pageSizeHint, continuationToken);
                 if ((response is null))
                 {
                     yield break;
                 }
-                using global::System.Text.Json.JsonDocument jsonDoc = global::System.Text.Json.JsonDocument.Parse(response.Content.ToString());
-                global::System.Text.Json.JsonElement root = jsonDoc.RootElement;
+                global::Samples.Models.Page responseWithType = ((global::Samples.Models.Page)response);
                 global::System.Collections.Generic.List<global::System.BinaryData> items = new global::System.Collections.Generic.List<global::System.BinaryData>();
-                if (root.TryGetProperty("Cats", out global::System.Text.Json.JsonElement itemsArray))
+                foreach (var item in responseWithType.Cats)
                 {
-                    foreach (var item in itemsArray.EnumerateArray())
-                    {
-                        items.Add(global::System.BinaryData.FromString(item.ToString()));
-                    }
+                    items.Add(global::System.BinaryData.FromObjectAsJson(item));
                 }
-                yield return global::Azure.Page<global::System.BinaryData>.FromValues(items, nextLink, response);
+                continuationToken = null;
+                yield return global::Azure.Page<global::System.BinaryData>.FromValues(items, continuationToken, response);
             }
-            while (!string.IsNullOrEmpty(nextLink));
+            while (!string.IsNullOrEmpty(continuationToken));
         }
 
         /// <summary> Get response from next link. </summary>
-        /// <param name="pageSizeHint"> The page size hint. </param>
-        /// <param name="continuationToken"> The continuation token. </param>
+        /// <param name="pageSizeHint"> The number of items per page. </param>
+        /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         private global::Azure.Response GetNextResponse(int? pageSizeHint, string continuationToken)
         {
             global::Azure.Core.HttpMessage message = _client.CreategetCatsRequest(_animalKind, _context);
@@ -73,7 +69,7 @@ namespace Samples
             scope.Start();
             try
             {
-                _client.Pipeline.Send(message, default);
+                _client.Pipeline.Send(message, _context.CancellationToken);
                 return this.GetResponse(message);
             }
             catch (global::System.Exception e)

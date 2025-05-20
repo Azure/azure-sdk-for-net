@@ -29,29 +29,28 @@ namespace BasicTypeSpec
         }
 
         /// <summary> Gets the pages of BasicTypeSpecClientListWithPagingAsyncCollectionResultOfT as an enumerable collection. </summary>
-        /// <param name="continuationToken"> The continuation token. </param>
-        /// <param name="pageSizeHint"> The page size hint. </param>
+        /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
+        /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of BasicTypeSpecClientListWithPagingAsyncCollectionResultOfT as an enumerable collection. </returns>
         public override async IAsyncEnumerable<Page<ThingModel>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            string nextLink = continuationToken;
             do
             {
-                Response response = await GetNextResponse(pageSizeHint, nextLink).ConfigureAwait(false);
+                Response response = await GetNextResponse(pageSizeHint, continuationToken).ConfigureAwait(false);
                 if (response is null)
                 {
                     yield break;
                 }
-                PageThingModel items = (PageThingModel)response;
-                nextLink = null;
-                yield return Page<ThingModel>.FromValues((IReadOnlyList<ThingModel>)items.Items, nextLink, response);
+                PageThingModel responseWithType = (PageThingModel)response;
+                continuationToken = null;
+                yield return Page<ThingModel>.FromValues((IReadOnlyList<ThingModel>)responseWithType.Items, continuationToken, response);
             }
-            while (!string.IsNullOrEmpty(nextLink));
+            while (!string.IsNullOrEmpty(continuationToken));
         }
 
         /// <summary> Get response from next link. </summary>
-        /// <param name="pageSizeHint"> The page size hint. </param>
-        /// <param name="continuationToken"> The continuation token. </param>
+        /// <param name="pageSizeHint"> The number of items per page. </param>
+        /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         private async ValueTask<Response> GetNextResponse(int? pageSizeHint, string continuationToken)
         {
             HttpMessage message = _client.CreateListWithPagingRequest(_context);
@@ -59,7 +58,7 @@ namespace BasicTypeSpec
             scope.Start();
             try
             {
-                await _client.Pipeline.SendAsync(message, default).ConfigureAwait(false);
+                await _client.Pipeline.SendAsync(message, _context.CancellationToken).ConfigureAwait(false);
                 return GetResponse(message);
             }
             catch (Exception e)

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text.Json;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -32,38 +31,33 @@ namespace BasicTypeSpec
         }
 
         /// <summary> Gets the pages of BasicTypeSpecClientListWithContinuationTokenHeaderResponseCollectionResult as an enumerable collection. </summary>
-        /// <param name="continuationToken"> The continuation token. </param>
-        /// <param name="pageSizeHint"> The page size hint. </param>
+        /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
+        /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of BasicTypeSpecClientListWithContinuationTokenHeaderResponseCollectionResult as an enumerable collection. </returns>
         public override IEnumerable<Page<BinaryData>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            string nextLink = continuationToken;
             do
             {
-                Response response = GetNextResponse(pageSizeHint, nextLink);
+                Response response = GetNextResponse(pageSizeHint, continuationToken);
                 if (response is null)
                 {
                     yield break;
                 }
-                using JsonDocument jsonDoc = JsonDocument.Parse(response.Content.ToString());
-                JsonElement root = jsonDoc.RootElement;
+                ListWithContinuationTokenHeaderResponseResponse responseWithType = (ListWithContinuationTokenHeaderResponseResponse)response;
                 List<BinaryData> items = new List<BinaryData>();
-                if (root.TryGetProperty("Things", out JsonElement itemsArray))
+                foreach (var item in responseWithType.Things)
                 {
-                    foreach (var item in itemsArray.EnumerateArray())
-                    {
-                        items.Add(BinaryData.FromString(item.ToString()));
-                    }
+                    items.Add(BinaryData.FromObjectAsJson(item));
                 }
-                nextLink = (response.Headers.TryGetValue("next-token", out string value) ? value : null);
-                yield return Page<BinaryData>.FromValues(items, nextLink, response);
+                continuationToken = response.Headers.TryGetValue("next-token", out string value) ? value : null;
+                yield return Page<BinaryData>.FromValues(items, continuationToken, response);
             }
-            while (!string.IsNullOrEmpty(nextLink));
+            while (!string.IsNullOrEmpty(continuationToken));
         }
 
         /// <summary> Get response from next link. </summary>
-        /// <param name="pageSizeHint"> The page size hint. </param>
-        /// <param name="continuationToken"> The continuation token. </param>
+        /// <param name="pageSizeHint"> The number of items per page. </param>
+        /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         private Response GetNextResponse(int? pageSizeHint, string continuationToken)
         {
             HttpMessage message = _client.CreateListWithContinuationTokenHeaderResponseRequest(_token, _context);
@@ -71,7 +65,7 @@ namespace BasicTypeSpec
             scope.Start();
             try
             {
-                _client.Pipeline.Send(message, default);
+                _client.Pipeline.Send(message, _context.CancellationToken);
                 return GetResponse(message);
             }
             catch (Exception e)

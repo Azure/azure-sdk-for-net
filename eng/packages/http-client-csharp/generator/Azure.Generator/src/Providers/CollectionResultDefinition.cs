@@ -32,18 +32,19 @@ namespace Azure.Generator.Providers
         private readonly IReadOnlyList<FieldProvider> _requestFields;
         private readonly string _scopeName;
         private readonly string _itemsPropertyName;
-        private readonly string? _nextLinkPropertyName;
+        private readonly string? _nextPagePropertyName;
         private readonly InputResponseLocation? _nextPageLocation;
         private readonly string _getNextResponseMethodName;
+        private readonly int? _nextTokenParameterIndex;
 
         private readonly IReadOnlyList<ParameterProvider> _createRequestParameters;
         private readonly FieldProvider? _contextField;
 
-        private static readonly ParameterProvider NextLinkParameter =
-            new("continuationToken", $"The continuation token.", new CSharpType(typeof(string), isNullable: true));
+        private static readonly ParameterProvider ContinuationTokenParameter =
+            new("continuationToken", $"A continuation token indicating where to resume paging.", new CSharpType(typeof(string), isNullable: true));
 
         private static readonly ParameterProvider PageSizeHintParameter =
-            new("pageSizeHint", $"The page size hint.", new CSharpType(typeof(int?)));
+            new("pageSizeHint", $"The number of items per page.", new CSharpType(typeof(int?)));
 
         public CollectionResultDefinition(ClientProvider client, InputPagingServiceMethod serviceMethod, CSharpType? itemModelType, bool isAsync)
         {
@@ -68,6 +69,10 @@ namespace Azure.Generator.Providers
             for (int paramIndex = 0; paramIndex < _createRequestParameters.Count; paramIndex++)
             {
                 var parameter = _createRequestParameters[paramIndex];
+                if (parameter.Name == _paging.ContinuationToken?.Parameter.Name)
+                {
+                    _nextTokenParameterIndex = paramIndex;
+                }
                 var field = new FieldProvider(
                     FieldModifiers.Private | FieldModifiers.ReadOnly,
                     parameter.Type,
@@ -103,13 +108,13 @@ namespace Azure.Generator.Providers
             // Use the canonical view in case the property was customized.
             if (_nextPageLocation == InputResponseLocation.Body)
             {
-                _nextLinkPropertyName =
+                _nextPagePropertyName =
                     responseModel.CanonicalView.Properties.FirstOrDefault(
                         p => p.WireInfo?.SerializedName == nextPagePropertyName)?.Name;
             }
             else if (_nextPageLocation == InputResponseLocation.Header)
             {
-                _nextLinkPropertyName = nextPagePropertyName;
+                _nextPagePropertyName = nextPagePropertyName;
             }
         }
 
@@ -146,88 +151,65 @@ namespace Azure.Generator.Providers
                     new CSharpType(typeof(IAsyncEnumerable<>), new CSharpType(typeof(Page<>), _itemModelType)) :
                     new CSharpType(typeof(IEnumerable<>), new CSharpType(typeof(Page<>), _itemModelType)),
                 $"The pages of {Name} as an enumerable collection.",
-                [NextLinkParameter, PageSizeHintParameter]);
+                [ContinuationTokenParameter, PageSizeHintParameter]);
 
-            if (!IsProtocolMethod())
-            {
-                // Convenience method
-                return new MethodProvider(signature, new MethodBodyStatement[]
-                {
-                    Declare("nextLink", new CSharpType(typeof(string), isNullable: true), NextLinkParameter, out var nextLinkVariableForConvenience),
-                    BuildDoWhileStatementForConvenience(nextLinkVariableForConvenience)
-                }, this);
-            }
-
-            // Protocol method
-            return new MethodProvider(signature, new MethodBodyStatement[]
-                {
-                    Declare("nextLink", new CSharpType(typeof(string), isNullable: true), NextLinkParameter, out var nextLinkVariable),
-                    BuildDoWhileStatementForProtocol(nextLinkVariable)
-                }, this);
+            return
+                new MethodProvider(signature,
+                    new MethodBodyStatement[]
+                    {
+                        BuildDoWhileStatementForProtocol(IsProtocolMethod())
+                    }, this);
         }
 
-        private DoWhileStatement BuildDoWhileStatementForProtocol(VariableExpression nextLinkVariable)
+        private DoWhileStatement BuildDoWhileStatementForProtocol(bool isProtocol)
         {
-            var doWhileStatement = new DoWhileStatement(Not(Static<string>().Invoke("IsNullOrEmpty", [nextLinkVariable])));
+            var doWhileStatement = new DoWhileStatement(Not(Static<string>().Invoke(nameof(string.IsNullOrEmpty), [ContinuationTokenParameter])));
 
             // Get the response
             doWhileStatement.Add(Declare("response", new CSharpType(typeof(Response), isNullable: true),
-                This.Invoke(_getNextResponseMethodName, [PageSizeHintParameter, nextLinkVariable], _isAsync),
+                This.Invoke(_getNextResponseMethodName, [PageSizeHintParameter, ContinuationTokenParameter], _isAsync),
                 out var responseVariable));
 
             // Early exit if response is null
             doWhileStatement.Add(new IfStatement(responseVariable.Is(Null)) { new YieldBreakStatement() });
 
-            // Parse response content as JsonDocument
-            doWhileStatement.Add(UsingDeclare("jsonDoc", typeof(JsonDocument),
-                Static<JsonDocument>().Invoke("Parse", [responseVariable.Property("Content").Invoke("ToString")]),
-                out var jsonDocVariable));
+            // Cast response to model type
+            doWhileStatement.Add(Declare("responseWithType", _responseType, responseVariable.CastTo(_responseType), out var responseWithTypeVariable));
 
-            // Get root element
-            doWhileStatement.Add(Declare("root", typeof(JsonElement),
-                jsonDocVariable.Property("RootElement"), out var rootVariable));
-
-            // Extract items array
-            doWhileStatement.Add(Declare("items", new CSharpType(typeof(List<>), _itemModelType),
-                New.Instance(new CSharpType(typeof(List<>), _itemModelType)), out var itemsVariable));
-
-            // Get items array from response
-            var tryGetItems = new IfStatement(rootVariable.Invoke("TryGetProperty", [Literal(_itemsPropertyName), new DeclarationExpression(typeof(JsonElement), "itemsArray", out var itemsArrayVariable, isOut: true)]));
-
-            // Parse items
-            var foreachItems = new ForEachStatement("item", itemsArrayVariable.Invoke("EnumerateArray").As<IEnumerable<KeyValuePair<string, object>>>(), out var itemVariable);
-            foreachItems.Add(itemsVariable.Invoke("Add", [Static<BinaryData>().Invoke("FromString", [itemVariable.Invoke("ToString")])]).Terminate());
-
-            tryGetItems.Add(foreachItems);
-            doWhileStatement.Add(tryGetItems);
-
-            // Extract next link
-            if (_nextPageLocation == InputResponseLocation.Body && _nextLinkPropertyName != null)
+            if (isProtocol)
             {
-                doWhileStatement.Add(nextLinkVariable.Assign(new BinaryOperatorExpression(":",
-                    new BinaryOperatorExpression("?",
-                    rootVariable.Invoke("TryGetProperty", [Literal(_nextLinkPropertyName), new DeclarationExpression(typeof(JsonElement), "value", out var nextLinkValue, isOut: true)]),
-                    nextLinkValue.Invoke("GetString")), Null)).Terminate());
-            }
-            else if (_nextPageLocation == InputResponseLocation.Header && _nextLinkPropertyName != null)
-            {
-                doWhileStatement.Add(nextLinkVariable.Assign(new BinaryOperatorExpression(":",
-                    new BinaryOperatorExpression("?",
-                        responseVariable.Property("Headers").Invoke("TryGetValue",[Literal(_nextLinkPropertyName), new DeclarationExpression(typeof(string), "value", out var nextLinkHeader, isOut: true)]).As<bool>(),nextLinkHeader),
-                        Null)).Terminate());
-            }
+                // Decalre items array
+                doWhileStatement.Add(Declare("items", new CSharpType(typeof(List<>), _itemModelType),
+                    New.Instance(new CSharpType(typeof(List<>), _itemModelType)), out var itemsVariable));
 
-            // Create and yield the page
-            doWhileStatement.Add(new YieldReturnStatement(
-                Static(new CSharpType(typeof(Page<>), [_itemModelType]))
-                    .Invoke("FromValues", [itemsVariable, nextLinkVariable, responseVariable])));
+                // Get items array from response
+                doWhileStatement.Add(
+                    new ForEachStatement("item", responseWithTypeVariable.Property(_itemsPropertyName).As<IEnumerable<KeyValuePair<string, object>>>(), out var itemVariable)
+                    {
+                    itemsVariable.Invoke("Add", [Static<BinaryData>().Invoke("FromObjectAsJson", [itemVariable])]).Terminate()
+                    });
+
+                // Extract next page
+                doWhileStatement.Add(ContinuationTokenParameter.Assign(_nextPagePropertyName is null ? Null : BuildGetNextPageMethodBody(responseWithTypeVariable, responseVariable)).Terminate());
+
+                // Create and yield the page
+                doWhileStatement.Add(YieldReturn(Static(new CSharpType(typeof(Page<>), [_itemModelType])).Invoke("FromValues", [itemsVariable, ContinuationTokenParameter, responseVariable])));
+            }
+            else
+            {
+                // Extract next page
+                doWhileStatement.Add(ContinuationTokenParameter.Assign(_nextPagePropertyName is null ? Null : BuildGetNextPageMethodBody(responseWithTypeVariable, responseVariable)).Terminate());
+
+                // Create and yield the page
+                doWhileStatement.Add(YieldReturn(Static(new CSharpType(typeof(Page<>), [_itemModelType])).Invoke("FromValues", [responseWithTypeVariable.Property(_itemsPropertyName).CastTo(new CSharpType(typeof(IReadOnlyList<>), _itemModelType)), ContinuationTokenParameter, responseVariable])));
+            }
 
             return doWhileStatement;
         }
 
-        private ValueExpression BuildGetNextLinkForProtocol(VariableExpression nextLinkVariable, VariableExpression rootVariable, VariableExpression responseVariable)
+        private ValueExpression BuildGetNextPageMethodBody(VariableExpression responseWithTypeVariable, VariableExpression responseVariable)
         {
-            if (_nextLinkPropertyName is null)
+            if (_nextPagePropertyName is null)
             {
                 return Null;
             }
@@ -235,48 +217,12 @@ namespace Azure.Generator.Providers
             switch (_nextPageLocation)
             {
                 case InputResponseLocation.Body:
-                    return new BinaryOperatorExpression(":",
-                    new BinaryOperatorExpression("?",
-                    rootVariable.Invoke("TryGetProperty", [Literal(_nextLinkPropertyName), new DeclarationExpression(typeof(JsonElement), "value", out var nextLinkValue, isOut: true)]),
-                    nextLinkValue.Invoke("GetString")), Null);
+                    return  _paging.NextLink is not null ? responseWithTypeVariable.Property(_nextPagePropertyName).Property(nameof(Uri.AbsoluteUri)) : responseWithTypeVariable.Property(_nextPagePropertyName);
                 case InputResponseLocation.Header:
-                    return new BinaryOperatorExpression(":",
-                        new BinaryOperatorExpression("?",
-                            responseVariable.Property("Headers").Invoke("TryGetValue", [Literal(_nextLinkPropertyName), new DeclarationExpression(typeof(string), "value", out var nextLinkHeader, isOut: true)]).As<bool>(), nextLinkHeader),
-                            Null);
-                default:
-                    return Null;
-            }
-        }
-
-        private DoWhileStatement BuildDoWhileStatementForConvenience(VariableExpression nextLinkVariable)
-        {
-            var doWhileStatement = new DoWhileStatement(Not(Static<string>().Invoke("IsNullOrEmpty", [nextLinkVariable])));
-            doWhileStatement.Add(Declare("response", new CSharpType(typeof(Response), isNullable: true), This.Invoke(_getNextResponseMethodName, [PageSizeHintParameter, nextLinkVariable], _isAsync), out var responseVariable));
-            doWhileStatement.Add(new IfStatement(responseVariable.Is(Null)) { new YieldBreakStatement() });
-            doWhileStatement.Add(Declare("items", _responseType, responseVariable.CastTo(_responseType), out var itemsVariable));
-            doWhileStatement.Add(nextLinkVariable.Assign(_nextLinkPropertyName is null ? Null : BuildGetNextLinkMethodBodyForConvenience(itemsVariable, responseVariable).Invoke("ToString")).Terminate());
-            doWhileStatement.Add(new YieldReturnStatement(Static(new CSharpType(typeof(Page<>), [_itemModelType])).Invoke("FromValues", [itemsVariable.Property(_itemsPropertyName).CastTo(new CSharpType(typeof(IReadOnlyList<>), _itemModelType)), nextLinkVariable, responseVariable])));
-            return doWhileStatement;
-        }
-
-        private ValueExpression BuildGetNextLinkMethodBodyForConvenience(VariableExpression itemsVariable, VariableExpression responseVariable)
-        {
-            if (_nextLinkPropertyName is null)
-            {
-                return Null;
-            }
-
-            switch (_nextPageLocation)
-            {
-                case InputResponseLocation.Body:
-                    return itemsVariable.Property(_nextLinkPropertyName);
-                case InputResponseLocation.Header:
-                    return new BinaryOperatorExpression(":",
-                            new BinaryOperatorExpression("?",
-                            responseVariable.Property("Headers").Invoke("TryGetValue", Literal(_nextLinkPropertyName), new DeclarationExpression(typeof(string), "value", out var nextLinkHeader, isOut: true)).As<bool>(),
-                            nextLinkHeader),
-                            Null);
+                    return new TernaryConditionalExpression(
+                        responseVariable.Property("Headers").Invoke("TryGetValue", Literal(_nextPagePropertyName), new DeclarationExpression(typeof(string), "value", out var nextLinkHeader, isOut: true)).As<bool>(),
+                        nextLinkHeader,
+                        Null);
                 default:
                     // Invalid location is logged by the emitter.
                     return Null;
@@ -291,19 +237,35 @@ namespace Azure.Generator.Providers
                 _isAsync ? MethodSignatureModifiers.Private | MethodSignatureModifiers.Async : MethodSignatureModifiers.Private,
                 _isAsync ? new CSharpType(typeof(ValueTask<>), new CSharpType(typeof(Response), isNullable: true)) : new CSharpType(typeof(Response), isNullable: true),
                 null,
-                [PageSizeHintParameter, NextLinkParameter]);
+                [PageSizeHintParameter, ContinuationTokenParameter]);
 
             var body = new MethodBodyStatement[]
             {
-                Declare("message", AzureClientGenerator.Instance.TypeFactory.HttpMessageApi.HttpMessageType, InvokeCreateRequestForNextLink(_requestFields[0].As<Uri>()), out var messageVariable),
+                Declare("message", AzureClientGenerator.Instance.TypeFactory.HttpMessageApi.HttpMessageType, BuildCreateHttpMessageExpression(), out var messageVariable),
                 UsingDeclare("scope", typeof(DiagnosticScope), _clientField.Property("ClientDiagnostics").Invoke(nameof(ClientDiagnostics.CreateScope), [Literal(_scopeName)]), out var scopeVariable),
                 scopeVariable.Invoke(nameof(DiagnosticScope.Start)).Terminate(),
                 new TryCatchFinallyStatement
-                    (BuildTryExpression(messageVariable), Catch(Declare<Exception>("e", out var exceptionVarialble), [scopeVariable.Invoke(nameof(DiagnosticScope.Failed), exceptionVarialble).Terminate(), Throw()]))
+                    (BuildTryExpression(messageVariable), Catch(Declare<Exception>("e", out var exceptionVariable), [scopeVariable.Invoke(nameof(DiagnosticScope.Failed), exceptionVariable).Terminate(), Throw()]))
             };
 
+            ValueExpression BuildCreateHttpMessageExpression()
+            {
+                if (_paging.NextLink is not null)
+                {
+                    return InvokeCreateRequestForNextLink(_requestFields[0].As<Uri>());
+                }
+                else if (_paging.ContinuationToken is not null)
+                {
+                    return InvokeCreateRequestForContinuationToken(_requestFields[_nextTokenParameterIndex!.Value]);
+                }
+                else
+                {
+                    return InvokeCreateRequestForSingle();
+                }
+            }
+
             TryExpression BuildTryExpression(ValueExpression messageVariable)
-                => new TryExpression(_clientField.Property("Pipeline").Invoke(_isAsync ? "SendAsync" : "Send", [messageVariable, Default], _isAsync).Terminate(), Return(This.Invoke(GetResponseMethodName, [messageVariable])));
+                => new TryExpression(_clientField.Property("Pipeline").Invoke(_isAsync ? "SendAsync" : "Send", [messageVariable, _contextField!.Property(nameof(RequestContext.CancellationToken))], _isAsync).Terminate(), Return(This.Invoke(GetResponseMethodName, [messageVariable])));
 
             return new MethodProvider(signature, body, this);
         }
@@ -321,7 +283,7 @@ namespace Azure.Generator.Providers
                 [messageParameter]);
             var body = new MethodBodyStatement[]
             {
-                new IfStatement(new BinaryOperatorExpression("&&", messageParameter.Property("Response").Property("IsError"), _contextField!.Property("ErrorOptions").NotEqual(Static<ErrorOptions>().Property(nameof(ErrorOptions.NoThrow)))))
+                new IfStatement(messageParameter.Property("Response").Property("IsError").As<bool>().And(_contextField!.Property("ErrorOptions").NotEqual(Static<ErrorOptions>().Property(nameof(ErrorOptions.NoThrow)))))
                 {
                     Throw(New.Instance<RequestFailedException>(messageParameter.Property("Response")))
                 },
@@ -336,6 +298,29 @@ namespace Azure.Generator.Providers
             // we replace the first argument (the initialUri) with the nextPageUri
             [nextPageUri, .. _requestFields.Skip(1)])
             .As<HttpMessage>();
+
+        private ScopedApi<HttpMessage> InvokeCreateRequestForContinuationToken(ValueExpression continuationToken)
+        {
+            ValueExpression[] arguments = _requestFields.Select(f => f.AsValueExpression).ToArray();
+
+            // Replace the nextToken field with the nextToken variable
+            arguments[_nextTokenParameterIndex!.Value] = continuationToken;
+
+            return _clientField.Invoke(
+                    $"Create{_operation.Name}Request", // TODO: may need to expose ToCleanName for the operation
+                    arguments)
+                .As<HttpMessage>();
+        }
+
+        private ScopedApi<HttpMessage> InvokeCreateRequestForSingle()
+        {
+            ValueExpression[] arguments = [.. _requestFields.Select(f => f.AsValueExpression)];
+
+            return _clientField.Invoke(
+                    $"Create{_operation.Name}Request", // TODO: may need to expose ToCleanName for the operation
+                    arguments)
+                .As<HttpMessage>();
+        }
 
         protected override ConstructorProvider[] BuildConstructors()
         {

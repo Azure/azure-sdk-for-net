@@ -32,29 +32,28 @@ namespace Samples
         }
 
         /// <summary> Gets the pages of CatClientgetCatsCollectionResultOfT as an enumerable collection. </summary>
-        /// <param name="continuationToken"> The continuation token. </param>
-        /// <param name="pageSizeHint"> The page size hint. </param>
+        /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
+        /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of CatClientgetCatsCollectionResultOfT as an enumerable collection. </returns>
         public override global::System.Collections.Generic.IEnumerable<global::Azure.Page<global::Samples.Models.Cat>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            string nextLink = continuationToken;
             do
             {
-                global::Azure.Response response = this.GetNextResponse(pageSizeHint, nextLink);
+                global::Azure.Response response = this.GetNextResponse(pageSizeHint, continuationToken);
                 if ((response is null))
                 {
                     yield break;
                 }
-                global::Samples.Models.Page items = ((global::Samples.Models.Page)response);
-                nextLink = items.NextCat.ToString();
-                yield return global::Azure.Page<global::Samples.Models.Cat>.FromValues(((global::System.Collections.Generic.IReadOnlyList<global::Samples.Models.Cat>)items.Cats), nextLink, response);
+                global::Samples.Models.Page responseWithType = ((global::Samples.Models.Page)response);
+                continuationToken = responseWithType.NextCat.AbsoluteUri;
+                yield return global::Azure.Page<global::Samples.Models.Cat>.FromValues(((global::System.Collections.Generic.IReadOnlyList<global::Samples.Models.Cat>)responseWithType.Cats), continuationToken, response);
             }
-            while (!string.IsNullOrEmpty(nextLink));
+            while (!string.IsNullOrEmpty(continuationToken));
         }
 
         /// <summary> Get response from next link. </summary>
-        /// <param name="pageSizeHint"> The page size hint. </param>
-        /// <param name="continuationToken"> The continuation token. </param>
+        /// <param name="pageSizeHint"> The number of items per page. </param>
+        /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         private global::Azure.Response GetNextResponse(int? pageSizeHint, string continuationToken)
         {
             global::Azure.Core.HttpMessage message = _client.CreategetCatsRequest(_nextPage, _context);
@@ -62,7 +61,7 @@ namespace Samples
             scope.Start();
             try
             {
-                _client.Pipeline.Send(message, default);
+                _client.Pipeline.Send(message, _context.CancellationToken);
                 return this.GetResponse(message);
             }
             catch (global::System.Exception e)

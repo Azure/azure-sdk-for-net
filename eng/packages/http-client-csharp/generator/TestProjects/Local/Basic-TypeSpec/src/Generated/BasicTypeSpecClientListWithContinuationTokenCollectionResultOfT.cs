@@ -31,29 +31,28 @@ namespace BasicTypeSpec
         }
 
         /// <summary> Gets the pages of BasicTypeSpecClientListWithContinuationTokenCollectionResultOfT as an enumerable collection. </summary>
-        /// <param name="continuationToken"> The continuation token. </param>
-        /// <param name="pageSizeHint"> The page size hint. </param>
+        /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
+        /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of BasicTypeSpecClientListWithContinuationTokenCollectionResultOfT as an enumerable collection. </returns>
         public override IEnumerable<Page<ThingModel>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            string nextLink = continuationToken;
             do
             {
-                Response response = GetNextResponse(pageSizeHint, nextLink);
+                Response response = GetNextResponse(pageSizeHint, continuationToken);
                 if (response is null)
                 {
                     yield break;
                 }
-                ListWithContinuationTokenResponse items = (ListWithContinuationTokenResponse)response;
-                nextLink = items.NextToken.ToString();
-                yield return Page<ThingModel>.FromValues((IReadOnlyList<ThingModel>)items.Things, nextLink, response);
+                ListWithContinuationTokenResponse responseWithType = (ListWithContinuationTokenResponse)response;
+                continuationToken = responseWithType.NextToken;
+                yield return Page<ThingModel>.FromValues((IReadOnlyList<ThingModel>)responseWithType.Things, continuationToken, response);
             }
-            while (!string.IsNullOrEmpty(nextLink));
+            while (!string.IsNullOrEmpty(continuationToken));
         }
 
         /// <summary> Get response from next link. </summary>
-        /// <param name="pageSizeHint"> The page size hint. </param>
-        /// <param name="continuationToken"> The continuation token. </param>
+        /// <param name="pageSizeHint"> The number of items per page. </param>
+        /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         private Response GetNextResponse(int? pageSizeHint, string continuationToken)
         {
             HttpMessage message = _client.CreateListWithContinuationTokenRequest(_token, _context);
@@ -61,7 +60,7 @@ namespace BasicTypeSpec
             scope.Start();
             try
             {
-                _client.Pipeline.Send(message, default);
+                _client.Pipeline.Send(message, _context.CancellationToken);
                 return GetResponse(message);
             }
             catch (Exception e)

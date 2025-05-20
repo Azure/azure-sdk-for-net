@@ -7,11 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text.Json;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Samples.Models;
 
 namespace Samples
 {
@@ -36,38 +36,33 @@ namespace Samples
         }
 
         /// <summary> Gets the pages of CatClientgetCatsAsyncCollectionResult as an enumerable collection. </summary>
-        /// <param name="continuationToken"> The continuation token. </param>
-        /// <param name="pageSizeHint"> The page size hint. </param>
+        /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
+        /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of CatClientgetCatsAsyncCollectionResult as an enumerable collection. </returns>
         public override async global::System.Collections.Generic.IAsyncEnumerable<global::Azure.Page<global::System.BinaryData>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            string nextLink = continuationToken;
             do
             {
-                global::Azure.Response response = await this.GetNextResponse(pageSizeHint, nextLink).ConfigureAwait(false);
+                global::Azure.Response response = await this.GetNextResponse(pageSizeHint, continuationToken).ConfigureAwait(false);
                 if ((response is null))
                 {
                     yield break;
                 }
-                using global::System.Text.Json.JsonDocument jsonDoc = global::System.Text.Json.JsonDocument.Parse(response.Content.ToString());
-                global::System.Text.Json.JsonElement root = jsonDoc.RootElement;
+                global::Samples.Models.Page responseWithType = ((global::Samples.Models.Page)response);
                 global::System.Collections.Generic.List<global::System.BinaryData> items = new global::System.Collections.Generic.List<global::System.BinaryData>();
-                if (root.TryGetProperty("Cats", out global::System.Text.Json.JsonElement itemsArray))
+                foreach (var item in responseWithType.Cats)
                 {
-                    foreach (var item in itemsArray.EnumerateArray())
-                    {
-                        items.Add(global::System.BinaryData.FromString(item.ToString()));
-                    }
+                    items.Add(global::System.BinaryData.FromObjectAsJson(item));
                 }
-                nextLink = ((response.Headers.TryGetValue("nextPage", out string value) ? value) : null);
-                yield return global::Azure.Page<global::System.BinaryData>.FromValues(items, nextLink, response);
+                continuationToken = response.Headers.TryGetValue("nextPage", out string value) ? value : null;
+                yield return global::Azure.Page<global::System.BinaryData>.FromValues(items, continuationToken, response);
             }
-            while (!string.IsNullOrEmpty(nextLink));
+            while (!string.IsNullOrEmpty(continuationToken));
         }
 
         /// <summary> Get response from next link. </summary>
-        /// <param name="pageSizeHint"> The page size hint. </param>
-        /// <param name="continuationToken"> The continuation token. </param>
+        /// <param name="pageSizeHint"> The number of items per page. </param>
+        /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         private async global::System.Threading.Tasks.ValueTask<global::Azure.Response> GetNextResponse(int? pageSizeHint, string continuationToken)
         {
             global::Azure.Core.HttpMessage message = _client.CreategetCatsRequest(_myToken, _context);
@@ -75,7 +70,7 @@ namespace Samples
             scope.Start();
             try
             {
-                await _client.Pipeline.SendAsync(message, default).ConfigureAwait(false);
+                await _client.Pipeline.SendAsync(message, _context.CancellationToken).ConfigureAwait(false);
                 return this.GetResponse(message);
             }
             catch (global::System.Exception e)
