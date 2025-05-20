@@ -76,8 +76,8 @@ namespace Azure.Communication.CallAutomation
     }
     public partial class AudioData : Azure.Communication.CallAutomation.StreamingData
     {
-        public AudioData(byte[] data) { }
-        public byte[] Data { get { throw null; } }
+        public AudioData(System.ReadOnlyMemory<byte> data) { }
+        public System.ReadOnlyMemory<byte> Data { get { throw null; } }
         public bool IsSilent { get { throw null; } }
         public Azure.Communication.CommunicationIdentifier Participant { get { throw null; } }
         public System.DateTimeOffset Timestamp { get { throw null; } }
@@ -105,7 +105,6 @@ namespace Azure.Communication.CallAutomation
         internal AudioMetadata() { }
         public Azure.Communication.CallAutomation.AudioChannel Channels { get { throw null; } }
         public string Encoding { get { throw null; } }
-        public int Length { get { throw null; } }
         public string MediaSubscriptionId { get { throw null; } }
         public int SampleRate { get { throw null; } }
     }
@@ -1501,14 +1500,10 @@ namespace Azure.Communication.CallAutomation
     }
     public partial class TranscriptionMetadata : Azure.Communication.CallAutomation.StreamingData
     {
-        public TranscriptionMetadata() { }
-        [System.Text.Json.Serialization.JsonPropertyNameAttribute("callConnectionId")]
+        internal TranscriptionMetadata() { }
         public string CallConnectionId { get { throw null; } }
-        [System.Text.Json.Serialization.JsonPropertyNameAttribute("correlationId")]
         public string CorrelationId { get { throw null; } }
-        [System.Text.Json.Serialization.JsonPropertyNameAttribute("locale")]
         public string Locale { get { throw null; } }
-        [System.Text.Json.Serialization.JsonPropertyNameAttribute("subscriptionId")]
         public string TranscriptionSubscriptionId { get { throw null; } }
     }
     public partial class TranscriptionOptions
