@@ -87,7 +87,7 @@ If `UnsafeAllowUnencryptedStorage` is `false` (the default), a `CredentialUnavai
 
 ### Silently authenticate a user with AuthenticationRecord and TokenCachePersistenceOptions
 
-When authenticating a user via `InteractiveBrowserCredential`, `DeviceCodeCredential`, or `UsernamePasswordCredential`, an [AuthenticationRecord](https://learn.microsoft.com/dotnet/api/azure.identity.authenticationrecord?view=azure-dotnet) can be persisted as well. The authentication record is:
+When authenticating a user via `InteractiveBrowserCredential`, or `DeviceCodeCredential`, an [AuthenticationRecord](https://learn.microsoft.com/dotnet/api/azure.identity.authenticationrecord?view=azure-dotnet) can be persisted as well. The authentication record is:
 
 - Returned from the `Authenticate` API and contains data identifying an authenticated account.
 - Needed to identify the appropriate entry in the persisted token cache to silently authenticate on subsequent executions.
@@ -151,6 +151,5 @@ The following table indicates the state of in-memory and persistent caching in e
 | `InteractiveBrowserCredential` | Supported                                                              | Supported                     |
 | `ManagedIdentityCredential`    | Supported                                                              | Not Supported                 |
 | `OnBehalfOfCredential`         | Supported                                                              | Supported                     |
-| `UsernamePasswordCredential`   | Supported                                                              | Supported                     |
 | `VisualStudioCredential`       | Supported                                                              | Not Supported                 |
 | `WorkloadIdentityCredential`   | Supported                                                              | Supported                     |

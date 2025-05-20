@@ -342,6 +342,12 @@ namespace Azure.AI.Language.Text
         public static bool operator !=(Azure.AI.Language.Text.AreaUnit left, Azure.AI.Language.Text.AreaUnit right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class AzureAILanguageTextContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureAILanguageTextContext() { }
+        public static Azure.AI.Language.Text.AzureAILanguageTextContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public abstract partial class BaseMetadata : System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.BaseMetadata>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.BaseMetadata>
     {
         protected BaseMetadata() { }

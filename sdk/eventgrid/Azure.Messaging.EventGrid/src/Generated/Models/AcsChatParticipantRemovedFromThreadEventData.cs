@@ -13,8 +13,20 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class AcsChatParticipantRemovedFromThreadEventData : AcsChatEventInThreadBaseProperties
     {
         /// <summary> Initializes a new instance of <see cref="AcsChatParticipantRemovedFromThreadEventData"/>. </summary>
-        internal AcsChatParticipantRemovedFromThreadEventData()
+        /// <param name="transactionId"> The transaction id will be used as co-relation vector. </param>
+        /// <param name="threadId"> The chat thread id. </param>
+        /// <param name="removedByCommunicationIdentifier"> The communication identifier of the user who removed the user. </param>
+        /// <param name="participantRemoved"> The details of the user who was removed. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="transactionId"/>, <paramref name="threadId"/>, <paramref name="removedByCommunicationIdentifier"/> or <paramref name="participantRemoved"/> is null. </exception>
+        internal AcsChatParticipantRemovedFromThreadEventData(string transactionId, string threadId, CommunicationIdentifierModel removedByCommunicationIdentifier, AcsChatThreadParticipantProperties participantRemoved) : base(transactionId, threadId)
         {
+            Argument.AssertNotNull(transactionId, nameof(transactionId));
+            Argument.AssertNotNull(threadId, nameof(threadId));
+            Argument.AssertNotNull(removedByCommunicationIdentifier, nameof(removedByCommunicationIdentifier));
+            Argument.AssertNotNull(participantRemoved, nameof(participantRemoved));
+
+            RemovedByCommunicationIdentifier = removedByCommunicationIdentifier;
+            ParticipantRemoved = participantRemoved;
         }
 
         /// <summary> Initializes a new instance of <see cref="AcsChatParticipantRemovedFromThreadEventData"/>. </summary>
@@ -24,8 +36,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="removedByCommunicationIdentifier"> The communication identifier of the user who removed the user. </param>
         /// <param name="participantRemoved"> The details of the user who was removed. </param>
         /// <param name="version"> The version of the thread. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="transactionId"/> or <paramref name="threadId"/> is null. </exception>
         internal AcsChatParticipantRemovedFromThreadEventData(string transactionId, string threadId, DateTimeOffset? time, CommunicationIdentifierModel removedByCommunicationIdentifier, AcsChatThreadParticipantProperties participantRemoved, long? version) : base(transactionId, threadId)
         {
+            Argument.AssertNotNull(transactionId, nameof(transactionId));
+            Argument.AssertNotNull(threadId, nameof(threadId));
+
             Time = time;
             RemovedByCommunicationIdentifier = removedByCommunicationIdentifier;
             ParticipantRemoved = participantRemoved;

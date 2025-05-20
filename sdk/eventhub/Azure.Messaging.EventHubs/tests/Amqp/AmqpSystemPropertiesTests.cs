@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Azure.Core.Amqp;
 using Azure.Messaging.EventHubs.Amqp;
 using Microsoft.Azure.Amqp;
@@ -207,6 +208,69 @@ namespace Azure.Messaging.EventHubs.Tests
             {
                 Assert.That(expectedValues.Contains(value), Is.True, $"The value, { value }, was in the properties but is unexpected.");
             }
+        }
+
+        /// <summary>
+        ///   Validates basic dictionary operation for the normalized enqueue time.
+        /// </summary>
+        ///
+        [Test]
+        public void ValueOperationsNormalizeEnqueuedTime()
+        {
+            var message = CreateEmptydDataBodyMessage();
+            var systemKey = AmqpProperty.EnqueuedTime.ToString();
+
+            var systemProps = new AmqpSystemProperties(message);
+            message.MessageAnnotations.Add(systemKey, new DateTime(2015, 10, 15, 0, 0, 0));
+
+            var expectedValue = message.GetEnqueuedTime(default);
+
+            Assert.That(systemProps[systemKey], Is.EqualTo(expectedValue), "The enqueued time did not match when read through the indexer.");
+            Assert.That(systemProps.TryGetValue(systemKey, out var enqueueTime), Is.True, "The enqueued time was not contained when read through TryGetValue.");
+            Assert.That(enqueueTime, Is.EqualTo(expectedValue), "The enqueued time did not match when read through TryGetValue.");
+
+            // Message annotation values are correct.
+
+            var key = systemProps.Keys.Single();
+            Assert.That(key, Is.EqualTo(systemKey), "The key should be the same as the enqueued time key.");
+            Assert.That(systemProps[key], Is.EqualTo(expectedValue), $"The message annotation, {key}, did not match when read through the indexer.");
+
+            // Value set should contain the enqueued time.
+
+            Assert.That(systemProps.Values.Single(), Is.EqualTo(expectedValue), "The enqueued time did not match when read through the Values set.");
+        }
+
+        /// <summary>
+        ///   Validates basic dictionary operation for the normalized sequence number.
+        /// </summary>
+        ///
+        [Test]
+        [TestCase(12345)]
+        [TestCase(12345L)]
+        [TestCase("12345")]
+        public void ValueOperationsNormalizeSequenceNumber(object sequenceSource)
+        {
+            var message = CreateEmptydDataBodyMessage();
+            var systemKey = AmqpProperty.SequenceNumber.ToString();
+
+            var systemProps = new AmqpSystemProperties(message);
+            message.MessageAnnotations.Add(systemKey, sequenceSource);
+
+            var expectedValue = message.GetSequenceNumber(default);
+
+            Assert.That(systemProps[systemKey], Is.EqualTo(expectedValue), "The sequence number did not match when read through the indexer.");
+            Assert.That(systemProps.TryGetValue(systemKey, out var enqueueTime), Is.True, "The sequence number was not contained when read through TryGetValue.");
+            Assert.That(enqueueTime, Is.EqualTo(expectedValue), "The sequence number did not match when read through TryGetValue.");
+
+            // Message annotation values are correct.
+
+            var key = systemProps.Keys.Single();
+            Assert.That(key, Is.EqualTo(systemKey), "The key should be the same as the sequence number key.");
+            Assert.That(systemProps[key], Is.EqualTo(expectedValue), $"The message annotation, {key}, did not match when read through the indexer.");
+
+            // Value set should contain the sequence number.
+
+            Assert.That(systemProps.Values.Single(), Is.EqualTo(expectedValue), "The sequence number did not match when read through the Values set.");
         }
 
         /// <summary>

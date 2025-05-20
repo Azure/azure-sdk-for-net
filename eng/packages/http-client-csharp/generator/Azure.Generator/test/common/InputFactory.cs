@@ -43,7 +43,7 @@ namespace Azure.Generator.Tests.Common
             /// <returns></returns>
             public static InputEnumTypeValue Int32(string name, int value)
             {
-                return new InputEnumTypeValue(name, value, InputPrimitiveType.Int32, null, $"{name} description");
+                return new InputEnumTypeValue(name, value, InputPrimitiveType.Int32, "", $"{name} description");
             }
 
             /// <summary>
@@ -54,7 +54,7 @@ namespace Azure.Generator.Tests.Common
             /// <returns></returns>
             public static InputEnumTypeValue Float32(string name, float value)
             {
-                return new InputEnumTypeValue(name, value, InputPrimitiveType.Float32, null, $"{name} description");
+                return new InputEnumTypeValue(name, value, InputPrimitiveType.Float32, "", $"{name} description");
             }
 
             /// <summary>
@@ -65,7 +65,7 @@ namespace Azure.Generator.Tests.Common
             /// <returns></returns>
             public static InputEnumTypeValue String(string name, string value)
             {
-                return new InputEnumTypeValue(name, value, InputPrimitiveType.String, null, $"{name} description");
+                return new InputEnumTypeValue(name, value, InputPrimitiveType.String, "", $"{name} description");
             }
         }
 
@@ -78,20 +78,24 @@ namespace Azure.Generator.Tests.Common
             /// Construct input literal type value for string
             /// </summary>
             /// <param name="value"></param>
+            /// <param name="name"></param>
+            /// <param name="namespace"></param>
             /// <returns></returns>
-            public static InputLiteralType String(string value)
+            public static InputLiteralType String(string value, string? name = null, string? @namespace = null)
             {
-                return new InputLiteralType(InputPrimitiveType.String, value);
+                return new InputLiteralType(name ?? string.Empty, @namespace ?? string.Empty, InputPrimitiveType.String, value);
             }
 
             /// <summary>
             /// Construct input enum type value for any
             /// </summary>
             /// <param name="value"></param>
+            /// <param name="name"></param>
+            /// <param name="namespace"></param>
             /// <returns></returns>
-            public static InputLiteralType Any(object value)
+            public static InputLiteralType Int32(int value, string? name = null, string? @namespace = null)
             {
-                return new InputLiteralType(InputPrimitiveType.Any, value);
+                return new InputLiteralType(name ?? string.Empty, @namespace ?? string.Empty, InputPrimitiveType.Int32, value);
             }
         }
 
@@ -369,6 +373,55 @@ namespace Azure.Generator.Tests.Common
         public static InputPagingServiceMetadata PagingMetadata(IReadOnlyList<string> itemPropertySegments, InputNextLink? nextLink, InputContinuationToken? continuationToken)
         {
             return new InputPagingServiceMetadata(itemPropertySegments, nextLink, continuationToken);
+        }
+
+        /// <summary>
+        /// Construct paging service method
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="operation"></param>
+        /// <param name="access"></param>
+        /// <param name="parameters"></param>
+        /// <param name="response"></param>
+        /// <param name="exception"></param>
+        /// <param name="longRunningServiceMetadata"></param>
+        /// <returns></returns>
+        public static InputLongRunningServiceMethod LongRunningServiceMethod(
+            string name,
+            InputOperation operation,
+            string access = "public",
+            IReadOnlyList<InputParameter>? parameters = null,
+            InputServiceMethodResponse? response = null,
+            InputServiceMethodResponse? exception = null,
+            InputLongRunningServiceMetadata? longRunningServiceMetadata = null)
+        {
+            return new InputLongRunningServiceMethod(
+                name,
+                access,
+                [],
+                null,
+                null,
+                operation,
+                parameters ?? [],
+                response ?? ServiceMethodResponse(null, null),
+                exception,
+                false,
+                true,
+                true,
+                string.Empty,
+                longRunningServiceMetadata ?? LongRunningServiceMetadata(1, OperationResponse(), null));
+        }
+
+        /// <summary>
+        /// Construct paging metadata
+        /// </summary>
+        /// <param name="finalState"></param>
+        /// <param name="finalResponse"></param>
+        /// <param name="resultPath"></param>
+        /// <returns></returns>
+        public static InputLongRunningServiceMetadata LongRunningServiceMetadata(int finalState, InputOperationResponse finalResponse, string? resultPath)
+        {
+            return new InputLongRunningServiceMetadata(finalState, finalResponse, resultPath);
         }
 
         /// <summary>

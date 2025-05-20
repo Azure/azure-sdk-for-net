@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Network
 {
     public partial class VpnServerConfigurationPolicyGroupResource : IJsonModel<VpnServerConfigurationPolicyGroupData>
     {
+        private static VpnServerConfigurationPolicyGroupData s_dataDeserializationInstance;
+        private static VpnServerConfigurationPolicyGroupData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<VpnServerConfigurationPolicyGroupData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<VpnServerConfigurationPolicyGroupData>)Data).Write(writer, options);
 
-        VpnServerConfigurationPolicyGroupData IJsonModel<VpnServerConfigurationPolicyGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<VpnServerConfigurationPolicyGroupData>)Data).Create(ref reader, options);
+        VpnServerConfigurationPolicyGroupData IJsonModel<VpnServerConfigurationPolicyGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<VpnServerConfigurationPolicyGroupData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<VpnServerConfigurationPolicyGroupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<VpnServerConfigurationPolicyGroupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<VpnServerConfigurationPolicyGroupData>(Data, options, AzureResourceManagerNetworkContext.Default);
 
-        VpnServerConfigurationPolicyGroupData IPersistableModel<VpnServerConfigurationPolicyGroupData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<VpnServerConfigurationPolicyGroupData>(data, options);
+        VpnServerConfigurationPolicyGroupData IPersistableModel<VpnServerConfigurationPolicyGroupData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<VpnServerConfigurationPolicyGroupData>(data, options, AzureResourceManagerNetworkContext.Default);
 
-        string IPersistableModel<VpnServerConfigurationPolicyGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<VpnServerConfigurationPolicyGroupData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<VpnServerConfigurationPolicyGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<VpnServerConfigurationPolicyGroupData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

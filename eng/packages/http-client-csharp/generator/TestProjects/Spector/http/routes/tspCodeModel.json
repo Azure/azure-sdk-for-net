@@ -3,6 +3,7 @@
  "name": "Routes",
  "apiVersions": [],
  "enums": [],
+ "constants": [],
  "models": [],
  "clients": [
   {

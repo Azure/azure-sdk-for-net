@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Billing
 {
     public partial class BillingAgreementResource : IJsonModel<BillingAgreementData>
     {
+        private static BillingAgreementData s_dataDeserializationInstance;
+        private static BillingAgreementData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<BillingAgreementData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<BillingAgreementData>)Data).Write(writer, options);
 
-        BillingAgreementData IJsonModel<BillingAgreementData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<BillingAgreementData>)Data).Create(ref reader, options);
+        BillingAgreementData IJsonModel<BillingAgreementData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<BillingAgreementData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<BillingAgreementData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<BillingAgreementData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<BillingAgreementData>(Data, options, AzureResourceManagerBillingContext.Default);
 
-        BillingAgreementData IPersistableModel<BillingAgreementData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<BillingAgreementData>(data, options);
+        BillingAgreementData IPersistableModel<BillingAgreementData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<BillingAgreementData>(data, options, AzureResourceManagerBillingContext.Default);
 
-        string IPersistableModel<BillingAgreementData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<BillingAgreementData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<BillingAgreementData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<BillingAgreementData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }
