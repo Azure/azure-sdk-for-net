@@ -39,6 +39,11 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(LifecycleHookType);
             }
+            if (Optional.IsDefined(WaitUntilTime))
+            {
+                writer.WritePropertyName("waitUntilTime"u8);
+                writer.WriteStringValue(WaitUntilTime);
+            }
             if (Optional.IsDefined(DefaultAction))
             {
                 writer.WritePropertyName("defaultAction"u8);
@@ -82,6 +87,7 @@ namespace Azure.ResourceManager.Compute.Models
                 return null;
             }
             string type = default;
+            string waitUntilTime = default;
             LifecycleHookAction? defaultAction = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -90,6 +96,11 @@ namespace Azure.ResourceManager.Compute.Models
                 if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("waitUntilTime"u8))
+                {
+                    waitUntilTime = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("defaultAction"u8))
@@ -107,7 +118,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new LifecycleHook(type, defaultAction, serializedAdditionalRawData);
+            return new LifecycleHook(type, waitUntilTime, defaultAction, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LifecycleHook>.Write(ModelReaderWriterOptions options)
