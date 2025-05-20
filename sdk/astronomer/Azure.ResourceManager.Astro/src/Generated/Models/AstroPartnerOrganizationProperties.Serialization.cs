@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Astro.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAstroContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(AstroPartnerOrganizationProperties)} does not support writing '{options.Format}' format.");
             }

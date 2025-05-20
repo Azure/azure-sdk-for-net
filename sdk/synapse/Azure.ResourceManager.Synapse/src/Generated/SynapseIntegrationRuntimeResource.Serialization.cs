@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Synapse
 {
     public partial class SynapseIntegrationRuntimeResource : IJsonModel<SynapseIntegrationRuntimeData>
     {
+        private static SynapseIntegrationRuntimeData s_dataDeserializationInstance;
+        private static SynapseIntegrationRuntimeData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<SynapseIntegrationRuntimeData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SynapseIntegrationRuntimeData>)Data).Write(writer, options);
 
-        SynapseIntegrationRuntimeData IJsonModel<SynapseIntegrationRuntimeData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SynapseIntegrationRuntimeData>)Data).Create(ref reader, options);
+        SynapseIntegrationRuntimeData IJsonModel<SynapseIntegrationRuntimeData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SynapseIntegrationRuntimeData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SynapseIntegrationRuntimeData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<SynapseIntegrationRuntimeData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SynapseIntegrationRuntimeData>(Data, options, AzureResourceManagerSynapseContext.Default);
 
-        SynapseIntegrationRuntimeData IPersistableModel<SynapseIntegrationRuntimeData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SynapseIntegrationRuntimeData>(data, options);
+        SynapseIntegrationRuntimeData IPersistableModel<SynapseIntegrationRuntimeData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SynapseIntegrationRuntimeData>(data, options, AzureResourceManagerSynapseContext.Default);
 
-        string IPersistableModel<SynapseIntegrationRuntimeData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SynapseIntegrationRuntimeData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<SynapseIntegrationRuntimeData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SynapseIntegrationRuntimeData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

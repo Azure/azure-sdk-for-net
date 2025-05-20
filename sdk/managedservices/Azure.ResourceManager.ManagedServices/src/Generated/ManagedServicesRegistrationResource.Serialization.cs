@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.ManagedServices
 {
     public partial class ManagedServicesRegistrationResource : IJsonModel<ManagedServicesRegistrationData>
     {
+        private static ManagedServicesRegistrationData s_dataDeserializationInstance;
+        private static ManagedServicesRegistrationData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<ManagedServicesRegistrationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ManagedServicesRegistrationData>)Data).Write(writer, options);
 
-        ManagedServicesRegistrationData IJsonModel<ManagedServicesRegistrationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ManagedServicesRegistrationData>)Data).Create(ref reader, options);
+        ManagedServicesRegistrationData IJsonModel<ManagedServicesRegistrationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ManagedServicesRegistrationData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ManagedServicesRegistrationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<ManagedServicesRegistrationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ManagedServicesRegistrationData>(Data, options, AzureResourceManagerManagedServicesContext.Default);
 
-        ManagedServicesRegistrationData IPersistableModel<ManagedServicesRegistrationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ManagedServicesRegistrationData>(data, options);
+        ManagedServicesRegistrationData IPersistableModel<ManagedServicesRegistrationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ManagedServicesRegistrationData>(data, options, AzureResourceManagerManagedServicesContext.Default);
 
-        string IPersistableModel<ManagedServicesRegistrationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ManagedServicesRegistrationData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<ManagedServicesRegistrationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ManagedServicesRegistrationData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

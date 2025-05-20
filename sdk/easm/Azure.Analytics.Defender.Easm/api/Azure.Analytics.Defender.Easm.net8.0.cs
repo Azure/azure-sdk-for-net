@@ -370,6 +370,12 @@ namespace Azure.Analytics.Defender.Easm
         public static bool operator !=(Azure.Analytics.Defender.Easm.AuditTrailItemKind left, Azure.Analytics.Defender.Easm.AuditTrailItemKind right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class AzureAnalyticsDefenderEasmContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureAnalyticsDefenderEasmContext() { }
+        public static Azure.Analytics.Defender.Easm.AzureAnalyticsDefenderEasmContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class AzureDataExplorerDataConnection : Azure.Analytics.Defender.Easm.DataConnection, System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Defender.Easm.AzureDataExplorerDataConnection>, System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Defender.Easm.AzureDataExplorerDataConnection>
     {
         internal AzureDataExplorerDataConnection() { }

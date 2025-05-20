@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.ClientModel.Primitives;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.IO;
@@ -16,6 +17,8 @@ namespace System.ClientModel.SourceGeneration.Tests.Unit
     internal static class CompilationHelper
     {
         private static readonly CSharpParseOptions s_defaultParseOptions = CreateParseOptions();
+
+        private static readonly HashSet<string> s_noWarn = ["CS1701", "CS8019", "CS0311", "CS1702"];
 
         public record GeneratorResult
         {
@@ -39,7 +42,8 @@ namespace System.ClientModel.SourceGeneration.Tests.Unit
             string assemblyName = "TestAssembly",
             bool includeSTJ = true,
             CSharpParseOptions? parseOptions = null,
-            string contextName = "LocalContext")
+            string contextName = "LocalContext",
+            HashSet<string>? additionalSuppress = null)
         {
             List<MetadataReference> references =
             [
@@ -48,6 +52,7 @@ namespace System.ClientModel.SourceGeneration.Tests.Unit
                 MetadataReference.CreateFromFile(Path.Combine(typeof(object).Assembly.Location, "..", "System.Runtime.dll")),
                 MetadataReference.CreateFromFile(typeof(JsonSerializer).Assembly.Location),
                 MetadataReference.CreateFromFile(typeof(BinaryData).Assembly.Location),
+                MetadataReference.CreateFromFile(typeof(ConcurrentDictionary<,>).Assembly.Location),
 #if NETFRAMEWORK
                 MetadataReference.CreateFromFile(Path.Combine(typeof(object).Assembly.Location, "..", "netstandard.dll")),
                 MetadataReference.CreateFromFile(typeof(ReadOnlyMemory<>).Assembly.Location),
@@ -88,6 +93,9 @@ namespace System.ClientModel.SourceGeneration.Tests.Unit
                     diag.ToString().EndsWith($"error CS0117: '{contextName}' does not contain a definition for 'Default'", StringComparison.Ordinal))
                     continue;
 
+                if (additionalSuppress is not null && additionalSuppress.Contains(diag.Id))
+                    continue;
+
                 Assert.Fail($"Compilation Error: {diag}");
             }
 
@@ -95,6 +103,12 @@ namespace System.ClientModel.SourceGeneration.Tests.Unit
         }
 
         public static GeneratorResult RunSourceGenerator(Compilation compilation, bool disableDiagnosticValidation = false)
+            => RunSourceGenerator(compilation, out _, out _, disableDiagnosticValidation);
+
+        public static GeneratorResult RunSourceGenerator(Compilation compilation, out Compilation newCompilation, bool disableDiagnosticValidation = false, HashSet<string>? additionalSuppress = null)
+            => RunSourceGenerator(compilation, out newCompilation, out _, disableDiagnosticValidation, additionalSuppress);
+
+        public static GeneratorResult RunSourceGenerator(Compilation compilation, out Compilation newCompilation, out ImmutableArray<GeneratedSourceResult> generatedSources, bool disableDiagnosticValidation = false, HashSet<string>? additionalSuppress = null)
         {
             ModelReaderWriterContextGenerationSpec? generatedSpecs = null;
             var generator = new ModelReaderWriterContextGenerator
@@ -103,7 +117,37 @@ namespace System.ClientModel.SourceGeneration.Tests.Unit
             };
 
             CSharpGeneratorDriver driver = CreateJsonSourceGeneratorDriver(compilation, generator);
-            driver.RunGeneratorsAndUpdateCompilation(compilation, out Compilation outCompilation, out ImmutableArray<Diagnostic> diagnostics);
+            var newDriver = driver.RunGeneratorsAndUpdateCompilation(compilation, out newCompilation, out ImmutableArray<Diagnostic> diagnostics);
+            var runResult = newDriver.GetRunResult();
+            var contextSourceGenerator = runResult.Results.First(runResult => runResult.Generator.GetGeneratorType().Equals(typeof(ModelReaderWriterContextGenerator)));
+            generatedSources = contextSourceGenerator.GeneratedSources;
+
+            var finalDiagnostics = newCompilation.GetDiagnostics().Where(d => !s_noWarn.Contains(d.Descriptor.Id));
+            foreach (var diagnostic in finalDiagnostics)
+            {
+                var location = diagnostic.Location;
+                if (location.IsInSource)
+                {
+                    var filePath = location.SourceTree?.FilePath;
+
+                    foreach (var result in runResult.Results)
+                    {
+                        foreach (var generatedSource in result.GeneratedSources)
+                        {
+                            if (generatedSource.SyntaxTree.FilePath == filePath)
+                            {
+                                var code = generatedSource.SyntaxTree.ToString();
+                                Assert.Fail($"Generated source file has errors: {diagnostic}{Environment.NewLine}Source:{Environment.NewLine}{code}");
+                            }
+                        }
+                    }
+                }
+
+                if (additionalSuppress is not null && additionalSuppress.Contains(diagnostic.Id))
+                    continue;
+
+                Assert.Fail($"Compilation Error: {diagnostic}");
+            }
 
             return new()
             {

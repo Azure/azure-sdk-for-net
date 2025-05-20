@@ -11,10 +11,12 @@ using System.Text.Json;
 using Azure;
 using Azure.Core;
 
-namespace _Type.Model.Visibility.Models
+namespace _Type.Model.Visibility
 {
     public partial class VisibilityModel : IJsonModel<VisibilityModel>
     {
+        internal VisibilityModel() => throw null;
+
         void IJsonModel<VisibilityModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;

@@ -34,21 +34,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 throw new FormatException($"The model {nameof(EventHubCaptureFileCreatedEventData)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsDefined(Fileurl))
-            {
-                writer.WritePropertyName("fileUrl"u8);
-                writer.WriteStringValue(Fileurl);
-            }
-            if (Optional.IsDefined(FileType))
-            {
-                writer.WritePropertyName("fileType"u8);
-                writer.WriteStringValue(FileType);
-            }
-            if (Optional.IsDefined(PartitionId))
-            {
-                writer.WritePropertyName("partitionId"u8);
-                writer.WriteStringValue(PartitionId);
-            }
+            writer.WritePropertyName("fileUrl"u8);
+            writer.WriteStringValue(Fileurl);
+            writer.WritePropertyName("fileType"u8);
+            writer.WriteStringValue(FileType);
+            writer.WritePropertyName("partitionId"u8);
+            writer.WriteStringValue(PartitionId);
             if (Optional.IsDefined(SizeInBytes))
             {
                 writer.WritePropertyName("sizeInBytes"u8);
@@ -224,7 +215,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureMessagingEventGridSystemEventsContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(EventHubCaptureFileCreatedEventData)} does not support writing '{options.Format}' format.");
             }

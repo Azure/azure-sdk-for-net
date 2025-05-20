@@ -1,5 +1,11 @@
 namespace Azure.ResourceManager.ResourceGraph
 {
+    public partial class AzureResourceManagerResourceGraphContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureResourceManagerResourceGraphContext() { }
+        public static Azure.ResourceManager.ResourceGraph.AzureResourceManagerResourceGraphContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public static partial class ResourceGraphExtensions
     {
         public static Azure.Response<System.BinaryData> GetResourceHistory(this Azure.ResourceManager.Resources.TenantResource tenantResource, Azure.ResourceManager.ResourceGraph.Models.ResourcesHistoryContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }

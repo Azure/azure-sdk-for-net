@@ -7,11 +7,10 @@
 
 using System;
 using System.ComponentModel;
-using BasicTypeSpec;
 
-namespace BasicTypeSpec.Models
+namespace BasicTypeSpec
 {
-    /// <summary> The ThingModel_optionalLiteralString. </summary>
+    /// <summary> The ThingModelOptionalLiteralString. </summary>
     public readonly partial struct ThingModelOptionalLiteralString : IEquatable<ThingModelOptionalLiteralString>
     {
         private readonly string _value;
@@ -45,11 +44,11 @@ namespace BasicTypeSpec.Models
         /// <param name="value"> The value. </param>
         public static implicit operator ThingModelOptionalLiteralString(string value) => new ThingModelOptionalLiteralString(value);
 
-        /// <param name="obj"> The object to compare. </param>
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ThingModelOptionalLiteralString other && Equals(other);
 
-        /// <param name="other"> The instance to compare. </param>
+        /// <inheritdoc/>
         public bool Equals(ThingModelOptionalLiteralString other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>

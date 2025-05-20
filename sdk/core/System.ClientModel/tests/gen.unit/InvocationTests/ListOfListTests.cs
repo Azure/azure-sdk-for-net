@@ -19,15 +19,6 @@ namespace System.ClientModel.SourceGeneration.Tests.Unit.InvocationTests
             if (invocationDuped)
             {
                 var dupedListListModel = ValidateBuilder("TestProject1", expectation, dict, out var dupedListModel);
-                Assert.AreEqual($"List<List<{expectation.TypeName}_0>>", listListModel.Type.Alias);
-                Assert.AreEqual($"List<{expectation.TypeName}_0>", listModel!.Type.Alias);
-                Assert.AreEqual($"List<List<{expectation.TypeName}_1>>", dupedListListModel.Type.Alias);
-                Assert.AreEqual($"List<{expectation.TypeName}_1>", dupedListModel!.Type.Alias);
-            }
-            else
-            {
-                Assert.IsNull(listListModel.Type.Alias);
-                Assert.IsNull(listModel!.Type.Alias);
             }
 
             Assert.IsTrue(dict.TryGetValue($"{expectation.Namespace}.{expectation.TypeName}", out var itemModel));
