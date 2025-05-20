@@ -2886,9 +2886,9 @@ namespace Azure.AI.Language.Text
         public virtual Azure.Response<Azure.AI.Language.Text.AnalyzeTextOperationState> AnalyzeTextOperationStatus(System.Guid jobId, bool? showStats = default(bool?), int? top = default(int?), int? skip = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> AnalyzeTextOperationStatusAsync(System.Guid jobId, bool? showStats, int? top, int? skip, Azure.RequestContext context) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Language.Text.AnalyzeTextOperationState>> AnalyzeTextOperationStatusAsync(System.Guid jobId, bool? showStats = default(bool?), int? top = default(int?), int? skip = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Operation AnalyzeTextSubmitOperation(Azure.WaitUntil waitUntil, Azure.AI.Language.Text.MultiLanguageTextInput textInput, System.Collections.Generic.IEnumerable<Azure.AI.Language.Text.AnalyzeTextOperationAction> actions, string displayName = null, string defaultLanguage = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Operation AnalyzeTextSubmitOperation(Azure.WaitUntil waitUntil, Azure.AI.Language.Text.MultiLanguageTextInput textInput, System.Collections.Generic.IEnumerable<Azure.AI.Language.Text.AnalyzeTextOperationAction> actions, string displayName = null, string defaultLanguage = null, float? cancelAfter = default(float?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Operation AnalyzeTextSubmitOperation(Azure.WaitUntil waitUntil, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Operation> AnalyzeTextSubmitOperationAsync(Azure.WaitUntil waitUntil, Azure.AI.Language.Text.MultiLanguageTextInput textInput, System.Collections.Generic.IEnumerable<Azure.AI.Language.Text.AnalyzeTextOperationAction> actions, string displayName = null, string defaultLanguage = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Operation> AnalyzeTextSubmitOperationAsync(Azure.WaitUntil waitUntil, Azure.AI.Language.Text.MultiLanguageTextInput textInput, System.Collections.Generic.IEnumerable<Azure.AI.Language.Text.AnalyzeTextOperationAction> actions, string displayName = null, string defaultLanguage = null, float? cancelAfter = default(float?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Operation> AnalyzeTextSubmitOperationAsync(Azure.WaitUntil waitUntil, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
     }
     public static partial class TextAnalysisClientBuilderExtensions
@@ -2899,13 +2899,14 @@ namespace Azure.AI.Language.Text
     }
     public partial class TextAnalysisClientOptions : Azure.Core.ClientOptions
     {
-        public TextAnalysisClientOptions(Azure.AI.Language.Text.TextAnalysisClientOptions.ServiceVersion version = Azure.AI.Language.Text.TextAnalysisClientOptions.ServiceVersion.V2024_11_15_Preview) { }
+        public TextAnalysisClientOptions(Azure.AI.Language.Text.TextAnalysisClientOptions.ServiceVersion version = Azure.AI.Language.Text.TextAnalysisClientOptions.ServiceVersion.V2025_05_15_Preview) { }
         public enum ServiceVersion
         {
             V2022_05_01 = 1,
             V2023_04_01 = 2,
             V2024_11_01 = 3,
             V2024_11_15_Preview = 4,
+            V2025_05_15_Preview = 5,
         }
     }
     public static partial class TextAnalysisModelFactory
