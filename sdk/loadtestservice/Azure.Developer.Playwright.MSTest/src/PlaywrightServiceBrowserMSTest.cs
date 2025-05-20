@@ -28,10 +28,10 @@ public class PlaywrightServiceBrowserMSTest : PlaywrightServiceBrowserClient
     /// <summary>
     /// Initializes a new instance of the <see cref="PlaywrightServiceBrowserMSTest"/> class.
     /// </summary>
-    /// <param name="testContext">MSTest test context</param>
-    public PlaywrightServiceBrowserMSTest(TestContext testContext) : this(
+    /// <param name="context">MSTest test context</param>
+    public PlaywrightServiceBrowserMSTest(TestContext context) : this(
         options: new PlaywrightServiceBrowserClientOptions(),
-        testContext: testContext
+        context: context
     )
     {
         // no-op
@@ -53,11 +53,11 @@ public class PlaywrightServiceBrowserMSTest : PlaywrightServiceBrowserClient
     /// Initializes a new instance of the <see cref="PlaywrightServiceBrowserMSTest"/> class.
     /// </summary>
     /// <param name="credential">The token credential.</param>
-    /// <param name="testContext">MSTest test context</param>
-    public PlaywrightServiceBrowserMSTest(TokenCredential credential, TestContext testContext) : this(
+    /// <param name="context">MSTest test context</param>
+    public PlaywrightServiceBrowserMSTest(TokenCredential credential, TestContext context) : this(
         options: new PlaywrightServiceBrowserClientOptions(),
         credential: credential,
-        testContext: testContext
+        context: context
     )
     {
         // no-op
@@ -78,9 +78,9 @@ public class PlaywrightServiceBrowserMSTest : PlaywrightServiceBrowserClient
     /// Initializes a new instance of the <see cref="PlaywrightServiceBrowserMSTest"/> class.
     /// </summary>
     /// <param name="options">Client options for PlaywrightBrowserClient.</param>
-    /// <param name="testContext">MSTest test context</param>
-    public PlaywrightServiceBrowserMSTest(TestContext testContext, PlaywrightServiceBrowserClientOptions options) : base(
-        options: InjectMSTestLogger(options, testContext)
+    /// <param name="context">MSTest test context</param>
+    public PlaywrightServiceBrowserMSTest(TestContext context, PlaywrightServiceBrowserClientOptions options) : base(
+        options: InjectMSTestLogger(options, context)
     )
     {
         _options = options;
@@ -104,10 +104,10 @@ public class PlaywrightServiceBrowserMSTest : PlaywrightServiceBrowserClient
     /// </summary>
     /// <param name="credential">The token credential.</param>
     /// <param name="options">Client options for PlaywrightBrowserClient.</param>
-    /// <param name="testContext">MSTest test context</param>
-    public PlaywrightServiceBrowserMSTest(TokenCredential credential, TestContext testContext, PlaywrightServiceBrowserClientOptions options) : base(
+    /// <param name="context">MSTest test context</param>
+    public PlaywrightServiceBrowserMSTest(TokenCredential credential, TestContext context, PlaywrightServiceBrowserClientOptions options) : base(
         credential: credential,
-        options: InjectMSTestLogger(options, testContext)
+        options: InjectMSTestLogger(options, context)
     )
     {
         _options = options;

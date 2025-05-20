@@ -30,7 +30,7 @@ public class PlaywrightServiceMSTestSetup
             OS = OSPlatform.Linux,
             ExposeNetwork = "<loopback>",
             RunId = Guid.NewGuid().ToString(),
-        }, testContext: testContext);
+        }, context: testContext);
         await playwrightClient.InitializeAsync();
     }
 
