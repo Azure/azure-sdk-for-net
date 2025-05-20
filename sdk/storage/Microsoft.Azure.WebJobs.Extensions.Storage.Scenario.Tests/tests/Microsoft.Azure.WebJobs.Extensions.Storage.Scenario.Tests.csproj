@@ -8,6 +8,7 @@
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" VersionOverride="2.1.0"/>
     <PackageReference Include="Microsoft.Azure.WebJobs.Logging.ApplicationInsights" VersionOverride="3.0.34" />
 		<PackageReference Include="Microsoft.Azure.WebJobs.Host.Storage" />
+    <PackageReference Include="Microsoft.Extensions.Logging" />
   </ItemGroup>
 
   <ItemGroup>
