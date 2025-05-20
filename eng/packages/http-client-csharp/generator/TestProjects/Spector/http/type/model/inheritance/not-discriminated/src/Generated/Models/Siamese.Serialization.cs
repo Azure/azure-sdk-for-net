@@ -11,10 +11,12 @@ using System.Text.Json;
 using Azure;
 using Azure.Core;
 
-namespace _Type.Model.Inheritance.NotDiscriminated.Models
+namespace _Type.Model.Inheritance.NotDiscriminated
 {
     public partial class Siamese : IJsonModel<Siamese>
     {
+        internal Siamese() => throw null;
+
         void IJsonModel<Siamese>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;

@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.KeyVault
 
         KeyVaultResource IOperationSource<KeyVaultResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<KeyVaultData>(response.Content);
+            var data = ModelReaderWriter.Read<KeyVaultData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerKeyVaultContext.Default);
             return new KeyVaultResource(_client, data);
         }
 
         async ValueTask<KeyVaultResource> IOperationSource<KeyVaultResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<KeyVaultData>(response.Content);
+            var data = ModelReaderWriter.Read<KeyVaultData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerKeyVaultContext.Default);
             return await Task.FromResult(new KeyVaultResource(_client, data)).ConfigureAwait(false);
         }
     }

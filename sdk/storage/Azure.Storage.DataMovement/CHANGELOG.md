@@ -7,6 +7,7 @@
 ### Breaking Changes
 
 ### Bugs Fixed
+- Fixed issue where transfers added concurrently to the local checkpointer would throw collision exceptions intermittently.
 
 ### Other Changes
 

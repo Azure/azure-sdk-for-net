@@ -11,10 +11,12 @@ using System.Text.Json;
 using Azure;
 using Azure.Core;
 
-namespace _Type.Model.Inheritance.NestedDiscriminator.Models
+namespace _Type.Model.Inheritance.NestedDiscriminator
 {
     public partial class GoblinShark : IJsonModel<GoblinShark>
     {
+        internal GoblinShark() => throw null;
+
         void IJsonModel<GoblinShark>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;

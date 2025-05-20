@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
@@ -13,8 +14,13 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class AcsChatThreadParticipantProperties
     {
         /// <summary> Initializes a new instance of <see cref="AcsChatThreadParticipantProperties"/>. </summary>
-        internal AcsChatThreadParticipantProperties()
+        /// <param name="participantCommunicationIdentifier"> The communication identifier of the user. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="participantCommunicationIdentifier"/> is null. </exception>
+        internal AcsChatThreadParticipantProperties(CommunicationIdentifierModel participantCommunicationIdentifier)
         {
+            Argument.AssertNotNull(participantCommunicationIdentifier, nameof(participantCommunicationIdentifier));
+
+            ParticipantCommunicationIdentifier = participantCommunicationIdentifier;
             Metadata = new ChangeTrackingDictionary<string, string>();
         }
 

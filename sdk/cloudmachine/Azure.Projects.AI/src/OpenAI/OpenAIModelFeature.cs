@@ -48,7 +48,7 @@ public class OpenAIModelFeature : AzureProjectFeature
     /// <exception cref="NotImplementedException"></exception>
     public ClientConnection CreateConnection(string cmId)
     {
-        ClientConnection connection = new("Azure.AI.OpenAI.AzureOpenAIClient", $"https://{cmId}.openai.azure.com", ClientAuthenticationMethod.Credential);
+        ClientConnection connection = new("Azure.AI.OpenAI.AzureOpenAIClient", $"https://{cmId}.openai.azure.com");
         return connection;
     }
 

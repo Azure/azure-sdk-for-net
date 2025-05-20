@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Synapse
 
         SynapseDedicatedSqlMinimalTlsSettingResource IOperationSource<SynapseDedicatedSqlMinimalTlsSettingResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<SynapseDedicatedSqlMinimalTlsSettingData>(response.Content);
+            var data = ModelReaderWriter.Read<SynapseDedicatedSqlMinimalTlsSettingData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSynapseContext.Default);
             return new SynapseDedicatedSqlMinimalTlsSettingResource(_client, data);
         }
 
         async ValueTask<SynapseDedicatedSqlMinimalTlsSettingResource> IOperationSource<SynapseDedicatedSqlMinimalTlsSettingResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<SynapseDedicatedSqlMinimalTlsSettingData>(response.Content);
+            var data = ModelReaderWriter.Read<SynapseDedicatedSqlMinimalTlsSettingData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSynapseContext.Default);
             return await Task.FromResult(new SynapseDedicatedSqlMinimalTlsSettingResource(_client, data)).ConfigureAwait(false);
         }
     }

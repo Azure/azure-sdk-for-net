@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.OperationalInsights.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_QueryPut()
         {
-            // Generated from example definition: specification/operationalinsights/resource-manager/Microsoft.OperationalInsights/stable/2019-09-01/examples/QueryPackQueriesPut.json
+            // Generated from example definition: specification/operationalinsights/resource-manager/Microsoft.OperationalInsights/stable/2025-02-01/examples/QueryPackQueriesPut.json
             // this example is just showing the usage of "Queries_Put" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.OperationalInsights.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_QueryGet()
         {
-            // Generated from example definition: specification/operationalinsights/resource-manager/Microsoft.OperationalInsights/stable/2019-09-01/examples/QueryPackQueriesGet.json
+            // Generated from example definition: specification/operationalinsights/resource-manager/Microsoft.OperationalInsights/stable/2025-02-01/examples/QueryPackQueriesGet.json
             // this example is just showing the usage of "Queries_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.OperationalInsights.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_QueryList()
         {
-            // Generated from example definition: specification/operationalinsights/resource-manager/Microsoft.OperationalInsights/stable/2019-09-01/examples/QueryPackQueriesList.json
+            // Generated from example definition: specification/operationalinsights/resource-manager/Microsoft.OperationalInsights/stable/2025-02-01/examples/QueryPackQueriesList.json
             // this example is just showing the usage of "Queries_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.OperationalInsights.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_QueryGet()
         {
-            // Generated from example definition: specification/operationalinsights/resource-manager/Microsoft.OperationalInsights/stable/2019-09-01/examples/QueryPackQueriesGet.json
+            // Generated from example definition: specification/operationalinsights/resource-manager/Microsoft.OperationalInsights/stable/2025-02-01/examples/QueryPackQueriesGet.json
             // this example is just showing the usage of "Queries_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.OperationalInsights.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_QueryGet()
         {
-            // Generated from example definition: specification/operationalinsights/resource-manager/Microsoft.OperationalInsights/stable/2019-09-01/examples/QueryPackQueriesGet.json
+            // Generated from example definition: specification/operationalinsights/resource-manager/Microsoft.OperationalInsights/stable/2025-02-01/examples/QueryPackQueriesGet.json
             // this example is just showing the usage of "Queries_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

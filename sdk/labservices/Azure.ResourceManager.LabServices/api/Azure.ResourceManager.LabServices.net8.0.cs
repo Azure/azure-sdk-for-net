@@ -1,5 +1,11 @@
 namespace Azure.ResourceManager.LabServices
 {
+    public partial class AzureResourceManagerLabServicesContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureResourceManagerLabServicesContext() { }
+        public static Azure.ResourceManager.LabServices.AzureResourceManagerLabServicesContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class LabCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.LabServices.LabResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.LabServices.LabResource>, System.Collections.IEnumerable
     {
         protected LabCollection() { }

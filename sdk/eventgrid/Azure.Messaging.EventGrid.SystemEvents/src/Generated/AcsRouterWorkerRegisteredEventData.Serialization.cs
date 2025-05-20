@@ -39,20 +39,26 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 writer.WritePropertyName("workerId"u8);
                 writer.WriteStringValue(WorkerId);
             }
-            writer.WritePropertyName("queueAssignments"u8);
-            writer.WriteStartArray();
-            foreach (var item in QueueAssignments)
+            if (options.Format != "W")
             {
-                writer.WriteObjectValue(item, options);
+                writer.WritePropertyName("queueAssignments"u8);
+                writer.WriteStartArray();
+                foreach (var item in QueueAssignments)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
             }
-            writer.WriteEndArray();
-            writer.WritePropertyName("channelConfigurations"u8);
-            writer.WriteStartArray();
-            foreach (var item in ChannelConfigurations)
+            if (options.Format != "W")
             {
-                writer.WriteObjectValue(item, options);
+                writer.WritePropertyName("channelConfigurations"u8);
+                writer.WriteStartArray();
+                foreach (var item in ChannelConfigurations)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
             }
-            writer.WriteEndArray();
             if (Optional.IsDefined(TotalCapacity))
             {
                 writer.WritePropertyName("totalCapacity"u8);
@@ -198,7 +204,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureMessagingEventGridSystemEventsContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(AcsRouterWorkerRegisteredEventData)} does not support writing '{options.Format}' format.");
             }

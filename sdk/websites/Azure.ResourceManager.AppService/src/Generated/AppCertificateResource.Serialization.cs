@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.AppService
 {
     public partial class AppCertificateResource : IJsonModel<AppCertificateData>
     {
+        private static AppCertificateData s_dataDeserializationInstance;
+        private static AppCertificateData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<AppCertificateData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<AppCertificateData>)Data).Write(writer, options);
 
-        AppCertificateData IJsonModel<AppCertificateData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AppCertificateData>)Data).Create(ref reader, options);
+        AppCertificateData IJsonModel<AppCertificateData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AppCertificateData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<AppCertificateData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<AppCertificateData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AppCertificateData>(Data, options, AzureResourceManagerAppServiceContext.Default);
 
-        AppCertificateData IPersistableModel<AppCertificateData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AppCertificateData>(data, options);
+        AppCertificateData IPersistableModel<AppCertificateData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AppCertificateData>(data, options, AzureResourceManagerAppServiceContext.Default);
 
-        string IPersistableModel<AppCertificateData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AppCertificateData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<AppCertificateData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AppCertificateData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

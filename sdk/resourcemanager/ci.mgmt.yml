@@ -23,6 +23,7 @@ trigger:
     - sdk/applicationinsights/Azure.ResourceManager.ApplicationInsights
     - sdk/appplatform/Azure.ResourceManager.AppPlatform
     - sdk/arc-scvmm/Azure.ResourceManager.ScVmm
+    - sdk/arizeaiobservabilityeval/Azure.ResourceManager.ArizeAIObservabilityEval
     - sdk/astronomer/Azure.ResourceManager.Astro
     - sdk/attestation/Azure.ResourceManager.Attestation
     - sdk/authorization/Azure.ResourceManager.Authorization
@@ -36,6 +37,7 @@ trigger:
     - sdk/billingbenefits/Azure.ResourceManager.BillingBenefits
     - sdk/blueprint/Azure.ResourceManager.Blueprint
     - sdk/botservice/Azure.ResourceManager.BotService
+    - sdk/carbon/Azure.ResourceManager.CarbonOptimization
     - sdk/cdn/Azure.ResourceManager.Cdn
     - sdk/changeanalysis/Azure.ResourceManager.ChangeAnalysis
     - sdk/chaos/Azure.ResourceManager.Chaos
@@ -68,6 +70,7 @@ trigger:
     - sdk/dataprotection/Azure.ResourceManager.DataProtectionBackup
     - sdk/datashare/Azure.ResourceManager.DataShare
     - sdk/defendereasm/Azure.ResourceManager.DefenderEasm
+    - sdk/dependencymap/Azure.ResourceManager.DependencyMap
     - sdk/desktopvirtualization/Azure.ResourceManager.DesktopVirtualization
     - sdk/devcenter/Azure.ResourceManager.DevCenter
     - sdk/deviceprovisioningservices/Azure.ResourceManager.DeviceProvisioningServices
@@ -79,6 +82,7 @@ trigger:
     - sdk/digitaltwins/Azure.ResourceManager.DigitalTwins
     - sdk/dns/Azure.ResourceManager.Dns
     - sdk/dnsresolver/Azure.ResourceManager.DnsResolver
+    - sdk/durabletask/Azure.ResourceManager.DurableTask
     - sdk/dynatrace/Azure.ResourceManager.Dynatrace
     - sdk/edgeorder/Azure.ResourceManager.EdgeOrder
     - sdk/edgezones/Azure.ResourceManager.EdgeZones
@@ -114,6 +118,7 @@ trigger:
     - sdk/kubernetesconfiguration/Azure.ResourceManager.KubernetesConfiguration
     - sdk/kusto/Azure.ResourceManager.Kusto
     - sdk/labservices/Azure.ResourceManager.LabServices
+    - sdk/lambdatesthyperexecute/Azure.ResourceManager.LambdaTestHyperExecute
     - sdk/loadtestservice/Azure.ResourceManager.LoadTesting
     - sdk/logic/Azure.ResourceManager.Logic
     - sdk/machinelearningcompute/Azure.ResourceManager.MachineLearningCompute
@@ -150,8 +155,10 @@ trigger:
     - sdk/orbital/Azure.ResourceManager.Orbital
     - sdk/paloaltonetworks.ngfw/Azure.ResourceManager.PaloAltoNetworks.Ngfw
     - sdk/peering/Azure.ResourceManager.Peering
+    - sdk/pineconevectordb/Azure.ResourceManager.PineconeVectorDB
     - sdk/playwrighttesting/Azure.ResourceManager.PlaywrightTesting
     - sdk/policyinsights/Azure.ResourceManager.PolicyInsights
+    - sdk/portalservices/Azure.ResourceManager.PortalServicesCopilot
     - sdk/postgresql/Azure.ResourceManager.PostgreSql
     - sdk/powerbidedicated/Azure.ResourceManager.PowerBIDedicated
     - sdk/privatedns/Azure.ResourceManager.PrivateDns
@@ -205,8 +212,10 @@ trigger:
     - sdk/voiceservices/Azure.ResourceManager.VoiceServices
     - sdk/webpubsub/Azure.ResourceManager.WebPubSub
     - sdk/websites/Azure.ResourceManager.AppService
+    - sdk/weightsandbiases/Azure.ResourceManager.WeightsAndBiases
     - sdk/workloadmonitor/Azure.ResourceManager.WorkloadMonitor
     - sdk/workloads/Azure.ResourceManager.Workloads
+    - sdk/workloadssapvirtualinstance/Azure.ResourceManager.WorkloadsSapVirtualInstance
 
 pr:
   branches:
@@ -232,6 +241,7 @@ pr:
     - sdk/applicationinsights/Azure.ResourceManager.ApplicationInsights
     - sdk/appplatform/Azure.ResourceManager.AppPlatform
     - sdk/arc-scvmm/Azure.ResourceManager.ScVmm
+    - sdk/arizeaiobservabilityeval/Azure.ResourceManager.ArizeAIObservabilityEval
     - sdk/astronomer/Azure.ResourceManager.Astro
     - sdk/attestation/Azure.ResourceManager.Attestation
     - sdk/authorization/Azure.ResourceManager.Authorization
@@ -245,6 +255,7 @@ pr:
     - sdk/billingbenefits/Azure.ResourceManager.BillingBenefits
     - sdk/blueprint/Azure.ResourceManager.Blueprint
     - sdk/botservice/Azure.ResourceManager.BotService
+    - sdk/carbon/Azure.ResourceManager.CarbonOptimization
     - sdk/cdn/Azure.ResourceManager.Cdn
     - sdk/changeanalysis/Azure.ResourceManager.ChangeAnalysis
     - sdk/chaos/Azure.ResourceManager.Chaos
@@ -277,6 +288,7 @@ pr:
     - sdk/dataprotection/Azure.ResourceManager.DataProtectionBackup
     - sdk/datashare/Azure.ResourceManager.DataShare
     - sdk/defendereasm/Azure.ResourceManager.DefenderEasm
+    - sdk/dependencymap/Azure.ResourceManager.DependencyMap
     - sdk/desktopvirtualization/Azure.ResourceManager.DesktopVirtualization
     - sdk/devcenter/Azure.ResourceManager.DevCenter
     - sdk/deviceprovisioningservices/Azure.ResourceManager.DeviceProvisioningServices
@@ -288,6 +300,7 @@ pr:
     - sdk/digitaltwins/Azure.ResourceManager.DigitalTwins
     - sdk/dns/Azure.ResourceManager.Dns
     - sdk/dnsresolver/Azure.ResourceManager.DnsResolver
+    - sdk/durabletask/Azure.ResourceManager.DurableTask
     - sdk/dynatrace/Azure.ResourceManager.Dynatrace
     - sdk/edgeorder/Azure.ResourceManager.EdgeOrder
     - sdk/edgezones/Azure.ResourceManager.EdgeZones
@@ -323,6 +336,7 @@ pr:
     - sdk/kubernetesconfiguration/Azure.ResourceManager.KubernetesConfiguration
     - sdk/kusto/Azure.ResourceManager.Kusto
     - sdk/labservices/Azure.ResourceManager.LabServices
+    - sdk/lambdatesthyperexecute/Azure.ResourceManager.LambdaTestHyperExecute
     - sdk/loadtestservice/Azure.ResourceManager.LoadTesting
     - sdk/logic/Azure.ResourceManager.Logic
     - sdk/machinelearningcompute/Azure.ResourceManager.MachineLearningCompute
@@ -359,8 +373,10 @@ pr:
     - sdk/orbital/Azure.ResourceManager.Orbital
     - sdk/paloaltonetworks.ngfw/Azure.ResourceManager.PaloAltoNetworks.Ngfw
     - sdk/peering/Azure.ResourceManager.Peering
+    - sdk/pineconevectordb/Azure.ResourceManager.PineconeVectorDB
     - sdk/playwrighttesting/Azure.ResourceManager.PlaywrightTesting
     - sdk/policyinsights/Azure.ResourceManager.PolicyInsights
+    - sdk/portalservices/Azure.ResourceManager.PortalServicesCopilot
     - sdk/postgresql/Azure.ResourceManager.PostgreSql
     - sdk/powerbidedicated/Azure.ResourceManager.PowerBIDedicated
     - sdk/privatedns/Azure.ResourceManager.PrivateDns
@@ -414,8 +430,10 @@ pr:
     - sdk/voiceservices/Azure.ResourceManager.VoiceServices
     - sdk/webpubsub/Azure.ResourceManager.WebPubSub
     - sdk/websites/Azure.ResourceManager.AppService
+    - sdk/weightsandbiases/Azure.ResourceManager.WeightsAndBiases
     - sdk/workloadmonitor/Azure.ResourceManager.WorkloadMonitor
     - sdk/workloads/Azure.ResourceManager.Workloads
+    - sdk/workloadssapvirtualinstance/Azure.ResourceManager.WorkloadsSapVirtualInstance
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml

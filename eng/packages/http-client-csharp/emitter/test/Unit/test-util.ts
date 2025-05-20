@@ -8,14 +8,15 @@ import { CompilerOptions, EmitContext, Program } from "@typespec/compiler";
 import { createTestHost, TestHost } from "@typespec/compiler/testing";
 import {
   CSharpEmitterContext,
-  CSharpEmitterOptions,
+  createCSharpEmitterContext,
   Logger,
-  LoggerLevel
+  LoggerLevel,
 } from "@typespec/http-client-csharp";
 import { HttpTestLibrary } from "@typespec/http/testing";
 import { RestTestLibrary } from "@typespec/rest/testing";
 import { VersioningTestLibrary } from "@typespec/versioning/testing";
 import { XmlTestLibrary } from "@typespec/xml/testing";
+import { AzureEmitterOptions } from "../../src/options.js";
 
 export async function createEmitterTestHost(): Promise<TestHost> {
   return createTestHost({
@@ -61,7 +62,7 @@ export async function typeSpecCompile(
     ${"@useDependency(Azure.Core.Versions.v1_0_Preview_1)"}
     "2023-01-01-preview"
     }
-    
+
     `;
   const fileContent = `
     import "@typespec/rest";
@@ -70,13 +71,13 @@ export async function typeSpecCompile(
     ${needXml ? 'import  "@typespec/xml";' : ""}
     ${'import "@azure-tools/typespec-azure-core";'}
     ${needTCGC ? 'import "@azure-tools/typespec-client-generator-core";' : ""}
-    using TypeSpec.Rest; 
+    using TypeSpec.Rest;
     using TypeSpec.Http;
     using TypeSpec.Versioning;
     ${needXml ? "using TypeSpec.Xml;" : ""}
     ${"using Azure.Core;\nusing Azure.Core.Traits;"}
     ${needTCGC ? "using Azure.ClientGenerator.Core;" : ""}
-    
+
     ${needNamespaces ? namespace : ""}
     ${content}
     `;
@@ -89,12 +90,13 @@ export async function typeSpecCompile(
 }
 
 export function createEmitterContext(
-  program: Program
-): EmitContext<CSharpEmitterOptions> {
+  program: Program,
+  options: AzureEmitterOptions = {}
+): EmitContext<AzureEmitterOptions> {
   return {
     program: program,
     emitterOutputDir: "./",
-    options: {
+    options: options ?? {
       outputFile: "tspCodeModel.json",
       logFile: "log.json",
       "new-project": false,
@@ -104,12 +106,12 @@ export function createEmitterContext(
       "generate-convenience-methods": true,
       "package-name": undefined
     }
-  } as EmitContext<CSharpEmitterOptions>;
+  } as EmitContext<AzureEmitterOptions>;
 }
 
 /* We always need to pass in the emitter name now that it is required so making a helper to do this. */
 export async function createCSharpSdkContext(
-  program: EmitContext<CSharpEmitterOptions>,
+  program: EmitContext<AzureEmitterOptions>,
   sdkContextOptions: CreateSdkContextOptions = {}
 ): Promise<CSharpEmitterContext> {
   const context = await createSdkContext(
@@ -117,15 +119,5 @@ export async function createCSharpSdkContext(
     "@typespec/http-client-csharp",
     sdkContextOptions
   );
-  return {
-    ...context,
-    logger: new Logger(program.program, LoggerLevel.INFO),
-    __typeCache: {
-      crossLanguageDefinitionIds: new Map(),
-      types: new Map(),
-      models: new Map(),
-      enums: new Map(),
-      clients: new Map()
-    }
-  };
+  return createCSharpEmitterContext(context, new Logger(program.program, LoggerLevel.INFO));
 }

@@ -262,6 +262,11 @@ namespace Azure.Communication.CallAutomation.Tests.CallRecordings
                         AudioChannelParticipantOrdering = { new CommunicationUserIdentifier("test") },
                         ChannelAffinity = testChannelAffinities,
                         PauseOnStart = false,
+                        PostProcessingOptions = new PostProcessingOptions(
+                            new TranscriptionSettings(true),
+                            new SummarizationSettings(true),
+                            "https://somecognitiveurl"
+                        )
                     })
                 },
                 new Func<CallRecording, TestDelegate>?[]
@@ -304,6 +309,11 @@ namespace Azure.Communication.CallAutomation.Tests.CallRecordings
                        RecordingFormat = RecordingFormat.Mp4,
                        ChannelAffinity = testChannelAffinities,
                        PauseOnStart = false,
+                       PostProcessingOptions = new PostProcessingOptions(
+                            new TranscriptionSettings(true),
+                            new SummarizationSettings(true),
+                            "https://somecognitiveurl"
+                        ),
                        AudioChannelParticipantOrdering = { new CommunicationUserIdentifier("test"),}
                    }).ConfigureAwait(false),
                 },

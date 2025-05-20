@@ -1,6 +1,7 @@
 {
-  "output-folder": ".",
   "package-name": "Parameters.Spread",
+  "model-namespace": true,
+  "namespace": "Parameters.Spread",
   "license": {
     "name": "MIT License",
     "company": "Microsoft Corporation",
