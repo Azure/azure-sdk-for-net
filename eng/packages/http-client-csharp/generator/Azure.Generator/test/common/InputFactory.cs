@@ -43,7 +43,7 @@ namespace Azure.Generator.Tests.Common
             /// <returns></returns>
             public static InputEnumTypeValue Int32(string name, int value)
             {
-                return new InputEnumTypeValue(name, value, InputPrimitiveType.Int32, null, $"{name} description");
+                return new InputEnumTypeValue(name, value, InputPrimitiveType.Int32, "", $"{name} description");
             }
 
             /// <summary>
@@ -54,7 +54,7 @@ namespace Azure.Generator.Tests.Common
             /// <returns></returns>
             public static InputEnumTypeValue Float32(string name, float value)
             {
-                return new InputEnumTypeValue(name, value, InputPrimitiveType.Float32, null, $"{name} description");
+                return new InputEnumTypeValue(name, value, InputPrimitiveType.Float32, "", $"{name} description");
             }
 
             /// <summary>
@@ -65,7 +65,7 @@ namespace Azure.Generator.Tests.Common
             /// <returns></returns>
             public static InputEnumTypeValue String(string name, string value)
             {
-                return new InputEnumTypeValue(name, value, InputPrimitiveType.String, null, $"{name} description");
+                return new InputEnumTypeValue(name, value, InputPrimitiveType.String, "", $"{name} description");
             }
         }
 
@@ -78,20 +78,24 @@ namespace Azure.Generator.Tests.Common
             /// Construct input literal type value for string
             /// </summary>
             /// <param name="value"></param>
+            /// <param name="name"></param>
+            /// <param name="namespace"></param>
             /// <returns></returns>
-            public static InputLiteralType String(string value)
+            public static InputLiteralType String(string value, string? name = null, string? @namespace = null)
             {
-                return new InputLiteralType(InputPrimitiveType.String, value);
+                return new InputLiteralType(name ?? string.Empty, @namespace ?? string.Empty, InputPrimitiveType.String, value);
             }
 
             /// <summary>
             /// Construct input enum type value for any
             /// </summary>
             /// <param name="value"></param>
+            /// <param name="name"></param>
+            /// <param name="namespace"></param>
             /// <returns></returns>
-            public static InputLiteralType Any(object value)
+            public static InputLiteralType Int32(int value, string? name = null, string? @namespace = null)
             {
-                return new InputLiteralType(InputPrimitiveType.Any, value);
+                return new InputLiteralType(name ?? string.Empty, @namespace ?? string.Empty, InputPrimitiveType.Int32, value);
             }
         }
 
@@ -135,7 +139,7 @@ namespace Azure.Generator.Tests.Common
                 defaultValue: Constant.String(contentType),
                 nameInRequest: "Content-Type",
                 isContentType: true,
-                kind: InputOperationParameterKind.Constant);
+                kind: InputParameterKind.Constant);
 
         /// <summary>
         /// Construct input paraemter
@@ -157,7 +161,7 @@ namespace Azure.Generator.Tests.Common
             InputConstant? defaultValue = null,
             InputRequestLocation location = InputRequestLocation.Body,
             bool isRequired = false,
-            InputOperationParameterKind kind = InputOperationParameterKind.Method,
+            InputParameterKind kind = InputParameterKind.Method,
             bool isEndpoint = false,
             bool isContentType = false)
         {
@@ -191,6 +195,8 @@ namespace Azure.Generator.Tests.Common
         /// <param name="wireName"></param>
         /// <param name="summary"></param>
         /// <param name="description"></param>
+        /// <param name="serializedName"></param>
+        /// <param name="kind"></param>
         /// <returns></returns>
         public static InputModelProperty Property(
             string name,
@@ -200,16 +206,20 @@ namespace Azure.Generator.Tests.Common
             bool isDiscriminator = false,
             string? wireName = null,
             string? summary = null,
-            string? description = null)
+            string? description = null,
+            string? serializedName = null,
+            InputModelPropertyKind kind = InputModelPropertyKind.Property)
         {
             return new InputModelProperty(
                 name,
+                kind,
                 summary,
                 description ?? $"Description for {name}",
                 type,
                 isRequired,
                 isReadOnly,
                 isDiscriminator,
+                serializedName,
                 new(json: new(wireName ?? name)));
         }
 
@@ -231,7 +241,7 @@ namespace Azure.Generator.Tests.Common
         /// <returns></returns>
         public static InputModelType Model(
             string name,
-            string clientNamespace = "Sample.Models",
+            string clientNamespace = "Samples.Models",
             string access = "public",
             InputModelTypeUsage usage = InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
             IEnumerable<InputModelProperty>? properties = null,
@@ -272,6 +282,149 @@ namespace Azure.Generator.Tests.Common
         }
 
         /// <summary>
+        /// Construct basic service method
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="operation"></param>
+        /// <param name="access"></param>
+        /// <param name="parameters"></param>
+        /// <param name="response"></param>
+        /// <param name="exception"></param>
+        /// <returns></returns>
+        public static InputBasicServiceMethod BasicServiceMethod(
+            string name,
+            InputOperation operation,
+            string access = "public",
+            IReadOnlyList<InputParameter>? parameters = null,
+            InputServiceMethodResponse? response = null,
+            InputServiceMethodResponse? exception = null)
+        {
+            return new InputBasicServiceMethod(
+                name,
+                access,
+                [],
+                null,
+                null,
+                operation,
+                parameters ?? [],
+                response ?? ServiceMethodResponse(null, null),
+                exception,
+                false,
+                true,
+                true,
+                string.Empty);
+        }
+
+        /// <summary>
+        /// Construct service method response
+        /// </summary>
+        /// <param name="type"></param>
+        /// <param name="resultSegments"></param>
+        /// <returns></returns>
+        public static InputServiceMethodResponse ServiceMethodResponse(InputType? type, IReadOnlyList<string>? resultSegments)
+        {
+            return new InputServiceMethodResponse(type, resultSegments);
+        }
+
+        /// <summary>
+        /// Construct paging service method
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="operation"></param>
+        /// <param name="access"></param>
+        /// <param name="parameters"></param>
+        /// <param name="response"></param>
+        /// <param name="exception"></param>
+        /// <param name="pagingMetadata"></param>
+        /// <returns></returns>
+        public static InputPagingServiceMethod PagingServiceMethod(
+           string name,
+           InputOperation operation,
+           string access = "public",
+           IReadOnlyList<InputParameter>? parameters = null,
+           InputServiceMethodResponse? response = null,
+           InputServiceMethodResponse? exception = null,
+           InputPagingServiceMetadata? pagingMetadata = null)
+        {
+            return new InputPagingServiceMethod(
+                name,
+                access,
+                [],
+                null,
+                null,
+                operation,
+                parameters ?? [],
+                response ?? ServiceMethodResponse(null, null),
+                exception,
+                false,
+                true,
+                true,
+                string.Empty,
+                pagingMetadata ?? PagingMetadata([], null, null));
+        }
+
+        /// <summary>
+        /// Construct paging metadata
+        /// </summary>
+        /// <param name="itemPropertySegments"></param>
+        /// <param name="nextLink"></param>
+        /// <param name="continuationToken"></param>
+        /// <returns></returns>
+        public static InputPagingServiceMetadata PagingMetadata(IReadOnlyList<string> itemPropertySegments, InputNextLink? nextLink, InputContinuationToken? continuationToken)
+        {
+            return new InputPagingServiceMetadata(itemPropertySegments, nextLink, continuationToken);
+        }
+
+        /// <summary>
+        /// Construct paging service method
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="operation"></param>
+        /// <param name="access"></param>
+        /// <param name="parameters"></param>
+        /// <param name="response"></param>
+        /// <param name="exception"></param>
+        /// <param name="longRunningServiceMetadata"></param>
+        /// <returns></returns>
+        public static InputLongRunningServiceMethod LongRunningServiceMethod(
+            string name,
+            InputOperation operation,
+            string access = "public",
+            IReadOnlyList<InputParameter>? parameters = null,
+            InputServiceMethodResponse? response = null,
+            InputServiceMethodResponse? exception = null,
+            InputLongRunningServiceMetadata? longRunningServiceMetadata = null)
+        {
+            return new InputLongRunningServiceMethod(
+                name,
+                access,
+                [],
+                null,
+                null,
+                operation,
+                parameters ?? [],
+                response ?? ServiceMethodResponse(null, null),
+                exception,
+                false,
+                true,
+                true,
+                string.Empty,
+                longRunningServiceMetadata ?? LongRunningServiceMetadata(1, OperationResponse(), null));
+        }
+
+        /// <summary>
+        /// Construct paging metadata
+        /// </summary>
+        /// <param name="finalState"></param>
+        /// <param name="finalResponse"></param>
+        /// <param name="resultPath"></param>
+        /// <returns></returns>
+        public static InputLongRunningServiceMetadata LongRunningServiceMetadata(int finalState, InputOperationResponse finalResponse, string? resultPath)
+        {
+            return new InputLongRunningServiceMetadata(finalState, finalResponse, resultPath);
+        }
+
+        /// <summary>
         /// Construct input operation
         /// </summary>
         /// <param name="name"></param>
@@ -294,7 +447,7 @@ namespace Azure.Generator.Tests.Common
             var operation = new InputOperation(
                 name,
                 null,
-                null,
+                "",
                 $"{name} description",
                 null,
                 access,
@@ -306,8 +459,6 @@ namespace Azure.Generator.Tests.Common
                 null,
                 requestMediaTypes is null ? null : [.. requestMediaTypes],
                 false,
-                null,
-                null,
                 true,
                 true,
                 name);
@@ -343,13 +494,13 @@ namespace Azure.Generator.Tests.Common
         /// <param name="name"></param>
         /// <param name="clientNamespace"></param>
         /// <param name="doc"></param>
-        /// <param name="operations"></param>
+        /// <param name="methods"></param>
         /// <param name="parameters"></param>
         /// <param name="parent"></param>
         /// <param name="decorators"></param>
         /// <param name="crossLanguageDefinitionId"></param>
         /// <returns></returns>
-        public static InputClient Client(string name, string clientNamespace = "Samples", string? doc = null, IEnumerable<InputOperation>? operations = null, IEnumerable<InputParameter>? parameters = null, InputClient? parent = null, IReadOnlyList<InputDecoratorInfo>? decorators = null, string? crossLanguageDefinitionId = null)
+        public static InputClient Client(string name, string clientNamespace = "Samples", string? doc = null, IEnumerable<InputServiceMethod>? methods = null, IEnumerable<InputParameter>? parameters = null, InputClient? parent = null, IReadOnlyList<InputDecoratorInfo>? decorators = null, string? crossLanguageDefinitionId = null)
         {
             // when this client has parent, we add the constructed client into the `children` list of the parent
             var clientChildren = new List<InputClient>();
@@ -359,7 +510,7 @@ namespace Azure.Generator.Tests.Common
                 crossLanguageDefinitionId ?? $"{clientNamespace}.{name}",
                 string.Empty,
                 doc ?? $"{name} description",
-                operations is null ? [] : [.. operations],
+                methods is null ? [] : [.. methods],
                 parameters is null ? [] : [.. parameters],
                 parent,
                 clientChildren

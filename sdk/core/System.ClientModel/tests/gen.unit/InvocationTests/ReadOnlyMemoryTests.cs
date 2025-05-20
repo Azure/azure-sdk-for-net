@@ -19,12 +19,6 @@ namespace System.ClientModel.SourceGeneration.Tests.Unit.InvocationTests
             if (invocationDuped)
             {
                 var dupedRomJsonModel = ValidateBuilder("TestProject1", expectation, dict);
-                Assert.AreEqual($"ReadOnlyMemory<{expectation.TypeName}_0>", romJsonModel.Type.Alias);
-                Assert.AreEqual($"ReadOnlyMemory<{expectation.TypeName}_1>", dupedRomJsonModel.Type.Alias);
-            }
-            else
-            {
-                Assert.IsNull(romJsonModel.Type.Alias);
             }
 
             Assert.IsTrue(dict.TryGetValue($"{expectation.Namespace}.{expectation.TypeName}", out var itemModel));

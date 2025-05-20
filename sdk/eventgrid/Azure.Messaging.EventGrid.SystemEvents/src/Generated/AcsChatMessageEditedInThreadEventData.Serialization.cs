@@ -35,19 +35,19 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
 
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(MessageBody))
+            writer.WritePropertyName("messageBody"u8);
+            writer.WriteStringValue(MessageBody);
+            if (Optional.IsCollectionDefined(Metadata))
             {
-                writer.WritePropertyName("messageBody"u8);
-                writer.WriteStringValue(MessageBody);
+                writer.WritePropertyName("metadata"u8);
+                writer.WriteStartObject();
+                foreach (var item in Metadata)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
             }
-            writer.WritePropertyName("metadata"u8);
-            writer.WriteStartObject();
-            foreach (var item in Metadata)
-            {
-                writer.WritePropertyName(item.Key);
-                writer.WriteStringValue(item.Value);
-            }
-            writer.WriteEndObject();
             if (Optional.IsDefined(EditTime))
             {
                 writer.WritePropertyName("editTime"u8);
@@ -97,6 +97,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 if (property.NameEquals("metadata"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
@@ -179,7 +183,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 type,
                 version,
                 messageBody,
-                metadata,
+                metadata ?? new ChangeTrackingDictionary<string, string>(),
                 editTime);
         }
 
@@ -190,7 +194,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureMessagingEventGridSystemEventsContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(AcsChatMessageEditedInThreadEventData)} does not support writing '{options.Format}' format.");
             }

@@ -11,10 +11,12 @@ using System.Text.Json;
 using Azure;
 using Azure.Core;
 
-namespace Encode.Numeric.Models
+namespace Encode.Numeric._Property
 {
     public partial class Uint8AsStringProperty : IJsonModel<Uint8AsStringProperty>
     {
+        internal Uint8AsStringProperty() => throw null;
+
         void IJsonModel<Uint8AsStringProperty>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;

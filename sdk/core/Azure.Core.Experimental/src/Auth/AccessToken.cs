@@ -10,17 +10,17 @@ namespace System.ClientModel.Primitives;
 /// <summary>
 /// Represents an OAuth token and its metadata.
 /// </summary>
-public class AccessToken
+public class AuthenticationToken
 {
     /// <summary>
-    /// Initializes a new instance of the <see cref="AccessToken"/> class.
+    /// Initializes a new instance of the <see cref="AuthenticationToken"/> class.
     /// </summary>
     /// <param name="tokenValue">The access token value.</param>
     /// <param name="tokenType">The type of the access token (e.g., "Bearer").</param>
     /// <param name="expiresOn">The date and time when the token expires.</param>
     /// <param name="refreshOn">Optional. The date and time when the token should be refreshed. Default is null.</param>
     /// <exception cref="ArgumentException">Thrown when <paramref name="tokenValue"/> is null or empty.</exception>
-    public AccessToken(string tokenValue, string tokenType, DateTimeOffset expiresOn, DateTimeOffset? refreshOn = null)
+    public AuthenticationToken(string tokenValue, string tokenType, DateTimeOffset expiresOn, DateTimeOffset? refreshOn = null)
     {
         Argument.AssertNotNullOrEmpty(tokenValue, nameof(tokenValue));
 

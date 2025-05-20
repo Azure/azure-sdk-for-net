@@ -197,7 +197,15 @@
     {
       "filename": "**/sdk/ai/**/*.cs",
       "words": [
-        "Ubinary"
+        "Ubinary",
+        "Ansii",
+        "Atbash",
+        "Bleu",
+        "azureai",
+        "bleu",
+        "azureai",
+        "Gleu",
+        "gleu"
       ]
     },
     {
@@ -247,6 +255,12 @@
       "words": [
         "tfvc",
         "updation"
+      ]
+    },
+    {
+      "filename": "**/sdk/arizeaiobservabilityeval/**/*.cs",
+      "words": [
+        "Arize"
       ]
     },
     {
@@ -423,6 +437,12 @@
         "dapr",
         "grpc",
         "proto"
+      ]
+    },
+    {
+      "filename": "**/sdk/containerregistry/**/*",
+      "words": [
+        "Abac"
       ]
     },
     {
@@ -1234,7 +1254,8 @@
         "vcpus",
         "esxi",
         "seleted",
-        "dras"
+        "dras",
+        "fqdns"
       ]
     },
     {
@@ -1373,7 +1394,8 @@
         "Stdev",
         "Unrestorable",
         "Vcores",
-        "Dtcs"
+        "Dtcs",
+        "Freemium"
       ]
     },
     {
@@ -1555,6 +1577,15 @@
       ]
     },
     {
+      "filename": "**/sdk/workloadssapvirtualinstance/**/*.cs",
+      "words": [
+        "acss",
+        "ascs",
+        "hana",
+        "mbps"
+      ]
+    },
+    {
       "filename": "**/sdk/containerinstance/**/*.cs",
       "words": [
         "Noreuse",
@@ -1623,13 +1654,14 @@
     {
       "filename": "**/sdk/iot/Azure.ResourceManager.IotFirmwareDefense/**/*.cs",
       "words": [
-        "RELRO",
-        "Relro",
         "relro",
-        "Rpath",
         "rpath",
         "runpath",
-        "Cves"
+        "cves",
+        "ocsp",
+        "sbom",
+        "diffie",
+        "iotfirmwaredefense"
       ]
     },
     {

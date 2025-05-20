@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Kubernetes
 
         ConnectedClusterResource IOperationSource<ConnectedClusterResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ConnectedClusterData>(response.Content);
+            var data = ModelReaderWriter.Read<ConnectedClusterData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerKubernetesContext.Default);
             return new ConnectedClusterResource(_client, data);
         }
 
         async ValueTask<ConnectedClusterResource> IOperationSource<ConnectedClusterResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ConnectedClusterData>(response.Content);
+            var data = ModelReaderWriter.Read<ConnectedClusterData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerKubernetesContext.Default);
             return await Task.FromResult(new ConnectedClusterResource(_client, data)).ConfigureAwait(false);
         }
     }

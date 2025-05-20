@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.OracleDatabase
 
         OracleSubscriptionResource IOperationSource<OracleSubscriptionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<OracleSubscriptionData>(response.Content);
+            var data = ModelReaderWriter.Read<OracleSubscriptionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerOracleDatabaseContext.Default);
             return new OracleSubscriptionResource(_client, data);
         }
 
         async ValueTask<OracleSubscriptionResource> IOperationSource<OracleSubscriptionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<OracleSubscriptionData>(response.Content);
+            var data = ModelReaderWriter.Read<OracleSubscriptionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerOracleDatabaseContext.Default);
             return await Task.FromResult(new OracleSubscriptionResource(_client, data)).ConfigureAwait(false);
         }
     }

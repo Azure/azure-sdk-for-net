@@ -1,5 +1,11 @@
 namespace Azure.ResourceManager.GraphServices
 {
+    public partial class AzureResourceManagerGraphServicesContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureResourceManagerGraphServicesContext() { }
+        public static Azure.ResourceManager.GraphServices.AzureResourceManagerGraphServicesContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class GraphServicesAccountResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.GraphServices.GraphServicesAccountResourceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.GraphServices.GraphServicesAccountResourceData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;

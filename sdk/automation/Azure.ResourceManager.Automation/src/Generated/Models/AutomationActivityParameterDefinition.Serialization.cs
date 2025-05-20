@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.Automation.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAutomationContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(AutomationActivityParameterDefinition)} does not support writing '{options.Format}' format.");
             }

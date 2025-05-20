@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Sql
 {
     public partial class SyncGroupResource : IJsonModel<SyncGroupData>
     {
+        private static SyncGroupData s_dataDeserializationInstance;
+        private static SyncGroupData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<SyncGroupData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SyncGroupData>)Data).Write(writer, options);
 
-        SyncGroupData IJsonModel<SyncGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SyncGroupData>)Data).Create(ref reader, options);
+        SyncGroupData IJsonModel<SyncGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SyncGroupData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SyncGroupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<SyncGroupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SyncGroupData>(Data, options, AzureResourceManagerSqlContext.Default);
 
-        SyncGroupData IPersistableModel<SyncGroupData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SyncGroupData>(data, options);
+        SyncGroupData IPersistableModel<SyncGroupData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SyncGroupData>(data, options, AzureResourceManagerSqlContext.Default);
 
-        string IPersistableModel<SyncGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SyncGroupData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<SyncGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SyncGroupData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

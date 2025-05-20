@@ -13,8 +13,13 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class AcsChatThreadWithUserDeletedEventData : AcsChatThreadEventBaseProperties
     {
         /// <summary> Initializes a new instance of <see cref="AcsChatThreadWithUserDeletedEventData"/>. </summary>
-        internal AcsChatThreadWithUserDeletedEventData()
+        /// <param name="deletedByCommunicationIdentifier"> The communication identifier of the user who deleted the thread. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="deletedByCommunicationIdentifier"/> is null. </exception>
+        internal AcsChatThreadWithUserDeletedEventData(CommunicationIdentifierModel deletedByCommunicationIdentifier)
         {
+            Argument.AssertNotNull(deletedByCommunicationIdentifier, nameof(deletedByCommunicationIdentifier));
+
+            DeletedByCommunicationIdentifier = deletedByCommunicationIdentifier;
         }
 
         /// <summary> Initializes a new instance of <see cref="AcsChatThreadWithUserDeletedEventData"/>. </summary>
