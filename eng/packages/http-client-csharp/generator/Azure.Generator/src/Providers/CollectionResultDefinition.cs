@@ -195,8 +195,7 @@ namespace Azure.Generator.Providers
             var tryGetItems = new IfStatement(rootVariable.Invoke("TryGetProperty", [Literal(_itemsPropertyName), new DeclarationExpression(typeof(JsonElement), "itemsArray", out var itemsArrayVariable, isOut: true)]));
 
             // Parse items
-            var foreachItems = new ForeachStatement("item", itemsArrayVariable.Invoke("EnumerateArray").As<IEnumerable<KeyValuePair<string, object>>>(), out var itemVariable);
-            //var foreachItems = new ForEachStatement("item", itemsArrayVariable.Invoke("EnumerateArray"), out var itemVarialble);
+            var foreachItems = new ForEachStatement("item", itemsArrayVariable.Invoke("EnumerateArray").As<IEnumerable<KeyValuePair<string, object>>>(), out var itemVariable);
             foreachItems.Add(itemsVariable.Invoke("Add", [Static<BinaryData>().Invoke("FromString", [itemVariable.Invoke("ToString")])]).Terminate());
 
             tryGetItems.Add(foreachItems);
@@ -257,7 +256,7 @@ namespace Azure.Generator.Providers
             doWhileStatement.Add(new IfStatement(responseVariable.Is(Null)) { new YieldBreakStatement() });
             doWhileStatement.Add(Declare("items", _responseType, responseVariable.CastTo(_responseType), out var itemsVariable));
             doWhileStatement.Add(nextLinkVariable.Assign(_nextLinkPropertyName is null ? Null : BuildGetNextLinkMethodBodyForConvenience(itemsVariable, responseVariable).Invoke("ToString")).Terminate());
-            doWhileStatement.Add(new YieldReturnStatement(Static(new CSharpType(typeof(Page<>), [_itemModelType])).Invoke("FromValues", [itemsVariable.Property(_itemsPropertyName).CastTo(new CSharpType(typeof(IReadOnlyList<>), _itemModelType))/*.Invoke("AsReadOnly")*/, nextLinkVariable, responseVariable])));
+            doWhileStatement.Add(new YieldReturnStatement(Static(new CSharpType(typeof(Page<>), [_itemModelType])).Invoke("FromValues", [itemsVariable.Property(_itemsPropertyName).CastTo(new CSharpType(typeof(IReadOnlyList<>), _itemModelType)), nextLinkVariable, responseVariable])));
             return doWhileStatement;
         }
 
@@ -300,16 +299,12 @@ namespace Azure.Generator.Providers
                 UsingDeclare("scope", typeof(DiagnosticScope), _clientField.Property("ClientDiagnostics").Invoke(nameof(ClientDiagnostics.CreateScope), [Literal(_scopeName)]), out var scopeVariable),
                 scopeVariable.Invoke(nameof(DiagnosticScope.Start)).Terminate(),
                 new TryCatchFinallyStatement
-                    (BuildTryStatement(messageVariable), Catch(Declare<Exception>("e", out var exceptionVarialble), [scopeVariable.Invoke(nameof(DiagnosticScope.Failed), exceptionVarialble).Terminate(), Throw()]))
+                    (BuildTryExpression(messageVariable), Catch(Declare<Exception>("e", out var exceptionVarialble), [scopeVariable.Invoke(nameof(DiagnosticScope.Failed), exceptionVarialble).Terminate(), Throw()]))
             };
 
-            TryStatement BuildTryStatement(ValueExpression messageVariable)
-            {
-                var tryStatement = new TryStatement();
-                tryStatement.Add(_clientField.Property("Pipeline").Invoke(_isAsync ? "SendAsync" : "Send", [messageVariable, Default], _isAsync).Terminate());
-                tryStatement.Add(Return(This.Invoke(GetResponseMethodName, [messageVariable])));
-                return tryStatement;
-            }
+            TryExpression BuildTryExpression(ValueExpression messageVariable)
+                => new TryExpression(_clientField.Property("Pipeline").Invoke(_isAsync ? "SendAsync" : "Send", [messageVariable, Default], _isAsync).Terminate(), Return(This.Invoke(GetResponseMethodName, [messageVariable])));
+
             return new MethodProvider(signature, body, this);
         }
 

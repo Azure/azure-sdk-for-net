@@ -131,7 +131,7 @@ namespace Azure.Generator.Visitors
             List<MethodBodyStatement> updatedFactoryMethodStatements = [];
 
             var statementsToVisit = method.BodyStatements ?? new ExpressionStatement(method.BodyExpression!);
-            foreach (var statement in statementsToVisit.Flatten())
+            foreach (var statement in statementsToVisit)
             {
                 if (TryUpdateSubClientFactoryMethodReturnStatement(
                     statement,
@@ -175,16 +175,9 @@ namespace Azure.Generator.Visitors
             // start scope
             var scopeStart = scope.Invoke(nameof(DiagnosticScope.Start)).Terminate();
             // wrap existing statements in try / catch
-            var tryStatement = new TryStatement
-            {
-                method.BodyStatements ?? new ExpressionStatement(method.BodyExpression!)
-            };
+            var tryStatement = new TryExpression(method.BodyStatements ?? new ExpressionStatement(method.BodyExpression!));
 
-            var catchBlock = new CatchStatement(Declare("e", typeof(Exception), out var exception))
-                {
-                    scope.Invoke(nameof(DiagnosticScope.Failed), [exception]).Terminate(),
-                    Throw()
-                };
+            var catchBlock = new CatchExpression(Declare("e", typeof(Exception), out var exception), scope.Invoke(nameof(DiagnosticScope.Failed), [exception]).Terminate(), Throw());
             var tryCatchRequestBlock = new TryCatchFinallyStatement(tryStatement, catchBlock);
             List<MethodBodyStatement> updatedBodyStatements = [scopeDeclaration, scopeStart, tryCatchRequestBlock];
 
