@@ -1,7 +1,6 @@
 import { AzureCoreTestLibrary } from "@azure-tools/typespec-azure-core/testing";
 import { AzureResourceManagerTestLibrary } from "@azure-tools/typespec-azure-resource-manager/testing";
-import {
-  createSdkContext} from "@azure-tools/typespec-client-generator-core";
+import { createSdkContext } from "@azure-tools/typespec-client-generator-core";
 import { SdkTestLibrary } from "@azure-tools/typespec-client-generator-core/testing";
 import { CompilerOptions, EmitContext, Program } from "@typespec/compiler";
 import { createTestHost, TestHost } from "@typespec/compiler/testing";
@@ -101,7 +100,7 @@ export function createEmitterContext(
 
 /* We always need to pass in the emitter name now that it is required so making a helper to do this. */
 export async function createCSharpSdkContext(
-  program: EmitContext<AzureEmitterOptions>,
+  program: EmitContext<AzureEmitterOptions>
 ): Promise<CSharpEmitterContext> {
   const context = await createSdkContext(
     program,

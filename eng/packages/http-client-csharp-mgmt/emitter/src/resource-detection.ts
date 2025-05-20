@@ -127,7 +127,9 @@ function gatherResourceMetadata(
     }
   }
 
-  function getResourceScope(model: InputModelType): "Tenant" | "Subscription" | "ResourceGroup" {
+  function getResourceScope(
+    model: InputModelType
+  ): "Tenant" | "Subscription" | "ResourceGroup" {
     const decorators = model.decorators;
     if (decorators?.some((d) => d.name == tenantResource)) {
       return "Tenant";

@@ -111,6 +111,9 @@ interface Employees {
       client.crossLanguageDefinitionId
     );
     strictEqual(resourceMetadataDecorator.arguments?.isSingleton, false);
-    strictEqual(resourceMetadataDecorator.arguments?.resourceScope, "ResourceGroup");
+    strictEqual(
+      resourceMetadataDecorator.arguments?.resourceScope,
+      "ResourceGroup"
+    );
   });
 });

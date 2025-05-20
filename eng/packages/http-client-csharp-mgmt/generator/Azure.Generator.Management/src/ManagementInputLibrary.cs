@@ -132,8 +132,7 @@ namespace Azure.Generator.Management
                     resourceModel ?? throw new InvalidOperationException("resourceModel cannot be null"),
                     resourceClient ?? throw new InvalidOperationException("resourceClient cannot be null"),
                     isSingleton,
-                    resourceScope
-                    );
+                    resourceScope);
             }
         }
     }
