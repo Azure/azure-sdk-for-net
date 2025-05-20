@@ -1,10 +1,14 @@
 # Release History
 
-### Acknowledgments
+## 1.7.0-beta.1 (Unreleased)
 
-Thank you to our developer community members who helped to make the Data Protection libraries better with their contributions to this release:
+### Features Added
 
-- Alex Batishchev _([GitHub](https://github.com/abatishchev))_
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
 
 ## 1.6.0 (2025-05-19)
 
