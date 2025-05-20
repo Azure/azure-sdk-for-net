@@ -19,7 +19,6 @@ namespace Azure.Developer.Playwright;
 /// <summary>
 /// Sets up and manages the Playwright service browser client.
 /// </summary>
-[SuppressMessage("Usage", "AZC0015:Unexpected client method return type.", Justification = "PlaywrightServiceBrowserClient is not a HTTP-based client.")]
 public class PlaywrightServiceBrowserClient : IDisposable
 {
     internal readonly IEntraLifecycle _entraLifecycle;
@@ -107,7 +106,9 @@ public class PlaywrightServiceBrowserClient : IDisposable
     /// <param name="exposeNetwork">The network exposure.</param>
     /// <param name="cancellationToken">Cancellation token.</param>
     /// <returns>The connect options.</returns>
+#pragma warning disable AZC0015 // Unexpected client method return type.
     public virtual async Task<ConnectOptions<T>> GetConnectOptionsAsync<T>(OSPlatform? os = null, string? runId = null, string? exposeNetwork = null, CancellationToken cancellationToken = default) where T : class, new()
+#pragma warning restore AZC0015 // Unexpected client method return type.
     {
         var environmentValueForUseCloudHostedBrowsers = _environment.GetEnvironmentVariable(Constants.s_playwright_service_use_cloud_hosted_browsers_environment_variable);
         if (bool.TryParse(environmentValueForUseCloudHostedBrowsers, out var useCloudHostedBrowsers) && !useCloudHostedBrowsers)
@@ -159,7 +160,9 @@ public class PlaywrightServiceBrowserClient : IDisposable
     /// <param name="exposeNetwork">The network exposure.</param>
     /// <param name="cancellationToken">Cancellation token.</param>
     /// <returns>The connect options.</returns>
+#pragma warning disable AZC0015 // Unexpected client method return type.
     public virtual ConnectOptions<T> GetConnectOptions<T>(OSPlatform? os = null, string? runId = null, string? exposeNetwork = null, CancellationToken cancellationToken = default) where T : class, new()
+#pragma warning restore AZC0015 // Unexpected client method return type.
     {
         var environmentValueForUseCloudHostedBrowsers = _environment.GetEnvironmentVariable(Constants.s_playwright_service_use_cloud_hosted_browsers_environment_variable);
         if (bool.TryParse(environmentValueForUseCloudHostedBrowsers, out var useCloudHostedBrowsers) && !useCloudHostedBrowsers)
@@ -205,7 +208,9 @@ public class PlaywrightServiceBrowserClient : IDisposable
     /// <summary>
     /// Initialises the resources used to setup entra id authentication.
     /// </summary>
+#pragma warning disable AZC0015 // Unexpected client method return type.
     public virtual async Task InitializeAsync(CancellationToken cancellationToken = default)
+#pragma warning restore AZC0015 // Unexpected client method return type.
     {
         if (string.IsNullOrEmpty(_options.ServiceEndpoint))
         {
@@ -235,7 +240,9 @@ public class PlaywrightServiceBrowserClient : IDisposable
     /// <summary>
     /// Initialises the resources used to setup entra id authentication.
     /// </summary>
+#pragma warning disable AZC0015 // Unexpected client method return type.
     public virtual void Initialize(CancellationToken cancellationToken = default)
+#pragma warning restore AZC0015 // Unexpected client method return type.
     {
         if (string.IsNullOrEmpty(_options.ServiceEndpoint))
         {
@@ -265,7 +272,9 @@ public class PlaywrightServiceBrowserClient : IDisposable
     /// <summary>
     /// Cleans up the resources used to setup entra id authentication.
     /// </summary>
+#pragma warning disable AZC0015 // Unexpected client method return type.
     public virtual async Task DisposeAsync()
+#pragma warning restore AZC0015 // Unexpected client method return type.
     {
         Dispose();
         await Task.CompletedTask.ConfigureAwait(false);
@@ -274,7 +283,9 @@ public class PlaywrightServiceBrowserClient : IDisposable
     /// <summary>
     /// Cleans up the resources used to setup entra id authentication.
     /// </summary>
+#pragma warning disable AZC0015 // Unexpected client method return type.
     public virtual void Dispose()
+#pragma warning restore AZC0015 // Unexpected client method return type.
     {
         _logger?.LogInformation("Cleaning up Playwright service resources.");
         RotationTimer?.Dispose();

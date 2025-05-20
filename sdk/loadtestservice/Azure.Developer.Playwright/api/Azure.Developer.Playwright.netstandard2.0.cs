@@ -35,28 +35,6 @@ namespace Azure.Developer.Playwright
         }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct RunSettingKey : System.IEquatable<Azure.Developer.Playwright.RunSettingKey>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public RunSettingKey(string value) { throw null; }
-        public static Azure.Developer.Playwright.RunSettingKey ExposeNetwork { get { throw null; } }
-        public static Azure.Developer.Playwright.RunSettingKey OS { get { throw null; } }
-        public static Azure.Developer.Playwright.RunSettingKey RunId { get { throw null; } }
-        public static Azure.Developer.Playwright.RunSettingKey RunName { get { throw null; } }
-        public static Azure.Developer.Playwright.RunSettingKey ServiceAuthType { get { throw null; } }
-        public static Azure.Developer.Playwright.RunSettingKey UseCloudHostedBrowsers { get { throw null; } }
-        public bool Equals(Azure.Developer.Playwright.RunSettingKey other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object? obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.Developer.Playwright.RunSettingKey left, Azure.Developer.Playwright.RunSettingKey right) { throw null; }
-        public static implicit operator Azure.Developer.Playwright.RunSettingKey (string value) { throw null; }
-        public static bool operator !=(Azure.Developer.Playwright.RunSettingKey left, Azure.Developer.Playwright.RunSettingKey right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ServiceAuthType : System.IEquatable<Azure.Developer.Playwright.ServiceAuthType>
     {
         private readonly object _dummy;

@@ -74,20 +74,20 @@ public class PlaywrightServiceBrowserNUnit : PlaywrightServiceBrowserClient
     /// </summary>
     /// <returns></returns>
     [OneTimeSetUp]
-    public async Task SetupAsync()
+    public async Task InitializeAsync()
     {
         if (!_options.UseCloudHostedBrowsers)
             return;
         nunitLogger.LogInformation("\nRunning tests using Azure Playwright service.\n");
 
-        await InitializeAsync().ConfigureAwait(false);
+        await base.InitializeAsync().ConfigureAwait(false);
     }
 
     /// <summary>
     /// Tear down resources utilized by Playwright Browser client.
     /// </summary>
     [OneTimeTearDown]
-    public async Task TearDownAsync()
+    public override async Task DisposeAsync()
     {
         await base.DisposeAsync().ConfigureAwait(false);
     }
