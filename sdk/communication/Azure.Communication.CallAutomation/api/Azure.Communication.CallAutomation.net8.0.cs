@@ -1464,10 +1464,6 @@ namespace Azure.Communication.CallAutomation
         public static bool operator !=(Azure.Communication.CallAutomation.StreamingTransport left, Azure.Communication.CallAutomation.StreamingTransport right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public enum TextFormat
-    {
-        Display = 0,
-    }
     public partial class TextSource : Azure.Communication.CallAutomation.PlaySource
     {
         public TextSource(string text) { }
@@ -1484,7 +1480,7 @@ namespace Azure.Communication.CallAutomation
         internal TranscriptionData() { }
         public double Confidence { get { throw null; } }
         public System.TimeSpan Duration { get { throw null; } }
-        public Azure.Communication.CallAutomation.TextFormat Format { get { throw null; } }
+        public string Format { get { throw null; } }
         public System.TimeSpan Offset { get { throw null; } }
         public Azure.Communication.CommunicationIdentifier Participant { get { throw null; } }
         public Azure.Communication.CallAutomation.TranscriptionResultState ResultState { get { throw null; } }

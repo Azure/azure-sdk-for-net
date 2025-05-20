@@ -159,7 +159,7 @@ namespace Azure.Communication.CallAutomation.Tests.MediaStreaming
         {
             Assert.IsNotNull(transcription);
             Assert.AreEqual("store hours", transcription.Text);
-            Assert.AreEqual(TextFormat.Display, transcription.Format);
+            Assert.AreEqual("display", transcription.Format);
             Assert.AreEqual(49876484, transcription.Offset.Ticks);
             Assert.AreEqual(9200000, transcription.Duration.Ticks);
 
@@ -173,7 +173,7 @@ namespace Azure.Communication.CallAutomation.Tests.MediaStreaming
         {
             Assert.IsNotNull(transcription);
             Assert.AreEqual("Hello World!", transcription.Text);
-            Assert.AreEqual(TextFormat.Display, transcription.Format);
+            Assert.AreEqual("display", transcription.Format);
             Assert.AreEqual(0.98d, transcription.Confidence);
             Assert.AreEqual(1, transcription.Offset.Ticks);
             Assert.AreEqual(2, transcription.Duration.Ticks);
