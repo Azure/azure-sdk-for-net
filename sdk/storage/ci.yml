@@ -9,10 +9,6 @@ trigger:
   paths:
     include:
     - sdk/storage/
-    - sdk/storage/Azure.Storage.DataMovement/
-    - sdk/storage/Azure.Storage.DataMovement.Blobs/
-    - sdk/storage/Azure.Storage.DataMovement.Files/
-    - sdk/storage/Azure.Storage.DataMovement.Blobs.Files.Shares/
     exclude:
     - sdk/storage/Azure.ResourceManager.Storage/
     - sdk/storage/Microsoft.Azure.WebJobs.Extensions.Storage/
