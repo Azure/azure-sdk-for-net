@@ -5164,7 +5164,8 @@
         "$id": "603",
         "resourceModel": "MgmtTypeSpec.Foo",
         "isSingleton": false,
-        "resourceType": "MgmtTypeSpec/foos"
+        "resourceType": "MgmtTypeSpec/foos",
+        "resourceScope": "ResourceGroup"
        }
       }
      ],
