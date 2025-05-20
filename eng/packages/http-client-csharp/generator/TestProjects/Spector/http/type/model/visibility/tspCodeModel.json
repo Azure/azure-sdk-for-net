@@ -3,9 +3,155 @@
  "name": "Type.Model.Visibility",
  "apiVersions": [],
  "enums": [],
- "models": [
+ "constants": [
   {
    "$id": "2",
+   "kind": "constant",
+   "name": "getModelContentType",
+   "namespace": "",
+   "usage": "None",
+   "valueType": {
+    "$id": "3",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "value": "application/json",
+   "decorators": []
+  },
+  {
+   "$id": "4",
+   "kind": "constant",
+   "name": "getModelContentType1",
+   "namespace": "",
+   "usage": "None",
+   "valueType": {
+    "$id": "5",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "value": "application/json",
+   "decorators": []
+  },
+  {
+   "$id": "6",
+   "kind": "constant",
+   "name": "headModelContentType",
+   "namespace": "",
+   "usage": "None",
+   "valueType": {
+    "$id": "7",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "value": "application/json",
+   "decorators": []
+  },
+  {
+   "$id": "8",
+   "kind": "constant",
+   "name": "putModelContentType",
+   "namespace": "",
+   "usage": "None",
+   "valueType": {
+    "$id": "9",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "value": "application/json",
+   "decorators": []
+  },
+  {
+   "$id": "10",
+   "kind": "constant",
+   "name": "patchModelContentType",
+   "namespace": "",
+   "usage": "None",
+   "valueType": {
+    "$id": "11",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "value": "application/json",
+   "decorators": []
+  },
+  {
+   "$id": "12",
+   "kind": "constant",
+   "name": "postModelContentType",
+   "namespace": "",
+   "usage": "None",
+   "valueType": {
+    "$id": "13",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "value": "application/json",
+   "decorators": []
+  },
+  {
+   "$id": "14",
+   "kind": "constant",
+   "name": "deleteModelContentType",
+   "namespace": "",
+   "usage": "None",
+   "valueType": {
+    "$id": "15",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "value": "application/json",
+   "decorators": []
+  },
+  {
+   "$id": "16",
+   "kind": "constant",
+   "name": "putReadOnlyModelContentType",
+   "namespace": "",
+   "usage": "None",
+   "valueType": {
+    "$id": "17",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "value": "application/json",
+   "decorators": []
+  },
+  {
+   "$id": "18",
+   "kind": "constant",
+   "name": "putReadOnlyModelContentType1",
+   "namespace": "",
+   "usage": "None",
+   "valueType": {
+    "$id": "19",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "value": "application/json",
+   "decorators": []
+  }
+ ],
+ "models": [
+  {
+   "$id": "20",
    "kind": "model",
    "name": "VisibilityModel",
    "namespace": "Type.Model.Visibility",
@@ -15,13 +161,13 @@
    "decorators": [],
    "properties": [
     {
-     "$id": "3",
+     "$id": "21",
      "kind": "property",
      "name": "readProp",
      "serializedName": "readProp",
      "doc": "Required string, illustrating a readonly property.",
      "type": {
-      "$id": "4",
+      "$id": "22",
       "kind": "string",
       "name": "string",
       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -34,21 +180,21 @@
      "decorators": [],
      "crossLanguageDefinitionId": "Type.Model.Visibility.VisibilityModel.readProp",
      "serializationOptions": {
-      "$id": "5",
+      "$id": "23",
       "json": {
-       "$id": "6",
+       "$id": "24",
        "name": "readProp"
       }
      }
     },
     {
-     "$id": "7",
-     "kind": "property",
+     "$id": "25",
+     "kind": "query",
      "name": "queryProp",
      "serializedName": "queryProp",
      "doc": "Required int32, illustrating a query property.",
      "type": {
-      "$id": "8",
+      "$id": "26",
       "kind": "int32",
       "name": "int32",
       "crossLanguageDefinitionId": "TypeSpec.int32",
@@ -56,30 +202,23 @@
      },
      "optional": false,
      "readOnly": false,
-     "discriminator": false,
-     "flatten": false,
      "decorators": [],
      "crossLanguageDefinitionId": "Type.Model.Visibility.VisibilityModel.queryProp",
-     "serializationOptions": {
-      "$id": "9",
-      "json": {
-       "$id": "10",
-       "name": "queryProp"
-      }
-     }
+     "discriminator": false,
+     "flatten": false
     },
     {
-     "$id": "11",
+     "$id": "27",
      "kind": "property",
      "name": "createProp",
      "serializedName": "createProp",
      "doc": "Required string[], illustrating a create property.",
      "type": {
-      "$id": "12",
+      "$id": "28",
       "kind": "array",
       "name": "Array",
       "valueType": {
-       "$id": "13",
+       "$id": "29",
        "kind": "string",
        "name": "string",
        "crossLanguageDefinitionId": "TypeSpec.string",
@@ -95,25 +234,25 @@
      "decorators": [],
      "crossLanguageDefinitionId": "Type.Model.Visibility.VisibilityModel.createProp",
      "serializationOptions": {
-      "$id": "14",
+      "$id": "30",
       "json": {
-       "$id": "15",
+       "$id": "31",
        "name": "createProp"
       }
      }
     },
     {
-     "$id": "16",
+     "$id": "32",
      "kind": "property",
      "name": "updateProp",
      "serializedName": "updateProp",
      "doc": "Required int32[], illustrating a update property.",
      "type": {
-      "$id": "17",
+      "$id": "33",
       "kind": "array",
-      "name": "Array",
+      "name": "Array1",
       "valueType": {
-       "$id": "18",
+       "$id": "34",
        "kind": "int32",
        "name": "int32",
        "crossLanguageDefinitionId": "TypeSpec.int32",
@@ -129,21 +268,21 @@
      "decorators": [],
      "crossLanguageDefinitionId": "Type.Model.Visibility.VisibilityModel.updateProp",
      "serializationOptions": {
-      "$id": "19",
+      "$id": "35",
       "json": {
-       "$id": "20",
+       "$id": "36",
        "name": "updateProp"
       }
      }
     },
     {
-     "$id": "21",
+     "$id": "37",
      "kind": "property",
      "name": "deleteProp",
      "serializedName": "deleteProp",
      "doc": "Required bool, illustrating a delete property.",
      "type": {
-      "$id": "22",
+      "$id": "38",
       "kind": "boolean",
       "name": "boolean",
       "crossLanguageDefinitionId": "TypeSpec.boolean",
@@ -156,9 +295,9 @@
      "decorators": [],
      "crossLanguageDefinitionId": "Type.Model.Visibility.VisibilityModel.deleteProp",
      "serializationOptions": {
-      "$id": "23",
+      "$id": "39",
       "json": {
-       "$id": "24",
+       "$id": "40",
        "name": "deleteProp"
       }
      }
@@ -166,7 +305,7 @@
    ]
   },
   {
-   "$id": "25",
+   "$id": "41",
    "kind": "model",
    "name": "ReadOnlyModel",
    "namespace": "Type.Model.Visibility",
@@ -176,20 +315,20 @@
    "decorators": [],
    "properties": [
     {
-     "$id": "26",
+     "$id": "42",
      "kind": "property",
      "name": "optionalNullableIntList",
      "serializedName": "optionalNullableIntList",
      "doc": "Optional readonly nullable int list.",
      "type": {
-      "$id": "27",
+      "$id": "43",
       "kind": "nullable",
       "type": {
-       "$id": "28",
+       "$id": "44",
        "kind": "array",
-       "name": "Array",
+       "name": "Array1",
        "valueType": {
-        "$id": "29",
+        "$id": "45",
         "kind": "int32",
         "name": "int32",
         "crossLanguageDefinitionId": "TypeSpec.int32",
@@ -207,31 +346,31 @@
      "decorators": [],
      "crossLanguageDefinitionId": "Type.Model.Visibility.ReadOnlyModel.optionalNullableIntList",
      "serializationOptions": {
-      "$id": "30",
+      "$id": "46",
       "json": {
-       "$id": "31",
+       "$id": "47",
        "name": "optionalNullableIntList"
       }
      }
     },
     {
-     "$id": "32",
+     "$id": "48",
      "kind": "property",
      "name": "optionalStringRecord",
      "serializedName": "optionalStringRecord",
      "doc": "Optional readonly string dictionary.",
      "type": {
-      "$id": "33",
+      "$id": "49",
       "kind": "dict",
       "keyType": {
-       "$id": "34",
+       "$id": "50",
        "kind": "string",
        "name": "string",
        "crossLanguageDefinitionId": "TypeSpec.string",
        "decorators": []
       },
       "valueType": {
-       "$id": "35",
+       "$id": "51",
        "kind": "string",
        "name": "string",
        "crossLanguageDefinitionId": "TypeSpec.string",
@@ -246,9 +385,9 @@
      "decorators": [],
      "crossLanguageDefinitionId": "Type.Model.Visibility.ReadOnlyModel.optionalStringRecord",
      "serializationOptions": {
-      "$id": "36",
+      "$id": "52",
       "json": {
-       "$id": "37",
+       "$id": "53",
        "name": "optionalStringRecord"
       }
      }
@@ -258,380 +397,291 @@
  ],
  "clients": [
   {
-   "$id": "38",
+   "$id": "54",
+   "kind": "client",
    "name": "VisibilityClient",
    "namespace": "Type.Model.Visibility",
    "doc": "Illustrates models with visibility properties.",
-   "operations": [
+   "methods": [
     {
-     "$id": "39",
+     "$id": "55",
+     "kind": "basic",
      "name": "getModel",
-     "resourceName": "Visibility",
      "accessibility": "public",
-     "parameters": [
-      {
-       "$id": "40",
-       "name": "contentType",
-       "nameInRequest": "Content-Type",
-       "doc": "Body parameter's content type. Known values are application/json",
-       "type": {
-        "$id": "41",
-        "kind": "constant",
-        "valueType": {
-         "$id": "42",
-         "kind": "string",
-         "name": "string",
-         "crossLanguageDefinitionId": "TypeSpec.string",
+     "apiVersions": [],
+     "operation": {
+      "$id": "56",
+      "name": "getModel",
+      "resourceName": "Visibility",
+      "accessibility": "public",
+      "parameters": [
+       {
+        "$id": "57",
+        "name": "queryProp",
+        "nameInRequest": "queryProp",
+        "doc": "Required int32, illustrating a query property.",
+        "type": {
+         "$id": "58",
+         "kind": "int32",
+         "name": "int32",
+         "crossLanguageDefinitionId": "TypeSpec.int32",
          "decorators": []
         },
-        "value": "application/json",
-        "decorators": []
+        "location": "Query",
+        "isApiVersion": false,
+        "isContentType": false,
+        "isEndpoint": false,
+        "explode": false,
+        "isRequired": true,
+        "kind": "Method",
+        "decorators": [],
+        "skipUrlEncoding": false
        },
-       "location": "Header",
-       "isApiVersion": false,
-       "isContentType": true,
-       "isEndpoint": false,
-       "explode": false,
-       "isRequired": true,
-       "kind": "Constant",
-       "decorators": [],
-       "skipUrlEncoding": false
-      },
-      {
-       "$id": "43",
-       "name": "accept",
-       "nameInRequest": "Accept",
-       "type": {
-        "$id": "44",
-        "kind": "constant",
-        "valueType": {
-         "$id": "45",
-         "kind": "string",
-         "name": "string",
-         "crossLanguageDefinitionId": "TypeSpec.string",
-         "decorators": []
+       {
+        "$id": "59",
+        "name": "contentType",
+        "nameInRequest": "Content-Type",
+        "doc": "Body parameter's content type. Known values are application/json",
+        "type": {
+         "$ref": "2"
         },
-        "value": "application/json",
-        "decorators": []
+        "location": "Header",
+        "isApiVersion": false,
+        "isContentType": true,
+        "isEndpoint": false,
+        "explode": false,
+        "isRequired": true,
+        "kind": "Constant",
+        "decorators": [],
+        "skipUrlEncoding": false
        },
-       "location": "Header",
-       "isApiVersion": false,
-       "isContentType": false,
-       "isEndpoint": false,
-       "explode": false,
-       "isRequired": true,
-       "kind": "Constant",
-       "decorators": [],
-       "skipUrlEncoding": false
-      },
-      {
-       "$id": "46",
-       "name": "input",
-       "nameInRequest": "input",
-       "type": {
-        "$ref": "2"
-       },
-       "location": "Body",
-       "isApiVersion": false,
-       "isContentType": false,
-       "isEndpoint": false,
-       "explode": false,
-       "isRequired": true,
-       "kind": "Method",
-       "decorators": [],
-       "skipUrlEncoding": false
-      }
-     ],
-     "responses": [
-      {
-       "$id": "47",
-       "statusCodes": [
-        200
-       ],
-       "bodyType": {
-        "$ref": "2"
-       },
-       "headers": [],
-       "isErrorResponse": false,
-       "contentTypes": [
-        "application/json"
-       ]
-      }
-     ],
-     "httpMethod": "GET",
-     "uri": "{endpoint}",
-     "path": "/type/model/visibility",
-     "requestMediaTypes": [
-      "application/json"
-     ],
-     "bufferResponse": true,
-     "generateProtocolMethod": true,
-     "generateConvenienceMethod": true,
-     "crossLanguageDefinitionId": "Type.Model.Visibility.getModel",
-     "decorators": []
-    },
-    {
-     "$id": "48",
-     "name": "headModel",
-     "resourceName": "Visibility",
-     "accessibility": "public",
-     "parameters": [
-      {
-       "$id": "49",
-       "name": "contentType",
-       "nameInRequest": "Content-Type",
-       "doc": "Body parameter's content type. Known values are application/json",
-       "type": {
-        "$id": "50",
-        "kind": "constant",
-        "valueType": {
-         "$id": "51",
-         "kind": "string",
-         "name": "string",
-         "crossLanguageDefinitionId": "TypeSpec.string",
-         "decorators": []
+       {
+        "$id": "60",
+        "name": "accept",
+        "nameInRequest": "Accept",
+        "type": {
+         "$ref": "4"
         },
-        "value": "application/json",
-        "decorators": []
+        "location": "Header",
+        "isApiVersion": false,
+        "isContentType": false,
+        "isEndpoint": false,
+        "explode": false,
+        "isRequired": true,
+        "kind": "Constant",
+        "decorators": [],
+        "skipUrlEncoding": false
        },
-       "location": "Header",
-       "isApiVersion": false,
-       "isContentType": true,
-       "isEndpoint": false,
-       "explode": false,
-       "isRequired": true,
-       "kind": "Constant",
-       "decorators": [],
-       "skipUrlEncoding": false
-      },
-      {
-       "$id": "52",
-       "name": "input",
-       "nameInRequest": "input",
-       "type": {
-        "$ref": "2"
-       },
-       "location": "Body",
-       "isApiVersion": false,
-       "isContentType": false,
-       "isEndpoint": false,
-       "explode": false,
-       "isRequired": true,
-       "kind": "Method",
-       "decorators": [],
-       "skipUrlEncoding": false
-      }
-     ],
-     "responses": [
-      {
-       "$id": "53",
-       "statusCodes": [
-        200
-       ],
-       "headers": [],
-       "isErrorResponse": false
-      }
-     ],
-     "httpMethod": "HEAD",
-     "uri": "{endpoint}",
-     "path": "/type/model/visibility",
-     "requestMediaTypes": [
-      "application/json"
-     ],
-     "bufferResponse": true,
-     "generateProtocolMethod": true,
-     "generateConvenienceMethod": true,
-     "crossLanguageDefinitionId": "Type.Model.Visibility.headModel",
-     "decorators": []
-    },
-    {
-     "$id": "54",
-     "name": "putModel",
-     "resourceName": "Visibility",
-     "accessibility": "public",
-     "parameters": [
-      {
-       "$id": "55",
-       "name": "contentType",
-       "nameInRequest": "Content-Type",
-       "doc": "Body parameter's content type. Known values are application/json",
-       "type": {
-        "$id": "56",
-        "kind": "constant",
-        "valueType": {
-         "$id": "57",
-         "kind": "string",
-         "name": "string",
-         "crossLanguageDefinitionId": "TypeSpec.string",
-         "decorators": []
+       {
+        "$id": "61",
+        "name": "input",
+        "nameInRequest": "input",
+        "type": {
+         "$ref": "20"
         },
-        "value": "application/json",
-        "decorators": []
-       },
-       "location": "Header",
-       "isApiVersion": false,
-       "isContentType": true,
-       "isEndpoint": false,
-       "explode": false,
-       "isRequired": true,
-       "kind": "Constant",
-       "decorators": [],
-       "skipUrlEncoding": false
-      },
-      {
-       "$id": "58",
-       "name": "input",
-       "nameInRequest": "input",
-       "type": {
-        "$ref": "2"
-       },
-       "location": "Body",
-       "isApiVersion": false,
-       "isContentType": false,
-       "isEndpoint": false,
-       "explode": false,
-       "isRequired": true,
-       "kind": "Method",
-       "decorators": [],
-       "skipUrlEncoding": false
-      }
-     ],
-     "responses": [
-      {
-       "$id": "59",
-       "statusCodes": [
-        204
-       ],
-       "headers": [],
-       "isErrorResponse": false
-      }
-     ],
-     "httpMethod": "PUT",
-     "uri": "{endpoint}",
-     "path": "/type/model/visibility",
-     "requestMediaTypes": [
-      "application/json"
-     ],
-     "bufferResponse": true,
-     "generateProtocolMethod": true,
-     "generateConvenienceMethod": true,
-     "crossLanguageDefinitionId": "Type.Model.Visibility.putModel",
-     "decorators": []
-    },
-    {
-     "$id": "60",
-     "name": "patchModel",
-     "resourceName": "Visibility",
-     "accessibility": "public",
-     "parameters": [
-      {
-       "$id": "61",
-       "name": "contentType",
-       "nameInRequest": "Content-Type",
-       "doc": "Body parameter's content type. Known values are application/json",
-       "type": {
+        "location": "Body",
+        "isApiVersion": false,
+        "isContentType": false,
+        "isEndpoint": false,
+        "explode": false,
+        "isRequired": true,
+        "kind": "Method",
+        "decorators": [],
+        "skipUrlEncoding": false
+       }
+      ],
+      "responses": [
+       {
         "$id": "62",
-        "kind": "constant",
-        "valueType": {
-         "$id": "63",
-         "kind": "string",
-         "name": "string",
-         "crossLanguageDefinitionId": "TypeSpec.string",
-         "decorators": []
+        "statusCodes": [
+         200
+        ],
+        "bodyType": {
+         "$ref": "20"
         },
-        "value": "application/json",
-        "decorators": []
+        "headers": [],
+        "isErrorResponse": false,
+        "contentTypes": [
+         "application/json"
+        ]
+       }
+      ],
+      "httpMethod": "GET",
+      "uri": "{endpoint}",
+      "path": "/type/model/visibility",
+      "requestMediaTypes": [
+       "application/json"
+      ],
+      "bufferResponse": true,
+      "generateProtocolMethod": true,
+      "generateConvenienceMethod": true,
+      "crossLanguageDefinitionId": "Type.Model.Visibility.getModel",
+      "decorators": []
+     },
+     "parameters": [
+      {
+       "$id": "63",
+       "name": "input",
+       "nameInRequest": "input",
+       "type": {
+        "$ref": "20"
        },
-       "location": "Header",
+       "location": "Body",
        "isApiVersion": false,
-       "isContentType": true,
+       "isContentType": false,
        "isEndpoint": false,
        "explode": false,
        "isRequired": true,
-       "kind": "Constant",
+       "kind": "Method",
        "decorators": [],
        "skipUrlEncoding": false
       },
       {
        "$id": "64",
-       "name": "input",
-       "nameInRequest": "input",
+       "name": "contentType",
+       "nameInRequest": "contentType",
+       "doc": "Body parameter's content type. Known values are application/json",
        "type": {
         "$ref": "2"
        },
-       "location": "Body",
+       "location": "Header",
        "isApiVersion": false,
        "isContentType": false,
        "isEndpoint": false,
        "explode": false,
        "isRequired": true,
-       "kind": "Method",
+       "kind": "Constant",
        "decorators": [],
        "skipUrlEncoding": false
-      }
-     ],
-     "responses": [
+      },
       {
        "$id": "65",
-       "statusCodes": [
-        204
-       ],
-       "headers": [],
-       "isErrorResponse": false
-      }
-     ],
-     "httpMethod": "PATCH",
-     "uri": "{endpoint}",
-     "path": "/type/model/visibility",
-     "requestMediaTypes": [
-      "application/json"
-     ],
-     "bufferResponse": true,
-     "generateProtocolMethod": true,
-     "generateConvenienceMethod": false,
-     "crossLanguageDefinitionId": "Type.Model.Visibility.patchModel",
-     "decorators": []
-    },
-    {
-     "$id": "66",
-     "name": "postModel",
-     "resourceName": "Visibility",
-     "accessibility": "public",
-     "parameters": [
-      {
-       "$id": "67",
-       "name": "contentType",
-       "nameInRequest": "Content-Type",
-       "doc": "Body parameter's content type. Known values are application/json",
+       "name": "accept",
+       "nameInRequest": "accept",
        "type": {
-        "$id": "68",
-        "kind": "constant",
-        "valueType": {
-         "$id": "69",
-         "kind": "string",
-         "name": "string",
-         "crossLanguageDefinitionId": "TypeSpec.string",
-         "decorators": []
-        },
-        "value": "application/json",
-        "decorators": []
+        "$ref": "4"
        },
        "location": "Header",
        "isApiVersion": false,
-       "isContentType": true,
+       "isContentType": false,
        "isEndpoint": false,
        "explode": false,
        "isRequired": true,
        "kind": "Constant",
        "decorators": [],
        "skipUrlEncoding": false
-      },
+      }
+     ],
+     "response": {
+      "$id": "66",
+      "type": {
+       "$ref": "20"
+      }
+     },
+     "isOverride": false,
+     "generateConvenient": true,
+     "generateProtocol": true,
+     "crossLanguageDefinitionId": "Type.Model.Visibility.getModel"
+    },
+    {
+     "$id": "67",
+     "kind": "basic",
+     "name": "headModel",
+     "accessibility": "public",
+     "apiVersions": [],
+     "operation": {
+      "$id": "68",
+      "name": "headModel",
+      "resourceName": "Visibility",
+      "accessibility": "public",
+      "parameters": [
+       {
+        "$id": "69",
+        "name": "queryProp",
+        "nameInRequest": "queryProp",
+        "doc": "Required int32, illustrating a query property.",
+        "type": {
+         "$id": "70",
+         "kind": "int32",
+         "name": "int32",
+         "crossLanguageDefinitionId": "TypeSpec.int32",
+         "decorators": []
+        },
+        "location": "Query",
+        "isApiVersion": false,
+        "isContentType": false,
+        "isEndpoint": false,
+        "explode": false,
+        "isRequired": true,
+        "kind": "Method",
+        "decorators": [],
+        "skipUrlEncoding": false
+       },
+       {
+        "$id": "71",
+        "name": "contentType",
+        "nameInRequest": "Content-Type",
+        "doc": "Body parameter's content type. Known values are application/json",
+        "type": {
+         "$ref": "6"
+        },
+        "location": "Header",
+        "isApiVersion": false,
+        "isContentType": true,
+        "isEndpoint": false,
+        "explode": false,
+        "isRequired": true,
+        "kind": "Constant",
+        "decorators": [],
+        "skipUrlEncoding": false
+       },
+       {
+        "$id": "72",
+        "name": "input",
+        "nameInRequest": "input",
+        "type": {
+         "$ref": "20"
+        },
+        "location": "Body",
+        "isApiVersion": false,
+        "isContentType": false,
+        "isEndpoint": false,
+        "explode": false,
+        "isRequired": true,
+        "kind": "Method",
+        "decorators": [],
+        "skipUrlEncoding": false
+       }
+      ],
+      "responses": [
+       {
+        "$id": "73",
+        "statusCodes": [
+         200
+        ],
+        "headers": [],
+        "isErrorResponse": false
+       }
+      ],
+      "httpMethod": "HEAD",
+      "uri": "{endpoint}",
+      "path": "/type/model/visibility",
+      "requestMediaTypes": [
+       "application/json"
+      ],
+      "bufferResponse": true,
+      "generateProtocolMethod": true,
+      "generateConvenienceMethod": true,
+      "crossLanguageDefinitionId": "Type.Model.Visibility.headModel",
+      "decorators": []
+     },
+     "parameters": [
       {
-       "$id": "70",
+       "$id": "74",
        "name": "input",
        "nameInRequest": "input",
        "type": {
-        "$ref": "2"
+        "$ref": "20"
        },
        "location": "Body",
        "isApiVersion": false,
@@ -642,154 +692,612 @@
        "kind": "Method",
        "decorators": [],
        "skipUrlEncoding": false
-      }
-     ],
-     "responses": [
+      },
       {
-       "$id": "71",
-       "statusCodes": [
-        204
-       ],
-       "headers": [],
-       "isErrorResponse": false
-      }
-     ],
-     "httpMethod": "POST",
-     "uri": "{endpoint}",
-     "path": "/type/model/visibility",
-     "requestMediaTypes": [
-      "application/json"
-     ],
-     "bufferResponse": true,
-     "generateProtocolMethod": true,
-     "generateConvenienceMethod": true,
-     "crossLanguageDefinitionId": "Type.Model.Visibility.postModel",
-     "decorators": []
-    },
-    {
-     "$id": "72",
-     "name": "deleteModel",
-     "resourceName": "Visibility",
-     "accessibility": "public",
-     "parameters": [
-      {
-       "$id": "73",
+       "$id": "75",
        "name": "contentType",
-       "nameInRequest": "Content-Type",
+       "nameInRequest": "contentType",
        "doc": "Body parameter's content type. Known values are application/json",
        "type": {
-        "$id": "74",
-        "kind": "constant",
-        "valueType": {
-         "$id": "75",
-         "kind": "string",
-         "name": "string",
-         "crossLanguageDefinitionId": "TypeSpec.string",
-         "decorators": []
-        },
-        "value": "application/json",
-        "decorators": []
+        "$ref": "6"
        },
        "location": "Header",
        "isApiVersion": false,
-       "isContentType": true,
+       "isContentType": false,
        "isEndpoint": false,
        "explode": false,
        "isRequired": true,
        "kind": "Constant",
        "decorators": [],
        "skipUrlEncoding": false
-      },
-      {
-       "$id": "76",
-       "name": "input",
-       "nameInRequest": "input",
-       "type": {
-        "$ref": "2"
-       },
-       "location": "Body",
-       "isApiVersion": false,
-       "isContentType": false,
-       "isEndpoint": false,
-       "explode": false,
-       "isRequired": true,
-       "kind": "Method",
-       "decorators": [],
-       "skipUrlEncoding": false
       }
      ],
-     "responses": [
-      {
-       "$id": "77",
-       "statusCodes": [
-        204
-       ],
-       "headers": [],
-       "isErrorResponse": false
-      }
-     ],
-     "httpMethod": "DELETE",
-     "uri": "{endpoint}",
-     "path": "/type/model/visibility",
-     "requestMediaTypes": [
-      "application/json"
-     ],
-     "bufferResponse": true,
-     "generateProtocolMethod": true,
-     "generateConvenienceMethod": true,
-     "crossLanguageDefinitionId": "Type.Model.Visibility.deleteModel",
-     "decorators": []
+     "response": {
+      "$id": "76"
+     },
+     "isOverride": false,
+     "generateConvenient": true,
+     "generateProtocol": true,
+     "crossLanguageDefinitionId": "Type.Model.Visibility.headModel"
     },
     {
-     "$id": "78",
-     "name": "putReadOnlyModel",
-     "resourceName": "Visibility",
+     "$id": "77",
+     "kind": "basic",
+     "name": "putModel",
      "accessibility": "public",
-     "parameters": [
-      {
-       "$id": "79",
-       "name": "contentType",
-       "nameInRequest": "Content-Type",
-       "doc": "Body parameter's content type. Known values are application/json",
-       "type": {
+     "apiVersions": [],
+     "operation": {
+      "$id": "78",
+      "name": "putModel",
+      "resourceName": "Visibility",
+      "accessibility": "public",
+      "parameters": [
+       {
+        "$id": "79",
+        "name": "contentType",
+        "nameInRequest": "Content-Type",
+        "doc": "Body parameter's content type. Known values are application/json",
+        "type": {
+         "$ref": "8"
+        },
+        "location": "Header",
+        "isApiVersion": false,
+        "isContentType": true,
+        "isEndpoint": false,
+        "explode": false,
+        "isRequired": true,
+        "kind": "Constant",
+        "decorators": [],
+        "skipUrlEncoding": false
+       },
+       {
         "$id": "80",
-        "kind": "constant",
-        "valueType": {
-         "$id": "81",
-         "kind": "string",
-         "name": "string",
-         "crossLanguageDefinitionId": "TypeSpec.string",
-         "decorators": []
+        "name": "input",
+        "nameInRequest": "input",
+        "type": {
+         "$ref": "20"
         },
-        "value": "application/json",
-        "decorators": []
-       },
-       "location": "Header",
-       "isApiVersion": false,
-       "isContentType": true,
-       "isEndpoint": false,
-       "explode": false,
-       "isRequired": true,
-       "kind": "Constant",
-       "decorators": [],
-       "skipUrlEncoding": false
-      },
+        "location": "Body",
+        "isApiVersion": false,
+        "isContentType": false,
+        "isEndpoint": false,
+        "explode": false,
+        "isRequired": true,
+        "kind": "Method",
+        "decorators": [],
+        "skipUrlEncoding": false
+       }
+      ],
+      "responses": [
+       {
+        "$id": "81",
+        "statusCodes": [
+         204
+        ],
+        "headers": [],
+        "isErrorResponse": false
+       }
+      ],
+      "httpMethod": "PUT",
+      "uri": "{endpoint}",
+      "path": "/type/model/visibility",
+      "requestMediaTypes": [
+       "application/json"
+      ],
+      "bufferResponse": true,
+      "generateProtocolMethod": true,
+      "generateConvenienceMethod": true,
+      "crossLanguageDefinitionId": "Type.Model.Visibility.putModel",
+      "decorators": []
+     },
+     "parameters": [
       {
        "$id": "82",
-       "name": "accept",
-       "nameInRequest": "Accept",
+       "name": "input",
+       "nameInRequest": "input",
        "type": {
-        "$id": "83",
-        "kind": "constant",
-        "valueType": {
-         "$id": "84",
-         "kind": "string",
-         "name": "string",
-         "crossLanguageDefinitionId": "TypeSpec.string",
-         "decorators": []
+        "$ref": "20"
+       },
+       "location": "Body",
+       "isApiVersion": false,
+       "isContentType": false,
+       "isEndpoint": false,
+       "explode": false,
+       "isRequired": true,
+       "kind": "Method",
+       "decorators": [],
+       "skipUrlEncoding": false
+      },
+      {
+       "$id": "83",
+       "name": "contentType",
+       "nameInRequest": "contentType",
+       "doc": "Body parameter's content type. Known values are application/json",
+       "type": {
+        "$ref": "8"
+       },
+       "location": "Header",
+       "isApiVersion": false,
+       "isContentType": false,
+       "isEndpoint": false,
+       "explode": false,
+       "isRequired": true,
+       "kind": "Constant",
+       "decorators": [],
+       "skipUrlEncoding": false
+      }
+     ],
+     "response": {
+      "$id": "84"
+     },
+     "isOverride": false,
+     "generateConvenient": true,
+     "generateProtocol": true,
+     "crossLanguageDefinitionId": "Type.Model.Visibility.putModel"
+    },
+    {
+     "$id": "85",
+     "kind": "basic",
+     "name": "patchModel",
+     "accessibility": "public",
+     "apiVersions": [],
+     "operation": {
+      "$id": "86",
+      "name": "patchModel",
+      "resourceName": "Visibility",
+      "accessibility": "public",
+      "parameters": [
+       {
+        "$id": "87",
+        "name": "contentType",
+        "nameInRequest": "Content-Type",
+        "doc": "Body parameter's content type. Known values are application/json",
+        "type": {
+         "$ref": "10"
         },
-        "value": "application/json",
-        "decorators": []
+        "location": "Header",
+        "isApiVersion": false,
+        "isContentType": true,
+        "isEndpoint": false,
+        "explode": false,
+        "isRequired": true,
+        "kind": "Constant",
+        "decorators": [],
+        "skipUrlEncoding": false
+       },
+       {
+        "$id": "88",
+        "name": "input",
+        "nameInRequest": "input",
+        "type": {
+         "$ref": "20"
+        },
+        "location": "Body",
+        "isApiVersion": false,
+        "isContentType": false,
+        "isEndpoint": false,
+        "explode": false,
+        "isRequired": true,
+        "kind": "Method",
+        "decorators": [],
+        "skipUrlEncoding": false
+       }
+      ],
+      "responses": [
+       {
+        "$id": "89",
+        "statusCodes": [
+         204
+        ],
+        "headers": [],
+        "isErrorResponse": false
+       }
+      ],
+      "httpMethod": "PATCH",
+      "uri": "{endpoint}",
+      "path": "/type/model/visibility",
+      "requestMediaTypes": [
+       "application/json"
+      ],
+      "bufferResponse": true,
+      "generateProtocolMethod": true,
+      "generateConvenienceMethod": false,
+      "crossLanguageDefinitionId": "Type.Model.Visibility.patchModel",
+      "decorators": []
+     },
+     "parameters": [
+      {
+       "$id": "90",
+       "name": "input",
+       "nameInRequest": "input",
+       "type": {
+        "$ref": "20"
+       },
+       "location": "Body",
+       "isApiVersion": false,
+       "isContentType": false,
+       "isEndpoint": false,
+       "explode": false,
+       "isRequired": true,
+       "kind": "Method",
+       "decorators": [],
+       "skipUrlEncoding": false
+      },
+      {
+       "$id": "91",
+       "name": "contentType",
+       "nameInRequest": "contentType",
+       "doc": "Body parameter's content type. Known values are application/json",
+       "type": {
+        "$ref": "10"
+       },
+       "location": "Header",
+       "isApiVersion": false,
+       "isContentType": false,
+       "isEndpoint": false,
+       "explode": false,
+       "isRequired": true,
+       "kind": "Constant",
+       "decorators": [],
+       "skipUrlEncoding": false
+      }
+     ],
+     "response": {
+      "$id": "92"
+     },
+     "isOverride": false,
+     "generateConvenient": true,
+     "generateProtocol": true,
+     "crossLanguageDefinitionId": "Type.Model.Visibility.patchModel"
+    },
+    {
+     "$id": "93",
+     "kind": "basic",
+     "name": "postModel",
+     "accessibility": "public",
+     "apiVersions": [],
+     "operation": {
+      "$id": "94",
+      "name": "postModel",
+      "resourceName": "Visibility",
+      "accessibility": "public",
+      "parameters": [
+       {
+        "$id": "95",
+        "name": "contentType",
+        "nameInRequest": "Content-Type",
+        "doc": "Body parameter's content type. Known values are application/json",
+        "type": {
+         "$ref": "12"
+        },
+        "location": "Header",
+        "isApiVersion": false,
+        "isContentType": true,
+        "isEndpoint": false,
+        "explode": false,
+        "isRequired": true,
+        "kind": "Constant",
+        "decorators": [],
+        "skipUrlEncoding": false
+       },
+       {
+        "$id": "96",
+        "name": "input",
+        "nameInRequest": "input",
+        "type": {
+         "$ref": "20"
+        },
+        "location": "Body",
+        "isApiVersion": false,
+        "isContentType": false,
+        "isEndpoint": false,
+        "explode": false,
+        "isRequired": true,
+        "kind": "Method",
+        "decorators": [],
+        "skipUrlEncoding": false
+       }
+      ],
+      "responses": [
+       {
+        "$id": "97",
+        "statusCodes": [
+         204
+        ],
+        "headers": [],
+        "isErrorResponse": false
+       }
+      ],
+      "httpMethod": "POST",
+      "uri": "{endpoint}",
+      "path": "/type/model/visibility",
+      "requestMediaTypes": [
+       "application/json"
+      ],
+      "bufferResponse": true,
+      "generateProtocolMethod": true,
+      "generateConvenienceMethod": true,
+      "crossLanguageDefinitionId": "Type.Model.Visibility.postModel",
+      "decorators": []
+     },
+     "parameters": [
+      {
+       "$id": "98",
+       "name": "input",
+       "nameInRequest": "input",
+       "type": {
+        "$ref": "20"
+       },
+       "location": "Body",
+       "isApiVersion": false,
+       "isContentType": false,
+       "isEndpoint": false,
+       "explode": false,
+       "isRequired": true,
+       "kind": "Method",
+       "decorators": [],
+       "skipUrlEncoding": false
+      },
+      {
+       "$id": "99",
+       "name": "contentType",
+       "nameInRequest": "contentType",
+       "doc": "Body parameter's content type. Known values are application/json",
+       "type": {
+        "$ref": "12"
+       },
+       "location": "Header",
+       "isApiVersion": false,
+       "isContentType": false,
+       "isEndpoint": false,
+       "explode": false,
+       "isRequired": true,
+       "kind": "Constant",
+       "decorators": [],
+       "skipUrlEncoding": false
+      }
+     ],
+     "response": {
+      "$id": "100"
+     },
+     "isOverride": false,
+     "generateConvenient": true,
+     "generateProtocol": true,
+     "crossLanguageDefinitionId": "Type.Model.Visibility.postModel"
+    },
+    {
+     "$id": "101",
+     "kind": "basic",
+     "name": "deleteModel",
+     "accessibility": "public",
+     "apiVersions": [],
+     "operation": {
+      "$id": "102",
+      "name": "deleteModel",
+      "resourceName": "Visibility",
+      "accessibility": "public",
+      "parameters": [
+       {
+        "$id": "103",
+        "name": "contentType",
+        "nameInRequest": "Content-Type",
+        "doc": "Body parameter's content type. Known values are application/json",
+        "type": {
+         "$ref": "14"
+        },
+        "location": "Header",
+        "isApiVersion": false,
+        "isContentType": true,
+        "isEndpoint": false,
+        "explode": false,
+        "isRequired": true,
+        "kind": "Constant",
+        "decorators": [],
+        "skipUrlEncoding": false
+       },
+       {
+        "$id": "104",
+        "name": "input",
+        "nameInRequest": "input",
+        "type": {
+         "$ref": "20"
+        },
+        "location": "Body",
+        "isApiVersion": false,
+        "isContentType": false,
+        "isEndpoint": false,
+        "explode": false,
+        "isRequired": true,
+        "kind": "Method",
+        "decorators": [],
+        "skipUrlEncoding": false
+       }
+      ],
+      "responses": [
+       {
+        "$id": "105",
+        "statusCodes": [
+         204
+        ],
+        "headers": [],
+        "isErrorResponse": false
+       }
+      ],
+      "httpMethod": "DELETE",
+      "uri": "{endpoint}",
+      "path": "/type/model/visibility",
+      "requestMediaTypes": [
+       "application/json"
+      ],
+      "bufferResponse": true,
+      "generateProtocolMethod": true,
+      "generateConvenienceMethod": true,
+      "crossLanguageDefinitionId": "Type.Model.Visibility.deleteModel",
+      "decorators": []
+     },
+     "parameters": [
+      {
+       "$id": "106",
+       "name": "input",
+       "nameInRequest": "input",
+       "type": {
+        "$ref": "20"
+       },
+       "location": "Body",
+       "isApiVersion": false,
+       "isContentType": false,
+       "isEndpoint": false,
+       "explode": false,
+       "isRequired": true,
+       "kind": "Method",
+       "decorators": [],
+       "skipUrlEncoding": false
+      },
+      {
+       "$id": "107",
+       "name": "contentType",
+       "nameInRequest": "contentType",
+       "doc": "Body parameter's content type. Known values are application/json",
+       "type": {
+        "$ref": "14"
+       },
+       "location": "Header",
+       "isApiVersion": false,
+       "isContentType": false,
+       "isEndpoint": false,
+       "explode": false,
+       "isRequired": true,
+       "kind": "Constant",
+       "decorators": [],
+       "skipUrlEncoding": false
+      }
+     ],
+     "response": {
+      "$id": "108"
+     },
+     "isOverride": false,
+     "generateConvenient": true,
+     "generateProtocol": true,
+     "crossLanguageDefinitionId": "Type.Model.Visibility.deleteModel"
+    },
+    {
+     "$id": "109",
+     "kind": "basic",
+     "name": "putReadOnlyModel",
+     "accessibility": "public",
+     "apiVersions": [],
+     "operation": {
+      "$id": "110",
+      "name": "putReadOnlyModel",
+      "resourceName": "Visibility",
+      "accessibility": "public",
+      "parameters": [
+       {
+        "$id": "111",
+        "name": "contentType",
+        "nameInRequest": "Content-Type",
+        "doc": "Body parameter's content type. Known values are application/json",
+        "type": {
+         "$ref": "16"
+        },
+        "location": "Header",
+        "isApiVersion": false,
+        "isContentType": true,
+        "isEndpoint": false,
+        "explode": false,
+        "isRequired": true,
+        "kind": "Constant",
+        "decorators": [],
+        "skipUrlEncoding": false
+       },
+       {
+        "$id": "112",
+        "name": "accept",
+        "nameInRequest": "Accept",
+        "type": {
+         "$ref": "18"
+        },
+        "location": "Header",
+        "isApiVersion": false,
+        "isContentType": false,
+        "isEndpoint": false,
+        "explode": false,
+        "isRequired": true,
+        "kind": "Constant",
+        "decorators": [],
+        "skipUrlEncoding": false
+       },
+       {
+        "$id": "113",
+        "name": "input",
+        "nameInRequest": "input",
+        "type": {
+         "$ref": "41"
+        },
+        "location": "Body",
+        "isApiVersion": false,
+        "isContentType": false,
+        "isEndpoint": false,
+        "explode": false,
+        "isRequired": true,
+        "kind": "Method",
+        "decorators": [],
+        "skipUrlEncoding": false
+       }
+      ],
+      "responses": [
+       {
+        "$id": "114",
+        "statusCodes": [
+         200
+        ],
+        "bodyType": {
+         "$ref": "41"
+        },
+        "headers": [],
+        "isErrorResponse": false,
+        "contentTypes": [
+         "application/json"
+        ]
+       }
+      ],
+      "httpMethod": "PUT",
+      "uri": "{endpoint}",
+      "path": "/type/model/visibility/readonlyroundtrip",
+      "requestMediaTypes": [
+       "application/json"
+      ],
+      "bufferResponse": true,
+      "generateProtocolMethod": true,
+      "generateConvenienceMethod": true,
+      "crossLanguageDefinitionId": "Type.Model.Visibility.putReadOnlyModel",
+      "decorators": []
+     },
+     "parameters": [
+      {
+       "$id": "115",
+       "name": "input",
+       "nameInRequest": "input",
+       "type": {
+        "$ref": "41"
+       },
+       "location": "Body",
+       "isApiVersion": false,
+       "isContentType": false,
+       "isEndpoint": false,
+       "explode": false,
+       "isRequired": true,
+       "kind": "Method",
+       "decorators": [],
+       "skipUrlEncoding": false
+      },
+      {
+       "$id": "116",
+       "name": "contentType",
+       "nameInRequest": "contentType",
+       "doc": "Body parameter's content type. Known values are application/json",
+       "type": {
+        "$ref": "16"
        },
        "location": "Header",
        "isApiVersion": false,
@@ -802,60 +1310,43 @@
        "skipUrlEncoding": false
       },
       {
-       "$id": "85",
-       "name": "input",
-       "nameInRequest": "input",
+       "$id": "117",
+       "name": "accept",
+       "nameInRequest": "accept",
        "type": {
-        "$ref": "25"
+        "$ref": "18"
        },
-       "location": "Body",
+       "location": "Header",
        "isApiVersion": false,
        "isContentType": false,
        "isEndpoint": false,
        "explode": false,
        "isRequired": true,
-       "kind": "Method",
+       "kind": "Constant",
        "decorators": [],
        "skipUrlEncoding": false
       }
      ],
-     "responses": [
-      {
-       "$id": "86",
-       "statusCodes": [
-        200
-       ],
-       "bodyType": {
-        "$ref": "25"
-       },
-       "headers": [],
-       "isErrorResponse": false,
-       "contentTypes": [
-        "application/json"
-       ]
+     "response": {
+      "$id": "118",
+      "type": {
+       "$ref": "41"
       }
-     ],
-     "httpMethod": "PUT",
-     "uri": "{endpoint}",
-     "path": "/type/model/visibility/readonlyroundtrip",
-     "requestMediaTypes": [
-      "application/json"
-     ],
-     "bufferResponse": true,
-     "generateProtocolMethod": true,
-     "generateConvenienceMethod": true,
-     "crossLanguageDefinitionId": "Type.Model.Visibility.putReadOnlyModel",
-     "decorators": []
+     },
+     "isOverride": false,
+     "generateConvenient": true,
+     "generateProtocol": true,
+     "crossLanguageDefinitionId": "Type.Model.Visibility.putReadOnlyModel"
     }
    ],
    "parameters": [
     {
-     "$id": "87",
+     "$id": "119",
      "name": "endpoint",
      "nameInRequest": "endpoint",
      "doc": "Service host",
      "type": {
-      "$id": "88",
+      "$id": "120",
       "kind": "url",
       "name": "url",
       "crossLanguageDefinitionId": "TypeSpec.url"
@@ -869,9 +1360,9 @@
      "explode": false,
      "kind": "Client",
      "defaultValue": {
-      "$id": "89",
+      "$id": "121",
       "type": {
-       "$id": "90",
+       "$id": "122",
        "kind": "string",
        "name": "string",
        "crossLanguageDefinitionId": "TypeSpec.string"
@@ -881,7 +1372,8 @@
     }
    ],
    "decorators": [],
-   "crossLanguageDefinitionId": "Type.Model.Visibility"
+   "crossLanguageDefinitionId": "Type.Model.Visibility",
+   "apiVersions": []
   }
  ]
 }

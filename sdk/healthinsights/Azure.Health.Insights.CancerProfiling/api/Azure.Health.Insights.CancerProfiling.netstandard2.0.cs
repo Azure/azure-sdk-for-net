@@ -1,5 +1,11 @@
 namespace Azure.Health.Insights.CancerProfiling
 {
+    public partial class AzureHealthInsightsCancerProfilingContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureHealthInsightsCancerProfilingContext() { }
+        public static Azure.Health.Insights.CancerProfiling.AzureHealthInsightsCancerProfilingContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class CancerProfilingClient
     {
         protected CancerProfilingClient() { }

@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> The WafMetricsResponseGranularity. </summary>
+    /// <summary>
+    /// The WafMetricsResponseGranularity.
+    /// Serialized Name: WafMetricsGranularity
+    /// </summary>
     public readonly partial struct WafMetricsResponseGranularity : IEquatable<WafMetricsResponseGranularity>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.Cdn.Models
         private const string PT1HValue = "PT1H";
         private const string P1DValue = "P1D";
 
-        /// <summary> PT5M. </summary>
+        /// <summary>
+        /// PT5M
+        /// Serialized Name: WafMetricsGranularity.PT5M
+        /// </summary>
         public static WafMetricsResponseGranularity PT5M { get; } = new WafMetricsResponseGranularity(PT5MValue);
-        /// <summary> PT1H. </summary>
+        /// <summary>
+        /// PT1H
+        /// Serialized Name: WafMetricsGranularity.PT1H
+        /// </summary>
         public static WafMetricsResponseGranularity PT1H { get; } = new WafMetricsResponseGranularity(PT1HValue);
-        /// <summary> P1D. </summary>
+        /// <summary>
+        /// P1D
+        /// Serialized Name: WafMetricsGranularity.P1D
+        /// </summary>
         public static WafMetricsResponseGranularity P1D { get; } = new WafMetricsResponseGranularity(P1DValue);
         /// <summary> Determines if two <see cref="WafMetricsResponseGranularity"/> values are the same. </summary>
         public static bool operator ==(WafMetricsResponseGranularity left, WafMetricsResponseGranularity right) => left.Equals(right);

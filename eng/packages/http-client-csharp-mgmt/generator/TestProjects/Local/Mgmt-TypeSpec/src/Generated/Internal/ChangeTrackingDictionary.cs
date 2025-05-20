@@ -20,6 +20,7 @@ namespace MgmtTypeSpec
         {
         }
 
+        /// <param name="dictionary"> The inner dictionary. </param>
         public ChangeTrackingDictionary(IDictionary<TKey, TValue> dictionary)
         {
             if (dictionary == null)
@@ -29,6 +30,7 @@ namespace MgmtTypeSpec
             _innerDictionary = new Dictionary<TKey, TValue>(dictionary);
         }
 
+        /// <param name="dictionary"> The inner dictionary. </param>
         public ChangeTrackingDictionary(IReadOnlyDictionary<TKey, TValue> dictionary)
         {
             if (dictionary == null)
@@ -98,6 +100,7 @@ namespace MgmtTypeSpec
             return GetEnumerator();
         }
 
+        /// <param name="item"> The item to add. </param>
         public void Add(KeyValuePair<TKey, TValue> item)
         {
             EnsureDictionary().Add(item);
@@ -108,6 +111,7 @@ namespace MgmtTypeSpec
             EnsureDictionary().Clear();
         }
 
+        /// <param name="item"> The item to search for. </param>
         public bool Contains(KeyValuePair<TKey, TValue> item)
         {
             if (IsUndefined)
@@ -117,6 +121,8 @@ namespace MgmtTypeSpec
             return EnsureDictionary().Contains(item);
         }
 
+        /// <param name="array"> The array to copy. </param>
+        /// <param name="index"> The index. </param>
         public void CopyTo(KeyValuePair<TKey, TValue>[] array, int index)
         {
             if (IsUndefined)
@@ -126,6 +132,7 @@ namespace MgmtTypeSpec
             EnsureDictionary().CopyTo(array, index);
         }
 
+        /// <param name="item"> The item to remove. </param>
         public bool Remove(KeyValuePair<TKey, TValue> item)
         {
             if (IsUndefined)
@@ -135,11 +142,14 @@ namespace MgmtTypeSpec
             return EnsureDictionary().Remove(item);
         }
 
+        /// <param name="key"> The key. </param>
+        /// <param name="value"> The value to add. </param>
         public void Add(TKey key, TValue value)
         {
             EnsureDictionary().Add(key, value);
         }
 
+        /// <param name="key"> The key to search for. </param>
         public bool ContainsKey(TKey key)
         {
             if (IsUndefined)
@@ -149,6 +159,7 @@ namespace MgmtTypeSpec
             return EnsureDictionary().ContainsKey(key);
         }
 
+        /// <param name="key"> The key. </param>
         public bool Remove(TKey key)
         {
             if (IsUndefined)
@@ -158,6 +169,8 @@ namespace MgmtTypeSpec
             return EnsureDictionary().Remove(key);
         }
 
+        /// <param name="key"> The key to search for. </param>
+        /// <param name="value"> The value. </param>
         public bool TryGetValue(TKey key, out TValue value)
         {
             if (IsUndefined)

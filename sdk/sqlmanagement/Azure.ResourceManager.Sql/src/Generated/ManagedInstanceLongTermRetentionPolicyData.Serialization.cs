@@ -12,6 +12,7 @@ using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
@@ -39,6 +40,11 @@ namespace Azure.ResourceManager.Sql
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
+            if (Optional.IsDefined(BackupStorageAccessTier))
+            {
+                writer.WritePropertyName("backupStorageAccessTier"u8);
+                writer.WriteStringValue(BackupStorageAccessTier.Value.ToString());
+            }
             if (Optional.IsDefined(WeeklyRetention))
             {
                 writer.WritePropertyName("weeklyRetention"u8);
@@ -86,6 +92,7 @@ namespace Azure.ResourceManager.Sql
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
+            SqlBackupStorageAccessTier? backupStorageAccessTier = default;
             string weeklyRetention = default;
             string monthlyRetention = default;
             string yearlyRetention = default;
@@ -127,6 +134,15 @@ namespace Azure.ResourceManager.Sql
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
+                        if (property0.NameEquals("backupStorageAccessTier"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            backupStorageAccessTier = new SqlBackupStorageAccessTier(property0.Value.GetString());
+                            continue;
+                        }
                         if (property0.NameEquals("weeklyRetention"u8))
                         {
                             weeklyRetention = property0.Value.GetString();
@@ -165,6 +181,7 @@ namespace Azure.ResourceManager.Sql
                 name,
                 type,
                 systemData,
+                backupStorageAccessTier,
                 weeklyRetention,
                 monthlyRetention,
                 yearlyRetention,
@@ -238,6 +255,21 @@ namespace Azure.ResourceManager.Sql
 
             builder.Append("  properties:");
             builder.AppendLine(" {");
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(BackupStorageAccessTier), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    backupStorageAccessTier: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(BackupStorageAccessTier))
+                {
+                    builder.Append("    backupStorageAccessTier: ");
+                    builder.AppendLine($"'{BackupStorageAccessTier.Value.ToString()}'");
+                }
+            }
+
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(WeeklyRetention), out propertyOverride);
             if (hasPropertyOverride)
             {
@@ -334,7 +366,7 @@ namespace Azure.ResourceManager.Sql
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSqlContext.Default);
                 case "bicep":
                     return SerializeBicep(options);
                 default:

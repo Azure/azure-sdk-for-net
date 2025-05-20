@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
 {
     public partial class NetworkFabricL3IsolationDomainResource : IJsonModel<NetworkFabricL3IsolationDomainData>
     {
+        private static NetworkFabricL3IsolationDomainData s_dataDeserializationInstance;
+        private static NetworkFabricL3IsolationDomainData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<NetworkFabricL3IsolationDomainData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<NetworkFabricL3IsolationDomainData>)Data).Write(writer, options);
 
-        NetworkFabricL3IsolationDomainData IJsonModel<NetworkFabricL3IsolationDomainData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetworkFabricL3IsolationDomainData>)Data).Create(ref reader, options);
+        NetworkFabricL3IsolationDomainData IJsonModel<NetworkFabricL3IsolationDomainData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetworkFabricL3IsolationDomainData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<NetworkFabricL3IsolationDomainData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<NetworkFabricL3IsolationDomainData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<NetworkFabricL3IsolationDomainData>(Data, options, AzureResourceManagerManagedNetworkFabricContext.Default);
 
-        NetworkFabricL3IsolationDomainData IPersistableModel<NetworkFabricL3IsolationDomainData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetworkFabricL3IsolationDomainData>(data, options);
+        NetworkFabricL3IsolationDomainData IPersistableModel<NetworkFabricL3IsolationDomainData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetworkFabricL3IsolationDomainData>(data, options, AzureResourceManagerManagedNetworkFabricContext.Default);
 
-        string IPersistableModel<NetworkFabricL3IsolationDomainData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetworkFabricL3IsolationDomainData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<NetworkFabricL3IsolationDomainData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetworkFabricL3IsolationDomainData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

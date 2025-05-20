@@ -42,6 +42,9 @@ namespace Azure.Storage.DataMovement.Tests
             Preserve = 1,
             NoPreserve = 2,
             NewProperties = 3,
+            PreserveNoPermissions = 4,
+            PreserveNfs = 5,
+            PreserveNfsNoPermissions = 6,
         }
 
         /// <summary>
@@ -626,7 +629,7 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         #region Single Concurrency
-        internal async Task CreateDirectoryTree(
+        internal async Task CreateDirectoryTreeAsync(
             TSourceContainerClient client,
             string sourcePrefix,
             int size)
@@ -660,7 +663,7 @@ namespace Azure.Storage.DataMovement.Tests
             string destPrefix = "destFolder";
             await CreateDirectoryInSourceAsync(sourceContainer, sourcePrefix);
             await CreateDirectoryInDestinationAsync(destinationContainer, destPrefix);
-            await CreateDirectoryTree(sourceContainer, sourcePrefix, size);
+            await CreateDirectoryTreeAsync(sourceContainer, sourcePrefix, size);
 
             // Create storage resource containers
             StorageResourceContainer sourceResource = GetSourceStorageResourceContainer(sourceContainer, sourcePrefix);

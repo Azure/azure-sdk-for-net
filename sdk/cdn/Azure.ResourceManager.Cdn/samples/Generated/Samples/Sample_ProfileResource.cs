@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Cdn.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_ProfilesGet()
         {
-            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2024-02-01/examples/Profiles_Get.json
+            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2025-04-15/examples/Profiles_Get.json
             // this example is just showing the usage of "Profiles_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Cdn.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_ProfilesDelete()
         {
-            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2024-02-01/examples/Profiles_Delete.json
+            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2025-04-15/examples/Profiles_Delete.json
             // this example is just showing the usage of "Profiles_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Cdn.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_ProfilesUpdate()
         {
-            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2024-02-01/examples/Profiles_Update.json
+            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2025-04-15/examples/Profiles_Update.json
             // this example is just showing the usage of "Profiles_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Cdn.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CheckEndpointNameAvailabilityFrontDoorProfile_CheckEndpointNameAvailability()
         {
-            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2024-02-01/examples/AFDProfiles_CheckEndpointNameAvailability.json
+            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2025-04-15/examples/AFDProfiles_CheckEndpointNameAvailability.json
             // this example is just showing the usage of "FrontDoorProfiles_CheckEndpointNameAvailability" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Cdn.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetFrontDoorProfileResourceUsages_AFDProfilesListResourceUsage()
         {
-            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2024-02-01/examples/AFDProfiles_ListResourceUsage.json
+            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2025-04-15/examples/AFDProfiles_ListResourceUsage.json
             // this example is just showing the usage of "FrontDoorProfiles_ListResourceUsage" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.Cdn.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CheckFrontDoorProfileHostNameAvailability_AFDProfilesCheckHostNameAvailability()
         {
-            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2024-02-01/examples/AFDProfiles_CheckHostNameAvailability.json
+            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2025-04-15/examples/AFDProfiles_CheckHostNameAvailability.json
             // this example is just showing the usage of "FrontDoorProfiles_CheckHostNameAvailability" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.Cdn.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task ValidateSecretFrontDoorProfile_ValidateSecret()
         {
-            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2024-02-01/examples/AFDProfiles_ValidateSecret.json
+            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2025-04-15/examples/AFDProfiles_ValidateSecret.json
             // this example is just showing the usage of "FrontDoorProfiles_ValidateSecret" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.Cdn.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task UpgradeFrontDoorProfile_AFDProfilesUpgrade()
         {
-            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2024-02-01/examples/AFDProfiles_Upgrade.json
+            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2025-04-15/examples/AFDProfiles_Upgrade.json
             // this example is just showing the usage of "FrontDoorProfiles_Upgrade" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -270,7 +270,7 @@ Id = new ResourceIdentifier("/subscriptions/subid/resourcegroups/RG/providers/Mi
         [Ignore("Only validating compilation of examples")]
         public async Task GetLogAnalyticsRankings_LogAnalyticsGetLogAnalyticsRankings()
         {
-            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2024-02-01/examples/LogAnalytics_GetLogAnalyticsRankings.json
+            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2025-04-15/examples/LogAnalytics_GetLogAnalyticsRankings.json
             // this example is just showing the usage of "LogAnalytics_GetLogAnalyticsRankings" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -302,7 +302,7 @@ Id = new ResourceIdentifier("/subscriptions/subid/resourcegroups/RG/providers/Mi
         [Ignore("Only validating compilation of examples")]
         public async Task GetLogAnalyticsLocations_LogAnalyticsGetLogAnalyticsLocations()
         {
-            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2024-02-01/examples/LogAnalytics_GetLogAnalyticsLocations.json
+            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2025-04-15/examples/LogAnalytics_GetLogAnalyticsLocations.json
             // this example is just showing the usage of "LogAnalytics_GetLogAnalyticsLocations" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -328,7 +328,7 @@ Id = new ResourceIdentifier("/subscriptions/subid/resourcegroups/RG/providers/Mi
         [Ignore("Only validating compilation of examples")]
         public async Task GetLogAnalyticsResources_LogAnalyticsGetLogAnalyticsResources()
         {
-            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2024-02-01/examples/LogAnalytics_GetLogAnalyticsResources.json
+            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2025-04-15/examples/LogAnalytics_GetLogAnalyticsResources.json
             // this example is just showing the usage of "LogAnalytics_GetLogAnalyticsResources" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -354,7 +354,7 @@ Id = new ResourceIdentifier("/subscriptions/subid/resourcegroups/RG/providers/Mi
         [Ignore("Only validating compilation of examples")]
         public async Task GetWafLogAnalyticsRankings_LogAnalyticsGetWafLogAnalyticsRankings()
         {
-            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2024-02-01/examples/LogAnalytics_GetWafLogAnalyticsRankings.json
+            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2025-04-15/examples/LogAnalytics_GetWafLogAnalyticsRankings.json
             // this example is just showing the usage of "LogAnalytics_GetWafLogAnalyticsRankings" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -386,7 +386,7 @@ Id = new ResourceIdentifier("/subscriptions/subid/resourcegroups/RG/providers/Mi
         [Ignore("Only validating compilation of examples")]
         public async Task MigrationCommit_ProfilesMigrationCommit()
         {
-            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2024-02-01/examples/Profiles_MigrationCommit.json
+            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2025-04-15/examples/Profiles_MigrationCommit.json
             // this example is just showing the usage of "Profiles_MigrationCommit" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -412,7 +412,7 @@ Id = new ResourceIdentifier("/subscriptions/subid/resourcegroups/RG/providers/Mi
         [Ignore("Only validating compilation of examples")]
         public async Task GenerateSsoUri_ProfilesGenerateSsoUri()
         {
-            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2024-02-01/examples/Profiles_GenerateSsoUri.json
+            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2025-04-15/examples/Profiles_GenerateSsoUri.json
             // this example is just showing the usage of "Profiles_GenerateSsoUri" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -438,7 +438,7 @@ Id = new ResourceIdentifier("/subscriptions/subid/resourcegroups/RG/providers/Mi
         [Ignore("Only validating compilation of examples")]
         public async Task GetSupportedOptimizationTypes_ProfilesListSupportedOptimizationTypes()
         {
-            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2024-02-01/examples/Profiles_ListSupportedOptimizationTypes.json
+            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2025-04-15/examples/Profiles_ListSupportedOptimizationTypes.json
             // this example is just showing the usage of "Profiles_ListSupportedOptimizationTypes" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -464,7 +464,7 @@ Id = new ResourceIdentifier("/subscriptions/subid/resourcegroups/RG/providers/Mi
         [Ignore("Only validating compilation of examples")]
         public async Task GetResourceUsages_ProfilesListResourceUsage()
         {
-            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2024-02-01/examples/Profiles_ListResourceUsage.json
+            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2025-04-15/examples/Profiles_ListResourceUsage.json
             // this example is just showing the usage of "Profiles_ListResourceUsage" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -485,6 +485,90 @@ Id = new ResourceIdentifier("/subscriptions/subid/resourcegroups/RG/providers/Mi
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task CheckCdnMigrationCompatibility_ProfilesCdnCanMigrate()
+        {
+            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2025-04-15/examples/CdnProfiles_CanMigrate.json
+            // this example is just showing the usage of "Profiles_CdnCanMigrateToAfd" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ProfileResource created on azure
+            // for more information of creating ProfileResource, please refer to the document of ProfileResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "RG";
+            string profileName = "profile1";
+            ResourceIdentifier profileResourceId = ProfileResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, profileName);
+            ProfileResource profile = client.GetProfileResource(profileResourceId);
+
+            // invoke the operation
+            ArmOperation<CanMigrateResult> lro = await profile.CheckCdnMigrationCompatibilityAsync(WaitUntil.Completed);
+            CanMigrateResult result = lro.Value;
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task MigrateCdnToAfd_ProfilesCdnMigrate()
+        {
+            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2025-04-15/examples/CdnProfiles_Migrate.json
+            // this example is just showing the usage of "Profiles_CdnMigrateToAfd" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ProfileResource created on azure
+            // for more information of creating ProfileResource, please refer to the document of ProfileResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "RG";
+            string profileName = "profile1";
+            ResourceIdentifier profileResourceId = ProfileResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, profileName);
+            ProfileResource profile = client.GetProfileResource(profileResourceId);
+
+            // invoke the operation
+            CdnMigrationToAfdContent content = new CdnMigrationToAfdContent(new CdnSku
+            {
+                Name = CdnSkuName.StandardAzureFrontDoor,
+            });
+            ArmOperation<MigrateResult> lro = await profile.MigrateCdnToAfdAsync(WaitUntil.Completed, content);
+            MigrateResult result = lro.Value;
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task AbortMigration_ProfilesCdnMigrationCommit()
+        {
+            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2025-04-15/examples/Profiles_MigrationAbort.json
+            // this example is just showing the usage of "Profiles_MigrationAbort" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ProfileResource created on azure
+            // for more information of creating ProfileResource, please refer to the document of ProfileResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "RG";
+            string profileName = "profile1";
+            ResourceIdentifier profileResourceId = ProfileResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, profileName);
+            ProfileResource profile = client.GetProfileResource(profileResourceId);
+
+            // invoke the operation
+            await profile.AbortMigrationAsync(WaitUntil.Completed);
 
             Console.WriteLine("Succeeded");
         }

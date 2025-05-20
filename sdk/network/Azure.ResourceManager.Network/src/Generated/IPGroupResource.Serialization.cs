@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Network
 {
     public partial class IPGroupResource : IJsonModel<IPGroupData>
     {
+        private static IPGroupData s_dataDeserializationInstance;
+        private static IPGroupData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<IPGroupData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<IPGroupData>)Data).Write(writer, options);
 
-        IPGroupData IJsonModel<IPGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<IPGroupData>)Data).Create(ref reader, options);
+        IPGroupData IJsonModel<IPGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<IPGroupData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<IPGroupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<IPGroupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<IPGroupData>(Data, options, AzureResourceManagerNetworkContext.Default);
 
-        IPGroupData IPersistableModel<IPGroupData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<IPGroupData>(data, options);
+        IPGroupData IPersistableModel<IPGroupData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<IPGroupData>(data, options, AzureResourceManagerNetworkContext.Default);
 
-        string IPersistableModel<IPGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<IPGroupData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<IPGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<IPGroupData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

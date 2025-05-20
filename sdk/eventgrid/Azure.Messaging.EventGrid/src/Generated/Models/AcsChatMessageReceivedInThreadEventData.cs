@@ -14,8 +14,23 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class AcsChatMessageReceivedInThreadEventData : AcsChatMessageEventInThreadBaseProperties
     {
         /// <summary> Initializes a new instance of <see cref="AcsChatMessageReceivedInThreadEventData"/>. </summary>
-        internal AcsChatMessageReceivedInThreadEventData()
+        /// <param name="transactionId"> The transaction id will be used as co-relation vector. </param>
+        /// <param name="threadId"> The chat thread id. </param>
+        /// <param name="messageId"> The chat message id. </param>
+        /// <param name="senderCommunicationIdentifier"> The communication identifier of the sender. </param>
+        /// <param name="type"> The type of the message. </param>
+        /// <param name="messageBody"> The body of the chat message. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="transactionId"/>, <paramref name="threadId"/>, <paramref name="messageId"/>, <paramref name="senderCommunicationIdentifier"/>, <paramref name="type"/> or <paramref name="messageBody"/> is null. </exception>
+        internal AcsChatMessageReceivedInThreadEventData(string transactionId, string threadId, string messageId, CommunicationIdentifierModel senderCommunicationIdentifier, string type, string messageBody) : base(transactionId, threadId, messageId, senderCommunicationIdentifier, type)
         {
+            Argument.AssertNotNull(transactionId, nameof(transactionId));
+            Argument.AssertNotNull(threadId, nameof(threadId));
+            Argument.AssertNotNull(messageId, nameof(messageId));
+            Argument.AssertNotNull(senderCommunicationIdentifier, nameof(senderCommunicationIdentifier));
+            Argument.AssertNotNull(type, nameof(type));
+            Argument.AssertNotNull(messageBody, nameof(messageBody));
+
+            MessageBody = messageBody;
             Metadata = new ChangeTrackingDictionary<string, string>();
         }
 
@@ -30,8 +45,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="version"> The version of the message. </param>
         /// <param name="messageBody"> The body of the chat message. </param>
         /// <param name="metadata"> The chat message metadata. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="transactionId"/> or <paramref name="threadId"/> is null. </exception>
         internal AcsChatMessageReceivedInThreadEventData(string transactionId, string threadId, string messageId, CommunicationIdentifierModel senderCommunicationIdentifier, string senderDisplayName, DateTimeOffset? composeTime, string type, long? version, string messageBody, IReadOnlyDictionary<string, string> metadata) : base(transactionId, threadId, messageId, senderCommunicationIdentifier, senderDisplayName, composeTime, type, version)
         {
+            Argument.AssertNotNull(transactionId, nameof(transactionId));
+            Argument.AssertNotNull(threadId, nameof(threadId));
+
             MessageBody = messageBody;
             Metadata = metadata;
         }

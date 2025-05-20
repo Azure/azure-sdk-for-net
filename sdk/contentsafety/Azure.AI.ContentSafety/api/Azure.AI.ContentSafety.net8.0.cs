@@ -108,6 +108,12 @@ namespace Azure.AI.ContentSafety
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.AnalyzeTextResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.AnalyzeTextResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class AzureAIContentSafetyContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureAIContentSafetyContext() { }
+        public static Azure.AI.ContentSafety.AzureAIContentSafetyContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class BlocklistClient
     {
         protected BlocklistClient() { }

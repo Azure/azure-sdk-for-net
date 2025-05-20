@@ -20,9 +20,9 @@ namespace MgmtTypeSpec
     /// <summary></summary>
     public partial class FooResource : ArmResource
     {
-        private FooData _data;
-        private ClientDiagnostics _fooClientDiagnostics;
-        private Foos _fooRestClient;
+        private readonly ClientDiagnostics _fooClientDiagnostics;
+        private readonly Foos _fooRestClient;
+        private readonly FooData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "MgmtTypeSpec/foos";
 
@@ -31,17 +31,23 @@ namespace MgmtTypeSpec
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="FooResource"/> class. </summary>
+        /// <param name="client"> The client parameters to use in these operations. </param>
+        /// <param name="data"> The resource that is the target of operations. </param>
         internal FooResource(ArmClient client, FooData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
+        /// <summary> Initializes a new instance of <see cref="FooResource"/> class. </summary>
+        /// <param name="client"> The client parameters to use in these operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal FooResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _fooClientDiagnostics = new ClientDiagnostics("MgmtTypeSpec", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string fooApiVersion);
-            _fooRestClient = new Foos(Pipeline, Endpoint, fooApiVersion);
+            _fooRestClient = new Foos(_fooClientDiagnostics, Pipeline, Endpoint, fooApiVersion);
             ValidateResourceId(id);
         }
 
@@ -61,6 +67,7 @@ namespace MgmtTypeSpec
             }
         }
 
+        /// <param name="id"></param>
         [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
@@ -79,7 +86,7 @@ namespace MgmtTypeSpec
         {
             Argument.AssertNotNull(resource, nameof(resource));
 
-            using DiagnosticScope scope = _fooClientDiagnostics.CreateScope("MgmtTypeSpec.createOrUpdate");
+            using DiagnosticScope scope = _fooClientDiagnostics.CreateScope("FooResource.Update");
             scope.Start();
             try
             {
@@ -120,7 +127,7 @@ namespace MgmtTypeSpec
         {
             Argument.AssertNotNull(resource, nameof(resource));
 
-            using DiagnosticScope scope = _fooClientDiagnostics.CreateScope("MgmtTypeSpec.createOrUpdate");
+            using DiagnosticScope scope = _fooClientDiagnostics.CreateScope("FooResource.UpdateAsync");
             scope.Start();
             try
             {
@@ -156,7 +163,7 @@ namespace MgmtTypeSpec
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         public virtual Response<FooResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _fooClientDiagnostics.CreateScope("MgmtTypeSpec.get");
+            using DiagnosticScope scope = _fooClientDiagnostics.CreateScope("FooResource.Get");
             scope.Start();
             try
             {
@@ -185,7 +192,7 @@ namespace MgmtTypeSpec
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         public virtual async Task<Response<FooResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _fooClientDiagnostics.CreateScope("MgmtTypeSpec.get");
+            using DiagnosticScope scope = _fooClientDiagnostics.CreateScope("FooResource.GetAsync");
             scope.Start();
             try
             {
@@ -215,7 +222,7 @@ namespace MgmtTypeSpec
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _fooClientDiagnostics.CreateScope("MgmtTypeSpec.delete");
+            using DiagnosticScope scope = _fooClientDiagnostics.CreateScope("FooResource.Delete");
             scope.Start();
             try
             {
@@ -245,7 +252,7 @@ namespace MgmtTypeSpec
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _fooClientDiagnostics.CreateScope("MgmtTypeSpec.delete");
+            using DiagnosticScope scope = _fooClientDiagnostics.CreateScope("FooResource.DeleteAsync");
             scope.Start();
             try
             {
