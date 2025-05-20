@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +23,14 @@ namespace Azure.ResourceManager.ApiManagement
 
         ApiGatewayResource IOperationSource<ApiGatewayResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = ApiGatewayData.DeserializeApiGatewayData(document.RootElement);
+            var data = ModelReaderWriter.Read<ApiGatewayData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerApiManagementContext.Default);
             return new ApiGatewayResource(_client, data);
         }
 
         async ValueTask<ApiGatewayResource> IOperationSource<ApiGatewayResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = ApiGatewayData.DeserializeApiGatewayData(document.RootElement);
-            return new ApiGatewayResource(_client, data);
+            var data = ModelReaderWriter.Read<ApiGatewayData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerApiManagementContext.Default);
+            return await Task.FromResult(new ApiGatewayResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
     public class DelegationSettingTests : ApiManagementManagementTestBase
     {
         public DelegationSettingTests(bool isAsync)
-                    : base(isAsync) //, RecordedTestMode.Record)
+                    : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 
@@ -27,15 +27,15 @@ namespace Azure.ResourceManager.ApiManagement.Tests
 
         private async Task SetCollectionsAsync()
         {
-            ResourceGroup = await CreateResourceGroupAsync();
+            ResourceGroup = await CreateResourceGroupAsync(AzureLocation.EastUS);
             ApiServiceCollection = ResourceGroup.GetApiManagementServices();
         }
 
         private async Task CreateApiServiceAsync()
         {
             await SetCollectionsAsync();
-            var apiName = Recording.GenerateAssetName("sdktestapimv2-");
-            var data = new ApiManagementServiceData(AzureLocation.WestUS2, new ApiManagementServiceSkuProperties(ApiManagementServiceSkuType.Standard, 1), "Sample@Sample.com", "sample")
+            var apiName = Recording.GenerateAssetName("testapi-");
+            var data = new ApiManagementServiceData(AzureLocation.EastUS, new ApiManagementServiceSkuProperties(ApiManagementServiceSkuType.Developer, 1), "Sample@Sample.com", "sample")
             {
                 Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssigned)
             };
@@ -78,12 +78,12 @@ namespace Azure.ResourceManager.ApiManagement.Tests
                 ValidationKey = "Sanitized"
             };
             var portalDelegationSettings = (await delegationCollection.CreateOrUpdateAsync(WaitUntil.Completed, portalDelegationSettingsParams)).Value;
-            //Assert.NotNull(portalDelegationSettings);
-            //Assert.AreEqual(urlParameter, portalDelegationSettings.Data.Uri.ToString());
-            // validation key is generated brand new on playback mode and hence validation fails
-            //Assert.Equal(portalDelegationSettingsParams.ValidationKey, portalDelegationSettings.ValidationKey);
-            //Assert.IsTrue(portalDelegationSettings.Data.UserRegistration.Enabled);
-            //Assert.IsTrue(portalDelegationSettings.Data.Subscriptions.Enabled);
+            Assert.NotNull(portalDelegationSettings);
+            Assert.AreEqual(urlParameter, portalDelegationSettings.Data.Uri.ToString());
+            //validation key is generated brand new on playback mode and hence validation fails
+            Assert.AreEqual(portalDelegationSettingsParams.ValidationKey, portalDelegationSettings.Data.ValidationKey);
+            Assert.IsTrue(portalDelegationSettings.Data.UserRegistration.IsUserRegistrationDelegationEnabled);
+            Assert.IsTrue(portalDelegationSettings.Data.Subscriptions.IsSubscriptionDelegationEnabled);
 
             // update the delegation settings
             var data = portalDelegationSettings.Data;
@@ -92,11 +92,11 @@ namespace Azure.ResourceManager.ApiManagement.Tests
 
             await portalDelegationSettings.UpdateAsync(ETag.All, data);
             portalDelegationSettings = await portalDelegationSettings.GetAsync();
-            //Assert.NotNull(portalDelegationSettings);
+            Assert.NotNull(portalDelegationSettings);
             //Assert.IsNull(portalDelegationSettings.Data.Uri.ToString());
-            //Assert.IsNull(portalDelegationSettings.Data.ValidationKey);
-            //Assert.IsFalse(portalDelegationSettings.Data.UserRegistration.Enabled);
-            //Assert.IsFalse(portalDelegationSettings.Data.Subscriptions.Enabled);
+            Assert.IsNull(portalDelegationSettings.Data.ValidationKey);
+            Assert.IsFalse(portalDelegationSettings.Data.UserRegistration.IsUserRegistrationDelegationEnabled);
+            Assert.IsFalse(portalDelegationSettings.Data.Subscriptions.IsSubscriptionDelegationEnabled);
         }
     }
 }

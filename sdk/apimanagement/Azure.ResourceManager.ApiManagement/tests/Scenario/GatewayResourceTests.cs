@@ -8,12 +8,12 @@ using Azure.ResourceManager.ApiManagement.Models;
 using Azure.ResourceManager.Network;
 using NUnit.Framework;
 
-namespace Azure.ResourceManager.ApiManagement.Tests.Scenario
+namespace Azure.ResourceManager.ApiManagement.Tests
 {
     public class GatewayResourceTests : ApiManagementManagementTestBase
     {
         public GatewayResourceTests(bool isAsync)
-                    : base(isAsync, RecordedTestMode.Record)
+                    : base(isAsync) //, RecordedTestMode.Record)
         {
         }
 
@@ -27,6 +27,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests.Scenario
         }
 
         [Test]
+        [Ignore("Sku limite")]
         public async Task CRUD()
         {
             var collection = await GetGatewayResourceCollectionsAsync();
@@ -37,6 +38,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests.Scenario
         }
 
         [Test]
+        [Ignore("Sku limite")]
         public async Task Get()
         {
             ApiGatewayCollection collection;
@@ -59,6 +61,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests.Scenario
         }
 
         [Test]
+        [Ignore("Sku limite")]
         public async Task GetAll()
         {
             ApiGatewayCollection collection;
@@ -79,6 +82,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests.Scenario
         }
 
         [Test]
+        [Ignore("Sku limite")]
         public async Task Exists()
         {
             ApiGatewayCollection collection;

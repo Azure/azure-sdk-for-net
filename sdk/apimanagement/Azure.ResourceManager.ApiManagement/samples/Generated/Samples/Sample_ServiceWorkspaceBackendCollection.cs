@@ -49,11 +49,11 @@ namespace Azure.ResourceManager.ApiManagement.Samples
                 {
                     Query =
 {
-["sv"] = {"xx", "bb", "cc"}
+["sv"] = new string[]{"xx", "bb", "cc"}
 },
                     Header =
 {
-["x-my-1"] = {"val1", "val2"}
+["x-my-1"] = new string[]{"val1", "val2"}
 },
                     Authorization = new BackendAuthorizationHeaderCredentials("Basic", "opensesma"),
                 },

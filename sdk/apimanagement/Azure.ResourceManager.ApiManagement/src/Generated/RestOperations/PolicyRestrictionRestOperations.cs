@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.ApiManagement
                 case 200:
                     {
                         PolicyRestrictionListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PolicyRestrictionListResult.DeserializePolicyRestrictionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.ApiManagement
                 case 200:
                     {
                         PolicyRestrictionListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PolicyRestrictionListResult.DeserializePolicyRestrictionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.ApiManagement
                 case 200:
                     {
                         PolicyRestrictionContractData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PolicyRestrictionContractData.DeserializePolicyRestrictionContractData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -329,7 +329,7 @@ namespace Azure.ResourceManager.ApiManagement
                 case 200:
                     {
                         PolicyRestrictionContractData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PolicyRestrictionContractData.DeserializePolicyRestrictionContractData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -412,7 +412,7 @@ namespace Azure.ResourceManager.ApiManagement
                 case 201:
                     {
                         PolicyRestrictionContractData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PolicyRestrictionContractData.DeserializePolicyRestrictionContractData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -447,7 +447,7 @@ namespace Azure.ResourceManager.ApiManagement
                 case 201:
                     {
                         PolicyRestrictionContractData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PolicyRestrictionContractData.DeserializePolicyRestrictionContractData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -524,7 +524,7 @@ namespace Azure.ResourceManager.ApiManagement
                 case 200:
                     {
                         PolicyRestrictionContractData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PolicyRestrictionContractData.DeserializePolicyRestrictionContractData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -558,7 +558,7 @@ namespace Azure.ResourceManager.ApiManagement
                 case 200:
                     {
                         PolicyRestrictionContractData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PolicyRestrictionContractData.DeserializePolicyRestrictionContractData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -709,7 +709,7 @@ namespace Azure.ResourceManager.ApiManagement
                 case 200:
                     {
                         PolicyRestrictionListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PolicyRestrictionListResult.DeserializePolicyRestrictionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -740,7 +740,7 @@ namespace Azure.ResourceManager.ApiManagement
                 case 200:
                     {
                         PolicyRestrictionListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PolicyRestrictionListResult.DeserializePolicyRestrictionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

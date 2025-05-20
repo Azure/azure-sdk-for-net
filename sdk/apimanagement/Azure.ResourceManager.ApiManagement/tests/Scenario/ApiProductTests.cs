@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
     public class ApiProductTests : ApiManagementManagementTestBase
     {
         public ApiProductTests(bool isAsync)
-                    : base(isAsync) //, RecordedTestMode.Record)
+                    : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
                 DisplayName = productId,
                 IsSubscriptionRequired = true,
             };
-            var product = productCollections.CreateOrUpdate(WaitUntil.Completed, productId, data).Value;
+            var product = (await productCollections.CreateOrUpdateAsync(WaitUntil.Completed, productId, data)).Value;
             var name = product.Data.Name;
             var result = (await product.GetAsync()).Value;
             Assert.NotNull(result);

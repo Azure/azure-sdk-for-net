@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.ApiManagement
                 case 200:
                     {
                         DiagnosticListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DiagnosticListResult.DeserializeDiagnosticListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.ApiManagement
                 case 200:
                     {
                         DiagnosticListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DiagnosticListResult.DeserializeDiagnosticListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -370,7 +370,7 @@ namespace Azure.ResourceManager.ApiManagement
                 case 200:
                     {
                         DiagnosticContractData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DiagnosticContractData.DeserializeDiagnosticContractData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -407,7 +407,7 @@ namespace Azure.ResourceManager.ApiManagement
                 case 200:
                     {
                         DiagnosticContractData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DiagnosticContractData.DeserializeDiagnosticContractData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -502,7 +502,7 @@ namespace Azure.ResourceManager.ApiManagement
                 case 201:
                     {
                         DiagnosticContractData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DiagnosticContractData.DeserializeDiagnosticContractData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -541,7 +541,7 @@ namespace Azure.ResourceManager.ApiManagement
                 case 201:
                     {
                         DiagnosticContractData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DiagnosticContractData.DeserializeDiagnosticContractData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -630,7 +630,7 @@ namespace Azure.ResourceManager.ApiManagement
                 case 200:
                     {
                         DiagnosticContractData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DiagnosticContractData.DeserializeDiagnosticContractData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -668,7 +668,7 @@ namespace Azure.ResourceManager.ApiManagement
                 case 200:
                     {
                         DiagnosticContractData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DiagnosticContractData.DeserializeDiagnosticContractData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -839,7 +839,7 @@ namespace Azure.ResourceManager.ApiManagement
                 case 200:
                     {
                         DiagnosticListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DiagnosticListResult.DeserializeDiagnosticListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -877,7 +877,7 @@ namespace Azure.ResourceManager.ApiManagement
                 case 200:
                     {
                         DiagnosticListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DiagnosticListResult.DeserializeDiagnosticListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

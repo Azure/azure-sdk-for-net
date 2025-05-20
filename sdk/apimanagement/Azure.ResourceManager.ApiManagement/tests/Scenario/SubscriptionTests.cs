@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
     public class SubscriptionTests : ApiManagementManagementTestBase
     {
         public SubscriptionTests(bool isAsync)
-                       : base(isAsync, RecordedTestMode.Record) //, RecordedTestMode.Record)
+                       : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 
