@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using TypeSpec.Http.Streams;
 
 namespace Streaming.Jsonl
 {
@@ -18,15 +19,15 @@ namespace Streaming.Jsonl
     {
         protected Basic() => throw null;
 
-        public HttpPipeline Pipeline => throw null;
+        public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response Send(RequestContent content, RequestContext context = null) => throw null;
 
         public virtual Task<Response> SendAsync(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Response Send(BinaryData body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Response Send(JsonlStreamInfo stream, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> SendAsync(BinaryData body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<Response> SendAsync(JsonlStreamInfo stream, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response Receive(RequestContext context) => throw null;
 

@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.KubernetesConfiguration
 
         KubernetesClusterExtensionResource IOperationSource<KubernetesClusterExtensionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<KubernetesClusterExtensionData>(response.Content);
+            var data = ModelReaderWriter.Read<KubernetesClusterExtensionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerKubernetesConfigurationContext.Default);
             return new KubernetesClusterExtensionResource(_client, data);
         }
 
         async ValueTask<KubernetesClusterExtensionResource> IOperationSource<KubernetesClusterExtensionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<KubernetesClusterExtensionData>(response.Content);
+            var data = ModelReaderWriter.Read<KubernetesClusterExtensionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerKubernetesConfigurationContext.Default);
             return await Task.FromResult(new KubernetesClusterExtensionResource(_client, data)).ConfigureAwait(false);
         }
     }

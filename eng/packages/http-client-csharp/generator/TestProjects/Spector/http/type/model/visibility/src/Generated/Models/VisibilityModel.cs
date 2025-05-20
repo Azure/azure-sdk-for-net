@@ -7,13 +7,19 @@
 
 using System.Collections.Generic;
 
-namespace _Type.Model.Visibility.Models
+namespace _Type.Model.Visibility
 {
     public partial class VisibilityModel
     {
-        public VisibilityModel(IEnumerable<string> createProp, IEnumerable<int> updateProp, bool deleteProp) => throw null;
+        public VisibilityModel(int queryProp, IEnumerable<string> createProp, IEnumerable<int> updateProp, bool deleteProp) => throw null;
 
         public string ReadProp => throw null;
+
+        public int QueryProp
+        {
+            get => throw null;
+            set => throw null;
+        }
 
         public IList<string> CreateProp => throw null;
 

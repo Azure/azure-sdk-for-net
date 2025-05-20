@@ -17,7 +17,10 @@
 
   <!-- Import the Text Analytics legacy generated source -->
   <ItemGroup>
-    <Compile Include="../../Azure.AI.TextAnalytics.Legacy.Shared/src/Generated/**/*" LinkBase="Shared/Legacy/Generated" />
+    <Compile
+      Include="../../Azure.AI.TextAnalytics.Legacy.Shared/src/Generated/**/*"
+      Exclude="../../Azure.AI.TextAnalytics.Legacy.Shared/src/Generated/Models/AzureAITextAnalyticsLegacyContext.cs"
+      LinkBase="Shared/Legacy/Generated" />
     <Compile Include="../../Azure.AI.TextAnalytics.Legacy.Shared/src/Custom/**/*" LinkBase="Shared/Legacy/Custom" />
   </ItemGroup>
 

@@ -14,8 +14,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class AcsRouterJobSchedulingFailedEventData : AcsRouterJobEventData
     {
         /// <summary> Initializes a new instance of <see cref="AcsRouterJobSchedulingFailedEventData"/>. </summary>
-        internal AcsRouterJobSchedulingFailedEventData()
+        /// <param name="labels"> Router Job events Labels. </param>
+        /// <param name="tags"> Router Jobs events Tags. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="labels"/> or <paramref name="tags"/> is null. </exception>
+        internal AcsRouterJobSchedulingFailedEventData(IReadOnlyDictionary<string, string> labels, IReadOnlyDictionary<string, string> tags) : base(labels, tags)
         {
+            Argument.AssertNotNull(labels, nameof(labels));
+            Argument.AssertNotNull(tags, nameof(tags));
+
             ExpiredAttachedWorkerSelectors = new ChangeTrackingList<AcsRouterWorkerSelector>();
             ExpiredRequestedWorkerSelectors = new ChangeTrackingList<AcsRouterWorkerSelector>();
         }

@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <summary> Initializes a new instance of <see cref="SnapshotBackupAdditionalDetails"/>. </summary>
         /// <param name="instantRpRetentionRangeInDays"></param>
         /// <param name="instantRPDetails"></param>
-        /// <param name="userAssignedManagedIdentityDetails"></param>
+        /// <param name="userAssignedManagedIdentityDetails"> User assigned managed identity details. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SnapshotBackupAdditionalDetails(int? instantRpRetentionRangeInDays, string instantRPDetails, UserAssignedManagedIdentityDetails userAssignedManagedIdentityDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public int? InstantRpRetentionRangeInDays { get; set; }
         /// <summary> Gets or sets the instant rp details. </summary>
         public string InstantRPDetails { get; set; }
-        /// <summary> Gets or sets the user assigned managed identity details. </summary>
+        /// <summary> User assigned managed identity details. </summary>
         public UserAssignedManagedIdentityDetails UserAssignedManagedIdentityDetails { get; set; }
     }
 }

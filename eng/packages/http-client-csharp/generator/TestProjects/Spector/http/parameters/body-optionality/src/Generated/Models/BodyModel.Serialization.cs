@@ -11,10 +11,12 @@ using System.Text.Json;
 using Azure;
 using Azure.Core;
 
-namespace Parameters.BodyOptionality.Models
+namespace Parameters.BodyOptionality
 {
     public partial class BodyModel : IJsonModel<BodyModel>
     {
+        internal BodyModel() => throw null;
+
         void IJsonModel<BodyModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;

@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Sql
 {
     public partial class RecoverableDatabaseResource : IJsonModel<RecoverableDatabaseData>
     {
+        private static RecoverableDatabaseData s_dataDeserializationInstance;
+        private static RecoverableDatabaseData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<RecoverableDatabaseData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<RecoverableDatabaseData>)Data).Write(writer, options);
 
-        RecoverableDatabaseData IJsonModel<RecoverableDatabaseData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<RecoverableDatabaseData>)Data).Create(ref reader, options);
+        RecoverableDatabaseData IJsonModel<RecoverableDatabaseData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<RecoverableDatabaseData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<RecoverableDatabaseData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<RecoverableDatabaseData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<RecoverableDatabaseData>(Data, options, AzureResourceManagerSqlContext.Default);
 
-        RecoverableDatabaseData IPersistableModel<RecoverableDatabaseData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<RecoverableDatabaseData>(data, options);
+        RecoverableDatabaseData IPersistableModel<RecoverableDatabaseData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<RecoverableDatabaseData>(data, options, AzureResourceManagerSqlContext.Default);
 
-        string IPersistableModel<RecoverableDatabaseData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<RecoverableDatabaseData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<RecoverableDatabaseData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<RecoverableDatabaseData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

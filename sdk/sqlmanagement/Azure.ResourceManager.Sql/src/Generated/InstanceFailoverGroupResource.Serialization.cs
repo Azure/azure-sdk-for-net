@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Sql
 {
     public partial class InstanceFailoverGroupResource : IJsonModel<InstanceFailoverGroupData>
     {
+        private static InstanceFailoverGroupData s_dataDeserializationInstance;
+        private static InstanceFailoverGroupData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<InstanceFailoverGroupData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<InstanceFailoverGroupData>)Data).Write(writer, options);
 
-        InstanceFailoverGroupData IJsonModel<InstanceFailoverGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<InstanceFailoverGroupData>)Data).Create(ref reader, options);
+        InstanceFailoverGroupData IJsonModel<InstanceFailoverGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<InstanceFailoverGroupData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<InstanceFailoverGroupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<InstanceFailoverGroupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<InstanceFailoverGroupData>(Data, options, AzureResourceManagerSqlContext.Default);
 
-        InstanceFailoverGroupData IPersistableModel<InstanceFailoverGroupData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<InstanceFailoverGroupData>(data, options);
+        InstanceFailoverGroupData IPersistableModel<InstanceFailoverGroupData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<InstanceFailoverGroupData>(data, options, AzureResourceManagerSqlContext.Default);
 
-        string IPersistableModel<InstanceFailoverGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<InstanceFailoverGroupData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<InstanceFailoverGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<InstanceFailoverGroupData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.DataLakeAnalytics
 
         DataLakeAnalyticsAccountResource IOperationSource<DataLakeAnalyticsAccountResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DataLakeAnalyticsAccountData>(response.Content);
+            var data = ModelReaderWriter.Read<DataLakeAnalyticsAccountData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDataLakeAnalyticsContext.Default);
             return new DataLakeAnalyticsAccountResource(_client, data);
         }
 
         async ValueTask<DataLakeAnalyticsAccountResource> IOperationSource<DataLakeAnalyticsAccountResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DataLakeAnalyticsAccountData>(response.Content);
+            var data = ModelReaderWriter.Read<DataLakeAnalyticsAccountData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDataLakeAnalyticsContext.Default);
             return await Task.FromResult(new DataLakeAnalyticsAccountResource(_client, data)).ConfigureAwait(false);
         }
     }
