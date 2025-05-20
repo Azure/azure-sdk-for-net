@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Network
 {
     public partial class LocalNetworkGatewayResource : IJsonModel<LocalNetworkGatewayData>
     {
+        private static LocalNetworkGatewayData s_dataDeserializationInstance;
+        private static LocalNetworkGatewayData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<LocalNetworkGatewayData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<LocalNetworkGatewayData>)Data).Write(writer, options);
 
-        LocalNetworkGatewayData IJsonModel<LocalNetworkGatewayData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<LocalNetworkGatewayData>)Data).Create(ref reader, options);
+        LocalNetworkGatewayData IJsonModel<LocalNetworkGatewayData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<LocalNetworkGatewayData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<LocalNetworkGatewayData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<LocalNetworkGatewayData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<LocalNetworkGatewayData>(Data, options, AzureResourceManagerNetworkContext.Default);
 
-        LocalNetworkGatewayData IPersistableModel<LocalNetworkGatewayData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<LocalNetworkGatewayData>(data, options);
+        LocalNetworkGatewayData IPersistableModel<LocalNetworkGatewayData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<LocalNetworkGatewayData>(data, options, AzureResourceManagerNetworkContext.Default);
 
-        string IPersistableModel<LocalNetworkGatewayData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<LocalNetworkGatewayData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<LocalNetworkGatewayData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<LocalNetworkGatewayData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

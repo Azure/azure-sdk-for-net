@@ -24,11 +24,14 @@ namespace Azure.ResourceManager.Compute.Models
 
         private const string LowestPriceValue = "LowestPrice";
         private const string CapacityOptimizedValue = "CapacityOptimized";
+        private const string PrioritizedValue = "Prioritized";
 
         /// <summary> LowestPrice. </summary>
         public static ComputeAllocationStrategy LowestPrice { get; } = new ComputeAllocationStrategy(LowestPriceValue);
         /// <summary> CapacityOptimized. </summary>
         public static ComputeAllocationStrategy CapacityOptimized { get; } = new ComputeAllocationStrategy(CapacityOptimizedValue);
+        /// <summary> Prioritized. </summary>
+        public static ComputeAllocationStrategy Prioritized { get; } = new ComputeAllocationStrategy(PrioritizedValue);
         /// <summary> Determines if two <see cref="ComputeAllocationStrategy"/> values are the same. </summary>
         public static bool operator ==(ComputeAllocationStrategy left, ComputeAllocationStrategy right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ComputeAllocationStrategy"/> values are not the same. </summary>

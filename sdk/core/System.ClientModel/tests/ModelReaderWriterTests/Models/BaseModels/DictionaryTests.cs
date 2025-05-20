@@ -13,6 +13,8 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.BaseModels
     {
         protected override ModelReaderWriterContext Context => new LocalContext();
 
+        protected override string CollectionTypeName => "Dictionary<String, BaseModel>";
+
         protected override Dictionary<string, BaseModel> GetModelInstance()
         {
             return new()
@@ -69,11 +71,9 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.BaseModels
 
                 protected override Type ItemType => typeof(BaseModel);
 
-                protected override bool IsCollection => true;
-
                 protected override object CreateInstance() => new Dictionary<string, BaseModel>();
 
-                protected override void AddKeyValuePair(object collection, string key, object item)
+                protected override void AddItemWithKey(object collection, string key, object item)
                     => ((Dictionary<string, BaseModel>)collection).Add(key, (BaseModel)item);
             }
         }

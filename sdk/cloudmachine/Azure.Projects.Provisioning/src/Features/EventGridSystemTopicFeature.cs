@@ -2,13 +2,12 @@
 // Licensed under the MIT License.
 
 using Azure.Projects.Core;
-using Azure.Projects.Storage;
 using Azure.Provisioning.EventGrid;
 using Azure.Provisioning.Expressions;
 using Azure.Provisioning.Resources;
 using Azure.Provisioning.Storage;
 
-namespace Azure.Projects.EventGrid;
+namespace Azure.Projects;
 
 internal class EventGridSystemTopicFeature : AzureProjectFeature
 {

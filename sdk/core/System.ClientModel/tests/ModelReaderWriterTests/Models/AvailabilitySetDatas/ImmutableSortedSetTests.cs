@@ -3,9 +3,7 @@
 
 using System.ClientModel.Primitives;
 using System.ClientModel.Tests.Client.Models.ResourceManager.Compute;
-using System.Collections.Generic;
 using System.Collections.Immutable;
-using System.Diagnostics.CodeAnalysis;
 using NUnit.Framework;
 
 namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.AvailabilitySetDatas
@@ -13,6 +11,8 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.AvailabilitySet
     public class ImmutableSortedSetTests : MrwCollectionTests<ImmutableSortedSet<AvailabilitySetData>, AvailabilitySetData>
     {
         protected override string GetJsonCollectionType() => "List";
+
+        protected override string CollectionTypeName => "ImmutableSortedSet<AvailabilitySetData>";
 
         protected override ModelReaderWriterContext Context => new LocalContext();
 
@@ -66,14 +66,12 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.AvailabilitySet
 
                 protected override Type ItemType => typeof(AvailabilitySetData);
 
-                protected override bool IsCollection => true;
-
                 protected override object CreateInstance() => ImmutableSortedSet<AvailabilitySetData>.Empty.WithComparer(new AvailabilitySetDataComparer()).ToBuilder();
 
                 protected override void AddItem(object collection, object item)
                     => ((ImmutableSortedSet<AvailabilitySetData>.Builder)collection).Add((AvailabilitySetData)item);
 
-                protected override object ToCollection(object builder)
+                protected override object ConvertCollectionBuilder(object builder)
                     => ((ImmutableSortedSet<AvailabilitySetData>.Builder)builder).ToImmutable();
             }
         }

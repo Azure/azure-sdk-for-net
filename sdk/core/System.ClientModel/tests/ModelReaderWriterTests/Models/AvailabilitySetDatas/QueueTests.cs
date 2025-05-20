@@ -4,13 +4,14 @@
 using System.ClientModel.Primitives;
 using System.ClientModel.Tests.Client.Models.ResourceManager.Compute;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 
 namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.AvailabilitySetDatas
 {
     public class QueueTests : MrwCollectionTests<Queue<AvailabilitySetData>, AvailabilitySetData>
     {
         protected override string GetJsonCollectionType() => "List";
+
+        protected override string CollectionTypeName => "Queue<AvailabilitySetData>";
 
         protected override ModelReaderWriterContext Context => new LocalContext();
 
@@ -48,8 +49,6 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.AvailabilitySet
                 protected override Type BuilderType => typeof(Queue<AvailabilitySetData>);
 
                 protected override Type ItemType => typeof(AvailabilitySetData);
-
-                protected override bool IsCollection => true;
 
                 protected override object CreateInstance() => new Queue<AvailabilitySetData>();
 

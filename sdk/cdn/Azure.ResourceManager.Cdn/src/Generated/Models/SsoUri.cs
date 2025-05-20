@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> The URI required to login to the supplemental portal from the Azure portal. </summary>
+    /// <summary>
+    /// The URI required to login to the supplemental portal from the Azure portal.
+    /// Serialized Name: SsoUri
+    /// </summary>
     public partial class SsoUri
     {
         /// <summary>
@@ -51,7 +54,10 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SsoUri"/>. </summary>
-        /// <param name="availableSsoUri"> The URI used to login to the supplemental portal. </param>
+        /// <param name="availableSsoUri">
+        /// The URI used to login to the supplemental portal.
+        /// Serialized Name: SsoUri.ssoUriValue
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SsoUri(Uri availableSsoUri, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -59,7 +65,10 @@ namespace Azure.ResourceManager.Cdn.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The URI used to login to the supplemental portal. </summary>
+        /// <summary>
+        /// The URI used to login to the supplemental portal.
+        /// Serialized Name: SsoUri.ssoUriValue
+        /// </summary>
         public Uri AvailableSsoUri { get; }
     }
 }

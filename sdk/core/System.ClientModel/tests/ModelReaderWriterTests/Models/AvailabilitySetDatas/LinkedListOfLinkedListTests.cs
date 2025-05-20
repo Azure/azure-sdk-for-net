@@ -4,13 +4,14 @@
 using System.ClientModel.Primitives;
 using System.ClientModel.Tests.Client.Models.ResourceManager.Compute;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 
 namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.AvailabilitySetDatas
 {
     public class LinkedListOfLinkedListTests : MrwCollectionTests<LinkedList<LinkedList<AvailabilitySetData>>, AvailabilitySetData>
     {
         protected override string GetJsonCollectionType() => "ListOfList";
+
+        protected override string CollectionTypeName => "LinkedList<LinkedList<AvailabilitySetData>>";
 
         protected override ModelReaderWriterContext Context => new LocalContext();
 
@@ -58,8 +59,6 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.AvailabilitySet
                 protected override Type BuilderType => typeof(LinkedList<LinkedList<AvailabilitySetData>>);
 
                 protected override Type ItemType => typeof(LinkedList<AvailabilitySetData>);
-
-                protected override bool IsCollection => true;
 
                 protected override object CreateInstance() => new LinkedList<LinkedList<AvailabilitySetData>>();
 

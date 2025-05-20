@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Output of the validate probe API. </summary>
+    /// <summary>
+    /// Output of the validate probe API.
+    /// Serialized Name: ValidateProbeOutput
+    /// </summary>
     public partial class ValidateProbeResult
     {
         /// <summary>
@@ -51,9 +54,18 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ValidateProbeResult"/>. </summary>
-        /// <param name="isValid"> Indicates whether the probe URL is accepted or not. </param>
-        /// <param name="errorCode"> Specifies the error code when the probe url is not accepted. </param>
-        /// <param name="message"> The detailed error message describing why the probe URL is not accepted. </param>
+        /// <param name="isValid">
+        /// Indicates whether the probe URL is accepted or not.
+        /// Serialized Name: ValidateProbeOutput.isValid
+        /// </param>
+        /// <param name="errorCode">
+        /// Specifies the error code when the probe url is not accepted.
+        /// Serialized Name: ValidateProbeOutput.errorCode
+        /// </param>
+        /// <param name="message">
+        /// The detailed error message describing why the probe URL is not accepted.
+        /// Serialized Name: ValidateProbeOutput.message
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ValidateProbeResult(bool? isValid, string errorCode, string message, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -63,11 +75,20 @@ namespace Azure.ResourceManager.Cdn.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Indicates whether the probe URL is accepted or not. </summary>
+        /// <summary>
+        /// Indicates whether the probe URL is accepted or not.
+        /// Serialized Name: ValidateProbeOutput.isValid
+        /// </summary>
         public bool? IsValid { get; }
-        /// <summary> Specifies the error code when the probe url is not accepted. </summary>
+        /// <summary>
+        /// Specifies the error code when the probe url is not accepted.
+        /// Serialized Name: ValidateProbeOutput.errorCode
+        /// </summary>
         public string ErrorCode { get; }
-        /// <summary> The detailed error message describing why the probe URL is not accepted. </summary>
+        /// <summary>
+        /// The detailed error message describing why the probe URL is not accepted.
+        /// Serialized Name: ValidateProbeOutput.message
+        /// </summary>
         public string Message { get; }
     }
 }

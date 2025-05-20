@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.DevTestLabs
 {
     public partial class DevTestLabArtifactResource : IJsonModel<DevTestLabArtifactData>
     {
+        private static DevTestLabArtifactData s_dataDeserializationInstance;
+        private static DevTestLabArtifactData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<DevTestLabArtifactData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DevTestLabArtifactData>)Data).Write(writer, options);
 
-        DevTestLabArtifactData IJsonModel<DevTestLabArtifactData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DevTestLabArtifactData>)Data).Create(ref reader, options);
+        DevTestLabArtifactData IJsonModel<DevTestLabArtifactData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DevTestLabArtifactData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<DevTestLabArtifactData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<DevTestLabArtifactData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DevTestLabArtifactData>(Data, options, AzureResourceManagerDevTestLabsContext.Default);
 
-        DevTestLabArtifactData IPersistableModel<DevTestLabArtifactData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DevTestLabArtifactData>(data, options);
+        DevTestLabArtifactData IPersistableModel<DevTestLabArtifactData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DevTestLabArtifactData>(data, options, AzureResourceManagerDevTestLabsContext.Default);
 
-        string IPersistableModel<DevTestLabArtifactData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DevTestLabArtifactData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<DevTestLabArtifactData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DevTestLabArtifactData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

@@ -1,0 +1,443 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/jobs/imports/job118532831?api-version=2023-10-31",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-fdaa75375b2319cae5030f7152a7fd0a-855ec5c25d0deb44-00",
+        "User-Agent": "azsdk-net-DigitalTwins.Core/1.6.0-alpha.20250501.1 (.NET 8.0.15; Microsoft Windows 10.0.26100)",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 404,
+      "ResponseHeaders": {
+        "Content-Length": "184",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 02 May 2025 15:02:12 GMT",
+        "mise-correlation-id": "afc03a14-1be9-4820-9b04-39d53ee3ddce",
+        "Strict-Transport-Security": "max-age=2592000",
+        "traceresponse": "00-fdaa75375b2319cae5030f7152a7fd0a-5c20fd331b8b6a01-01"
+      },
+      "ResponseBody": {
+        "error": {
+          "code": "JobNotFound",
+          "message": "There is no job available that matches the provided id job118532831. Check that the Job ID provided is valid by doing a Jobs_List API call."
+        }
+      }
+    },
+    {
+      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/jobs/imports/job118532831?api-version=2023-10-31",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "196",
+        "Content-Type": "application/json",
+        "traceparent": "00-9d5cc7ea1e7c9908a8efb5d806d1aedc-4d4757ab0c25be92-00",
+        "User-Agent": "azsdk-net-DigitalTwins.Core/1.6.0-alpha.20250501.1 (.NET 8.0.15; Microsoft Windows 10.0.26100)",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "inputBlobUri": "https://azsdknew9.blob.core.windows.net/azsdknew9/importJobInputBlobSdkTest.ndjson",
+        "outputBlobUri": "https://azsdknew9.blob.core.windows.net/azsdknew9/output-job118532831.ndjson"
+      },
+      "StatusCode": 429,
+      "ResponseHeaders": {
+        "Content-Length": "167",
+        "Content-Type": "application/json",
+        "Date": "Fri, 02 May 2025 15:02:12 GMT",
+        "Retry-After": "6"
+      },
+      "ResponseBody": {
+        "error": {
+          "statusCode": 429,
+          "message": "Maximum request rate limit reached. For Azure Digital Twins rate limiting details please see http://aka.ms/dtv2limits."
+        }
+      }
+    },
+    {
+      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/jobs/imports/job118532831?api-version=2023-10-31",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "196",
+        "Content-Type": "application/json",
+        "traceparent": "00-9d5cc7ea1e7c9908a8efb5d806d1aedc-4d4757ab0c25be92-00",
+        "User-Agent": "azsdk-net-DigitalTwins.Core/1.6.0-alpha.20250501.1 (.NET 8.0.15; Microsoft Windows 10.0.26100)",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "inputBlobUri": "https://azsdknew9.blob.core.windows.net/azsdknew9/importJobInputBlobSdkTest.ndjson",
+        "outputBlobUri": "https://azsdknew9.blob.core.windows.net/azsdknew9/output-job118532831.ndjson"
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Content-Length": "385",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 02 May 2025 15:02:20 GMT",
+        "mise-correlation-id": "63982609-4943-40a9-ae63-f508ea4c304e",
+        "Strict-Transport-Security": "max-age=2592000",
+        "traceresponse": "00-9d5cc7ea1e7c9908a8efb5d806d1aedc-9b7f2509470b258d-01"
+      },
+      "ResponseBody": {
+        "id": "job118532831",
+        "inputBlobUri": "https://azsdknew9.blob.core.windows.net/azsdknew9/importJobInputBlobSdkTest.ndjson",
+        "outputBlobUri": "https://azsdknew9.blob.core.windows.net/azsdknew9/output-job118532831.ndjson",
+        "createdDateTime": "2025-05-02T15:02:18.8464828Z",
+        "lastActionDateTime": "2025-05-02T15:02:18.846483Z",
+        "purgeDateTime": "2025-06-01T15:02:18.8464832Z",
+        "status": "notstarted"
+      }
+    },
+    {
+      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/jobs/imports/job118532831?api-version=2023-10-31",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-f8cbb59280f76f323c3e3d03e0323cb9-25a3f8f92bc98c65-00",
+        "User-Agent": "azsdk-net-DigitalTwins.Core/1.6.0-alpha.20250501.1 (.NET 8.0.15; Microsoft Windows 10.0.26100)",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Length": "385",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 02 May 2025 15:02:20 GMT",
+        "mise-correlation-id": "75b327d4-bd8d-489c-8be7-e42e18dd79b5",
+        "Strict-Transport-Security": "max-age=2592000",
+        "traceresponse": "00-f8cbb59280f76f323c3e3d03e0323cb9-ffc62a052122ce08-01"
+      },
+      "ResponseBody": {
+        "id": "job118532831",
+        "inputBlobUri": "https://azsdknew9.blob.core.windows.net/azsdknew9/importJobInputBlobSdkTest.ndjson",
+        "outputBlobUri": "https://azsdknew9.blob.core.windows.net/azsdknew9/output-job118532831.ndjson",
+        "createdDateTime": "2025-05-02T15:02:18.8464828Z",
+        "lastActionDateTime": "2025-05-02T15:02:18.846483Z",
+        "purgeDateTime": "2025-06-01T15:02:18.8464832Z",
+        "status": "notstarted"
+      }
+    },
+    {
+      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/jobs/imports?api-version=2023-10-31",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-07237f9f6b688de8cd6ece27e2089863-9626e9dec52e4c4d-00",
+        "User-Agent": "azsdk-net-DigitalTwins.Core/1.6.0-alpha.20250501.1 (.NET 8.0.15; Microsoft Windows 10.0.26100)",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 429,
+      "ResponseHeaders": {
+        "Content-Length": "167",
+        "Content-Type": "application/json",
+        "Date": "Fri, 02 May 2025 15:02:20 GMT",
+        "Retry-After": "7"
+      },
+      "ResponseBody": {
+        "error": {
+          "statusCode": 429,
+          "message": "Maximum request rate limit reached. For Azure Digital Twins rate limiting details please see http://aka.ms/dtv2limits."
+        }
+      }
+    },
+    {
+      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/jobs/imports?api-version=2023-10-31",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-07237f9f6b688de8cd6ece27e2089863-9626e9dec52e4c4d-00",
+        "User-Agent": "azsdk-net-DigitalTwins.Core/1.6.0-alpha.20250501.1 (.NET 8.0.15; Microsoft Windows 10.0.26100)",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Length": "2657",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 02 May 2025 15:02:27 GMT",
+        "mise-correlation-id": "e8b0e8e7-653f-4a86-b14c-198ed1fbded5",
+        "Strict-Transport-Security": "max-age=2592000",
+        "traceresponse": "00-07237f9f6b688de8cd6ece27e2089863-085b7302a7378ff3-01"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "id": "job11989450484",
+            "inputBlobUri": "https://azsdknew9.blob.core.windows.net/azsdknew9/importJobInputBlobSdkTest.ndjson",
+            "outputBlobUri": "https://azsdknew9.blob.core.windows.net/azsdknew9/output-job11989450484.ndjson",
+            "createdDateTime": "2025-05-02T14:46:55.9648247Z",
+            "lastActionDateTime": "2025-05-02T14:48:43.0058827Z",
+            "finishedDateTime": "2025-05-02T14:48:43.0058827Z",
+            "purgeDateTime": "2025-06-01T14:46:55.9648256Z",
+            "status": "succeeded"
+          },
+          {
+            "id": "job1237449672",
+            "inputBlobUri": "https://azsdknew9.blob.core.windows.net/azsdknew9/importJobInputBlobSdkTest.ndjson",
+            "outputBlobUri": "https://azsdknew9.blob.core.windows.net/azsdknew9/output-job1237449672.ndjson",
+            "createdDateTime": "2025-05-02T14:51:41.4324686Z",
+            "lastActionDateTime": "2025-05-02T14:53:10.5691762Z",
+            "finishedDateTime": "2025-05-02T14:53:10.5691762Z",
+            "purgeDateTime": "2025-06-01T14:51:41.4324693Z",
+            "status": "succeeded"
+          },
+          {
+            "id": "job11028972332",
+            "inputBlobUri": "https://azsdknew9.blob.core.windows.net/azsdknew9/importJobInputBlobSdkTest.ndjson",
+            "outputBlobUri": "https://azsdknew9.blob.core.windows.net/azsdknew9/output-job11028972332.ndjson",
+            "createdDateTime": "2025-05-02T14:56:50.124855Z",
+            "lastActionDateTime": "2025-05-02T14:56:56.9465215Z",
+            "finishedDateTime": "2025-05-02T14:56:56.9465215Z",
+            "purgeDateTime": "2025-06-01T14:56:50.1248554Z",
+            "status": "succeeded"
+          },
+          {
+            "id": "job11102979529",
+            "inputBlobUri": "https://azsdknew9.blob.core.windows.net/azsdknew9/importJobInputBlobSdkTest.ndjson",
+            "outputBlobUri": "https://azsdknew9.blob.core.windows.net/azsdknew9/output-job11102979529.ndjson",
+            "createdDateTime": "2025-05-02T14:57:00.6981935Z",
+            "lastActionDateTime": "2025-05-02T14:57:07.1168683Z",
+            "finishedDateTime": "2025-05-02T14:57:07.1168683Z",
+            "purgeDateTime": "2025-06-01T14:57:00.698194Z",
+            "status": "succeeded"
+          },
+          {
+            "id": "job11595337459",
+            "inputBlobUri": "https://azsdknew9.blob.core.windows.net/azsdknew9/importJobInputBlobSdkTest.ndjson",
+            "outputBlobUri": "https://azsdknew9.blob.core.windows.net/azsdknew9/output-job11595337459.ndjson",
+            "createdDateTime": "2025-05-02T15:01:40.9006253Z",
+            "lastActionDateTime": "2025-05-02T15:01:48.046893Z",
+            "finishedDateTime": "2025-05-02T15:01:48.046893Z",
+            "purgeDateTime": "2025-06-01T15:01:40.9006258Z",
+            "status": "succeeded"
+          },
+          {
+            "id": "job118532831",
+            "inputBlobUri": "https://azsdknew9.blob.core.windows.net/azsdknew9/importJobInputBlobSdkTest.ndjson",
+            "outputBlobUri": "https://azsdknew9.blob.core.windows.net/azsdknew9/output-job118532831.ndjson",
+            "createdDateTime": "2025-05-02T15:02:18.8464828Z",
+            "lastActionDateTime": "2025-05-02T15:02:27.2019447Z",
+            "finishedDateTime": "2025-05-02T15:02:27.2019447Z",
+            "purgeDateTime": "2025-06-01T15:02:18.8464832Z",
+            "status": "succeeded"
+          }
+        ],
+        "nextLink": null
+      }
+    },
+    {
+      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/jobs/imports/job118532831/cancel?api-version=2023-10-31",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "0",
+        "traceparent": "00-e30076757a14b01b2d4529eb789abc5a-86149bf007c7dc97-00",
+        "User-Agent": "azsdk-net-DigitalTwins.Core/1.6.0-alpha.20250501.1 (.NET 8.0.15; Microsoft Windows 10.0.26100)",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 429,
+      "ResponseHeaders": {
+        "Content-Length": "167",
+        "Content-Type": "application/json",
+        "Date": "Fri, 02 May 2025 15:02:27 GMT",
+        "Retry-After": "5"
+      },
+      "ResponseBody": {
+        "error": {
+          "statusCode": 429,
+          "message": "Maximum request rate limit reached. For Azure Digital Twins rate limiting details please see http://aka.ms/dtv2limits."
+        }
+      }
+    },
+    {
+      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/jobs/imports/job118532831/cancel?api-version=2023-10-31",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "0",
+        "traceparent": "00-e30076757a14b01b2d4529eb789abc5a-86149bf007c7dc97-00",
+        "User-Agent": "azsdk-net-DigitalTwins.Core/1.6.0-alpha.20250501.1 (.NET 8.0.15; Microsoft Windows 10.0.26100)",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Length": "435",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 02 May 2025 15:02:32 GMT",
+        "mise-correlation-id": "8806d28c-1c65-4187-8e58-bd49f4e38ceb",
+        "Strict-Transport-Security": "max-age=2592000",
+        "traceresponse": "00-e30076757a14b01b2d4529eb789abc5a-281ffa4feac223e5-01"
+      },
+      "ResponseBody": {
+        "id": "job118532831",
+        "inputBlobUri": "https://azsdknew9.blob.core.windows.net/azsdknew9/importJobInputBlobSdkTest.ndjson",
+        "outputBlobUri": "https://azsdknew9.blob.core.windows.net/azsdknew9/output-job118532831.ndjson",
+        "createdDateTime": "2025-05-02T15:02:18.8464828Z",
+        "lastActionDateTime": "2025-05-02T15:02:27.2019447Z",
+        "finishedDateTime": "2025-05-02T15:02:27.2019447Z",
+        "purgeDateTime": "2025-06-01T15:02:18.8464832Z",
+        "status": "succeeded"
+      }
+    },
+    {
+      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/jobs/imports/job118532831?api-version=2023-10-31",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-6b1821f929da172d767dfaaa4fdee0cf-9678196339fe92f7-00",
+        "User-Agent": "azsdk-net-DigitalTwins.Core/1.6.0-alpha.20250501.1 (.NET 8.0.15; Microsoft Windows 10.0.26100)",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 429,
+      "ResponseHeaders": {
+        "Content-Length": "167",
+        "Content-Type": "application/json",
+        "Date": "Fri, 02 May 2025 15:02:32 GMT",
+        "Retry-After": "14"
+      },
+      "ResponseBody": {
+        "error": {
+          "statusCode": 429,
+          "message": "Maximum request rate limit reached. For Azure Digital Twins rate limiting details please see http://aka.ms/dtv2limits."
+        }
+      }
+    },
+    {
+      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/jobs/imports/job118532831?api-version=2023-10-31",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-6b1821f929da172d767dfaaa4fdee0cf-9678196339fe92f7-00",
+        "User-Agent": "azsdk-net-DigitalTwins.Core/1.6.0-alpha.20250501.1 (.NET 8.0.15; Microsoft Windows 10.0.26100)",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Length": "435",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 02 May 2025 15:02:46 GMT",
+        "mise-correlation-id": "79d6457b-ec1f-44d8-8ffe-001cb51cf2de",
+        "Strict-Transport-Security": "max-age=2592000",
+        "traceresponse": "00-6b1821f929da172d767dfaaa4fdee0cf-52a061c3627e1484-01"
+      },
+      "ResponseBody": {
+        "id": "job118532831",
+        "inputBlobUri": "https://azsdknew9.blob.core.windows.net/azsdknew9/importJobInputBlobSdkTest.ndjson",
+        "outputBlobUri": "https://azsdknew9.blob.core.windows.net/azsdknew9/output-job118532831.ndjson",
+        "createdDateTime": "2025-05-02T15:02:18.8464828Z",
+        "lastActionDateTime": "2025-05-02T15:02:27.2019447Z",
+        "finishedDateTime": "2025-05-02T15:02:27.2019447Z",
+        "purgeDateTime": "2025-06-01T15:02:18.8464832Z",
+        "status": "succeeded"
+      }
+    },
+    {
+      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/jobs/imports/job118532831?api-version=2023-10-31",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-4e1d48114d85d2353e8714f7d2e74049-70df5d1eb1b9ce79-00",
+        "User-Agent": "azsdk-net-DigitalTwins.Core/1.6.0-alpha.20250501.1 (.NET 8.0.15; Microsoft Windows 10.0.26100)",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 204,
+      "ResponseHeaders": {
+        "Content-Length": "0",
+        "Date": "Fri, 02 May 2025 15:02:57 GMT",
+        "mise-correlation-id": "290ad967-d04c-4420-a5a1-166fd9caaf92",
+        "Strict-Transport-Security": "max-age=2592000",
+        "traceresponse": "00-4e1d48114d85d2353e8714f7d2e74049-f0bac81a24f8b453-01"
+      },
+      "ResponseBody": null
+    },
+    {
+      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/jobs/imports/job118532831?api-version=2023-10-31",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-89d023985ce1e8c90931042887a13408-67902006c34d622b-00",
+        "User-Agent": "azsdk-net-DigitalTwins.Core/1.6.0-alpha.20250501.1 (.NET 8.0.15; Microsoft Windows 10.0.26100)",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 429,
+      "ResponseHeaders": {
+        "Content-Length": "167",
+        "Content-Type": "application/json",
+        "Date": "Fri, 02 May 2025 15:02:57 GMT",
+        "Retry-After": "12"
+      },
+      "ResponseBody": {
+        "error": {
+          "statusCode": 429,
+          "message": "Maximum request rate limit reached. For Azure Digital Twins rate limiting details please see http://aka.ms/dtv2limits."
+        }
+      }
+    },
+    {
+      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/jobs/imports/job118532831?api-version=2023-10-31",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-89d023985ce1e8c90931042887a13408-67902006c34d622b-00",
+        "User-Agent": "azsdk-net-DigitalTwins.Core/1.6.0-alpha.20250501.1 (.NET 8.0.15; Microsoft Windows 10.0.26100)",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 404,
+      "ResponseHeaders": {
+        "Content-Length": "184",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 02 May 2025 15:03:09 GMT",
+        "mise-correlation-id": "82e437fc-f2a5-4170-9d68-8d646dc85330",
+        "Strict-Transport-Security": "max-age=2592000",
+        "traceresponse": "00-89d023985ce1e8c90931042887a13408-54b0591c62df1758-01"
+      },
+      "ResponseBody": {
+        "error": {
+          "code": "JobNotFound",
+          "message": "There is no job available that matches the provided id job118532831. Check that the Job ID provided is valid by doing a Jobs_List API call."
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "DIGITALTWINS_URL": "https://fakeHost.api.wus2.digitaltwins.azure.net",
+    "INPUT_BLOB_URI": "https://azsdknew9.blob.core.windows.net/azsdknew9/importJobInputBlobSdkTest.ndjson",
+    "RandomSeed": "874243037",
+    "STORAGE_CONTAINER_URI": "https://azsdknew9.blob.core.windows.net/azsdknew9"
+  }
+}

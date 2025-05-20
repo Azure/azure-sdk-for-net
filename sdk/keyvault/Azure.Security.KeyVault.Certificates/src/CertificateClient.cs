@@ -882,7 +882,7 @@ namespace Azure.Security.KeyVault.Certificates
 
             try
             {
-                return _pipeline.SendRequest(RequestMethod.Post, new CertificateBackup { Value = backup }, () => new KeyVaultCertificateWithPolicy(), cancellationToken, CertificatesPath, "/restore");
+                return _pipeline.SendRequest(RequestMethod.Post, new CertificateBackup { Value = backup }, () => new KeyVaultCertificateWithPolicy(), cancellationToken, CertificatesPath, "restore");
             }
             catch (Exception e)
             {
@@ -909,7 +909,7 @@ namespace Azure.Security.KeyVault.Certificates
 
             try
             {
-                return await _pipeline.SendRequestAsync(RequestMethod.Post, new CertificateBackup { Value = backup }, () => new KeyVaultCertificateWithPolicy(), cancellationToken, CertificatesPath, "/restore").ConfigureAwait(false);
+                return await _pipeline.SendRequestAsync(RequestMethod.Post, new CertificateBackup { Value = backup }, () => new KeyVaultCertificateWithPolicy(), cancellationToken, CertificatesPath, "restore").ConfigureAwait(false);
             }
             catch (Exception e)
             {

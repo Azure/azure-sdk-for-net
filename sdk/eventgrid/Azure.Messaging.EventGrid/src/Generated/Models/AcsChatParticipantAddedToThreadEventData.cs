@@ -13,8 +13,20 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class AcsChatParticipantAddedToThreadEventData : AcsChatEventInThreadBaseProperties
     {
         /// <summary> Initializes a new instance of <see cref="AcsChatParticipantAddedToThreadEventData"/>. </summary>
-        internal AcsChatParticipantAddedToThreadEventData()
+        /// <param name="transactionId"> The transaction id will be used as co-relation vector. </param>
+        /// <param name="threadId"> The chat thread id. </param>
+        /// <param name="addedByCommunicationIdentifier"> The communication identifier of the user who added the user. </param>
+        /// <param name="participantAdded"> The details of the user who was added. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="transactionId"/>, <paramref name="threadId"/>, <paramref name="addedByCommunicationIdentifier"/> or <paramref name="participantAdded"/> is null. </exception>
+        internal AcsChatParticipantAddedToThreadEventData(string transactionId, string threadId, CommunicationIdentifierModel addedByCommunicationIdentifier, AcsChatThreadParticipantProperties participantAdded) : base(transactionId, threadId)
         {
+            Argument.AssertNotNull(transactionId, nameof(transactionId));
+            Argument.AssertNotNull(threadId, nameof(threadId));
+            Argument.AssertNotNull(addedByCommunicationIdentifier, nameof(addedByCommunicationIdentifier));
+            Argument.AssertNotNull(participantAdded, nameof(participantAdded));
+
+            AddedByCommunicationIdentifier = addedByCommunicationIdentifier;
+            ParticipantAdded = participantAdded;
         }
 
         /// <summary> Initializes a new instance of <see cref="AcsChatParticipantAddedToThreadEventData"/>. </summary>
@@ -24,8 +36,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="addedByCommunicationIdentifier"> The communication identifier of the user who added the user. </param>
         /// <param name="participantAdded"> The details of the user who was added. </param>
         /// <param name="version"> The version of the thread. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="transactionId"/> or <paramref name="threadId"/> is null. </exception>
         internal AcsChatParticipantAddedToThreadEventData(string transactionId, string threadId, DateTimeOffset? time, CommunicationIdentifierModel addedByCommunicationIdentifier, AcsChatThreadParticipantProperties participantAdded, long? version) : base(transactionId, threadId)
         {
+            Argument.AssertNotNull(transactionId, nameof(transactionId));
+            Argument.AssertNotNull(threadId, nameof(threadId));
+
             Time = time;
             AddedByCommunicationIdentifier = addedByCommunicationIdentifier;
             ParticipantAdded = participantAdded;
