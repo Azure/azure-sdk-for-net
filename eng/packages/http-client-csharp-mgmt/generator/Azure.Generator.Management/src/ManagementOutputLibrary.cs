@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Generator.Management.Primitives;
 using Azure.Generator.Management.Providers;
 using Microsoft.TypeSpec.Generator.Providers;
 using System.Collections.Generic;
@@ -22,7 +21,7 @@ namespace Azure.Generator.Management
         {
             var resources = new List<ResourceClientProvider>();
             var collections = new List<ResourceCollectionClientProvider>();
-            foreach (var client in ManagementClientGenerator.Instance.InputLibrary.InputNamespace.Clients)
+            foreach (var client in ManagementClientGenerator.Instance.InputLibrary.AllClients)
             {
                 BuildResourceCore(resources, collections, client);
             }
@@ -44,11 +43,6 @@ namespace Azure.Generator.Management
                     ManagementClientGenerator.Instance.AddTypeToKeep(collection.Name);
                     collections.Add(collection);
                 }
-            }
-
-            foreach (var child in client.Children)
-            {
-                BuildResourceCore(resources, collections, child);
             }
         }
 
