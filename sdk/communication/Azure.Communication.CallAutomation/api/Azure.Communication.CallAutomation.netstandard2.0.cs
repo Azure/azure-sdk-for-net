@@ -863,13 +863,12 @@ namespace Azure.Communication.CallAutomation
     }
     public partial class MediaStreamingOptions
     {
-        public MediaStreamingOptions(Azure.Communication.CallAutomation.MediaStreamingAudioChannel audioChannelType) { }
-        public MediaStreamingOptions(System.Uri transportUri, Azure.Communication.CallAutomation.MediaStreamingContent contentType, Azure.Communication.CallAutomation.MediaStreamingAudioChannel audioChannelType, Azure.Communication.CallAutomation.StreamingTransport transportType = default(Azure.Communication.CallAutomation.StreamingTransport), bool? startMediaStreaming = default(bool?)) { }
+        public MediaStreamingOptions(System.Uri transportUri, Azure.Communication.CallAutomation.MediaStreamingAudioChannel audioChannelType) { }
         public Azure.Communication.CallAutomation.AudioFormat? AudioFormat { get { throw null; } set { } }
         public bool? EnableBidirectional { get { throw null; } set { } }
         public bool? EnableDtmfTones { get { throw null; } set { } }
         public Azure.Communication.CallAutomation.MediaStreamingAudioChannel MediaStreamingAudioChannel { get { throw null; } }
-        public Azure.Communication.CallAutomation.MediaStreamingContent MediaStreamingContent { get { throw null; } }
+        public Azure.Communication.CallAutomation.MediaStreamingContent MediaStreamingContent { get { throw null; } set { } }
         public Azure.Communication.CallAutomation.StreamingTransport MediaStreamingTransport { get { throw null; } }
         public bool? StartMediaStreaming { get { throw null; } set { } }
         public System.Uri TransportUri { get { throw null; } }
@@ -1503,13 +1502,12 @@ namespace Azure.Communication.CallAutomation
     }
     public partial class TranscriptionOptions
     {
-        public TranscriptionOptions(string locale) { }
-        public TranscriptionOptions(System.Uri transportUri, string locale, bool? startTranscription = default(bool?), Azure.Communication.CallAutomation.StreamingTransport transcriptionTransport = default(Azure.Communication.CallAutomation.StreamingTransport)) { }
+        public TranscriptionOptions(System.Uri transportUri, string locale) { }
         public bool? EnableIntermediateResults { get { throw null; } set { } }
         public string Locale { get { throw null; } }
         public string SpeechRecognitionModelEndpointId { get { throw null; } set { } }
-        public bool? StartTranscription { get { throw null; } }
-        public Azure.Communication.CallAutomation.StreamingTransport TranscriptionTransport { get { throw null; } }
+        public bool? StartTranscription { get { throw null; } set { } }
+        public Azure.Communication.CallAutomation.StreamingTransport TranscriptionTransport { get { throw null; } set { } }
         public System.Uri TransportUri { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
