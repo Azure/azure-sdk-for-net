@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 {
     public partial class SiteRecoveryVaultSettingResource : IJsonModel<SiteRecoveryVaultSettingData>
     {
+        private static SiteRecoveryVaultSettingData s_dataDeserializationInstance;
+        private static SiteRecoveryVaultSettingData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<SiteRecoveryVaultSettingData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SiteRecoveryVaultSettingData>)Data).Write(writer, options);
 
-        SiteRecoveryVaultSettingData IJsonModel<SiteRecoveryVaultSettingData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SiteRecoveryVaultSettingData>)Data).Create(ref reader, options);
+        SiteRecoveryVaultSettingData IJsonModel<SiteRecoveryVaultSettingData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SiteRecoveryVaultSettingData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SiteRecoveryVaultSettingData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<SiteRecoveryVaultSettingData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SiteRecoveryVaultSettingData>(Data, options, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
 
-        SiteRecoveryVaultSettingData IPersistableModel<SiteRecoveryVaultSettingData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SiteRecoveryVaultSettingData>(data, options);
+        SiteRecoveryVaultSettingData IPersistableModel<SiteRecoveryVaultSettingData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SiteRecoveryVaultSettingData>(data, options, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
 
-        string IPersistableModel<SiteRecoveryVaultSettingData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SiteRecoveryVaultSettingData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<SiteRecoveryVaultSettingData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SiteRecoveryVaultSettingData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

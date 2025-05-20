@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Provisioning status of the profile. </summary>
+    /// <summary>
+    /// Provisioning status of the profile.
+    /// Serialized Name: ProfileProvisioningState
+    /// </summary>
     public readonly partial struct ProfileProvisioningState : IEquatable<ProfileProvisioningState>
     {
         private readonly string _value;
@@ -28,15 +31,30 @@ namespace Azure.ResourceManager.Cdn.Models
         private const string DeletingValue = "Deleting";
         private const string CreatingValue = "Creating";
 
-        /// <summary> Succeeded. </summary>
+        /// <summary>
+        /// Succeeded
+        /// Serialized Name: ProfileProvisioningState.Succeeded
+        /// </summary>
         public static ProfileProvisioningState Succeeded { get; } = new ProfileProvisioningState(SucceededValue);
-        /// <summary> Failed. </summary>
+        /// <summary>
+        /// Failed
+        /// Serialized Name: ProfileProvisioningState.Failed
+        /// </summary>
         public static ProfileProvisioningState Failed { get; } = new ProfileProvisioningState(FailedValue);
-        /// <summary> Updating. </summary>
+        /// <summary>
+        /// Updating
+        /// Serialized Name: ProfileProvisioningState.Updating
+        /// </summary>
         public static ProfileProvisioningState Updating { get; } = new ProfileProvisioningState(UpdatingValue);
-        /// <summary> Deleting. </summary>
+        /// <summary>
+        /// Deleting
+        /// Serialized Name: ProfileProvisioningState.Deleting
+        /// </summary>
         public static ProfileProvisioningState Deleting { get; } = new ProfileProvisioningState(DeletingValue);
-        /// <summary> Creating. </summary>
+        /// <summary>
+        /// Creating
+        /// Serialized Name: ProfileProvisioningState.Creating
+        /// </summary>
         public static ProfileProvisioningState Creating { get; } = new ProfileProvisioningState(CreatingValue);
         /// <summary> Determines if two <see cref="ProfileProvisioningState"/> values are the same. </summary>
         public static bool operator ==(ProfileProvisioningState left, ProfileProvisioningState right) => left.Equals(right);

@@ -9,9 +9,9 @@ using System;
 using System.ComponentModel;
 using System.Globalization;
 
-namespace BasicTypeSpec.Models
+namespace BasicTypeSpec
 {
-    /// <summary> The ThingModel_requiredLiteralInt. </summary>
+    /// <summary> The ThingModelRequiredLiteralInt. </summary>
     public readonly partial struct ThingModelRequiredLiteralInt : IEquatable<ThingModelRequiredLiteralInt>
     {
         private readonly int _value;
@@ -42,11 +42,11 @@ namespace BasicTypeSpec.Models
         /// <param name="value"> The value. </param>
         public static implicit operator ThingModelRequiredLiteralInt(int value) => new ThingModelRequiredLiteralInt(value);
 
-        /// <param name="obj"> The object to compare. </param>
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ThingModelRequiredLiteralInt other && Equals(other);
 
-        /// <param name="other"> The instance to compare. </param>
+        /// <inheritdoc/>
         public bool Equals(ThingModelRequiredLiteralInt other) => Equals(_value, other._value);
 
         /// <inheritdoc/>

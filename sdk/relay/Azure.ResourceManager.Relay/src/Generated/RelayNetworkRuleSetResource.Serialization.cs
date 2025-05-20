@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Relay
 {
     public partial class RelayNetworkRuleSetResource : IJsonModel<RelayNetworkRuleSetData>
     {
+        private static RelayNetworkRuleSetData s_dataDeserializationInstance;
+        private static RelayNetworkRuleSetData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<RelayNetworkRuleSetData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<RelayNetworkRuleSetData>)Data).Write(writer, options);
 
-        RelayNetworkRuleSetData IJsonModel<RelayNetworkRuleSetData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<RelayNetworkRuleSetData>)Data).Create(ref reader, options);
+        RelayNetworkRuleSetData IJsonModel<RelayNetworkRuleSetData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<RelayNetworkRuleSetData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<RelayNetworkRuleSetData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<RelayNetworkRuleSetData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<RelayNetworkRuleSetData>(Data, options, AzureResourceManagerRelayContext.Default);
 
-        RelayNetworkRuleSetData IPersistableModel<RelayNetworkRuleSetData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<RelayNetworkRuleSetData>(data, options);
+        RelayNetworkRuleSetData IPersistableModel<RelayNetworkRuleSetData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<RelayNetworkRuleSetData>(data, options, AzureResourceManagerRelayContext.Default);
 
-        string IPersistableModel<RelayNetworkRuleSetData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<RelayNetworkRuleSetData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<RelayNetworkRuleSetData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<RelayNetworkRuleSetData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

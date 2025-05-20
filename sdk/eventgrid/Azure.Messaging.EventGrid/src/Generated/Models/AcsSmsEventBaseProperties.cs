@@ -5,22 +5,24 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of common properties of all SMS events. </summary>
     public partial class AcsSmsEventBaseProperties
     {
         /// <summary> Initializes a new instance of <see cref="AcsSmsEventBaseProperties"/>. </summary>
-        internal AcsSmsEventBaseProperties()
-        {
-        }
-
-        /// <summary> Initializes a new instance of <see cref="AcsSmsEventBaseProperties"/>. </summary>
         /// <param name="messageId"> The identity of the SMS message. </param>
         /// <param name="from"> The identity of SMS message sender. </param>
         /// <param name="to"> The identity of SMS message receiver. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="messageId"/>, <paramref name="from"/> or <paramref name="to"/> is null. </exception>
         internal AcsSmsEventBaseProperties(string messageId, string @from, string to)
         {
+            Argument.AssertNotNull(messageId, nameof(messageId));
+            Argument.AssertNotNull(@from, nameof(@from));
+            Argument.AssertNotNull(to, nameof(to));
+
             MessageId = messageId;
             From = @from;
             To = to;

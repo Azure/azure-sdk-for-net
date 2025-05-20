@@ -1,7 +1,10 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Collections;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using System.Text;
 using Microsoft.CodeAnalysis.Text;
 
@@ -11,20 +14,26 @@ internal sealed partial class ModelReaderWriterContextGenerator
 {
     private sealed partial class Emitter
     {
+        private const string s_modelReaderWriterContext = "global::System.ClientModel.Primitives.ModelReaderWriterContext";
+        private const string s_modelReaderWriterTypeBuilder = "global::System.ClientModel.Primitives.ModelReaderWriterTypeBuilder";
+
         internal void Emit(ModelReaderWriterContextGenerationSpec contextGenerationSpec)
         {
-            EmitContextClass(contextGenerationSpec);
+            var hintNames = new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase);
+
+            EmitContextClass(contextGenerationSpec, hintNames);
 
             foreach (var modelInfo in contextGenerationSpec.TypeBuilders)
             {
-                EmitTypeBuilder(modelInfo, contextGenerationSpec.Type);
+                EmitTypeBuilder(modelInfo, contextGenerationSpec.Type, hintNames);
             }
         }
 
-        private void EmitContextClass(ModelReaderWriterContextGenerationSpec contextGenerationSpec)
+        private void EmitContextClass(ModelReaderWriterContextGenerationSpec contextGenerationSpec, Dictionary<string, int> hintNames)
         {
             var contextName = contextGenerationSpec.Type.Name;
             var namespaces = GetNameSpaces(contextGenerationSpec);
+            namespaces.Add("System.Collections.Concurrent");
 
             var indent = 0;
             var builder = new StringBuilder();
@@ -34,136 +43,119 @@ internal sealed partial class ModelReaderWriterContextGenerator
             {
                 builder.AppendLine(indent, $"using {nameSpace};");
             }
-            foreach (var typeRef in contextGenerationSpec.GetAllTypeRefs())
-            {
-                if (typeRef.Alias is null || typeRef.ItemType is not null)
-                    continue;
-
-                builder.AppendLine(indent, $"using {typeRef.Alias} = {typeRef.Namespace}.{typeRef.TypeCaseName.Remove(typeRef.TypeCaseName.Length - 1)};");
-                if (contextGenerationSpec.Type.IsSameAssembly(typeRef))
-                {
-                    builder.AppendLine(indent, $"using {typeRef.Alias}_Builder = {typeRef.Namespace}.{typeRef.TypeCaseName}Builder;");
-                }
-            }
             builder.AppendLine();
 
             builder.AppendLine(indent, $"namespace {contextGenerationSpec.Type.Namespace};");
             builder.AppendLine();
 
-            builder.AppendLine(indent, $"{contextGenerationSpec.Modifier} partial class {contextName} : ModelReaderWriterContext");
+            builder.AppendLine(indent, $"{contextGenerationSpec.Modifier} partial class {contextName} : {s_modelReaderWriterContext}");
             builder.AppendLine(indent, "{");
             indent++;
 
-            builder.AppendLine(indent, "private readonly Dictionary<Type, Func<ModelReaderWriterTypeBuilder>> _typeBuilderFactories = [];");
+            builder.Append(indent, "private readonly ");
+            builder.AppendType(typeof(Dictionary<,>));
+            builder.Append("<");
+            builder.AppendType(typeof(Type));
+            builder.Append(", ");
+            builder.AppendType(typeof(Func<>));
+            builder.Append("<");
+            builder.AppendLine($"{s_modelReaderWriterTypeBuilder}>> _typeBuilderFactories = new();");
+
+            builder.Append(indent, "private readonly ");
+            builder.AppendType(typeof(ConcurrentDictionary<,>));
+            builder.Append("<");
+            builder.AppendType(typeof(Type));
+            builder.Append(", ");
+            builder.AppendLine($"{s_modelReaderWriterTypeBuilder}> _typeBuilders = new();");
             builder.AppendLine();
 
             if (contextGenerationSpec.ReferencedContexts.Count > 0)
             {
-                foreach (var referencedContext in contextGenerationSpec.ReferencedContexts)
-                {
-                    builder.AppendLine(indent, $"private static readonly {referencedContext.Name} s_{referencedContext.CamelCaseName}Library = new();");
-                }
-                builder.AppendLine();
-            }
-
-            if (contextGenerationSpec.TypeBuilders.Count > 0)
-            {
-                foreach (var modelInfo in contextGenerationSpec.TypeBuilders)
-                {
-                    builder.Append(indent, "private ");
-                    string typeCase;
-                    string camelCase;
-                    if (modelInfo.Type.Alias is not null)
-                    {
-                        typeCase = $"{modelInfo.Type.TypeCaseAlias}Builder";
-                        camelCase = $"_{modelInfo.Type.CamelCaseAlias}Builder";
-                    }
-                    else
-                    {
-                        typeCase = $"{modelInfo.Type.TypeCaseName}Builder";
-                        camelCase = $"_{modelInfo.Type.CamelCaseName}Builder";
-                    }
-
-                    if (ShouldGenerateAsLocal(contextGenerationSpec, modelInfo))
-                    {
-                        builder.Append(typeCase);
-                        builder.Append(" ");
-                    }
-                    else
-                    {
-                        builder.Append("ModelReaderWriterTypeBuilder ");
-                    }
-                    builder.Append(camelCase);
-                    builder.AppendLine(";");
-                }
-                builder.AppendLine();
-
-                builder.AppendLine(indent, $"private static {contextName} _{contextName.ToCamelCase()};");
-                builder.AppendLine(indent, "/// <summary> Gets the default instance </summary>");
-                builder.AppendLine(indent, $"public static {contextName} Default => _{contextName.ToCamelCase()} ??= new();");
-                builder.AppendLine();
-
-                builder.AppendLine(indent, $"private {contextName}()");
+                builder.Append(indent, "private static readonly ");
+                builder.AppendType(typeof(Dictionary<,>));
+                builder.Append("<");
+                builder.AppendType(typeof(Type));
+                builder.Append(", ");
+                builder.Append(s_modelReaderWriterContext);
+                builder.AppendLine("> s_referenceContexts = new()");
                 builder.AppendLine(indent, "{");
                 indent++;
-                foreach (var modelInfo in contextGenerationSpec.TypeBuilders)
+                foreach (var referencedContext in contextGenerationSpec.ReferencedContexts)
                 {
-                    string typeofName;
-                    string camelCase;
-                    if (modelInfo.Type.Alias is not null)
-                    {
-                        typeofName = modelInfo.Type.Alias;
-                        camelCase = $"_{modelInfo.Type.CamelCaseAlias}Builder";
-                    }
-                    else
-                    {
-                        typeofName = modelInfo.Type.Name;
-                        camelCase = $"_{modelInfo.Type.CamelCaseName}Builder";
-                    }
-
-                    builder.Append(indent, $"_typeBuilderFactories.Add(typeof({typeofName}), () => {camelCase} ??=");
-                    if (ShouldGenerateAsLocal(contextGenerationSpec, modelInfo))
-                    {
-                        builder.AppendLine(" new());");
-                    }
-                    else
-                    {
-                        builder.AppendLine($" s_{modelInfo.ContextType.CamelCaseName}Library.GetTypeBuilder(typeof({typeofName})));");
-                    }
+                    builder.AppendLine(indent, $"{{ typeof({referencedContext.FullyQualifiedName}), {referencedContext.FullyQualifiedName}.Default }},");
                 }
-                builder.AppendLine();
-
-                builder.AppendLine(indent, "AddAdditionalFactories(_typeBuilderFactories);");
-
                 indent--;
-                builder.AppendLine(indent, "}");
+                builder.AppendLine(indent, "};");
                 builder.AppendLine();
             }
 
-            builder.AppendLine(indent, "/// <inheritdoc/>");
-            builder.AppendLine(indent, "protected override bool TryGetTypeBuilderCore(Type type, out ModelReaderWriterTypeBuilder builder)");
+            builder.AppendLine(indent, $"private static {contextName} _{contextName.ToCamelCase()};");
+            builder.AppendLine(indent, "/// <summary> Gets the default instance </summary>");
+            builder.AppendLine(indent, $"public static {contextName} Default => _{contextName.ToCamelCase()} ??= new();");
+            builder.AppendLine();
+
+            builder.AppendLine(indent, $"private {contextName}()");
             builder.AppendLine(indent, "{");
             indent++;
+            foreach (var modelInfo in contextGenerationSpec.TypeBuilders)
+            {
+                WrapInSuppress(modelInfo.Type.ObsoleteLevel, builder, () =>
+                {
+                    builder.Append(indent, $"_typeBuilderFactories.Add(typeof({modelInfo.Type.FullyQualifiedName}), () => ");
+                    if (ShouldGenerateAsLocal(contextGenerationSpec, modelInfo))
+                    {
+                        builder.AppendLine($" new global::{modelInfo.Type.GetInnerItemType().Namespace}.{modelInfo.Type.TypeCaseName}Builder());");
+                    }
+                    else
+                    {
+                        builder.AppendLine($" s_referenceContexts[typeof({modelInfo.ContextType.FullyQualifiedName})].GetTypeBuilder(typeof({modelInfo.Type.FullyQualifiedName})));");
+                    }
+                });
+            }
+            builder.AppendLine();
+
+            builder.AppendLine(indent, "AddAdditionalFactories(_typeBuilderFactories);");
+
+            indent--;
+            builder.AppendLine(indent, "}");
+            builder.AppendLine();
+
+            builder.AppendLine(indent, "/// <inheritdoc/>");
+            builder.Append(indent, "protected override bool TryGetTypeBuilderCore(");
+            builder.AppendType(typeof(Type));
+            builder.AppendLine($" type, out {s_modelReaderWriterTypeBuilder} builder)");
+            builder.AppendLine(indent, "{");
+            indent++;
+            builder.AppendLine(indent, "if (_typeBuilders.TryGetValue(type, out builder))");
+            builder.AppendLine(indent, "{");
+            indent++;
+            builder.AppendLine(indent, "return true;");
+            indent--;
+            builder.AppendLine(indent, "}");
+            builder.AppendLine();
             builder.AppendLine(indent, "if (_typeBuilderFactories.TryGetValue(type, out var factory))");
             builder.AppendLine(indent, "{");
             indent++;
             builder.AppendLine(indent, "builder = factory();");
+            builder.AppendLine(indent, "_typeBuilders.TryAdd(type, builder);");
             builder.AppendLine(indent, "return true;");
             indent--;
             builder.AppendLine(indent, "}");
             builder.AppendLine();
             if (contextGenerationSpec.ReferencedContexts.Count > 0)
             {
-                for (int i = 0; i < contextGenerationSpec.ReferencedContexts.Count; i++)
-                {
-                    var referencedContext = contextGenerationSpec.ReferencedContexts[i];
-                    builder.AppendLine(indent, $"if (s_{referencedContext.CamelCaseName}Library.TryGetTypeBuilder(type, out builder))");
-                    builder.AppendLine(indent, "{");
-                    indent++;
-                    builder.AppendLine(indent, "return true;");
-                    indent--;
-                    builder.AppendLine(indent, "}");
-                }
+                builder.AppendLine(indent, "foreach(var kvp in s_referenceContexts)");
+                builder.AppendLine(indent, "{");
+                indent++;
+                builder.AppendLine(indent, $"if (kvp.Value.TryGetTypeBuilder(type, out builder))");
+                builder.AppendLine(indent, "{");
+                indent++;
+                builder.AppendLine(indent, $"_typeBuilders.TryAdd(type, builder);");
+                builder.AppendLine(indent, "return true;");
+                indent--;
+                builder.AppendLine(indent, "}");
+                indent--;
+                builder.AppendLine(indent, "}");
                 builder.AppendLine();
             }
             else
@@ -175,12 +167,36 @@ internal sealed partial class ModelReaderWriterContextGenerator
             builder.AppendLine(indent, "}");
             builder.AppendLine();
 
-            builder.AppendLine(indent, $"partial void AddAdditionalFactories(Dictionary<Type, Func<ModelReaderWriterTypeBuilder>> factories);");
+            builder.Append(indent, "partial void AddAdditionalFactories(");
+            builder.AppendType(typeof(Dictionary<,>));
+            builder.Append("<");
+            builder.AppendType(typeof(Type));
+            builder.Append(", ");
+            builder.AppendType(typeof(Func<>));
+            builder.Append("<");
+            builder.Append(s_modelReaderWriterTypeBuilder);
+            builder.AppendLine(">> factories);");
 
             indent--;
             builder.AppendLine(indent, "}");
 
-            AddSource($"{contextName}.g.cs", SourceText.From(builder.ToString(), Encoding.UTF8));
+            AddNewFile(contextName, builder.ToString(), hintNames);
+        }
+
+        private void AddNewFile(string fileName, string source, Dictionary<string, int> hintNames)
+        {
+            var hintName = fileName;
+            if (hintNames.TryGetValue(fileName, out var collisionCount))
+            {
+                hintName = $"{fileName}_{collisionCount++}";
+                hintNames[fileName] = collisionCount;
+            }
+            else
+            {
+                hintNames.Add(fileName, 1);
+            }
+
+            AddSource($"{hintName}.g.cs", SourceText.From(source, Encoding.UTF8));
         }
 
         private static void EmitHeader(int indent, StringBuilder builder)
@@ -199,7 +215,7 @@ internal sealed partial class ModelReaderWriterContextGenerator
                 contextGenerationSpec.Type.Equals(modelInfo.ContextType);
         }
 
-        private void EmitTypeBuilder(TypeBuilderSpec modelInfo, TypeRef context)
+        private void EmitTypeBuilder(TypeBuilderSpec modelInfo, TypeRef context, Dictionary<string, int> hintNames)
         {
             if (modelInfo.Kind == TypeBuilderKind.IPersistableModel && !context.IsSameAssembly(modelInfo.Type))
             {
@@ -222,9 +238,7 @@ internal sealed partial class ModelReaderWriterContextGenerator
             builder.AppendLine(indent, $"namespace {innerItemType.Namespace};");
             builder.AppendLine();
 
-            var className = modelInfo.Type.ItemType is null || modelInfo.Type.Alias is null ? modelInfo.Type.TypeCaseName : modelInfo.Type.TypeCaseAlias;
-
-            builder.AppendLine(indent, $"internal class {className}Builder : ModelReaderWriterTypeBuilder");
+            builder.AppendLine(indent, $"internal class {modelInfo.Type.TypeCaseName}Builder : {s_modelReaderWriterTypeBuilder}");
             builder.AppendLine(indent, "{");
             indent++;
 
@@ -255,7 +269,7 @@ internal sealed partial class ModelReaderWriterContextGenerator
             indent--;
             builder.AppendLine(indent, "}");
 
-            AddSource($"{innerItemType.Namespace.Replace('.', '_')}_{modelInfo.Type.TypeCaseName}Builder.g.cs", SourceText.From(builder.ToString(), Encoding.UTF8));
+            AddNewFile($"{innerItemType.Namespace.Replace('.', '_')}_{modelInfo.Type.TypeCaseName}Builder", builder.ToString(), hintNames);
         }
 
         private static HashSet<string> GetNamespaces(TypeBuilderSpec modelInfo)
@@ -270,6 +284,7 @@ internal sealed partial class ModelReaderWriterContextGenerator
                 case TypeBuilderKind.ReadOnlyMemory:
                     namespaces.Add("System.Collections");
                     namespaces.Add("System.Collections.Generic");
+                    namespaces.Add("System.Runtime.InteropServices");
                     break;
                 case TypeBuilderKind.Array:
                     namespaces.Add("System.Collections.Generic");
@@ -296,44 +311,60 @@ internal sealed partial class ModelReaderWriterContextGenerator
             TypeBuilderSpec modelInfo)
         {
             var elementType = modelInfo.Type.ItemType!;
-            builder.AppendLine(indent, $"protected override Type BuilderType => typeof(List<{elementType.Name}>);");
-            builder.AppendLine();
 
-            builder.AppendLine(indent, $"protected override Type ItemType => typeof({elementType.Name});");
-            builder.AppendLine();
+            WrapInSuppress(elementType.ObsoleteLevel, builder, () =>
+            {
+                builder.Append(indent, "protected override ");
+                builder.AppendType(typeof(Type));
+                builder.Append(" BuilderType => typeof(");
+                builder.AppendType(typeof(List<>));
+                builder.AppendLine($"<{elementType.FullyQualifiedName}>);");
+                builder.AppendLine();
 
-            builder.AppendLine(indent, $"protected override object CreateInstance() => new List<{elementType.Name}>();");
-            builder.AppendLine();
+                builder.Append(indent, "protected override ");
+                builder.AppendType(typeof(Type));
+                builder.AppendLine($" ItemType => typeof({elementType.FullyQualifiedName});");
+                builder.AppendLine();
 
-            builder.AppendLine(indent, "protected override void AddItem(object collection, object item)");
-            indent++;
-            builder.AppendLine(indent, $"=> ((List<{elementType.Name}>)collection).Add(({elementType.Name})item);");
-            indent--;
-            builder.AppendLine();
+                builder.Append(indent, "protected override object CreateInstance() => new ");
+                builder.AppendType(typeof(List<>));
+                builder.AppendLine($"<{elementType.FullyQualifiedName}>();");
+                builder.AppendLine();
 
-            builder.AppendLine(indent, "protected override object ToCollection(object builder)");
-            indent++;
-            builder.AppendLine(indent, $"=> new {modelInfo.Type.Name}([.. (List<{elementType.Name}>)builder]);");
-            indent--;
-            builder.AppendLine();
+                builder.AppendLine(indent, "protected override void AddItem(object collectionBuilder, object item)");
+                indent++;
+                builder.Append(indent, "=> ((");
+                builder.AppendType(typeof(List<>));
+                builder.AppendLine($"<{elementType.FullyQualifiedName}>)collectionBuilder).Add(({elementType.FullyQualifiedName})item);");
+                indent--;
+                builder.AppendLine();
 
-            builder.AppendLine(indent, "protected override IEnumerable GetItems(object obj)");
-            builder.AppendLine(indent, "{");
-            indent++;
-            builder.AppendLine(indent, $"if (obj is {modelInfo.Type.Name} rom)");
-            builder.AppendLine(indent, "{");
-            indent++;
-            builder.AppendLine(indent, "for (int i = 0; i < rom.Length; i++)");
-            builder.AppendLine(indent, "{");
-            indent++;
-            builder.AppendLine(indent, "yield return rom.Span[i];");
-            indent--;
-            builder.AppendLine(indent, "}");
-            indent--;
-            builder.AppendLine(indent, "}");
-            builder.AppendLine(indent, "yield break;");
-            indent--;
-            builder.AppendLine(indent, "}");
+                builder.AppendLine(indent, "protected override object ConvertCollectionBuilder(object collectionBuilder)");
+                indent++;
+                builder.Append(indent, $"=> new {modelInfo.Type.FullyQualifiedName}(((");
+                builder.AppendType(typeof(List<>));
+                builder.AppendLine($"<{elementType.FullyQualifiedName}>)collectionBuilder).ToArray());");
+                indent--;
+                builder.AppendLine();
+
+                builder.Append(indent, "protected override ");
+                builder.AppendType(typeof(IEnumerable));
+                builder.AppendLine(" GetItems(object obj)");
+                builder.AppendLine(indent, "{");
+                indent++;
+                builder.AppendLine(indent, $"if (obj is {modelInfo.Type.FullyQualifiedName} rom)");
+                builder.AppendLine(indent, "{");
+                indent++;
+                builder.Append(indent, "return ");
+                builder.AppendType(typeof(MemoryMarshal));
+                builder.AppendLine($".ToEnumerable(rom);");
+                indent--;
+                builder.AppendLine(indent, "}");
+                builder.AppendLine();
+                builder.AppendLine(indent, $"return null;");
+                indent--;
+                builder.AppendLine(indent, "}");
+            });
         }
 
         private static void EmitMultiDimensionalArrayBuilder(
@@ -342,55 +373,63 @@ internal sealed partial class ModelReaderWriterContextGenerator
             TypeBuilderSpec modelInfo)
         {
             var elementType = modelInfo.Type.ItemType!;
-            builder.Append(indent, "protected override Type BuilderType => typeof(");
-            builder.AppendVariableList(modelInfo.Type.ArrayRank, elementType.Name);
-            builder.AppendLine(");");
-            builder.AppendLine();
 
-            builder.Append(indent, "protected override Type ItemType => typeof(");
-            builder.AppendVariableList(modelInfo.Type.ArrayRank - 1, elementType.Name);
-            builder.AppendLine(");");
-            builder.AppendLine();
+            WrapInSuppress(elementType.ObsoleteLevel, builder, () =>
+            {
+                builder.Append(indent, "protected override ");
+                builder.AppendType(typeof(Type));
+                builder.Append(" BuilderType => typeof(");
+                builder.AppendVariableList(modelInfo.Type.ArrayRank, elementType.FullyQualifiedName);
+                builder.AppendLine(");");
+                builder.AppendLine();
 
-            builder.Append(indent, "protected override object CreateInstance() => new ");
-            builder.AppendVariableList(modelInfo.Type.ArrayRank, elementType.Name);
-            builder.AppendLine("();");
-            builder.AppendLine();
+                builder.Append(indent, "protected override ");
+                builder.AppendType(typeof(Type));
+                builder.Append(" ItemType => typeof(");
+                builder.AppendVariableList(modelInfo.Type.ArrayRank - 1, elementType.FullyQualifiedName);
+                builder.AppendLine(");");
+                builder.AppendLine();
 
-            builder.AppendLine(indent, "protected override void AddItem(object collection, object item)");
-            indent++;
-            builder.Append(indent, "=> ((");
-            builder.AppendVariableList(modelInfo.Type.ArrayRank, elementType.Name);
-            builder.Append(")collection).Add((");
-            builder.AppendVariableList(modelInfo.Type.ArrayRank - 1, elementType.Name);
-            builder.AppendLine(")item);");
-            indent--;
-            builder.AppendLine();
+                builder.Append(indent, "protected override object CreateInstance() => new ");
+                builder.AppendVariableList(modelInfo.Type.ArrayRank, elementType.FullyQualifiedName);
+                builder.AppendLine("();");
+                builder.AppendLine();
 
-            builder.AppendLine(indent, "protected override object ToCollection(object builder)");
-            builder.AppendLine(indent, "{");
-            indent++;
-            builder.Append(indent, "var instance = (");
-            builder.AppendVariableList(modelInfo.Type.ArrayRank, elementType.Name);
-            builder.AppendLine(")builder;");
-            builder.AppendLine(indent, "int rowCount = instance.Count;");
-            builder.AppendLine(indent, "int colCount = instance[0].Count;");
-            builder.AppendLine(indent, $"{modelInfo.Type.Name} multiArray = new {elementType.Name}[rowCount, colCount];");
-            builder.AppendLine();
-            builder.AppendLine(indent, "for (int i = 0; i < rowCount; i++)");
-            builder.AppendLine(indent, "{");
-            indent++;
-            builder.AppendLine(indent, "for (int j = 0; j < colCount; j++)");
-            builder.AppendLine(indent, "{");
-            indent++;
-            builder.AppendLine(indent, "multiArray[i, j] = instance[i][j];");
-            indent--;
-            builder.AppendLine(indent, "}");
-            indent--;
-            builder.AppendLine(indent, "}");
-            builder.AppendLine(indent, "return multiArray;");
-            indent--;
-            builder.AppendLine(indent, "}");
+                builder.AppendLine(indent, "protected override void AddItem(object collectionBuilder, object item)");
+                indent++;
+                builder.Append(indent, "=> ((");
+                builder.AppendVariableList(modelInfo.Type.ArrayRank, elementType.FullyQualifiedName);
+                builder.Append(")collectionBuilder).Add((");
+                builder.AppendVariableList(modelInfo.Type.ArrayRank - 1, elementType.FullyQualifiedName);
+                builder.AppendLine(")item);");
+                indent--;
+                builder.AppendLine();
+
+                builder.AppendLine(indent, "protected override object ConvertCollectionBuilder(object collectionBuilder)");
+                builder.AppendLine(indent, "{");
+                indent++;
+                builder.Append(indent, "var instance = (");
+                builder.AppendVariableList(modelInfo.Type.ArrayRank, elementType.FullyQualifiedName);
+                builder.AppendLine(")collectionBuilder;");
+                builder.AppendLine(indent, "int rowCount = instance.Count;");
+                builder.AppendLine(indent, "int colCount = instance[0].Count;");
+                builder.AppendLine(indent, $"{modelInfo.Type.Name} multiArray = new {elementType.FullyQualifiedName}[rowCount, colCount];");
+                builder.AppendLine();
+                builder.AppendLine(indent, "for (int i = 0; i < rowCount; i++)");
+                builder.AppendLine(indent, "{");
+                indent++;
+                builder.AppendLine(indent, "for (int j = 0; j < colCount; j++)");
+                builder.AppendLine(indent, "{");
+                indent++;
+                builder.AppendLine(indent, "multiArray[i, j] = instance[i][j];");
+                indent--;
+                builder.AppendLine(indent, "}");
+                indent--;
+                builder.AppendLine(indent, "}");
+                builder.AppendLine(indent, "return multiArray;");
+                indent--;
+                builder.AppendLine(indent, "}");
+            });
         }
 
         private static void EmitArrayBuilder(
@@ -399,25 +438,40 @@ internal sealed partial class ModelReaderWriterContextGenerator
             TypeBuilderSpec modelInfo)
         {
             var elementType = modelInfo.Type.ItemType!;
-            builder.AppendLine(indent, $"protected override Type BuilderType => typeof(List<{elementType.Name}>);");
-            builder.AppendLine();
+            WrapInSuppress(elementType.ObsoleteLevel, builder, () =>
+            {
+                builder.Append(indent, "protected override ");
+                builder.AppendType(typeof(Type));
+                builder.Append(" BuilderType => typeof(");
+                builder.AppendType(typeof(List<>));
+                builder.AppendLine($"<{elementType.FullyQualifiedName}>);");
+                builder.AppendLine();
 
-            builder.AppendLine(indent, $"protected override Type ItemType => typeof({elementType.Name});");
-            builder.AppendLine();
+                builder.Append(indent, "protected override ");
+                builder.AppendType(typeof(Type));
+                builder.AppendLine($" ItemType => typeof({elementType.FullyQualifiedName});");
+                builder.AppendLine();
 
-            builder.AppendLine(indent, $"protected override object CreateInstance() => new List<{elementType.Name}>();");
-            builder.AppendLine();
+                builder.Append(indent, "protected override object CreateInstance() => new ");
+                builder.AppendType(typeof(List<>));
+                builder.AppendLine($"<{elementType.FullyQualifiedName}>();");
+                builder.AppendLine();
 
-            builder.AppendLine(indent, "protected override void AddItem(object collection, object item)");
-            indent++;
-            builder.AppendLine(indent, $"=> ((List<{elementType.Name}>)collection).Add(({elementType.Name})item);");
-            indent--;
-            builder.AppendLine();
+                builder.AppendLine(indent, "protected override void AddItem(object collectionBuilder, object item)");
+                indent++;
+                builder.Append(indent, "=> ((");
+                builder.AppendType(typeof(List<>));
+                builder.AppendLine($"<{elementType.FullyQualifiedName}>)collectionBuilder).Add(({elementType.FullyQualifiedName})item);");
+                indent--;
+                builder.AppendLine();
 
-            builder.AppendLine(indent, "protected override object ToCollection(object builder)");
-            indent++;
-            builder.AppendLine(indent, $"=> ((List<{elementType.Name}>)builder).ToArray();");
-            indent--;
+                builder.AppendLine(indent, "protected override object ConvertCollectionBuilder(object collectionBuilder)");
+                indent++;
+                builder.Append(indent, "=> ((");
+                builder.AppendType(typeof(List<>));
+                builder.AppendLine($"<{elementType.FullyQualifiedName}>)collectionBuilder).ToArray();");
+                indent--;
+            });
         }
 
         private static void EmitDictionaryBuilder(
@@ -426,19 +480,27 @@ internal sealed partial class ModelReaderWriterContextGenerator
             TypeBuilderSpec modelInfo)
         {
             var elementType = modelInfo.Type.ItemType!;
-            builder.AppendLine(indent, $"protected override Type BuilderType => typeof(Dictionary<string, {elementType.Name}>);");
-            builder.AppendLine();
 
-            builder.AppendLine(indent, $"protected override Type ItemType => typeof({elementType.Name});");
-            builder.AppendLine();
+            WrapInSuppress(elementType.ObsoleteLevel, builder, () =>
+            {
+                builder.Append(indent, "protected override ");
+                builder.AppendType(typeof(Type));
+                builder.AppendLine($" BuilderType => typeof({modelInfo.Type.FullyQualifiedName});");
+                builder.AppendLine();
 
-            builder.AppendLine(indent, $"protected override object CreateInstance() => new Dictionary<string, {elementType.Name}>();");
-            builder.AppendLine();
+                builder.Append(indent, "protected override ");
+                builder.AppendType(typeof(Type));
+                builder.AppendLine($" ItemType => typeof({elementType.FullyQualifiedName});");
+                builder.AppendLine();
 
-            builder.AppendLine(indent, "protected override void AddKeyValuePair(object collection, string key, object item)");
-            indent++;
-            builder.AppendLine(indent, $"=> ((Dictionary<string, {elementType.Name}>)collection).Add(key, ({elementType.Name})item);");
-            indent--;
+                builder.AppendLine(indent, $"protected override object CreateInstance() => new {modelInfo.Type.FullyQualifiedName}();");
+                builder.AppendLine();
+
+                builder.AppendLine(indent, "protected override void AddItemWithKey(object collectionBuilder, string key, object item)");
+                indent++;
+                builder.AppendLine(indent, $"=> (({modelInfo.Type.FullyQualifiedName})collectionBuilder).Add(key, ({elementType.FullyQualifiedName})item);");
+                indent--;
+            });
         }
 
         private static void EmitListBuilder(
@@ -448,19 +510,26 @@ internal sealed partial class ModelReaderWriterContextGenerator
         {
             var elementType = modelInfo.Type.ItemType!;
 
-            builder.AppendLine(indent, $"protected override Type BuilderType => typeof({modelInfo.Type.Name});");
-            builder.AppendLine();
+            WrapInSuppress(elementType.ObsoleteLevel, builder, () =>
+            {
+                builder.Append(indent, "protected override ");
+                builder.AppendType(typeof(Type));
+                builder.AppendLine($" BuilderType => typeof({modelInfo.Type.FullyQualifiedName});");
+                builder.AppendLine();
 
-            builder.AppendLine(indent, $"protected override Type ItemType => typeof({elementType.Name});");
-            builder.AppendLine();
+                builder.Append(indent, "protected override ");
+                builder.AppendType(typeof(Type));
+                builder.Append($" ItemType => typeof({elementType.FullyQualifiedName});");
+                builder.AppendLine();
 
-            builder.AppendLine(indent, $"protected override object CreateInstance() => new {modelInfo.Type.Name}();");
-            builder.AppendLine();
+                builder.AppendLine(indent, $"protected override object CreateInstance() => new {modelInfo.Type.FullyQualifiedName}();");
+                builder.AppendLine();
 
-            builder.AppendLine(indent, "protected override void AddItem(object collection, object item)");
-            indent++;
-            builder.AppendLine(indent, $"=> (({modelInfo.Type.Name})collection).Add(({elementType.Name})item);");
-            indent--;
+                builder.AppendLine(indent, "protected override void AddItem(object collectionBuilder, object item)");
+                indent++;
+                builder.AppendLine(indent, $"=> (({modelInfo.Type.FullyQualifiedName})collectionBuilder).Add(({elementType.FullyQualifiedName})item);");
+                indent--;
+            });
         }
 
         private static void EmitPersistableModelBuilder(
@@ -469,17 +538,40 @@ internal sealed partial class ModelReaderWriterContextGenerator
             TypeBuilderSpec modelInfo,
             TypeRef context)
         {
-            builder.AppendLine(indent, $"protected override Type BuilderType => typeof({modelInfo.Type.Name});");
+            WrapInSuppress(modelInfo.Type.ObsoleteLevel, builder, () => {
+                builder.Append(indent, "protected override ");
+                builder.AppendType(typeof(Type));
+                builder.AppendLine($" BuilderType => typeof({modelInfo.Type.FullyQualifiedName});");
+            });
             builder.AppendLine();
 
             if (modelInfo.PersistableModelProxy is not null)
             {
-                builder.AppendLine(indent, $"protected override object CreateInstance() => new {modelInfo.PersistableModelProxy.Name}();");
+                WrapInSuppress(modelInfo.PersistableModelProxy.ObsoleteLevel, builder, () =>
+                    builder.AppendLine(indent, $"protected override object CreateInstance() => new {modelInfo.PersistableModelProxy.FullyQualifiedName}();"));
             }
             else
             {
-                builder.AppendLine(indent, $"protected override object CreateInstance() => new {modelInfo.Type.Name}();");
+                WrapInSuppress(modelInfo.Type.ObsoleteLevel, builder, () =>
+                    builder.AppendLine(indent, $"protected override object CreateInstance() => new {modelInfo.Type.FullyQualifiedName}();"));
             }
+        }
+
+        /// <summary>
+        /// Helper method to wrap the action in #pragma warning disable CS0618 and #pragma warning restore CS0618.
+        /// This is needed if MRW is used with a type that is marked as Obsolete, but not marked as an error.
+        /// </summary>
+        private static void WrapInSuppress(ObsoleteLevel level, StringBuilder builder, Action action)
+        {
+            if (level == ObsoleteLevel.None)
+            {
+                action();
+                return;
+            }
+
+            builder.AppendLine("#pragma warning disable CS0618");
+            action();
+            builder.AppendLine("#pragma warning restore CS0618");
         }
 
         private HashSet<string> GetNameSpaces(ModelReaderWriterContextGenerationSpec contextGenerationSpec)

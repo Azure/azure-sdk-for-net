@@ -19,7 +19,7 @@ function Get-ChangeLogEntries {
     LogError "ChangeLog[${ChangeLogLocation}] does not exist"
     return $null
   }
-  LogDebug "Extracting entries from [${ChangeLogLocation}]."
+  Write-Verbose "Extracting entries from [${ChangeLogLocation}]."
   return Get-ChangeLogEntriesFromContent (Get-Content -Path $ChangeLogLocation)
 }
 

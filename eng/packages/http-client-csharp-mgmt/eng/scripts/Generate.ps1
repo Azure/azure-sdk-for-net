@@ -2,8 +2,7 @@
 param(
     $filter,
     [bool]$Stubbed = $true,
-    [bool]$LaunchOnly = $false,
-    [switch]$ForceNewProject = $false
+    [bool]$LaunchOnly = $false
 )
 
 Import-Module "$PSScriptRoot\Generation.psm1" -DisableNameChecking -Force;
@@ -21,7 +20,7 @@ if (-not $LaunchOnly) {
 
         $mgmtTypespecTestProject = Join-Path $testProjectsLocalDir "Mgmt-TypeSpec"
 
-        Invoke (Get-Mgmt-TspCommand "$mgmtTypespecTestProject/main.tsp" $mgmtTypespecTestProject -forceNewProject $ForceNewProject)
+        Invoke (Get-Mgmt-TspCommand "$mgmtTypespecTestProject/main.tsp" $mgmtTypespecTestProject)
 
         # exit if the generation failed
         if ($LASTEXITCODE -ne 0) {
@@ -41,7 +40,7 @@ if (-not $LaunchOnly) {
 # only write new launch settings if no filter was passed in
 if ($null -eq $filter) {
     $mgmtSpec = "TestProjects/Local/Mgmt-TypeSpec"
-    
+
     # Write the launch settings for Mgmt
     $mgmtLaunchSettings = @{}
     $mgmtLaunchSettings.Add("profiles", @{})
@@ -49,7 +48,7 @@ if ($null -eq $filter) {
     $mgmtLaunchSettings["profiles"]["Mgmt-TypeSpec"].Add("commandLineArgs", "`$(SolutionDir)/../dist/generator/Microsoft.TypeSpec.Generator.dll `$(SolutionDir)/$mgmtSpec -g MgmtClientGenerator")
     $mgmtLaunchSettings["profiles"]["Mgmt-TypeSpec"].Add("commandName", "Executable")
     $mgmtLaunchSettings["profiles"]["Mgmt-TypeSpec"].Add("executablePath", "dotnet")
-    
+
     $mgmtSortedLaunchSettings = @{}
     $mgmtSortedLaunchSettings.Add("profiles", [ordered]@{})
     $mgmtLaunchSettings["profiles"].Keys | Sort-Object | ForEach-Object {
@@ -65,9 +64,9 @@ if ($null -eq $filter) {
 
         $mgmtSortedLaunchSettings["profiles"][$profileKey] = $sortedProfile
     }
-    
+
     # Write the launch settings to the launchSettings.json file
-    $mgmtLaunchSettingsPath = Join-Path $mgmtSolutionDir "Azure.Generator.Mgmt" "src" "Properties" "launchSettings.json"
+    $mgmtLaunchSettingsPath = Join-Path $mgmtSolutionDir "Azure.Generator.Management" "src" "Properties" "launchSettings.json"
     # Write the settings to JSON and normalize line endings to Unix style (LF)
     $mgmtSortedLaunchSettings | ConvertTo-Json | ForEach-Object { ($_ -replace "`r`n", "`n") + "`n" } | Set-Content -NoNewline $mgmtLaunchSettingsPath
 }

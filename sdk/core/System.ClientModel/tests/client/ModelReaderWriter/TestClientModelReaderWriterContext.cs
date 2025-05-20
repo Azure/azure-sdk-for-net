@@ -5,12 +5,14 @@ using System.ClientModel.Primitives;
 using System.ClientModel.Tests.Client.ModelReaderWriterTests.Models;
 using System.ClientModel.Tests.Client.Models.ResourceManager.Compute;
 using System.ClientModel.Tests.Client.Models.ResourceManager.Resources;
-using System.Diagnostics.CodeAnalysis;
 
 namespace System.ClientModel.Tests.ModelReaderWriterTests
 {
     public class TestClientModelReaderWriterContext : ModelReaderWriterContext
     {
+        private static TestClientModelReaderWriterContext? _default;
+        public static TestClientModelReaderWriterContext Default => _default ??= new TestClientModelReaderWriterContext();
+
         private AvailabilitySetData_Builder? _availabilitySetData_Builder;
         private BaseModel_Builder? _baseModel_Builder;
         private ModelAsStruct_Builder? _modelAsStruct_Builder;

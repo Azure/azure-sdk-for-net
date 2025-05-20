@@ -11,7 +11,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> The UserAssignedManagedIdentityDetails. </summary>
+    /// <summary> User assigned managed identity details. </summary>
     public partial class UserAssignedManagedIdentityDetails
     {
         /// <summary>
@@ -52,9 +52,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="UserAssignedManagedIdentityDetails"/>. </summary>
-        /// <param name="identityArmId"></param>
-        /// <param name="identityName"></param>
-        /// <param name="userAssignedIdentityProperties"> User assigned identity properties. </param>
+        /// <param name="identityArmId"> The ARM id of the assigned identity. </param>
+        /// <param name="identityName"> The name of the assigned identity. </param>
+        /// <param name="userAssignedIdentityProperties"> User assigned managed identity properties. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal UserAssignedManagedIdentityDetails(string identityArmId, string identityName, UserAssignedIdentity userAssignedIdentityProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -64,11 +64,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets or sets the identity arm id. </summary>
+        /// <summary> The ARM id of the assigned identity. </summary>
         public string IdentityArmId { get; set; }
-        /// <summary> Gets or sets the identity name. </summary>
+        /// <summary> The name of the assigned identity. </summary>
         public string IdentityName { get; set; }
-        /// <summary> User assigned identity properties. </summary>
+        /// <summary> User assigned managed identity properties. </summary>
         public UserAssignedIdentity UserAssignedIdentityProperties { get; set; }
     }
 }

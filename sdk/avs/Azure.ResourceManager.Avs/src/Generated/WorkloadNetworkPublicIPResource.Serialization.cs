@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Avs
 {
     public partial class WorkloadNetworkPublicIPResource : IJsonModel<WorkloadNetworkPublicIPData>
     {
+        private static WorkloadNetworkPublicIPData s_dataDeserializationInstance;
+        private static WorkloadNetworkPublicIPData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<WorkloadNetworkPublicIPData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<WorkloadNetworkPublicIPData>)Data).Write(writer, options);
 
-        WorkloadNetworkPublicIPData IJsonModel<WorkloadNetworkPublicIPData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<WorkloadNetworkPublicIPData>)Data).Create(ref reader, options);
+        WorkloadNetworkPublicIPData IJsonModel<WorkloadNetworkPublicIPData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<WorkloadNetworkPublicIPData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<WorkloadNetworkPublicIPData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<WorkloadNetworkPublicIPData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<WorkloadNetworkPublicIPData>(Data, options, AzureResourceManagerAvsContext.Default);
 
-        WorkloadNetworkPublicIPData IPersistableModel<WorkloadNetworkPublicIPData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<WorkloadNetworkPublicIPData>(data, options);
+        WorkloadNetworkPublicIPData IPersistableModel<WorkloadNetworkPublicIPData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<WorkloadNetworkPublicIPData>(data, options, AzureResourceManagerAvsContext.Default);
 
-        string IPersistableModel<WorkloadNetworkPublicIPData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<WorkloadNetworkPublicIPData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<WorkloadNetworkPublicIPData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<WorkloadNetworkPublicIPData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

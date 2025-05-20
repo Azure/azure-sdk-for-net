@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Sql
 
         SqlServerDevOpsAuditingSettingResource IOperationSource<SqlServerDevOpsAuditingSettingResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<SqlServerDevOpsAuditingSettingData>(response.Content);
+            var data = ModelReaderWriter.Read<SqlServerDevOpsAuditingSettingData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSqlContext.Default);
             return new SqlServerDevOpsAuditingSettingResource(_client, data);
         }
 
         async ValueTask<SqlServerDevOpsAuditingSettingResource> IOperationSource<SqlServerDevOpsAuditingSettingResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<SqlServerDevOpsAuditingSettingData>(response.Content);
+            var data = ModelReaderWriter.Read<SqlServerDevOpsAuditingSettingData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSqlContext.Default);
             return await Task.FromResult(new SqlServerDevOpsAuditingSettingResource(_client, data)).ConfigureAwait(false);
         }
     }

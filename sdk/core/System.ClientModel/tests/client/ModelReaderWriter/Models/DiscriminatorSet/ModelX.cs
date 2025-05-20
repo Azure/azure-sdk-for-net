@@ -1,11 +1,14 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using ClientModel.Tests.ClientShared;
 using System.ClientModel.Primitives;
+#if !SOURCE_GENERATOR
+using System.ClientModel.Tests.ModelReaderWriterTests;
+#endif
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
+using ClientModel.Tests.ClientShared;
 
 #if SOURCE_GENERATOR
 namespace System.ClientModel.SourceGeneration.Tests
@@ -206,9 +209,19 @@ namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
 
         BinaryData IPersistableModel<ModelX>.Write(ModelReaderWriterOptions options)
         {
-            ModelReaderWriterHelper.ValidateFormat(this, options.Format);
+            var format = options.Format == "W" ? ((IPersistableModel<ModelX>)this).GetFormatFromOptions(options) : options.Format;
 
-            return ModelReaderWriter.Write(this, options);
+            switch (format)
+            {
+                case "J":
+#if SOURCE_GENERATOR
+                    return ModelReaderWriter.Write(this, options, BasicContext.Default);
+#else
+                    return ModelReaderWriter.Write(this, options, TestClientModelReaderWriterContext.Default);
+#endif
+                default:
+                    throw new FormatException($"The model {nameof(ModelX)} does not support writing '{options.Format}' format.");
+            }
         }
 
         string IPersistableModel<ModelX>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

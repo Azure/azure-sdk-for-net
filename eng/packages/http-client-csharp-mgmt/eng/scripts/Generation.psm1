@@ -25,13 +25,11 @@ function Get-Mgmt-TspCommand {
         [string]$specFile,
         [string]$generationDir,
         [bool]$generateStub = $false,
-        [string]$apiVersion = $null,
-        [bool]$forceNewProject = $false
+        [string]$apiVersion = $null
     )
     $command = "npx tsp compile $specFile"
     $command += " --trace @azure-typespec/http-client-csharp-mgmt"
-    $command += " --emit $repoRoot/../../http-client-csharp-mgmt"
-    
+    $command += " --emit $repoRoot/.."
     $configFile = Join-Path $generationDir "tspconfig.yaml"
     if (Test-Path $configFile) {
         $command += " --config=$configFile"
@@ -41,14 +39,12 @@ function Get-Mgmt-TspCommand {
     if ($generateStub) {
         $command += " --option @azure-typespec/http-client-csharp-mgmt.plugin-name=AzureStubPlugin"
     }
-    
+
     if ($apiVersion) {
         $command += " --option @azure-typespec/http-client-csharp-mgmt.api-version=$apiVersion"
     }
 
-    if ($forceNewProject) {
-        $command += " --option @azure-typespec/http-client-csharp-mgmt.new-project=true"
-    }
+    $command += " --option @azure-typespec/http-client-csharp-mgmt.new-project=true"
 
     return $command
 }
@@ -62,7 +58,7 @@ function Refresh-Mgmt-Build {
     }
 
     # we don't want to build the entire solution because the test projects might not build until after regeneration
-    Invoke "dotnet build $repoRoot/../../http-client-csharp-mgmt/generator/Azure.Generator.Mgmt/src"
+    Invoke "dotnet build $repoRoot/../../http-client-csharp-mgmt/generator/Azure.Generator.Management/src"
     # exit if the generation failed
     if ($LASTEXITCODE -ne 0) {
         exit $LASTEXITCODE

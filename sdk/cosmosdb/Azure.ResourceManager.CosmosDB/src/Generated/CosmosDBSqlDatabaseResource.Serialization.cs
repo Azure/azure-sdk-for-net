@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.CosmosDB
 {
     public partial class CosmosDBSqlDatabaseResource : IJsonModel<CosmosDBSqlDatabaseData>
     {
+        private static CosmosDBSqlDatabaseData s_dataDeserializationInstance;
+        private static CosmosDBSqlDatabaseData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<CosmosDBSqlDatabaseData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<CosmosDBSqlDatabaseData>)Data).Write(writer, options);
 
-        CosmosDBSqlDatabaseData IJsonModel<CosmosDBSqlDatabaseData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<CosmosDBSqlDatabaseData>)Data).Create(ref reader, options);
+        CosmosDBSqlDatabaseData IJsonModel<CosmosDBSqlDatabaseData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<CosmosDBSqlDatabaseData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<CosmosDBSqlDatabaseData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<CosmosDBSqlDatabaseData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<CosmosDBSqlDatabaseData>(Data, options, AzureResourceManagerCosmosDBContext.Default);
 
-        CosmosDBSqlDatabaseData IPersistableModel<CosmosDBSqlDatabaseData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CosmosDBSqlDatabaseData>(data, options);
+        CosmosDBSqlDatabaseData IPersistableModel<CosmosDBSqlDatabaseData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CosmosDBSqlDatabaseData>(data, options, AzureResourceManagerCosmosDBContext.Default);
 
-        string IPersistableModel<CosmosDBSqlDatabaseData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<CosmosDBSqlDatabaseData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<CosmosDBSqlDatabaseData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<CosmosDBSqlDatabaseData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

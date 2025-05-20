@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    /// <summary> The name of the embedding model from the Azure AI Studio Catalog that will be called. </summary>
+    /// <summary> The name of the embedding model from the Azure AI Foundry Catalog that will be called. </summary>
     public readonly partial struct AIFoundryModelCatalogName : IEquatable<AIFoundryModelCatalogName>
     {
         private readonly string _value;
@@ -28,6 +28,7 @@ namespace Azure.Search.Documents.Indexes.Models
         private const string FacebookDinoV2ImageEmbeddingsViTGiantValue = "Facebook-DinoV2-Image-Embeddings-ViT-Giant";
         private const string CohereEmbedV3EnglishValue = "Cohere-embed-v3-english";
         private const string CohereEmbedV3MultilingualValue = "Cohere-embed-v3-multilingual";
+        private const string CohereEmbedV4Value = "Cohere-embed-v4";
 
         /// <summary> OpenAI-CLIP-Image-Text-Embeddings-vit-base-patch32. </summary>
         public static AIFoundryModelCatalogName OpenAIClipImageTextEmbeddingsVitBasePatch32 { get; } = new AIFoundryModelCatalogName(OpenAIClipImageTextEmbeddingsVitBasePatch32Value);
@@ -41,6 +42,8 @@ namespace Azure.Search.Documents.Indexes.Models
         public static AIFoundryModelCatalogName CohereEmbedV3English { get; } = new AIFoundryModelCatalogName(CohereEmbedV3EnglishValue);
         /// <summary> Cohere-embed-v3-multilingual. </summary>
         public static AIFoundryModelCatalogName CohereEmbedV3Multilingual { get; } = new AIFoundryModelCatalogName(CohereEmbedV3MultilingualValue);
+        /// <summary> Cohere embed v4 model for generating embeddings from both text and images. </summary>
+        public static AIFoundryModelCatalogName CohereEmbedV4 { get; } = new AIFoundryModelCatalogName(CohereEmbedV4Value);
         /// <summary> Determines if two <see cref="AIFoundryModelCatalogName"/> values are the same. </summary>
         public static bool operator ==(AIFoundryModelCatalogName left, AIFoundryModelCatalogName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AIFoundryModelCatalogName"/> values are not the same. </summary>

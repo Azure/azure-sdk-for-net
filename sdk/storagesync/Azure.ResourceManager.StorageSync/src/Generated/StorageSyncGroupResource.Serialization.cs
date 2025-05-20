@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.StorageSync
 {
     public partial class StorageSyncGroupResource : IJsonModel<StorageSyncGroupData>
     {
+        private static StorageSyncGroupData s_dataDeserializationInstance;
+        private static StorageSyncGroupData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<StorageSyncGroupData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<StorageSyncGroupData>)Data).Write(writer, options);
 
-        StorageSyncGroupData IJsonModel<StorageSyncGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<StorageSyncGroupData>)Data).Create(ref reader, options);
+        StorageSyncGroupData IJsonModel<StorageSyncGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<StorageSyncGroupData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<StorageSyncGroupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<StorageSyncGroupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<StorageSyncGroupData>(Data, options, AzureResourceManagerStorageSyncContext.Default);
 
-        StorageSyncGroupData IPersistableModel<StorageSyncGroupData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<StorageSyncGroupData>(data, options);
+        StorageSyncGroupData IPersistableModel<StorageSyncGroupData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<StorageSyncGroupData>(data, options, AzureResourceManagerStorageSyncContext.Default);
 
-        string IPersistableModel<StorageSyncGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<StorageSyncGroupData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<StorageSyncGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<StorageSyncGroupData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

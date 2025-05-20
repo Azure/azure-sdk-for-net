@@ -10,8 +10,11 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.IotFirmwareDefense.Models
 {
-    /// <summary> Describes the type of summary. </summary>
-    internal readonly partial struct FirmwareAnalysisSummaryType : IEquatable<FirmwareAnalysisSummaryType>
+    /// <summary>
+    /// Describes the type of summary.
+    /// Serialized Name: SummaryType
+    /// </summary>
+    public readonly partial struct FirmwareAnalysisSummaryType : IEquatable<FirmwareAnalysisSummaryType>
     {
         private readonly string _value;
 
@@ -23,20 +26,35 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         }
 
         private const string FirmwareValue = "Firmware";
-        private const string CveValue = "CVE";
+        private const string CommonVulnerabilitiesAndExposuresValue = "CommonVulnerabilitiesAndExposures";
         private const string BinaryHardeningValue = "BinaryHardening";
         private const string CryptoCertificateValue = "CryptoCertificate";
         private const string CryptoKeyValue = "CryptoKey";
 
-        /// <summary> Firmware. </summary>
+        /// <summary>
+        /// The summary contains information about the submitted firmware
+        /// Serialized Name: SummaryType.Firmware
+        /// </summary>
         public static FirmwareAnalysisSummaryType Firmware { get; } = new FirmwareAnalysisSummaryType(FirmwareValue);
-        /// <summary> CVE. </summary>
-        public static FirmwareAnalysisSummaryType Cve { get; } = new FirmwareAnalysisSummaryType(CveValue);
-        /// <summary> BinaryHardening. </summary>
+        /// <summary>
+        /// The summary contains information about the Common Vulnerabilities and Exposures analysis results
+        /// Serialized Name: SummaryType.CommonVulnerabilitiesAndExposures
+        /// </summary>
+        public static FirmwareAnalysisSummaryType CommonVulnerabilitiesAndExposures { get; } = new FirmwareAnalysisSummaryType(CommonVulnerabilitiesAndExposuresValue);
+        /// <summary>
+        /// The summary contains information about the binary hardening analysis results
+        /// Serialized Name: SummaryType.BinaryHardening
+        /// </summary>
         public static FirmwareAnalysisSummaryType BinaryHardening { get; } = new FirmwareAnalysisSummaryType(BinaryHardeningValue);
-        /// <summary> CryptoCertificate. </summary>
+        /// <summary>
+        /// The summary contains information about the cryptographic certificate analysis results
+        /// Serialized Name: SummaryType.CryptoCertificate
+        /// </summary>
         public static FirmwareAnalysisSummaryType CryptoCertificate { get; } = new FirmwareAnalysisSummaryType(CryptoCertificateValue);
-        /// <summary> CryptoKey. </summary>
+        /// <summary>
+        /// The summary contains information about the cryptographic key analysis results
+        /// Serialized Name: SummaryType.CryptoKey
+        /// </summary>
         public static FirmwareAnalysisSummaryType CryptoKey { get; } = new FirmwareAnalysisSummaryType(CryptoKeyValue);
         /// <summary> Determines if two <see cref="FirmwareAnalysisSummaryType"/> values are the same. </summary>
         public static bool operator ==(FirmwareAnalysisSummaryType left, FirmwareAnalysisSummaryType right) => left.Equals(right);
