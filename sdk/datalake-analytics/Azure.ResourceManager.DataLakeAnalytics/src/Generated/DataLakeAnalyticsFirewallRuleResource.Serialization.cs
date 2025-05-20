@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.DataLakeAnalytics
 {
     public partial class DataLakeAnalyticsFirewallRuleResource : IJsonModel<DataLakeAnalyticsFirewallRuleData>
     {
+        private static DataLakeAnalyticsFirewallRuleData s_dataDeserializationInstance;
+        private static DataLakeAnalyticsFirewallRuleData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<DataLakeAnalyticsFirewallRuleData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DataLakeAnalyticsFirewallRuleData>)Data).Write(writer, options);
 
-        DataLakeAnalyticsFirewallRuleData IJsonModel<DataLakeAnalyticsFirewallRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DataLakeAnalyticsFirewallRuleData>)Data).Create(ref reader, options);
+        DataLakeAnalyticsFirewallRuleData IJsonModel<DataLakeAnalyticsFirewallRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DataLakeAnalyticsFirewallRuleData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<DataLakeAnalyticsFirewallRuleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DataLakeAnalyticsFirewallRuleData>(Data, options, AzureResourceManagerDataLakeAnalyticsContext.Default);
 
         DataLakeAnalyticsFirewallRuleData IPersistableModel<DataLakeAnalyticsFirewallRuleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DataLakeAnalyticsFirewallRuleData>(data, options, AzureResourceManagerDataLakeAnalyticsContext.Default);
 
-        string IPersistableModel<DataLakeAnalyticsFirewallRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DataLakeAnalyticsFirewallRuleData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<DataLakeAnalyticsFirewallRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DataLakeAnalyticsFirewallRuleData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

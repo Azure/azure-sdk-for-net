@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.ContainerServiceFleet
 {
     public partial class ContainerServiceFleetUpdateRunResource : IJsonModel<ContainerServiceFleetUpdateRunData>
     {
+        private static ContainerServiceFleetUpdateRunData s_dataDeserializationInstance;
+        private static ContainerServiceFleetUpdateRunData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<ContainerServiceFleetUpdateRunData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ContainerServiceFleetUpdateRunData>)Data).Write(writer, options);
 
-        ContainerServiceFleetUpdateRunData IJsonModel<ContainerServiceFleetUpdateRunData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ContainerServiceFleetUpdateRunData>)Data).Create(ref reader, options);
+        ContainerServiceFleetUpdateRunData IJsonModel<ContainerServiceFleetUpdateRunData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ContainerServiceFleetUpdateRunData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<ContainerServiceFleetUpdateRunData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ContainerServiceFleetUpdateRunData>(Data, options, AzureResourceManagerContainerServiceFleetContext.Default);
 
         ContainerServiceFleetUpdateRunData IPersistableModel<ContainerServiceFleetUpdateRunData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ContainerServiceFleetUpdateRunData>(data, options, AzureResourceManagerContainerServiceFleetContext.Default);
 
-        string IPersistableModel<ContainerServiceFleetUpdateRunData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ContainerServiceFleetUpdateRunData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<ContainerServiceFleetUpdateRunData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ContainerServiceFleetUpdateRunData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

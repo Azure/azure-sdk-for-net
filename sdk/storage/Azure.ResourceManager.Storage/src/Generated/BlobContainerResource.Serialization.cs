@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Storage
 {
     public partial class BlobContainerResource : IJsonModel<BlobContainerData>
     {
+        private static BlobContainerData s_dataDeserializationInstance;
+        private static BlobContainerData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<BlobContainerData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<BlobContainerData>)Data).Write(writer, options);
 
-        BlobContainerData IJsonModel<BlobContainerData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<BlobContainerData>)Data).Create(ref reader, options);
+        BlobContainerData IJsonModel<BlobContainerData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<BlobContainerData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<BlobContainerData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<BlobContainerData>(Data, options, AzureResourceManagerStorageContext.Default);
 
         BlobContainerData IPersistableModel<BlobContainerData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<BlobContainerData>(data, options, AzureResourceManagerStorageContext.Default);
 
-        string IPersistableModel<BlobContainerData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<BlobContainerData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<BlobContainerData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<BlobContainerData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

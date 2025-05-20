@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.DevCenter
 {
     public partial class DevCenterCatalogResource : IJsonModel<DevCenterCatalogData>
     {
+        private static DevCenterCatalogData s_dataDeserializationInstance;
+        private static DevCenterCatalogData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<DevCenterCatalogData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DevCenterCatalogData>)Data).Write(writer, options);
 
-        DevCenterCatalogData IJsonModel<DevCenterCatalogData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DevCenterCatalogData>)Data).Create(ref reader, options);
+        DevCenterCatalogData IJsonModel<DevCenterCatalogData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DevCenterCatalogData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<DevCenterCatalogData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DevCenterCatalogData>(Data, options, AzureResourceManagerDevCenterContext.Default);
 
         DevCenterCatalogData IPersistableModel<DevCenterCatalogData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DevCenterCatalogData>(data, options, AzureResourceManagerDevCenterContext.Default);
 
-        string IPersistableModel<DevCenterCatalogData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DevCenterCatalogData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<DevCenterCatalogData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DevCenterCatalogData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Monitor
 {
     public partial class DiagnosticSettingsCategoryResource : IJsonModel<DiagnosticSettingsCategoryData>
     {
+        private static DiagnosticSettingsCategoryData s_dataDeserializationInstance;
+        private static DiagnosticSettingsCategoryData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<DiagnosticSettingsCategoryData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DiagnosticSettingsCategoryData>)Data).Write(writer, options);
 
-        DiagnosticSettingsCategoryData IJsonModel<DiagnosticSettingsCategoryData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DiagnosticSettingsCategoryData>)Data).Create(ref reader, options);
+        DiagnosticSettingsCategoryData IJsonModel<DiagnosticSettingsCategoryData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DiagnosticSettingsCategoryData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<DiagnosticSettingsCategoryData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DiagnosticSettingsCategoryData>(Data, options, AzureResourceManagerMonitorContext.Default);
 
         DiagnosticSettingsCategoryData IPersistableModel<DiagnosticSettingsCategoryData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DiagnosticSettingsCategoryData>(data, options, AzureResourceManagerMonitorContext.Default);
 
-        string IPersistableModel<DiagnosticSettingsCategoryData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DiagnosticSettingsCategoryData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<DiagnosticSettingsCategoryData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DiagnosticSettingsCategoryData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

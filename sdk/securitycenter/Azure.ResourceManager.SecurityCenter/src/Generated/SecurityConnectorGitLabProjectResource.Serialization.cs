@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.SecurityCenter
 {
     public partial class SecurityConnectorGitLabProjectResource : IJsonModel<SecurityConnectorGitLabProjectData>
     {
+        private static SecurityConnectorGitLabProjectData s_dataDeserializationInstance;
+        private static SecurityConnectorGitLabProjectData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<SecurityConnectorGitLabProjectData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SecurityConnectorGitLabProjectData>)Data).Write(writer, options);
 
-        SecurityConnectorGitLabProjectData IJsonModel<SecurityConnectorGitLabProjectData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SecurityConnectorGitLabProjectData>)Data).Create(ref reader, options);
+        SecurityConnectorGitLabProjectData IJsonModel<SecurityConnectorGitLabProjectData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SecurityConnectorGitLabProjectData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<SecurityConnectorGitLabProjectData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SecurityConnectorGitLabProjectData>(Data, options, AzureResourceManagerSecurityCenterContext.Default);
 
         SecurityConnectorGitLabProjectData IPersistableModel<SecurityConnectorGitLabProjectData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SecurityConnectorGitLabProjectData>(data, options, AzureResourceManagerSecurityCenterContext.Default);
 
-        string IPersistableModel<SecurityConnectorGitLabProjectData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SecurityConnectorGitLabProjectData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<SecurityConnectorGitLabProjectData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SecurityConnectorGitLabProjectData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

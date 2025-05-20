@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Network
 {
     public partial class SecurityAdminConfigurationResource : IJsonModel<SecurityAdminConfigurationData>
     {
+        private static SecurityAdminConfigurationData s_dataDeserializationInstance;
+        private static SecurityAdminConfigurationData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<SecurityAdminConfigurationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SecurityAdminConfigurationData>)Data).Write(writer, options);
 
-        SecurityAdminConfigurationData IJsonModel<SecurityAdminConfigurationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SecurityAdminConfigurationData>)Data).Create(ref reader, options);
+        SecurityAdminConfigurationData IJsonModel<SecurityAdminConfigurationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SecurityAdminConfigurationData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<SecurityAdminConfigurationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SecurityAdminConfigurationData>(Data, options, AzureResourceManagerNetworkContext.Default);
 
         SecurityAdminConfigurationData IPersistableModel<SecurityAdminConfigurationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SecurityAdminConfigurationData>(data, options, AzureResourceManagerNetworkContext.Default);
 
-        string IPersistableModel<SecurityAdminConfigurationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SecurityAdminConfigurationData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<SecurityAdminConfigurationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SecurityAdminConfigurationData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

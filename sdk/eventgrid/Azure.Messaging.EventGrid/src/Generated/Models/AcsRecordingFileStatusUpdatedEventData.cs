@@ -13,8 +13,13 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class AcsRecordingFileStatusUpdatedEventData
     {
         /// <summary> Initializes a new instance of <see cref="AcsRecordingFileStatusUpdatedEventData"/>. </summary>
-        internal AcsRecordingFileStatusUpdatedEventData()
+        /// <param name="recordingStorageInfo"> The details of recording storage information. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="recordingStorageInfo"/> is null. </exception>
+        internal AcsRecordingFileStatusUpdatedEventData(AcsRecordingStorageInfoProperties recordingStorageInfo)
         {
+            Argument.AssertNotNull(recordingStorageInfo, nameof(recordingStorageInfo));
+
+            RecordingStorageInfo = recordingStorageInfo;
         }
 
         /// <summary> Initializes a new instance of <see cref="AcsRecordingFileStatusUpdatedEventData"/>. </summary>

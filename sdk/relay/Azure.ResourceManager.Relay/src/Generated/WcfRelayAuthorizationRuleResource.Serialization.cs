@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Relay
 {
     public partial class WcfRelayAuthorizationRuleResource : IJsonModel<RelayAuthorizationRuleData>
     {
+        private static RelayAuthorizationRuleData s_dataDeserializationInstance;
+        private static RelayAuthorizationRuleData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<RelayAuthorizationRuleData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<RelayAuthorizationRuleData>)Data).Write(writer, options);
 
-        RelayAuthorizationRuleData IJsonModel<RelayAuthorizationRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<RelayAuthorizationRuleData>)Data).Create(ref reader, options);
+        RelayAuthorizationRuleData IJsonModel<RelayAuthorizationRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<RelayAuthorizationRuleData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<RelayAuthorizationRuleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<RelayAuthorizationRuleData>(Data, options, AzureResourceManagerRelayContext.Default);
 
         RelayAuthorizationRuleData IPersistableModel<RelayAuthorizationRuleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<RelayAuthorizationRuleData>(data, options, AzureResourceManagerRelayContext.Default);
 
-        string IPersistableModel<RelayAuthorizationRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<RelayAuthorizationRuleData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<RelayAuthorizationRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<RelayAuthorizationRuleData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

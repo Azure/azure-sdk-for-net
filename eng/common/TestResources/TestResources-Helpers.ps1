@@ -129,8 +129,30 @@ function MergeHashes([hashtable] $source, [psvariable] $dest) {
     }
 }
 
+function IsBicepInstalled() {
+    try {
+        bicep --version | Out-Null
+        return $LASTEXITCODE -eq 0
+    }
+    catch {
+        return $false
+    }
+}
+
+function IsAzCliBicepInstalled() {
+    try {
+        az bicep version | Out-Null
+        return $LASTEXITCODE -eq 0
+    }
+    catch {
+        return $false
+    }
+}
+
 function BuildBicepFile([System.IO.FileSystemInfo] $file) {
-    if (!(Get-Command bicep -ErrorAction Ignore)) {
+    $useBicepCli = IsBicepInstalled
+
+    if (!$useBicepCli -and !(IsAzCliBicepInstalled)) {
         Write-Error "A bicep file was found at '$($file.FullName)' but the Azure Bicep CLI is not installed. See https://aka.ms/bicep-install"
         throw
     }
@@ -140,7 +162,12 @@ function BuildBicepFile([System.IO.FileSystemInfo] $file) {
 
     # Az can deploy bicep files natively, but by compiling here it becomes easier to parse the
     # outputted json for mismatched parameter declarations.
-    bicep build $file.FullName --outfile $templateFilePath
+    if ($useBicepCli) {
+        bicep build $file.FullName --outfile $templateFilePath
+    } else {
+        az bicep build --file $file.FullName --outfile $templateFilePath
+    }
+
     if ($LASTEXITCODE) {
         Write-Error "Failure building bicep file '$($file.FullName)'"
         throw
@@ -150,13 +177,22 @@ function BuildBicepFile([System.IO.FileSystemInfo] $file) {
 }
 
 function LintBicepFile([string] $path) {
-    if (!(Get-Command bicep -ErrorAction Ignore)) {
-      Write-Error "A bicep file was found at '$path' but the Azure Bicep CLI is not installed. See https://aka.ms/bicep-install"
-      throw
+    $useBicepCli = IsBicepInstalled
+
+    if (!$useBicepCli -and !(IsAzCliBicepInstalled)) {
+        Write-Error "A bicep file was found at '$path' but the Azure Bicep CLI is not installed. See https://aka.ms/bicep-install"
+        throw
     }
 
     # Work around lack of config file override: https://github.com/Azure/bicep/issues/5013
-    $output = bicep lint "$path" 2>&1
+    $output = bicep lint $path 2>&1
+
+    if ($useBicepCli) {
+        $output = bicep lint $path 2>&1
+    } else {
+        $output = az bicep lint --file $path 2>&1
+    }
+
     if ($LASTEXITCODE) {
         Write-Error "Failed linting bicep file '$path'"
         throw

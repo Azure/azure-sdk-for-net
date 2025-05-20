@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Authorization
 {
     public partial class AuthorizationProviderOperationsMetadataResource : IJsonModel<AuthorizationProviderOperationsMetadataData>
     {
+        private static AuthorizationProviderOperationsMetadataData s_dataDeserializationInstance;
+        private static AuthorizationProviderOperationsMetadataData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<AuthorizationProviderOperationsMetadataData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<AuthorizationProviderOperationsMetadataData>)Data).Write(writer, options);
 
-        AuthorizationProviderOperationsMetadataData IJsonModel<AuthorizationProviderOperationsMetadataData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AuthorizationProviderOperationsMetadataData>)Data).Create(ref reader, options);
+        AuthorizationProviderOperationsMetadataData IJsonModel<AuthorizationProviderOperationsMetadataData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AuthorizationProviderOperationsMetadataData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<AuthorizationProviderOperationsMetadataData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AuthorizationProviderOperationsMetadataData>(Data, options, AzureResourceManagerAuthorizationContext.Default);
 
         AuthorizationProviderOperationsMetadataData IPersistableModel<AuthorizationProviderOperationsMetadataData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AuthorizationProviderOperationsMetadataData>(data, options, AzureResourceManagerAuthorizationContext.Default);
 
-        string IPersistableModel<AuthorizationProviderOperationsMetadataData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AuthorizationProviderOperationsMetadataData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<AuthorizationProviderOperationsMetadataData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AuthorizationProviderOperationsMetadataData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

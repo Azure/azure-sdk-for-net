@@ -5,12 +5,11 @@ using Autorest.CSharp.Core;
 using System.Threading;
 using System;
 using Azure.Core;
-using System.ClientModel;
 using System.Threading.Tasks;
 
 namespace Azure.AI.Agents.Persistent
 {
-    public partial class VectorStoreFiles
+    internal partial class VectorStoreFiles
     {
         /// <summary> Returns a list of vector store files. </summary>
         /// <param name="vectorStoreId"> Identifier of the vector store. </param>

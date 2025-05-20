@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.OperationalInsights
 {
     public partial class OperationalInsightsLinkedStorageAccountsResource : IJsonModel<OperationalInsightsLinkedStorageAccountsData>
     {
+        private static OperationalInsightsLinkedStorageAccountsData s_dataDeserializationInstance;
+        private static OperationalInsightsLinkedStorageAccountsData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<OperationalInsightsLinkedStorageAccountsData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<OperationalInsightsLinkedStorageAccountsData>)Data).Write(writer, options);
 
-        OperationalInsightsLinkedStorageAccountsData IJsonModel<OperationalInsightsLinkedStorageAccountsData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<OperationalInsightsLinkedStorageAccountsData>)Data).Create(ref reader, options);
+        OperationalInsightsLinkedStorageAccountsData IJsonModel<OperationalInsightsLinkedStorageAccountsData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<OperationalInsightsLinkedStorageAccountsData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<OperationalInsightsLinkedStorageAccountsData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<OperationalInsightsLinkedStorageAccountsData>(Data, options, AzureResourceManagerOperationalInsightsContext.Default);
 
         OperationalInsightsLinkedStorageAccountsData IPersistableModel<OperationalInsightsLinkedStorageAccountsData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<OperationalInsightsLinkedStorageAccountsData>(data, options, AzureResourceManagerOperationalInsightsContext.Default);
 
-        string IPersistableModel<OperationalInsightsLinkedStorageAccountsData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<OperationalInsightsLinkedStorageAccountsData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<OperationalInsightsLinkedStorageAccountsData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<OperationalInsightsLinkedStorageAccountsData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

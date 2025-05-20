@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
 {
     public partial class PostgreSqlFlexibleServerConfigurationResource : IJsonModel<PostgreSqlFlexibleServerConfigurationData>
     {
+        private static PostgreSqlFlexibleServerConfigurationData s_dataDeserializationInstance;
+        private static PostgreSqlFlexibleServerConfigurationData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<PostgreSqlFlexibleServerConfigurationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<PostgreSqlFlexibleServerConfigurationData>)Data).Write(writer, options);
 
-        PostgreSqlFlexibleServerConfigurationData IJsonModel<PostgreSqlFlexibleServerConfigurationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PostgreSqlFlexibleServerConfigurationData>)Data).Create(ref reader, options);
+        PostgreSqlFlexibleServerConfigurationData IJsonModel<PostgreSqlFlexibleServerConfigurationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PostgreSqlFlexibleServerConfigurationData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<PostgreSqlFlexibleServerConfigurationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<PostgreSqlFlexibleServerConfigurationData>(Data, options, AzureResourceManagerPostgreSqlContext.Default);
 
         PostgreSqlFlexibleServerConfigurationData IPersistableModel<PostgreSqlFlexibleServerConfigurationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PostgreSqlFlexibleServerConfigurationData>(data, options, AzureResourceManagerPostgreSqlContext.Default);
 
-        string IPersistableModel<PostgreSqlFlexibleServerConfigurationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PostgreSqlFlexibleServerConfigurationData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<PostgreSqlFlexibleServerConfigurationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PostgreSqlFlexibleServerConfigurationData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

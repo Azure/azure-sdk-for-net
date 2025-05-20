@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Indicates whether content compression is enabled. If compression is enabled, content will be served as compressed if user requests for a compressed version. Content won't be compressed on AzureFrontDoor when requested content is smaller than 1 byte or larger than 1 MB. </summary>
+    /// <summary>
+    /// Indicates whether content compression is enabled. If compression is enabled, content will be served as compressed if user requests for a compressed version. Content won't be compressed on AzureFrontDoor when requested content is smaller than 1 byte or larger than 1 MB.
+    /// Serialized Name: RuleIsCompressionEnabled
+    /// </summary>
     public readonly partial struct RuleIsCompressionEnabled : IEquatable<RuleIsCompressionEnabled>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.Cdn.Models
         private const string EnabledValue = "Enabled";
         private const string DisabledValue = "Disabled";
 
-        /// <summary> Enabled. </summary>
+        /// <summary>
+        /// Enabled
+        /// Serialized Name: RuleIsCompressionEnabled.Enabled
+        /// </summary>
         public static RuleIsCompressionEnabled Enabled { get; } = new RuleIsCompressionEnabled(EnabledValue);
-        /// <summary> Disabled. </summary>
+        /// <summary>
+        /// Disabled
+        /// Serialized Name: RuleIsCompressionEnabled.Disabled
+        /// </summary>
         public static RuleIsCompressionEnabled Disabled { get; } = new RuleIsCompressionEnabled(DisabledValue);
         /// <summary> Determines if two <see cref="RuleIsCompressionEnabled"/> values are the same. </summary>
         public static bool operator ==(RuleIsCompressionEnabled left, RuleIsCompressionEnabled right) => left.Equals(right);

@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Storage
 {
     public partial class StorageAccountManagementPolicyResource : IJsonModel<StorageAccountManagementPolicyData>
     {
+        private static StorageAccountManagementPolicyData s_dataDeserializationInstance;
+        private static StorageAccountManagementPolicyData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<StorageAccountManagementPolicyData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<StorageAccountManagementPolicyData>)Data).Write(writer, options);
 
-        StorageAccountManagementPolicyData IJsonModel<StorageAccountManagementPolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<StorageAccountManagementPolicyData>)Data).Create(ref reader, options);
+        StorageAccountManagementPolicyData IJsonModel<StorageAccountManagementPolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<StorageAccountManagementPolicyData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<StorageAccountManagementPolicyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<StorageAccountManagementPolicyData>(Data, options, AzureResourceManagerStorageContext.Default);
 
         StorageAccountManagementPolicyData IPersistableModel<StorageAccountManagementPolicyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<StorageAccountManagementPolicyData>(data, options, AzureResourceManagerStorageContext.Default);
 
-        string IPersistableModel<StorageAccountManagementPolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<StorageAccountManagementPolicyData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<StorageAccountManagementPolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<StorageAccountManagementPolicyData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }
