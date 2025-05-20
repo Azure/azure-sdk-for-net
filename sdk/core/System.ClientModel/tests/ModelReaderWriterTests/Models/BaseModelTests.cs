@@ -3,7 +3,11 @@
 
 using NUnit.Framework;
 using System.Linq;
+#if SOURCE_GENERATOR
+using System.ClientModel.SourceGeneration.Tests;
+#else
 using System.ClientModel.Tests.Client.ModelReaderWriterTests.Models;
+#endif
 using System.ClientModel.Primitives;
 
 namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
@@ -20,7 +24,11 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
 
         protected override string WirePayload => "{\"kind\":\"X\",\"name\":\"xmodel\",\"xProperty\":100,\"extra\":\"stuff\"}";
 
-        protected override ModelReaderWriterContext Context => new TestClientModelReaderWriterContext();
+#if SOURCE_GENERATOR
+        protected override ModelReaderWriterContext Context => BasicContext.Default;
+#else
+        protected override ModelReaderWriterContext Context => TestClientModelReaderWriterContext.Default;
+#endif
 
         protected override void CompareModels(BaseModel model, BaseModel model2, string format)
         {

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -17,15 +16,13 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <summary> Initializes a new instance of <see cref="AcsRouterJobClassificationFailedEventData"/>. </summary>
         /// <param name="labels"> Router Job events Labels. </param>
         /// <param name="tags"> Router Jobs events Tags. </param>
-        /// <param name="errors"> Router Job Classification Failed Errors. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="labels"/>, <paramref name="tags"/> or <paramref name="errors"/> is null. </exception>
-        internal AcsRouterJobClassificationFailedEventData(IReadOnlyDictionary<string, string> labels, IReadOnlyDictionary<string, string> tags, IEnumerable<AcsRouterCommunicationError> errors) : base(labels, tags)
+        /// <exception cref="ArgumentNullException"> <paramref name="labels"/> or <paramref name="tags"/> is null. </exception>
+        internal AcsRouterJobClassificationFailedEventData(IReadOnlyDictionary<string, string> labels, IReadOnlyDictionary<string, string> tags) : base(labels, tags)
         {
             Argument.AssertNotNull(labels, nameof(labels));
             Argument.AssertNotNull(tags, nameof(tags));
-            Argument.AssertNotNull(errors, nameof(errors));
 
-            Errors = errors.ToList();
+            Errors = new ChangeTrackingList<AcsRouterCommunicationError>();
         }
 
         /// <summary> Initializes a new instance of <see cref="AcsRouterJobClassificationFailedEventData"/>. </summary>

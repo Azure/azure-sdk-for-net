@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.DesktopVirtualization
 {
     public partial class ScalingPlanPersonalScheduleResource : IJsonModel<ScalingPlanPersonalScheduleData>
     {
+        private static ScalingPlanPersonalScheduleData s_dataDeserializationInstance;
+        private static ScalingPlanPersonalScheduleData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<ScalingPlanPersonalScheduleData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ScalingPlanPersonalScheduleData>)Data).Write(writer, options);
 
-        ScalingPlanPersonalScheduleData IJsonModel<ScalingPlanPersonalScheduleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ScalingPlanPersonalScheduleData>)Data).Create(ref reader, options);
+        ScalingPlanPersonalScheduleData IJsonModel<ScalingPlanPersonalScheduleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ScalingPlanPersonalScheduleData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ScalingPlanPersonalScheduleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<ScalingPlanPersonalScheduleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ScalingPlanPersonalScheduleData>(Data, options, AzureResourceManagerDesktopVirtualizationContext.Default);
 
-        ScalingPlanPersonalScheduleData IPersistableModel<ScalingPlanPersonalScheduleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ScalingPlanPersonalScheduleData>(data, options);
+        ScalingPlanPersonalScheduleData IPersistableModel<ScalingPlanPersonalScheduleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ScalingPlanPersonalScheduleData>(data, options, AzureResourceManagerDesktopVirtualizationContext.Default);
 
-        string IPersistableModel<ScalingPlanPersonalScheduleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ScalingPlanPersonalScheduleData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<ScalingPlanPersonalScheduleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ScalingPlanPersonalScheduleData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

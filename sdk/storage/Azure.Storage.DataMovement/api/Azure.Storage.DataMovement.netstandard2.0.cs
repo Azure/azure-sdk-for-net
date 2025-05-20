@@ -24,6 +24,8 @@ namespace Azure.Storage.DataMovement
         protected internal abstract Azure.Storage.DataMovement.StorageResourceCheckpointDetails GetDestinationCheckpointDetails();
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         protected internal abstract Azure.Storage.DataMovement.StorageResourceCheckpointDetails GetSourceCheckpointDetails();
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        protected internal virtual System.Threading.Tasks.Task ValidateTransferAsync(string transferId, Azure.Storage.DataMovement.StorageResource sourceResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     public abstract partial class StorageResourceCheckpointDetails
@@ -47,13 +49,29 @@ namespace Azure.Storage.DataMovement
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         protected internal override bool IsContainer { get { throw null; } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        protected internal Azure.Storage.DataMovement.StorageResourceContainerProperties ResourceProperties { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        protected internal virtual System.Threading.Tasks.Task CreateIfNotExistsAsync(Azure.Storage.DataMovement.StorageResourceContainerProperties sourceProperties, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         protected internal abstract System.Threading.Tasks.Task CreateIfNotExistsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         protected internal abstract Azure.Storage.DataMovement.StorageResourceContainer GetChildStorageResourceContainer(string path);
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        protected internal virtual System.Threading.Tasks.Task<Azure.Storage.DataMovement.StorageResourceContainerProperties> GetPropertiesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         protected internal abstract Azure.Storage.DataMovement.StorageResourceItem GetStorageResourceReference(string path, string resourceId);
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         protected internal abstract System.Collections.Generic.IAsyncEnumerable<Azure.Storage.DataMovement.StorageResource> GetStorageResourcesAsync(Azure.Storage.DataMovement.StorageResourceContainer destinationContainer = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+    }
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+    public partial class StorageResourceContainerProperties
+    {
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public StorageResourceContainerProperties() { }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public System.Collections.Generic.IDictionary<string, object> RawProperties { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public System.Uri Uri { get { throw null; } set { } }
     }
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     public partial class StorageResourceCopyFromUriOptions
@@ -126,6 +144,8 @@ namespace Azure.Storage.DataMovement
         public System.Collections.Generic.IDictionary<string, object> RawProperties { get { throw null; } set { } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public long? ResourceLength { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public System.Uri Uri { get { throw null; } set { } }
     }
     public abstract partial class StorageResourceProvider
     {

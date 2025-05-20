@@ -22,6 +22,7 @@ namespace Azure.Search.Documents.Indexes.Models
             IndexerExecutionResult lastResult = default;
             IReadOnlyList<IndexerExecutionResult> executionHistory = default;
             SearchIndexerLimits limits = default;
+            IndexerState currentState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"u8))
@@ -54,8 +55,17 @@ namespace Azure.Search.Documents.Indexes.Models
                     limits = SearchIndexerLimits.DeserializeSearchIndexerLimits(property.Value);
                     continue;
                 }
+                if (property.NameEquals("currentState"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    currentState = IndexerState.DeserializeIndexerState(property.Value);
+                    continue;
+                }
             }
-            return new SearchIndexerStatus(status, lastResult, executionHistory, limits);
+            return new SearchIndexerStatus(status, lastResult, executionHistory, limits, currentState);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

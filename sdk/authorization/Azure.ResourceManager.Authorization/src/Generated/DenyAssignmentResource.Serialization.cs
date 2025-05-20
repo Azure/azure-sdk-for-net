@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Authorization
 {
     public partial class DenyAssignmentResource : IJsonModel<DenyAssignmentData>
     {
+        private static DenyAssignmentData s_dataDeserializationInstance;
+        private static DenyAssignmentData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<DenyAssignmentData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DenyAssignmentData>)Data).Write(writer, options);
 
-        DenyAssignmentData IJsonModel<DenyAssignmentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DenyAssignmentData>)Data).Create(ref reader, options);
+        DenyAssignmentData IJsonModel<DenyAssignmentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DenyAssignmentData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<DenyAssignmentData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<DenyAssignmentData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DenyAssignmentData>(Data, options, AzureResourceManagerAuthorizationContext.Default);
 
-        DenyAssignmentData IPersistableModel<DenyAssignmentData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DenyAssignmentData>(data, options);
+        DenyAssignmentData IPersistableModel<DenyAssignmentData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DenyAssignmentData>(data, options, AzureResourceManagerAuthorizationContext.Default);
 
-        string IPersistableModel<DenyAssignmentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DenyAssignmentData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<DenyAssignmentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DenyAssignmentData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

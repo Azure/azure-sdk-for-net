@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Support
 {
     public partial class SupportAzureServiceResource : IJsonModel<SupportAzureServiceData>
     {
+        private static SupportAzureServiceData s_dataDeserializationInstance;
+        private static SupportAzureServiceData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<SupportAzureServiceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SupportAzureServiceData>)Data).Write(writer, options);
 
-        SupportAzureServiceData IJsonModel<SupportAzureServiceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SupportAzureServiceData>)Data).Create(ref reader, options);
+        SupportAzureServiceData IJsonModel<SupportAzureServiceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SupportAzureServiceData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SupportAzureServiceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<SupportAzureServiceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SupportAzureServiceData>(Data, options, AzureResourceManagerSupportContext.Default);
 
-        SupportAzureServiceData IPersistableModel<SupportAzureServiceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SupportAzureServiceData>(data, options);
+        SupportAzureServiceData IPersistableModel<SupportAzureServiceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SupportAzureServiceData>(data, options, AzureResourceManagerSupportContext.Default);
 
-        string IPersistableModel<SupportAzureServiceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SupportAzureServiceData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<SupportAzureServiceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SupportAzureServiceData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

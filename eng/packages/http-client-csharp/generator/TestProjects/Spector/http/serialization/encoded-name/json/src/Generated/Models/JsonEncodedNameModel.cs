@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Serialization.EncodedName.Json.Models
+namespace Serialization.EncodedName.Json._Property
 {
     public partial class JsonEncodedNameModel
     {

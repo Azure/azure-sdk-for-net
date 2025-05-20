@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.DevTestLabs
 {
     public partial class DevTestLabVmResource : IJsonModel<DevTestLabVmData>
     {
+        private static DevTestLabVmData s_dataDeserializationInstance;
+        private static DevTestLabVmData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<DevTestLabVmData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DevTestLabVmData>)Data).Write(writer, options);
 
-        DevTestLabVmData IJsonModel<DevTestLabVmData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DevTestLabVmData>)Data).Create(ref reader, options);
+        DevTestLabVmData IJsonModel<DevTestLabVmData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DevTestLabVmData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<DevTestLabVmData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<DevTestLabVmData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DevTestLabVmData>(Data, options, AzureResourceManagerDevTestLabsContext.Default);
 
-        DevTestLabVmData IPersistableModel<DevTestLabVmData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DevTestLabVmData>(data, options);
+        DevTestLabVmData IPersistableModel<DevTestLabVmData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DevTestLabVmData>(data, options, AzureResourceManagerDevTestLabsContext.Default);
 
-        string IPersistableModel<DevTestLabVmData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DevTestLabVmData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<DevTestLabVmData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DevTestLabVmData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

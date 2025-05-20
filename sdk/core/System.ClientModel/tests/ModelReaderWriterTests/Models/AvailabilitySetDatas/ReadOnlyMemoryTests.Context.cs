@@ -44,7 +44,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.AvailabilitySet
                 protected override void AddItem(object collection, object item)
                     => ((List<AvailabilitySetData>)collection).Add((AvailabilitySetData)item);
 
-                protected override object ToCollection(object builder)
+                protected override object ConvertCollectionBuilder(object builder)
                     => new ReadOnlyMemory<AvailabilitySetData>([.. (List<AvailabilitySetData>)builder]);
 
                 protected override IEnumerable GetItems(object obj)

@@ -39,10 +39,10 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 writer.WritePropertyName("code"u8);
                 writer.WriteStringValue(Code);
             }
-            if (options.Format != "W" && Optional.IsDefined(ErrorModelType))
+            if (options.Format != "W" && Optional.IsDefined(Type))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(ErrorModelType);
+                writer.WriteStringValue(Type);
             }
             if (options.Format != "W" && Optional.IsDefined(Severity))
             {
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesDataReplicationContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(DataReplicationErrorInfo)} does not support writing '{options.Format}' format.");
             }
