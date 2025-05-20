@@ -412,7 +412,6 @@ namespace Azure.AI.Language.Conversations.Tests
             // Arrange: Initialize client and input
             ConversationAnalysisClient client = Client;
             List<string> redactedTexts = new();
-            Console.WriteLine($"Endpoint1111111:  " + TestEnvironment.Endpoint);
             // Create an EntityMaskTypePolicyType
             var redactionPolicy = new EntityMaskTypePolicyType();
 

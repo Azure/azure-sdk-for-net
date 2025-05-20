@@ -21,7 +21,6 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
         {
             // Arrange: Initialize client and input
             ConversationAnalysisClient client = Client;
-            Console.WriteLine($"Endpoint1111111:  " + TestEnvironment.Endpoint);
             List<string> detectedEntities = new();
 
             // Create a NoMaskPolicyType (PII should be detected but not redacted)
