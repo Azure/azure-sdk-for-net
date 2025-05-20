@@ -10,12 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.AI.Agents.Persistent
 {
-    /// <summary>
-    /// An abstract representation of an input tool definition that an agent can use.
-    /// Please note <see cref="ToolDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="AzureAISearchToolDefinition"/>, <see cref="AzureFunctionToolDefinition"/>, <see cref="BingCustomSearchToolDefinition"/>, <see cref="BingGroundingToolDefinition"/>, <see cref="CodeInterpreterToolDefinition"/>, <see cref="ConnectedAgentToolDefinition"/>, <see cref="MicrosoftFabricToolDefinition"/>, <see cref="FileSearchToolDefinition"/>, <see cref="FunctionToolDefinition"/>, <see cref="OpenApiToolDefinition"/> and <see cref="SharepointToolDefinition"/>.
-    /// </summary>
-    public abstract partial class ToolDefinition
+    /// <summary> A connection resource. </summary>
+    public partial class ToolConnection
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -47,23 +43,33 @@ namespace Azure.AI.Agents.Persistent
         /// </list>
         /// </para>
         /// </summary>
-        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ToolDefinition"/>. </summary>
-        protected ToolDefinition()
+        /// <summary> Initializes a new instance of <see cref="ToolConnection"/>. </summary>
+        /// <param name="connectionId"> A connection in a ToolConnectionList attached to this tool. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="connectionId"/> is null. </exception>
+        public ToolConnection(string connectionId)
         {
+            Argument.AssertNotNull(connectionId, nameof(connectionId));
+
+            ConnectionId = connectionId;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ToolDefinition"/>. </summary>
-        /// <param name="type"> The object type. </param>
+        /// <summary> Initializes a new instance of <see cref="ToolConnection"/>. </summary>
+        /// <param name="connectionId"> A connection in a ToolConnectionList attached to this tool. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ToolDefinition(string type, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ToolConnection(string connectionId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Type = type;
+            ConnectionId = connectionId;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The object type. </summary>
-        internal string Type { get; set; }
+        /// <summary> Initializes a new instance of <see cref="ToolConnection"/> for deserialization. </summary>
+        internal ToolConnection()
+        {
+        }
+
+        /// <summary> A connection in a ToolConnectionList attached to this tool. </summary>
+        public string ConnectionId { get; set; }
     }
 }
