@@ -13,8 +13,13 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class AcsChatThreadEventInThreadBaseProperties : AcsChatEventInThreadBaseProperties
     {
         /// <summary> Initializes a new instance of <see cref="AcsChatThreadEventInThreadBaseProperties"/>. </summary>
-        internal AcsChatThreadEventInThreadBaseProperties()
+        /// <param name="transactionId"> The transaction id will be used as co-relation vector. </param>
+        /// <param name="threadId"> The chat thread id. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="transactionId"/> or <paramref name="threadId"/> is null. </exception>
+        internal AcsChatThreadEventInThreadBaseProperties(string transactionId, string threadId) : base(transactionId, threadId)
         {
+            Argument.AssertNotNull(transactionId, nameof(transactionId));
+            Argument.AssertNotNull(threadId, nameof(threadId));
         }
 
         /// <summary> Initializes a new instance of <see cref="AcsChatThreadEventInThreadBaseProperties"/>. </summary>
@@ -22,8 +27,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="threadId"> The chat thread id. </param>
         /// <param name="createTime"> The original creation time of the thread. </param>
         /// <param name="version"> The version of the thread. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="transactionId"/> or <paramref name="threadId"/> is null. </exception>
         internal AcsChatThreadEventInThreadBaseProperties(string transactionId, string threadId, DateTimeOffset? createTime, long? version) : base(transactionId, threadId)
         {
+            Argument.AssertNotNull(transactionId, nameof(transactionId));
+            Argument.AssertNotNull(threadId, nameof(threadId));
+
             CreateTime = createTime;
             Version = version;
         }

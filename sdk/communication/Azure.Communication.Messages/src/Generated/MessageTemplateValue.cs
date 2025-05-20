@@ -76,7 +76,7 @@ namespace Azure.Communication.Messages
         }
 
         /// <summary> Template binding reference name. </summary>
-        public string Name { get; }
+        public string Name { get; set; }
         /// <summary> The type discriminator describing a template parameter type. </summary>
         internal MessageTemplateValueKind Kind { get; set; }
     }

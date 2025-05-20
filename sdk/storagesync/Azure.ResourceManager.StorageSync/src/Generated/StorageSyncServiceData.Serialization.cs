@@ -37,6 +37,12 @@ namespace Azure.ResourceManager.StorageSync
             }
 
             base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(Identity))
+            {
+                writer.WritePropertyName("identity"u8);
+                var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
+                JsonSerializer.Serialize(writer, Identity, serializeOptions);
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(IncomingTrafficPolicy))
@@ -58,6 +64,11 @@ namespace Azure.ResourceManager.StorageSync
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
+            }
+            if (options.Format != "W" && Optional.IsDefined(UseIdentity))
+            {
+                writer.WritePropertyName("useIdentity"u8);
+                writer.WriteBooleanValue(UseIdentity.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(LastWorkflowId))
             {
@@ -102,6 +113,7 @@ namespace Azure.ResourceManager.StorageSync
             {
                 return null;
             }
+            ManagedServiceIdentity identity = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -112,6 +124,7 @@ namespace Azure.ResourceManager.StorageSync
             int? storageSyncServiceStatus = default;
             Guid? storageSyncServiceUid = default;
             string provisioningState = default;
+            bool? useIdentity = default;
             string lastWorkflowId = default;
             string lastOperationName = default;
             IReadOnlyList<StorageSyncPrivateEndpointConnectionData> privateEndpointConnections = default;
@@ -119,6 +132,16 @@ namespace Azure.ResourceManager.StorageSync
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("identity"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
+                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText(), serializeOptions);
+                    continue;
+                }
                 if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -203,6 +226,15 @@ namespace Azure.ResourceManager.StorageSync
                             provisioningState = property0.Value.GetString();
                             continue;
                         }
+                        if (property0.NameEquals("useIdentity"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            useIdentity = property0.Value.GetBoolean();
+                            continue;
+                        }
                         if (property0.NameEquals("lastWorkflowId"u8))
                         {
                             lastWorkflowId = property0.Value.GetString();
@@ -243,10 +275,12 @@ namespace Azure.ResourceManager.StorageSync
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
+                identity,
                 incomingTrafficPolicy,
                 storageSyncServiceStatus,
                 storageSyncServiceUid,
                 provisioningState,
+                useIdentity,
                 lastWorkflowId,
                 lastOperationName,
                 privateEndpointConnections ?? new ChangeTrackingList<StorageSyncPrivateEndpointConnectionData>(),
@@ -260,7 +294,7 @@ namespace Azure.ResourceManager.StorageSync
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerStorageSyncContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(StorageSyncServiceData)} does not support writing '{options.Format}' format.");
             }

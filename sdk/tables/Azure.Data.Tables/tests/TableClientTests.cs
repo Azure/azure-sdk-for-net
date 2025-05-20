@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Diagnostics.Tracing;
 using System.Linq;
 using System.Net;
-using System.Reflection.Metadata;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Diagnostics;
@@ -367,6 +366,33 @@ namespace Azure.Data.Tables.Tests
             Assert.That(deserializedEntity.MyFoo.ToString(), Is.EqualTo(entity.MyFoo.ToString()), "The entities should be equivalent");
             Assert.That(deserializedEntity.MyNullableFoo.ToString(), Is.EqualTo(entity.MyNullableFoo.ToString()), "The entities should be equivalent");
             Assert.That(deserializedEntity.MyNullableFoo2.ToString(), Is.EqualTo(entity.MyNullableFoo2.ToString()), "The entities should be equivalent");
+            Assert.That(dictEntity.TryGetValue(TableConstants.PropertyNames.Timestamp, out var _), Is.False, "Only PK, RK, and user properties should be sent");
+        }
+
+        // This test validates that a table entity with an enum property that has an unknown enum value is not deserialized.
+        [Test]
+        public void EnumPropertiesWithUnknownValuesAreNotDeserialized()
+        {
+            Foo foo = (Foo)3;
+            NullableFoo? nullableFoo = (NullableFoo)3;
+            var entity = new EnumEntity
+            {
+                PartitionKey = "partitionKey",
+                RowKey = "01",
+                Timestamp = DateTime.Now,
+                MyFoo = foo,
+                MyNullableFoo = nullableFoo,
+                ETag = ETag.All
+            };
+
+            // Create the new entities.
+            var dictEntity = entity.ToOdataAnnotatedDictionary();
+            var deserializedEntity = dictEntity.ToTableEntity<EnumEntity>();
+            Assert.That(deserializedEntity.PartitionKey, Is.EqualTo(entity.PartitionKey), "The entities should be equivalent");
+            Assert.That(deserializedEntity.RowKey, Is.EqualTo(entity.RowKey), "The entities should be equivalent");
+            Assert.That(deserializedEntity.MyFoo.ToString(), Is.EqualTo(default(Foo).ToString()), "The non-existing enum value should not be deserialized.");
+            Assert.IsNull(deserializedEntity.MyNullableFoo, "The non-existing nullable enum value should not be deserialized.");
+            Assert.IsNull(deserializedEntity.MyNullableFoo2, "The entities should be equivalent.");
             Assert.That(dictEntity.TryGetValue(TableConstants.PropertyNames.Timestamp, out var _), Is.False, "Only PK, RK, and user properties should be sent");
         }
 

@@ -69,6 +69,11 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 writer.WritePropertyName("disabled"u8);
                 writer.WriteBooleanValue(Disabled.Value);
             }
+            if (Optional.IsDefined(AutoUpgradeProfileStatus))
+            {
+                writer.WritePropertyName("autoUpgradeProfileStatus"u8);
+                writer.WriteObjectValue(AutoUpgradeProfileStatus, options);
+            }
             writer.WriteEndObject();
         }
 
@@ -102,6 +107,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
             ContainerServiceFleetUpgradeChannel? channel = default;
             AutoUpgradeNodeImageSelection nodeImageSelection = default;
             bool? disabled = default;
+            AutoUpgradeProfileStatus autoUpgradeProfileStatus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -193,6 +199,15 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                             disabled = property0.Value.GetBoolean();
                             continue;
                         }
+                        if (property0.NameEquals("autoUpgradeProfileStatus"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            autoUpgradeProfileStatus = AutoUpgradeProfileStatus.DeserializeAutoUpgradeProfileStatus(property0.Value, options);
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -213,6 +228,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 channel,
                 nodeImageSelection,
                 disabled,
+                autoUpgradeProfileStatus,
                 serializedAdditionalRawData);
         }
 
@@ -223,7 +239,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerContainerServiceFleetContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(AutoUpgradeProfileData)} does not support writing '{options.Format}' format.");
             }

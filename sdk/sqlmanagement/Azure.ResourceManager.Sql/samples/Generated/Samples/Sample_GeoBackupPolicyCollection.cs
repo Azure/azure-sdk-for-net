@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.Sql.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task CreateOrUpdate_UpdateGeoBackupPolicy()
+        public async Task CreateOrUpdate_CreateOrUpdateADatabaseDefaultGeoBackupPolicy()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/stable/2014-04-01/examples/GeoBackupPoliciesCreateOrUpdate.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-05-01-preview/examples/GeoBackupPoliciesCreateOrUpdate.json
             // this example is just showing the usage of "GeoBackupPolicies_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -42,7 +42,10 @@ namespace Azure.ResourceManager.Sql.Samples
 
             // invoke the operation
             GeoBackupPolicyName geoBackupPolicyName = GeoBackupPolicyName.Default;
-            GeoBackupPolicyData data = new GeoBackupPolicyData(GeoBackupPolicyState.Enabled);
+            GeoBackupPolicyData data = new GeoBackupPolicyData
+            {
+                GeoBackupPolicyState = GeoBackupPolicyState.Enabled,
+            };
             ArmOperation<GeoBackupPolicyResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, geoBackupPolicyName, data);
             GeoBackupPolicyResource result = lro.Value;
 
@@ -55,9 +58,9 @@ namespace Azure.ResourceManager.Sql.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Get_GetGeoBackupPolicy()
+        public async Task Get_GetsTheSpecifiedGeoBackupPolicy()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/stable/2014-04-01/examples/GeoBackupPoliciesGet.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-05-01-preview/examples/GeoBackupPoliciesGet.json
             // this example is just showing the usage of "GeoBackupPolicies_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -90,10 +93,10 @@ namespace Azure.ResourceManager.Sql.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetAll_ListGeoBackupPolicies()
+        public async Task GetAll_ListGeoBackupPoliciesForTheGivenDatabaseResource()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/stable/2014-04-01/examples/GeoBackupPoliciesList.json
-            // this example is just showing the usage of "GeoBackupPolicies_ListByDatabase" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-05-01-preview/examples/GeoBackupPoliciesList.json
+            // this example is just showing the usage of "GeoBackupPolicies_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -127,9 +130,9 @@ namespace Azure.ResourceManager.Sql.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Exists_GetGeoBackupPolicy()
+        public async Task Exists_GetsTheSpecifiedGeoBackupPolicy()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/stable/2014-04-01/examples/GeoBackupPoliciesGet.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-05-01-preview/examples/GeoBackupPoliciesGet.json
             // this example is just showing the usage of "GeoBackupPolicies_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -158,9 +161,9 @@ namespace Azure.ResourceManager.Sql.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetIfExists_GetGeoBackupPolicy()
+        public async Task GetIfExists_GetsTheSpecifiedGeoBackupPolicy()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/stable/2014-04-01/examples/GeoBackupPoliciesGet.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-05-01-preview/examples/GeoBackupPoliciesGet.json
             // this example is just showing the usage of "GeoBackupPolicies_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

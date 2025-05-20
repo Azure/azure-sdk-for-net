@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -15,22 +14,20 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class AcsChatThreadCreatedEventData : AcsChatThreadEventInThreadBaseProperties
     {
         /// <summary> Initializes a new instance of <see cref="AcsChatThreadCreatedEventData"/>. </summary>
+        /// <param name="threadId"> The chat thread id. </param>
         /// <param name="createdByCommunicationIdentifier"> The communication identifier of the user who created the thread. </param>
         /// <param name="properties"> The thread properties. </param>
-        /// <param name="metadata"> The thread metadata. </param>
-        /// <param name="participants"> The list of properties of participants who are part of the thread. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="createdByCommunicationIdentifier"/>, <paramref name="properties"/>, <paramref name="metadata"/> or <paramref name="participants"/> is null. </exception>
-        internal AcsChatThreadCreatedEventData(CommunicationIdentifierModel createdByCommunicationIdentifier, IReadOnlyDictionary<string, BinaryData> properties, IReadOnlyDictionary<string, string> metadata, IEnumerable<AcsChatThreadParticipantProperties> participants)
+        /// <exception cref="ArgumentNullException"> <paramref name="threadId"/>, <paramref name="createdByCommunicationIdentifier"/> or <paramref name="properties"/> is null. </exception>
+        internal AcsChatThreadCreatedEventData(string threadId, CommunicationIdentifierModel createdByCommunicationIdentifier, IReadOnlyDictionary<string, BinaryData> properties) : base(threadId)
         {
+            Argument.AssertNotNull(threadId, nameof(threadId));
             Argument.AssertNotNull(createdByCommunicationIdentifier, nameof(createdByCommunicationIdentifier));
             Argument.AssertNotNull(properties, nameof(properties));
-            Argument.AssertNotNull(metadata, nameof(metadata));
-            Argument.AssertNotNull(participants, nameof(participants));
 
             CreatedByCommunicationIdentifier = createdByCommunicationIdentifier;
             Properties = properties;
-            Metadata = metadata;
-            Participants = participants.ToList();
+            Metadata = new ChangeTrackingDictionary<string, string>();
+            Participants = new ChangeTrackingList<AcsChatThreadParticipantProperties>();
         }
 
         /// <summary> Initializes a new instance of <see cref="AcsChatThreadCreatedEventData"/>. </summary>

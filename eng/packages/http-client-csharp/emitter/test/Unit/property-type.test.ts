@@ -39,9 +39,10 @@ describe("Test GetInputType for enum", () => {
     const context = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(context);
     const root = createModel(sdkContext);
-    const inputParamArray = root.clients[0].operations[0].parameters.filter(
-      (p) => p.name === "input"
-    );
+    const inputParamArray =
+      root.clients[0].methods[0].operation.parameters.filter(
+        (p) => p.name === "input"
+      );
     strictEqual(1, inputParamArray.length);
     const type = inputParamArray[0].type;
     strictEqual(type.kind, "enum");
@@ -87,9 +88,10 @@ describe("Test GetInputType for enum", () => {
     const context = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(context);
     const root = createModel(sdkContext);
-    const inputParamArray = root.clients[0].operations[0].parameters.filter(
-      (p) => p.name === "input"
-    );
+    const inputParamArray =
+      root.clients[0].methods[0].operation.parameters.filter(
+        (p) => p.name === "input"
+      );
     strictEqual(1, inputParamArray.length);
     const type = inputParamArray[0].type;
     strictEqual(type.kind, "enum");
@@ -113,4 +115,3 @@ describe("Test GetInputType for enum", () => {
     strictEqual(type.usage, UsageFlags.Input | UsageFlags.Json);
   });
 });
-//# sourceMappingURL=property-type.test.js.map

@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.NetApp
 {
     public partial class NetAppVolumeSnapshotResource : IJsonModel<NetAppVolumeSnapshotData>
     {
+        private static NetAppVolumeSnapshotData s_dataDeserializationInstance;
+        private static NetAppVolumeSnapshotData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<NetAppVolumeSnapshotData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<NetAppVolumeSnapshotData>)Data).Write(writer, options);
 
-        NetAppVolumeSnapshotData IJsonModel<NetAppVolumeSnapshotData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetAppVolumeSnapshotData>)Data).Create(ref reader, options);
+        NetAppVolumeSnapshotData IJsonModel<NetAppVolumeSnapshotData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetAppVolumeSnapshotData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<NetAppVolumeSnapshotData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<NetAppVolumeSnapshotData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<NetAppVolumeSnapshotData>(Data, options, AzureResourceManagerNetAppContext.Default);
 
-        NetAppVolumeSnapshotData IPersistableModel<NetAppVolumeSnapshotData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetAppVolumeSnapshotData>(data, options);
+        NetAppVolumeSnapshotData IPersistableModel<NetAppVolumeSnapshotData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetAppVolumeSnapshotData>(data, options, AzureResourceManagerNetAppContext.Default);
 
-        string IPersistableModel<NetAppVolumeSnapshotData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetAppVolumeSnapshotData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<NetAppVolumeSnapshotData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetAppVolumeSnapshotData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

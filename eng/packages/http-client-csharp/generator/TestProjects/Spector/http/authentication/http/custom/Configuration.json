@@ -1,5 +1,4 @@
 {
-  "output-folder": ".",
   "package-name": "Authentication.Http.Custom",
   "license": {
     "name": "MIT License",
