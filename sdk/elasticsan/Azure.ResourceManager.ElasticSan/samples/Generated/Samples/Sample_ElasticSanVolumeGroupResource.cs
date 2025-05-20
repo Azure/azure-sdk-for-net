@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.ElasticSan.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_VolumeGroupsGetMaximumSetGen()
         {
-            // Generated from example definition: specification/elasticsan/resource-manager/Microsoft.ElasticSan/preview/2024-06-01-preview/examples/VolumeGroups_Get_MaximumSet_Gen.json
+            // Generated from example definition: specification/elasticsan/resource-manager/Microsoft.ElasticSan/preview/2024-07-01-preview/examples/VolumeGroups_Get_MaximumSet_Gen.json
             // this example is just showing the usage of "VolumeGroups_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ElasticSan.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_VolumeGroupsGetMinimumSetGen()
         {
-            // Generated from example definition: specification/elasticsan/resource-manager/Microsoft.ElasticSan/preview/2024-06-01-preview/examples/VolumeGroups_Get_MinimumSet_Gen.json
+            // Generated from example definition: specification/elasticsan/resource-manager/Microsoft.ElasticSan/preview/2024-07-01-preview/examples/VolumeGroups_Get_MinimumSet_Gen.json
             // this example is just showing the usage of "VolumeGroups_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.ElasticSan.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_VolumeGroupsDeleteMaximumSetGen()
         {
-            // Generated from example definition: specification/elasticsan/resource-manager/Microsoft.ElasticSan/preview/2024-06-01-preview/examples/VolumeGroups_Delete_MaximumSet_Gen.json
+            // Generated from example definition: specification/elasticsan/resource-manager/Microsoft.ElasticSan/preview/2024-07-01-preview/examples/VolumeGroups_Delete_MaximumSet_Gen.json
             // this example is just showing the usage of "VolumeGroups_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.ElasticSan.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_VolumeGroupsDeleteMinimumSetGen()
         {
-            // Generated from example definition: specification/elasticsan/resource-manager/Microsoft.ElasticSan/preview/2024-06-01-preview/examples/VolumeGroups_Delete_MinimumSet_Gen.json
+            // Generated from example definition: specification/elasticsan/resource-manager/Microsoft.ElasticSan/preview/2024-07-01-preview/examples/VolumeGroups_Delete_MinimumSet_Gen.json
             // this example is just showing the usage of "VolumeGroups_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.ElasticSan.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_VolumeGroupsUpdateMaximumSetGen()
         {
-            // Generated from example definition: specification/elasticsan/resource-manager/Microsoft.ElasticSan/preview/2024-06-01-preview/examples/VolumeGroups_Update_MaximumSet_Gen.json
+            // Generated from example definition: specification/elasticsan/resource-manager/Microsoft.ElasticSan/preview/2024-07-01-preview/examples/VolumeGroups_Update_MaximumSet_Gen.json
             // this example is just showing the usage of "VolumeGroups_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.ElasticSan.Samples
                 {
                     UserAssignedIdentities =
 {
-[new ResourceIdentifier("key1006")] = new UserAssignedIdentity()
+[new ResourceIdentifier("key2350")] = new UserAssignedIdentity()
 },
                 },
                 ProtocolType = ElasticSanStorageTargetType.Iscsi,
@@ -170,17 +170,22 @@ namespace Azure.ResourceManager.ElasticSan.Samples
                 {
                     KeyVaultProperties = new ElasticSanKeyVaultProperties
                     {
-                        KeyName = "lunpapamzeimppgobraxjt",
-                        KeyVersion = "oemygbnfmqhijmonkqfqmy",
-                        KeyVaultUri = new Uri("https://microsoft.com/a"),
+                        KeyName = "rommjwp",
+                        KeyVersion = "ulmxxgzgsuhalwesmhfslq",
+                        KeyVaultUri = new Uri("https://microsoft.com/at"),
                     },
-                    EncryptionUserAssignedIdentity = new ResourceIdentifier("gfhkfbozahmmwluqndfgxunssafa"),
+                    EncryptionUserAssignedIdentity = new ResourceIdentifier("vgbeephfgecgg"),
                 },
-                VirtualNetworkRules = {new ElasticSanVirtualNetworkRule(new ResourceIdentifier("bkhwaiqvvaguymsmnzzbzz"))
+                VirtualNetworkRules = {new ElasticSanVirtualNetworkRule(new ResourceIdentifier("fhhawhc"))
 {
 Action = ElasticSanVirtualNetworkRuleAction.Allow,
 }},
                 EnforceDataIntegrityCheckForIscsi = true,
+                DeleteRetentionPolicy = new ElasticSanDeleteRetentionPolicy
+                {
+                    PolicyState = ElasticSanDeleteRetentionPolicyState.Enabled,
+                    RetentionPeriodDays = 14,
+                },
             };
             ArmOperation<ElasticSanVolumeGroupResource> lro = await elasticSanVolumeGroup.UpdateAsync(WaitUntil.Completed, patch);
             ElasticSanVolumeGroupResource result = lro.Value;
@@ -196,7 +201,7 @@ Action = ElasticSanVirtualNetworkRuleAction.Allow,
         [Ignore("Only validating compilation of examples")]
         public async Task Update_VolumeGroupsUpdateMinimumSetGen()
         {
-            // Generated from example definition: specification/elasticsan/resource-manager/Microsoft.ElasticSan/preview/2024-06-01-preview/examples/VolumeGroups_Update_MinimumSet_Gen.json
+            // Generated from example definition: specification/elasticsan/resource-manager/Microsoft.ElasticSan/preview/2024-07-01-preview/examples/VolumeGroups_Update_MinimumSet_Gen.json
             // this example is just showing the usage of "VolumeGroups_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -223,6 +228,64 @@ Action = ElasticSanVirtualNetworkRuleAction.Allow,
             ElasticSanVolumeGroupData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task PreBackupVolume_VolumeGroupsPreBackupMaximumSetGen()
+        {
+            // Generated from example definition: specification/elasticsan/resource-manager/Microsoft.ElasticSan/preview/2024-07-01-preview/examples/Volumes_PreBackup_MaximumSet_Gen.json
+            // this example is just showing the usage of "Volumes_PreBackup" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ElasticSanVolumeGroupResource created on azure
+            // for more information of creating ElasticSanVolumeGroupResource, please refer to the document of ElasticSanVolumeGroupResource
+            string subscriptionId = "subscriptionid";
+            string resourceGroupName = "resourcegroupname";
+            string elasticSanName = "elasticsanname";
+            string volumeGroupName = "volumegroupname";
+            ResourceIdentifier elasticSanVolumeGroupResourceId = ElasticSanVolumeGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, elasticSanName, volumeGroupName);
+            ElasticSanVolumeGroupResource elasticSanVolumeGroup = client.GetElasticSanVolumeGroupResource(elasticSanVolumeGroupResourceId);
+
+            // invoke the operation
+            ElasticSanVolumeNameListContent content = new ElasticSanVolumeNameListContent(new string[] { "volumename" });
+            ArmOperation<ElasticSanPreValidationResult> lro = await elasticSanVolumeGroup.PreBackupVolumeAsync(WaitUntil.Completed, content);
+            ElasticSanPreValidationResult result = lro.Value;
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task PreRestoreVolume_VolumeGroupsPreRestoreMaximumSetGen()
+        {
+            // Generated from example definition: specification/elasticsan/resource-manager/Microsoft.ElasticSan/preview/2024-07-01-preview/examples/Volumes_PreRestore_MaximumSet_Gen.json
+            // this example is just showing the usage of "Volumes_PreRestore" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ElasticSanVolumeGroupResource created on azure
+            // for more information of creating ElasticSanVolumeGroupResource, please refer to the document of ElasticSanVolumeGroupResource
+            string subscriptionId = "subscriptionid";
+            string resourceGroupName = "resourcegroupname";
+            string elasticSanName = "elasticsanname";
+            string volumeGroupName = "volumegroupname";
+            ResourceIdentifier elasticSanVolumeGroupResourceId = ElasticSanVolumeGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, elasticSanName, volumeGroupName);
+            ElasticSanVolumeGroupResource elasticSanVolumeGroup = client.GetElasticSanVolumeGroupResource(elasticSanVolumeGroupResourceId);
+
+            // invoke the operation
+            DiskSnapshotListContent content = new DiskSnapshotListContent(new ResourceIdentifier[] { new ResourceIdentifier("/subscriptions/{subscriptionid}/resourceGroups/{resourcegroupname}/providers/Microsoft.Compute/snapshots/disksnapshot1") });
+            ArmOperation<ElasticSanPreValidationResult> lro = await elasticSanVolumeGroup.PreRestoreVolumeAsync(WaitUntil.Completed, content);
+            ElasticSanPreValidationResult result = lro.Value;
+
+            Console.WriteLine($"Succeeded: {result}");
         }
     }
 }

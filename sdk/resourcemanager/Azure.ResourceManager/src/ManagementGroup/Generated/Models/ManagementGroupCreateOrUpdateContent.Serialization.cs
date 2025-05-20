@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ManagementGroupCreateOrUpdateContent)} does not support writing '{options.Format}' format.");
             }

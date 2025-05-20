@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.ManagedNetwork
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerManagedNetworkContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ScopeAssignmentData)} does not support writing '{options.Format}' format.");
             }

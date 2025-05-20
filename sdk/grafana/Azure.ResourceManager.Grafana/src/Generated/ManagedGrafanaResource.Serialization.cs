@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Grafana
 {
     public partial class ManagedGrafanaResource : IJsonModel<ManagedGrafanaData>
     {
+        private static ManagedGrafanaData s_dataDeserializationInstance;
+        private static ManagedGrafanaData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<ManagedGrafanaData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ManagedGrafanaData>)Data).Write(writer, options);
 
-        ManagedGrafanaData IJsonModel<ManagedGrafanaData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ManagedGrafanaData>)Data).Create(ref reader, options);
+        ManagedGrafanaData IJsonModel<ManagedGrafanaData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ManagedGrafanaData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ManagedGrafanaData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<ManagedGrafanaData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ManagedGrafanaData>(Data, options, AzureResourceManagerGrafanaContext.Default);
 
-        ManagedGrafanaData IPersistableModel<ManagedGrafanaData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ManagedGrafanaData>(data, options);
+        ManagedGrafanaData IPersistableModel<ManagedGrafanaData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ManagedGrafanaData>(data, options, AzureResourceManagerGrafanaContext.Default);
 
-        string IPersistableModel<ManagedGrafanaData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ManagedGrafanaData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<ManagedGrafanaData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ManagedGrafanaData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

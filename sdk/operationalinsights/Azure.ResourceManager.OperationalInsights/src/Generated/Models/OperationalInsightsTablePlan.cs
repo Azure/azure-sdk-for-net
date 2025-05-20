@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         private const string BasicValue = "Basic";
         private const string AnalyticsValue = "Analytics";
 
-        /// <summary> Logs  that are adjusted to support high volume low value verbose logs. </summary>
+        /// <summary> Logs that are adjusted to support high volume low value verbose logs. </summary>
         public static OperationalInsightsTablePlan Basic { get; } = new OperationalInsightsTablePlan(BasicValue);
         /// <summary> Logs  that allow monitoring and analytics. </summary>
         public static OperationalInsightsTablePlan Analytics { get; } = new OperationalInsightsTablePlan(AnalyticsValue);

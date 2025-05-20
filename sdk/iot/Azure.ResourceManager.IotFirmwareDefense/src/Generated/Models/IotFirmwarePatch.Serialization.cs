@@ -63,15 +63,8 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             }
             if (Optional.IsDefined(FileSize))
             {
-                if (FileSize != null)
-                {
-                    writer.WritePropertyName("fileSize"u8);
-                    writer.WriteNumberValue(FileSize.Value);
-                }
-                else
-                {
-                    writer.WriteNull("fileSize");
-                }
+                writer.WritePropertyName("fileSize"u8);
+                writer.WriteNumberValue(FileSize.Value);
             }
             if (Optional.IsDefined(Status))
             {
@@ -182,7 +175,6 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                fileSize = null;
                                 continue;
                             }
                             fileSize = property0.Value.GetInt64();
@@ -249,7 +241,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerIotFirmwareDefenseContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(IotFirmwarePatch)} does not support writing '{options.Format}' format.");
             }

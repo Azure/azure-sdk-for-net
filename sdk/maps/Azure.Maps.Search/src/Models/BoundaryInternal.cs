@@ -5,7 +5,6 @@ using Azure.Core;
 
 namespace Azure.Maps.Search.Models
 {
-    [CodeGenSerialization(nameof(BoundingBox), "boundingBox")]
     [CodeGenModel("Boundary")]
     internal partial class BoundaryInternal
     {

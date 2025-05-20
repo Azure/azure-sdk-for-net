@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.ApiManagement
 {
     public partial class ApiManagementPortalSignInSettingResource : IJsonModel<ApiManagementPortalSignInSettingData>
     {
+        private static ApiManagementPortalSignInSettingData s_dataDeserializationInstance;
+        private static ApiManagementPortalSignInSettingData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<ApiManagementPortalSignInSettingData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ApiManagementPortalSignInSettingData>)Data).Write(writer, options);
 
-        ApiManagementPortalSignInSettingData IJsonModel<ApiManagementPortalSignInSettingData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ApiManagementPortalSignInSettingData>)Data).Create(ref reader, options);
+        ApiManagementPortalSignInSettingData IJsonModel<ApiManagementPortalSignInSettingData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ApiManagementPortalSignInSettingData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ApiManagementPortalSignInSettingData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<ApiManagementPortalSignInSettingData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ApiManagementPortalSignInSettingData>(Data, options, AzureResourceManagerApiManagementContext.Default);
 
-        ApiManagementPortalSignInSettingData IPersistableModel<ApiManagementPortalSignInSettingData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ApiManagementPortalSignInSettingData>(data, options);
+        ApiManagementPortalSignInSettingData IPersistableModel<ApiManagementPortalSignInSettingData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ApiManagementPortalSignInSettingData>(data, options, AzureResourceManagerApiManagementContext.Default);
 
-        string IPersistableModel<ApiManagementPortalSignInSettingData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ApiManagementPortalSignInSettingData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<ApiManagementPortalSignInSettingData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ApiManagementPortalSignInSettingData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

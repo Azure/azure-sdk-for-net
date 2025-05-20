@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.IotFirmwareDefense.Models
 {
-    /// <summary> Provisioning state of the resource. </summary>
+    /// <summary>
+    /// The status of a firmware analysis job.
+    /// Serialized Name: ProvisioningState
+    /// </summary>
     public readonly partial struct FirmwareProvisioningState : IEquatable<FirmwareProvisioningState>
     {
         private readonly string _value;
@@ -22,19 +25,43 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string AcceptedValue = "Accepted";
         private const string SucceededValue = "Succeeded";
-        private const string CanceledValue = "Canceled";
         private const string FailedValue = "Failed";
+        private const string CanceledValue = "Canceled";
+        private const string PendingValue = "Pending";
+        private const string ExtractingValue = "Extracting";
+        private const string AnalyzingValue = "Analyzing";
 
-        /// <summary> Accepted. </summary>
-        public static FirmwareProvisioningState Accepted { get; } = new FirmwareProvisioningState(AcceptedValue);
-        /// <summary> Succeeded. </summary>
+        /// <summary>
+        /// The request has successfully completed.
+        /// Serialized Name: ProvisioningState.Succeeded
+        /// </summary>
         public static FirmwareProvisioningState Succeeded { get; } = new FirmwareProvisioningState(SucceededValue);
-        /// <summary> Canceled. </summary>
-        public static FirmwareProvisioningState Canceled { get; } = new FirmwareProvisioningState(CanceledValue);
-        /// <summary> Failed. </summary>
+        /// <summary>
+        /// There was an error during the request.
+        /// Serialized Name: ProvisioningState.Failed
+        /// </summary>
         public static FirmwareProvisioningState Failed { get; } = new FirmwareProvisioningState(FailedValue);
+        /// <summary>
+        /// The request was canceled.
+        /// Serialized Name: ProvisioningState.Canceled
+        /// </summary>
+        public static FirmwareProvisioningState Canceled { get; } = new FirmwareProvisioningState(CanceledValue);
+        /// <summary>
+        /// The request is queued and awaiting execution
+        /// Serialized Name: ProvisioningState.Pending
+        /// </summary>
+        public static FirmwareProvisioningState Pending { get; } = new FirmwareProvisioningState(PendingValue);
+        /// <summary>
+        /// The Firmware is currently being extracted.
+        /// Serialized Name: ProvisioningState.Extracting
+        /// </summary>
+        public static FirmwareProvisioningState Extracting { get; } = new FirmwareProvisioningState(ExtractingValue);
+        /// <summary>
+        /// Analysis is being run on the firmware
+        /// Serialized Name: ProvisioningState.Analyzing
+        /// </summary>
+        public static FirmwareProvisioningState Analyzing { get; } = new FirmwareProvisioningState(AnalyzingValue);
         /// <summary> Determines if two <see cref="FirmwareProvisioningState"/> values are the same. </summary>
         public static bool operator ==(FirmwareProvisioningState left, FirmwareProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="FirmwareProvisioningState"/> values are not the same. </summary>

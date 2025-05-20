@@ -8,7 +8,15 @@
 
 ### Bugs Fixed
 
+- Fixed a bug where the data types of broker-owned properties were being adjusted when an event was read by the client, causing the underlying AMQP data to be mutated.  This resulted in binary changes when the AMQP message was serialized and unintentionally altered the service contract.  Going forward, the original data types will be preserved on the AMQP representation of the message and type normalization only applied to the .NET `EventData` projection.
+
 ### Other Changes
+
+## 6.5.1 (2025-04-09)
+
+### Bugs Fixed
+
+- Fixed a bug which caused the placeholder value used to represent missing offsets in v5.11.3 - v5.11.6 to not be properly detected and incorrectly used as a valid offset when reading from a partition.
 
 ## 6.5.0 (2025-04-08)
 

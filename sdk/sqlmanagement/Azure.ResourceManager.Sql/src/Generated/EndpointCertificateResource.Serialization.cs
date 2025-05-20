@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Sql
 {
     public partial class EndpointCertificateResource : IJsonModel<EndpointCertificateData>
     {
+        private static EndpointCertificateData s_dataDeserializationInstance;
+        private static EndpointCertificateData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<EndpointCertificateData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<EndpointCertificateData>)Data).Write(writer, options);
 
-        EndpointCertificateData IJsonModel<EndpointCertificateData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<EndpointCertificateData>)Data).Create(ref reader, options);
+        EndpointCertificateData IJsonModel<EndpointCertificateData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<EndpointCertificateData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<EndpointCertificateData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<EndpointCertificateData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<EndpointCertificateData>(Data, options, AzureResourceManagerSqlContext.Default);
 
-        EndpointCertificateData IPersistableModel<EndpointCertificateData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<EndpointCertificateData>(data, options);
+        EndpointCertificateData IPersistableModel<EndpointCertificateData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<EndpointCertificateData>(data, options, AzureResourceManagerSqlContext.Default);
 
-        string IPersistableModel<EndpointCertificateData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<EndpointCertificateData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<EndpointCertificateData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<EndpointCertificateData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Sql.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetADatabaseSThreatDetectionPolicy()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2020-11-01-preview/examples/ManagedDatabaseSecurityAlertGet.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-05-01-preview/examples/ManagedDatabaseSecurityAlertGet.json
             // this example is just showing the usage of "ManagedDatabaseSecurityAlertPolicies_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Sql.Samples
             string resourceGroupName = "securityalert-6852";
             string managedInstanceName = "securityalert-2080";
             string databaseName = "testdb";
-            SqlSecurityAlertPolicyName securityAlertPolicyName = SqlSecurityAlertPolicyName.Default;
+            SqlSecurityAlertPolicyName securityAlertPolicyName = new SqlSecurityAlertPolicyName("default");
             ResourceIdentifier managedDatabaseSecurityAlertPolicyResourceId = ManagedDatabaseSecurityAlertPolicyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, managedInstanceName, databaseName, securityAlertPolicyName);
             ManagedDatabaseSecurityAlertPolicyResource managedDatabaseSecurityAlertPolicy = client.GetManagedDatabaseSecurityAlertPolicyResource(managedDatabaseSecurityAlertPolicyResourceId);
 
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Sql.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateADatabaseSThreatDetectionPolicyWithAllParameters()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2020-11-01-preview/examples/ManagedDatabaseSecurityAlertCreateMax.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-05-01-preview/examples/ManagedDatabaseSecurityAlertCreateMax.json
             // this example is just showing the usage of "ManagedDatabaseSecurityAlertPolicies_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Sql.Samples
             string resourceGroupName = "securityalert-4799";
             string managedInstanceName = "securityalert-6440";
             string databaseName = "testdb";
-            SqlSecurityAlertPolicyName securityAlertPolicyName = SqlSecurityAlertPolicyName.Default;
+            SqlSecurityAlertPolicyName securityAlertPolicyName = new SqlSecurityAlertPolicyName("default");
             ResourceIdentifier managedDatabaseSecurityAlertPolicyResourceId = ManagedDatabaseSecurityAlertPolicyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, managedInstanceName, databaseName, securityAlertPolicyName);
             ManagedDatabaseSecurityAlertPolicyResource managedDatabaseSecurityAlertPolicy = client.GetManagedDatabaseSecurityAlertPolicyResource(managedDatabaseSecurityAlertPolicyResourceId);
 
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Sql.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateADatabaseSThreatDetectionPolicyWithMinimalParameters()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2020-11-01-preview/examples/ManagedDatabaseSecurityAlertCreateMin.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-05-01-preview/examples/ManagedDatabaseSecurityAlertCreateMin.json
             // this example is just showing the usage of "ManagedDatabaseSecurityAlertPolicies_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Sql.Samples
             string resourceGroupName = "securityalert-4799";
             string managedInstanceName = "securityalert-6440";
             string databaseName = "testdb";
-            SqlSecurityAlertPolicyName securityAlertPolicyName = SqlSecurityAlertPolicyName.Default;
+            SqlSecurityAlertPolicyName securityAlertPolicyName = new SqlSecurityAlertPolicyName("default");
             ResourceIdentifier managedDatabaseSecurityAlertPolicyResourceId = ManagedDatabaseSecurityAlertPolicyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, managedInstanceName, databaseName, securityAlertPolicyName);
             ManagedDatabaseSecurityAlertPolicyResource managedDatabaseSecurityAlertPolicy = client.GetManagedDatabaseSecurityAlertPolicyResource(managedDatabaseSecurityAlertPolicyResourceId);
 

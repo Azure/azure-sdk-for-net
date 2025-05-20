@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Resources
 {
     public partial class TenantDataBoundaryResource : IJsonModel<DataBoundaryData>
     {
+        private static DataBoundaryData s_dataDeserializationInstance;
+        private static DataBoundaryData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<DataBoundaryData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DataBoundaryData>)Data).Write(writer, options);
 
-        DataBoundaryData IJsonModel<DataBoundaryData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DataBoundaryData>)Data).Create(ref reader, options);
+        DataBoundaryData IJsonModel<DataBoundaryData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DataBoundaryData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<DataBoundaryData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<DataBoundaryData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DataBoundaryData>(Data, options, AzureResourceManagerResourcesContext.Default);
 
-        DataBoundaryData IPersistableModel<DataBoundaryData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DataBoundaryData>(data, options);
+        DataBoundaryData IPersistableModel<DataBoundaryData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DataBoundaryData>(data, options, AzureResourceManagerResourcesContext.Default);
 
-        string IPersistableModel<DataBoundaryData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DataBoundaryData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<DataBoundaryData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DataBoundaryData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

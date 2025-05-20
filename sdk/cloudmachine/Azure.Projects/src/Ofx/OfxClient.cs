@@ -23,7 +23,7 @@ public partial class OfxClient : ProjectClient
     /// </summary>
     /// <param name="projectId"></param>
     /// <param name="connections"></param>
-    public OfxClient(string projectId, ConnectionProvider connections):
+    public OfxClient(string projectId, ClientConnectionProvider connections):
         base(projectId, connections)
     {
         Messaging = new MessagingServices(this);
