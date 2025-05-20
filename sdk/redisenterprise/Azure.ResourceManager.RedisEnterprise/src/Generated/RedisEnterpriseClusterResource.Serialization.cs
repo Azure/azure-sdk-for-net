@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.RedisEnterprise
 {
     public partial class RedisEnterpriseClusterResource : IJsonModel<RedisEnterpriseClusterData>
     {
+        private static RedisEnterpriseClusterData s_dataDeserializationInstance;
+        private static RedisEnterpriseClusterData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<RedisEnterpriseClusterData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<RedisEnterpriseClusterData>)Data).Write(writer, options);
 
-        RedisEnterpriseClusterData IJsonModel<RedisEnterpriseClusterData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<RedisEnterpriseClusterData>)Data).Create(ref reader, options);
+        RedisEnterpriseClusterData IJsonModel<RedisEnterpriseClusterData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<RedisEnterpriseClusterData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<RedisEnterpriseClusterData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<RedisEnterpriseClusterData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<RedisEnterpriseClusterData>(Data, options, AzureResourceManagerRedisEnterpriseContext.Default);
 
-        RedisEnterpriseClusterData IPersistableModel<RedisEnterpriseClusterData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<RedisEnterpriseClusterData>(data, options);
+        RedisEnterpriseClusterData IPersistableModel<RedisEnterpriseClusterData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<RedisEnterpriseClusterData>(data, options, AzureResourceManagerRedisEnterpriseContext.Default);
 
-        string IPersistableModel<RedisEnterpriseClusterData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<RedisEnterpriseClusterData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<RedisEnterpriseClusterData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<RedisEnterpriseClusterData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

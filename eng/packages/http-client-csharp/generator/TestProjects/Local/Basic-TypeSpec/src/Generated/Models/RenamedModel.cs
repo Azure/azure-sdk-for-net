@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace BasicTypeSpec.Models
+namespace BasicTypeSpec
 {
     /// <summary> this is a model with a client name. </summary>
     public partial class RenamedModel
@@ -16,11 +16,16 @@ namespace BasicTypeSpec.Models
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
+        /// <summary> Initializes a new instance of <see cref="RenamedModel"/>. </summary>
+        /// <param name="name"> name of the ModelWithClientName. </param>
         internal RenamedModel(string name)
         {
             Name = name;
         }
 
+        /// <summary> Initializes a new instance of <see cref="RenamedModel"/>. </summary>
+        /// <param name="name"> name of the ModelWithClientName. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal RenamedModel(string name, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;

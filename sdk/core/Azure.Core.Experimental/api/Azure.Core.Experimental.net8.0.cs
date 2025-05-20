@@ -126,15 +126,15 @@ namespace System.ClientModel
     {
         protected AuthenticationTokenProvider() { }
         public abstract System.ClientModel.Primitives.GetTokenOptions? CreateTokenOptions(System.Collections.Generic.IReadOnlyDictionary<string, object> properties);
-        public abstract System.ClientModel.Primitives.AccessToken GetToken(System.ClientModel.Primitives.GetTokenOptions properties, System.Threading.CancellationToken cancellationToken);
-        public abstract System.Threading.Tasks.ValueTask<System.ClientModel.Primitives.AccessToken> GetTokenAsync(System.ClientModel.Primitives.GetTokenOptions properties, System.Threading.CancellationToken cancellationToken);
+        public abstract System.ClientModel.Primitives.AuthenticationToken GetToken(System.ClientModel.Primitives.GetTokenOptions properties, System.Threading.CancellationToken cancellationToken);
+        public abstract System.Threading.Tasks.ValueTask<System.ClientModel.Primitives.AuthenticationToken> GetTokenAsync(System.ClientModel.Primitives.GetTokenOptions properties, System.Threading.CancellationToken cancellationToken);
     }
 }
 namespace System.ClientModel.Primitives
 {
-    public partial class AccessToken
+    public partial class AuthenticationToken
     {
-        public AccessToken(string tokenValue, string tokenType, System.DateTimeOffset expiresOn, System.DateTimeOffset? refreshOn = default(System.DateTimeOffset?)) { }
+        public AuthenticationToken(string tokenValue, string tokenType, System.DateTimeOffset expiresOn, System.DateTimeOffset? refreshOn = default(System.DateTimeOffset?)) { }
         public System.DateTimeOffset ExpiresOn { get { throw null; } }
         public System.DateTimeOffset? RefreshOn { get { throw null; } }
         public string TokenType { get { throw null; } }

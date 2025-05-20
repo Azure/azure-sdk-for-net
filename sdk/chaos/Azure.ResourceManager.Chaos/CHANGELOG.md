@@ -1,6 +1,6 @@
 # Release History
 
-## 1.1.0-beta.3 (Unreleased)
+## 1.1.0-beta.4 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,12 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.1.0-beta.3 (2025-05-01)
+
+### Features Added
+
+- Exposed new property in Capability Type resource: "requiredAzureRoleDefinitionIds"
 
 ## 1.1.0-beta.2 (2025-03-11)
 

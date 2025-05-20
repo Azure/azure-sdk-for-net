@@ -8,9 +8,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using BasicTypeSpec;
 
-namespace BasicTypeSpec.Models
+namespace BasicTypeSpec
 {
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class BasicTypeSpecModelFactory
@@ -29,7 +28,7 @@ namespace BasicTypeSpec.Models
         /// <param name="requiredBadDescription"> description with xml &lt;|endoftext|&gt;. </param>
         /// <param name="optionalNullableList"> optional nullable collection. </param>
         /// <param name="requiredNullableList"> required nullable collection. </param>
-        /// <returns> A new <see cref="Models.ThingModel"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="BasicTypeSpec.ThingModel"/> instance for mocking. </returns>
         public static ThingModel ThingModel(string name = default, BinaryData requiredUnion = default, ThingModelRequiredLiteralString requiredLiteralString = default, ThingModelRequiredLiteralInt requiredLiteralInt = default, ThingModelRequiredLiteralFloat requiredLiteralFloat = default, bool requiredLiteralBool = default, ThingModelOptionalLiteralString? optionalLiteralString = default, ThingModelOptionalLiteralInt? optionalLiteralInt = default, ThingModelOptionalLiteralFloat? optionalLiteralFloat = default, bool? optionalLiteralBool = default, string requiredBadDescription = default, IEnumerable<int> optionalNullableList = default, IEnumerable<int> requiredNullableList = default)
         {
             optionalNullableList ??= new ChangeTrackingList<int>();
@@ -77,7 +76,7 @@ namespace BasicTypeSpec.Models
         /// <param name="readOnlyOptionalRecordUnknown"> optional readonly record of unknown. </param>
         /// <param name="modelWithRequiredNullable"> this is a model with required nullable properties. </param>
         /// <param name="requiredBytes"> Required bytes. </param>
-        /// <returns> A new <see cref="Models.RoundTripModel"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="BasicTypeSpec.RoundTripModel"/> instance for mocking. </returns>
         public static RoundTripModel RoundTripModel(string requiredString = default, int requiredInt = default, IEnumerable<StringFixedEnum> requiredCollection = default, IDictionary<string, StringExtensibleEnum> requiredDictionary = default, ThingModel requiredModel = default, IntExtensibleEnum? intExtensibleEnum = default, IEnumerable<IntExtensibleEnum> intExtensibleEnumCollection = default, FloatExtensibleEnum? floatExtensibleEnum = default, FloatExtensibleEnumWithIntValue? floatExtensibleEnumWithIntValue = default, IEnumerable<FloatExtensibleEnum> floatExtensibleEnumCollection = default, FloatFixedEnum? floatFixedEnum = default, FloatFixedEnumWithIntValue? floatFixedEnumWithIntValue = default, IEnumerable<FloatFixedEnum> floatFixedEnumCollection = default, IntFixedEnum? intFixedEnum = default, IEnumerable<IntFixedEnum> intFixedEnumCollection = default, StringFixedEnum? stringFixedEnum = default, BinaryData requiredUnknown = default, BinaryData optionalUnknown = default, IDictionary<string, BinaryData> requiredRecordUnknown = default, IDictionary<string, BinaryData> optionalRecordUnknown = default, IReadOnlyDictionary<string, BinaryData> readOnlyRequiredRecordUnknown = default, IReadOnlyDictionary<string, BinaryData> readOnlyOptionalRecordUnknown = default, ModelWithRequiredNullableProperties modelWithRequiredNullable = default, BinaryData requiredBytes = default)
         {
             requiredCollection ??= new ChangeTrackingList<StringFixedEnum>();
@@ -123,7 +122,7 @@ namespace BasicTypeSpec.Models
         /// <param name="requiredNullablePrimitive"> required nullable primitive type. </param>
         /// <param name="requiredExtensibleEnum"> required nullable extensible enum type. </param>
         /// <param name="requiredFixedEnum"> required nullable fixed enum type. </param>
-        /// <returns> A new <see cref="Models.ModelWithRequiredNullableProperties"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="BasicTypeSpec.ModelWithRequiredNullableProperties"/> instance for mocking. </returns>
         public static ModelWithRequiredNullableProperties ModelWithRequiredNullableProperties(int? requiredNullablePrimitive = default, StringExtensibleEnum? requiredExtensibleEnum = default, StringFixedEnum? requiredFixedEnum = default)
         {
 
@@ -132,7 +131,7 @@ namespace BasicTypeSpec.Models
 
         /// <summary> this is not a friendly model but with a friendly name. </summary>
         /// <param name="name"> name of the NotFriend. </param>
-        /// <returns> A new <see cref="Models.FriendModel"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="BasicTypeSpec.FriendModel"/> instance for mocking. </returns>
         public static FriendModel FriendModel(string name = default)
         {
 
@@ -141,7 +140,7 @@ namespace BasicTypeSpec.Models
 
         /// <summary> this is a model with a client name. </summary>
         /// <param name="name"> name of the ModelWithClientName. </param>
-        /// <returns> A new <see cref="Models.RenamedModel"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="BasicTypeSpec.RenamedModel"/> instance for mocking. </returns>
         public static RenamedModel RenamedModel(string name = default)
         {
 
@@ -149,7 +148,7 @@ namespace BasicTypeSpec.Models
         }
 
         /// <summary> The ReturnsAnonymousModelResponse. </summary>
-        /// <returns> A new <see cref="Models.ReturnsAnonymousModelResponse"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="BasicTypeSpec.ReturnsAnonymousModelResponse"/> instance for mocking. </returns>
         public static ReturnsAnonymousModelResponse ReturnsAnonymousModelResponse()
         {
 

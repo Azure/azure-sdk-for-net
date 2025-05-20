@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Peering
 {
     public partial class PeeringResource : IJsonModel<PeeringData>
     {
+        private static PeeringData s_dataDeserializationInstance;
+        private static PeeringData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<PeeringData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<PeeringData>)Data).Write(writer, options);
 
-        PeeringData IJsonModel<PeeringData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PeeringData>)Data).Create(ref reader, options);
+        PeeringData IJsonModel<PeeringData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PeeringData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<PeeringData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<PeeringData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<PeeringData>(Data, options, AzureResourceManagerPeeringContext.Default);
 
-        PeeringData IPersistableModel<PeeringData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PeeringData>(data, options);
+        PeeringData IPersistableModel<PeeringData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PeeringData>(data, options, AzureResourceManagerPeeringContext.Default);
 
-        string IPersistableModel<PeeringData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PeeringData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<PeeringData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PeeringData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

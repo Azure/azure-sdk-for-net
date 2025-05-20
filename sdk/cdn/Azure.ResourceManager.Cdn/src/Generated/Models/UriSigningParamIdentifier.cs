@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Defines how to identify a parameter for a specific purpose e.g. expires. </summary>
+    /// <summary>
+    /// Defines how to identify a parameter for a specific purpose e.g. expires
+    /// Serialized Name: UrlSigningParamIdentifier
+    /// </summary>
     public partial class UriSigningParamIdentifier
     {
         /// <summary>
@@ -46,8 +49,14 @@ namespace Azure.ResourceManager.Cdn.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="UriSigningParamIdentifier"/>. </summary>
-        /// <param name="paramIndicator"> Indicates the purpose of the parameter. </param>
-        /// <param name="paramName"> Parameter name. </param>
+        /// <param name="paramIndicator">
+        /// Indicates the purpose of the parameter
+        /// Serialized Name: UrlSigningParamIdentifier.paramIndicator
+        /// </param>
+        /// <param name="paramName">
+        /// Parameter name
+        /// Serialized Name: UrlSigningParamIdentifier.paramName
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="paramName"/> is null. </exception>
         public UriSigningParamIdentifier(ParamIndicator paramIndicator, string paramName)
         {
@@ -58,8 +67,14 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="UriSigningParamIdentifier"/>. </summary>
-        /// <param name="paramIndicator"> Indicates the purpose of the parameter. </param>
-        /// <param name="paramName"> Parameter name. </param>
+        /// <param name="paramIndicator">
+        /// Indicates the purpose of the parameter
+        /// Serialized Name: UrlSigningParamIdentifier.paramIndicator
+        /// </param>
+        /// <param name="paramName">
+        /// Parameter name
+        /// Serialized Name: UrlSigningParamIdentifier.paramName
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal UriSigningParamIdentifier(ParamIndicator paramIndicator, string paramName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -73,9 +88,15 @@ namespace Azure.ResourceManager.Cdn.Models
         {
         }
 
-        /// <summary> Indicates the purpose of the parameter. </summary>
+        /// <summary>
+        /// Indicates the purpose of the parameter
+        /// Serialized Name: UrlSigningParamIdentifier.paramIndicator
+        /// </summary>
         public ParamIndicator ParamIndicator { get; set; }
-        /// <summary> Parameter name. </summary>
+        /// <summary>
+        /// Parameter name
+        /// Serialized Name: UrlSigningParamIdentifier.paramName
+        /// </summary>
         public string ParamName { get; set; }
     }
 }

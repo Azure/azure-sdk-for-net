@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Synapse
 {
     public partial class SynapseKeyResource : IJsonModel<SynapseKeyData>
     {
+        private static SynapseKeyData s_dataDeserializationInstance;
+        private static SynapseKeyData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<SynapseKeyData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SynapseKeyData>)Data).Write(writer, options);
 
-        SynapseKeyData IJsonModel<SynapseKeyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SynapseKeyData>)Data).Create(ref reader, options);
+        SynapseKeyData IJsonModel<SynapseKeyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SynapseKeyData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SynapseKeyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<SynapseKeyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SynapseKeyData>(Data, options, AzureResourceManagerSynapseContext.Default);
 
-        SynapseKeyData IPersistableModel<SynapseKeyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SynapseKeyData>(data, options);
+        SynapseKeyData IPersistableModel<SynapseKeyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SynapseKeyData>(data, options, AzureResourceManagerSynapseContext.Default);
 
-        string IPersistableModel<SynapseKeyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SynapseKeyData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<SynapseKeyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SynapseKeyData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

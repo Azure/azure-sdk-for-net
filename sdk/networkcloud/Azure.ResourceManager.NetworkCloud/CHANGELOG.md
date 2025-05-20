@@ -1,6 +1,11 @@
 # Release History
 
-## 1.2.0-beta.1 (Unreleased)
+## 1.2.0 (Unreleased)
+
+### Features Added
+- Upgraded api-version tag from 'package-2024-07-01' to 'package-2025-02-01'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/08973141b0d31a7e75d4dc43a5224a1814a0994f/specification/networkcloud/resource-manager/readme.md.
+
+## 1.2.0-beta.1 (2025-04-25)
 
 ### Features Added
 - This SDK version supports 2024-10-01-preview API version.
@@ -12,12 +17,6 @@
 - VirtualMachine is updated to return the extended location to use for creation of a VirtualMachine console resource.
 - VirtualMachine is updated to support persistent storage for OS disk.
 - VirtualMachine's property VmDeviceModel gets a new option 'T3'. When 'T3' is selected, SecureBoot and vTPM are automatically enabled. This is to support Windows users.
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
 
 ## 1.1.0 (2025-01-31)
 

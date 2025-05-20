@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
 {
     public partial class ConnectedClusterLoadBalancerResource : IJsonModel<ConnectedClusterLoadBalancerData>
     {
+        private static ConnectedClusterLoadBalancerData s_dataDeserializationInstance;
+        private static ConnectedClusterLoadBalancerData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<ConnectedClusterLoadBalancerData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ConnectedClusterLoadBalancerData>)Data).Write(writer, options);
 
-        ConnectedClusterLoadBalancerData IJsonModel<ConnectedClusterLoadBalancerData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ConnectedClusterLoadBalancerData>)Data).Create(ref reader, options);
+        ConnectedClusterLoadBalancerData IJsonModel<ConnectedClusterLoadBalancerData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ConnectedClusterLoadBalancerData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ConnectedClusterLoadBalancerData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<ConnectedClusterLoadBalancerData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ConnectedClusterLoadBalancerData>(Data, options, AzureResourceManagerContainerOrchestratorRuntimeContext.Default);
 
-        ConnectedClusterLoadBalancerData IPersistableModel<ConnectedClusterLoadBalancerData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ConnectedClusterLoadBalancerData>(data, options);
+        ConnectedClusterLoadBalancerData IPersistableModel<ConnectedClusterLoadBalancerData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ConnectedClusterLoadBalancerData>(data, options, AzureResourceManagerContainerOrchestratorRuntimeContext.Default);
 
-        string IPersistableModel<ConnectedClusterLoadBalancerData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ConnectedClusterLoadBalancerData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<ConnectedClusterLoadBalancerData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ConnectedClusterLoadBalancerData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

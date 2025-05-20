@@ -72,8 +72,9 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// This is a boolean and not an enum because enabled/disabled are all available states of the auto upgrade profile.
         /// By default, this is set to False.
         /// </param>
+        /// <param name="autoUpgradeProfileStatus"> The status of the auto upgrade profile. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AutoUpgradeProfileData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? eTag, AutoUpgradeProfileProvisioningState? provisioningState, ResourceIdentifier updateStrategyId, ContainerServiceFleetUpgradeChannel? channel, AutoUpgradeNodeImageSelection nodeImageSelection, bool? disabled, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal AutoUpgradeProfileData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? eTag, AutoUpgradeProfileProvisioningState? provisioningState, ResourceIdentifier updateStrategyId, ContainerServiceFleetUpgradeChannel? channel, AutoUpgradeNodeImageSelection nodeImageSelection, bool? disabled, AutoUpgradeProfileStatus autoUpgradeProfileStatus, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ETag = eTag;
             ProvisioningState = provisioningState;
@@ -81,6 +82,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
             Channel = channel;
             NodeImageSelection = nodeImageSelection;
             Disabled = disabled;
+            AutoUpgradeProfileStatus = autoUpgradeProfileStatus;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -111,5 +113,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// By default, this is set to False.
         /// </summary>
         public bool? Disabled { get; set; }
+        /// <summary> The status of the auto upgrade profile. </summary>
+        public AutoUpgradeProfileStatus AutoUpgradeProfileStatus { get; set; }
     }
 }

@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.NetApp
 {
     public partial class NetAppBackupVaultBackupResource : IJsonModel<NetAppBackupData>
     {
+        private static NetAppBackupData s_dataDeserializationInstance;
+        private static NetAppBackupData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<NetAppBackupData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<NetAppBackupData>)Data).Write(writer, options);
 
-        NetAppBackupData IJsonModel<NetAppBackupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetAppBackupData>)Data).Create(ref reader, options);
+        NetAppBackupData IJsonModel<NetAppBackupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetAppBackupData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<NetAppBackupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<NetAppBackupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<NetAppBackupData>(Data, options, AzureResourceManagerNetAppContext.Default);
 
-        NetAppBackupData IPersistableModel<NetAppBackupData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetAppBackupData>(data, options);
+        NetAppBackupData IPersistableModel<NetAppBackupData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetAppBackupData>(data, options, AzureResourceManagerNetAppContext.Default);
 
-        string IPersistableModel<NetAppBackupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetAppBackupData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<NetAppBackupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetAppBackupData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.CustomerInsights
 
         ConnectorResourceFormatResource IOperationSource<ConnectorResourceFormatResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ConnectorResourceFormatData>(response.Content);
+            var data = ModelReaderWriter.Read<ConnectorResourceFormatData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerCustomerInsightsContext.Default);
             return new ConnectorResourceFormatResource(_client, data);
         }
 
         async ValueTask<ConnectorResourceFormatResource> IOperationSource<ConnectorResourceFormatResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ConnectorResourceFormatData>(response.Content);
+            var data = ModelReaderWriter.Read<ConnectorResourceFormatData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerCustomerInsightsContext.Default);
             return await Task.FromResult(new ConnectorResourceFormatResource(_client, data)).ConfigureAwait(false);
         }
     }

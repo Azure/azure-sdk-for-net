@@ -34,66 +34,60 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 throw new FormatException($"The model {nameof(MachineLearningServicesRunCompletedEventData)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsDefined(ExperimentId))
+            writer.WritePropertyName("experimentId"u8);
+            writer.WriteStringValue(ExperimentId);
+            writer.WritePropertyName("experimentName"u8);
+            writer.WriteStringValue(ExperimentName);
+            writer.WritePropertyName("runId"u8);
+            writer.WriteStringValue(RunId);
+            writer.WritePropertyName("runType"u8);
+            writer.WriteStringValue(RunType);
+            if (Optional.IsCollectionDefined(RunTags))
             {
-                writer.WritePropertyName("experimentId"u8);
-                writer.WriteStringValue(ExperimentId);
-            }
-            if (Optional.IsDefined(ExperimentName))
-            {
-                writer.WritePropertyName("experimentName"u8);
-                writer.WriteStringValue(ExperimentName);
-            }
-            if (Optional.IsDefined(RunId))
-            {
-                writer.WritePropertyName("runId"u8);
-                writer.WriteStringValue(RunId);
-            }
-            if (Optional.IsDefined(RunType))
-            {
-                writer.WritePropertyName("runType"u8);
-                writer.WriteStringValue(RunType);
-            }
-            writer.WritePropertyName("runTags"u8);
-            writer.WriteStartObject();
-            foreach (var item in RunTags)
-            {
-                writer.WritePropertyName(item.Key);
-                if (item.Value == null)
+                writer.WritePropertyName("runTags"u8);
+                writer.WriteStartObject();
+                foreach (var item in RunTags)
                 {
-                    writer.WriteNullValue();
-                    continue;
-                }
+                    writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
-                {
-                    JsonSerializer.Serialize(writer, document.RootElement);
-                }
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
 #endif
-            }
-            writer.WriteEndObject();
-            writer.WritePropertyName("runProperties"u8);
-            writer.WriteStartObject();
-            foreach (var item in RunProperties)
-            {
-                writer.WritePropertyName(item.Key);
-                if (item.Value == null)
-                {
-                    writer.WriteNullValue();
-                    continue;
                 }
+                writer.WriteEndObject();
+            }
+            if (Optional.IsCollectionDefined(RunProperties))
+            {
+                writer.WritePropertyName("runProperties"u8);
+                writer.WriteStartObject();
+                foreach (var item in RunProperties)
+                {
+                    writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
-                {
-                    JsonSerializer.Serialize(writer, document.RootElement);
-                }
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
 #endif
+                }
+                writer.WriteEndObject();
             }
-            writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -163,6 +157,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 if (property.NameEquals("runTags"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
@@ -180,6 +178,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 if (property.NameEquals("runProperties"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
@@ -206,8 +208,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 experimentName,
                 runId,
                 runType,
-                runTags,
-                runProperties,
+                runTags ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                runProperties ?? new ChangeTrackingDictionary<string, BinaryData>(),
                 serializedAdditionalRawData);
         }
 
@@ -218,7 +220,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureMessagingEventGridSystemEventsContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(MachineLearningServicesRunCompletedEventData)} does not support writing '{options.Format}' format.");
             }

@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.ContainerService
 {
     public partial class MeshRevisionProfileResource : IJsonModel<MeshRevisionProfileData>
     {
+        private static MeshRevisionProfileData s_dataDeserializationInstance;
+        private static MeshRevisionProfileData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<MeshRevisionProfileData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<MeshRevisionProfileData>)Data).Write(writer, options);
 
-        MeshRevisionProfileData IJsonModel<MeshRevisionProfileData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MeshRevisionProfileData>)Data).Create(ref reader, options);
+        MeshRevisionProfileData IJsonModel<MeshRevisionProfileData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MeshRevisionProfileData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<MeshRevisionProfileData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<MeshRevisionProfileData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<MeshRevisionProfileData>(Data, options, AzureResourceManagerContainerServiceContext.Default);
 
-        MeshRevisionProfileData IPersistableModel<MeshRevisionProfileData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MeshRevisionProfileData>(data, options);
+        MeshRevisionProfileData IPersistableModel<MeshRevisionProfileData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MeshRevisionProfileData>(data, options, AzureResourceManagerContainerServiceContext.Default);
 
-        string IPersistableModel<MeshRevisionProfileData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MeshRevisionProfileData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<MeshRevisionProfileData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MeshRevisionProfileData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

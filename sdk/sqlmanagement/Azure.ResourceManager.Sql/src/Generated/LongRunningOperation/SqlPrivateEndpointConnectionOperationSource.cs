@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Sql
 
         SqlPrivateEndpointConnectionResource IOperationSource<SqlPrivateEndpointConnectionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<SqlPrivateEndpointConnectionData>(response.Content);
+            var data = ModelReaderWriter.Read<SqlPrivateEndpointConnectionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSqlContext.Default);
             return new SqlPrivateEndpointConnectionResource(_client, data);
         }
 
         async ValueTask<SqlPrivateEndpointConnectionResource> IOperationSource<SqlPrivateEndpointConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<SqlPrivateEndpointConnectionData>(response.Content);
+            var data = ModelReaderWriter.Read<SqlPrivateEndpointConnectionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSqlContext.Default);
             return await Task.FromResult(new SqlPrivateEndpointConnectionResource(_client, data)).ConfigureAwait(false);
         }
     }

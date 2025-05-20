@@ -10,7 +10,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core.Pipeline;
-using Payload.ContentNegotiation.Models;
+using Payload.ContentNegotiation._DifferentBody;
 
 namespace Payload.ContentNegotiation
 {
@@ -18,7 +18,7 @@ namespace Payload.ContentNegotiation
     {
         protected DifferentBody() => throw null;
 
-        public HttpPipeline Pipeline => throw null;
+        public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response GetAvatarAsPng(RequestContext context) => throw null;
 
