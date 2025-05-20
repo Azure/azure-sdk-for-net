@@ -145,6 +145,7 @@ function addResourceMetadata(client: InputClient, metadata: ResourceMetadata) {
     name: resourceMetadata,
     arguments: {
       resourceModel: metadata.resourceModel.crossLanguageDefinitionId,
+      resourceClient: metadata.resourceClient.crossLanguageDefinitionId,
       isSingleton: metadata.isSingleton,
       resourceType: metadata.resourceType,
       resourceScope: metadata.resourceScope

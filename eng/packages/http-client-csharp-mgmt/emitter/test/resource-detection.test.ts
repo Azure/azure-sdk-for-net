@@ -106,6 +106,10 @@ interface Employees {
       resourceMetadataDecorator.arguments?.resourceModel,
       model.crossLanguageDefinitionId
     );
+    strictEqual(
+      resourceMetadataDecorator.arguments?.resourceClient,
+      client.crossLanguageDefinitionId
+    );
     strictEqual(resourceMetadataDecorator.arguments?.isSingleton, false);
     strictEqual(resourceMetadataDecorator.arguments?.resourceScope, "ResourceGroup");
   });

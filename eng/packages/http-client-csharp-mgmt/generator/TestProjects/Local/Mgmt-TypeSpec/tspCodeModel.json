@@ -5163,6 +5163,7 @@
        "arguments": {
         "$id": "603",
         "resourceModel": "MgmtTypeSpec.Foo",
+        "resourceClient": "MgmtTypeSpec.Foos",
         "isSingleton": false,
         "resourceType": "MgmtTypeSpec/foos",
         "resourceScope": "ResourceGroup"

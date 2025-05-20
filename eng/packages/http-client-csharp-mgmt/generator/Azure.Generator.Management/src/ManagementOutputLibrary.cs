@@ -32,15 +32,15 @@ namespace Azure.Generator.Management
         private static void BuildResourceCore(List<ResourceClientProvider> resources, List<ResourceCollectionClientProvider> collections, Microsoft.TypeSpec.Generator.Input.InputClient client)
         {
             // A resource client should contain the decorator "Azure.ResourceManager.@resourceMetadata"
-            var resourceMetadata = client.Decorators.FirstOrDefault(d => d.Name.Equals(KnownDecorators.ResourceMetadata));
+            var resourceMetadata = ManagementClientGenerator.Instance.InputLibrary.GetResourceMetadata(client);
             if (resourceMetadata is not null)
             {
-                var resource = new ResourceClientProvider(client);
+                var resource = new ResourceClientProvider(client, resourceMetadata);
                 ManagementClientGenerator.Instance.AddTypeToKeep(resource.Name);
                 resources.Add(resource);
                 if (!resource.IsSingleton)
                 {
-                    var collection = new ResourceCollectionClientProvider(client, resource);
+                    var collection = new ResourceCollectionClientProvider(client, resourceMetadata, resource);
                     ManagementClientGenerator.Instance.AddTypeToKeep(collection.Name);
                     collections.Add(collection);
                 }
