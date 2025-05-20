@@ -1,4 +1,4 @@
-# Analyze an AIConversation
+# Analyze an AI Conversation
 
 This sample demonstrates how to analyze an utterance in an AIConversation. To get started, you'll need to create a Cognitive Language service endpoint and an API key. See the [README](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/cognitivelanguage/Azure.AI.Language.Conversations/README.md) for links and instructions.
 
