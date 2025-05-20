@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.SqlVirtualMachine
 {
     public partial class SqlVmGroupResource : IJsonModel<SqlVmGroupData>
     {
+        private static SqlVmGroupData s_dataDeserializationInstance;
+        private static SqlVmGroupData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<SqlVmGroupData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SqlVmGroupData>)Data).Write(writer, options);
 
-        SqlVmGroupData IJsonModel<SqlVmGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SqlVmGroupData>)Data).Create(ref reader, options);
+        SqlVmGroupData IJsonModel<SqlVmGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SqlVmGroupData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<SqlVmGroupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SqlVmGroupData>(Data, options, AzureResourceManagerSqlVirtualMachineContext.Default);
 
         SqlVmGroupData IPersistableModel<SqlVmGroupData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SqlVmGroupData>(data, options, AzureResourceManagerSqlVirtualMachineContext.Default);
 
-        string IPersistableModel<SqlVmGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SqlVmGroupData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<SqlVmGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SqlVmGroupData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

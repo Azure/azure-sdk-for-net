@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.RedisEnterprise
 {
     public partial class RedisEnterprisePrivateEndpointConnectionResource : IJsonModel<RedisEnterprisePrivateEndpointConnectionData>
     {
+        private static RedisEnterprisePrivateEndpointConnectionData s_dataDeserializationInstance;
+        private static RedisEnterprisePrivateEndpointConnectionData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<RedisEnterprisePrivateEndpointConnectionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<RedisEnterprisePrivateEndpointConnectionData>)Data).Write(writer, options);
 
-        RedisEnterprisePrivateEndpointConnectionData IJsonModel<RedisEnterprisePrivateEndpointConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<RedisEnterprisePrivateEndpointConnectionData>)Data).Create(ref reader, options);
+        RedisEnterprisePrivateEndpointConnectionData IJsonModel<RedisEnterprisePrivateEndpointConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<RedisEnterprisePrivateEndpointConnectionData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<RedisEnterprisePrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<RedisEnterprisePrivateEndpointConnectionData>(Data, options, AzureResourceManagerRedisEnterpriseContext.Default);
 
         RedisEnterprisePrivateEndpointConnectionData IPersistableModel<RedisEnterprisePrivateEndpointConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<RedisEnterprisePrivateEndpointConnectionData>(data, options, AzureResourceManagerRedisEnterpriseContext.Default);
 
-        string IPersistableModel<RedisEnterprisePrivateEndpointConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<RedisEnterprisePrivateEndpointConnectionData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<RedisEnterprisePrivateEndpointConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<RedisEnterprisePrivateEndpointConnectionData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

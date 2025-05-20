@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Migration.Assessment
 {
     public partial class MigrationAssessmentImportCollectorResource : IJsonModel<MigrationAssessmentImportCollectorData>
     {
+        private static MigrationAssessmentImportCollectorData s_dataDeserializationInstance;
+        private static MigrationAssessmentImportCollectorData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<MigrationAssessmentImportCollectorData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<MigrationAssessmentImportCollectorData>)Data).Write(writer, options);
 
-        MigrationAssessmentImportCollectorData IJsonModel<MigrationAssessmentImportCollectorData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MigrationAssessmentImportCollectorData>)Data).Create(ref reader, options);
+        MigrationAssessmentImportCollectorData IJsonModel<MigrationAssessmentImportCollectorData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MigrationAssessmentImportCollectorData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<MigrationAssessmentImportCollectorData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<MigrationAssessmentImportCollectorData>(Data, options, AzureResourceManagerMigrationAssessmentContext.Default);
 
         MigrationAssessmentImportCollectorData IPersistableModel<MigrationAssessmentImportCollectorData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MigrationAssessmentImportCollectorData>(data, options, AzureResourceManagerMigrationAssessmentContext.Default);
 
-        string IPersistableModel<MigrationAssessmentImportCollectorData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MigrationAssessmentImportCollectorData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<MigrationAssessmentImportCollectorData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MigrationAssessmentImportCollectorData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

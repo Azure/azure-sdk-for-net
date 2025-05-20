@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.DefenderEasm
 {
     public partial class EasmWorkspaceResource : IJsonModel<EasmWorkspaceData>
     {
+        private static EasmWorkspaceData s_dataDeserializationInstance;
+        private static EasmWorkspaceData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<EasmWorkspaceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<EasmWorkspaceData>)Data).Write(writer, options);
 
-        EasmWorkspaceData IJsonModel<EasmWorkspaceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<EasmWorkspaceData>)Data).Create(ref reader, options);
+        EasmWorkspaceData IJsonModel<EasmWorkspaceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<EasmWorkspaceData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<EasmWorkspaceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<EasmWorkspaceData>(Data, options, AzureResourceManagerDefenderEasmContext.Default);
 
         EasmWorkspaceData IPersistableModel<EasmWorkspaceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<EasmWorkspaceData>(data, options, AzureResourceManagerDefenderEasmContext.Default);
 
-        string IPersistableModel<EasmWorkspaceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<EasmWorkspaceData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<EasmWorkspaceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<EasmWorkspaceData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.BotService
 {
     public partial class BotResource : IJsonModel<BotData>
     {
+        private static BotData s_dataDeserializationInstance;
+        private static BotData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<BotData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<BotData>)Data).Write(writer, options);
 
-        BotData IJsonModel<BotData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<BotData>)Data).Create(ref reader, options);
+        BotData IJsonModel<BotData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<BotData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<BotData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<BotData>(Data, options, AzureResourceManagerBotServiceContext.Default);
 
         BotData IPersistableModel<BotData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<BotData>(data, options, AzureResourceManagerBotServiceContext.Default);
 
-        string IPersistableModel<BotData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<BotData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<BotData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<BotData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #nullable disable
@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 using Azure.AI.Inference;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
+using Azure.Core.Diagnostics;
+using System.Diagnostics.Tracing;
 
 namespace Azure.AI.Projects.Tests;
 
@@ -18,15 +20,15 @@ public class Sample_AIInference : SamplesBase<AIProjectsTestEnvironment>
     [SyncOnly]
     public void InferenceChatCompletion()
     {
-        #region Snippet:ExtensionsChatClientSync
+        #region Snippet:AI_Projects_ChatClientSync
 #if SNIPPET
-        var connectionString = System.Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
+        var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
         var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
 #else
-        var connectionString = TestEnvironment.AzureAICONNECTIONSTRING;
+        var endpoint = TestEnvironment.PROJECTENDPOINT;
         var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
 #endif
-        AIProjectClient client = new AIProjectClient(connectionString);
+        AIProjectClient client = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
         ChatCompletionsClient chatClient = client.GetChatCompletionsClient();
 
         var requestOptions = new ChatCompletionsOptions()
@@ -47,15 +49,15 @@ public class Sample_AIInference : SamplesBase<AIProjectsTestEnvironment>
     [AsyncOnly]
     public async Task InferenceChatCompletionAsync()
     {
-        #region Snippet:ExtensionsChatClientAsync
+        #region Snippet:AI_Projects_ChatClientAsync
 #if SNIPPET
-        var connectionString = System.Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
+        var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
         var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
 #else
-        var connectionString = TestEnvironment.AzureAICONNECTIONSTRING;
+        var endpoint = TestEnvironment.PROJECTENDPOINT;
         var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
 #endif
-        AIProjectClient client = new(connectionString);
+        AIProjectClient client = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
         ChatCompletionsClient chatClient = client.GetChatCompletionsClient();
 
         var requestOptions = new ChatCompletionsOptions()
@@ -76,15 +78,15 @@ public class Sample_AIInference : SamplesBase<AIProjectsTestEnvironment>
     [SyncOnly]
     public void InferenceEmbedding()
     {
-        #region Snippet:ExtensionsEmbeddingSync
+        #region Snippet:AI_Projects_EmbeddingSync
 #if SNIPPET
-        var connectionString = System.Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
-        var modelDeploymentName = System.Environment.GetEnvironmentVariable("EMBEDDING_MODEL_DEPLOYMENT_NAME");
+        var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
+        var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
 #else
-        var connectionString = TestEnvironment.AzureAICONNECTIONSTRING;
-        var modelDeploymentName = TestEnvironment.EMBEDDINGMODELDEPLOYMENTNAME;
+        var endpoint = TestEnvironment.PROJECTENDPOINT;
+        var modelDeploymentName = TestEnvironment.EMBEDDINGSMODELDEPLOYMENTNAME;
 #endif
-        AIProjectClient client = new AIProjectClient(connectionString);
+        AIProjectClient client = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
         EmbeddingsClient embeddingsClient = client.GetEmbeddingsClient();
 
         var input = new List<string> { "first phrase", "second phrase", "third phrase" };
@@ -106,15 +108,15 @@ public class Sample_AIInference : SamplesBase<AIProjectsTestEnvironment>
     [AsyncOnly]
     public async Task InferenceEmbeddingAsync()
     {
-        #region Snippet:ExtensionsEmbeddingAsync
+        #region Snippet:AI_Projects_EmbeddingAsync
 #if SNIPPET
-        var connectionString = System.Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
-        var modelDeploymentName = System.Environment.GetEnvironmentVariable("EMBEDDING_MODEL_DEPLOYMENT_NAME");
+        var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
+        var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
 #else
-        var connectionString = TestEnvironment.AzureAICONNECTIONSTRING;
-        var modelDeploymentName = TestEnvironment.EMBEDDINGMODELDEPLOYMENTNAME;
+        var endpoint = TestEnvironment.PROJECTENDPOINT;
+        var modelDeploymentName = TestEnvironment.EMBEDDINGSMODELDEPLOYMENTNAME;
 #endif
-        AIProjectClient client = new AIProjectClient(connectionString);
+        AIProjectClient client = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
         EmbeddingsClient embeddingsClient = client.GetEmbeddingsClient();
 
         var input = new List<string> { "first phrase", "second phrase", "third phrase" };
@@ -133,20 +135,120 @@ public class Sample_AIInference : SamplesBase<AIProjectsTestEnvironment>
     }
 
     [Test]
-    public void ThrowsWhenNoConnection()
+    [SyncOnly]
+    public void InferenceImageEmbedding()
     {
-        var connectionString = TestEnvironment.AzureAICONNECTIONSTRING;
-        var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
-        AIProjectClient client = new AIProjectClient(connectionString);
+        #region Snippet:AI_Projects_ImageEmbeddingSync
+#if SNIPPET
+        var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
+        var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
+#else
+        var endpoint = TestEnvironment.PROJECTENDPOINT;
+        var modelDeploymentName = TestEnvironment.EMBEDDINGSMODELDEPLOYMENTNAME;
+#endif
+        AIProjectClient client = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
+        ImageEmbeddingsClient imageEmbeddingsClient = client.GetImageEmbeddingsClient();
 
-        var ex = Assert.Throws<InvalidOperationException>(() =>
+        List<ImageEmbeddingInput> input = new List<ImageEmbeddingInput>
         {
-            ChatCompletionsClient chatClient = client.GetChatCompletionsClient();
-        });
+#if SNIPPET
+            ImageEmbeddingInput.Load(imageFilePath:"sampleImage.png", imageFormat:"png")
+#else
+            ImageEmbeddingInput.Load(TestEnvironment.TESTIMAGEPNGINPUTPATH, "png"),
+#endif
+        };
 
-        Assert.AreEqual(
-            $"No connections found for '{ConnectionType.Serverless}'. At least one connection is required. Please add a new connection in the Azure AI Foundry portal by following the instructions here: https://aka.ms/azsdk/azure-ai-projects/how-to/connections-add",
-            ex.Message);
-        Console.WriteLine(ex.Message);
+        var requestOptions = new ImageEmbeddingsOptions(input)
+        {
+            Model = modelDeploymentName
+        };
+
+        Response<EmbeddingsResult> response = imageEmbeddingsClient.Embed(requestOptions);
+        foreach (EmbeddingItem item in response.Value.Data)
+        {
+            List<float> embedding = item.Embedding.ToObjectFromJson<List<float>>();
+            Console.WriteLine($"Index: {item.Index}, Embedding: <{string.Join(", ", embedding)}>");
+        }
+#endregion
+
+        Assert.That(response, Is.Not.Null);
+        Assert.That(response.Value, Is.InstanceOf<EmbeddingsResult>());
+        Assert.That(response.Value.Id, Is.Not.Null.Or.Empty);
+        Assert.AreEqual(response.Value.Data.Count, input.Count);
+        for (int i = 0; i < input.Count; i++)
+        {
+            Assert.AreEqual(response.Value.Data[i].Index, i);
+            Assert.That(response.Value.Data[i].Embedding, Is.Not.Null.Or.Empty);
+            var embedding = response.Value.Data[i].Embedding.ToObjectFromJson<List<float>>();
+            Assert.That(embedding.Count, Is.GreaterThan(0));
+        }
     }
+
+    [Test]
+    [AsyncOnly]
+    public async Task InferenceImageEmbeddingAsync()
+    {
+        #region Snippet:AI_Projects_ImageEmbeddingAsync
+#if SNIPPET
+        var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
+        var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
+#else
+        var endpoint = TestEnvironment.PROJECTENDPOINT;
+        var modelDeploymentName = TestEnvironment.EMBEDDINGSMODELDEPLOYMENTNAME;
+#endif
+        AIProjectClient client = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
+        ImageEmbeddingsClient imageEmbeddingsClient = client.GetImageEmbeddingsClient();
+
+        List<ImageEmbeddingInput> input = new List<ImageEmbeddingInput>
+        {
+#if SNIPPET
+            ImageEmbeddingInput.Load(imageFilePath:"sampleImage.png", imageFormat:"png")
+#else
+            ImageEmbeddingInput.Load(TestEnvironment.TESTIMAGEPNGINPUTPATH, "png"),
+#endif
+        };
+
+        var requestOptions = new ImageEmbeddingsOptions(input)
+        {
+            Model = modelDeploymentName
+        };
+
+        Response<EmbeddingsResult> response = await imageEmbeddingsClient.EmbedAsync(requestOptions);
+        foreach (EmbeddingItem item in response.Value.Data)
+        {
+            List<float> embedding = item.Embedding.ToObjectFromJson<List<float>>();
+            Console.WriteLine($"Index: {item.Index}, Embedding: <{string.Join(", ", embedding)}>");
+        }
+        #endregion
+
+        Assert.That(response, Is.Not.Null);
+        Assert.That(response.Value, Is.InstanceOf<EmbeddingsResult>());
+        Assert.That(response.Value.Id, Is.Not.Null.Or.Empty);
+        Assert.AreEqual(response.Value.Data.Count, input.Count);
+        for (int i = 0; i < input.Count; i++)
+        {
+            Assert.AreEqual(response.Value.Data[i].Index, i);
+            Assert.That(response.Value.Data[i].Embedding, Is.Not.Null.Or.Empty);
+            var embedding = response.Value.Data[i].Embedding.ToObjectFromJson<List<float>>();
+            Assert.That(embedding.Count, Is.GreaterThan(0));
+        }
+    }
+
+    // [Test]
+    // public void ThrowsWhenNoConnection()
+    // {
+    //     var endpoint = TestEnvironment.PROJECTENDPOINT;
+    //     var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
+    //     AIProjectClient client = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
+
+    //     var ex = Assert.Throws<InvalidOperationException>(() =>
+    //     {
+    //         ChatCompletionsClient chatClient = client.GetChatCompletionsClient();
+    //     });
+
+    //     Assert.AreEqual(
+    //         $"No connections found for '{ConnectionType.Serverless}'. At least one connection is required. Please add a new connection in the Azure AI Foundry portal by following the instructions here: https://aka.ms/azsdk/azure-ai-projects/how-to/connections-add",
+    //         ex.Message);
+    //     Console.WriteLine(ex.Message);
+    // }
 }

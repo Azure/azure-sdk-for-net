@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Threading;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -15,13 +16,10 @@ namespace Azure.AI.Projects
     /// <summary> The AIProject service client. </summary>
     public partial class AIProjectClient
     {
-        private static readonly string[] AuthorizationScopes = new string[] { "https://management.azure.com/.default" };
+        private static readonly string[] AuthorizationScopes = new string[] { "https://ai.azure.com/.default" };
         private readonly TokenCredential _tokenCredential;
         private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
-        private readonly string _subscriptionId;
-        private readonly string _resourceGroupName;
-        private readonly string _projectName;
 
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
@@ -29,56 +27,72 @@ namespace Azure.AI.Projects
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline => _pipeline;
 
-        /// <summary> Initializes a new instance of AIProjectClient. </summary>
-        /// <param name="endpoint"> The Azure AI Foundry project endpoint, in the form `https://&lt;azure-region&gt;.api.azureml.ms` or `https://&lt;private-link-guid&gt;.&lt;azure-region&gt;.api.azureml.ms`, where &lt;azure-region&gt; is the Azure region where the project is deployed (e.g. westus) and &lt;private-link-guid&gt; is the GUID of the Enterprise private link. </param>
-        /// <param name="subscriptionId"> The Azure subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the Azure Resource Group. </param>
-        /// <param name="projectName"> The Azure AI Foundry project name. </param>
-        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="projectName"/> or <paramref name="credential"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        public AIProjectClient(Uri endpoint, string subscriptionId, string resourceGroupName, string projectName, TokenCredential credential) : this(endpoint, subscriptionId, resourceGroupName, projectName, credential, new AIProjectClientOptions())
+        private ServicePatterns _cachedServicePatterns;
+
+        /// <summary> Initializes a new instance of ServicePatterns. </summary>
+        public virtual ServicePatterns GetServicePatternsClient()
         {
+            return Volatile.Read(ref _cachedServicePatterns) ?? Interlocked.CompareExchange(ref _cachedServicePatterns, new ServicePatterns(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint), null) ?? _cachedServicePatterns;
         }
 
-        /// <summary> Initializes a new instance of AgentsClient. </summary>
+        /// <summary> Initializes a new instance of Connections. </summary>
         /// <param name="apiVersion"> The API version to use for this operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
-        public virtual AgentsClient GetAgentsClient(string apiVersion = "2024-07-01-preview")
+        public virtual Connections GetConnectionsClient(string apiVersion = "2025-05-15-preview")
         {
             Argument.AssertNotNull(apiVersion, nameof(apiVersion));
 
-            return new AgentsClient(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, _subscriptionId, _resourceGroupName, _projectName, apiVersion);
+            return new Connections(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, apiVersion);
         }
 
-        /// <summary> Initializes a new instance of ConnectionsClient. </summary>
+        /// <summary> Initializes a new instance of Evaluations. </summary>
         /// <param name="apiVersion"> The API version to use for this operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
-        public virtual ConnectionsClient GetConnectionsClient(string apiVersion = "2024-07-01-preview")
+        public virtual Evaluations GetEvaluationsClient(string apiVersion = "2025-05-15-preview")
         {
             Argument.AssertNotNull(apiVersion, nameof(apiVersion));
 
-            return new ConnectionsClient(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, _subscriptionId, _resourceGroupName, _projectName, apiVersion);
+            return new Evaluations(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, apiVersion);
         }
 
-        /// <summary> Initializes a new instance of TelemetryClient. </summary>
+        /// <summary> Initializes a new instance of Datasets. </summary>
         /// <param name="apiVersion"> The API version to use for this operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
-        public virtual TelemetryClient GetTelemetryClient(string apiVersion = "2024-07-01-preview")
+        public virtual Datasets GetDatasetsClient(string apiVersion = "2025-05-15-preview")
         {
             Argument.AssertNotNull(apiVersion, nameof(apiVersion));
 
-            return new TelemetryClient(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, _subscriptionId, _resourceGroupName, _projectName, apiVersion);
+            return new Datasets(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, apiVersion);
         }
 
-        /// <summary> Initializes a new instance of EvaluationsClient. </summary>
+        /// <summary> Initializes a new instance of Indexes. </summary>
         /// <param name="apiVersion"> The API version to use for this operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
-        public virtual EvaluationsClient GetEvaluationsClient(string apiVersion = "2024-07-01-preview")
+        public virtual Indexes GetIndexesClient(string apiVersion = "2025-05-15-preview")
         {
             Argument.AssertNotNull(apiVersion, nameof(apiVersion));
 
-            return new EvaluationsClient(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, _subscriptionId, _resourceGroupName, _projectName, apiVersion);
+            return new Indexes(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, apiVersion);
+        }
+
+        /// <summary> Initializes a new instance of Deployments. </summary>
+        /// <param name="apiVersion"> The API version to use for this operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
+        public virtual Deployments GetDeploymentsClient(string apiVersion = "2025-05-15-preview")
+        {
+            Argument.AssertNotNull(apiVersion, nameof(apiVersion));
+
+            return new Deployments(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, apiVersion);
+        }
+
+        /// <summary> Initializes a new instance of RedTeams. </summary>
+        /// <param name="apiVersion"> The API version to use for this operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
+        public virtual RedTeams GetRedTeamsClient(string apiVersion = "2025-05-15-preview")
+        {
+            Argument.AssertNotNull(apiVersion, nameof(apiVersion));
+
+            return new RedTeams(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, apiVersion);
         }
     }
 }

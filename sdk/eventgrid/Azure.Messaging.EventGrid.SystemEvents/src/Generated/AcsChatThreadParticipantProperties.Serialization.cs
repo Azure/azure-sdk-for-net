@@ -41,14 +41,17 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
             writer.WritePropertyName("participantCommunicationIdentifier"u8);
             writer.WriteObjectValue(ParticipantCommunicationIdentifier, options);
-            writer.WritePropertyName("metadata"u8);
-            writer.WriteStartObject();
-            foreach (var item in Metadata)
+            if (Optional.IsCollectionDefined(Metadata))
             {
-                writer.WritePropertyName(item.Key);
-                writer.WriteStringValue(item.Value);
+                writer.WritePropertyName("metadata"u8);
+                writer.WriteStartObject();
+                foreach (var item in Metadata)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
             }
-            writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -105,6 +108,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 if (property.NameEquals("metadata"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
@@ -119,7 +126,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new AcsChatThreadParticipantProperties(displayName, participantCommunicationIdentifier, metadata, serializedAdditionalRawData);
+            return new AcsChatThreadParticipantProperties(displayName, participantCommunicationIdentifier, metadata ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AcsChatThreadParticipantProperties>.Write(ModelReaderWriterOptions options)

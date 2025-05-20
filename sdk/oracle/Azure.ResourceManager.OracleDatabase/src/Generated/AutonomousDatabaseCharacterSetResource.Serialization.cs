@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.OracleDatabase
 {
     public partial class AutonomousDatabaseCharacterSetResource : IJsonModel<AutonomousDatabaseCharacterSetData>
     {
+        private static AutonomousDatabaseCharacterSetData s_dataDeserializationInstance;
+        private static AutonomousDatabaseCharacterSetData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<AutonomousDatabaseCharacterSetData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<AutonomousDatabaseCharacterSetData>)Data).Write(writer, options);
 
-        AutonomousDatabaseCharacterSetData IJsonModel<AutonomousDatabaseCharacterSetData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AutonomousDatabaseCharacterSetData>)Data).Create(ref reader, options);
+        AutonomousDatabaseCharacterSetData IJsonModel<AutonomousDatabaseCharacterSetData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AutonomousDatabaseCharacterSetData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<AutonomousDatabaseCharacterSetData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AutonomousDatabaseCharacterSetData>(Data, options, AzureResourceManagerOracleDatabaseContext.Default);
 
         AutonomousDatabaseCharacterSetData IPersistableModel<AutonomousDatabaseCharacterSetData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AutonomousDatabaseCharacterSetData>(data, options, AzureResourceManagerOracleDatabaseContext.Default);
 
-        string IPersistableModel<AutonomousDatabaseCharacterSetData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AutonomousDatabaseCharacterSetData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<AutonomousDatabaseCharacterSetData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AutonomousDatabaseCharacterSetData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

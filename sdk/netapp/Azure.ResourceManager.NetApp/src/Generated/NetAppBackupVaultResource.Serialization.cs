@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.NetApp
 {
     public partial class NetAppBackupVaultResource : IJsonModel<NetAppBackupVaultData>
     {
+        private static NetAppBackupVaultData s_dataDeserializationInstance;
+        private static NetAppBackupVaultData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<NetAppBackupVaultData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<NetAppBackupVaultData>)Data).Write(writer, options);
 
-        NetAppBackupVaultData IJsonModel<NetAppBackupVaultData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetAppBackupVaultData>)Data).Create(ref reader, options);
+        NetAppBackupVaultData IJsonModel<NetAppBackupVaultData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetAppBackupVaultData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<NetAppBackupVaultData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<NetAppBackupVaultData>(Data, options, AzureResourceManagerNetAppContext.Default);
 
         NetAppBackupVaultData IPersistableModel<NetAppBackupVaultData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetAppBackupVaultData>(data, options, AzureResourceManagerNetAppContext.Default);
 
-        string IPersistableModel<NetAppBackupVaultData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetAppBackupVaultData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<NetAppBackupVaultData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetAppBackupVaultData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

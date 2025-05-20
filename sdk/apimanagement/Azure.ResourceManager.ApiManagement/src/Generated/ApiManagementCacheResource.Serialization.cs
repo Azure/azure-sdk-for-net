@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.ApiManagement
 {
     public partial class ApiManagementCacheResource : IJsonModel<ApiManagementCacheData>
     {
+        private static ApiManagementCacheData s_dataDeserializationInstance;
+        private static ApiManagementCacheData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<ApiManagementCacheData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ApiManagementCacheData>)Data).Write(writer, options);
 
-        ApiManagementCacheData IJsonModel<ApiManagementCacheData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ApiManagementCacheData>)Data).Create(ref reader, options);
+        ApiManagementCacheData IJsonModel<ApiManagementCacheData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ApiManagementCacheData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<ApiManagementCacheData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ApiManagementCacheData>(Data, options, AzureResourceManagerApiManagementContext.Default);
 
         ApiManagementCacheData IPersistableModel<ApiManagementCacheData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ApiManagementCacheData>(data, options, AzureResourceManagerApiManagementContext.Default);
 
-        string IPersistableModel<ApiManagementCacheData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ApiManagementCacheData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<ApiManagementCacheData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ApiManagementCacheData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Hci
 {
     public partial class HciClusterResource : IJsonModel<HciClusterData>
     {
+        private static HciClusterData s_dataDeserializationInstance;
+        private static HciClusterData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<HciClusterData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<HciClusterData>)Data).Write(writer, options);
 
-        HciClusterData IJsonModel<HciClusterData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<HciClusterData>)Data).Create(ref reader, options);
+        HciClusterData IJsonModel<HciClusterData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<HciClusterData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<HciClusterData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<HciClusterData>(Data, options, AzureResourceManagerHciContext.Default);
 
         HciClusterData IPersistableModel<HciClusterData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<HciClusterData>(data, options, AzureResourceManagerHciContext.Default);
 
-        string IPersistableModel<HciClusterData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<HciClusterData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<HciClusterData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<HciClusterData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

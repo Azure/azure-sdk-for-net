@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
 {
     public partial class NetworkFabricControllerResource : IJsonModel<NetworkFabricControllerData>
     {
+        private static NetworkFabricControllerData s_dataDeserializationInstance;
+        private static NetworkFabricControllerData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<NetworkFabricControllerData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<NetworkFabricControllerData>)Data).Write(writer, options);
 
-        NetworkFabricControllerData IJsonModel<NetworkFabricControllerData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetworkFabricControllerData>)Data).Create(ref reader, options);
+        NetworkFabricControllerData IJsonModel<NetworkFabricControllerData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetworkFabricControllerData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<NetworkFabricControllerData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<NetworkFabricControllerData>(Data, options, AzureResourceManagerManagedNetworkFabricContext.Default);
 
         NetworkFabricControllerData IPersistableModel<NetworkFabricControllerData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetworkFabricControllerData>(data, options, AzureResourceManagerManagedNetworkFabricContext.Default);
 
-        string IPersistableModel<NetworkFabricControllerData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetworkFabricControllerData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<NetworkFabricControllerData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetworkFabricControllerData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

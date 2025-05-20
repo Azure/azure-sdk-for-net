@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Sql
 {
     public partial class ManagedServerSecurityAlertPolicyResource : IJsonModel<ManagedServerSecurityAlertPolicyData>
     {
+        private static ManagedServerSecurityAlertPolicyData s_dataDeserializationInstance;
+        private static ManagedServerSecurityAlertPolicyData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<ManagedServerSecurityAlertPolicyData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ManagedServerSecurityAlertPolicyData>)Data).Write(writer, options);
 
-        ManagedServerSecurityAlertPolicyData IJsonModel<ManagedServerSecurityAlertPolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ManagedServerSecurityAlertPolicyData>)Data).Create(ref reader, options);
+        ManagedServerSecurityAlertPolicyData IJsonModel<ManagedServerSecurityAlertPolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ManagedServerSecurityAlertPolicyData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<ManagedServerSecurityAlertPolicyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ManagedServerSecurityAlertPolicyData>(Data, options, AzureResourceManagerSqlContext.Default);
 
         ManagedServerSecurityAlertPolicyData IPersistableModel<ManagedServerSecurityAlertPolicyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ManagedServerSecurityAlertPolicyData>(data, options, AzureResourceManagerSqlContext.Default);
 
-        string IPersistableModel<ManagedServerSecurityAlertPolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ManagedServerSecurityAlertPolicyData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<ManagedServerSecurityAlertPolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ManagedServerSecurityAlertPolicyData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }
