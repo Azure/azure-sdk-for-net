@@ -4,23 +4,18 @@
 #nullable disable
 
 using System;
+using Azure.Identity;
 using NUnit.Framework;
 using System.Threading.Tasks;
+using Azure.AI.Inference;
 using Azure.Core.TestFramework;
 using System.IO;
-using System.Runtime.CompilerServices;
-using Azure.Identity;
+using System.Reflection;
 
 namespace Azure.AI.Projects.Tests
 {
     public class Sample_Datasets : SamplesBase<AIProjectsTestEnvironment>
     {
-        private static string GetFile([CallerFilePath] string pth = "", string file="")
-        {
-            var dirName = Path.GetDirectoryName(pth) ?? "";
-            return Path.Combine(dirName, file);
-        }
-
         [Test]
         [SyncOnly]
         public void DatasetsExample()
@@ -33,15 +28,14 @@ namespace Azure.AI.Projects.Tests
             var endpoint = TestEnvironment.PROJECTENDPOINT;
             var datasetName = TestEnvironment.DATASETNAME;
 #endif
-            AIProjectClient projectClient = new(new Uri(endpoint), new AzureCliCredential());
+            AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
             Datasets datasets = projectClient.GetDatasetsClient();
-            datasets.CreateOrUpdate(name: datasetName, version: "1");
 
             Console.WriteLine("Uploading a single file to create Dataset version '1'...");
             var datasetResponse = datasets.UploadFile(
                 name: datasetName,
                 version: "1",
-                filePath: GetFile(file: "sample_folder/sample_file1.txt")
+                filePath: "sample_folder/sample_file1.txt"
                 );
             Console.WriteLine(datasetResponse);
 
@@ -49,7 +43,7 @@ namespace Azure.AI.Projects.Tests
             datasetResponse = datasets.UploadFolder(
                 name: datasetName,
                 version: "2",
-                folderPath: GetFile("sample_folder")
+                folderPath: "sample_folder"
             );
             Console.WriteLine(datasetResponse);
 
@@ -66,11 +60,6 @@ namespace Azure.AI.Projects.Tests
             Console.WriteLine($"Listing latest versions for all datasets:");
             foreach (var ds in datasets.GetDatasetVersions())
             {
-                AssetCredentialResponse credentials = datasets.GetCredentials(
-                    name: ds.Name,
-                    version: ds.Version
-                );
-                Console.WriteLine($"Blob URI: {credentials.BlobReference.BlobUri}");
                 Console.WriteLine(ds);
             }
 
