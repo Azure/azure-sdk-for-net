@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.IotCentral
 {
     public partial class IotCentralPrivateEndpointConnectionResource : IJsonModel<IotCentralPrivateEndpointConnectionData>
     {
+        private static IotCentralPrivateEndpointConnectionData s_dataDeserializationInstance;
+        private static IotCentralPrivateEndpointConnectionData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<IotCentralPrivateEndpointConnectionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<IotCentralPrivateEndpointConnectionData>)Data).Write(writer, options);
 
-        IotCentralPrivateEndpointConnectionData IJsonModel<IotCentralPrivateEndpointConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<IotCentralPrivateEndpointConnectionData>)Data).Create(ref reader, options);
+        IotCentralPrivateEndpointConnectionData IJsonModel<IotCentralPrivateEndpointConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<IotCentralPrivateEndpointConnectionData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<IotCentralPrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<IotCentralPrivateEndpointConnectionData>(Data, options, AzureResourceManagerIotCentralContext.Default);
 
         IotCentralPrivateEndpointConnectionData IPersistableModel<IotCentralPrivateEndpointConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<IotCentralPrivateEndpointConnectionData>(data, options, AzureResourceManagerIotCentralContext.Default);
 
-        string IPersistableModel<IotCentralPrivateEndpointConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<IotCentralPrivateEndpointConnectionData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<IotCentralPrivateEndpointConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<IotCentralPrivateEndpointConnectionData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

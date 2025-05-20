@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
 {
     public partial class ServiceFabricManagedApplicationResource : IJsonModel<ServiceFabricManagedApplicationData>
     {
+        private static ServiceFabricManagedApplicationData s_dataDeserializationInstance;
+        private static ServiceFabricManagedApplicationData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<ServiceFabricManagedApplicationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ServiceFabricManagedApplicationData>)Data).Write(writer, options);
 
-        ServiceFabricManagedApplicationData IJsonModel<ServiceFabricManagedApplicationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ServiceFabricManagedApplicationData>)Data).Create(ref reader, options);
+        ServiceFabricManagedApplicationData IJsonModel<ServiceFabricManagedApplicationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ServiceFabricManagedApplicationData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<ServiceFabricManagedApplicationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ServiceFabricManagedApplicationData>(Data, options, AzureResourceManagerServiceFabricManagedClustersContext.Default);
 
         ServiceFabricManagedApplicationData IPersistableModel<ServiceFabricManagedApplicationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ServiceFabricManagedApplicationData>(data, options, AzureResourceManagerServiceFabricManagedClustersContext.Default);
 
-        string IPersistableModel<ServiceFabricManagedApplicationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ServiceFabricManagedApplicationData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<ServiceFabricManagedApplicationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ServiceFabricManagedApplicationData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

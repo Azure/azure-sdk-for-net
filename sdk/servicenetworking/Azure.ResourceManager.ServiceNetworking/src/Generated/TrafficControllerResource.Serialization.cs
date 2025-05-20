@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.ServiceNetworking
 {
     public partial class TrafficControllerResource : IJsonModel<TrafficControllerData>
     {
+        private static TrafficControllerData s_dataDeserializationInstance;
+        private static TrafficControllerData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<TrafficControllerData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<TrafficControllerData>)Data).Write(writer, options);
 
-        TrafficControllerData IJsonModel<TrafficControllerData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<TrafficControllerData>)Data).Create(ref reader, options);
+        TrafficControllerData IJsonModel<TrafficControllerData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<TrafficControllerData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<TrafficControllerData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<TrafficControllerData>(Data, options, AzureResourceManagerServiceNetworkingContext.Default);
 
         TrafficControllerData IPersistableModel<TrafficControllerData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<TrafficControllerData>(data, options, AzureResourceManagerServiceNetworkingContext.Default);
 
-        string IPersistableModel<TrafficControllerData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<TrafficControllerData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<TrafficControllerData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<TrafficControllerData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.CostManagement
 {
     public partial class CostManagementExportResource : IJsonModel<CostManagementExportData>
     {
+        private static CostManagementExportData s_dataDeserializationInstance;
+        private static CostManagementExportData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<CostManagementExportData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<CostManagementExportData>)Data).Write(writer, options);
 
-        CostManagementExportData IJsonModel<CostManagementExportData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<CostManagementExportData>)Data).Create(ref reader, options);
+        CostManagementExportData IJsonModel<CostManagementExportData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<CostManagementExportData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<CostManagementExportData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<CostManagementExportData>(Data, options, AzureResourceManagerCostManagementContext.Default);
 
         CostManagementExportData IPersistableModel<CostManagementExportData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CostManagementExportData>(data, options, AzureResourceManagerCostManagementContext.Default);
 
-        string IPersistableModel<CostManagementExportData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<CostManagementExportData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<CostManagementExportData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<CostManagementExportData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

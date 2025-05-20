@@ -16,13 +16,13 @@ namespace Azure.Communication.CallAutomation
         /// Initializes a new instance of the <see cref="PostProcessingOptions"/> class.
         /// </summary>
         public PostProcessingOptions(
-            string cognitiveServicesEndpoint,
-            SummarizationSettings summarization = null,
-            TranscriptionSettings transcription = null)
+            TranscriptionSettings transcriptionSettings,
+            SummarizationSettings summarizationSettings = null,
+            string cognitiveServicesEndpoint = null)
         {
             this.CognitiveServicesEndpoint = cognitiveServicesEndpoint;
-            this.Summarization = summarization;
-            this.Transcription = transcription;
+            this.SummarizationSettings = summarizationSettings;
+            this.TranscriptionSettings = transcriptionSettings;
         }
 
         /// <summary>
@@ -31,9 +31,9 @@ namespace Azure.Communication.CallAutomation
         /// </summary>
         public string CognitiveServicesEndpoint { get; set; }
         /// <summary> Define options of the transcription for the post recording processing. </summary>
-        internal TranscriptionSettings Transcription { get; private set;}
+        public TranscriptionSettings TranscriptionSettings { get; set;}
         /// <summary> Define options of the summarization for the post recording processing. </summary>
-        internal SummarizationSettings Summarization { get; private set; }
+        public SummarizationSettings SummarizationSettings { get; set; }
 
         /// <summary>
         /// Set the transcription settings for the post recording processing.
@@ -41,7 +41,7 @@ namespace Azure.Communication.CallAutomation
         /// <param name="enableTranscription"></param>
         public void setTranscriptionSettings(bool enableTranscription)
         {
-            this.Transcription = new TranscriptionSettings(enableTranscription);
+            this.TranscriptionSettings = new TranscriptionSettings(enableTranscription);
         }
 
         /// <summary>

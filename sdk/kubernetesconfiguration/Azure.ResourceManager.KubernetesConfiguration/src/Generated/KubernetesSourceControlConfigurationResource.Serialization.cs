@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.KubernetesConfiguration
 {
     public partial class KubernetesSourceControlConfigurationResource : IJsonModel<KubernetesSourceControlConfigurationData>
     {
+        private static KubernetesSourceControlConfigurationData s_dataDeserializationInstance;
+        private static KubernetesSourceControlConfigurationData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<KubernetesSourceControlConfigurationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<KubernetesSourceControlConfigurationData>)Data).Write(writer, options);
 
-        KubernetesSourceControlConfigurationData IJsonModel<KubernetesSourceControlConfigurationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<KubernetesSourceControlConfigurationData>)Data).Create(ref reader, options);
+        KubernetesSourceControlConfigurationData IJsonModel<KubernetesSourceControlConfigurationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<KubernetesSourceControlConfigurationData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<KubernetesSourceControlConfigurationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<KubernetesSourceControlConfigurationData>(Data, options, AzureResourceManagerKubernetesConfigurationContext.Default);
 
         KubernetesSourceControlConfigurationData IPersistableModel<KubernetesSourceControlConfigurationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<KubernetesSourceControlConfigurationData>(data, options, AzureResourceManagerKubernetesConfigurationContext.Default);
 
-        string IPersistableModel<KubernetesSourceControlConfigurationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<KubernetesSourceControlConfigurationData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<KubernetesSourceControlConfigurationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<KubernetesSourceControlConfigurationData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

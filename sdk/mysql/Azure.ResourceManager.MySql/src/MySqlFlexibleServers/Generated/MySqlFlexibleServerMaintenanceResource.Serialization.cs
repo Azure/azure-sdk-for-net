@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
 {
     public partial class MySqlFlexibleServerMaintenanceResource : IJsonModel<MySqlFlexibleServerMaintenanceData>
     {
+        private static MySqlFlexibleServerMaintenanceData s_dataDeserializationInstance;
+        private static MySqlFlexibleServerMaintenanceData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<MySqlFlexibleServerMaintenanceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<MySqlFlexibleServerMaintenanceData>)Data).Write(writer, options);
 
-        MySqlFlexibleServerMaintenanceData IJsonModel<MySqlFlexibleServerMaintenanceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MySqlFlexibleServerMaintenanceData>)Data).Create(ref reader, options);
+        MySqlFlexibleServerMaintenanceData IJsonModel<MySqlFlexibleServerMaintenanceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MySqlFlexibleServerMaintenanceData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<MySqlFlexibleServerMaintenanceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<MySqlFlexibleServerMaintenanceData>(Data, options, AzureResourceManagerMySqlContext.Default);
 
         MySqlFlexibleServerMaintenanceData IPersistableModel<MySqlFlexibleServerMaintenanceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MySqlFlexibleServerMaintenanceData>(data, options, AzureResourceManagerMySqlContext.Default);
 
-        string IPersistableModel<MySqlFlexibleServerMaintenanceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MySqlFlexibleServerMaintenanceData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<MySqlFlexibleServerMaintenanceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MySqlFlexibleServerMaintenanceData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

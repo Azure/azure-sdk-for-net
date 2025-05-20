@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Network
 {
     public partial class WebApplicationFirewallPolicyResource : IJsonModel<WebApplicationFirewallPolicyData>
     {
+        private static WebApplicationFirewallPolicyData s_dataDeserializationInstance;
+        private static WebApplicationFirewallPolicyData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<WebApplicationFirewallPolicyData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<WebApplicationFirewallPolicyData>)Data).Write(writer, options);
 
-        WebApplicationFirewallPolicyData IJsonModel<WebApplicationFirewallPolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<WebApplicationFirewallPolicyData>)Data).Create(ref reader, options);
+        WebApplicationFirewallPolicyData IJsonModel<WebApplicationFirewallPolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<WebApplicationFirewallPolicyData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<WebApplicationFirewallPolicyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<WebApplicationFirewallPolicyData>(Data, options, AzureResourceManagerNetworkContext.Default);
 
         WebApplicationFirewallPolicyData IPersistableModel<WebApplicationFirewallPolicyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<WebApplicationFirewallPolicyData>(data, options, AzureResourceManagerNetworkContext.Default);
 
-        string IPersistableModel<WebApplicationFirewallPolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<WebApplicationFirewallPolicyData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<WebApplicationFirewallPolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<WebApplicationFirewallPolicyData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

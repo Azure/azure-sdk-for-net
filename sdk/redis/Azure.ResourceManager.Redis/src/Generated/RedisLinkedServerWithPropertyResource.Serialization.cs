@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Redis
 {
     public partial class RedisLinkedServerWithPropertyResource : IJsonModel<RedisLinkedServerWithPropertyData>
     {
+        private static RedisLinkedServerWithPropertyData s_dataDeserializationInstance;
+        private static RedisLinkedServerWithPropertyData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<RedisLinkedServerWithPropertyData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<RedisLinkedServerWithPropertyData>)Data).Write(writer, options);
 
-        RedisLinkedServerWithPropertyData IJsonModel<RedisLinkedServerWithPropertyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<RedisLinkedServerWithPropertyData>)Data).Create(ref reader, options);
+        RedisLinkedServerWithPropertyData IJsonModel<RedisLinkedServerWithPropertyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<RedisLinkedServerWithPropertyData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<RedisLinkedServerWithPropertyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<RedisLinkedServerWithPropertyData>(Data, options, AzureResourceManagerRedisContext.Default);
 
         RedisLinkedServerWithPropertyData IPersistableModel<RedisLinkedServerWithPropertyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<RedisLinkedServerWithPropertyData>(data, options, AzureResourceManagerRedisContext.Default);
 
-        string IPersistableModel<RedisLinkedServerWithPropertyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<RedisLinkedServerWithPropertyData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<RedisLinkedServerWithPropertyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<RedisLinkedServerWithPropertyData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.ServiceBus
 {
     public partial class MigrationConfigurationResource : IJsonModel<MigrationConfigurationData>
     {
+        private static MigrationConfigurationData s_dataDeserializationInstance;
+        private static MigrationConfigurationData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<MigrationConfigurationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<MigrationConfigurationData>)Data).Write(writer, options);
 
-        MigrationConfigurationData IJsonModel<MigrationConfigurationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MigrationConfigurationData>)Data).Create(ref reader, options);
+        MigrationConfigurationData IJsonModel<MigrationConfigurationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MigrationConfigurationData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<MigrationConfigurationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<MigrationConfigurationData>(Data, options, AzureResourceManagerServiceBusContext.Default);
 
         MigrationConfigurationData IPersistableModel<MigrationConfigurationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MigrationConfigurationData>(data, options, AzureResourceManagerServiceBusContext.Default);
 
-        string IPersistableModel<MigrationConfigurationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MigrationConfigurationData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<MigrationConfigurationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MigrationConfigurationData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

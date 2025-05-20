@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.NetApp
 {
     public partial class NetAppAccountResource : IJsonModel<NetAppAccountData>
     {
+        private static NetAppAccountData s_dataDeserializationInstance;
+        private static NetAppAccountData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<NetAppAccountData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<NetAppAccountData>)Data).Write(writer, options);
 
-        NetAppAccountData IJsonModel<NetAppAccountData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetAppAccountData>)Data).Create(ref reader, options);
+        NetAppAccountData IJsonModel<NetAppAccountData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetAppAccountData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<NetAppAccountData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<NetAppAccountData>(Data, options, AzureResourceManagerNetAppContext.Default);
 
         NetAppAccountData IPersistableModel<NetAppAccountData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetAppAccountData>(data, options, AzureResourceManagerNetAppContext.Default);
 
-        string IPersistableModel<NetAppAccountData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetAppAccountData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<NetAppAccountData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetAppAccountData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }
