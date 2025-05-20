@@ -1738,6 +1738,8 @@ namespace Azure.Provisioning.Resources
             public static readonly string V2020_09_01;
             public static readonly string V2021_06_01;
             public static readonly string V2023_04_01;
+            public static readonly string V2024_05_01;
+            public static readonly string V2025_01_01;
         }
     }
     public partial class ManagementGroupPolicySetDefinition : Azure.Provisioning.Primitives.ProvisionableResource
@@ -1769,6 +1771,8 @@ namespace Azure.Provisioning.Resources
             public static readonly string V2020_09_01;
             public static readonly string V2021_06_01;
             public static readonly string V2023_04_01;
+            public static readonly string V2024_05_01;
+            public static readonly string V2025_01_01;
         }
     }
     public partial class ManagementGroupSubscription : Azure.Provisioning.Primitives.ProvisionableResource
@@ -1893,6 +1897,8 @@ namespace Azure.Provisioning.Resources
             public static readonly string V2022_06_01;
             public static readonly string V2023_04_01;
             public static readonly string V2024_04_01;
+            public static readonly string V2024_05_01;
+            public static readonly string V2025_01_01;
         }
     }
     public partial class PolicyDefinitionGroup : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -2443,6 +2449,8 @@ namespace Azure.Provisioning.Roles
             public static readonly string V2022_01_31_PREVIEW;
             public static readonly string V2023_01_31;
             public static readonly string V2023_07_31_PREVIEW;
+            public static readonly string V2024_11_30;
+            public static readonly string V2025_01_31_PREVIEW;
         }
     }
     public partial class UserAssignedIdentity : Azure.Provisioning.Primitives.ProvisionableResource
@@ -2468,6 +2476,8 @@ namespace Azure.Provisioning.Roles
             public static readonly string V2022_01_31_PREVIEW;
             public static readonly string V2023_01_31;
             public static readonly string V2023_07_31_PREVIEW;
+            public static readonly string V2024_11_30;
+            public static readonly string V2025_01_31_PREVIEW;
         }
     }
 }

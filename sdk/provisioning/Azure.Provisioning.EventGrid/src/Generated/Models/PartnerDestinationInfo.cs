@@ -25,8 +25,8 @@ public partial class PartnerDestinationInfo : ProvisionableConstruct
 {
     /// <summary>
     /// Azure subscription ID of the subscriber. The partner destination
-    /// associated with the channel will be             created under this
-    /// Azure subscription.
+    /// associated with the channel will be created under this Azure
+    /// subscription.
     /// </summary>
     public BicepValue<string> AzureSubscriptionId 
     {
@@ -37,8 +37,7 @@ public partial class PartnerDestinationInfo : ProvisionableConstruct
 
     /// <summary>
     /// Azure Resource Group of the subscriber. The partner destination
-    /// associated with the channel will be             created under this
-    /// resource group.
+    /// associated with the channel will be created under this resource group.
     /// </summary>
     public BicepValue<string> ResourceGroupName 
     {
