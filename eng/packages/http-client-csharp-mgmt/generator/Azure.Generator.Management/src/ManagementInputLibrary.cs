@@ -93,12 +93,12 @@ namespace Azure.Generator.Management
                 InputClient? resourceClient = null;
                 bool isSingleton = false;
                 ResourceScope resourceScope = default;
-                if (args.TryGetValue("resourceType", out var resourceTypeData))
+                if (args.TryGetValue(KnownDecorators.ResourceType, out var resourceTypeData))
                 {
                     resourceType = resourceTypeData.ToObjectFromJson<string>();
                 }
 
-                if (args.TryGetValue("resourceModel", out var resourceModelData))
+                if (args.TryGetValue(KnownDecorators.ResourceModel, out var resourceModelData))
                 {
                     var resourceModelId = resourceModelData.ToObjectFromJson<string>();
                     if (resourceModelId != null)
@@ -107,7 +107,7 @@ namespace Azure.Generator.Management
                     }
                 }
 
-                if (args.TryGetValue("resourceClient", out var resourceClientData))
+                if (args.TryGetValue(KnownDecorators.ResourceClient, out var resourceClientData))
                 {
                     var resourceClientId = resourceClientData.ToObjectFromJson<string>();
                     if (resourceClientId != null)
@@ -116,12 +116,12 @@ namespace Azure.Generator.Management
                     }
                 }
 
-                if (args.TryGetValue("isSingleton", out var isSingletonData))
+                if (args.TryGetValue(KnownDecorators.IsSingleton, out var isSingletonData))
                 {
                     isSingleton = isSingletonData.ToObjectFromJson<bool>();
                 }
 
-                if (args.TryGetValue("resourceScope", out var scopeData))
+                if (args.TryGetValue(KnownDecorators.ResourceScope, out var scopeData))
                 {
                     var scopeString = scopeData.ToObjectFromJson<string>();
                     resourceScope = Enum.Parse<ResourceScope>(scopeString!, true);
