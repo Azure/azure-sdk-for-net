@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.ApiManagement
 {
     public partial class PolicyRestrictionContractResource : IJsonModel<PolicyRestrictionContractData>
     {
+        private static PolicyRestrictionContractData s_dataDeserializationInstance;
+        private static PolicyRestrictionContractData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<PolicyRestrictionContractData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<PolicyRestrictionContractData>)Data).Write(writer, options);
 
-        PolicyRestrictionContractData IJsonModel<PolicyRestrictionContractData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PolicyRestrictionContractData>)Data).Create(ref reader, options);
+        PolicyRestrictionContractData IJsonModel<PolicyRestrictionContractData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PolicyRestrictionContractData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<PolicyRestrictionContractData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<PolicyRestrictionContractData>(Data, options, AzureResourceManagerApiManagementContext.Default);
 
         PolicyRestrictionContractData IPersistableModel<PolicyRestrictionContractData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PolicyRestrictionContractData>(data, options, AzureResourceManagerApiManagementContext.Default);
 
-        string IPersistableModel<PolicyRestrictionContractData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PolicyRestrictionContractData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<PolicyRestrictionContractData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PolicyRestrictionContractData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

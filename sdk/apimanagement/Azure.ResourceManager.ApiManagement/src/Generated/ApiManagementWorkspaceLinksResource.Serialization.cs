@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.ApiManagement
 {
     public partial class ApiManagementWorkspaceLinksResource : IJsonModel<ApiManagementWorkspaceLinksData>
     {
+        private static ApiManagementWorkspaceLinksData s_dataDeserializationInstance;
+        private static ApiManagementWorkspaceLinksData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<ApiManagementWorkspaceLinksData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ApiManagementWorkspaceLinksData>)Data).Write(writer, options);
 
-        ApiManagementWorkspaceLinksData IJsonModel<ApiManagementWorkspaceLinksData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ApiManagementWorkspaceLinksData>)Data).Create(ref reader, options);
+        ApiManagementWorkspaceLinksData IJsonModel<ApiManagementWorkspaceLinksData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ApiManagementWorkspaceLinksData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<ApiManagementWorkspaceLinksData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ApiManagementWorkspaceLinksData>(Data, options, AzureResourceManagerApiManagementContext.Default);
 
         ApiManagementWorkspaceLinksData IPersistableModel<ApiManagementWorkspaceLinksData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ApiManagementWorkspaceLinksData>(data, options, AzureResourceManagerApiManagementContext.Default);
 
-        string IPersistableModel<ApiManagementWorkspaceLinksData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ApiManagementWorkspaceLinksData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<ApiManagementWorkspaceLinksData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ApiManagementWorkspaceLinksData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

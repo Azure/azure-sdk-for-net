@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.ApiManagement
 {
     public partial class ApiGatewayResource : IJsonModel<ApiGatewayData>
     {
+        private static ApiGatewayData s_dataDeserializationInstance;
+        private static ApiGatewayData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<ApiGatewayData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ApiGatewayData>)Data).Write(writer, options);
 
-        ApiGatewayData IJsonModel<ApiGatewayData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ApiGatewayData>)Data).Create(ref reader, options);
+        ApiGatewayData IJsonModel<ApiGatewayData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ApiGatewayData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<ApiGatewayData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ApiGatewayData>(Data, options, AzureResourceManagerApiManagementContext.Default);
 
         ApiGatewayData IPersistableModel<ApiGatewayData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ApiGatewayData>(data, options, AzureResourceManagerApiManagementContext.Default);
 
-        string IPersistableModel<ApiGatewayData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ApiGatewayData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<ApiGatewayData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ApiGatewayData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }
