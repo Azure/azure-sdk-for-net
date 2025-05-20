@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Hci
 {
     public partial class HciClusterSecuritySettingResource : IJsonModel<HciClusterSecuritySettingData>
     {
+        private static HciClusterSecuritySettingData s_dataDeserializationInstance;
+        private static HciClusterSecuritySettingData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<HciClusterSecuritySettingData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<HciClusterSecuritySettingData>)Data).Write(writer, options);
 
-        HciClusterSecuritySettingData IJsonModel<HciClusterSecuritySettingData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<HciClusterSecuritySettingData>)Data).Create(ref reader, options);
+        HciClusterSecuritySettingData IJsonModel<HciClusterSecuritySettingData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<HciClusterSecuritySettingData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<HciClusterSecuritySettingData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<HciClusterSecuritySettingData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<HciClusterSecuritySettingData>(Data, options, AzureResourceManagerHciContext.Default);
 
-        HciClusterSecuritySettingData IPersistableModel<HciClusterSecuritySettingData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<HciClusterSecuritySettingData>(data, options);
+        HciClusterSecuritySettingData IPersistableModel<HciClusterSecuritySettingData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<HciClusterSecuritySettingData>(data, options, AzureResourceManagerHciContext.Default);
 
-        string IPersistableModel<HciClusterSecuritySettingData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<HciClusterSecuritySettingData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<HciClusterSecuritySettingData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<HciClusterSecuritySettingData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 {
     public partial class ReplicationProtectionIntentResource : IJsonModel<ReplicationProtectionIntentData>
     {
+        private static ReplicationProtectionIntentData s_dataDeserializationInstance;
+        private static ReplicationProtectionIntentData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<ReplicationProtectionIntentData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ReplicationProtectionIntentData>)Data).Write(writer, options);
 
-        ReplicationProtectionIntentData IJsonModel<ReplicationProtectionIntentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ReplicationProtectionIntentData>)Data).Create(ref reader, options);
+        ReplicationProtectionIntentData IJsonModel<ReplicationProtectionIntentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ReplicationProtectionIntentData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ReplicationProtectionIntentData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<ReplicationProtectionIntentData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ReplicationProtectionIntentData>(Data, options, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
 
-        ReplicationProtectionIntentData IPersistableModel<ReplicationProtectionIntentData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ReplicationProtectionIntentData>(data, options);
+        ReplicationProtectionIntentData IPersistableModel<ReplicationProtectionIntentData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ReplicationProtectionIntentData>(data, options, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
 
-        string IPersistableModel<ReplicationProtectionIntentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ReplicationProtectionIntentData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<ReplicationProtectionIntentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ReplicationProtectionIntentData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

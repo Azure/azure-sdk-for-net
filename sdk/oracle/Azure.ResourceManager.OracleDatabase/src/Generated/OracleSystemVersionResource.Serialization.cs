@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.OracleDatabase
 {
     public partial class OracleSystemVersionResource : IJsonModel<OracleSystemVersionData>
     {
+        private static OracleSystemVersionData s_dataDeserializationInstance;
+        private static OracleSystemVersionData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<OracleSystemVersionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<OracleSystemVersionData>)Data).Write(writer, options);
 
-        OracleSystemVersionData IJsonModel<OracleSystemVersionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<OracleSystemVersionData>)Data).Create(ref reader, options);
+        OracleSystemVersionData IJsonModel<OracleSystemVersionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<OracleSystemVersionData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<OracleSystemVersionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<OracleSystemVersionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<OracleSystemVersionData>(Data, options, AzureResourceManagerOracleDatabaseContext.Default);
 
-        OracleSystemVersionData IPersistableModel<OracleSystemVersionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<OracleSystemVersionData>(data, options);
+        OracleSystemVersionData IPersistableModel<OracleSystemVersionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<OracleSystemVersionData>(data, options, AzureResourceManagerOracleDatabaseContext.Default);
 
-        string IPersistableModel<OracleSystemVersionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<OracleSystemVersionData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<OracleSystemVersionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<OracleSystemVersionData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ApiManagement
             int length = stringBuilder.Length;
             bool inMultilineString = false;
 
-            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            BinaryData data = ModelReaderWriter.Write(childObject, options, AzureResourceManagerApiManagementContext.Default);
             string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
             for (int i = 0; i < lines.Length; i++)
             {

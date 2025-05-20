@@ -17,6 +17,7 @@ namespace System.ClientModel.SourceGeneration.Tests.Unit.InvocationTests
         internal const string BaseModel = "BaseModel";
         internal const string LocalBaseModel = "LocalBaseModel";
         internal delegate void TypeValidation(ModelExpectation expectation, bool invocationDuped, Dictionary<string, TypeBuilderSpec> dict);
+        private const string ContextParmeter = ", LocalContext.Default";
 
         internal readonly struct ModelExpectation
         {
@@ -78,11 +79,11 @@ namespace System.ClientModel.SourceGeneration.Tests.Unit.InvocationTests
 
     public class JsonModel : IJsonModel<JsonModel>
     {
-        public JsonModel Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => new JsonModel();
-        public JsonModel Create(BinaryData data, ModelReaderWriterOptions options) => new JsonModel();
-        public string GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-        public void Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) { }
-        public BinaryData Write(ModelReaderWriterOptions options) => BinaryData.Empty;
+        JsonModel IJsonModel<JsonModel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => new JsonModel();
+        JsonModel IPersistableModel<JsonModel>.Create(BinaryData data, ModelReaderWriterOptions options) => new JsonModel();
+        string IPersistableModel<JsonModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        void IJsonModel<JsonModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) { }
+        BinaryData IPersistableModel<JsonModel>.Write(ModelReaderWriterOptions options) => BinaryData.Empty;
     }
 """ },
             { AvailabilitySetData, "" },
@@ -93,20 +94,20 @@ namespace System.ClientModel.SourceGeneration.Tests.Unit.InvocationTests
     [PersistableModelProxy(typeof(UnknownLocalBaseModel))]
     public abstract class LocalBaseModel : IJsonModel<LocalBaseModel>
     {
-        public LocalBaseModel Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => new UnknownLocalBaseModel();
-        public LocalBaseModel Create(BinaryData data, ModelReaderWriterOptions options) => new UnknownLocalBaseModel();
-        public string GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-        public void Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) { }
-        public BinaryData Write(ModelReaderWriterOptions options) => BinaryData.Empty;
+        LocalBaseModel IJsonModel<LocalBaseModel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => new UnknownLocalBaseModel();
+        LocalBaseModel IPersistableModel<LocalBaseModel>.Create(BinaryData data, ModelReaderWriterOptions options) => new UnknownLocalBaseModel();
+        string IPersistableModel<LocalBaseModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        void IJsonModel<LocalBaseModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) { }
+        BinaryData IPersistableModel<LocalBaseModel>.Write(ModelReaderWriterOptions options) => BinaryData.Empty;
     }
 
     internal class UnknownLocalBaseModel : LocalBaseModel, IJsonModel<LocalBaseModel>
     {
-        public LocalBaseModel Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => new UnknownLocalBaseModel();
-        public LocalBaseModel Create(BinaryData data, ModelReaderWriterOptions options) => new UnknownLocalBaseModel();
-        public string GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-        public void Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) { }
-        public BinaryData Write(ModelReaderWriterOptions options) => BinaryData.Empty;
+        LocalBaseModel IJsonModel<LocalBaseModel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => new UnknownLocalBaseModel();
+        LocalBaseModel IPersistableModel<LocalBaseModel>.Create(BinaryData data, ModelReaderWriterOptions options) => new UnknownLocalBaseModel();
+        string IPersistableModel<LocalBaseModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        void IJsonModel<LocalBaseModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) { }
+        BinaryData IPersistableModel<LocalBaseModel>.Write(ModelReaderWriterOptions options) => BinaryData.Empty;
     }
 """ }
         };
@@ -143,7 +144,7 @@ namespace System.ClientModel.SourceGeneration.Tests.Unit.InvocationTests
         public static readonly IEnumerable<bool> AddedContexts =
         [
             true, // Context added
-            false // Context not added
+            //false // Context not added will be added after https://github.com/Azure/azure-sdk-for-net/issues/48294 for now it won't compile so no need to test
         ];
 
         private static readonly Dictionary<string, Action<TypeBuilderSpec>> s_builderValidators = new()
@@ -277,7 +278,7 @@ namespace System.ClientModel.SourceGeneration.Tests.Unit.InvocationTests
             string type,
             string invocation,
             bool contextAdded,
-            Func<string, string, string> getCaller,
+            Func<bool, string, string, string> getCaller,
             List<TypeValidation> validations,
             bool shouldBeFound = true,
             bool addDefaultContext = true,
@@ -317,7 +318,7 @@ $$"""
 
             source +=
 $$"""
-    {{getCaller(type, invocation)}}
+    {{getCaller(contextAdded, type, invocation)}}
 }
 """;
 
@@ -417,7 +418,7 @@ namespace TestProject1
             }
         }
 
-        private string AttributeCall(string type, string invocation)
+        private string AttributeCall(bool contextAdded, string type, string invocation)
         {
             return
 $$"""
@@ -429,8 +430,9 @@ $$"""
 """;
         }
 
-        private string LocalCall(string type, string invocation)
+        private string LocalCall(bool contextAdded, string type, string invocation)
         {
+            var invocationToUse = contextAdded ? invocation : invocation.Remove(invocation.IndexOf(ContextParmeter), ContextParmeter.Length);
             return
 $$"""
 
@@ -438,45 +440,66 @@ $$"""
     {
         public void Call()
         {
-            {{string.Format(invocation, string.Format(TypeStringFormat, type))}}
+            {{string.Format(invocationToUse, string.Format(TypeStringFormat, type))}}
         }
     }
 """;
         }
 
-        private string DupeModelCall(string type, string invocation)
+        private string DupeModelCall(bool contextAdded, string type, string invocation)
         {
+            var invocationToUse = contextAdded ? invocation : invocation.Remove(invocation.IndexOf(ContextParmeter), ContextParmeter.Length);
             return
+   $$"""
+
+    public class Caller
+    {
+        public void Call()
+        {
+            {{string.Format(invocationToUse, string.Format(TypeStringFormat, type))}}
+            {{string.Format(invocationToUse, $"{string.Format(TypeStringFormat, $"TestProject1.{type}")}")}}
+        }
+    }
+""";
+        }
+
+        private string DuplicateCall(bool contextAdded, string type, string invocation)
+        {
+            string code =
 $$"""
 
     public class Caller
     {
         public void Call()
         {
-            {{string.Format(invocation, string.Format(TypeStringFormat, type))}}
-            {{string.Format(invocation, $"{string.Format(TypeStringFormat, $"TestProject1.{type}")}")}}
-        }
-    }
 """;
-        }
-
-        private string DuplicateCall(string type, string invocation)
-        {
-            return
+            if (contextAdded)
+            {
+                code +=
 $$"""
+                ModelReaderWriter.Read <{{ string.Format(TypeStringFormat, type)}}> (BinaryData.Empty, ModelReaderWriterOptions.Json, LocalContext.Default);
+                ModelReaderWriter.Read <{{ string.Format(TypeStringFormat, type)}}> (BinaryData.Empty, ModelReaderWriterOptions.Json, LocalContext.Default);
+""";
+            }
+            else
+            {
+                code +=
+$$"""
+                ModelReaderWriter.Read <{{ string.Format(TypeStringFormat, type)}}> (BinaryData.Empty, ModelReaderWriterOptions.Json);
+                ModelReaderWriter.Read <{{ string.Format(TypeStringFormat, type)}}> (BinaryData.Empty, ModelReaderWriterOptions.Json);
+""";
+            }
 
-    public class Caller
-    {
-        public void Call()
-        {
-            ModelReaderWriter.Read<{{string.Format(TypeStringFormat, type)}}>(BinaryData.Empty, ModelReaderWriterOptions.Json, LocalContext.Default);
-            ModelReaderWriter.Read<{{string.Format(TypeStringFormat, type)}}>(BinaryData.Empty, ModelReaderWriterOptions.Json, LocalContext.Default);
+            code +=
+"""
         }
     }
 """;
+
+            return code;
         }
 
-        private string ParameterCall(string type, string invocation)
+        private string ParameterCall(bool contextAdded, string type, string invocation)
         {
             return
 $$"""
@@ -496,7 +519,7 @@ $$"""
 """;
         }
 
-        private string LocalNoInitCall(string type, string invocation)
+        private string LocalNoInitCall(bool contextAdded, string type, string invocation)
         {
             return
 $$"""
@@ -619,13 +642,12 @@ $$"""
             Assert.IsNull(aset.ItemType);
         }
 
-        [TestCase(true)]
-        [TestCase(false)]
-        public void DuplicateInvocation(bool contextAdded)
+        [Test]
+        public void DuplicateInvocation()
             => RunInvocationTest(
                 JsonModel,
                 string.Empty,
-                contextAdded,
+                true,
                 DuplicateCall,
                 TypeValidations);
     }

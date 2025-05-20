@@ -40,20 +40,26 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 writer.WritePropertyName("priority"u8);
                 writer.WriteNumberValue(Priority.Value);
             }
-            writer.WritePropertyName("expiredAttachedWorkerSelectors"u8);
-            writer.WriteStartArray();
-            foreach (var item in ExpiredAttachedWorkerSelectors)
+            if (options.Format != "W")
             {
-                writer.WriteObjectValue(item, options);
+                writer.WritePropertyName("expiredAttachedWorkerSelectors"u8);
+                writer.WriteStartArray();
+                foreach (var item in ExpiredAttachedWorkerSelectors)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
             }
-            writer.WriteEndArray();
-            writer.WritePropertyName("expiredRequestedWorkerSelectors"u8);
-            writer.WriteStartArray();
-            foreach (var item in ExpiredRequestedWorkerSelectors)
+            if (options.Format != "W")
             {
-                writer.WriteObjectValue(item, options);
+                writer.WritePropertyName("expiredRequestedWorkerSelectors"u8);
+                writer.WriteStartArray();
+                foreach (var item in ExpiredRequestedWorkerSelectors)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
             }
-            writer.WriteEndArray();
             if (Optional.IsDefined(ScheduledOn))
             {
                 writer.WritePropertyName("scheduledOn"u8);
@@ -209,7 +215,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureMessagingEventGridSystemEventsContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(AcsRouterJobWaitingForActivationEventData)} does not support writing '{options.Format}' format.");
             }

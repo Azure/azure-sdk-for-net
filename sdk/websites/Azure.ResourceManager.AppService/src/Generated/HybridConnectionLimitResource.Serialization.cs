@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.AppService
 {
     public partial class HybridConnectionLimitResource : IJsonModel<HybridConnectionLimitData>
     {
+        private static HybridConnectionLimitData s_dataDeserializationInstance;
+        private static HybridConnectionLimitData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<HybridConnectionLimitData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<HybridConnectionLimitData>)Data).Write(writer, options);
 
-        HybridConnectionLimitData IJsonModel<HybridConnectionLimitData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<HybridConnectionLimitData>)Data).Create(ref reader, options);
+        HybridConnectionLimitData IJsonModel<HybridConnectionLimitData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<HybridConnectionLimitData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<HybridConnectionLimitData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<HybridConnectionLimitData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<HybridConnectionLimitData>(Data, options, AzureResourceManagerAppServiceContext.Default);
 
-        HybridConnectionLimitData IPersistableModel<HybridConnectionLimitData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<HybridConnectionLimitData>(data, options);
+        HybridConnectionLimitData IPersistableModel<HybridConnectionLimitData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<HybridConnectionLimitData>(data, options, AzureResourceManagerAppServiceContext.Default);
 
-        string IPersistableModel<HybridConnectionLimitData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<HybridConnectionLimitData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<HybridConnectionLimitData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<HybridConnectionLimitData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

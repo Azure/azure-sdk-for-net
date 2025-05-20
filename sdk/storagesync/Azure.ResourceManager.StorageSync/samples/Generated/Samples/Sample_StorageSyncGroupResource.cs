@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.StorageSync.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_SyncGroupsGet()
         {
-            // Generated from example definition: specification/storagesync/resource-manager/Microsoft.StorageSync/stable/2022-06-01/examples/SyncGroups_Get.json
+            // Generated from example definition: specification/storagesync/resource-manager/Microsoft.StorageSync/stable/2022-09-01/examples/SyncGroups_Get.json
             // this example is just showing the usage of "SyncGroups_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.StorageSync.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_SyncGroupsDelete()
         {
-            // Generated from example definition: specification/storagesync/resource-manager/Microsoft.StorageSync/stable/2022-06-01/examples/SyncGroups_Delete.json
+            // Generated from example definition: specification/storagesync/resource-manager/Microsoft.StorageSync/stable/2022-09-01/examples/SyncGroups_Delete.json
             // this example is just showing the usage of "SyncGroups_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.StorageSync.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_SyncGroupsCreate()
         {
-            // Generated from example definition: specification/storagesync/resource-manager/Microsoft.StorageSync/stable/2022-06-01/examples/SyncGroups_Create.json
+            // Generated from example definition: specification/storagesync/resource-manager/Microsoft.StorageSync/stable/2022-09-01/examples/SyncGroups_Create.json
             // this example is just showing the usage of "SyncGroups_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerServiceBusContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ServiceBusRegenerateAccessKeyContent)} does not support writing '{options.Format}' format.");
             }

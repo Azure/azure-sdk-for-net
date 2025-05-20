@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.EnergyServices
 {
     public partial class EnergyServiceResource : IJsonModel<EnergyServiceData>
     {
+        private static EnergyServiceData s_dataDeserializationInstance;
+        private static EnergyServiceData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<EnergyServiceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<EnergyServiceData>)Data).Write(writer, options);
 
-        EnergyServiceData IJsonModel<EnergyServiceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<EnergyServiceData>)Data).Create(ref reader, options);
+        EnergyServiceData IJsonModel<EnergyServiceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<EnergyServiceData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<EnergyServiceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<EnergyServiceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<EnergyServiceData>(Data, options, AzureResourceManagerEnergyServicesContext.Default);
 
-        EnergyServiceData IPersistableModel<EnergyServiceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<EnergyServiceData>(data, options);
+        EnergyServiceData IPersistableModel<EnergyServiceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<EnergyServiceData>(data, options, AzureResourceManagerEnergyServicesContext.Default);
 
-        string IPersistableModel<EnergyServiceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<EnergyServiceData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<EnergyServiceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<EnergyServiceData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

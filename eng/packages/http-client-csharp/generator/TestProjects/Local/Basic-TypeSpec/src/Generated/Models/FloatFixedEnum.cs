@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace BasicTypeSpec.Models
+namespace BasicTypeSpec
 {
     /// <summary> float fixed enum. </summary>
     public enum FloatFixedEnum

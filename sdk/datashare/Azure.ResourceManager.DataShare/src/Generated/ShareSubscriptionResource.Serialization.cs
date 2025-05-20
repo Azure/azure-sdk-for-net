@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.DataShare
 {
     public partial class ShareSubscriptionResource : IJsonModel<ShareSubscriptionData>
     {
+        private static ShareSubscriptionData s_dataDeserializationInstance;
+        private static ShareSubscriptionData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<ShareSubscriptionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ShareSubscriptionData>)Data).Write(writer, options);
 
-        ShareSubscriptionData IJsonModel<ShareSubscriptionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ShareSubscriptionData>)Data).Create(ref reader, options);
+        ShareSubscriptionData IJsonModel<ShareSubscriptionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ShareSubscriptionData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ShareSubscriptionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<ShareSubscriptionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ShareSubscriptionData>(Data, options, AzureResourceManagerDataShareContext.Default);
 
-        ShareSubscriptionData IPersistableModel<ShareSubscriptionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ShareSubscriptionData>(data, options);
+        ShareSubscriptionData IPersistableModel<ShareSubscriptionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ShareSubscriptionData>(data, options, AzureResourceManagerDataShareContext.Default);
 
-        string IPersistableModel<ShareSubscriptionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ShareSubscriptionData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<ShareSubscriptionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ShareSubscriptionData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

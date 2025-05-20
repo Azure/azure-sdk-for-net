@@ -6,6 +6,12 @@
     <NoWarn>$(NoWarn);0618</NoWarn>
   </PropertyGroup>
 
+  <!-- TEMP until Azure.Core releases with updated dependencies, since these dependencies impact test behavior -->
+  <ItemGroup>
+    <PackageReference Include="System.Memory.Data" />
+  </ItemGroup>
+  <!-- ======================================================================================================= -->
+
   <ItemGroup>
     <PackageReference Include="NUnit" />
     <PackageReference Include="NUnit3TestAdapter" />

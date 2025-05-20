@@ -50,6 +50,11 @@ namespace Azure.ResourceManager.NeonPostgres.Models
                 writer.WritePropertyName("partnerOrganizationProperties"u8);
                 writer.WriteObjectValue(PartnerOrganizationProperties, options);
             }
+            if (Optional.IsDefined(ProjectProperties))
+            {
+                writer.WritePropertyName("projectProperties"u8);
+                writer.WriteObjectValue(ProjectProperties, options);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -92,6 +97,7 @@ namespace Azure.ResourceManager.NeonPostgres.Models
             NeonCompanyDetails companyDetails = default;
             NeonResourceProvisioningState? provisioningState = default;
             PartnerOrganizationProperties partnerOrganizationProperties = default;
+            NeonProjectProperties projectProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -129,6 +135,15 @@ namespace Azure.ResourceManager.NeonPostgres.Models
                     partnerOrganizationProperties = PartnerOrganizationProperties.DeserializePartnerOrganizationProperties(property.Value, options);
                     continue;
                 }
+                if (property.NameEquals("projectProperties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    projectProperties = NeonProjectProperties.DeserializeNeonProjectProperties(property.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -141,6 +156,7 @@ namespace Azure.ResourceManager.NeonPostgres.Models
                 companyDetails,
                 provisioningState,
                 partnerOrganizationProperties,
+                projectProperties,
                 serializedAdditionalRawData);
         }
 
@@ -151,7 +167,7 @@ namespace Azure.ResourceManager.NeonPostgres.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNeonPostgresContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(NeonOrganizationProperties)} does not support writing '{options.Format}' format.");
             }

@@ -5,12 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
-using System.Runtime.InteropServices;
-using System.Runtime.Serialization;
 using Azure.Core;
-using Azure.Core.Amqp;
 using Azure.Core.Amqp.Shared;
-using Azure.Messaging.EventHubs.Diagnostics;
 using Microsoft.Azure.Amqp;
 using Microsoft.Azure.Amqp.Encoding;
 using Microsoft.Azure.Amqp.Framing;
@@ -26,21 +22,6 @@ namespace Azure.Messaging.EventHubs.Amqp
     {
         /// <summary>The size, in bytes, to use as a buffer for stream operations.</summary>
         private const int StreamBufferSizeInBytes = 512;
-
-        /// <summary>The set of key names for annotations known to be DateTime-based system properties.</summary>
-        private static readonly HashSet<string> SystemPropertyDateTimeKeys = new()
-        {
-            AmqpProperty.EnqueuedTime.ToString(),
-            AmqpProperty.PartitionLastEnqueuedTimeUtc.ToString(),
-            AmqpProperty.LastPartitionPropertiesRetrievalTimeUtc.ToString()
-        };
-
-        /// <summary>The set of key names for annotations known to be long-based system properties.</summary>
-        private static readonly HashSet<string> SystemPropertyLongKeys = new()
-        {
-            AmqpProperty.SequenceNumber.ToString(),
-            AmqpProperty.PartitionLastEnqueuedSequenceNumber.ToString(),
-        };
 
         /// <summary>
         ///   Converts a given <see cref="EventData" /> source into its corresponding
@@ -123,7 +104,7 @@ namespace Azure.Messaging.EventHubs.Amqp
         public virtual EventData CreateEventFromMessage(AmqpMessage source)
         {
             Argument.AssertNotNull(source, nameof(source));
-            return BuildEventFromAmqpMessage(source);
+            return new EventData(AmqpAnnotatedMessageConverter.FromAmqpMessage(source));
         }
 
         /// <summary>
@@ -411,72 +392,6 @@ namespace Azure.Messaging.EventHubs.Amqp
 
             SetPublisherProperties(message, source.PendingPublishSequenceNumber, source.PendingProducerGroupId, source.PendingProducerOwnerLevel);
             return message;
-        }
-
-        /// <summary>
-        ///   Builds an <see cref="EventData" /> from an <see cref="AmqpMessage" />.
-        /// </summary>
-        ///
-        /// <param name="source">The message to use as the source of the event.</param>
-        ///
-        /// <returns>The <see cref="EventData" /> constructed from the source message.</returns>
-        ///
-        private static EventData BuildEventFromAmqpMessage(AmqpMessage source)
-        {
-            var message = AmqpAnnotatedMessageConverter.FromAmqpMessage(source);
-
-            // Message Annotations - special handling for Event Hub service annotations
-
-            if ((source.Sections & SectionFlag.MessageAnnotations) > 0)
-            {
-                NormalizeBrokerProperties(message.MessageAnnotations, source.MessageAnnotations.Map);
-            }
-
-            // Delivery Annotations - special handling for Event Hub service annotations
-
-            if ((source.Sections & SectionFlag.DeliveryAnnotations) > 0)
-            {
-                NormalizeBrokerProperties(message.DeliveryAnnotations, source.DeliveryAnnotations.Map);
-            }
-
-            return new EventData(message);
-        }
-
-        /// <summary>
-        ///   Normalizes the broker-owned properties of an event.
-        /// </summary>
-        ///
-        /// <param name="properties">The properties to normalize.</param>
-        /// <param name="sourceProperties">The source properties from the AMQP message.</param>
-        ///
-        private static void NormalizeBrokerProperties(IDictionary<string, object> properties,
-                                                      Annotations sourceProperties)
-        {
-            foreach (var pair in sourceProperties)
-            {
-                string keyString = pair.Key.ToString();
-                if (SystemPropertyDateTimeKeys.Contains(keyString))
-                {
-                    properties[keyString] =
-                        pair.Value switch
-                        {
-                            DateTime dateValue => new DateTimeOffset(dateValue, TimeSpan.Zero),
-                            long longValue => new DateTimeOffset(longValue, TimeSpan.Zero),
-                            _ => pair.Value
-                        };
-                }
-                else if (SystemPropertyLongKeys.Contains(keyString))
-                {
-                    properties[keyString] =
-                        pair.Value switch
-                        {
-                            string stringValue when long.TryParse(stringValue, NumberStyles.Integer, CultureInfo.InvariantCulture,
-                                    out var longValue) =>
-                                longValue,
-                            _ => pair.Value
-                        };
-                }
-            }
         }
 
         /// <summary>
