@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Sql
 {
     public partial class SqlFirewallRuleResource : IJsonModel<SqlFirewallRuleData>
     {
+        private static SqlFirewallRuleData s_dataDeserializationInstance;
+        private static SqlFirewallRuleData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<SqlFirewallRuleData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SqlFirewallRuleData>)Data).Write(writer, options);
 
-        SqlFirewallRuleData IJsonModel<SqlFirewallRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SqlFirewallRuleData>)Data).Create(ref reader, options);
+        SqlFirewallRuleData IJsonModel<SqlFirewallRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SqlFirewallRuleData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SqlFirewallRuleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<SqlFirewallRuleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SqlFirewallRuleData>(Data, options, AzureResourceManagerSqlContext.Default);
 
-        SqlFirewallRuleData IPersistableModel<SqlFirewallRuleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SqlFirewallRuleData>(data, options);
+        SqlFirewallRuleData IPersistableModel<SqlFirewallRuleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SqlFirewallRuleData>(data, options, AzureResourceManagerSqlContext.Default);
 
-        string IPersistableModel<SqlFirewallRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SqlFirewallRuleData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<SqlFirewallRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SqlFirewallRuleData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

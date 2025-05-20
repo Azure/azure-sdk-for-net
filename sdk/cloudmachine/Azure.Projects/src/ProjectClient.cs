@@ -6,7 +6,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.ComponentModel;
 using Azure.Core;
-using Azure.Data.AppConfiguration;
 using Azure.Identity;
 
 namespace Azure.Projects;
@@ -14,10 +13,10 @@ namespace Azure.Projects;
 /// <summary>
 /// The project client.
 /// </summary>
-public partial class ProjectClient : ConnectionProvider
+public partial class ProjectClient : ClientConnectionProvider
 {
     private readonly TokenCredential _credential = BuildCredential(default);
-    private readonly ConnectionProvider _connections;
+    private readonly ClientConnectionProvider _connections;
 
     /// <summary>
     /// The project ID.
@@ -28,7 +27,7 @@ public partial class ProjectClient : ConnectionProvider
     /// <summary>
     /// Initializes a new instance of the <see cref="ProjectClient"/>.
     /// </summary>
-    public ProjectClient()
+    public ProjectClient() : base(maxCacheSize: 100)
     {
         // TODO: should it ever create?
         ProjectId = ReadOrCreateProjectId();
@@ -41,7 +40,7 @@ public partial class ProjectClient : ConnectionProvider
     /// <param name="projectId"></param>
     /// <param name="connections"></param>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public ProjectClient(string projectId, ConnectionProvider connections)
+    public ProjectClient(string projectId, ClientConnectionProvider connections) : base(maxCacheSize: 100)
     {
         if (connections == null)
         {

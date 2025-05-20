@@ -6,13 +6,10 @@
 using System;
 using System.IO;
 using System.Linq;
-using Azure.Projects.AppService;
-using Azure.Projects.KeyVault;
 using Azure.Projects.Ofx;
-using Azure.Projects.OpenAI;
-using Azure.Projects.ServiceBus;
-using Azure.Projects.Storage;
 using NUnit.Framework;
+using Azure.Projects.Core;
+using Azure.Provisioning.CognitiveServices;
 
 [assembly: NonParallelizable]
 
@@ -24,10 +21,29 @@ public class BicepGenerationTests
     public void MinimalProject()
     {
         ProjectInfrastructure infrastructure = new("cm0c420d2f21084cd");
+
         string actualBicep = infrastructure.Build().Compile().FirstOrDefault().Value;
-        File.WriteAllText("d:\\minimal.bicep", actualBicep);
+        // Un-comment to debug bicep creation issues
+        //File.WriteAllText(Path.Combine(Path.GetTempPath(), "minimal.bicep"), actualBicep);
 
         string expectedBicep = LoadTestFile("minimal.bicep");
+        Assert.AreEqual(expectedBicep, actualBicep);
+    }
+
+    [Test]
+    public void MinimalProjectWithDeveloperAppConfig()
+    {
+        #region Snippet:StoreAppConfigurationSku
+        AppConfigConnectionStore connections = new(AppConfigurationFeature.SkuName.Developer);
+        ProjectInfrastructure infrastructure = new(connections);
+        #endregion
+
+        infrastructure = new(connections, "cm0c420d2f21084cd"); // we don't want cmid in the snippet
+        string actualBicep = infrastructure.Build().Compile().FirstOrDefault().Value;
+        // Un-comment to debug bicep creation issues
+        //File.WriteAllText(Path.Combine(Path.GetTempPath(), "developer.bicep"), actualBicep);
+
+        string expectedBicep = LoadTestFile("developer.bicep");
         Assert.AreEqual(expectedBicep, actualBicep);
     }
 
@@ -36,8 +52,11 @@ public class BicepGenerationTests
     {
         ProjectInfrastructure infrastructure = new("cm0c420d2f21084cd");
         infrastructure.AddFeature(new KeyVaultFeature());
+
         string actualBicep = infrastructure.Build().Compile().FirstOrDefault().Value;
-        File.WriteAllText("d:\\kv.bicep", actualBicep);
+        // Un-comment to debug bicep creation issues
+        //File.WriteAllText(Path.Combine(Path.GetTempPath(), "kv.bicep"), actualBicep);
+
         string expectedBicep = LoadTestFile("kv.bicep");
         Assert.AreEqual(expectedBicep, actualBicep);
     }
@@ -49,7 +68,9 @@ public class BicepGenerationTests
         infrastructure.AddFeature(new BlobContainerFeature("testcontainer", isObservable: false));
 
         string actualBicep = infrastructure.Build().Compile().FirstOrDefault().Value;
-        File.WriteAllText("d:\\blobs.bicep", actualBicep);
+        // Un-comment to debug bicep creation issues
+        //File.WriteAllText(Path.Combine(Path.GetTempPath(), "blobs.bicep"), actualBicep);
+
         string expectedBicep = LoadTestFile("blobs.bicep");
         Assert.AreEqual(expectedBicep, actualBicep);
     }
@@ -62,7 +83,9 @@ public class BicepGenerationTests
         infrastructure.AddFeature(new BlobContainerFeature("container2", isObservable: false));
 
         string actualBicep = infrastructure.Build().Compile().FirstOrDefault().Value;
-        File.WriteAllText("d:\\blobs2Containers.bicep", actualBicep);
+        // Un-comment to debug bicep creation issues
+        //File.WriteAllText(Path.Combine(Path.GetTempPath(), "blobs2Containers.bicep"), actualBicep);
+
         string expectedBicep = LoadTestFile("blobs2Containers.bicep");
         Assert.AreEqual(expectedBicep, actualBicep);
     }
@@ -74,7 +97,9 @@ public class BicepGenerationTests
         infrastructure.AddFeature(new BlobContainerFeature("default", isObservable: true));
 
         string actualBicep = infrastructure.Build().Compile().FirstOrDefault().Value;
-        File.WriteAllText("d:\\blobsObservable.bicep", actualBicep);
+        // Un-comment to debug bicep creation issues
+        //File.WriteAllText(Path.Combine(Path.GetTempPath(), "blobsObservable.bicep"), actualBicep);
+
         string expectedBicep = LoadTestFile("blobsObservable.bicep");
         Assert.AreEqual(expectedBicep, actualBicep);
     }
@@ -87,9 +112,25 @@ public class BicepGenerationTests
         infrastructure.AddFeature(new OpenAIModelFeature("text-embedding-ada-002", "2", AIModelKind.Embedding));
 
         string actualBicep = infrastructure.Build().Compile().FirstOrDefault().Value;
-        File.WriteAllText("d:\\openai.bicep", actualBicep);
+        // Un-comment to debug bicep creation issues
+        //File.WriteAllText(Path.Combine(Path.GetTempPath(), "openai.bicep"), actualBicep);
 
         string expectedBicep = LoadTestFile("openai.bicep");
+        Assert.AreEqual(expectedBicep, actualBicep);
+    }
+
+    [Test]
+    public void MaaS()
+    {
+        ProjectInfrastructure infrastructure = new("cm0c420d2f21084cd");
+        infrastructure.AddFeature(new AIModelsFeature("DeepSeek-V3", "1"));
+
+        string actualBicep = infrastructure.Build().Compile().FirstOrDefault().Value;
+        string path = Path.Combine(Path.GetTempPath(), "maas.bicep");
+        // Un-comment to debug bicep creation issues
+        //File.WriteAllText(path, actualBicep);
+
+        string expectedBicep = LoadTestFile("maas.bicep");
         Assert.AreEqual(expectedBicep, actualBicep);
     }
 
@@ -100,7 +141,9 @@ public class BicepGenerationTests
         infrastructure.AddFeature(new ServiceBusNamespaceFeature(infrastructure.ProjectId));
 
         string actualBicep = infrastructure.Build().Compile().FirstOrDefault().Value;
-        File.WriteAllText("d:\\sb.bicep", actualBicep);
+        // Un-comment to debug bicep creation issues
+        //File.WriteAllText(Path.Combine(Path.GetTempPath(), "sb.bicep"), actualBicep);
+
         string expectedBicep = LoadTestFile("sb.bicep");
         Assert.AreEqual(expectedBicep, actualBicep);
     }
@@ -109,10 +152,12 @@ public class BicepGenerationTests
     public void Ofx()
     {
         ProjectInfrastructure infrastructure = new("cm0c420d2f21084cd");
-        infrastructure.AddFeature(new OfxProjectFeature());
+        infrastructure.AddFeature(new OfxFeatures());
 
         string actualBicep = infrastructure.Build().Compile().FirstOrDefault().Value;
-        File.WriteAllText("d:\\cm.bicep", actualBicep);
+        // Un-comment to debug bicep creation issues
+        //File.WriteAllText(Path.Combine(Path.GetTempPath(), "cm.bicep"), actualBicep);
+
         string expectedBicep = LoadTestFile("cm.bicep");
         Assert.AreEqual(expectedBicep, actualBicep);
     }
@@ -127,20 +172,10 @@ public class BicepGenerationTests
         infrastructure.AddFeature(new AppServiceFeature());
 
         string actualBicep = infrastructure.Build().Compile().FirstOrDefault().Value;
-        File.WriteAllText("d:\\app.bicep", actualBicep);
+        // Un-comment to debug bicep creation issues
+        //File.WriteAllText(Path.Combine(Path.GetTempPath(), "app.bicep"), actualBicep);
+
         string expectedBicep = LoadTestFile("app.bicep");
-        Assert.AreEqual(expectedBicep, actualBicep);
-    }
-
-    [Test]
-    public void AIFoundry()
-    {
-        ProjectInfrastructure infrastructure = new("cm0c420d2f21084cd");
-        infrastructure.AddFeature(new AIFoundry.AIProjectFeature());
-        string actualBicep = infrastructure.Build().Compile().FirstOrDefault().Value;
-        File.WriteAllText("d:\\foundry.bicep", actualBicep);
-
-        string expectedBicep = LoadTestFile("foundry.bicep");
         Assert.AreEqual(expectedBicep, actualBicep);
     }
 

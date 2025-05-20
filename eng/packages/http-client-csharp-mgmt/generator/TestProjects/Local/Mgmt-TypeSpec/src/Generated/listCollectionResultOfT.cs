@@ -13,6 +13,10 @@ namespace MgmtTypeSpec
 {
     internal partial class listCollectionResultOfT : Pageable<FooData>
     {
+        /// <summary> Gets the pages of listCollectionResultOfT as an enumerable collection. </summary>
+        /// <param name="continuationToken"> The continuation token. </param>
+        /// <param name="pageSizeHint"> The page size hint. </param>
+        /// <returns> The pages of listCollectionResultOfT as an enumerable collection. </returns>
         public override IEnumerable<Page<FooData>> AsPages(string continuationToken = null, int? pageSizeHint = null) => throw null;
     }
 }

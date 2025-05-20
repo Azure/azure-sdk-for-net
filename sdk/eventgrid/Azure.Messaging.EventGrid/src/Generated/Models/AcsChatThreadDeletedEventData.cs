@@ -13,8 +13,17 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class AcsChatThreadDeletedEventData : AcsChatThreadEventInThreadBaseProperties
     {
         /// <summary> Initializes a new instance of <see cref="AcsChatThreadDeletedEventData"/>. </summary>
-        internal AcsChatThreadDeletedEventData()
+        /// <param name="transactionId"> The transaction id will be used as co-relation vector. </param>
+        /// <param name="threadId"> The chat thread id. </param>
+        /// <param name="deletedByCommunicationIdentifier"> The communication identifier of the user who deleted the thread. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="transactionId"/>, <paramref name="threadId"/> or <paramref name="deletedByCommunicationIdentifier"/> is null. </exception>
+        internal AcsChatThreadDeletedEventData(string transactionId, string threadId, CommunicationIdentifierModel deletedByCommunicationIdentifier) : base(transactionId, threadId)
         {
+            Argument.AssertNotNull(transactionId, nameof(transactionId));
+            Argument.AssertNotNull(threadId, nameof(threadId));
+            Argument.AssertNotNull(deletedByCommunicationIdentifier, nameof(deletedByCommunicationIdentifier));
+
+            DeletedByCommunicationIdentifier = deletedByCommunicationIdentifier;
         }
 
         /// <summary> Initializes a new instance of <see cref="AcsChatThreadDeletedEventData"/>. </summary>
@@ -24,8 +33,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="version"> The version of the thread. </param>
         /// <param name="deletedByCommunicationIdentifier"> The communication identifier of the user who deleted the thread. </param>
         /// <param name="deleteTime"> The deletion time of the thread. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="transactionId"/> or <paramref name="threadId"/> is null. </exception>
         internal AcsChatThreadDeletedEventData(string transactionId, string threadId, DateTimeOffset? createTime, long? version, CommunicationIdentifierModel deletedByCommunicationIdentifier, DateTimeOffset? deleteTime) : base(transactionId, threadId, createTime, version)
         {
+            Argument.AssertNotNull(transactionId, nameof(transactionId));
+            Argument.AssertNotNull(threadId, nameof(threadId));
+
             DeletedByCommunicationIdentifier = deletedByCommunicationIdentifier;
             DeleteTime = deleteTime;
         }

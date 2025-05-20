@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.SecurityDevOps
 {
     public partial class AzureDevOpsProjectResource : IJsonModel<AzureDevOpsProjectData>
     {
+        private static AzureDevOpsProjectData s_dataDeserializationInstance;
+        private static AzureDevOpsProjectData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<AzureDevOpsProjectData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<AzureDevOpsProjectData>)Data).Write(writer, options);
 
-        AzureDevOpsProjectData IJsonModel<AzureDevOpsProjectData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AzureDevOpsProjectData>)Data).Create(ref reader, options);
+        AzureDevOpsProjectData IJsonModel<AzureDevOpsProjectData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AzureDevOpsProjectData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<AzureDevOpsProjectData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<AzureDevOpsProjectData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AzureDevOpsProjectData>(Data, options, AzureResourceManagerSecurityDevOpsContext.Default);
 
-        AzureDevOpsProjectData IPersistableModel<AzureDevOpsProjectData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AzureDevOpsProjectData>(data, options);
+        AzureDevOpsProjectData IPersistableModel<AzureDevOpsProjectData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AzureDevOpsProjectData>(data, options, AzureResourceManagerSecurityDevOpsContext.Default);
 
-        string IPersistableModel<AzureDevOpsProjectData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AzureDevOpsProjectData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<AzureDevOpsProjectData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AzureDevOpsProjectData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

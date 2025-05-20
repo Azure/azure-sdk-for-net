@@ -16,6 +16,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Microsoft.TypeSpec.Generator.Providers;
 
 namespace Azure.Generator
 {
@@ -51,9 +52,7 @@ namespace Azure.Generator
         /// </summary>
         protected internal virtual IReadOnlyList<CSharpProjectWriter.CSProjDependencyPackage> AzureDependencyPackages =>
             [
-                new("Azure.Core"),
-                new("System.ClientModel"),
-                new("System.Text.Json")
+                new("Azure.Core")
             ];
 
         /// <inheritdoc/>
@@ -67,6 +66,14 @@ namespace Azure.Generator
                     return result;
                 }
             }
+            else if (inputType is InputModelType inputModelType)
+            {
+                if (KnownAzureTypes.TryGetKnownType(inputModelType.CrossLanguageDefinitionId, out var knownType))
+                {
+                    return knownType;
+                }
+            }
+
             return base.CreateCSharpTypeCore(inputType);
         }
 
@@ -75,7 +82,7 @@ namespace Azure.Generator
             InputPrimitiveType? primitiveType = inputType;
             while (primitiveType != null)
             {
-                if (KnownAzureTypes.TryGetPrimitiveType(primitiveType.CrossLanguageDefinitionId, out var knownType))
+                if (KnownAzureTypes.TryGetKnownType(primitiveType.CrossLanguageDefinitionId, out var knownType))
                 {
                     return knownType;
                 }

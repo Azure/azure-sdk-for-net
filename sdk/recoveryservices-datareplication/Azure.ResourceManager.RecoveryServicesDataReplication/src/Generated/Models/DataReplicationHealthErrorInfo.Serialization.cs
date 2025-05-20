@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             if (Optional.IsDefined(AffectedResourceType))
             {
                 writer.WritePropertyName("affectedResourceType"u8);
-                writer.WriteStringValue(AffectedResourceType);
+                writer.WriteStringValue(AffectedResourceType.Value);
             }
             if (Optional.IsCollectionDefined(AffectedResourceCorrelationIds))
             {
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             {
                 return null;
             }
-            string affectedResourceType = default;
+            ResourceType? affectedResourceType = default;
             IReadOnlyList<string> affectedResourceCorrelationIds = default;
             IReadOnlyList<DataReplicationInnerHealthErrorInfo> childErrors = default;
             string code = default;
@@ -171,7 +171,11 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             {
                 if (property.NameEquals("affectedResourceType"u8))
                 {
-                    affectedResourceType = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    affectedResourceType = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("affectedResourceCorrelationIds"u8))
@@ -296,7 +300,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesDataReplicationContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(DataReplicationHealthErrorInfo)} does not support writing '{options.Format}' format.");
             }

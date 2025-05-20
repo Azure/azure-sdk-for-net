@@ -10,7 +10,6 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using _Type._Enum.Fixed.Models;
 
 namespace _Type._Enum.Fixed
 {
@@ -18,7 +17,7 @@ namespace _Type._Enum.Fixed
     {
         protected String() => throw null;
 
-        public HttpPipeline Pipeline => throw null;
+        public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response GetKnownValue(RequestContext context) => throw null;
 

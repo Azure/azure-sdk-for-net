@@ -4,13 +4,14 @@
 using System.ClientModel.Primitives;
 using System.ClientModel.Tests.Client.Models.ResourceManager.Compute;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 
 namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.AvailabilitySetDatas
 {
     public class ArrayOfListTests : MrwCollectionTests<List<AvailabilitySetData>[], AvailabilitySetData>
     {
         protected override string GetJsonCollectionType() => "ListOfList";
+
+        protected override string CollectionTypeName => "List<AvailabilitySetData>[]";
 
         protected override ModelReaderWriterContext Context => new LocalContext();
 
@@ -57,14 +58,12 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.AvailabilitySet
 
                 protected override Type ItemType => typeof(List<AvailabilitySetData>);
 
-                protected override bool IsCollection => true;
-
                 protected override object CreateInstance() => new List<List<AvailabilitySetData>>();
 
                 protected override void AddItem(object collection, object item)
                     => ((List<List<AvailabilitySetData>>)collection).Add((List<AvailabilitySetData>)item);
 
-                protected override object ToCollection(object builder)
+                protected override object ConvertCollectionBuilder(object builder)
                     => ((List<List<AvailabilitySetData>>)builder).ToArray();
             }
         }

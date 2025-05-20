@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             }
             DataReplicationProvisioningState? provisioningState = default;
             ResourceIdentifier serviceResourceId = default;
-            DataReplicationReplicationVaultType? vaultType = default;
+            DataReplicationVaultType? vaultType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                     {
                         continue;
                     }
-                    vaultType = new DataReplicationReplicationVaultType(property.Value.GetString());
+                    vaultType = new DataReplicationVaultType(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesDataReplicationContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(DataReplicationVaultProperties)} does not support writing '{options.Format}' format.");
             }

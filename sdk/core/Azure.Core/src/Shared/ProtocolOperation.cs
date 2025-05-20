@@ -31,6 +31,11 @@ namespace Azure.Core
 #pragma warning restore CA1822
 
         /// <inheritdoc />
+        public override RehydrationToken? GetRehydrationToken() => ((IOperation<T>)this).GetRehydrationToken();
+
+        RehydrationToken IOperation<T>.GetRehydrationToken() => _nextLinkOperation.GetRehydrationToken();
+
+        /// <inheritdoc />
         public override T Value => _operation.Value;
 
         /// <inheritdoc />

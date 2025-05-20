@@ -1,5 +1,11 @@
 namespace Azure.ResourceManager.Migration.Assessment
 {
+    public partial class AzureResourceManagerMigrationAssessmentContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureResourceManagerMigrationAssessmentContext() { }
+        public static Azure.ResourceManager.Migration.Assessment.AzureResourceManagerMigrationAssessmentContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class MigrationAssessedMachineCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Migration.Assessment.MigrationAssessedMachineResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Migration.Assessment.MigrationAssessedMachineResource>, System.Collections.IEnumerable
     {
         protected MigrationAssessedMachineCollection() { }

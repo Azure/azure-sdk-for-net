@@ -103,15 +103,15 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 writer.WritePropertyName("targetFabricId"u8);
                 writer.WriteStringValue(TargetFabricId);
             }
-            if (options.Format != "W" && Optional.IsDefined(DraId))
+            if (options.Format != "W" && Optional.IsDefined(FabricAgentId))
             {
-                writer.WritePropertyName("draId"u8);
-                writer.WriteStringValue(DraId);
+                writer.WritePropertyName("fabricAgentId"u8);
+                writer.WriteStringValue(FabricAgentId);
             }
-            if (options.Format != "W" && Optional.IsDefined(TargetDraId))
+            if (options.Format != "W" && Optional.IsDefined(TargetFabricAgentId))
             {
-                writer.WritePropertyName("targetDraId"u8);
-                writer.WriteStringValue(TargetDraId);
+                writer.WritePropertyName("targetFabricAgentId"u8);
+                writer.WriteStringValue(TargetFabricAgentId);
             }
             if (options.Format != "W" && Optional.IsDefined(IsResyncRequired))
             {
@@ -232,8 +232,8 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             string targetFabricProviderId = default;
             string fabricId = default;
             string targetFabricId = default;
-            string draId = default;
-            string targetDraId = default;
+            string fabricAgentId = default;
+            string targetFabricAgentId = default;
             bool? resyncRequired = default;
             DateTimeOffset? lastSuccessfulPlannedFailoverTime = default;
             DateTimeOffset? lastSuccessfulUnplannedFailoverTime = default;
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             ProtectedItemJobProperties lastTestFailoverJob = default;
             DataReplicationHealthStatus? replicationHealth = default;
             IReadOnlyList<DataReplicationHealthErrorInfo> healthErrors = default;
-            ProtectedItemModelCustomProperties customProperties = default;
+            DataReplicationProtectedItemCustomProperties customProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -341,14 +341,14 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                     targetFabricId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("draId"u8))
+                if (property.NameEquals("fabricAgentId"u8))
                 {
-                    draId = property.Value.GetString();
+                    fabricAgentId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("targetDraId"u8))
+                if (property.NameEquals("targetFabricAgentId"u8))
                 {
-                    targetDraId = property.Value.GetString();
+                    targetFabricAgentId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("resyncRequired"u8))
@@ -462,7 +462,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 }
                 if (property.NameEquals("customProperties"u8))
                 {
-                    customProperties = ProtectedItemModelCustomProperties.DeserializeProtectedItemModelCustomProperties(property.Value, options);
+                    customProperties = DataReplicationProtectedItemCustomProperties.DeserializeDataReplicationProtectedItemCustomProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -487,8 +487,8 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 targetFabricProviderId,
                 fabricId,
                 targetFabricId,
-                draId,
-                targetDraId,
+                fabricAgentId,
+                targetFabricAgentId,
                 resyncRequired,
                 lastSuccessfulPlannedFailoverTime,
                 lastSuccessfulUnplannedFailoverTime,
@@ -511,7 +511,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesDataReplicationContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(DataReplicationProtectedItemProperties)} does not support writing '{options.Format}' format.");
             }

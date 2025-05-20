@@ -6,19 +6,12 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using Azure.Core;
-using Azure.Data.AppConfiguration;
 using Azure.Identity;
 using Azure.Messaging.ServiceBus;
-using Azure.Projects.AppConfiguration;
-using Azure.Projects.AppService;
-using Azure.Projects.KeyVault;
+using Azure.Projects.Core;
 using Azure.Projects.Ofx;
-using Azure.Projects.OpenAI;
-using Azure.Projects.ServiceBus;
-using Azure.Projects.Storage;
 using Azure.Security.KeyVault.Secrets;
 using Azure.Storage.Blobs;
 using NUnit.Framework;
@@ -62,7 +55,7 @@ public class ConnectionTests
         TestConnectionStore store = new();
         ProjectInfrastructure infrastructure = new(store, projectId);
         infrastructure.AddFeature(new AppConfigurationFeature());
-        infrastructure.AddFeature(new OfxProjectFeature());
+        infrastructure.AddFeature(new OfxFeatures());
         infrastructure.Build();
 
         ProjectClient project = new(projectId, store.Provider);
@@ -93,14 +86,14 @@ internal class TestConnectionStore : ConnectionStore
     {
         _provider.AddConnection(connectionId, new ClientConnection(connectionId, endpoint));
     }
-    public ConnectionProvider Provider => _provider;
+    public ClientConnectionProvider Provider => _provider;
 }
-internal class TestConnectionProvider : ConnectionProvider
+internal class TestConnectionProvider : ClientConnectionProvider
 {
     private readonly Dictionary<string, ClientConnection> _connections = new();
     private readonly TokenCredential _credential;
 
-    public TestConnectionProvider(TokenCredential credential)
+    public TestConnectionProvider(TokenCredential credential) : base(maxCacheSize: 100)
         => _credential = credential;
     public override ClientConnection GetConnection(string connectionId)
         => _connections[connectionId];
@@ -109,7 +102,7 @@ internal class TestConnectionProvider : ConnectionProvider
     {
         if (connection.Credential == null)
         {
-            _connections.Add(connectionId, new ClientConnection(connectionId, connection.Locator, _credential));
+            _connections.Add(connectionId, new ClientConnection(connectionId, connection.Locator, _credential, CredentialKind.TokenCredential));
         }
         else
         {

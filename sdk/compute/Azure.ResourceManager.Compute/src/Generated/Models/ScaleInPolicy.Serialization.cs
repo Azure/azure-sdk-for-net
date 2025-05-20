@@ -49,6 +49,11 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("forceDeletion"u8);
                 writer.WriteBooleanValue(ForceDeletion.Value);
             }
+            if (Optional.IsDefined(PrioritizeUnhealthyVms))
+            {
+                writer.WritePropertyName("prioritizeUnhealthyVMs"u8);
+                writer.WriteBooleanValue(PrioritizeUnhealthyVms.Value);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -88,6 +93,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
             IList<VirtualMachineScaleSetScaleInRule> rules = default;
             bool? forceDeletion = default;
+            bool? prioritizeUnhealthyVms = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,13 +121,22 @@ namespace Azure.ResourceManager.Compute.Models
                     forceDeletion = property.Value.GetBoolean();
                     continue;
                 }
+                if (property.NameEquals("prioritizeUnhealthyVMs"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    prioritizeUnhealthyVms = property.Value.GetBoolean();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ScaleInPolicy(rules ?? new ChangeTrackingList<VirtualMachineScaleSetScaleInRule>(), forceDeletion, serializedAdditionalRawData);
+            return new ScaleInPolicy(rules ?? new ChangeTrackingList<VirtualMachineScaleSetScaleInRule>(), forceDeletion, prioritizeUnhealthyVms, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ScaleInPolicy>.Write(ModelReaderWriterOptions options)
@@ -131,7 +146,7 @@ namespace Azure.ResourceManager.Compute.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ScaleInPolicy)} does not support writing '{options.Format}' format.");
             }

@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.ClientModel.Internal;
 using System.Collections;
 
 namespace System.ClientModel.Primitives;
@@ -27,7 +28,7 @@ internal abstract class CollectionWriter
             {
                 return new JsonCollectionWriter();
             }
-            throw new InvalidOperationException($"{persistableModel.GetType().Name} has a wire format of '{wireFormat}'.  It must be 'J' to be written as a collection");
+            throw new InvalidOperationException($"{persistableModel.GetType().ToFriendlyName()} has a wire format of '{wireFormat}'.  It must be 'J' to be written as a collection");
         }
     }
 
@@ -44,7 +45,7 @@ internal abstract class CollectionWriter
         }
         else
         {
-            throw new InvalidOperationException($"Unable to write {enumerable.GetType().Name}.  Only collections of 'IPersistableModel' can be written.");
+            throw new InvalidOperationException($"Unable to write {enumerable.GetType().ToFriendlyName()}.  Only collections of 'IPersistableModel' can be written.");
         }
     }
 

@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Media
 {
     public partial class MediaJobResource : IJsonModel<MediaJobData>
     {
+        private static MediaJobData s_dataDeserializationInstance;
+        private static MediaJobData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<MediaJobData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<MediaJobData>)Data).Write(writer, options);
 
-        MediaJobData IJsonModel<MediaJobData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MediaJobData>)Data).Create(ref reader, options);
+        MediaJobData IJsonModel<MediaJobData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MediaJobData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<MediaJobData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<MediaJobData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<MediaJobData>(Data, options, AzureResourceManagerMediaContext.Default);
 
-        MediaJobData IPersistableModel<MediaJobData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MediaJobData>(data, options);
+        MediaJobData IPersistableModel<MediaJobData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MediaJobData>(data, options, AzureResourceManagerMediaContext.Default);
 
-        string IPersistableModel<MediaJobData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MediaJobData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<MediaJobData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MediaJobData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

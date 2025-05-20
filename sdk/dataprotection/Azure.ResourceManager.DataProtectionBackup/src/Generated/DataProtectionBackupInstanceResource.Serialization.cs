@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.DataProtectionBackup
 {
     public partial class DataProtectionBackupInstanceResource : IJsonModel<DataProtectionBackupInstanceData>
     {
+        private static DataProtectionBackupInstanceData s_dataDeserializationInstance;
+        private static DataProtectionBackupInstanceData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<DataProtectionBackupInstanceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DataProtectionBackupInstanceData>)Data).Write(writer, options);
 
-        DataProtectionBackupInstanceData IJsonModel<DataProtectionBackupInstanceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DataProtectionBackupInstanceData>)Data).Create(ref reader, options);
+        DataProtectionBackupInstanceData IJsonModel<DataProtectionBackupInstanceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DataProtectionBackupInstanceData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<DataProtectionBackupInstanceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<DataProtectionBackupInstanceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DataProtectionBackupInstanceData>(Data, options, AzureResourceManagerDataProtectionBackupContext.Default);
 
-        DataProtectionBackupInstanceData IPersistableModel<DataProtectionBackupInstanceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DataProtectionBackupInstanceData>(data, options);
+        DataProtectionBackupInstanceData IPersistableModel<DataProtectionBackupInstanceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DataProtectionBackupInstanceData>(data, options, AzureResourceManagerDataProtectionBackupContext.Default);
 
-        string IPersistableModel<DataProtectionBackupInstanceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DataProtectionBackupInstanceData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<DataProtectionBackupInstanceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DataProtectionBackupInstanceData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

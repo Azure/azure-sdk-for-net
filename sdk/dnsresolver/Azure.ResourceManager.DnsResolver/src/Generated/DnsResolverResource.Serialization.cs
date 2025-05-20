@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.DnsResolver
 {
     public partial class DnsResolverResource : IJsonModel<DnsResolverData>
     {
+        private static DnsResolverData s_dataDeserializationInstance;
+        private static DnsResolverData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<DnsResolverData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DnsResolverData>)Data).Write(writer, options);
 
-        DnsResolverData IJsonModel<DnsResolverData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DnsResolverData>)Data).Create(ref reader, options);
+        DnsResolverData IJsonModel<DnsResolverData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DnsResolverData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<DnsResolverData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<DnsResolverData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DnsResolverData>(Data, options, AzureResourceManagerDnsResolverContext.Default);
 
-        DnsResolverData IPersistableModel<DnsResolverData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DnsResolverData>(data, options);
+        DnsResolverData IPersistableModel<DnsResolverData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DnsResolverData>(data, options, AzureResourceManagerDnsResolverContext.Default);
 
-        string IPersistableModel<DnsResolverData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DnsResolverData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<DnsResolverData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DnsResolverData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

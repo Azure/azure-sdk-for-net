@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Input of the validate probe API. </summary>
+    /// <summary>
+    /// Input of the validate probe API.
+    /// Serialized Name: ValidateProbeInput
+    /// </summary>
     public partial class ValidateProbeContent
     {
         /// <summary>
@@ -46,7 +49,10 @@ namespace Azure.ResourceManager.Cdn.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ValidateProbeContent"/>. </summary>
-        /// <param name="probeUri"> The probe URL to validate. </param>
+        /// <param name="probeUri">
+        /// The probe URL to validate.
+        /// Serialized Name: ValidateProbeInput.probeURL
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="probeUri"/> is null. </exception>
         public ValidateProbeContent(Uri probeUri)
         {
@@ -56,7 +62,10 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ValidateProbeContent"/>. </summary>
-        /// <param name="probeUri"> The probe URL to validate. </param>
+        /// <param name="probeUri">
+        /// The probe URL to validate.
+        /// Serialized Name: ValidateProbeInput.probeURL
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ValidateProbeContent(Uri probeUri, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -69,7 +78,10 @@ namespace Azure.ResourceManager.Cdn.Models
         {
         }
 
-        /// <summary> The probe URL to validate. </summary>
+        /// <summary>
+        /// The probe URL to validate.
+        /// Serialized Name: ValidateProbeInput.probeURL
+        /// </summary>
         public Uri ProbeUri { get; }
     }
 }

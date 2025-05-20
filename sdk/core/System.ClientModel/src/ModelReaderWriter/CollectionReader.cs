@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.ClientModel.Internal;
+
 namespace System.ClientModel.Primitives;
 
 internal abstract class CollectionReader
@@ -22,14 +24,14 @@ internal abstract class CollectionReader
             var element = builder.CreateElement();
             if (element is not IPersistableModel<object> persistableModel)
             {
-                throw new InvalidOperationException($"'{element?.GetType().Name}' must implement {nameof(IPersistableModel<object>)}");
+                throw new InvalidOperationException($"'{element?.GetType().ToFriendlyName()}' must implement {nameof(IPersistableModel<object>)}");
             }
             var wireFormat = persistableModel.GetFormatFromOptions(options);
             if (wireFormat == "J" && persistableModel is IJsonModel<object>)
             {
                 return new JsonCollectionReader();
             }
-            throw new InvalidOperationException($"{persistableModel.GetType().Name} has a wire format of '{wireFormat}' it must be 'J' to be read as a collection");
+            throw new InvalidOperationException($"{persistableModel.GetType().ToFriendlyName()} has a wire format of '{wireFormat}' it must be 'J' to be read as a collection");
         }
     }
 
