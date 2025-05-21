@@ -5,16 +5,16 @@
 - Total libraries: 391
 - Management Plane (Swagger): 177
 - Management Plane (TSP-Old): 29
-- Management Plane (TypeSpec - http-client-csharp): 0
+- Management Plane (TypeSpec - @azure-typespec/http-client-csharp): 0
 - Data Plane (Swagger): 114
 - Data Plane (TSP-Old): 32
-- Data Plane (TypeSpec - http-client-csharp): 2
+- Data Plane (TypeSpec - @azure-typespec/http-client-csharp): 2
 - No generator: 37
 
 
-## Data Plane Libraries using TypeSpec (http-client-csharp)
+## Data Plane Libraries using TypeSpec (@azure-typespec/http-client-csharp)
 
-TypeSpec with http-client-csharp generator is detected by the presence of a tsp-location.yaml file with an emitterPackageJsonPath value referencing http-client-csharp, or through special handling for specific libraries.
+TypeSpec with @azure-typespec/http-client-csharp generator is detected by the presence of a tsp-location.yaml file with an emitterPackageJsonPath value referencing @azure-typespec/http-client-csharp, or through special handling for specific libraries.
 
 | Service | Library | Path |
 | ------- | ------- | ---- |

@@ -27,7 +27,7 @@ def identify_generator(path):
     """
     # Special case for Azure.AI.OpenAI which uses TypeSpec with new generator via special handling
     if os.path.basename(path) == "Azure.AI.OpenAI" and "openai" in path:
-        return "http-client-csharp"
+        return "@azure-typespec/http-client-csharp"
         
     # First check for direct TypeSpec indicators
     tsp_config_path = os.path.join(path, "src", "tspconfig.yaml")
@@ -64,13 +64,13 @@ def identify_generator(path):
                                     # Look for TypeSpec generator in dependencies
                                     for dep in package_json.get('dependencies', {}):
                                         if dep.startswith('@azure-typespec/'):
-                                            # Return just the generator name without the @azure-typespec/ prefix
-                                            return dep.replace('@azure-typespec/', '')
+                                            # Return the fully qualified name of the emitter package
+                                            return dep
                             except Exception as e:
                                 pass  # Fall back to generic name if can't extract
                     
-                    # If we couldn't extract a specific name, use a generic "TypeSpec New Generator"
-                    return "http-client-csharp"  # Default name for new generator
+                    # If we couldn't extract a specific name, use a default fully qualified name
+                    return "@azure-typespec/http-client-csharp"  # Default name for new generator
                 else:
                     # Found tsp-location.yaml but no emitterPackageJsonPath, it's using the old TypeSpec generator
                     return "TSP-Old"
