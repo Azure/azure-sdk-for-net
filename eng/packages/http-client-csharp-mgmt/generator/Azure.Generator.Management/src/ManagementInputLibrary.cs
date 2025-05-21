@@ -28,7 +28,7 @@ namespace Azure.Generator.Management
         /// </summary>
         internal IReadOnlyList<InputClient> AllClients => _allClients ??= EnumerateClients();
 
-        private IReadOnlyDictionary<InputClient, ResourceMetadata> ResourceMetadata => _resourceMetadata ??= BuildResourceMetadata();
+        private IReadOnlyDictionary<InputClient, ResourceMetadata> ResourceMetadata => _resourceMetadata ??= DeserializeResourceMetadata();
 
         private IReadOnlyDictionary<string, InputModelType> InputModelsByCrossLanguageDefinitionId => _inputModelsByCrossLanguageDefinitionId ??= BuildModelCrossLanguageDefinitionIds();
 
@@ -73,7 +73,7 @@ namespace Azure.Generator.Management
             return result;
         }
 
-        private IReadOnlyDictionary<InputClient, ResourceMetadata> BuildResourceMetadata()
+        private IReadOnlyDictionary<InputClient, ResourceMetadata> DeserializeResourceMetadata()
         {
             var resourceMetadata = new Dictionary<InputClient, ResourceMetadata>();
             foreach (var client in AllClients)
