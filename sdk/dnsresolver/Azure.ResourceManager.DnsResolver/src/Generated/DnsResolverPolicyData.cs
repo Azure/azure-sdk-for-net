@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.DnsResolver
     /// <summary>
     /// A class representing the DnsResolverPolicy data model.
     /// Describes a DNS resolver policy.
+    /// Serialized Name: DnsResolverPolicy
     /// </summary>
     public partial class DnsResolverPolicyData : TrackedResourceData
     {
@@ -64,9 +65,18 @@ namespace Azure.ResourceManager.DnsResolver
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="etag"> ETag of the DNS resolver policy. </param>
-        /// <param name="provisioningState"> The current provisioning state of the DNS resolver policy. This is a read-only property and any attempt to set this value will be ignored. </param>
-        /// <param name="resourceGuid"> The resourceGuid property of the DNS resolver policy resource. </param>
+        /// <param name="etag">
+        /// ETag of the DNS resolver policy.
+        /// Serialized Name: DnsResolverPolicy.etag
+        /// </param>
+        /// <param name="provisioningState">
+        /// The current provisioning state of the DNS resolver policy. This is a read-only property and any attempt to set this value will be ignored.
+        /// Serialized Name: DnsResolverPolicy.properties.provisioningState
+        /// </param>
+        /// <param name="resourceGuid">
+        /// The resourceGuid property of the DNS resolver policy resource.
+        /// Serialized Name: DnsResolverPolicy.properties.resourceGuid
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal DnsResolverPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, DnsResolverProvisioningState? provisioningState, Guid? resourceGuid, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
@@ -81,11 +91,20 @@ namespace Azure.ResourceManager.DnsResolver
         {
         }
 
-        /// <summary> ETag of the DNS resolver policy. </summary>
+        /// <summary>
+        /// ETag of the DNS resolver policy.
+        /// Serialized Name: DnsResolverPolicy.etag
+        /// </summary>
         public ETag? ETag { get; }
-        /// <summary> The current provisioning state of the DNS resolver policy. This is a read-only property and any attempt to set this value will be ignored. </summary>
+        /// <summary>
+        /// The current provisioning state of the DNS resolver policy. This is a read-only property and any attempt to set this value will be ignored.
+        /// Serialized Name: DnsResolverPolicy.properties.provisioningState
+        /// </summary>
         public DnsResolverProvisioningState? ProvisioningState { get; }
-        /// <summary> The resourceGuid property of the DNS resolver policy resource. </summary>
+        /// <summary>
+        /// The resourceGuid property of the DNS resolver policy resource.
+        /// Serialized Name: DnsResolverPolicy.properties.resourceGuid
+        /// </summary>
         public Guid? ResourceGuid { get; }
     }
 }

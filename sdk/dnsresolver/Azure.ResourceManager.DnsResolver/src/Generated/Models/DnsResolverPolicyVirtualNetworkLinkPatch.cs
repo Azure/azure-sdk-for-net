@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DnsResolver.Models
 {
-    /// <summary> Describes a DNS resolver policy virtual network link for PATCH operation. </summary>
+    /// <summary>
+    /// Describes a DNS resolver policy virtual network link for PATCH operation.
+    /// Serialized Name: DnsResolverPolicyVirtualNetworkLinkPatch
+    /// </summary>
     public partial class DnsResolverPolicyVirtualNetworkLinkPatch
     {
         /// <summary>
@@ -52,7 +55,10 @@ namespace Azure.ResourceManager.DnsResolver.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DnsResolverPolicyVirtualNetworkLinkPatch"/>. </summary>
-        /// <param name="tags"> Tags for the DNS resolver policy virtual network link. </param>
+        /// <param name="tags">
+        /// Tags for the DNS resolver policy virtual network link.
+        /// Serialized Name: DnsResolverPolicyVirtualNetworkLinkPatch.tags
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal DnsResolverPolicyVirtualNetworkLinkPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -60,7 +66,10 @@ namespace Azure.ResourceManager.DnsResolver.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Tags for the DNS resolver policy virtual network link. </summary>
+        /// <summary>
+        /// Tags for the DNS resolver policy virtual network link.
+        /// Serialized Name: DnsResolverPolicyVirtualNetworkLinkPatch.tags
+        /// </summary>
         public IDictionary<string, string> Tags { get; }
     }
 }

@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.DnsResolver.Mocking
 
         /// <summary>
         /// Gets an object representing a <see cref="VirtualNetworkDnsResolverResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="VirtualNetworkDnsResolverResource.CreateResourceIdentifier(string,string,string)" /> to create a <see cref="VirtualNetworkDnsResolverResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// You can use <see cref="VirtualNetworkDnsResolverResource.CreateResourceIdentifier" /> to create a <see cref="VirtualNetworkDnsResolverResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="VirtualNetworkDnsResolverResource"/> object. </returns>

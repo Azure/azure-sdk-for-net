@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DnsResolver.Models
 {
-    /// <summary> Describes a DNS resolver domain list for PATCH operation. </summary>
+    /// <summary>
+    /// Describes a DNS resolver domain list for PATCH operation.
+    /// Serialized Name: DnsResolverDomainListPatch
+    /// </summary>
     public partial class DnsResolverDomainListPatch
     {
         /// <summary>
@@ -53,8 +56,14 @@ namespace Azure.ResourceManager.DnsResolver.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DnsResolverDomainListPatch"/>. </summary>
-        /// <param name="tags"> Tags for DNS resolver domain list. </param>
-        /// <param name="domains"> The domains in the domain list. </param>
+        /// <param name="tags">
+        /// Tags for DNS resolver domain list.
+        /// Serialized Name: DnsResolverDomainListPatch.tags
+        /// </param>
+        /// <param name="domains">
+        /// The domains in the domain list.
+        /// Serialized Name: DnsResolverDomainListPatch.properties.domains
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal DnsResolverDomainListPatch(IDictionary<string, string> tags, IList<string> domains, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -63,9 +72,15 @@ namespace Azure.ResourceManager.DnsResolver.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Tags for DNS resolver domain list. </summary>
+        /// <summary>
+        /// Tags for DNS resolver domain list.
+        /// Serialized Name: DnsResolverDomainListPatch.tags
+        /// </summary>
         public IDictionary<string, string> Tags { get; }
-        /// <summary> The domains in the domain list. </summary>
+        /// <summary>
+        /// The domains in the domain list.
+        /// Serialized Name: DnsResolverDomainListPatch.properties.domains
+        /// </summary>
         public IList<string> Domains { get; }
     }
 }

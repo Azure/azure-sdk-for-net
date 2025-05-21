@@ -17,6 +17,7 @@ namespace Azure.ResourceManager.DnsResolver
     /// <summary>
     /// A class representing the DnsResolverInboundEndpoint data model.
     /// Describes an inbound endpoint for a DNS resolver.
+    /// Serialized Name: InboundEndpoint
     /// </summary>
     public partial class DnsResolverInboundEndpointData : TrackedResourceData
     {
@@ -54,7 +55,10 @@ namespace Azure.ResourceManager.DnsResolver
 
         /// <summary> Initializes a new instance of <see cref="DnsResolverInboundEndpointData"/>. </summary>
         /// <param name="location"> The location. </param>
-        /// <param name="ipConfigurations"> IP configurations for the inbound endpoint. </param>
+        /// <param name="ipConfigurations">
+        /// IP configurations for the inbound endpoint.
+        /// Serialized Name: InboundEndpoint.properties.ipConfigurations
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ipConfigurations"/> is null. </exception>
         public DnsResolverInboundEndpointData(AzureLocation location, IEnumerable<InboundEndpointIPConfiguration> ipConfigurations) : base(location)
         {
@@ -70,10 +74,22 @@ namespace Azure.ResourceManager.DnsResolver
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="etag"> ETag of the inbound endpoint. </param>
-        /// <param name="ipConfigurations"> IP configurations for the inbound endpoint. </param>
-        /// <param name="provisioningState"> The current provisioning state of the inbound endpoint. This is a read-only property and any attempt to set this value will be ignored. </param>
-        /// <param name="resourceGuid"> The resourceGuid property of the inbound endpoint resource. </param>
+        /// <param name="etag">
+        /// ETag of the inbound endpoint.
+        /// Serialized Name: InboundEndpoint.etag
+        /// </param>
+        /// <param name="ipConfigurations">
+        /// IP configurations for the inbound endpoint.
+        /// Serialized Name: InboundEndpoint.properties.ipConfigurations
+        /// </param>
+        /// <param name="provisioningState">
+        /// The current provisioning state of the inbound endpoint. This is a read-only property and any attempt to set this value will be ignored.
+        /// Serialized Name: InboundEndpoint.properties.provisioningState
+        /// </param>
+        /// <param name="resourceGuid">
+        /// The resourceGuid property of the inbound endpoint resource.
+        /// Serialized Name: InboundEndpoint.properties.resourceGuid
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal DnsResolverInboundEndpointData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, IList<InboundEndpointIPConfiguration> ipConfigurations, DnsResolverProvisioningState? provisioningState, Guid? resourceGuid, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
@@ -89,13 +105,25 @@ namespace Azure.ResourceManager.DnsResolver
         {
         }
 
-        /// <summary> ETag of the inbound endpoint. </summary>
+        /// <summary>
+        /// ETag of the inbound endpoint.
+        /// Serialized Name: InboundEndpoint.etag
+        /// </summary>
         public ETag? ETag { get; }
-        /// <summary> IP configurations for the inbound endpoint. </summary>
+        /// <summary>
+        /// IP configurations for the inbound endpoint.
+        /// Serialized Name: InboundEndpoint.properties.ipConfigurations
+        /// </summary>
         public IList<InboundEndpointIPConfiguration> IPConfigurations { get; }
-        /// <summary> The current provisioning state of the inbound endpoint. This is a read-only property and any attempt to set this value will be ignored. </summary>
+        /// <summary>
+        /// The current provisioning state of the inbound endpoint. This is a read-only property and any attempt to set this value will be ignored.
+        /// Serialized Name: InboundEndpoint.properties.provisioningState
+        /// </summary>
         public DnsResolverProvisioningState? ProvisioningState { get; }
-        /// <summary> The resourceGuid property of the inbound endpoint resource. </summary>
+        /// <summary>
+        /// The resourceGuid property of the inbound endpoint resource.
+        /// Serialized Name: InboundEndpoint.properties.resourceGuid
+        /// </summary>
         public Guid? ResourceGuid { get; }
     }
 }

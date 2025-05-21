@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
             {
                 return null;
             }
-            DnsSecurityRuleActionType? actionType = default;
+            ActionType? actionType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
                     {
                         continue;
                     }
-                    actionType = new DnsSecurityRuleActionType(property.Value.GetString());
+                    actionType = new ActionType(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

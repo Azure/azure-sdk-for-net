@@ -17,6 +17,7 @@ namespace Azure.ResourceManager.DnsResolver
     /// <summary>
     /// A class representing the DnsResolverOutboundEndpoint data model.
     /// Describes an outbound endpoint for a DNS resolver.
+    /// Serialized Name: OutboundEndpoint
     /// </summary>
     public partial class DnsResolverOutboundEndpointData : TrackedResourceData
     {
@@ -54,7 +55,10 @@ namespace Azure.ResourceManager.DnsResolver
 
         /// <summary> Initializes a new instance of <see cref="DnsResolverOutboundEndpointData"/>. </summary>
         /// <param name="location"> The location. </param>
-        /// <param name="subnet"> The reference to the subnet used for the outbound endpoint. </param>
+        /// <param name="subnet">
+        /// The reference to the subnet used for the outbound endpoint.
+        /// Serialized Name: OutboundEndpoint.properties.subnet
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subnet"/> is null. </exception>
         public DnsResolverOutboundEndpointData(AzureLocation location, WritableSubResource subnet) : base(location)
         {
@@ -70,10 +74,22 @@ namespace Azure.ResourceManager.DnsResolver
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="etag"> ETag of the outbound endpoint. </param>
-        /// <param name="subnet"> The reference to the subnet used for the outbound endpoint. </param>
-        /// <param name="provisioningState"> The current provisioning state of the outbound endpoint. This is a read-only property and any attempt to set this value will be ignored. </param>
-        /// <param name="resourceGuid"> The resourceGuid property of the outbound endpoint resource. </param>
+        /// <param name="etag">
+        /// ETag of the outbound endpoint.
+        /// Serialized Name: OutboundEndpoint.etag
+        /// </param>
+        /// <param name="subnet">
+        /// The reference to the subnet used for the outbound endpoint.
+        /// Serialized Name: OutboundEndpoint.properties.subnet
+        /// </param>
+        /// <param name="provisioningState">
+        /// The current provisioning state of the outbound endpoint. This is a read-only property and any attempt to set this value will be ignored.
+        /// Serialized Name: OutboundEndpoint.properties.provisioningState
+        /// </param>
+        /// <param name="resourceGuid">
+        /// The resourceGuid property of the outbound endpoint resource.
+        /// Serialized Name: OutboundEndpoint.properties.resourceGuid
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal DnsResolverOutboundEndpointData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, WritableSubResource subnet, DnsResolverProvisioningState? provisioningState, Guid? resourceGuid, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
@@ -89,9 +105,15 @@ namespace Azure.ResourceManager.DnsResolver
         {
         }
 
-        /// <summary> ETag of the outbound endpoint. </summary>
+        /// <summary>
+        /// ETag of the outbound endpoint.
+        /// Serialized Name: OutboundEndpoint.etag
+        /// </summary>
         public ETag? ETag { get; }
-        /// <summary> The reference to the subnet used for the outbound endpoint. </summary>
+        /// <summary>
+        /// The reference to the subnet used for the outbound endpoint.
+        /// Serialized Name: OutboundEndpoint.properties.subnet
+        /// </summary>
         internal WritableSubResource Subnet { get; set; }
         /// <summary> Gets or sets Id. </summary>
         public ResourceIdentifier SubnetId
@@ -105,9 +127,15 @@ namespace Azure.ResourceManager.DnsResolver
             }
         }
 
-        /// <summary> The current provisioning state of the outbound endpoint. This is a read-only property and any attempt to set this value will be ignored. </summary>
+        /// <summary>
+        /// The current provisioning state of the outbound endpoint. This is a read-only property and any attempt to set this value will be ignored.
+        /// Serialized Name: OutboundEndpoint.properties.provisioningState
+        /// </summary>
         public DnsResolverProvisioningState? ProvisioningState { get; }
-        /// <summary> The resourceGuid property of the outbound endpoint resource. </summary>
+        /// <summary>
+        /// The resourceGuid property of the outbound endpoint resource.
+        /// Serialized Name: OutboundEndpoint.properties.resourceGuid
+        /// </summary>
         public Guid? ResourceGuid { get; }
     }
 }

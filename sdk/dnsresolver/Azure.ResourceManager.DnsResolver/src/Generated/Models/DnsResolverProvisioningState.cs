@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.DnsResolver.Models
 {
-    /// <summary> The current provisioning state of the resource. </summary>
+    /// <summary>
+    /// The current provisioning state of the resource.
+    /// Serialized Name: ProvisioningState
+    /// </summary>
     public readonly partial struct DnsResolverProvisioningState : IEquatable<DnsResolverProvisioningState>
     {
         private readonly string _value;
@@ -29,17 +32,35 @@ namespace Azure.ResourceManager.DnsResolver.Models
         private const string FailedValue = "Failed";
         private const string CanceledValue = "Canceled";
 
-        /// <summary> Creating. </summary>
+        /// <summary>
+        /// Creating
+        /// Serialized Name: ProvisioningState.Creating
+        /// </summary>
         public static DnsResolverProvisioningState Creating { get; } = new DnsResolverProvisioningState(CreatingValue);
-        /// <summary> Updating. </summary>
+        /// <summary>
+        /// Updating
+        /// Serialized Name: ProvisioningState.Updating
+        /// </summary>
         public static DnsResolverProvisioningState Updating { get; } = new DnsResolverProvisioningState(UpdatingValue);
-        /// <summary> Deleting. </summary>
+        /// <summary>
+        /// Deleting
+        /// Serialized Name: ProvisioningState.Deleting
+        /// </summary>
         public static DnsResolverProvisioningState Deleting { get; } = new DnsResolverProvisioningState(DeletingValue);
-        /// <summary> Succeeded. </summary>
+        /// <summary>
+        /// Succeeded
+        /// Serialized Name: ProvisioningState.Succeeded
+        /// </summary>
         public static DnsResolverProvisioningState Succeeded { get; } = new DnsResolverProvisioningState(SucceededValue);
-        /// <summary> Failed. </summary>
+        /// <summary>
+        /// Failed
+        /// Serialized Name: ProvisioningState.Failed
+        /// </summary>
         public static DnsResolverProvisioningState Failed { get; } = new DnsResolverProvisioningState(FailedValue);
-        /// <summary> Canceled. </summary>
+        /// <summary>
+        /// Canceled
+        /// Serialized Name: ProvisioningState.Canceled
+        /// </summary>
         public static DnsResolverProvisioningState Canceled { get; } = new DnsResolverProvisioningState(CanceledValue);
         /// <summary> Determines if two <see cref="DnsResolverProvisioningState"/> values are the same. </summary>
         public static bool operator ==(DnsResolverProvisioningState left, DnsResolverProvisioningState right) => left.Equals(right);

@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.DnsResolver.Models
 {
-    /// <summary> The state of forwarding rule. </summary>
+    /// <summary>
+    /// The state of forwarding rule.
+    /// Serialized Name: ForwardingRuleState
+    /// </summary>
     public readonly partial struct DnsForwardingRuleState : IEquatable<DnsForwardingRuleState>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.DnsResolver.Models
         private const string EnabledValue = "Enabled";
         private const string DisabledValue = "Disabled";
 
-        /// <summary> Enabled. </summary>
+        /// <summary>
+        /// Enabled
+        /// Serialized Name: ForwardingRuleState.Enabled
+        /// </summary>
         public static DnsForwardingRuleState Enabled { get; } = new DnsForwardingRuleState(EnabledValue);
-        /// <summary> Disabled. </summary>
+        /// <summary>
+        /// Disabled
+        /// Serialized Name: ForwardingRuleState.Disabled
+        /// </summary>
         public static DnsForwardingRuleState Disabled { get; } = new DnsForwardingRuleState(DisabledValue);
         /// <summary> Determines if two <see cref="DnsForwardingRuleState"/> values are the same. </summary>
         public static bool operator ==(DnsForwardingRuleState left, DnsForwardingRuleState right) => left.Equals(right);

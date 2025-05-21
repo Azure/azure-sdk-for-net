@@ -11,7 +11,10 @@ using System.Net;
 
 namespace Azure.ResourceManager.DnsResolver.Models
 {
-    /// <summary> Describes a server to forward the DNS queries to. </summary>
+    /// <summary>
+    /// Describes a server to forward the DNS queries to.
+    /// Serialized Name: TargetDnsServer
+    /// </summary>
     public partial class TargetDnsServer
     {
         /// <summary>
@@ -47,7 +50,10 @@ namespace Azure.ResourceManager.DnsResolver.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="TargetDnsServer"/>. </summary>
-        /// <param name="ipAddress"> DNS server IP address. </param>
+        /// <param name="ipAddress">
+        /// DNS server IP address.
+        /// Serialized Name: TargetDnsServer.ipAddress
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ipAddress"/> is null. </exception>
         public TargetDnsServer(IPAddress ipAddress)
         {
@@ -57,8 +63,14 @@ namespace Azure.ResourceManager.DnsResolver.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="TargetDnsServer"/>. </summary>
-        /// <param name="ipAddress"> DNS server IP address. </param>
-        /// <param name="port"> DNS server port. </param>
+        /// <param name="ipAddress">
+        /// DNS server IP address.
+        /// Serialized Name: TargetDnsServer.ipAddress
+        /// </param>
+        /// <param name="port">
+        /// DNS server port.
+        /// Serialized Name: TargetDnsServer.port
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal TargetDnsServer(IPAddress ipAddress, int? port, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -72,9 +84,15 @@ namespace Azure.ResourceManager.DnsResolver.Models
         {
         }
 
-        /// <summary> DNS server IP address. </summary>
+        /// <summary>
+        /// DNS server IP address.
+        /// Serialized Name: TargetDnsServer.ipAddress
+        /// </summary>
         public IPAddress IPAddress { get; set; }
-        /// <summary> DNS server port. </summary>
+        /// <summary>
+        /// DNS server port.
+        /// Serialized Name: TargetDnsServer.port
+        /// </summary>
         public int? Port { get; set; }
     }
 }

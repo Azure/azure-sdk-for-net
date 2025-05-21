@@ -17,6 +17,7 @@ namespace Azure.ResourceManager.DnsResolver
     /// <summary>
     /// A class representing the DnsResolverPolicyVirtualNetworkLink data model.
     /// Describes a DNS resolver policy virtual network link.
+    /// Serialized Name: DnsResolverPolicyVirtualNetworkLink
     /// </summary>
     public partial class DnsResolverPolicyVirtualNetworkLinkData : TrackedResourceData
     {
@@ -54,7 +55,10 @@ namespace Azure.ResourceManager.DnsResolver
 
         /// <summary> Initializes a new instance of <see cref="DnsResolverPolicyVirtualNetworkLinkData"/>. </summary>
         /// <param name="location"> The location. </param>
-        /// <param name="virtualNetwork"> The reference to the virtual network. This cannot be changed after creation. </param>
+        /// <param name="virtualNetwork">
+        /// The reference to the virtual network. This cannot be changed after creation.
+        /// Serialized Name: DnsResolverPolicyVirtualNetworkLink.properties.virtualNetwork
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetwork"/> is null. </exception>
         public DnsResolverPolicyVirtualNetworkLinkData(AzureLocation location, WritableSubResource virtualNetwork) : base(location)
         {
@@ -70,9 +74,18 @@ namespace Azure.ResourceManager.DnsResolver
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="etag"> ETag of the DNS resolver policy virtual network link. </param>
-        /// <param name="virtualNetwork"> The reference to the virtual network. This cannot be changed after creation. </param>
-        /// <param name="provisioningState"> The current provisioning state of the DNS resolver policy virtual network link. This is a read-only property and any attempt to set this value will be ignored. </param>
+        /// <param name="etag">
+        /// ETag of the DNS resolver policy virtual network link.
+        /// Serialized Name: DnsResolverPolicyVirtualNetworkLink.etag
+        /// </param>
+        /// <param name="virtualNetwork">
+        /// The reference to the virtual network. This cannot be changed after creation.
+        /// Serialized Name: DnsResolverPolicyVirtualNetworkLink.properties.virtualNetwork
+        /// </param>
+        /// <param name="provisioningState">
+        /// The current provisioning state of the DNS resolver policy virtual network link. This is a read-only property and any attempt to set this value will be ignored.
+        /// Serialized Name: DnsResolverPolicyVirtualNetworkLink.properties.provisioningState
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal DnsResolverPolicyVirtualNetworkLinkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, WritableSubResource virtualNetwork, DnsResolverProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
@@ -87,9 +100,15 @@ namespace Azure.ResourceManager.DnsResolver
         {
         }
 
-        /// <summary> ETag of the DNS resolver policy virtual network link. </summary>
+        /// <summary>
+        /// ETag of the DNS resolver policy virtual network link.
+        /// Serialized Name: DnsResolverPolicyVirtualNetworkLink.etag
+        /// </summary>
         public ETag? ETag { get; }
-        /// <summary> The reference to the virtual network. This cannot be changed after creation. </summary>
+        /// <summary>
+        /// The reference to the virtual network. This cannot be changed after creation.
+        /// Serialized Name: DnsResolverPolicyVirtualNetworkLink.properties.virtualNetwork
+        /// </summary>
         internal WritableSubResource VirtualNetwork { get; set; }
         /// <summary> Gets or sets Id. </summary>
         public ResourceIdentifier VirtualNetworkId
@@ -103,7 +122,10 @@ namespace Azure.ResourceManager.DnsResolver
             }
         }
 
-        /// <summary> The current provisioning state of the DNS resolver policy virtual network link. This is a read-only property and any attempt to set this value will be ignored. </summary>
+        /// <summary>
+        /// The current provisioning state of the DNS resolver policy virtual network link. This is a read-only property and any attempt to set this value will be ignored.
+        /// Serialized Name: DnsResolverPolicyVirtualNetworkLink.properties.provisioningState
+        /// </summary>
         public DnsResolverProvisioningState? ProvisioningState { get; }
     }
 }

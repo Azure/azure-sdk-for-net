@@ -13,7 +13,10 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.DnsResolver.Models
 {
-    /// <summary> IP configuration. </summary>
+    /// <summary>
+    /// IP configuration.
+    /// Serialized Name: IpConfiguration
+    /// </summary>
     public partial class InboundEndpointIPConfiguration
     {
         /// <summary>
@@ -49,7 +52,10 @@ namespace Azure.ResourceManager.DnsResolver.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="InboundEndpointIPConfiguration"/>. </summary>
-        /// <param name="subnet"> The reference to the subnet bound to the IP configuration. </param>
+        /// <param name="subnet">
+        /// The reference to the subnet bound to the IP configuration.
+        /// Serialized Name: IpConfiguration.subnet
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subnet"/> is null. </exception>
         public InboundEndpointIPConfiguration(WritableSubResource subnet)
         {
@@ -59,9 +65,18 @@ namespace Azure.ResourceManager.DnsResolver.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="InboundEndpointIPConfiguration"/>. </summary>
-        /// <param name="subnet"> The reference to the subnet bound to the IP configuration. </param>
-        /// <param name="privateIPAddress"> Private IP address of the IP configuration. </param>
-        /// <param name="privateIPAllocationMethod"> Private IP address allocation method. </param>
+        /// <param name="subnet">
+        /// The reference to the subnet bound to the IP configuration.
+        /// Serialized Name: IpConfiguration.subnet
+        /// </param>
+        /// <param name="privateIPAddress">
+        /// Private IP address of the IP configuration.
+        /// Serialized Name: IpConfiguration.privateIpAddress
+        /// </param>
+        /// <param name="privateIPAllocationMethod">
+        /// Private IP address allocation method.
+        /// Serialized Name: IpConfiguration.privateIpAllocationMethod
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal InboundEndpointIPConfiguration(WritableSubResource subnet, IPAddress privateIPAddress, InboundEndpointIPAllocationMethod? privateIPAllocationMethod, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -76,7 +91,10 @@ namespace Azure.ResourceManager.DnsResolver.Models
         {
         }
 
-        /// <summary> The reference to the subnet bound to the IP configuration. </summary>
+        /// <summary>
+        /// The reference to the subnet bound to the IP configuration.
+        /// Serialized Name: IpConfiguration.subnet
+        /// </summary>
         internal WritableSubResource Subnet { get; set; }
         /// <summary> Gets or sets Id. </summary>
         public ResourceIdentifier SubnetId
@@ -90,9 +108,15 @@ namespace Azure.ResourceManager.DnsResolver.Models
             }
         }
 
-        /// <summary> Private IP address of the IP configuration. </summary>
+        /// <summary>
+        /// Private IP address of the IP configuration.
+        /// Serialized Name: IpConfiguration.privateIpAddress
+        /// </summary>
         public IPAddress PrivateIPAddress { get; set; }
-        /// <summary> Private IP address allocation method. </summary>
+        /// <summary>
+        /// Private IP address allocation method.
+        /// Serialized Name: IpConfiguration.privateIpAllocationMethod
+        /// </summary>
         public InboundEndpointIPAllocationMethod? PrivateIPAllocationMethod { get; set; }
     }
 }

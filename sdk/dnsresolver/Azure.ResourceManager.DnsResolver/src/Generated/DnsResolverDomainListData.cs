@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.DnsResolver
     /// <summary>
     /// A class representing the DnsResolverDomainList data model.
     /// Describes a DNS resolver domain list.
+    /// Serialized Name: DnsResolverDomainList
     /// </summary>
     public partial class DnsResolverDomainListData : TrackedResourceData
     {
@@ -65,11 +66,26 @@ namespace Azure.ResourceManager.DnsResolver
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="etag"> ETag of the DNS resolver domain list. </param>
-        /// <param name="domains"> The domains in the domain list. </param>
-        /// <param name="domainsUri"> The URL for bulk upload or download for domain lists containing larger set of domains. </param>
-        /// <param name="provisioningState"> The current provisioning state of the DNS resolver domain list. This is a read-only property and any attempt to set this value will be ignored. </param>
-        /// <param name="resourceGuid"> The resourceGuid property of the DNS resolver domain list resource. </param>
+        /// <param name="etag">
+        /// ETag of the DNS resolver domain list.
+        /// Serialized Name: DnsResolverDomainList.etag
+        /// </param>
+        /// <param name="domains">
+        /// The domains in the domain list.
+        /// Serialized Name: DnsResolverDomainList.properties.domains
+        /// </param>
+        /// <param name="domainsUri">
+        /// The URL for bulk upload or download for domain lists containing larger set of domains.
+        /// Serialized Name: DnsResolverDomainList.properties.domainsUrl
+        /// </param>
+        /// <param name="provisioningState">
+        /// The current provisioning state of the DNS resolver domain list. This is a read-only property and any attempt to set this value will be ignored.
+        /// Serialized Name: DnsResolverDomainList.properties.provisioningState
+        /// </param>
+        /// <param name="resourceGuid">
+        /// The resourceGuid property of the DNS resolver domain list resource.
+        /// Serialized Name: DnsResolverDomainList.properties.resourceGuid
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal DnsResolverDomainListData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, IList<string> domains, Uri domainsUri, DnsResolverProvisioningState? provisioningState, Guid? resourceGuid, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
@@ -86,15 +102,30 @@ namespace Azure.ResourceManager.DnsResolver
         {
         }
 
-        /// <summary> ETag of the DNS resolver domain list. </summary>
+        /// <summary>
+        /// ETag of the DNS resolver domain list.
+        /// Serialized Name: DnsResolverDomainList.etag
+        /// </summary>
         public ETag? ETag { get; }
-        /// <summary> The domains in the domain list. </summary>
+        /// <summary>
+        /// The domains in the domain list.
+        /// Serialized Name: DnsResolverDomainList.properties.domains
+        /// </summary>
         public IList<string> Domains { get; }
-        /// <summary> The URL for bulk upload or download for domain lists containing larger set of domains. </summary>
+        /// <summary>
+        /// The URL for bulk upload or download for domain lists containing larger set of domains.
+        /// Serialized Name: DnsResolverDomainList.properties.domainsUrl
+        /// </summary>
         public Uri DomainsUri { get; }
-        /// <summary> The current provisioning state of the DNS resolver domain list. This is a read-only property and any attempt to set this value will be ignored. </summary>
+        /// <summary>
+        /// The current provisioning state of the DNS resolver domain list. This is a read-only property and any attempt to set this value will be ignored.
+        /// Serialized Name: DnsResolverDomainList.properties.provisioningState
+        /// </summary>
         public DnsResolverProvisioningState? ProvisioningState { get; }
-        /// <summary> The resourceGuid property of the DNS resolver domain list resource. </summary>
+        /// <summary>
+        /// The resourceGuid property of the DNS resolver domain list resource.
+        /// Serialized Name: DnsResolverDomainList.properties.resourceGuid
+        /// </summary>
         public Guid? ResourceGuid { get; }
     }
 }

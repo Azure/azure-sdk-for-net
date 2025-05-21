@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.DnsResolver.Models
 {
-    /// <summary> The current status of the DNS resolver. This is a read-only property and any attempt to set this value will be ignored. </summary>
+    /// <summary>
+    /// The current status of the DNS resolver. This is a read-only property and any attempt to set this value will be ignored.
+    /// Serialized Name: DnsResolverState
+    /// </summary>
     public readonly partial struct DnsResolverState : IEquatable<DnsResolverState>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.DnsResolver.Models
         private const string ConnectedValue = "Connected";
         private const string DisconnectedValue = "Disconnected";
 
-        /// <summary> Connected. </summary>
+        /// <summary>
+        /// Connected
+        /// Serialized Name: DnsResolverState.Connected
+        /// </summary>
         public static DnsResolverState Connected { get; } = new DnsResolverState(ConnectedValue);
-        /// <summary> Disconnected. </summary>
+        /// <summary>
+        /// Disconnected
+        /// Serialized Name: DnsResolverState.Disconnected
+        /// </summary>
         public static DnsResolverState Disconnected { get; } = new DnsResolverState(DisconnectedValue);
         /// <summary> Determines if two <see cref="DnsResolverState"/> values are the same. </summary>
         public static bool operator ==(DnsResolverState left, DnsResolverState right) => left.Equals(right);

@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.DnsResolver.Models
 {
-    /// <summary> Private IP address allocation method. </summary>
+    /// <summary>
+    /// Private IP address allocation method.
+    /// Serialized Name: IpAllocationMethod
+    /// </summary>
     public readonly partial struct InboundEndpointIPAllocationMethod : IEquatable<InboundEndpointIPAllocationMethod>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.DnsResolver.Models
         private const string StaticValue = "Static";
         private const string DynamicValue = "Dynamic";
 
-        /// <summary> Static. </summary>
+        /// <summary>
+        /// Static
+        /// Serialized Name: IpAllocationMethod.Static
+        /// </summary>
         public static InboundEndpointIPAllocationMethod Static { get; } = new InboundEndpointIPAllocationMethod(StaticValue);
-        /// <summary> Dynamic. </summary>
+        /// <summary>
+        /// Dynamic
+        /// Serialized Name: IpAllocationMethod.Dynamic
+        /// </summary>
         public static InboundEndpointIPAllocationMethod Dynamic { get; } = new InboundEndpointIPAllocationMethod(DynamicValue);
         /// <summary> Determines if two <see cref="InboundEndpointIPAllocationMethod"/> values are the same. </summary>
         public static bool operator ==(InboundEndpointIPAllocationMethod left, InboundEndpointIPAllocationMethod right) => left.Equals(right);

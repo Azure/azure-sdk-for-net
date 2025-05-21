@@ -11,7 +11,10 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.DnsResolver.Models
 {
-    /// <summary> Describes a DNS security rule for PATCH operation. </summary>
+    /// <summary>
+    /// Describes a DNS security rule for PATCH operation.
+    /// Serialized Name: DnsSecurityRulePatch
+    /// </summary>
     public partial class DnsSecurityRulePatch
     {
         /// <summary>
@@ -54,11 +57,26 @@ namespace Azure.ResourceManager.DnsResolver.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DnsSecurityRulePatch"/>. </summary>
-        /// <param name="tags"> Tags for DNS security rule. </param>
-        /// <param name="action"> The action to take on DNS requests that match the DNS security rule. </param>
-        /// <param name="dnsResolverDomainLists"> DNS resolver policy domains lists that the DNS security rule applies to. </param>
-        /// <param name="dnsSecurityRuleState"> The state of DNS security rule. </param>
-        /// <param name="priority"> The priority of the DNS security rule. </param>
+        /// <param name="tags">
+        /// Tags for DNS security rule.
+        /// Serialized Name: DnsSecurityRulePatch.tags
+        /// </param>
+        /// <param name="action">
+        /// The action to take on DNS requests that match the DNS security rule.
+        /// Serialized Name: DnsSecurityRulePatch.properties.action
+        /// </param>
+        /// <param name="dnsResolverDomainLists">
+        /// DNS resolver policy domains lists that the DNS security rule applies to.
+        /// Serialized Name: DnsSecurityRulePatch.properties.dnsResolverDomainLists
+        /// </param>
+        /// <param name="dnsSecurityRuleState">
+        /// The state of DNS security rule.
+        /// Serialized Name: DnsSecurityRulePatch.properties.dnsSecurityRuleState
+        /// </param>
+        /// <param name="priority">
+        /// The priority of the DNS security rule.
+        /// Serialized Name: DnsSecurityRulePatch.properties.priority
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal DnsSecurityRulePatch(IDictionary<string, string> tags, DnsSecurityRuleAction action, IList<WritableSubResource> dnsResolverDomainLists, DnsSecurityRuleState? dnsSecurityRuleState, int? priority, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -70,12 +88,21 @@ namespace Azure.ResourceManager.DnsResolver.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Tags for DNS security rule. </summary>
+        /// <summary>
+        /// Tags for DNS security rule.
+        /// Serialized Name: DnsSecurityRulePatch.tags
+        /// </summary>
         public IDictionary<string, string> Tags { get; }
-        /// <summary> The action to take on DNS requests that match the DNS security rule. </summary>
+        /// <summary>
+        /// The action to take on DNS requests that match the DNS security rule.
+        /// Serialized Name: DnsSecurityRulePatch.properties.action
+        /// </summary>
         internal DnsSecurityRuleAction Action { get; set; }
-        /// <summary> The type of action to take. </summary>
-        public DnsSecurityRuleActionType? ActionType
+        /// <summary>
+        /// The type of action to take.
+        /// Serialized Name: DnsSecurityRuleAction.actionType
+        /// </summary>
+        public ActionType? ActionType
         {
             get => Action is null ? default : Action.ActionType;
             set
@@ -86,11 +113,20 @@ namespace Azure.ResourceManager.DnsResolver.Models
             }
         }
 
-        /// <summary> DNS resolver policy domains lists that the DNS security rule applies to. </summary>
+        /// <summary>
+        /// DNS resolver policy domains lists that the DNS security rule applies to.
+        /// Serialized Name: DnsSecurityRulePatch.properties.dnsResolverDomainLists
+        /// </summary>
         public IList<WritableSubResource> DnsResolverDomainLists { get; }
-        /// <summary> The state of DNS security rule. </summary>
+        /// <summary>
+        /// The state of DNS security rule.
+        /// Serialized Name: DnsSecurityRulePatch.properties.dnsSecurityRuleState
+        /// </summary>
         public DnsSecurityRuleState? DnsSecurityRuleState { get; set; }
-        /// <summary> The priority of the DNS security rule. </summary>
+        /// <summary>
+        /// The priority of the DNS security rule.
+        /// Serialized Name: DnsSecurityRulePatch.properties.priority
+        /// </summary>
         public int? Priority { get; set; }
     }
 }

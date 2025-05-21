@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DnsResolver.Models
 {
-    /// <summary> The response to an enumeration operation on DNS security rules within a DNS resolver policy. </summary>
+    /// <summary>
+    /// The response to an enumeration operation on DNS security rules within a DNS resolver policy.
+    /// Serialized Name: DnsSecurityRuleListResult
+    /// </summary>
     internal partial class DnsSecurityRuleListResult
     {
         /// <summary>
@@ -52,8 +55,14 @@ namespace Azure.ResourceManager.DnsResolver.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DnsSecurityRuleListResult"/>. </summary>
-        /// <param name="value"> Enumeration of the DNS security rules. </param>
-        /// <param name="nextLink"> The continuation token for the next page of results. </param>
+        /// <param name="value">
+        /// Enumeration of the DNS security rules.
+        /// Serialized Name: DnsSecurityRuleListResult.value
+        /// </param>
+        /// <param name="nextLink">
+        /// The continuation token for the next page of results.
+        /// Serialized Name: DnsSecurityRuleListResult.nextLink
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal DnsSecurityRuleListResult(IReadOnlyList<DnsSecurityRuleData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -62,9 +71,15 @@ namespace Azure.ResourceManager.DnsResolver.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Enumeration of the DNS security rules. </summary>
+        /// <summary>
+        /// Enumeration of the DNS security rules.
+        /// Serialized Name: DnsSecurityRuleListResult.value
+        /// </summary>
         public IReadOnlyList<DnsSecurityRuleData> Value { get; }
-        /// <summary> The continuation token for the next page of results. </summary>
+        /// <summary>
+        /// The continuation token for the next page of results.
+        /// Serialized Name: DnsSecurityRuleListResult.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

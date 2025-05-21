@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DnsResolver.Models
 {
-    /// <summary> Describes a forwarding rule for PATCH operation. </summary>
+    /// <summary>
+    /// Describes a forwarding rule for PATCH operation.
+    /// Serialized Name: ForwardingRulePatch
+    /// </summary>
     public partial class DnsForwardingRulePatch
     {
         /// <summary>
@@ -53,9 +56,18 @@ namespace Azure.ResourceManager.DnsResolver.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DnsForwardingRulePatch"/>. </summary>
-        /// <param name="targetDnsServers"> DNS servers to forward the DNS query to. </param>
-        /// <param name="metadata"> Metadata attached to the forwarding rule. </param>
-        /// <param name="dnsForwardingRuleState"> The state of forwarding rule. </param>
+        /// <param name="targetDnsServers">
+        /// DNS servers to forward the DNS query to.
+        /// Serialized Name: ForwardingRulePatch.properties.targetDnsServers
+        /// </param>
+        /// <param name="metadata">
+        /// Metadata attached to the forwarding rule.
+        /// Serialized Name: ForwardingRulePatch.properties.metadata
+        /// </param>
+        /// <param name="dnsForwardingRuleState">
+        /// The state of forwarding rule.
+        /// Serialized Name: ForwardingRulePatch.properties.forwardingRuleState
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal DnsForwardingRulePatch(IList<TargetDnsServer> targetDnsServers, IDictionary<string, string> metadata, DnsForwardingRuleState? dnsForwardingRuleState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -65,11 +77,20 @@ namespace Azure.ResourceManager.DnsResolver.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> DNS servers to forward the DNS query to. </summary>
+        /// <summary>
+        /// DNS servers to forward the DNS query to.
+        /// Serialized Name: ForwardingRulePatch.properties.targetDnsServers
+        /// </summary>
         public IList<TargetDnsServer> TargetDnsServers { get; }
-        /// <summary> Metadata attached to the forwarding rule. </summary>
+        /// <summary>
+        /// Metadata attached to the forwarding rule.
+        /// Serialized Name: ForwardingRulePatch.properties.metadata
+        /// </summary>
         public IDictionary<string, string> Metadata { get; }
-        /// <summary> The state of forwarding rule. </summary>
+        /// <summary>
+        /// The state of forwarding rule.
+        /// Serialized Name: ForwardingRulePatch.properties.forwardingRuleState
+        /// </summary>
         public DnsForwardingRuleState? DnsForwardingRuleState { get; set; }
     }
 }

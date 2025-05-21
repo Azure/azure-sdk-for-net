@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DnsResolver.Models
 {
-    /// <summary> Describes a DNS resolver domain list for bulk UPLOAD or DOWNLOAD operations. </summary>
+    /// <summary>
+    /// Describes a DNS resolver domain list for bulk UPLOAD or DOWNLOAD operations.
+    /// Serialized Name: DnsResolverDomainListBulk
+    /// </summary>
     public partial class DnsResolverDomainListBulk
     {
         /// <summary>
@@ -46,10 +49,16 @@ namespace Azure.ResourceManager.DnsResolver.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="DnsResolverDomainListBulk"/>. </summary>
-        /// <param name="storageUri"> The storage account blob file URL to be used in the bulk upload or download request of DNS resolver domain list. </param>
-        /// <param name="action"> The action to take in the request, Upload or Download. </param>
+        /// <param name="storageUri">
+        /// The storage account blob file URL to be used in the bulk upload or download request of DNS resolver domain list.
+        /// Serialized Name: DnsResolverDomainListBulk.properties.storageUrl
+        /// </param>
+        /// <param name="action">
+        /// The action to take in the request, Upload or Download.
+        /// Serialized Name: DnsResolverDomainListBulk.properties.action
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="storageUri"/> is null. </exception>
-        public DnsResolverDomainListBulk(Uri storageUri, DnsResolverDomainListBulkAction action)
+        public DnsResolverDomainListBulk(Uri storageUri, Action action)
         {
             Argument.AssertNotNull(storageUri, nameof(storageUri));
 
@@ -58,10 +67,16 @@ namespace Azure.ResourceManager.DnsResolver.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DnsResolverDomainListBulk"/>. </summary>
-        /// <param name="storageUri"> The storage account blob file URL to be used in the bulk upload or download request of DNS resolver domain list. </param>
-        /// <param name="action"> The action to take in the request, Upload or Download. </param>
+        /// <param name="storageUri">
+        /// The storage account blob file URL to be used in the bulk upload or download request of DNS resolver domain list.
+        /// Serialized Name: DnsResolverDomainListBulk.properties.storageUrl
+        /// </param>
+        /// <param name="action">
+        /// The action to take in the request, Upload or Download.
+        /// Serialized Name: DnsResolverDomainListBulk.properties.action
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DnsResolverDomainListBulk(Uri storageUri, DnsResolverDomainListBulkAction action, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DnsResolverDomainListBulk(Uri storageUri, Action action, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             StorageUri = storageUri;
             Action = action;
@@ -73,9 +88,15 @@ namespace Azure.ResourceManager.DnsResolver.Models
         {
         }
 
-        /// <summary> The storage account blob file URL to be used in the bulk upload or download request of DNS resolver domain list. </summary>
+        /// <summary>
+        /// The storage account blob file URL to be used in the bulk upload or download request of DNS resolver domain list.
+        /// Serialized Name: DnsResolverDomainListBulk.properties.storageUrl
+        /// </summary>
         public Uri StorageUri { get; }
-        /// <summary> The action to take in the request, Upload or Download. </summary>
-        public DnsResolverDomainListBulkAction Action { get; }
+        /// <summary>
+        /// The action to take in the request, Upload or Download.
+        /// Serialized Name: DnsResolverDomainListBulk.properties.action
+        /// </summary>
+        public Action Action { get; }
     }
 }

@@ -59,6 +59,9 @@ acronym-mapping:
   Etag: ETag|etag
   DnsForwardingRulesetName: rulesetName
 
+mgmt-debug:
+  show-serialized-names: true
+
 rename-mapping:
   ProvisioningState: DnsResolverProvisioningState
   ForwardingRule: DnsForwardingRule
@@ -70,8 +73,6 @@ rename-mapping:
   IpAllocationMethod: InboundEndpointIPAllocationMethod
   OutboundEndpoint: DnsResolverOutboundEndpoint
   VirtualNetworkLink: DnsForwardingRulesetVirtualNetworkLink
-  ActionType: DnsSecurityRuleActionType
-  Action: DnsResolverDomainListBulkAction
 
 directive:
   - from: dnsresolver.json

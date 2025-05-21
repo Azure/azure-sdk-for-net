@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DnsResolver.Models
 {
-    /// <summary> The action to take on DNS requests that match the DNS security rule. </summary>
+    /// <summary>
+    /// The action to take on DNS requests that match the DNS security rule.
+    /// Serialized Name: DnsSecurityRuleAction
+    /// </summary>
     public partial class DnsSecurityRuleAction
     {
         /// <summary>
@@ -51,15 +54,21 @@ namespace Azure.ResourceManager.DnsResolver.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DnsSecurityRuleAction"/>. </summary>
-        /// <param name="actionType"> The type of action to take. </param>
+        /// <param name="actionType">
+        /// The type of action to take.
+        /// Serialized Name: DnsSecurityRuleAction.actionType
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DnsSecurityRuleAction(DnsSecurityRuleActionType? actionType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DnsSecurityRuleAction(ActionType? actionType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ActionType = actionType;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The type of action to take. </summary>
-        public DnsSecurityRuleActionType? ActionType { get; set; }
+        /// <summary>
+        /// The type of action to take.
+        /// Serialized Name: DnsSecurityRuleAction.actionType
+        /// </summary>
+        public ActionType? ActionType { get; set; }
     }
 }

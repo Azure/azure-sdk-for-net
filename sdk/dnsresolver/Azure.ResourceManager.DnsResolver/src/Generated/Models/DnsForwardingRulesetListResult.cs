@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DnsResolver.Models
 {
-    /// <summary> The response to an enumeration operation on DNS forwarding rulesets. </summary>
+    /// <summary>
+    /// The response to an enumeration operation on DNS forwarding rulesets.
+    /// Serialized Name: DnsForwardingRulesetListResult
+    /// </summary>
     internal partial class DnsForwardingRulesetListResult
     {
         /// <summary>
@@ -52,8 +55,14 @@ namespace Azure.ResourceManager.DnsResolver.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DnsForwardingRulesetListResult"/>. </summary>
-        /// <param name="value"> Enumeration of the DNS forwarding rulesets. </param>
-        /// <param name="nextLink"> The continuation token for the next page of results. </param>
+        /// <param name="value">
+        /// Enumeration of the DNS forwarding rulesets.
+        /// Serialized Name: DnsForwardingRulesetListResult.value
+        /// </param>
+        /// <param name="nextLink">
+        /// The continuation token for the next page of results.
+        /// Serialized Name: DnsForwardingRulesetListResult.nextLink
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal DnsForwardingRulesetListResult(IReadOnlyList<DnsForwardingRulesetData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -62,9 +71,15 @@ namespace Azure.ResourceManager.DnsResolver.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Enumeration of the DNS forwarding rulesets. </summary>
+        /// <summary>
+        /// Enumeration of the DNS forwarding rulesets.
+        /// Serialized Name: DnsForwardingRulesetListResult.value
+        /// </summary>
         public IReadOnlyList<DnsForwardingRulesetData> Value { get; }
-        /// <summary> The continuation token for the next page of results. </summary>
+        /// <summary>
+        /// The continuation token for the next page of results.
+        /// Serialized Name: DnsForwardingRulesetListResult.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }
