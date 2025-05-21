@@ -129,7 +129,7 @@ namespace Azure.Storage.DataMovement.Tests
                 .Returns(Task.FromResult(properties));
             mockSource.Setup(r => r.GetCopyAuthorizationHeaderAsync(It.IsAny<CancellationToken>()))
                 .Returns(Task.FromResult(httpAuthorization));
-            mockSource.Setup(b => b.ValidateItemTransferAsync(It.IsAny<StorageResourceItem>(), It.IsAny<CancellationToken>()))
+            mockSource.Setup(b => b.ShouldTransferAsync(It.IsAny<CancellationToken>()))
                 .Returns(Task.FromResult(true));
 
             // Set up Destination to copy in one shot with a large chunk size and smaller total length.
@@ -204,7 +204,7 @@ namespace Azure.Storage.DataMovement.Tests
             StorageResourceItemProperties properties = GetResourceProperties(length);
             mockSource.Setup(r => r.GetPropertiesAsync(It.IsAny<CancellationToken>()))
                 .Returns(Task.FromResult(properties));
-            mockSource.Setup(b => b.ValidateItemTransferAsync(It.IsAny<StorageResourceItem>(), It.IsAny<CancellationToken>()))
+            mockSource.Setup(b => b.ShouldTransferAsync(It.IsAny<CancellationToken>()))
                 .Returns(Task.FromResult(true));
 
             // Setup destination with small chunk size and a larger source total length

@@ -166,7 +166,7 @@ namespace Azure.Storage.DataMovement
                 }
                 await OnTransferStateChangedAsync(TransferState.InProgress).ConfigureAwait(false);
 
-                if (!await _sourceResource.ValidateItemTransferAsync(_destinationResource, _cancellationToken).ConfigureAwait(false))
+                if (!await _sourceResource.ShouldTransferAsync(_cancellationToken).ConfigureAwait(false))
                 {
                     await OnTransferStateChangedAsync(TransferState.Completed).ConfigureAwait(false);
                     return;

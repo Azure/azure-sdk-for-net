@@ -24,13 +24,13 @@ namespace Azure.Storage.DataMovement.Files.Shares
             WriteEvent(ProtocolValidationSkippedEvent, transferId, endpoint, resourceUri);
         }
 
-        [Event(SymLinkDetectedEvent, Level = EventLevel.Informational, Message = "Source resource item detected to be Symbolic link: Resource={0}")]
+        [Event(SymLinkDetectedEvent, Level = EventLevel.Informational, Message = "Source resource item detected to be Symbolic link. The item transfer will be skipped: Resource={0}")]
         public void SymLinkDetected(string resourceUri)
         {
             WriteEvent(SymLinkDetectedEvent, resourceUri);
         }
 
-        [Event(HardLinkDetectedEvent, Level = EventLevel.Informational, Message = "Source resource item detected to be Hard link: Resource={0}")]
+        [Event(HardLinkDetectedEvent, Level = EventLevel.Informational, Message = "Source resource item detected to be Hard link. The item will be transfered as a regular file: Resource={0}")]
         public void HardLinkDetected(string resourceUri)
         {
             WriteEvent(HardLinkDetectedEvent, resourceUri);

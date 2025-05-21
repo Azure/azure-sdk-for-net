@@ -129,7 +129,7 @@ namespace Azure.Storage.DataMovement
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         protected internal abstract System.Threading.Tasks.Task SetPermissionsAsync(Azure.Storage.DataMovement.StorageResourceItem sourceResource, Azure.Storage.DataMovement.StorageResourceItemProperties sourceProperties, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        protected internal virtual System.Threading.Tasks.Task<bool> ValidateItemTransferAsync(Azure.Storage.DataMovement.StorageResourceItem destItem, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        protected internal virtual System.Threading.Tasks.Task<bool> ShouldTransferAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     public partial class StorageResourceItemProperties

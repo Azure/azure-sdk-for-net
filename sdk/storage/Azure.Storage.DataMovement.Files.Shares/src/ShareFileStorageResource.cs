@@ -38,6 +38,8 @@ namespace Azure.Storage.DataMovement.Files.Shares
 
         internal string _destinationPermissionKey;
 
+        internal bool _isResourcePropertiesFullySet = false;
+
         public ShareFileStorageResource(
             ShareFileClient fileClient,
             ShareFileStorageResourceOptions options = default)
@@ -239,6 +241,11 @@ namespace Azure.Storage.DataMovement.Files.Shares
         protected override async Task<StorageResourceItemProperties> GetPropertiesAsync(CancellationToken cancellationToken = default)
         {
             CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
+
+            if (_isResourcePropertiesFullySet)
+            {
+                return ResourceProperties;
+            }
             Response<ShareFileProperties> response = await ShareFileClient.GetPropertiesAsync(
                 conditions: _options?.SourceConditions,
                 cancellationToken: cancellationToken).ConfigureAwait(false);
@@ -250,6 +257,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
             {
                 ResourceProperties = response.Value.ToStorageResourceItemProperties();
             }
+            _isResourcePropertiesFullySet = true;
             return ResourceProperties;
         }
 
@@ -348,9 +356,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
                 directoryMetadata: _options?.DirectoryMetadata);
         }
 
-        protected override async Task<bool> ValidateItemTransferAsync(
-            StorageResourceItem destItem,
-            CancellationToken cancellationToken = default)
+        protected override async Task<bool> ShouldTransferAsync(CancellationToken cancellationToken = default)
         {
             CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
 

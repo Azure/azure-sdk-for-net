@@ -25,6 +25,8 @@ namespace Azure.Storage.DataMovement.Files.Shares
 
         public override string ProviderId => "share";
 
+        internal bool _isResourcePropertiesFullySet = false;
+
         internal ShareDirectoryStorageResourceContainer(ShareDirectoryClient shareDirectoryClient, ShareFileStorageResourceOptions options)
         {
             ShareDirectoryClient = shareDirectoryClient;
@@ -142,6 +144,11 @@ namespace Azure.Storage.DataMovement.Files.Shares
         protected override async Task<StorageResourceContainerProperties> GetPropertiesAsync(CancellationToken cancellationToken = default)
         {
             CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
+
+            if (_isResourcePropertiesFullySet)
+            {
+                return ResourceProperties;
+            }
             Response<ShareDirectoryProperties> response = await ShareDirectoryClient.GetPropertiesAsync(
                 cancellationToken: cancellationToken).ConfigureAwait(false);
             if (ResourceProperties != default)
@@ -152,6 +159,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
             {
                 ResourceProperties = response.Value.ToStorageResourceContainerProperties();
             }
+            _isResourcePropertiesFullySet = true;
             return ResourceProperties;
         }
 
