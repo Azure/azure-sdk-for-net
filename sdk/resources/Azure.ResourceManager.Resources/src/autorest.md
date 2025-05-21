@@ -402,6 +402,10 @@ directive:
           "$ref": "./examples/PostDeploymentWhatIfOnTenant.json"
         }
       }
+  - from: resources.json
+    where: $.definitions.DeploymentExtensionConfigItem
+    transform: >
+      $.properties.keyVaultReference["$ref"] = "../2024-03-01/deploymentStacks.json#/definitions/KeyVaultParameterReference"
   # Add scope operations
   - from: deploymentStacks.json
     where: $.paths
