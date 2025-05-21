@@ -253,7 +253,7 @@ namespace Azure.Storage.DataMovement
         /// Whether the item transfer should be performed.
         /// </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        protected internal virtual Task<bool> ShouldTransferAsync(CancellationToken cancellationToken = default)
+        protected internal virtual Task<bool> ShouldItemTransferAsync(CancellationToken cancellationToken = default)
             => Task.FromResult(true);
     }
 }

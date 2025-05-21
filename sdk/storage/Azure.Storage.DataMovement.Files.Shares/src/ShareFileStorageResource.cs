@@ -356,7 +356,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
                 directoryMetadata: _options?.DirectoryMetadata);
         }
 
-        protected override async Task<bool> ShouldTransferAsync(CancellationToken cancellationToken = default)
+        protected override async Task<bool> ShouldItemTransferAsync(CancellationToken cancellationToken = default)
         {
             CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
 
