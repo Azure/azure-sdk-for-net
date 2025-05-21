@@ -10,13 +10,13 @@ namespace Azure.Communication.CallAutomation
     /// </summary>
     public class TranscriptionMetadata : StreamingData
     {
-        internal TranscriptionMetadata(TranscriptionMetadataInternal metaData)
+        internal TranscriptionMetadata(TranscriptionMetadataInternal transcriptionMetadataInternal)
         {
-            TranscriptionSubscriptionId = metaData.TranscriptionSubscriptionId;
-            Locale = metaData.Locale;
-            CallConnectionId = metaData.CallConnectionId;
-            CorrelationId = metaData.CorrelationId;
-            SpeechRecognitionModelEndpointId = metaData.SpeechRecognitionModelEndpointId;
+            TranscriptionSubscriptionId = transcriptionMetadataInternal.TranscriptionSubscriptionId;
+            Locale = transcriptionMetadataInternal.Locale;
+            CallConnectionId = transcriptionMetadataInternal.CallConnectionId;
+            CorrelationId = transcriptionMetadataInternal.CorrelationId;
+            SpeechRecognitionModelEndpointId = transcriptionMetadataInternal.SpeechRecognitionModelEndpointId;
         }
         /// <summary>
         /// Transcription Subscription Id.

@@ -30,7 +30,7 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary>
-        /// The dtmf data in base64 byte.
+        /// The dtmf data in base64 string.
         /// </summary>
         public string Data { get; }
 
