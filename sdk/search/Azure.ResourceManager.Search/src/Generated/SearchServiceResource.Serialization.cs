@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Search
 {
     public partial class SearchServiceResource : IJsonModel<SearchServiceData>
     {
+        private static SearchServiceData s_dataDeserializationInstance;
+        private static SearchServiceData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<SearchServiceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SearchServiceData>)Data).Write(writer, options);
 
-        SearchServiceData IJsonModel<SearchServiceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SearchServiceData>)Data).Create(ref reader, options);
+        SearchServiceData IJsonModel<SearchServiceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SearchServiceData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<SearchServiceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SearchServiceData>(Data, options, AzureResourceManagerSearchContext.Default);
 
         SearchServiceData IPersistableModel<SearchServiceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SearchServiceData>(data, options, AzureResourceManagerSearchContext.Default);
 
-        string IPersistableModel<SearchServiceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SearchServiceData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<SearchServiceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SearchServiceData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

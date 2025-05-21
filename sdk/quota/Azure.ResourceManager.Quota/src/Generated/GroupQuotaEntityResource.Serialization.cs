@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Quota
 {
     public partial class GroupQuotaEntityResource : IJsonModel<GroupQuotaEntityData>
     {
+        private static GroupQuotaEntityData s_dataDeserializationInstance;
+        private static GroupQuotaEntityData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<GroupQuotaEntityData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<GroupQuotaEntityData>)Data).Write(writer, options);
 
-        GroupQuotaEntityData IJsonModel<GroupQuotaEntityData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<GroupQuotaEntityData>)Data).Create(ref reader, options);
+        GroupQuotaEntityData IJsonModel<GroupQuotaEntityData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<GroupQuotaEntityData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<GroupQuotaEntityData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<GroupQuotaEntityData>(Data, options, AzureResourceManagerQuotaContext.Default);
 
         GroupQuotaEntityData IPersistableModel<GroupQuotaEntityData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<GroupQuotaEntityData>(data, options, AzureResourceManagerQuotaContext.Default);
 
-        string IPersistableModel<GroupQuotaEntityData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<GroupQuotaEntityData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<GroupQuotaEntityData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<GroupQuotaEntityData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

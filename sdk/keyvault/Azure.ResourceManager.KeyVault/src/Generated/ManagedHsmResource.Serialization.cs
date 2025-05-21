@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.KeyVault
 {
     public partial class ManagedHsmResource : IJsonModel<ManagedHsmData>
     {
+        private static ManagedHsmData s_dataDeserializationInstance;
+        private static ManagedHsmData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<ManagedHsmData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ManagedHsmData>)Data).Write(writer, options);
 
-        ManagedHsmData IJsonModel<ManagedHsmData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ManagedHsmData>)Data).Create(ref reader, options);
+        ManagedHsmData IJsonModel<ManagedHsmData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ManagedHsmData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<ManagedHsmData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ManagedHsmData>(Data, options, AzureResourceManagerKeyVaultContext.Default);
 
         ManagedHsmData IPersistableModel<ManagedHsmData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ManagedHsmData>(data, options, AzureResourceManagerKeyVaultContext.Default);
 
-        string IPersistableModel<ManagedHsmData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ManagedHsmData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<ManagedHsmData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ManagedHsmData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

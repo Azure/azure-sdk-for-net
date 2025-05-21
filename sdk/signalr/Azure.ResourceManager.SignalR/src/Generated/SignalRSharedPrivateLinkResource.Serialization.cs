@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.SignalR
 {
     public partial class SignalRSharedPrivateLinkResource : IJsonModel<SignalRSharedPrivateLinkResourceData>
     {
+        private static SignalRSharedPrivateLinkResourceData s_dataDeserializationInstance;
+        private static SignalRSharedPrivateLinkResourceData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<SignalRSharedPrivateLinkResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SignalRSharedPrivateLinkResourceData>)Data).Write(writer, options);
 
-        SignalRSharedPrivateLinkResourceData IJsonModel<SignalRSharedPrivateLinkResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SignalRSharedPrivateLinkResourceData>)Data).Create(ref reader, options);
+        SignalRSharedPrivateLinkResourceData IJsonModel<SignalRSharedPrivateLinkResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SignalRSharedPrivateLinkResourceData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<SignalRSharedPrivateLinkResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SignalRSharedPrivateLinkResourceData>(Data, options, AzureResourceManagerSignalRContext.Default);
 
         SignalRSharedPrivateLinkResourceData IPersistableModel<SignalRSharedPrivateLinkResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SignalRSharedPrivateLinkResourceData>(data, options, AzureResourceManagerSignalRContext.Default);
 
-        string IPersistableModel<SignalRSharedPrivateLinkResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SignalRSharedPrivateLinkResourceData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<SignalRSharedPrivateLinkResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SignalRSharedPrivateLinkResourceData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

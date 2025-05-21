@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Authorization
 {
     public partial class RoleAssignmentScheduleRequestResource : IJsonModel<RoleAssignmentScheduleRequestData>
     {
+        private static RoleAssignmentScheduleRequestData s_dataDeserializationInstance;
+        private static RoleAssignmentScheduleRequestData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<RoleAssignmentScheduleRequestData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<RoleAssignmentScheduleRequestData>)Data).Write(writer, options);
 
-        RoleAssignmentScheduleRequestData IJsonModel<RoleAssignmentScheduleRequestData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<RoleAssignmentScheduleRequestData>)Data).Create(ref reader, options);
+        RoleAssignmentScheduleRequestData IJsonModel<RoleAssignmentScheduleRequestData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<RoleAssignmentScheduleRequestData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<RoleAssignmentScheduleRequestData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<RoleAssignmentScheduleRequestData>(Data, options, AzureResourceManagerAuthorizationContext.Default);
 
         RoleAssignmentScheduleRequestData IPersistableModel<RoleAssignmentScheduleRequestData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<RoleAssignmentScheduleRequestData>(data, options, AzureResourceManagerAuthorizationContext.Default);
 
-        string IPersistableModel<RoleAssignmentScheduleRequestData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<RoleAssignmentScheduleRequestData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<RoleAssignmentScheduleRequestData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<RoleAssignmentScheduleRequestData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

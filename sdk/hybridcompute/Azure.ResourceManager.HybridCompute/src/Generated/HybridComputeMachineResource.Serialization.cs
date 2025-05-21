@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.HybridCompute
 {
     public partial class HybridComputeMachineResource : IJsonModel<HybridComputeMachineData>
     {
+        private static HybridComputeMachineData s_dataDeserializationInstance;
+        private static HybridComputeMachineData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<HybridComputeMachineData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<HybridComputeMachineData>)Data).Write(writer, options);
 
-        HybridComputeMachineData IJsonModel<HybridComputeMachineData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<HybridComputeMachineData>)Data).Create(ref reader, options);
+        HybridComputeMachineData IJsonModel<HybridComputeMachineData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<HybridComputeMachineData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<HybridComputeMachineData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<HybridComputeMachineData>(Data, options, AzureResourceManagerHybridComputeContext.Default);
 
         HybridComputeMachineData IPersistableModel<HybridComputeMachineData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<HybridComputeMachineData>(data, options, AzureResourceManagerHybridComputeContext.Default);
 
-        string IPersistableModel<HybridComputeMachineData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<HybridComputeMachineData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<HybridComputeMachineData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<HybridComputeMachineData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

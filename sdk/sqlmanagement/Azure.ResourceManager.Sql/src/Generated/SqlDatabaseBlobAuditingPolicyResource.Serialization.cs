@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Sql
 {
     public partial class SqlDatabaseBlobAuditingPolicyResource : IJsonModel<SqlDatabaseBlobAuditingPolicyData>
     {
+        private static SqlDatabaseBlobAuditingPolicyData s_dataDeserializationInstance;
+        private static SqlDatabaseBlobAuditingPolicyData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<SqlDatabaseBlobAuditingPolicyData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SqlDatabaseBlobAuditingPolicyData>)Data).Write(writer, options);
 
-        SqlDatabaseBlobAuditingPolicyData IJsonModel<SqlDatabaseBlobAuditingPolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SqlDatabaseBlobAuditingPolicyData>)Data).Create(ref reader, options);
+        SqlDatabaseBlobAuditingPolicyData IJsonModel<SqlDatabaseBlobAuditingPolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SqlDatabaseBlobAuditingPolicyData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<SqlDatabaseBlobAuditingPolicyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SqlDatabaseBlobAuditingPolicyData>(Data, options, AzureResourceManagerSqlContext.Default);
 
         SqlDatabaseBlobAuditingPolicyData IPersistableModel<SqlDatabaseBlobAuditingPolicyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SqlDatabaseBlobAuditingPolicyData>(data, options, AzureResourceManagerSqlContext.Default);
 
-        string IPersistableModel<SqlDatabaseBlobAuditingPolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SqlDatabaseBlobAuditingPolicyData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<SqlDatabaseBlobAuditingPolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SqlDatabaseBlobAuditingPolicyData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

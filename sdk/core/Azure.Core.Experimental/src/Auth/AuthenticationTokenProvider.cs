@@ -26,7 +26,7 @@ public abstract class AuthenticationTokenProvider
     /// <param name="properties">The options used by the <see cref="AuthenticationTokenProvider"/> to make a token request.</param>
     /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
     /// <returns></returns>
-    public abstract AccessToken GetToken(GetTokenOptions properties, CancellationToken cancellationToken);
+    public abstract AuthenticationToken GetToken(GetTokenOptions properties, CancellationToken cancellationToken);
 
     /// <summary>
     /// Gets the token.
@@ -34,5 +34,5 @@ public abstract class AuthenticationTokenProvider
     /// <param name="properties">The options used by the <see cref="AuthenticationTokenProvider"/> to make a token request.</param>
     /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
     /// <returns></returns>
-    public abstract ValueTask<AccessToken> GetTokenAsync(GetTokenOptions properties, CancellationToken cancellationToken);
+    public abstract ValueTask<AuthenticationToken> GetTokenAsync(GetTokenOptions properties, CancellationToken cancellationToken);
 }

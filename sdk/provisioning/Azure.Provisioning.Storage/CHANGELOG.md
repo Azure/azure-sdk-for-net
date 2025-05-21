@@ -1,14 +1,10 @@
 # Release History
 
-## 1.1.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
+## 1.0.1 (2025-05-15)
 
 ### Bugs Fixed
 
-### Other Changes
+- Fixed the `Name` of `QueueService` should always be `default`. (https://github.com/Azure/azure-sdk-for-net/issues/49898)
 
 ## 1.0.0 (2024-10-25)
 

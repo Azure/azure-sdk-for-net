@@ -1,5 +1,18 @@
 # Release History
 
+## 1.1.0-beta.1 (2025-05-21)
+
+### Features Added
+- Set API version to 2025-05-15-preview.
+- Added Bing Custom search tool.
+- Added Sharepoint grounding tool.
+- Added Microsoft Fabric tool.
+
+## 1.0.0 (2025-05-15)
+
+### Features Added
+- First stable release of Azure AI Agents Persistent client library.
+
 ## 1.0.0-beta.2 (2025-05-14)
 
 ### Breaking Changes

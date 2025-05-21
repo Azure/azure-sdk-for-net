@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Logic
 {
     public partial class IntegrationAccountSessionResource : IJsonModel<IntegrationAccountSessionData>
     {
+        private static IntegrationAccountSessionData s_dataDeserializationInstance;
+        private static IntegrationAccountSessionData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<IntegrationAccountSessionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<IntegrationAccountSessionData>)Data).Write(writer, options);
 
-        IntegrationAccountSessionData IJsonModel<IntegrationAccountSessionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<IntegrationAccountSessionData>)Data).Create(ref reader, options);
+        IntegrationAccountSessionData IJsonModel<IntegrationAccountSessionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<IntegrationAccountSessionData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<IntegrationAccountSessionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<IntegrationAccountSessionData>(Data, options, AzureResourceManagerLogicContext.Default);
 
         IntegrationAccountSessionData IPersistableModel<IntegrationAccountSessionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<IntegrationAccountSessionData>(data, options, AzureResourceManagerLogicContext.Default);
 
-        string IPersistableModel<IntegrationAccountSessionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<IntegrationAccountSessionData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<IntegrationAccountSessionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<IntegrationAccountSessionData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

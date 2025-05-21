@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.ElasticSan
 {
     public partial class ElasticSanVolumeGroupResource : IJsonModel<ElasticSanVolumeGroupData>
     {
+        private static ElasticSanVolumeGroupData s_dataDeserializationInstance;
+        private static ElasticSanVolumeGroupData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<ElasticSanVolumeGroupData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ElasticSanVolumeGroupData>)Data).Write(writer, options);
 
-        ElasticSanVolumeGroupData IJsonModel<ElasticSanVolumeGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ElasticSanVolumeGroupData>)Data).Create(ref reader, options);
+        ElasticSanVolumeGroupData IJsonModel<ElasticSanVolumeGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ElasticSanVolumeGroupData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<ElasticSanVolumeGroupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ElasticSanVolumeGroupData>(Data, options, AzureResourceManagerElasticSanContext.Default);
 
         ElasticSanVolumeGroupData IPersistableModel<ElasticSanVolumeGroupData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ElasticSanVolumeGroupData>(data, options, AzureResourceManagerElasticSanContext.Default);
 
-        string IPersistableModel<ElasticSanVolumeGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ElasticSanVolumeGroupData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<ElasticSanVolumeGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ElasticSanVolumeGroupData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }
