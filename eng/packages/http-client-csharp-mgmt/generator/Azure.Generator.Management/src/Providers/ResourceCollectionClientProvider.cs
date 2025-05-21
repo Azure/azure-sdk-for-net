@@ -233,7 +233,7 @@ namespace Azure.Generator.Management.Providers
             return ContextualParameters.Take(ContextualParameters.Count - 1).Any(p => p == parameter.Name);
         }
 
-        protected override MethodBodyStatement BuildReturnStatements(ValueExpression responseVariable, MethodSignature signature)
+        protected override IReadOnlyList<MethodBodyStatement> BuildReturnStatements(ValueExpression responseVariable, MethodSignature signature)
         {
             if (signature.Name == "GetIfExists" || signature.Name == "GetIfExistsAsync")
             {
@@ -247,7 +247,7 @@ namespace Azure.Generator.Management.Providers
             return base.BuildReturnStatements(responseVariable, signature);
         }
 
-        private MethodBodyStatement BuildReturnStatementsForGetIfExists(ValueExpression responseVariable, MethodSignature signature)
+        private IReadOnlyList<MethodBodyStatement> BuildReturnStatementsForGetIfExists(ValueExpression responseVariable, MethodSignature signature)
         {
             List<MethodBodyStatement> statements =
             [
@@ -262,10 +262,10 @@ namespace Azure.Generator.Management.Providers
             return statements;
         }
 
-        private MethodBodyStatement BuildReturnStatementsForExists(ValueExpression responseVariable)
+        private IReadOnlyList<MethodBodyStatement> BuildReturnStatementsForExists(ValueExpression responseVariable)
         {
             var returnValueExpression = responseVariable.Property("Value").NotEqual(Null);
-            return Return(Static(typeof(Response)).Invoke(nameof(Response.FromValue), returnValueExpression, responseVariable.Invoke("GetRawResponse")));
+            return [Return(Static(typeof(Response)).Invoke(nameof(Response.FromValue), returnValueExpression, responseVariable.Invoke("GetRawResponse")))];
         }
     }
 }
