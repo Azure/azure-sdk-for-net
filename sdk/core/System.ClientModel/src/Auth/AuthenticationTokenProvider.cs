@@ -17,22 +17,22 @@ public abstract class AuthenticationTokenProvider
     /// Creates a new instance of <see cref="GetTokenOptions"/> using the provided <paramref name="properties"/>.
     /// </summary>
     /// <param name="properties"></param>
-    /// <returns></returns>
+    /// <returns>An instance of <see cref="GetTokenOptions"/> or <c>null</c> if the provided options are not valid.</returns>
     public abstract GetTokenOptions? CreateTokenOptions(IReadOnlyDictionary<string, object> properties);
 
     /// <summary>
     /// Gets a token from the auth provider.
     /// </summary>
-    /// <param name="properties">The options used by the <see cref="AuthenticationTokenProvider"/> to make a token request.</param>
+    /// <param name="options">The options used by the <see cref="AuthenticationTokenProvider"/> to make a token request.</param>
     /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
     /// <returns></returns>
-    public abstract AuthenticationToken GetToken(GetTokenOptions properties, CancellationToken cancellationToken);
+    public abstract AuthenticationToken GetToken(GetTokenOptions options, CancellationToken cancellationToken);
 
     /// <summary>
     /// Gets the token.
     /// </summary>
-    /// <param name="properties">The options used by the <see cref="AuthenticationTokenProvider"/> to make a token request.</param>
+    /// <param name="options">The options used by the <see cref="AuthenticationTokenProvider"/> to make a token request.</param>
     /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
     /// <returns></returns>
-    public abstract ValueTask<AuthenticationToken> GetTokenAsync(GetTokenOptions properties, CancellationToken cancellationToken);
+    public abstract ValueTask<AuthenticationToken> GetTokenAsync(GetTokenOptions options, CancellationToken cancellationToken);
 }

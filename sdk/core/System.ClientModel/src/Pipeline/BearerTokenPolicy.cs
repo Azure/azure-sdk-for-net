@@ -18,7 +18,7 @@ public class BearerTokenPolicy : AuthenticationPolicy
     public BearerTokenPolicy(AuthenticationTokenProvider tokenProvider, IEnumerable<IReadOnlyDictionary<string, object>> contexts)
     {
         _tokenProvider = tokenProvider;
-        _flowContext = GetContext(contexts, tokenProvider);
+        _flowContext = GetOptionsFromContexts(contexts, tokenProvider);
     }
 
     /// <inheritdoc />
@@ -62,14 +62,14 @@ public class BearerTokenPolicy : AuthenticationPolicy
         }
     }
 
-    internal static GetTokenOptions GetContext(IEnumerable<IReadOnlyDictionary<string, object>> contexts, AuthenticationTokenProvider tokenProvider)
+    internal static GetTokenOptions GetOptionsFromContexts(IEnumerable<IReadOnlyDictionary<string, object>> contexts, AuthenticationTokenProvider tokenProvider)
     {
         foreach (var context in contexts)
         {
-            var createdContext = tokenProvider.CreateTokenOptions(context);
-            if (createdContext is not null)
+            var options = tokenProvider.CreateTokenOptions(context);
+            if (options is not null)
             {
-                return createdContext;
+                return options;
             }
         }
         throw new InvalidOperationException($"The service does not support any of the auth flows implemented by the supplied token provider {tokenProvider.GetType().FullName}.");
