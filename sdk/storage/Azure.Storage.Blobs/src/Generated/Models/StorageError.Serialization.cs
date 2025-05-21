@@ -14,7 +14,7 @@ namespace Azure.Storage.Blobs.Models
         internal static StorageError DeserializeStorageError(XElement element)
         {
             string message = default;
-            long? copySourceStatusCode = default;
+            int? copySourceStatusCode = default;
             string copySourceErrorCode = default;
             string copySourceErrorMessage = default;
             if (element.Element("Message") is XElement messageElement)
@@ -23,7 +23,7 @@ namespace Azure.Storage.Blobs.Models
             }
             if (element.Element("CopySourceStatusCode") is XElement copySourceStatusCodeElement)
             {
-                copySourceStatusCode = (long?)copySourceStatusCodeElement;
+                copySourceStatusCode = (int?)copySourceStatusCodeElement;
             }
             if (element.Element("CopySourceErrorCode") is XElement copySourceErrorCodeElement)
             {

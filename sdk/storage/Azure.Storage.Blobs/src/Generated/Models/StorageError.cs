@@ -20,7 +20,7 @@ namespace Azure.Storage.Blobs.Models
         /// <param name="copySourceStatusCode"></param>
         /// <param name="copySourceErrorCode"></param>
         /// <param name="copySourceErrorMessage"></param>
-        internal StorageError(string message, long? copySourceStatusCode, string copySourceErrorCode, string copySourceErrorMessage)
+        internal StorageError(string message, int? copySourceStatusCode, string copySourceErrorCode, string copySourceErrorMessage)
         {
             Message = message;
             CopySourceStatusCode = copySourceStatusCode;
@@ -31,7 +31,7 @@ namespace Azure.Storage.Blobs.Models
         /// <summary> Gets the message. </summary>
         public string Message { get; }
         /// <summary> Gets the copy source status code. </summary>
-        public long? CopySourceStatusCode { get; }
+        public int? CopySourceStatusCode { get; }
         /// <summary> Gets the copy source error code. </summary>
         public string CopySourceErrorCode { get; }
         /// <summary> Gets the copy source error message. </summary>
