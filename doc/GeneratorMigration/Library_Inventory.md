@@ -14,7 +14,7 @@
 
 ## Data Plane Libraries using TypeSpec (@azure-typespec/http-client-csharp)
 
-TypeSpec with @azure-typespec/http-client-csharp generator is detected by the presence of a tsp-location.yaml file with an emitterPackageJsonPath value referencing @azure-typespec/http-client-csharp, or through special handling for specific libraries.
+TypeSpec with @azure-typespec/http-client-csharp generator is detected by the presence of a tsp-location.yaml file with an emitterPackageJsonPath value referencing @azure-typespec/http-client-csharp, or through special handling for specific libraries. Total: 2
 
 | Service | Library | Path |
 | ------- | ------- | ---- |
@@ -24,7 +24,7 @@ TypeSpec with @azure-typespec/http-client-csharp generator is detected by the pr
 
 ## Data Plane Libraries using TypeSpec (Old Generator)
 
-TypeSpec with old generator is detected by the presence of a tsp-location.yaml file without an emitterPackageJsonPath value, tspconfig.yaml file, tsp directory, or *.tsp files.
+TypeSpec with old generator is detected by the presence of a tsp-location.yaml file without an emitterPackageJsonPath value, tspconfig.yaml file, tsp directory, or *.tsp files. Total: 32
 
 | Service | Library | Path |
 | ------- | ------- | ---- |
@@ -63,6 +63,8 @@ TypeSpec with old generator is detected by the presence of a tsp-location.yaml f
 
 
 ## Data Plane Libraries using Swagger
+
+Total: 114
 
 | Service | Library | Path |
 | ------- | ------- | ---- |
@@ -184,7 +186,7 @@ TypeSpec with old generator is detected by the presence of a tsp-location.yaml f
 
 ## Management Plane Libraries using TypeSpec (Old Generator)
 
-TypeSpec with old generator is detected by the presence of a tsp-location.yaml file without an emitterPackageJsonPath value, tspconfig.yaml file, tsp directory, or *.tsp files.
+TypeSpec with old generator is detected by the presence of a tsp-location.yaml file without an emitterPackageJsonPath value, tspconfig.yaml file, tsp directory, or *.tsp files. Total: 29
 
 | Service | Library | Path |
 | ------- | ------- | ---- |
@@ -220,6 +222,8 @@ TypeSpec with old generator is detected by the presence of a tsp-location.yaml f
 
 
 ## Management Plane Libraries using Swagger
+
+Total: 177
 
 | Service | Library | Path |
 | ------- | ------- | ---- |

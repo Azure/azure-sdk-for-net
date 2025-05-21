@@ -243,7 +243,7 @@ def generate_markdown_report(libraries):
     for gen_type in sorted(new_generator_types):
         if len(data_tsp_by_generator[gen_type]) > 0:
             report.append(f"## Data Plane Libraries using TypeSpec ({gen_type})\n")
-            report.append(f"TypeSpec with {gen_type} generator is detected by the presence of a tsp-location.yaml file with an emitterPackageJsonPath value referencing {gen_type}, or through special handling for specific libraries.\n")
+            report.append(f"TypeSpec with {gen_type} generator is detected by the presence of a tsp-location.yaml file with an emitterPackageJsonPath value referencing {gen_type}, or through special handling for specific libraries. Total: {len(data_tsp_by_generator[gen_type])}\n")
             report.append("| Service | Library | Path |")
             report.append("| ------- | ------- | ---- |")
             for lib in sorted(data_tsp_by_generator[gen_type], key=lambda x: (x["service"], x["library"])):
@@ -253,7 +253,7 @@ def generate_markdown_report(libraries):
     # Old TypeSpec Data Plane Libraries
     if len(data_tsp_old) > 0:
         report.append("## Data Plane Libraries using TypeSpec (Old Generator)\n")
-        report.append("TypeSpec with old generator is detected by the presence of a tsp-location.yaml file without an emitterPackageJsonPath value, tspconfig.yaml file, tsp directory, or *.tsp files.\n")
+        report.append(f"TypeSpec with old generator is detected by the presence of a tsp-location.yaml file without an emitterPackageJsonPath value, tspconfig.yaml file, tsp directory, or *.tsp files. Total: {len(data_tsp_old)}\n")
         report.append("| Service | Library | Path |")
         report.append("| ------- | ------- | ---- |")
         for lib in sorted(data_tsp_old, key=lambda x: (x["service"], x["library"])):
@@ -263,6 +263,7 @@ def generate_markdown_report(libraries):
     # Data Plane Swagger Libraries
     if len(data_swagger) > 0:
         report.append("## Data Plane Libraries using Swagger\n")
+        report.append(f"Total: {len(data_swagger)}\n")
         report.append("| Service | Library | Path |")
         report.append("| ------- | ------- | ---- |")
         for lib in sorted(data_swagger, key=lambda x: (x["service"], x["library"])):
@@ -273,7 +274,7 @@ def generate_markdown_report(libraries):
     for gen_type in sorted(new_generator_types):
         if len(mgmt_tsp_by_generator[gen_type]) > 0:
             report.append(f"## Management Plane Libraries using TypeSpec ({gen_type})\n")
-            report.append(f"TypeSpec with {gen_type} generator is detected by the presence of a tsp-location.yaml file with an emitterPackageJsonPath value referencing {gen_type}, or through special handling for specific libraries.\n")
+            report.append(f"TypeSpec with {gen_type} generator is detected by the presence of a tsp-location.yaml file with an emitterPackageJsonPath value referencing {gen_type}, or through special handling for specific libraries. Total: {len(mgmt_tsp_by_generator[gen_type])}\n")
             report.append("| Service | Library | Path |")
             report.append("| ------- | ------- | ---- |")
             for lib in sorted(mgmt_tsp_by_generator[gen_type], key=lambda x: (x["service"], x["library"])):
@@ -283,7 +284,7 @@ def generate_markdown_report(libraries):
     # Old TypeSpec Management Plane Libraries
     if len(mgmt_tsp_old) > 0:
         report.append("## Management Plane Libraries using TypeSpec (Old Generator)\n")
-        report.append("TypeSpec with old generator is detected by the presence of a tsp-location.yaml file without an emitterPackageJsonPath value, tspconfig.yaml file, tsp directory, or *.tsp files.\n")
+        report.append(f"TypeSpec with old generator is detected by the presence of a tsp-location.yaml file without an emitterPackageJsonPath value, tspconfig.yaml file, tsp directory, or *.tsp files. Total: {len(mgmt_tsp_old)}\n")
         report.append("| Service | Library | Path |")
         report.append("| ------- | ------- | ---- |")
         for lib in sorted(mgmt_tsp_old, key=lambda x: (x["service"], x["library"])):
@@ -293,6 +294,7 @@ def generate_markdown_report(libraries):
     # Management Plane Swagger Libraries
     if len(mgmt_swagger) > 0:
         report.append("## Management Plane Libraries using Swagger\n")
+        report.append(f"Total: {len(mgmt_swagger)}\n")
         report.append("| Service | Library | Path |")
         report.append("| ------- | ------- | ---- |")
         for lib in sorted(mgmt_swagger, key=lambda x: (x["service"], x["library"])):
