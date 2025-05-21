@@ -10,7 +10,7 @@ namespace Azure.Communication.CallAutomation
     /// </summary>
     public class TranscriptionMetadata : StreamingData
     {
-        internal TranscriptionMetadata(TranscriptionMetaDataInternal metaData)
+        internal TranscriptionMetadata(TranscriptionMetadataInternal metaData)
         {
             TranscriptionSubscriptionId = metaData.TranscriptionSubscriptionId;
             Locale = metaData.Locale;
