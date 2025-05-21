@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.NeonPostgres
 {
     public partial class NeonOrganizationResource : IJsonModel<NeonOrganizationData>
     {
+        private static NeonOrganizationData s_dataDeserializationInstance;
+        private static NeonOrganizationData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<NeonOrganizationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<NeonOrganizationData>)Data).Write(writer, options);
 
-        NeonOrganizationData IJsonModel<NeonOrganizationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NeonOrganizationData>)Data).Create(ref reader, options);
+        NeonOrganizationData IJsonModel<NeonOrganizationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NeonOrganizationData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<NeonOrganizationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<NeonOrganizationData>(Data, options, AzureResourceManagerNeonPostgresContext.Default);
 
         NeonOrganizationData IPersistableModel<NeonOrganizationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NeonOrganizationData>(data, options, AzureResourceManagerNeonPostgresContext.Default);
 
-        string IPersistableModel<NeonOrganizationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NeonOrganizationData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<NeonOrganizationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NeonOrganizationData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

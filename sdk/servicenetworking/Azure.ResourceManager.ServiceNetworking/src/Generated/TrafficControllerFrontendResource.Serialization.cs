@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.ServiceNetworking
 {
     public partial class TrafficControllerFrontendResource : IJsonModel<TrafficControllerFrontendData>
     {
+        private static TrafficControllerFrontendData s_dataDeserializationInstance;
+        private static TrafficControllerFrontendData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<TrafficControllerFrontendData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<TrafficControllerFrontendData>)Data).Write(writer, options);
 
-        TrafficControllerFrontendData IJsonModel<TrafficControllerFrontendData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<TrafficControllerFrontendData>)Data).Create(ref reader, options);
+        TrafficControllerFrontendData IJsonModel<TrafficControllerFrontendData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<TrafficControllerFrontendData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<TrafficControllerFrontendData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<TrafficControllerFrontendData>(Data, options, AzureResourceManagerServiceNetworkingContext.Default);
 
         TrafficControllerFrontendData IPersistableModel<TrafficControllerFrontendData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<TrafficControllerFrontendData>(data, options, AzureResourceManagerServiceNetworkingContext.Default);
 
-        string IPersistableModel<TrafficControllerFrontendData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<TrafficControllerFrontendData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<TrafficControllerFrontendData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<TrafficControllerFrontendData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

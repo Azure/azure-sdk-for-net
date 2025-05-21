@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Sql
 {
     public partial class EncryptionProtectorResource : IJsonModel<EncryptionProtectorData>
     {
+        private static EncryptionProtectorData s_dataDeserializationInstance;
+        private static EncryptionProtectorData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<EncryptionProtectorData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<EncryptionProtectorData>)Data).Write(writer, options);
 
-        EncryptionProtectorData IJsonModel<EncryptionProtectorData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<EncryptionProtectorData>)Data).Create(ref reader, options);
+        EncryptionProtectorData IJsonModel<EncryptionProtectorData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<EncryptionProtectorData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<EncryptionProtectorData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<EncryptionProtectorData>(Data, options, AzureResourceManagerSqlContext.Default);
 
         EncryptionProtectorData IPersistableModel<EncryptionProtectorData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<EncryptionProtectorData>(data, options, AzureResourceManagerSqlContext.Default);
 
-        string IPersistableModel<EncryptionProtectorData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<EncryptionProtectorData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<EncryptionProtectorData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<EncryptionProtectorData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

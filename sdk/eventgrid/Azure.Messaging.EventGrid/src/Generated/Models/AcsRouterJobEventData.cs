@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
@@ -13,10 +14,16 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class AcsRouterJobEventData : AcsRouterEventData
     {
         /// <summary> Initializes a new instance of <see cref="AcsRouterJobEventData"/>. </summary>
-        internal AcsRouterJobEventData()
+        /// <param name="labels"> Router Job events Labels. </param>
+        /// <param name="tags"> Router Jobs events Tags. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="labels"/> or <paramref name="tags"/> is null. </exception>
+        internal AcsRouterJobEventData(IReadOnlyDictionary<string, string> labels, IReadOnlyDictionary<string, string> tags)
         {
-            Labels = new ChangeTrackingDictionary<string, string>();
-            Tags = new ChangeTrackingDictionary<string, string>();
+            Argument.AssertNotNull(labels, nameof(labels));
+            Argument.AssertNotNull(tags, nameof(tags));
+
+            Labels = labels;
+            Tags = tags;
         }
 
         /// <summary> Initializes a new instance of <see cref="AcsRouterJobEventData"/>. </summary>

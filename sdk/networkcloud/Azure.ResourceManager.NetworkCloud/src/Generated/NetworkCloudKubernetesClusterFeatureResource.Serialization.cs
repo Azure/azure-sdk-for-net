@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.NetworkCloud
 {
     public partial class NetworkCloudKubernetesClusterFeatureResource : IJsonModel<NetworkCloudKubernetesClusterFeatureData>
     {
+        private static NetworkCloudKubernetesClusterFeatureData s_dataDeserializationInstance;
+        private static NetworkCloudKubernetesClusterFeatureData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<NetworkCloudKubernetesClusterFeatureData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<NetworkCloudKubernetesClusterFeatureData>)Data).Write(writer, options);
 
-        NetworkCloudKubernetesClusterFeatureData IJsonModel<NetworkCloudKubernetesClusterFeatureData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetworkCloudKubernetesClusterFeatureData>)Data).Create(ref reader, options);
+        NetworkCloudKubernetesClusterFeatureData IJsonModel<NetworkCloudKubernetesClusterFeatureData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetworkCloudKubernetesClusterFeatureData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<NetworkCloudKubernetesClusterFeatureData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<NetworkCloudKubernetesClusterFeatureData>(Data, options, AzureResourceManagerNetworkCloudContext.Default);
 
         NetworkCloudKubernetesClusterFeatureData IPersistableModel<NetworkCloudKubernetesClusterFeatureData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetworkCloudKubernetesClusterFeatureData>(data, options, AzureResourceManagerNetworkCloudContext.Default);
 
-        string IPersistableModel<NetworkCloudKubernetesClusterFeatureData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetworkCloudKubernetesClusterFeatureData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<NetworkCloudKubernetesClusterFeatureData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetworkCloudKubernetesClusterFeatureData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

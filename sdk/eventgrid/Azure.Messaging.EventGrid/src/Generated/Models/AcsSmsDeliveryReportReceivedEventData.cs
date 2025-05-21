@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -14,9 +15,25 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class AcsSmsDeliveryReportReceivedEventData : AcsSmsEventBaseProperties
     {
         /// <summary> Initializes a new instance of <see cref="AcsSmsDeliveryReportReceivedEventData"/>. </summary>
-        internal AcsSmsDeliveryReportReceivedEventData()
+        /// <param name="messageId"> The identity of the SMS message. </param>
+        /// <param name="from"> The identity of SMS message sender. </param>
+        /// <param name="to"> The identity of SMS message receiver. </param>
+        /// <param name="deliveryStatus"> Status of Delivery. </param>
+        /// <param name="deliveryStatusDetails"> Details about Delivery Status. </param>
+        /// <param name="deliveryAttempts"> List of details of delivery attempts made. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="messageId"/>, <paramref name="from"/>, <paramref name="to"/>, <paramref name="deliveryStatus"/>, <paramref name="deliveryStatusDetails"/> or <paramref name="deliveryAttempts"/> is null. </exception>
+        internal AcsSmsDeliveryReportReceivedEventData(string messageId, string @from, string to, string deliveryStatus, string deliveryStatusDetails, IEnumerable<AcsSmsDeliveryAttemptProperties> deliveryAttempts) : base(messageId, @from, to)
         {
-            DeliveryAttempts = new ChangeTrackingList<AcsSmsDeliveryAttemptProperties>();
+            Argument.AssertNotNull(messageId, nameof(messageId));
+            Argument.AssertNotNull(@from, nameof(@from));
+            Argument.AssertNotNull(to, nameof(to));
+            Argument.AssertNotNull(deliveryStatus, nameof(deliveryStatus));
+            Argument.AssertNotNull(deliveryStatusDetails, nameof(deliveryStatusDetails));
+            Argument.AssertNotNull(deliveryAttempts, nameof(deliveryAttempts));
+
+            DeliveryStatus = deliveryStatus;
+            DeliveryStatusDetails = deliveryStatusDetails;
+            DeliveryAttempts = deliveryAttempts.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="AcsSmsDeliveryReportReceivedEventData"/>. </summary>
@@ -28,8 +45,13 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="deliveryAttempts"> List of details of delivery attempts made. </param>
         /// <param name="receivedTimestamp"> The time at which the SMS delivery report was received. </param>
         /// <param name="tag"> Customer Content. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="messageId"/>, <paramref name="from"/> or <paramref name="to"/> is null. </exception>
         internal AcsSmsDeliveryReportReceivedEventData(string messageId, string @from, string to, string deliveryStatus, string deliveryStatusDetails, IReadOnlyList<AcsSmsDeliveryAttemptProperties> deliveryAttempts, DateTimeOffset? receivedTimestamp, string tag) : base(messageId, @from, to)
         {
+            Argument.AssertNotNull(messageId, nameof(messageId));
+            Argument.AssertNotNull(@from, nameof(@from));
+            Argument.AssertNotNull(to, nameof(to));
+
             DeliveryStatus = deliveryStatus;
             DeliveryStatusDetails = deliveryStatusDetails;
             DeliveryAttempts = deliveryAttempts;

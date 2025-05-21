@@ -48,21 +48,21 @@ namespace Azure.AI.Agents.Persistent
         /// <summary> Initializes a new instance of <see cref="OpenApiFunctionDefinition"/>. </summary>
         /// <param name="name"> The name of the function to be called. </param>
         /// <param name="spec"> The openapi function shape, described as a JSON Schema object. </param>
-        /// <param name="auth">
+        /// <param name="openApiAuthentication">
         /// Open API authentication details
         /// Please note <see cref="OpenApiAuthDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="OpenApiAnonymousAuthDetails"/>, <see cref="OpenApiConnectionAuthDetails"/> and <see cref="OpenApiManagedAuthDetails"/>.
         /// </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="spec"/> or <paramref name="auth"/> is null. </exception>
-        public OpenApiFunctionDefinition(string name, BinaryData spec, OpenApiAuthDetails auth)
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="spec"/> or <paramref name="openApiAuthentication"/> is null. </exception>
+        public OpenApiFunctionDefinition(string name, BinaryData spec, OpenApiAuthDetails openApiAuthentication)
         {
             Argument.AssertNotNull(name, nameof(name));
             Argument.AssertNotNull(spec, nameof(spec));
-            Argument.AssertNotNull(auth, nameof(auth));
+            Argument.AssertNotNull(openApiAuthentication, nameof(openApiAuthentication));
 
             Name = name;
             Spec = spec;
-            Auth = auth;
+            OpenApiAuthentication = openApiAuthentication;
             DefaultParams = new ChangeTrackingList<string>();
             Functions = new ChangeTrackingList<InternalFunctionDefinition>();
         }
@@ -71,7 +71,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="name"> The name of the function to be called. </param>
         /// <param name="description"> A description of what the function does, used by the model to choose when and how to call the function. </param>
         /// <param name="spec"> The openapi function shape, described as a JSON Schema object. </param>
-        /// <param name="auth">
+        /// <param name="openApiAuthentication">
         /// Open API authentication details
         /// Please note <see cref="OpenApiAuthDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="OpenApiAnonymousAuthDetails"/>, <see cref="OpenApiConnectionAuthDetails"/> and <see cref="OpenApiManagedAuthDetails"/>.
@@ -79,12 +79,12 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="defaultParams"> List of OpenAPI spec parameters that will use user-provided defaults. </param>
         /// <param name="functions"> List of function definitions used by OpenApi tool. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal OpenApiFunctionDefinition(string name, string description, BinaryData spec, OpenApiAuthDetails auth, IList<string> defaultParams, IList<InternalFunctionDefinition> functions, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal OpenApiFunctionDefinition(string name, string description, BinaryData spec, OpenApiAuthDetails openApiAuthentication, IList<string> defaultParams, IList<InternalFunctionDefinition> functions, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Description = description;
             Spec = spec;
-            Auth = auth;
+            OpenApiAuthentication = openApiAuthentication;
             DefaultParams = defaultParams;
             Functions = functions;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -135,7 +135,7 @@ namespace Azure.AI.Agents.Persistent
         /// Please note <see cref="OpenApiAuthDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="OpenApiAnonymousAuthDetails"/>, <see cref="OpenApiConnectionAuthDetails"/> and <see cref="OpenApiManagedAuthDetails"/>.
         /// </summary>
-        public OpenApiAuthDetails Auth { get; set; }
+        public OpenApiAuthDetails OpenApiAuthentication { get; set; }
         /// <summary> List of OpenAPI spec parameters that will use user-provided defaults. </summary>
         public IList<string> DefaultParams { get; }
     }

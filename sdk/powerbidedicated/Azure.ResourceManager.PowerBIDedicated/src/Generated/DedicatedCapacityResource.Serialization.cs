@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.PowerBIDedicated
 {
     public partial class DedicatedCapacityResource : IJsonModel<DedicatedCapacityData>
     {
+        private static DedicatedCapacityData s_dataDeserializationInstance;
+        private static DedicatedCapacityData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<DedicatedCapacityData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DedicatedCapacityData>)Data).Write(writer, options);
 
-        DedicatedCapacityData IJsonModel<DedicatedCapacityData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DedicatedCapacityData>)Data).Create(ref reader, options);
+        DedicatedCapacityData IJsonModel<DedicatedCapacityData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DedicatedCapacityData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<DedicatedCapacityData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DedicatedCapacityData>(Data, options, AzureResourceManagerPowerBIDedicatedContext.Default);
 
         DedicatedCapacityData IPersistableModel<DedicatedCapacityData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DedicatedCapacityData>(data, options, AzureResourceManagerPowerBIDedicatedContext.Default);
 
-        string IPersistableModel<DedicatedCapacityData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DedicatedCapacityData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<DedicatedCapacityData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DedicatedCapacityData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

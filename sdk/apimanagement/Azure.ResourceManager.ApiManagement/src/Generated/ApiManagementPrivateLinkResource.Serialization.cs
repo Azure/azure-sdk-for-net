@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.ApiManagement
 {
     public partial class ApiManagementPrivateLinkResource : IJsonModel<ApiManagementPrivateLinkResourceData>
     {
+        private static ApiManagementPrivateLinkResourceData s_dataDeserializationInstance;
+        private static ApiManagementPrivateLinkResourceData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<ApiManagementPrivateLinkResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ApiManagementPrivateLinkResourceData>)Data).Write(writer, options);
 
-        ApiManagementPrivateLinkResourceData IJsonModel<ApiManagementPrivateLinkResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ApiManagementPrivateLinkResourceData>)Data).Create(ref reader, options);
+        ApiManagementPrivateLinkResourceData IJsonModel<ApiManagementPrivateLinkResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ApiManagementPrivateLinkResourceData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<ApiManagementPrivateLinkResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ApiManagementPrivateLinkResourceData>(Data, options, AzureResourceManagerApiManagementContext.Default);
 
         ApiManagementPrivateLinkResourceData IPersistableModel<ApiManagementPrivateLinkResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ApiManagementPrivateLinkResourceData>(data, options, AzureResourceManagerApiManagementContext.Default);
 
-        string IPersistableModel<ApiManagementPrivateLinkResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ApiManagementPrivateLinkResourceData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<ApiManagementPrivateLinkResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ApiManagementPrivateLinkResourceData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

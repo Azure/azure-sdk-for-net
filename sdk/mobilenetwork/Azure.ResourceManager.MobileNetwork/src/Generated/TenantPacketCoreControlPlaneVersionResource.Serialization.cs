@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.MobileNetwork
 {
     public partial class TenantPacketCoreControlPlaneVersionResource : IJsonModel<PacketCoreControlPlaneVersionData>
     {
+        private static PacketCoreControlPlaneVersionData s_dataDeserializationInstance;
+        private static PacketCoreControlPlaneVersionData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<PacketCoreControlPlaneVersionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<PacketCoreControlPlaneVersionData>)Data).Write(writer, options);
 
-        PacketCoreControlPlaneVersionData IJsonModel<PacketCoreControlPlaneVersionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PacketCoreControlPlaneVersionData>)Data).Create(ref reader, options);
+        PacketCoreControlPlaneVersionData IJsonModel<PacketCoreControlPlaneVersionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PacketCoreControlPlaneVersionData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<PacketCoreControlPlaneVersionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<PacketCoreControlPlaneVersionData>(Data, options, AzureResourceManagerMobileNetworkContext.Default);
 
         PacketCoreControlPlaneVersionData IPersistableModel<PacketCoreControlPlaneVersionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PacketCoreControlPlaneVersionData>(data, options, AzureResourceManagerMobileNetworkContext.Default);
 
-        string IPersistableModel<PacketCoreControlPlaneVersionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PacketCoreControlPlaneVersionData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<PacketCoreControlPlaneVersionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PacketCoreControlPlaneVersionData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

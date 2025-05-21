@@ -127,6 +127,11 @@ namespace Azure.ResourceManager.Sql
                 writer.WritePropertyName("storageThroughputMBps"u8);
                 writer.WriteNumberValue(StorageThroughputMBps.Value);
             }
+            if (Optional.IsDefined(TotalMemoryInMB))
+            {
+                writer.WritePropertyName("totalMemoryMB"u8);
+                writer.WriteNumberValue(TotalMemoryInMB.Value);
+            }
             if (Optional.IsDefined(Collation))
             {
                 writer.WritePropertyName("collation"u8);
@@ -303,6 +308,7 @@ namespace Azure.ResourceManager.Sql
             int? storageSizeInGB = default;
             int? storageIOps = default;
             int? storageThroughputMBps = default;
+            int? totalMemoryMB = default;
             string collation = default;
             string dnsZone = default;
             ResourceIdentifier dnsZonePartner = default;
@@ -520,6 +526,15 @@ namespace Azure.ResourceManager.Sql
                                 continue;
                             }
                             storageThroughputMBps = property0.Value.GetInt32();
+                            continue;
+                        }
+                        if (property0.NameEquals("totalMemoryMB"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            totalMemoryMB = property0.Value.GetInt32();
                             continue;
                         }
                         if (property0.NameEquals("collation"u8))
@@ -769,6 +784,7 @@ namespace Azure.ResourceManager.Sql
                 storageSizeInGB,
                 storageIOps,
                 storageThroughputMBps,
+                totalMemoryMB,
                 collation,
                 dnsZone,
                 dnsZonePartner,
@@ -1197,6 +1213,21 @@ namespace Azure.ResourceManager.Sql
                 {
                     builder.Append("    storageThroughputMBps: ");
                     builder.AppendLine($"{StorageThroughputMBps.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TotalMemoryInMB), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    totalMemoryMB: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(TotalMemoryInMB))
+                {
+                    builder.Append("    totalMemoryMB: ");
+                    builder.AppendLine($"{TotalMemoryInMB.Value}");
                 }
             }
 

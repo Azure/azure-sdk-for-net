@@ -33,6 +33,8 @@ namespace Azure.Identity
 
         public static string AzureFederatedTokenFile => GetNonEmptyStringOrNull(Environment.GetEnvironmentVariable("AZURE_FEDERATED_TOKEN_FILE"));
 
+        public static string CredentialSelection => GetNonEmptyStringOrNull(Environment.GetEnvironmentVariable("AZURE_TOKEN_CREDENTIALS"));
+
         private static string GetNonEmptyStringOrNull(string str)
         {
             return !string.IsNullOrEmpty(str) ? str : null;

@@ -5,21 +5,22 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of common properties of all thread-level chat events. </summary>
     public partial class AcsChatEventInThreadBaseProperties
     {
         /// <summary> Initializes a new instance of <see cref="AcsChatEventInThreadBaseProperties"/>. </summary>
-        internal AcsChatEventInThreadBaseProperties()
-        {
-        }
-
-        /// <summary> Initializes a new instance of <see cref="AcsChatEventInThreadBaseProperties"/>. </summary>
         /// <param name="transactionId"> The transaction id will be used as co-relation vector. </param>
         /// <param name="threadId"> The chat thread id. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="transactionId"/> or <paramref name="threadId"/> is null. </exception>
         internal AcsChatEventInThreadBaseProperties(string transactionId, string threadId)
         {
+            Argument.AssertNotNull(transactionId, nameof(transactionId));
+            Argument.AssertNotNull(threadId, nameof(threadId));
+
             TransactionId = transactionId;
             ThreadId = threadId;
         }

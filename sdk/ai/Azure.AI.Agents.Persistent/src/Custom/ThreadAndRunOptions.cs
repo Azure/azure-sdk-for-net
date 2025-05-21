@@ -12,7 +12,7 @@ namespace Azure.AI.Agents.Persistent
         public string OverrideModelName { get; set; } = default;
         public string OverrideInstructions { get; set; } = default;
         public IEnumerable<ToolDefinition> OverrideTools { get; set; } = null;
-        public UpdateToolResourcesOptions ToolResources { get; set; } = null;
+        public ToolResources ToolResources { get; set; } = null;
         public bool? Stream { get; set; } = null;
         public float? Temperature { get; set; } = null;
         public float? TopP { get; set; } = null;

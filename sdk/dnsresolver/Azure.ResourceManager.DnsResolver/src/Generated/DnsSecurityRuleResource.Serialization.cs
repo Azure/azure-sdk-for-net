@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.DnsResolver
 {
     public partial class DnsSecurityRuleResource : IJsonModel<DnsSecurityRuleData>
     {
+        private static DnsSecurityRuleData s_dataDeserializationInstance;
+        private static DnsSecurityRuleData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<DnsSecurityRuleData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DnsSecurityRuleData>)Data).Write(writer, options);
 
-        DnsSecurityRuleData IJsonModel<DnsSecurityRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DnsSecurityRuleData>)Data).Create(ref reader, options);
+        DnsSecurityRuleData IJsonModel<DnsSecurityRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DnsSecurityRuleData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<DnsSecurityRuleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DnsSecurityRuleData>(Data, options, AzureResourceManagerDnsResolverContext.Default);
 
         DnsSecurityRuleData IPersistableModel<DnsSecurityRuleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DnsSecurityRuleData>(data, options, AzureResourceManagerDnsResolverContext.Default);
 
-        string IPersistableModel<DnsSecurityRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DnsSecurityRuleData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<DnsSecurityRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DnsSecurityRuleData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

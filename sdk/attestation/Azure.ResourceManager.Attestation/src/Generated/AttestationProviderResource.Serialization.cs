@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Attestation
 {
     public partial class AttestationProviderResource : IJsonModel<AttestationProviderData>
     {
+        private static AttestationProviderData s_dataDeserializationInstance;
+        private static AttestationProviderData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<AttestationProviderData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<AttestationProviderData>)Data).Write(writer, options);
 
-        AttestationProviderData IJsonModel<AttestationProviderData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AttestationProviderData>)Data).Create(ref reader, options);
+        AttestationProviderData IJsonModel<AttestationProviderData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AttestationProviderData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<AttestationProviderData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AttestationProviderData>(Data, options, AzureResourceManagerAttestationContext.Default);
 
         AttestationProviderData IPersistableModel<AttestationProviderData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AttestationProviderData>(data, options, AzureResourceManagerAttestationContext.Default);
 
-        string IPersistableModel<AttestationProviderData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AttestationProviderData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<AttestationProviderData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AttestationProviderData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

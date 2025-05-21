@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
 {
     public partial class UserAssignedIdentityResource : IJsonModel<UserAssignedIdentityData>
     {
+        private static UserAssignedIdentityData s_dataDeserializationInstance;
+        private static UserAssignedIdentityData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<UserAssignedIdentityData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<UserAssignedIdentityData>)Data).Write(writer, options);
 
-        UserAssignedIdentityData IJsonModel<UserAssignedIdentityData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<UserAssignedIdentityData>)Data).Create(ref reader, options);
+        UserAssignedIdentityData IJsonModel<UserAssignedIdentityData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<UserAssignedIdentityData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<UserAssignedIdentityData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<UserAssignedIdentityData>(Data, options, AzureResourceManagerManagedServiceIdentitiesContext.Default);
 
         UserAssignedIdentityData IPersistableModel<UserAssignedIdentityData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<UserAssignedIdentityData>(data, options, AzureResourceManagerManagedServiceIdentitiesContext.Default);
 
-        string IPersistableModel<UserAssignedIdentityData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<UserAssignedIdentityData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<UserAssignedIdentityData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<UserAssignedIdentityData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }
