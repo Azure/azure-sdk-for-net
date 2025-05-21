@@ -39,7 +39,7 @@
     "library": "Azure.Communication.ProgrammableConnectivity",
     "path": "sdk/communication/Azure.Communication.ProgrammableConnectivity",
     "type": "Data Plane",
-    "generator": "Swagger"
+    "generator": "TSP-Old"
   },
   {
     "service": "communication",
@@ -60,7 +60,7 @@
     "library": "Azure.Communication.Messages",
     "path": "sdk/communication/Azure.Communication.Messages",
     "type": "Data Plane",
-    "generator": "Swagger"
+    "generator": "TSP-Old"
   },
   {
     "service": "communication",
@@ -74,7 +74,7 @@
     "library": "Azure.Communication.JobRouter",
     "path": "sdk/communication/Azure.Communication.JobRouter",
     "type": "Data Plane",
-    "generator": "Swagger"
+    "generator": "TSP-Old"
   },
   {
     "service": "communication",
@@ -333,7 +333,7 @@
     "library": "Azure.Analytics.OnlineExperimentation",
     "path": "sdk/onlineexperimentation/Azure.Analytics.OnlineExperimentation",
     "type": "Data Plane",
-    "generator": "Swagger"
+    "generator": "TSP-Old"
   },
   {
     "service": "networkfunction",
@@ -487,7 +487,7 @@
     "library": "Azure.ResourceManager.DependencyMap",
     "path": "sdk/dependencymap/Azure.ResourceManager.DependencyMap",
     "type": "Management",
-    "generator": "Swagger"
+    "generator": "TSP-Old"
   },
   {
     "service": "confluent",
@@ -508,14 +508,14 @@
     "library": "Azure.ResourceManager.DatabaseWatcher",
     "path": "sdk/databasewatcher/Azure.ResourceManager.DatabaseWatcher",
     "type": "Management",
-    "generator": "Swagger"
+    "generator": "TSP-Old"
   },
   {
     "service": "anomalydetector",
     "library": "Azure.AI.AnomalyDetector",
     "path": "sdk/anomalydetector/Azure.AI.AnomalyDetector",
     "type": "Data Plane",
-    "generator": "Swagger"
+    "generator": "TSP-Old"
   },
   {
     "service": "datadog",
@@ -529,7 +529,7 @@
     "library": "Azure.AI.OpenAI.Assistants",
     "path": "sdk/openai/Azure.AI.OpenAI.Assistants",
     "type": "Data Plane",
-    "generator": "Swagger"
+    "generator": "TSP-Old"
   },
   {
     "service": "openai",
@@ -550,21 +550,21 @@
     "library": "Azure.AI.Language.Text",
     "path": "sdk/cognitivelanguage/Azure.AI.Language.Text",
     "type": "Data Plane",
-    "generator": "Swagger"
+    "generator": "TSP-Old"
   },
   {
     "service": "cognitivelanguage",
     "library": "Azure.AI.Language.Conversations.Authoring",
     "path": "sdk/cognitivelanguage/Azure.AI.Language.Conversations.Authoring",
     "type": "Data Plane",
-    "generator": "Swagger"
+    "generator": "TSP-Old"
   },
   {
     "service": "cognitivelanguage",
     "library": "Azure.AI.Language.Text.Authoring",
     "path": "sdk/cognitivelanguage/Azure.AI.Language.Text.Authoring",
     "type": "Data Plane",
-    "generator": "Swagger"
+    "generator": "TSP-Old"
   },
   {
     "service": "cognitivelanguage",
@@ -578,7 +578,7 @@
     "library": "Azure.AI.Language.Conversations",
     "path": "sdk/cognitivelanguage/Azure.AI.Language.Conversations",
     "type": "Data Plane",
-    "generator": "Swagger"
+    "generator": "TSP-Old"
   },
   {
     "service": "mysql",
@@ -648,7 +648,7 @@
     "library": "Azure.ResourceManager.WorkloadsSapVirtualInstance",
     "path": "sdk/workloadssapvirtualinstance/Azure.ResourceManager.WorkloadsSapVirtualInstance",
     "type": "Management",
-    "generator": "Swagger"
+    "generator": "TSP-Old"
   },
   {
     "service": "providerhub",
@@ -676,7 +676,7 @@
     "library": "Azure.ResourceManager.DurableTask",
     "path": "sdk/durabletask/Azure.ResourceManager.DurableTask",
     "type": "Management",
-    "generator": "Swagger"
+    "generator": "TSP-Old"
   },
   {
     "service": "extensions",
@@ -718,7 +718,7 @@
     "library": "Azure.AI.Vision.ImageAnalysis",
     "path": "sdk/vision/Azure.AI.Vision.ImageAnalysis",
     "type": "Data Plane",
-    "generator": "Swagger"
+    "generator": "TSP-Old"
   },
   {
     "service": "cosmosdb",
@@ -802,7 +802,7 @@
     "library": "Azure.ResourceManager.LambdaTestHyperExecute",
     "path": "sdk/lambdatesthyperexecute/Azure.ResourceManager.LambdaTestHyperExecute",
     "type": "Management",
-    "generator": "Swagger"
+    "generator": "TSP-Old"
   },
   {
     "service": "compute",
@@ -823,7 +823,7 @@
     "library": "Azure.Security.CodeTransparency",
     "path": "sdk/confidentialledger/Azure.Security.CodeTransparency",
     "type": "Data Plane",
-    "generator": "Swagger"
+    "generator": "TSP-Old"
   },
   {
     "service": "confidentialledger",
@@ -844,7 +844,7 @@
     "library": "Azure.ResourceManager.HybridConnectivity",
     "path": "sdk/hybridconnectivity/Azure.ResourceManager.HybridConnectivity",
     "type": "Management",
-    "generator": "Swagger"
+    "generator": "TSP-Old"
   },
   {
     "service": "securitydevops",
@@ -1110,7 +1110,7 @@
     "library": "Azure.ResourceManager.ComputeSchedule",
     "path": "sdk/computeschedule/Azure.ResourceManager.ComputeSchedule",
     "type": "Management",
-    "generator": "Swagger"
+    "generator": "TSP-Old"
   },
   {
     "service": "websites",
@@ -1201,7 +1201,7 @@
     "library": "Azure.ResourceManager.StandbyPool",
     "path": "sdk/standbypool/Azure.ResourceManager.StandbyPool",
     "type": "Management",
-    "generator": "Swagger"
+    "generator": "TSP-Old"
   },
   {
     "service": "managedserviceidentity",
@@ -1222,14 +1222,14 @@
     "library": "Azure.ResourceManager.ServiceNetworking",
     "path": "sdk/servicenetworking/Azure.ResourceManager.ServiceNetworking",
     "type": "Management",
-    "generator": "Swagger"
+    "generator": "TSP-Old"
   },
   {
     "service": "carbon",
     "library": "Azure.ResourceManager.CarbonOptimization",
     "path": "sdk/carbon/Azure.ResourceManager.CarbonOptimization",
     "type": "Management",
-    "generator": "Swagger"
+    "generator": "TSP-Old"
   },
   {
     "service": "provisioning",
@@ -1488,7 +1488,7 @@
     "library": "Azure.ResourceManager.AgriculturePlatform",
     "path": "sdk/agricultureplatform/Azure.ResourceManager.AgriculturePlatform",
     "type": "Management",
-    "generator": "Swagger"
+    "generator": "TSP-Old"
   },
   {
     "service": "metricsadvisor",
@@ -1502,7 +1502,7 @@
     "library": "Azure.ResourceManager.InformaticaDataManagement",
     "path": "sdk/informaticadatamanagement/Azure.ResourceManager.InformaticaDataManagement",
     "type": "Management",
-    "generator": "Swagger"
+    "generator": "TSP-Old"
   },
   {
     "service": "marketplaceordering",
@@ -1523,7 +1523,7 @@
     "library": "Azure.AI.ContentSafety",
     "path": "sdk/contentsafety/Azure.AI.ContentSafety",
     "type": "Data Plane",
-    "generator": "Swagger"
+    "generator": "TSP-Old"
   },
   {
     "service": "peering",
@@ -1551,21 +1551,21 @@
     "library": "Azure.ResourceManager.ComputeFleet",
     "path": "sdk/computefleet/Azure.ResourceManager.ComputeFleet",
     "type": "Management",
-    "generator": "Swagger"
+    "generator": "TSP-Old"
   },
   {
     "service": "face",
     "library": "Azure.AI.Vision.Face",
     "path": "sdk/face/Azure.AI.Vision.Face",
     "type": "Data Plane",
-    "generator": "Swagger"
+    "generator": "TSP-Old"
   },
   {
     "service": "loadtestservice",
     "library": "Azure.Developer.LoadTesting",
     "path": "sdk/loadtestservice/Azure.Developer.LoadTesting",
     "type": "Data Plane",
-    "generator": "Swagger"
+    "generator": "TSP-Old"
   },
   {
     "service": "loadtestservice",
@@ -1586,14 +1586,14 @@
     "library": "Azure.AI.Translation.Document",
     "path": "sdk/translation/Azure.AI.Translation.Document",
     "type": "Data Plane",
-    "generator": "Swagger"
+    "generator": "TSP-Old"
   },
   {
     "service": "translation",
     "library": "Azure.AI.Translation.Text",
     "path": "sdk/translation/Azure.AI.Translation.Text",
     "type": "Data Plane",
-    "generator": "Swagger"
+    "generator": "TSP-Old"
   },
   {
     "service": "webpubsub",
@@ -1747,7 +1747,7 @@
     "library": "Azure.ResourceManager.PineconeVectorDB",
     "path": "sdk/pineconevectordb/Azure.ResourceManager.PineconeVectorDB",
     "type": "Management",
-    "generator": "Swagger"
+    "generator": "TSP-Old"
   },
   {
     "service": "securitycenter",
@@ -1775,7 +1775,7 @@
     "library": "Azure.Analytics.Purview.DataMap",
     "path": "sdk/purview/Azure.Analytics.Purview.DataMap",
     "type": "Data Plane",
-    "generator": "Swagger"
+    "generator": "TSP-Old"
   },
   {
     "service": "purview",
@@ -1880,14 +1880,14 @@
     "library": "Azure.ResourceManager.HealthDataAIServices",
     "path": "sdk/healthdataaiservices/Azure.ResourceManager.HealthDataAIServices",
     "type": "Management",
-    "generator": "Swagger"
+    "generator": "TSP-Old"
   },
   {
     "service": "healthdataaiservices",
     "library": "Azure.Health.Deidentification",
     "path": "sdk/healthdataaiservices/Azure.Health.Deidentification",
     "type": "Data Plane",
-    "generator": "Swagger"
+    "generator": "TSP-Old"
   },
   {
     "service": "storageactions",
@@ -1901,21 +1901,21 @@
     "library": "Azure.ResourceManager.RecoveryServicesDataReplication",
     "path": "sdk/recoveryservices-datareplication/Azure.ResourceManager.RecoveryServicesDataReplication",
     "type": "Management",
-    "generator": "Swagger"
+    "generator": "TSP-Old"
   },
   {
     "service": "fabric",
     "library": "Azure.ResourceManager.Fabric",
     "path": "sdk/fabric/Azure.ResourceManager.Fabric",
     "type": "Management",
-    "generator": "Swagger"
+    "generator": "TSP-Old"
   },
   {
     "service": "devopsinfrastructure",
     "library": "Azure.ResourceManager.DevOpsInfrastructure",
     "path": "sdk/devopsinfrastructure/Azure.ResourceManager.DevOpsInfrastructure",
     "type": "Management",
-    "generator": "Swagger"
+    "generator": "TSP-Old"
   },
   {
     "service": "deviceupdate",
@@ -1964,7 +1964,7 @@
     "library": "Azure.Security.KeyVault.Administration",
     "path": "sdk/keyvault/Azure.Security.KeyVault.Administration",
     "type": "Data Plane",
-    "generator": "Swagger"
+    "generator": "TSP-Old"
   },
   {
     "service": "keyvault",
@@ -2167,7 +2167,7 @@
     "library": "Azure.Messaging.EventGrid.SystemEvents",
     "path": "sdk/eventgrid/Azure.Messaging.EventGrid.SystemEvents",
     "type": "Data Plane",
-    "generator": "Swagger"
+    "generator": "TSP-Old"
   },
   {
     "service": "eventgrid",
@@ -2181,7 +2181,7 @@
     "library": "Azure.Messaging.EventGrid.Namespaces",
     "path": "sdk/eventgrid/Azure.Messaging.EventGrid.Namespaces",
     "type": "Data Plane",
-    "generator": "Swagger"
+    "generator": "TSP-New"
   },
   {
     "service": "databox",
@@ -2195,7 +2195,7 @@
     "library": "Azure.ResourceManager.WeightsAndBiases",
     "path": "sdk/weightsandbiases/Azure.ResourceManager.WeightsAndBiases",
     "type": "Management",
-    "generator": "Swagger"
+    "generator": "TSP-Old"
   },
   {
     "service": "newrelicobservability",
@@ -2230,14 +2230,14 @@
     "library": "Azure.ResourceManager.ArizeAIObservabilityEval",
     "path": "sdk/arizeaiobservabilityeval/Azure.ResourceManager.ArizeAIObservabilityEval",
     "type": "Management",
-    "generator": "Swagger"
+    "generator": "TSP-Old"
   },
   {
     "service": "deviceregistry",
     "library": "Azure.ResourceManager.DeviceRegistry",
     "path": "sdk/deviceregistry/Azure.ResourceManager.DeviceRegistry",
     "type": "Management",
-    "generator": "Swagger"
+    "generator": "TSP-Old"
   },
   {
     "service": "billing",
@@ -2265,7 +2265,7 @@
     "library": "Azure.Developer.DevCenter",
     "path": "sdk/devcenter/Azure.Developer.DevCenter",
     "type": "Data Plane",
-    "generator": "Swagger"
+    "generator": "TSP-Old"
   },
   {
     "service": "devcenter",
@@ -2279,7 +2279,7 @@
     "library": "Azure.ResourceManager.MongoCluster",
     "path": "sdk/mongocluster/Azure.ResourceManager.MongoCluster",
     "type": "Management",
-    "generator": "Swagger"
+    "generator": "TSP-Old"
   },
   {
     "service": "personalizer",
@@ -2293,14 +2293,14 @@
     "library": "Azure.ResourceManager.Terraform",
     "path": "sdk/terraform/Azure.ResourceManager.Terraform",
     "type": "Management",
-    "generator": "Swagger"
+    "generator": "TSP-Old"
   },
   {
     "service": "documentintelligence",
     "library": "Azure.AI.DocumentIntelligence",
     "path": "sdk/documentintelligence/Azure.AI.DocumentIntelligence",
     "type": "Data Plane",
-    "generator": "Swagger"
+    "generator": "TSP-Old"
   },
   {
     "service": "automanage",
@@ -2321,7 +2321,7 @@
     "library": "Azure.ResourceManager.NeonPostgres",
     "path": "sdk/neonpostgres/Azure.ResourceManager.NeonPostgres",
     "type": "Management",
-    "generator": "Swagger"
+    "generator": "TSP-Old"
   },
   {
     "service": "orbital",
@@ -2335,21 +2335,21 @@
     "library": "Azure.AI.Projects",
     "path": "sdk/ai/Azure.AI.Projects",
     "type": "Data Plane",
-    "generator": "Swagger"
+    "generator": "TSP-Old"
   },
   {
     "service": "ai",
     "library": "Azure.AI.Inference",
     "path": "sdk/ai/Azure.AI.Inference",
     "type": "Data Plane",
-    "generator": "Swagger"
+    "generator": "TSP-Old"
   },
   {
     "service": "ai",
     "library": "Azure.AI.Agents.Persistent",
     "path": "sdk/ai/Azure.AI.Agents.Persistent",
     "type": "Data Plane",
-    "generator": "Swagger"
+    "generator": "TSP-Old"
   },
   {
     "service": "managementpartner",
@@ -2384,7 +2384,7 @@
     "library": "Azure.ResourceManager.PlaywrightTesting",
     "path": "sdk/playwrighttesting/Azure.ResourceManager.PlaywrightTesting",
     "type": "Management",
-    "generator": "Swagger"
+    "generator": "TSP-Old"
   },
   {
     "service": "playwrighttesting",
@@ -2475,7 +2475,7 @@
     "library": "Azure.ResourceManager.IotOperations",
     "path": "sdk/iotoperations/Azure.ResourceManager.IotOperations",
     "type": "Management",
-    "generator": "Swagger"
+    "generator": "TSP-Old"
   },
   {
     "service": "selfhelp",
@@ -2517,14 +2517,14 @@
     "library": "Azure.ResourceManager.Chaos",
     "path": "sdk/chaos/Azure.ResourceManager.Chaos",
     "type": "Management",
-    "generator": "Swagger"
+    "generator": "TSP-Old"
   },
   {
     "service": "containerorchestratorruntime",
     "library": "Azure.ResourceManager.ContainerOrchestratorRuntime",
     "path": "sdk/containerorchestratorruntime/Azure.ResourceManager.ContainerOrchestratorRuntime",
     "type": "Management",
-    "generator": "Swagger"
+    "generator": "TSP-Old"
   },
   {
     "service": "datashare",
@@ -2720,7 +2720,7 @@
     "library": "Azure.Compute.Batch",
     "path": "sdk/batch/Azure.Compute.Batch",
     "type": "Data Plane",
-    "generator": "Swagger"
+    "generator": "TSP-Old"
   },
   {
     "service": "resourcegraph",
@@ -2741,7 +2741,7 @@
     "library": "Azure.Data.SchemaRegistry",
     "path": "sdk/schemaregistry/Azure.Data.SchemaRegistry",
     "type": "Data Plane",
-    "generator": "Swagger"
+    "generator": "TSP-Old"
   },
   {
     "service": "hybridkubernetes",
@@ -2860,7 +2860,7 @@
     "library": "Azure.ResourceManager.PortalServicesCopilot",
     "path": "sdk/portalservices/Azure.ResourceManager.PortalServicesCopilot",
     "type": "Management",
-    "generator": "Swagger"
+    "generator": "TSP-Old"
   },
   {
     "service": "network",
@@ -2923,7 +2923,7 @@
     "library": "Azure.Analytics.Defender.Easm",
     "path": "sdk/easm/Azure.Analytics.Defender.Easm",
     "type": "Data Plane",
-    "generator": "Swagger"
+    "generator": "TSP-Old"
   },
   {
     "service": "resources",
@@ -2951,20 +2951,20 @@
     "library": "Azure.Health.Insights.RadiologyInsights",
     "path": "sdk/healthinsights/Azure.Health.Insights.RadiologyInsights",
     "type": "Data Plane",
-    "generator": "Swagger"
+    "generator": "TSP-Old"
   },
   {
     "service": "healthinsights",
     "library": "Azure.Health.Insights.CancerProfiling",
     "path": "sdk/healthinsights/Azure.Health.Insights.CancerProfiling",
     "type": "Data Plane",
-    "generator": "Swagger"
+    "generator": "TSP-Old"
   },
   {
     "service": "healthinsights",
     "library": "Azure.Health.Insights.ClinicalMatching",
     "path": "sdk/healthinsights/Azure.Health.Insights.ClinicalMatching",
     "type": "Data Plane",
-    "generator": "Swagger"
+    "generator": "TSP-Old"
   }
 ]

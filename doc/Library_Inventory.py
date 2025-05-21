@@ -30,11 +30,11 @@ def identify_generator(path):
     tsp_dir = os.path.join(path, "src", "tsp")
     tsp_files = glob.glob(os.path.join(path, "src", "*.tsp"))
     
-    # Check for tspLocation.yaml files
+    # Check for tsp-location.yaml files
     tsp_location_paths = []
     for root, dirs, files in os.walk(path):
         for file in files:
-            if file.lower() == "tsplocation.yaml":
+            if file.lower() == "tsp-location.yaml":
                 tsp_location_paths.append(os.path.join(root, file))
     
     # If there's a tspLocation.yaml file and it contains emitterPackageJsonPath, it's using the new TypeSpec generator
@@ -179,7 +179,7 @@ def generate_markdown_report(libraries):
     report.append("\n")
     
     report.append("## Data Plane Libraries using TSP (New Generator)\n")
-    report.append("TSP with new generator is detected by the presence of a tsplocation.yaml file with an emitterPackageJsonPath value.\n")
+    report.append("TSP with new generator is detected by the presence of a tsp-location.yaml file with an emitterPackageJsonPath value.\n")
     report.append("| Service | Library | Path |")
     report.append("| ------- | ------- | ---- |")
     for lib in sorted(data_tsp_new, key=lambda x: (x["service"], x["library"])):
@@ -187,7 +187,7 @@ def generate_markdown_report(libraries):
     report.append("\n")
     
     report.append("## Data Plane Libraries using TSP (Old Generator)\n")
-    report.append("TSP with old generator is detected by the presence of a tsplocation.yaml file without an emitterPackageJsonPath value, tspconfig.yaml file, tsp directory, or *.tsp files.\n")
+    report.append("TSP with old generator is detected by the presence of a tsp-location.yaml file without an emitterPackageJsonPath value, tspconfig.yaml file, tsp directory, or *.tsp files.\n")
     report.append("| Service | Library | Path |")
     report.append("| ------- | ------- | ---- |")
     for lib in sorted(data_tsp_old, key=lambda x: (x["service"], x["library"])):
@@ -202,7 +202,7 @@ def generate_markdown_report(libraries):
     report.append("\n")
     
     report.append("## Management Plane Libraries using TSP (New Generator)\n")
-    report.append("TSP with new generator is detected by the presence of a tsplocation.yaml file with an emitterPackageJsonPath value.\n")
+    report.append("TSP with new generator is detected by the presence of a tsp-location.yaml file with an emitterPackageJsonPath value.\n")
     report.append("| Service | Library | Path |")
     report.append("| ------- | ------- | ---- |")
     for lib in sorted(mgmt_tsp_new, key=lambda x: (x["service"], x["library"])):
@@ -210,7 +210,7 @@ def generate_markdown_report(libraries):
     report.append("\n")
     
     report.append("## Management Plane Libraries using TSP (Old Generator)\n")
-    report.append("TSP with old generator is detected by the presence of a tsplocation.yaml file without an emitterPackageJsonPath value, tspconfig.yaml file, tsp directory, or *.tsp files.\n")
+    report.append("TSP with old generator is detected by the presence of a tsp-location.yaml file without an emitterPackageJsonPath value, tspconfig.yaml file, tsp directory, or *.tsp files.\n")
     report.append("| Service | Library | Path |")
     report.append("| ------- | ------- | ---- |")
     for lib in sorted(mgmt_tsp_old, key=lambda x: (x["service"], x["library"])):
