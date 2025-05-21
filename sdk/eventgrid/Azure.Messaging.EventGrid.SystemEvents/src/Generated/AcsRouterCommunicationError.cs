@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -48,15 +47,13 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 
         /// <summary> Initializes a new instance of <see cref="AcsRouterCommunicationError"/>. </summary>
         /// <param name="innererror"> Router Communication Inner Error. </param>
-        /// <param name="details"> List of Router Communication Errors. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="innererror"/> or <paramref name="details"/> is null. </exception>
-        internal AcsRouterCommunicationError(AcsRouterCommunicationError innererror, IEnumerable<AcsRouterCommunicationError> details)
+        /// <exception cref="ArgumentNullException"> <paramref name="innererror"/> is null. </exception>
+        internal AcsRouterCommunicationError(AcsRouterCommunicationError innererror)
         {
             Argument.AssertNotNull(innererror, nameof(innererror));
-            Argument.AssertNotNull(details, nameof(details));
 
             Innererror = innererror;
-            Details = details.ToList();
+            Details = new ChangeTrackingList<AcsRouterCommunicationError>();
         }
 
         /// <summary> Initializes a new instance of <see cref="AcsRouterCommunicationError"/>. </summary>

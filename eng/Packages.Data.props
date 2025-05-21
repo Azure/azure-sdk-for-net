@@ -166,7 +166,7 @@
     <PackageReference Update="Microsoft.Bcl.Numerics" Version="8.0.0" />
 
     <!-- Other approved packages -->
-    <PackageReference Update="Microsoft.Azure.Amqp" Version="2.6.9" />
+    <PackageReference Update="Microsoft.Azure.Amqp" Version="2.6.11" />
     <PackageReference Update="Microsoft.Azure.WebPubSub.Common" Version="1.4.0" />
     <PackageReference Update="Microsoft.Identity.Client" Version="4.71.1" />
     <PackageReference Update="Microsoft.Identity.Client.Extensions.Msal" Version="4.71.1" />
@@ -209,7 +209,6 @@
     <PackageReference Update="Microsoft.TypeSpec.Generator.ClientModel" Version="[$(UnbrandedGeneratorVersion)]" />
     <PackageReference Update="Microsoft.TypeSpec.Generator.Input" Version="[$(UnbrandedGeneratorVersion)]" />
     <PackageReference Update="Azure.Generator" Version="[$(AzureGeneratorVersion)]" />
-    <PackageReference Update="System.ClientModel" Version="1.4.1" />
   </ItemGroup>
 
   <!--
@@ -439,7 +438,7 @@
 
   <PropertyGroup>
     <TestProxyVersion>1.0.0-dev.20250501.1</TestProxyVersion>
-    <UnbrandedGeneratorVersion>1.0.0-alpha.20250514.1</UnbrandedGeneratorVersion>
+    <UnbrandedGeneratorVersion>1.0.0-alpha.20250519.4</UnbrandedGeneratorVersion>
     <AzureGeneratorVersion>1.0.0-alpha.20250515.2</AzureGeneratorVersion>
   </PropertyGroup>
 </Project>

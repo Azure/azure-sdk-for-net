@@ -14,10 +14,23 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class AcsChatThreadPropertiesUpdatedEventData : AcsChatThreadEventInThreadBaseProperties
     {
         /// <summary> Initializes a new instance of <see cref="AcsChatThreadPropertiesUpdatedEventData"/>. </summary>
-        internal AcsChatThreadPropertiesUpdatedEventData()
+        /// <param name="transactionId"> The transaction id will be used as co-relation vector. </param>
+        /// <param name="threadId"> The chat thread id. </param>
+        /// <param name="editedByCommunicationIdentifier"> The communication identifier of the user who updated the thread properties. </param>
+        /// <param name="properties"> The updated thread properties. </param>
+        /// <param name="metadata"> The thread metadata. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="transactionId"/>, <paramref name="threadId"/>, <paramref name="editedByCommunicationIdentifier"/>, <paramref name="properties"/> or <paramref name="metadata"/> is null. </exception>
+        internal AcsChatThreadPropertiesUpdatedEventData(string transactionId, string threadId, CommunicationIdentifierModel editedByCommunicationIdentifier, IReadOnlyDictionary<string, object> properties, IReadOnlyDictionary<string, string> metadata) : base(transactionId, threadId)
         {
-            Properties = new ChangeTrackingDictionary<string, object>();
-            Metadata = new ChangeTrackingDictionary<string, string>();
+            Argument.AssertNotNull(transactionId, nameof(transactionId));
+            Argument.AssertNotNull(threadId, nameof(threadId));
+            Argument.AssertNotNull(editedByCommunicationIdentifier, nameof(editedByCommunicationIdentifier));
+            Argument.AssertNotNull(properties, nameof(properties));
+            Argument.AssertNotNull(metadata, nameof(metadata));
+
+            EditedByCommunicationIdentifier = editedByCommunicationIdentifier;
+            Properties = properties;
+            Metadata = metadata;
         }
 
         /// <summary> Initializes a new instance of <see cref="AcsChatThreadPropertiesUpdatedEventData"/>. </summary>
@@ -29,8 +42,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="editTime"> The time at which the properties of the thread were updated. </param>
         /// <param name="properties"> The updated thread properties. </param>
         /// <param name="metadata"> The thread metadata. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="transactionId"/> or <paramref name="threadId"/> is null. </exception>
         internal AcsChatThreadPropertiesUpdatedEventData(string transactionId, string threadId, DateTimeOffset? createTime, long? version, CommunicationIdentifierModel editedByCommunicationIdentifier, DateTimeOffset? editTime, IReadOnlyDictionary<string, object> properties, IReadOnlyDictionary<string, string> metadata) : base(transactionId, threadId, createTime, version)
         {
+            Argument.AssertNotNull(transactionId, nameof(transactionId));
+            Argument.AssertNotNull(threadId, nameof(threadId));
+
             EditedByCommunicationIdentifier = editedByCommunicationIdentifier;
             EditTime = editTime;
             Properties = properties;

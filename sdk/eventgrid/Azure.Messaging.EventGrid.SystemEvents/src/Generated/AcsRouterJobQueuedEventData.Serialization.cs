@@ -40,20 +40,26 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 writer.WritePropertyName("priority"u8);
                 writer.WriteNumberValue(Priority.Value);
             }
-            writer.WritePropertyName("attachedWorkerSelectors"u8);
-            writer.WriteStartArray();
-            foreach (var item in AttachedWorkerSelectors)
+            if (options.Format != "W")
             {
-                writer.WriteObjectValue(item, options);
+                writer.WritePropertyName("attachedWorkerSelectors"u8);
+                writer.WriteStartArray();
+                foreach (var item in AttachedWorkerSelectors)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
             }
-            writer.WriteEndArray();
-            writer.WritePropertyName("requestedWorkerSelectors"u8);
-            writer.WriteStartArray();
-            foreach (var item in RequestedWorkerSelectors)
+            if (options.Format != "W")
             {
-                writer.WriteObjectValue(item, options);
+                writer.WritePropertyName("requestedWorkerSelectors"u8);
+                writer.WriteStartArray();
+                foreach (var item in RequestedWorkerSelectors)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
             }
-            writer.WriteEndArray();
         }
 
         AcsRouterJobQueuedEventData IJsonModel<AcsRouterJobQueuedEventData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
