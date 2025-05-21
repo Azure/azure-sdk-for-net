@@ -23,11 +23,11 @@ def is_mgmt_library(path):
 def identify_generator(path):
     """
     Identify if a library is generated using swagger or tsp.
-    Returns: "Swagger", "TSP-New", "TSP-Old", or "No Generator"
+    Returns: "Swagger", a specific TypeSpec generator name, "TSP-Old", or "No Generator"
     """
     # Special case for Azure.AI.OpenAI which uses TypeSpec with new generator via special handling
     if os.path.basename(path) == "Azure.AI.OpenAI" and "openai" in path:
-        return "TSP-New"
+        return "http-client-csharp"
         
     # First check for direct TypeSpec indicators
     tsp_config_path = os.path.join(path, "src", "tspconfig.yaml")
@@ -41,15 +41,38 @@ def identify_generator(path):
             if file.lower() == "tsp-location.yaml":
                 tsp_location_paths.append(os.path.join(root, file))
     
-    # If there's a tspLocation.yaml file and it contains emitterPackageJsonPath, it's using the new TypeSpec generator
+    # If there's a tsp-location.yaml file and it contains emitterPackageJsonPath, extract the generator name
     for tsp_location_path in tsp_location_paths:
         try:
             with open(tsp_location_path, 'r', encoding='utf-8', errors='ignore') as f:
-                content = f.read().lower()
-                if "emitterpackagejsonpath" in content:
-                    return "TSP-New"
+                content = f.read()
+                if "emitterPackageJsonPath" in content:
+                    # Extract the emitterPackageJsonPath value
+                    import re
+                    match = re.search(r'emitterPackageJsonPath:\s*"([^"]+)"', content)
+                    if match:
+                        emitter_path = match.group(1)
+                        # Construct absolute path to the emitter package JSON
+                        repo_root = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", ".."))
+                        emitter_json_path = os.path.join(repo_root, emitter_path)
+                        
+                        # Try to read the generator name from the emitter package JSON
+                        if os.path.exists(emitter_json_path):
+                            try:
+                                with open(emitter_json_path, 'r', encoding='utf-8', errors='ignore') as f:
+                                    package_json = json.load(f)
+                                    # Look for TypeSpec generator in dependencies
+                                    for dep in package_json.get('dependencies', {}):
+                                        if dep.startswith('@azure-typespec/'):
+                                            # Return just the generator name without the @azure-typespec/ prefix
+                                            return dep.replace('@azure-typespec/', '')
+                            except Exception as e:
+                                pass  # Fall back to generic name if can't extract
+                    
+                    # If we couldn't extract a specific name, use a generic "TypeSpec New Generator"
+                    return "http-client-csharp"  # Default name for new generator
                 else:
-                    # Found tspLocation.yaml but no emitterPackageJsonPath, it's using the old TypeSpec generator
+                    # Found tsp-location.yaml but no emitterPackageJsonPath, it's using the old TypeSpec generator
                     return "TSP-Old"
         except:
             pass
@@ -164,16 +187,35 @@ def generate_markdown_report(libraries):
     """
     # Group by type and generator
     mgmt_swagger = [lib for lib in libraries if lib["type"] == "Management" and lib["generator"] == "Swagger"]
-    mgmt_tsp_old = [lib for lib in libraries if lib["type"] == "Management" and lib["generator"] == "TSP-Old"]
-    mgmt_tsp_new = [lib for lib in libraries if lib["type"] == "Management" and lib["generator"] == "TSP-New"]
     data_swagger = [lib for lib in libraries if lib["type"] == "Data Plane" and lib["generator"] == "Swagger"]
-    data_tsp_old = [lib for lib in libraries if lib["type"] == "Data Plane" and lib["generator"] == "TSP-Old"]
-    data_tsp_new = [lib for lib in libraries if lib["type"] == "Data Plane" and lib["generator"] == "TSP-New"]
-    no_generator = [lib for lib in libraries if lib["generator"] == "No Generator"]
     
-    # Combined TSP counts for backward compatibility
-    mgmt_tsp = mgmt_tsp_old + mgmt_tsp_new
-    data_tsp = data_tsp_old + data_tsp_new
+    # Old TypeSpec libraries
+    mgmt_tsp_old = [lib for lib in libraries if lib["type"] == "Management" and lib["generator"] == "TSP-Old"]
+    data_tsp_old = [lib for lib in libraries if lib["type"] == "Data Plane" and lib["generator"] == "TSP-Old"]
+    
+    # Group by specific TypeSpec generator
+    # First, identify all unique new generator types
+    new_generator_types = set([
+        lib["generator"] 
+        for lib in libraries 
+        if lib["generator"] not in ["Swagger", "TSP-Old", "No Generator"]
+    ])
+    
+    # Create groups for each generator type
+    mgmt_tsp_by_generator = {}
+    data_tsp_by_generator = {}
+    
+    for gen_type in new_generator_types:
+        mgmt_tsp_by_generator[gen_type] = [
+            lib for lib in libraries 
+            if lib["type"] == "Management" and lib["generator"] == gen_type
+        ]
+        data_tsp_by_generator[gen_type] = [
+            lib for lib in libraries 
+            if lib["type"] == "Data Plane" and lib["generator"] == gen_type
+        ]
+    
+    no_generator = [lib for lib in libraries if lib["generator"] == "No Generator"]
     
     report = []
     report.append("# Azure SDK for .NET Libraries Inventory\n")
@@ -181,60 +223,85 @@ def generate_markdown_report(libraries):
     report.append("## Summary\n")
     report.append(f"- Total libraries: {len(libraries)}")
     report.append(f"- Management Plane (Swagger): {len(mgmt_swagger)}")
-    report.append(f"- Management Plane (TSP): {len(mgmt_tsp)} (New Generator: {len(mgmt_tsp_new)}, Old Generator: {len(mgmt_tsp_old)})")
+    report.append(f"- Management Plane (TSP-Old): {len(mgmt_tsp_old)}")
+    
+    # List all new generator types with counts
+    for gen_type in sorted(new_generator_types):
+        report.append(f"- Management Plane (TypeSpec - {gen_type}): {len(mgmt_tsp_by_generator[gen_type])}")
+    
     report.append(f"- Data Plane (Swagger): {len(data_swagger)}")
-    report.append(f"- Data Plane (TSP): {len(data_tsp)} (New Generator: {len(data_tsp_new)}, Old Generator: {len(data_tsp_old)})")
+    report.append(f"- Data Plane (TSP-Old): {len(data_tsp_old)}")
+    
+    # List all new generator types with counts for data plane
+    for gen_type in sorted(new_generator_types):
+        report.append(f"- Data Plane (TypeSpec - {gen_type}): {len(data_tsp_by_generator[gen_type])}")
+    
     report.append(f"- No generator: {len(no_generator)}")
     report.append("\n")
     
-    report.append("## Data Plane Libraries using TSP (New Generator)\n")
-    report.append("TSP with new generator is detected by the presence of a tsp-location.yaml file with an emitterPackageJsonPath value or special handling for specific libraries like Azure.AI.OpenAI.\n")
-    report.append("| Service | Library | Path |")
-    report.append("| ------- | ------- | ---- |")
-    for lib in sorted(data_tsp_new, key=lambda x: (x["service"], x["library"])):
-        report.append(f"| {lib['service']} | {lib['library']} | {lib['path']} |")
-    report.append("\n")
+    # Add sections for each TypeSpec generator for Data Plane
+    for gen_type in sorted(new_generator_types):
+        if len(data_tsp_by_generator[gen_type]) > 0:
+            report.append(f"## Data Plane Libraries using TypeSpec ({gen_type})\n")
+            report.append(f"TypeSpec with {gen_type} generator is detected by the presence of a tsp-location.yaml file with an emitterPackageJsonPath value referencing {gen_type}, or through special handling for specific libraries.\n")
+            report.append("| Service | Library | Path |")
+            report.append("| ------- | ------- | ---- |")
+            for lib in sorted(data_tsp_by_generator[gen_type], key=lambda x: (x["service"], x["library"])):
+                report.append(f"| {lib['service']} | {lib['library']} | {lib['path']} |")
+            report.append("\n")
     
-    report.append("## Data Plane Libraries using TSP (Old Generator)\n")
-    report.append("TSP with old generator is detected by the presence of a tsp-location.yaml file without an emitterPackageJsonPath value, tspconfig.yaml file, tsp directory, or *.tsp files.\n")
-    report.append("| Service | Library | Path |")
-    report.append("| ------- | ------- | ---- |")
-    for lib in sorted(data_tsp_old, key=lambda x: (x["service"], x["library"])):
-        report.append(f"| {lib['service']} | {lib['library']} | {lib['path']} |")
-    report.append("\n")
+    # Old TypeSpec Data Plane Libraries
+    if len(data_tsp_old) > 0:
+        report.append("## Data Plane Libraries using TypeSpec (Old Generator)\n")
+        report.append("TypeSpec with old generator is detected by the presence of a tsp-location.yaml file without an emitterPackageJsonPath value, tspconfig.yaml file, tsp directory, or *.tsp files.\n")
+        report.append("| Service | Library | Path |")
+        report.append("| ------- | ------- | ---- |")
+        for lib in sorted(data_tsp_old, key=lambda x: (x["service"], x["library"])):
+            report.append(f"| {lib['service']} | {lib['library']} | {lib['path']} |")
+        report.append("\n")
     
-    report.append("## Data Plane Libraries using Swagger\n")
-    report.append("| Service | Library | Path |")
-    report.append("| ------- | ------- | ---- |")
-    for lib in sorted(data_swagger, key=lambda x: (x["service"], x["library"])):
-        report.append(f"| {lib['service']} | {lib['library']} | {lib['path']} |")
-    report.append("\n")
+    # Data Plane Swagger Libraries
+    if len(data_swagger) > 0:
+        report.append("## Data Plane Libraries using Swagger\n")
+        report.append("| Service | Library | Path |")
+        report.append("| ------- | ------- | ---- |")
+        for lib in sorted(data_swagger, key=lambda x: (x["service"], x["library"])):
+            report.append(f"| {lib['service']} | {lib['library']} | {lib['path']} |")
+        report.append("\n")
     
-    report.append("## Management Plane Libraries using TSP (New Generator)\n")
-    report.append("TSP with new generator is detected by the presence of a tsp-location.yaml file with an emitterPackageJsonPath value or special handling for specific libraries.\n")
-    report.append("| Service | Library | Path |")
-    report.append("| ------- | ------- | ---- |")
-    for lib in sorted(mgmt_tsp_new, key=lambda x: (x["service"], x["library"])):
-        report.append(f"| {lib['service']} | {lib['library']} | {lib['path']} |")
-    report.append("\n")
+    # Add sections for each TypeSpec generator for Management Plane
+    for gen_type in sorted(new_generator_types):
+        if len(mgmt_tsp_by_generator[gen_type]) > 0:
+            report.append(f"## Management Plane Libraries using TypeSpec ({gen_type})\n")
+            report.append(f"TypeSpec with {gen_type} generator is detected by the presence of a tsp-location.yaml file with an emitterPackageJsonPath value referencing {gen_type}, or through special handling for specific libraries.\n")
+            report.append("| Service | Library | Path |")
+            report.append("| ------- | ------- | ---- |")
+            for lib in sorted(mgmt_tsp_by_generator[gen_type], key=lambda x: (x["service"], x["library"])):
+                report.append(f"| {lib['service']} | {lib['library']} | {lib['path']} |")
+            report.append("\n")
     
-    report.append("## Management Plane Libraries using TSP (Old Generator)\n")
-    report.append("TSP with old generator is detected by the presence of a tsp-location.yaml file without an emitterPackageJsonPath value, tspconfig.yaml file, tsp directory, or *.tsp files.\n")
-    report.append("| Service | Library | Path |")
-    report.append("| ------- | ------- | ---- |")
-    for lib in sorted(mgmt_tsp_old, key=lambda x: (x["service"], x["library"])):
-        report.append(f"| {lib['service']} | {lib['library']} | {lib['path']} |")
-    report.append("\n")
+    # Old TypeSpec Management Plane Libraries
+    if len(mgmt_tsp_old) > 0:
+        report.append("## Management Plane Libraries using TypeSpec (Old Generator)\n")
+        report.append("TypeSpec with old generator is detected by the presence of a tsp-location.yaml file without an emitterPackageJsonPath value, tspconfig.yaml file, tsp directory, or *.tsp files.\n")
+        report.append("| Service | Library | Path |")
+        report.append("| ------- | ------- | ---- |")
+        for lib in sorted(mgmt_tsp_old, key=lambda x: (x["service"], x["library"])):
+            report.append(f"| {lib['service']} | {lib['library']} | {lib['path']} |")
+        report.append("\n")
     
-    report.append("## Management Plane Libraries using Swagger\n")
-    report.append("| Service | Library | Path |")
-    report.append("| ------- | ------- | ---- |")
-    for lib in sorted(mgmt_swagger, key=lambda x: (x["service"], x["library"])):
-        report.append(f"| {lib['service']} | {lib['library']} | {lib['path']} |")
-    report.append("\n")
+    # Management Plane Swagger Libraries
+    if len(mgmt_swagger) > 0:
+        report.append("## Management Plane Libraries using Swagger\n")
+        report.append("| Service | Library | Path |")
+        report.append("| ------- | ------- | ---- |")
+        for lib in sorted(mgmt_swagger, key=lambda x: (x["service"], x["library"])):
+            report.append(f"| {lib['service']} | {lib['library']} | {lib['path']} |")
+        report.append("\n")
     
+    # No Generator Libraries
     report.append("## Libraries with No Generator\n")
-    report.append("Libraries with no generator have neither autorest.md nor tsp-location.yaml files.\n")
+    report.append(f"Libraries with no generator have neither autorest.md nor tsp-location.yaml files. Total: {len(no_generator)}\n")
     report.append("| Service | Library | Path |")
     report.append("| ------- | ------- | ---- |")
     for lib in sorted(no_generator, key=lambda x: (x["service"], x["library"])):
@@ -252,21 +319,36 @@ if __name__ == "__main__":
     # Print summary counts
     mgmt_swagger = sum(1 for lib in libraries if lib["type"] == "Management" and lib["generator"] == "Swagger")
     mgmt_tsp_old = sum(1 for lib in libraries if lib["type"] == "Management" and lib["generator"] == "TSP-Old")
-    mgmt_tsp_new = sum(1 for lib in libraries if lib["type"] == "Management" and lib["generator"] == "TSP-New")
-    mgmt_tsp = mgmt_tsp_old + mgmt_tsp_new
-    
     data_swagger = sum(1 for lib in libraries if lib["type"] == "Data Plane" and lib["generator"] == "Swagger")
     data_tsp_old = sum(1 for lib in libraries if lib["type"] == "Data Plane" and lib["generator"] == "TSP-Old")
-    data_tsp_new = sum(1 for lib in libraries if lib["type"] == "Data Plane" and lib["generator"] == "TSP-New")
-    data_tsp = data_tsp_old + data_tsp_new
-    
     no_generator = sum(1 for lib in libraries if lib["generator"] == "No Generator")
+    
+    # Get counts for specific TypeSpec generators
+    new_generator_types = set([
+        lib["generator"] 
+        for lib in libraries 
+        if lib["generator"] not in ["Swagger", "TSP-Old", "No Generator"]
+    ])
     
     print(f"Total libraries found: {len(libraries)}")
     print(f"Management Plane (Swagger): {mgmt_swagger}")
-    print(f"Management Plane (TSP): {mgmt_tsp} (New Generator: {mgmt_tsp_new}, Old Generator: {mgmt_tsp_old})")
+    print(f"Management Plane (TSP-Old): {mgmt_tsp_old}")
+    
+    # Print counts for each new generator type in Management Plane
+    for gen_type in sorted(new_generator_types):
+        mgmt_gen_count = sum(1 for lib in libraries if lib["type"] == "Management" and lib["generator"] == gen_type)
+        if mgmt_gen_count > 0:
+            print(f"Management Plane (TypeSpec - {gen_type}): {mgmt_gen_count}")
+    
     print(f"Data Plane (Swagger): {data_swagger}")
-    print(f"Data Plane (TSP): {data_tsp} (New Generator: {data_tsp_new}, Old Generator: {data_tsp_old})")
+    print(f"Data Plane (TSP-Old): {data_tsp_old}")
+    
+    # Print counts for each new generator type in Data Plane
+    for gen_type in sorted(new_generator_types):
+        data_gen_count = sum(1 for lib in libraries if lib["type"] == "Data Plane" and lib["generator"] == gen_type)
+        if data_gen_count > 0:
+            print(f"Data Plane (TypeSpec - {gen_type}): {data_gen_count}")
+    
     print(f"No generator: {no_generator}")
     
     # Generate the inventory markdown file

@@ -4,15 +4,17 @@
 
 - Total libraries: 391
 - Management Plane (Swagger): 177
-- Management Plane (TSP): 29 (New Generator: 0, Old Generator: 29)
+- Management Plane (TSP-Old): 29
+- Management Plane (TypeSpec - http-client-csharp): 0
 - Data Plane (Swagger): 114
-- Data Plane (TSP): 34 (New Generator: 2, Old Generator: 32)
+- Data Plane (TSP-Old): 32
+- Data Plane (TypeSpec - http-client-csharp): 2
 - No generator: 37
 
 
-## Data Plane Libraries using TSP (New Generator)
+## Data Plane Libraries using TypeSpec (http-client-csharp)
 
-TSP with new generator is detected by the presence of a tsp-location.yaml file with an emitterPackageJsonPath value or special handling for specific libraries like Azure.AI.OpenAI.
+TypeSpec with http-client-csharp generator is detected by the presence of a tsp-location.yaml file with an emitterPackageJsonPath value referencing http-client-csharp, or through special handling for specific libraries.
 
 | Service | Library | Path |
 | ------- | ------- | ---- |
@@ -20,9 +22,9 @@ TSP with new generator is detected by the presence of a tsp-location.yaml file w
 | openai | Azure.AI.OpenAI | sdk/openai/Azure.AI.OpenAI |
 
 
-## Data Plane Libraries using TSP (Old Generator)
+## Data Plane Libraries using TypeSpec (Old Generator)
 
-TSP with old generator is detected by the presence of a tsp-location.yaml file without an emitterPackageJsonPath value, tspconfig.yaml file, tsp directory, or *.tsp files.
+TypeSpec with old generator is detected by the presence of a tsp-location.yaml file without an emitterPackageJsonPath value, tspconfig.yaml file, tsp directory, or *.tsp files.
 
 | Service | Library | Path |
 | ------- | ------- | ---- |
@@ -180,17 +182,9 @@ TSP with old generator is detected by the presence of a tsp-location.yaml file w
 | webpubsub | Azure.Messaging.WebPubSub | sdk/webpubsub/Azure.Messaging.WebPubSub |
 
 
-## Management Plane Libraries using TSP (New Generator)
+## Management Plane Libraries using TypeSpec (Old Generator)
 
-TSP with new generator is detected by the presence of a tsp-location.yaml file with an emitterPackageJsonPath value or special handling for specific libraries.
-
-| Service | Library | Path |
-| ------- | ------- | ---- |
-
-
-## Management Plane Libraries using TSP (Old Generator)
-
-TSP with old generator is detected by the presence of a tsp-location.yaml file without an emitterPackageJsonPath value, tspconfig.yaml file, tsp directory, or *.tsp files.
+TypeSpec with old generator is detected by the presence of a tsp-location.yaml file without an emitterPackageJsonPath value, tspconfig.yaml file, tsp directory, or *.tsp files.
 
 | Service | Library | Path |
 | ------- | ------- | ---- |
@@ -410,7 +404,7 @@ TSP with old generator is detected by the presence of a tsp-location.yaml file w
 
 ## Libraries with No Generator
 
-Libraries with no generator have neither autorest.md nor tsp-location.yaml files.
+Libraries with no generator have neither autorest.md nor tsp-location.yaml files. Total: 37
 
 | Service | Library | Path |
 | ------- | ------- | ---- |

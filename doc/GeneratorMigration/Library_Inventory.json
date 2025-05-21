@@ -515,7 +515,7 @@
     "library": "Azure.AI.OpenAI",
     "path": "sdk/openai/Azure.AI.OpenAI",
     "type": "Data Plane",
-    "generator": "TSP-New"
+    "generator": "http-client-csharp"
   },
   {
     "service": "oracle",
@@ -1992,7 +1992,7 @@
     "library": "Azure.Messaging.EventGrid.Namespaces",
     "path": "sdk/eventgrid/Azure.Messaging.EventGrid.Namespaces",
     "type": "Data Plane",
-    "generator": "TSP-New"
+    "generator": "http-client-csharp"
   },
   {
     "service": "databox",
