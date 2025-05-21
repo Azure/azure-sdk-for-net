@@ -1084,15 +1084,12 @@ namespace Azure.Storage.Blobs
             BlobUploadOptions options,
             CancellationToken cancellationToken = default)
         {
-            using (var stream = content.ToStream())
-            {
-                return StagedUploadInternal(
-                    stream,
-                    options,
-                    async: false,
-                    cancellationToken: cancellationToken)
-                    .EnsureCompleted();
-            }
+            return StagedUploadInternal(
+                content,
+                options,
+                async: false,
+                cancellationToken: cancellationToken)
+                .EnsureCompleted();
         }
 
         /// <summary>
@@ -1223,15 +1220,12 @@ namespace Azure.Storage.Blobs
             BlobUploadOptions options,
             CancellationToken cancellationToken = default)
         {
-            using (FileStream stream = new FileStream(path, FileMode.Open, FileAccess.Read))
-            {
-                return StagedUploadInternal(
-                    stream,
-                    options,
-                    async: false,
-                    cancellationToken: cancellationToken)
-                    .EnsureCompleted();
-            }
+            return StagedUploadInternal(
+                path,
+                options,
+                async: false,
+                cancellationToken: cancellationToken)
+                .EnsureCompleted();
         }
 
         /// <summary>
@@ -1304,23 +1298,20 @@ namespace Azure.Storage.Blobs
             StorageTransferOptions transferOptions = default,
             CancellationToken cancellationToken = default)
         {
-            using (FileStream stream = new FileStream(path, FileMode.Open, FileAccess.Read))
-            {
-                return StagedUploadInternal(
-                    stream,
-                    new BlobUploadOptions
-                    {
-                        HttpHeaders = httpHeaders,
-                        Metadata = metadata,
-                        Conditions = conditions,
-                        ProgressHandler = progressHandler,
-                        AccessTier = accessTier,
-                        TransferOptions = transferOptions
-                    },
-                    async: false,
-                    cancellationToken: cancellationToken)
-                    .EnsureCompleted();
-            }
+            return StagedUploadInternal(
+                path,
+                new BlobUploadOptions
+                {
+                    HttpHeaders = httpHeaders,
+                    Metadata = metadata,
+                    Conditions = conditions,
+                    ProgressHandler = progressHandler,
+                    AccessTier = accessTier,
+                    TransferOptions = transferOptions
+                },
+                async: false,
+                cancellationToken: cancellationToken)
+                .EnsureCompleted();
         }
 
         /// <summary>
@@ -1417,15 +1408,12 @@ namespace Azure.Storage.Blobs
             BlobUploadOptions options,
             CancellationToken cancellationToken = default)
         {
-            using (var stream = content.ToStream())
-            {
-                return await StagedUploadInternal(
-                    stream,
-                    options,
-                    async: true,
-                    cancellationToken: cancellationToken)
-                .ConfigureAwait(false);
-            }
+            return await StagedUploadInternal(
+                content,
+                options,
+                async: true,
+                cancellationToken: cancellationToken)
+            .ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1556,15 +1544,12 @@ namespace Azure.Storage.Blobs
             BlobUploadOptions options,
             CancellationToken cancellationToken = default)
         {
-            using (FileStream stream = new FileStream(path, FileMode.Open, FileAccess.Read))
-            {
-                return await StagedUploadInternal(
-                    stream,
-                    options,
-                    async: true,
-                    cancellationToken: cancellationToken)
-                .ConfigureAwait(false);
-            }
+            return await StagedUploadInternal(
+                path,
+                options,
+                async: true,
+                cancellationToken: cancellationToken)
+            .ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1638,22 +1623,89 @@ namespace Azure.Storage.Blobs
             StorageTransferOptions transferOptions = default,
             CancellationToken cancellationToken = default)
         {
-            using (FileStream stream = new FileStream(path, FileMode.Open, FileAccess.Read))
+            return await StagedUploadInternal(
+                path,
+                new BlobUploadOptions
+                {
+                    HttpHeaders = httpHeaders,
+                    Metadata = metadata,
+                    Conditions = conditions,
+                    ProgressHandler = progressHandler,
+                    AccessTier = accessTier,
+                    TransferOptions = transferOptions
+                },
+                async: true,
+                cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// This operation will create a new
+        /// block blob of arbitrary size by uploading it as indiviually staged
+        /// blocks if it's larger than the
+        /// <paramref name="options"/> MaximumTransferLength.
+        /// </summary>
+        /// <param name="content">
+        /// A <see cref="Stream"/> containing the content to upload.
+        /// </param>
+        /// <param name="options">
+        /// Options for this upload.
+        /// </param>
+        /// <param name="async">
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlobContentInfo}"/> describing the
+        /// state of the updated block blob.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
+        /// </remarks>
+        internal async Task<Response<BlobContentInfo>> StagedUploadInternal(
+            BinaryData content,
+            BlobUploadOptions options,
+            bool async = true,
+            CancellationToken cancellationToken = default)
+        {
+            UploadTransferValidationOptions validationOptions = options?.TransferValidation ?? ClientConfiguration.TransferValidation.Upload;
+
+            var uploader = GetPartitionedUploader(
+                transferOptions: options?.TransferOptions ?? default,
+                validationOptions,
+                operationName: $"{nameof(BlobClient)}.{nameof(Upload)}");
+
+            // can't encrypt in-place, as encrypting changes size
+            // revert to streaming for now
+            if (UsingClientSideEncryption)
             {
-                return await StagedUploadInternal(
-                    stream,
-                    new BlobUploadOptions
-                    {
-                        HttpHeaders = httpHeaders,
-                        Metadata = metadata,
-                        Conditions = conditions,
-                        ProgressHandler = progressHandler,
-                        AccessTier = accessTier,
-                        TransferOptions = transferOptions
-                    },
-                    async: true,
-                    cancellationToken).ConfigureAwait(false);
+                options ??= new BlobUploadOptions();
+                IClientSideEncryptor encryptor = ClientSideEncryption.GetClientSideEncryptor();
+                long encryptedContentLength = encryptor.ExpectedOutputContentLength(content.ToMemory().Length);
+                (Stream contentStream, options.Metadata) = await new BlobClientSideEncryptor(encryptor)
+                    .ClientSideEncryptInternal(content.ToStream(), options.Metadata, async, cancellationToken).ConfigureAwait(false);
+
+                return await uploader.UploadInternal(
+                    contentStream,
+                    encryptedContentLength,
+                    options,
+                    options?.ProgressHandler,
+                    async,
+                    cancellationToken)
+                    .ConfigureAwait(false);
             }
+
+            return await uploader.UploadInternal(
+                content,
+                options,
+                options?.ProgressHandler,
+                async,
+                cancellationToken)
+                .ConfigureAwait(false);
         }
 
         /// <summary>
