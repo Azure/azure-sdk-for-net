@@ -9,12 +9,6 @@
   - For more information, refer to: https://learn.microsoft.com/azure/communication-services/concepts/numbers/sub-eligibility-number-capability
 - API version `2025-04-01` is the default.
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
-
 ## 1.3.0 (2025-02-11)
 
 ### Features Added
