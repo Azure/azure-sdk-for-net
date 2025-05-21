@@ -1,6 +1,6 @@
 # Release History
 
-## 1.4.0-beta.1 (Unreleased)
+## 1.4.0-beta.1 (2025-05-21)
 
 ### Features Added
 - Adds support for the Browse Available Phone Numbers and Reservations APIs
@@ -8,12 +8,6 @@
 - Adds support for automated purchases of phone numbers from countries requiring a Do Not Resell agreement.
   - For more information, refer to: https://learn.microsoft.com/azure/communication-services/concepts/numbers/sub-eligibility-number-capability
 - API version `2025-04-01` is the default.
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
 
 ## 1.3.0 (2025-02-11)
 
