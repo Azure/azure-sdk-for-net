@@ -5,13 +5,13 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Input;
+using Microsoft.TypeSpec.Generator.Input.Utilities;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using Microsoft.TypeSpec.Generator.Snippets;
@@ -89,7 +89,7 @@ namespace Azure.Generator.Providers
             }
 
             _requestFields = fields;
-            _scopeName = $"{_client.Name}.{_operation.Name}"; // TODO - may need to expose ToCleanName for the operation
+            _scopeName = _client.GetScopeName(_operation);
 
             // We only need to consider the first layer in Azure
             var response = _operation.Responses.FirstOrDefault(r => !r.IsErrorResponse);
@@ -126,8 +126,7 @@ namespace Azure.Generator.Providers
         protected override string BuildRelativeFilePath() => Path.Combine("src", "Generated", $"{Name}.cs");
 
         protected override string BuildName()
-        // TODO - may need to expose ToCleanName for the operation
-            => $"{_client.Type.Name}{_operation.Name}{(_isAsync ? "Async" : "")}CollectionResult{(IsProtocolMethod() ? "" : "OfT")}";
+            => $"{_client.Type.Name}{_operation.Name.ToCleanIdentifierName()}{(_isAsync ? "Async" : "")}CollectionResult{(IsProtocolMethod() ? "" : "OfT")}";
 
         // Model type is BinaryData fro protocol methods
         private bool IsProtocolMethod() => _itemModelType.Equals(typeof(BinaryData));
