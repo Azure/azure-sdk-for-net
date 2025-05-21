@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.PureStorageBlock
 {
     public partial class PureStorageAvsStorageContainerVolumeResource : IJsonModel<PureStorageAvsStorageContainerVolumeData>
     {
+        private static PureStorageAvsStorageContainerVolumeData s_dataDeserializationInstance;
+        private static PureStorageAvsStorageContainerVolumeData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<PureStorageAvsStorageContainerVolumeData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<PureStorageAvsStorageContainerVolumeData>)Data).Write(writer, options);
 
-        PureStorageAvsStorageContainerVolumeData IJsonModel<PureStorageAvsStorageContainerVolumeData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PureStorageAvsStorageContainerVolumeData>)Data).Create(ref reader, options);
+        PureStorageAvsStorageContainerVolumeData IJsonModel<PureStorageAvsStorageContainerVolumeData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PureStorageAvsStorageContainerVolumeData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<PureStorageAvsStorageContainerVolumeData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<PureStorageAvsStorageContainerVolumeData>(Data, options, AzureResourceManagerPureStorageBlockContext.Default);
 
         PureStorageAvsStorageContainerVolumeData IPersistableModel<PureStorageAvsStorageContainerVolumeData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PureStorageAvsStorageContainerVolumeData>(data, options, AzureResourceManagerPureStorageBlockContext.Default);
 
-        string IPersistableModel<PureStorageAvsStorageContainerVolumeData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PureStorageAvsStorageContainerVolumeData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<PureStorageAvsStorageContainerVolumeData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PureStorageAvsStorageContainerVolumeData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

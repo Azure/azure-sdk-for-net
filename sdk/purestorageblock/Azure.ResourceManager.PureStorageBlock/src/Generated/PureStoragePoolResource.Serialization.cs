@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.PureStorageBlock
 {
     public partial class PureStoragePoolResource : IJsonModel<PureStoragePoolData>
     {
+        private static PureStoragePoolData s_dataDeserializationInstance;
+        private static PureStoragePoolData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<PureStoragePoolData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<PureStoragePoolData>)Data).Write(writer, options);
 
-        PureStoragePoolData IJsonModel<PureStoragePoolData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PureStoragePoolData>)Data).Create(ref reader, options);
+        PureStoragePoolData IJsonModel<PureStoragePoolData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PureStoragePoolData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<PureStoragePoolData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<PureStoragePoolData>(Data, options, AzureResourceManagerPureStorageBlockContext.Default);
 
         PureStoragePoolData IPersistableModel<PureStoragePoolData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PureStoragePoolData>(data, options, AzureResourceManagerPureStorageBlockContext.Default);
 
-        string IPersistableModel<PureStoragePoolData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PureStoragePoolData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<PureStoragePoolData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PureStoragePoolData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

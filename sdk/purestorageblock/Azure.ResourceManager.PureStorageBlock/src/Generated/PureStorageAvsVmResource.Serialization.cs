@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.PureStorageBlock
 {
     public partial class PureStorageAvsVmResource : IJsonModel<PureStorageAvsVmData>
     {
+        private static PureStorageAvsVmData s_dataDeserializationInstance;
+        private static PureStorageAvsVmData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<PureStorageAvsVmData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<PureStorageAvsVmData>)Data).Write(writer, options);
 
-        PureStorageAvsVmData IJsonModel<PureStorageAvsVmData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PureStorageAvsVmData>)Data).Create(ref reader, options);
+        PureStorageAvsVmData IJsonModel<PureStorageAvsVmData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PureStorageAvsVmData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<PureStorageAvsVmData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<PureStorageAvsVmData>(Data, options, AzureResourceManagerPureStorageBlockContext.Default);
 
         PureStorageAvsVmData IPersistableModel<PureStorageAvsVmData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PureStorageAvsVmData>(data, options, AzureResourceManagerPureStorageBlockContext.Default);
 
-        string IPersistableModel<PureStorageAvsVmData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PureStorageAvsVmData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<PureStorageAvsVmData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PureStorageAvsVmData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }
