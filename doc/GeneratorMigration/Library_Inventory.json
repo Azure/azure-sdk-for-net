@@ -536,7 +536,7 @@
     "library": "Azure.AI.OpenAI",
     "path": "sdk/openai/Azure.AI.OpenAI",
     "type": "Data Plane",
-    "generator": "Swagger"
+    "generator": "TSP-New"
   },
   {
     "service": "oracle",

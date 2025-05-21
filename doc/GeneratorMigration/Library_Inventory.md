@@ -5,18 +5,19 @@
 - Total libraries: 424
 - Management Plane (Swagger): 177
 - Management Plane (TSP): 29 (New Generator: 0, Old Generator: 29)
-- Data Plane (Swagger): 118
-- Data Plane (TSP): 33 (New Generator: 1, Old Generator: 32)
+- Data Plane (Swagger): 117
+- Data Plane (TSP): 34 (New Generator: 2, Old Generator: 32)
 - Unknown generator: 67
 
 
 ## Data Plane Libraries using TSP (New Generator)
 
-TSP with new generator is detected by the presence of a tsp-location.yaml file with an emitterPackageJsonPath value.
+TSP with new generator is detected by the presence of a tsp-location.yaml file with an emitterPackageJsonPath value or special handling for specific libraries like Azure.AI.OpenAI.
 
 | Service | Library | Path |
 | ------- | ------- | ---- |
 | eventgrid | Azure.Messaging.EventGrid.Namespaces | sdk/eventgrid/Azure.Messaging.EventGrid.Namespaces |
+| openai | Azure.AI.OpenAI | sdk/openai/Azure.AI.OpenAI |
 
 
 ## Data Plane Libraries using TSP (Old Generator)
@@ -125,7 +126,6 @@ TSP with old generator is detected by the presence of a tsp-location.yaml file w
 | monitor | Azure.Monitor.OpenTelemetry.LiveMetrics | sdk/monitor/Azure.Monitor.OpenTelemetry.LiveMetrics |
 | monitor | Azure.Monitor.Query | sdk/monitor/Azure.Monitor.Query |
 | objectanchors | Azure.MixedReality.ObjectAnchors.Conversion | sdk/objectanchors/Azure.MixedReality.ObjectAnchors.Conversion |
-| openai | Azure.AI.OpenAI | sdk/openai/Azure.AI.OpenAI |
 | personalizer | Azure.AI.Personalizer | sdk/personalizer/Azure.AI.Personalizer |
 | playwrighttesting | Azure.Developer.MicrosoftPlaywrightTesting.TestLogger | sdk/playwrighttesting/Azure.Developer.MicrosoftPlaywrightTesting.TestLogger |
 | provisioning | Azure.Provisioning | sdk/provisioning/Azure.Provisioning |
@@ -185,7 +185,7 @@ TSP with old generator is detected by the presence of a tsp-location.yaml file w
 
 ## Management Plane Libraries using TSP (New Generator)
 
-TSP with new generator is detected by the presence of a tsp-location.yaml file with an emitterPackageJsonPath value.
+TSP with new generator is detected by the presence of a tsp-location.yaml file with an emitterPackageJsonPath value or special handling for specific libraries.
 
 | Service | Library | Path |
 | ------- | ------- | ---- |

@@ -25,6 +25,10 @@ def identify_generator(path):
     Identify if a library is generated using swagger or tsp.
     Returns: "Swagger", "TSP-New", "TSP-Old", or "Unknown"
     """
+    # Special case for Azure.AI.OpenAI which uses TypeSpec with new generator via special handling
+    if os.path.basename(path) == "Azure.AI.OpenAI" and "openai" in path:
+        return "TSP-New"
+        
     # First check for direct TypeSpec indicators
     tsp_config_path = os.path.join(path, "src", "tspconfig.yaml")
     tsp_dir = os.path.join(path, "src", "tsp")
@@ -179,7 +183,7 @@ def generate_markdown_report(libraries):
     report.append("\n")
     
     report.append("## Data Plane Libraries using TSP (New Generator)\n")
-    report.append("TSP with new generator is detected by the presence of a tsp-location.yaml file with an emitterPackageJsonPath value.\n")
+    report.append("TSP with new generator is detected by the presence of a tsp-location.yaml file with an emitterPackageJsonPath value or special handling for specific libraries like Azure.AI.OpenAI.\n")
     report.append("| Service | Library | Path |")
     report.append("| ------- | ------- | ---- |")
     for lib in sorted(data_tsp_new, key=lambda x: (x["service"], x["library"])):
@@ -202,7 +206,7 @@ def generate_markdown_report(libraries):
     report.append("\n")
     
     report.append("## Management Plane Libraries using TSP (New Generator)\n")
-    report.append("TSP with new generator is detected by the presence of a tsp-location.yaml file with an emitterPackageJsonPath value.\n")
+    report.append("TSP with new generator is detected by the presence of a tsp-location.yaml file with an emitterPackageJsonPath value or special handling for specific libraries.\n")
     report.append("| Service | Library | Path |")
     report.append("| ------- | ------- | ---- |")
     for lib in sorted(mgmt_tsp_new, key=lambda x: (x["service"], x["library"])):
