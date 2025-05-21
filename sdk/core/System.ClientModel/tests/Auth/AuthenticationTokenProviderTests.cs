@@ -14,7 +14,7 @@ using NUnit.Framework;
 
 namespace System.ClientModel.Tests.Auth;
 
-public class TokenProviderTests
+public class AuthenticationTokenProviderTests
 {
     [Test]
     public void SampleUsage()
@@ -62,7 +62,7 @@ public class TokenProviderTests
             });
             ClientPipeline pipeline = ClientPipeline.Create(options,
             perCallPolicies: ReadOnlySpan<PipelinePolicy>.Empty,
-            perTryPolicies: [new OAuth2BearerTokenAuthenticationPolicy(credential, flows)],
+            perTryPolicies: [new BearerTokenPolicy(credential, flows)],
             beforeTransportPolicies: ReadOnlySpan<PipelinePolicy>.Empty);
             _pipeline = pipeline;
         }
@@ -77,7 +77,7 @@ public class TokenProviderTests
             request.Method = "GET";
             request.Uri = new Uri("https://localhost/foo");
             _pipeline.Send(message);
-            return ClientResult.FromResponse(message.Response);
+            return ClientResult.FromResponse(message.Response!);
         }
     }
 
@@ -107,21 +107,21 @@ public class TokenProviderTests
             // Create a mock handler that returns the predefined response
             var mockHandler = new MockHttpMessageHandler(req =>
             {
-                Assert.AreEqual(req.RequestUri.ToString(), "https://myauthserver.com/token");
+                Assert.AreEqual(req.RequestUri?.ToString(), "https://myauthserver.com/token");
                 // Extract the Authorization header
                 var authHeader = req.Headers.Authorization;
                 Assert.IsNotNull(authHeader, "Authorization header is missing");
-                Assert.AreEqual("Basic", authHeader.Scheme, "Authorization scheme should be 'Basic'");
+                Assert.AreEqual("Basic", authHeader?.Scheme, "Authorization scheme should be 'Basic'");
 
                 // Decode the Base64 parameter
-                byte[] credentialBytes = Convert.FromBase64String(authHeader.Parameter);
+                byte[] credentialBytes = Convert.FromBase64String(authHeader!.Parameter!);
                 string decodedCredentials = Encoding.ASCII.GetString(credentialBytes);
 
                 // Verify the decoded credentials
                 Assert.AreEqual($"{_clientId}:{_clientSecret}", decodedCredentials, "Decoded credentials don't match expected values");
 
                 // Validate form content
-                var content = req.Content.ReadAsStringAsync().GetAwaiter().GetResult();
+                var content = req?.Content?.ReadAsStringAsync().GetAwaiter().GetResult();
                 Assert.That(content, Contains.Substring("grant_type=client_credentials"), "grant_type should be client_credentials");
                 Assert.That(content, Contains.Substring("scope=baselineScope+read"), "scope should be baselineScope+read");
 
@@ -142,7 +142,7 @@ public class TokenProviderTests
             return await GetAccessTokenInternal(true, properties, cancellationToken).ConfigureAwait(false);
         }
 
-        public override GetTokenOptions CreateTokenOptions(IReadOnlyDictionary<string, object> properties)
+        public override GetTokenOptions? CreateTokenOptions(IReadOnlyDictionary<string, object> properties)
         {
             if (properties.TryGetValue(GetTokenOptions.ScopesPropertyName, out var scopes) && scopes is string[] scopeArray &&
                 properties.TryGetValue(GetTokenOptions.TokenUrlPropertyName, out var tokenUri) && tokenUri is string tokenUriValue &&
@@ -190,8 +190,8 @@ public class TokenProviderTests
             using JsonDocument jsonDoc = await JsonDocument.ParseAsync(responseStream);
             JsonElement root = jsonDoc.RootElement;
 
-            string accessToken = root.GetProperty("access_token").GetString();
-            string tokenType = root.GetProperty("token_type").GetString();
+            string? accessToken = root.GetProperty("access_token").GetString();
+            string? tokenType = root.GetProperty("token_type").GetString();
             int expiresIn = root.GetProperty("expires_in").GetInt32();
 
             // Calculate expiration and refresh times based on current UTC time
@@ -199,7 +199,7 @@ public class TokenProviderTests
             DateTimeOffset expiresOn = now.AddSeconds(expiresIn);
             DateTimeOffset refreshOn = now.AddSeconds(expiresIn * 0.85);
 
-            return new AuthenticationToken(accessToken, tokenType, expiresOn, refreshOn);
+            return new AuthenticationToken(accessToken!, tokenType!, expiresOn, refreshOn);
         }
     }
 

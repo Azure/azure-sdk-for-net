@@ -1,24 +1,21 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.ClientModel.Primitives;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using Azure.Core.Pipeline;
+using System.ClientModel.Internal;
 
 namespace System.ClientModel.Primitives;
 
 /// <summary>
 /// A <see cref="PipelinePolicy"/> that uses an <see cref="AuthenticationTokenProvider"/> to authenticate requests.
 /// </summary>
-public class OAuth2BearerTokenAuthenticationPolicy : PipelinePolicy
+public class BearerTokenPolicy : AuthenticationPolicy
 {
     private readonly AuthenticationTokenProvider _tokenProvider;
     private readonly GetTokenOptions _flowContext;
 
     /// <param name="tokenProvider"></param>
     /// <param name="contexts"></param>
-    public OAuth2BearerTokenAuthenticationPolicy(AuthenticationTokenProvider tokenProvider, IEnumerable<IReadOnlyDictionary<string, object>> contexts)
+    public BearerTokenPolicy(AuthenticationTokenProvider tokenProvider, IEnumerable<IReadOnlyDictionary<string, object>> contexts)
     {
         _tokenProvider = tokenProvider;
         _flowContext = GetContext(contexts, tokenProvider);
