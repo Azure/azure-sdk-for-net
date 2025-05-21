@@ -60,8 +60,8 @@ namespace Azure.Storage.DataMovement.Files.Shares
         /// Applies to copy, upload, and download transfers.
         ///
         /// Note: Only NFS -> NFS and SMB -> SMB transfers are currently supported.
-        /// For NFS Share-to-Share Copy and Download transfers, Hardlinks will be copied as regular files. Symbolic links are skipped.
-        /// For NFS Upload transfers, Symbolic links are not supported.
+        /// For NFS Share-to-Share Copy and Download transfers, Hardlinks will be copied as regular files and Symbolic links are skipped.
+        /// For NFS Upload transfers, Hardlinks will be copied as regular files and Symbolic links are not supported.
         /// </summary>
         public ShareProtocols ShareProtocol { get; set; } = ShareProtocols.Smb;
 
