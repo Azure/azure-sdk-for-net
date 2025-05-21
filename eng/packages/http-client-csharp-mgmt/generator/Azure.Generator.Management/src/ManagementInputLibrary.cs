@@ -13,33 +13,35 @@ namespace Azure.Generator.Management
     /// <inheritdoc/>
     public class ManagementInputLibrary : InputLibrary
     {
-        private readonly Lazy<IReadOnlyList<InputClient>> _allClients;
-        private readonly Lazy<IReadOnlyDictionary<InputClient, ResourceMetadata>> _resourceMetadata;
-        private readonly Lazy<IReadOnlyDictionary<string, InputModelType>> _inputModelsByCrossLanguageDefinitionId;
-        private readonly Lazy<IReadOnlyDictionary<string, InputClient>> _inputClientsByCrossLanguageDefinitionId;
+        private IReadOnlyList<InputClient>? _allClients;
+        private IReadOnlyDictionary<InputClient, ResourceMetadata>? _resourceMetadata;
+        private IReadOnlyDictionary<string, InputModelType>? _inputModelsByCrossLanguageDefinitionId;
+        private IReadOnlyDictionary<string, InputClient>? _inputClientsByCrossLanguageDefinitionId;
 
         /// <inheritdoc/>
         public ManagementInputLibrary(string configPath) : base(configPath)
         {
-            _allClients = new(EnumerateClients);
-            _resourceMetadata = new(BuildResourceMetadata);
-            _inputModelsByCrossLanguageDefinitionId = new(BuildModelCrossLanguageDefinitionIds);
-            _inputClientsByCrossLanguageDefinitionId = new(() => AllClients.ToDictionary(c => c.CrossLanguageDefinitionId, c => c));
         }
 
         /// <summary>
         /// All clients in the input library, including the subclients.
         /// </summary>
-        public IReadOnlyList<InputClient> AllClients => _allClients.Value;
+        internal IReadOnlyList<InputClient> AllClients => _allClients ??= EnumerateClients();
+
+        private IReadOnlyDictionary<InputClient, ResourceMetadata> ResourceMetadata => _resourceMetadata ??= BuildResourceMetadata();
+
+        private IReadOnlyDictionary<string, InputModelType> InputModelsByCrossLanguageDefinitionId => _inputModelsByCrossLanguageDefinitionId ??= BuildModelCrossLanguageDefinitionIds();
+
+        private IReadOnlyDictionary<string, InputClient> InputClientsByCrossLanguageDefinitionId => _inputClientsByCrossLanguageDefinitionId ??= AllClients.ToDictionary(c => c.CrossLanguageDefinitionId, c => c);
 
         internal ResourceMetadata? GetResourceMetadata(InputClient client)
-            => _resourceMetadata.Value.TryGetValue(client, out var metadata) ? metadata : null;
+            => ResourceMetadata.TryGetValue(client, out var metadata) ? metadata : null;
 
         internal InputModelType? GetModelByCrossLanguageDefinitionId(string crossLanguageDefinitionId)
-            => _inputModelsByCrossLanguageDefinitionId.Value.TryGetValue(crossLanguageDefinitionId, out var model) ? model : null;
+            => InputModelsByCrossLanguageDefinitionId.TryGetValue(crossLanguageDefinitionId, out var model) ? model : null;
 
         internal InputClient? GetClientByCrossLanguageDefinitionId(string crossLanguageDefinitionId)
-            => _inputClientsByCrossLanguageDefinitionId.Value.TryGetValue(crossLanguageDefinitionId, out var client) ? client : null;
+            => InputClientsByCrossLanguageDefinitionId.TryGetValue(crossLanguageDefinitionId, out var client) ? client : null;
 
         internal bool IsResourceModel(InputModelType model)
             => model.Decorators.Any(d => d.Name.Equals(KnownDecorators.ArmResourceInternal));
@@ -92,7 +94,7 @@ namespace Azure.Generator.Management
                 InputModelType? resourceModel = null;
                 InputClient? resourceClient = null;
                 bool isSingleton = false;
-                ResourceScope resourceScope = default;
+                ResourceScope? resourceScope = null;
                 if (args.TryGetValue(KnownDecorators.ResourceType, out var resourceTypeData))
                 {
                     resourceType = resourceTypeData.ToObjectFromJson<string>();
@@ -124,7 +126,10 @@ namespace Azure.Generator.Management
                 if (args.TryGetValue(KnownDecorators.ResourceScope, out var scopeData))
                 {
                     var scopeString = scopeData.ToObjectFromJson<string>();
-                    resourceScope = Enum.Parse<ResourceScope>(scopeString!, true);
+                    if (Enum.TryParse<ResourceScope>(scopeString, true, out var scope))
+                    {
+                        resourceScope = scope;
+                    }
                 }
 
                 // TODO -- I know we should never throw the exception, but here we just put it here and refine it later
@@ -132,7 +137,7 @@ namespace Azure.Generator.Management
                     resourceModel ?? throw new InvalidOperationException("resourceModel cannot be null"),
                     resourceClient ?? throw new InvalidOperationException("resourceClient cannot be null"),
                     isSingleton,
-                    resourceScope);
+                    resourceScope ?? throw new InvalidOperationException("resourceScope cannot be null"));
             }
         }
     }

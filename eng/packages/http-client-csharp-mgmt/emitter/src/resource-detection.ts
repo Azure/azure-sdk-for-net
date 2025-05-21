@@ -8,7 +8,8 @@ import {
 } from "@typespec/http-client-csharp";
 import {
   calculateResourceTypeFromPath,
-  ResourceMetadata
+  ResourceMetadata,
+  ResourceScope
 } from "./resource-metadata.js";
 import { DecoratorInfo } from "@azure-tools/typespec-client-generator-core";
 import {
@@ -127,18 +128,16 @@ function gatherResourceMetadata(
     }
   }
 
-  function getResourceScope(
-    model: InputModelType
-  ): "Tenant" | "Subscription" | "ResourceGroup" {
+  function getResourceScope(model: InputModelType): ResourceScope {
     const decorators = model.decorators;
     if (decorators?.some((d) => d.name == tenantResource)) {
-      return "Tenant";
+      return ResourceScope.Tenant;
     } else if (decorators?.some((d) => d.name == subscriptionResource)) {
-      return "Subscription";
+      return ResourceScope.Subscription;
     } else if (decorators?.some((d) => d.name == resourceGroupResource)) {
-      return "ResourceGroup";
+      return ResourceScope.ResourceGroup;
     }
-    return "ResourceGroup"; // all the templates work as if there is a resource group decorator when there is no such decorator
+    return ResourceScope.ResourceGroup; // all the templates work as if there is a resource group decorator when there is no such decorator
   }
 }
 

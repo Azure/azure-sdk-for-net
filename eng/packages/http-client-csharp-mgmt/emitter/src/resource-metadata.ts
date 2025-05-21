@@ -32,10 +32,17 @@ export function calculateResourceTypeFromPath(path: string): string {
     }, "");
 }
 
+export enum ResourceScope {
+  Tenant = "Tenant",
+  Subscription = "Subscription",
+  ResourceGroup = "ResourceGroup"
+}
+
 export interface ResourceMetadata {
   resourceType: string;
   resourceModel: InputModelType;
   resourceClient: InputClient;
   isSingleton: boolean;
-  resourceScope: "Tenant" | "Subscription" | "ResourceGroup"; // TODO -- add parent resource support in the same RP case
+  resourceScope: ResourceScope;
+  // TODO -- add parent resource support in the same RP case
 }
