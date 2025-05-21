@@ -4,8 +4,8 @@ Run `dotnet build /t:GenerateCode` to generate code.
 
 ``` yaml
 azure-arm: true
-require: https://github.com/jamesvoongms/jamesvoong-azure-rest-api-specs/blob/16c277599f69e854b89e4ca7658eded7507e98f3/specification/dnsresolver/resource-manager/readme.md
-tag: package-2025-01
+require: https://github.com/jamesvoongms/jamesvoong-azure-rest-api-specs/blob/7f70fea824775502f92a3a51f342c77ddc0325c4/specification/dnsresolver/resource-manager/readme.md
+#tag: package-2025-01
 library-name: dnsresolver
 namespace: Azure.ResourceManager.DnsResolver
 output-folder: $(this-folder)/Generated
@@ -59,8 +59,8 @@ acronym-mapping:
   Etag: ETag|etag
   DnsForwardingRulesetName: rulesetName
 
-mgmt-debug:
-  show-serialized-names: true
+# mgmt-debug:
+#   show-serialized-names: true
 
 rename-mapping:
   ProvisioningState: DnsResolverProvisioningState
@@ -75,11 +75,21 @@ rename-mapping:
   VirtualNetworkLink: DnsForwardingRulesetVirtualNetworkLink
   ActionType: DnsSecurityRuleActionType
   Action: DnsResolverDomainListBulkAction
-
+  VirtualNetworkDnsForwardingRuleset.id: -|arm-id
 
 directive:
   - from: dnsresolver.json
-    where: $.definitions
+    where: $.definitions.DnsSecurityRuleAction
     transform: >
-      $.VirtualNetworkDnsForwardingRuleset.properties.id['x-ms-format'] = 'arm-id';
+      $.properties["blockResponseCode"] = {
+          "type": "string",
+          "description": "The response code for block actions.",
+          "enum": [
+            "SERVFAIL"
+          ],
+          "x-ms-enum": {
+            "name": "BlockResponseCode",
+            "modelAsString": true
+          }
+        };
 ```

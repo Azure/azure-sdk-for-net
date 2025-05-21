@@ -6,7 +6,6 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DnsResolver.Models
 {
-	[CodeGenSerialization(nameof(BlockResponseCode), "blockResponseCode")]
 	public partial class DnsSecurityRuleAction
 	{
         /// <summary>
