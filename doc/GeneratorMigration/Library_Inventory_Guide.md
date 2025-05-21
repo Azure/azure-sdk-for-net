@@ -33,6 +33,7 @@ python doc/GeneratorMigration/Library_Inventory.py
 python doc/GeneratorMigration/Library_Inventory.py --json
 ```
    - This will generate an additional `Library_Inventory.json` file with the raw inventory data
+   - Note: The JSON file is for temporary analytical use and should not be checked into the repository
 
 ## Inventory Classification Logic
 
