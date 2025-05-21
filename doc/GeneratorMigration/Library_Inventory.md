@@ -2,12 +2,12 @@
 
 ## Summary
 
-- Total libraries: 424
+- Total libraries: 391
 - Management Plane (Swagger): 177
 - Management Plane (TSP): 29 (New Generator: 0, Old Generator: 29)
-- Data Plane (Swagger): 117
+- Data Plane (Swagger): 114
 - Data Plane (TSP): 34 (New Generator: 2, Old Generator: 32)
-- Unknown generator: 67
+- No generator: 37
 
 
 ## Data Plane Libraries using TSP (New Generator)
@@ -67,7 +67,6 @@ TSP with old generator is detected by the presence of a tsp-location.yaml file w
 | agrifood | Azure.Verticals.AgriFood.Farming | sdk/agrifood/Azure.Verticals.AgriFood.Farming |
 | appconfiguration | Azure.Data.AppConfiguration | sdk/appconfiguration/Azure.Data.AppConfiguration |
 | attestation | Azure.Security.Attestation | sdk/attestation/Azure.Security.Attestation |
-| batch | Microsoft.Azure.Batch | sdk/batch/Microsoft.Azure.Batch |
 | cognitivelanguage | Azure.AI.Language.QuestionAnswering | sdk/cognitivelanguage/Azure.AI.Language.QuestionAnswering |
 | cognitiveservices | AnomalyDetector | sdk/cognitiveservices/AnomalyDetector |
 | cognitiveservices | FormRecognizer | sdk/cognitiveservices/FormRecognizer |
@@ -110,7 +109,6 @@ TSP with old generator is detected by the presence of a tsp-location.yaml file w
 | digitaltwins | Azure.DigitalTwins.Core | sdk/digitaltwins/Azure.DigitalTwins.Core |
 | eventgrid | Azure.Messaging.EventGrid | sdk/eventgrid/Azure.Messaging.EventGrid |
 | formrecognizer | Azure.AI.FormRecognizer | sdk/formrecognizer/Azure.AI.FormRecognizer |
-| hdinsight | Microsoft.Azure.HDInsight.Job | sdk/hdinsight/Microsoft.Azure.HDInsight.Job |
 | iot | Azure.IoT.Hub.Service | sdk/iot/Azure.IoT.Hub.Service |
 | maps | Azure.Maps.Common | sdk/maps/Azure.Maps.Common |
 | maps | Azure.Maps.Geolocation | sdk/maps/Azure.Maps.Geolocation |
@@ -172,7 +170,6 @@ TSP with old generator is detected by the presence of a tsp-location.yaml file w
 | synapse | Azure.Analytics.Synapse.ManagedPrivateEndpoints | sdk/synapse/Azure.Analytics.Synapse.ManagedPrivateEndpoints |
 | synapse | Azure.Analytics.Synapse.Monitoring | sdk/synapse/Azure.Analytics.Synapse.Monitoring |
 | synapse | Azure.Analytics.Synapse.Spark | sdk/synapse/Azure.Analytics.Synapse.Spark |
-| synapse | Microsoft.Azure.Synapse | sdk/synapse/Microsoft.Azure.Synapse |
 | tables | Azure.Data.Tables | sdk/tables/Azure.Data.Tables |
 | template | .content | sdk/template/.content |
 | template | Azure.Template | sdk/template/Azure.Template |
@@ -411,12 +408,12 @@ TSP with old generator is detected by the presence of a tsp-location.yaml file w
 | workloads | Azure.ResourceManager.Workloads | sdk/workloads/Azure.ResourceManager.Workloads |
 
 
-## Libraries with Unknown Generator
+## Libraries with No Generator
+
+Libraries with no generator have neither autorest.md nor tsp-location.yaml files.
 
 | Service | Library | Path |
 | ------- | ------- | ---- |
-| batch | Microsoft.Azure.Batch.Conventions.Files | sdk/batch/Microsoft.Azure.Batch.Conventions.Files |
-| batch | Microsoft.Azure.Batch.FileStaging | sdk/batch/Microsoft.Azure.Batch.FileStaging |
 | cloudmachine | Azure.Projects | sdk/cloudmachine/Azure.Projects |
 | cloudmachine | Azure.Projects.AI | sdk/cloudmachine/Azure.Projects.AI |
 | cloudmachine | Azure.Projects.AI.Foundry | sdk/cloudmachine/Azure.Projects.AI.Foundry |
@@ -428,27 +425,13 @@ TSP with old generator is detected by the presence of a tsp-location.yaml file w
 | core | Azure.Core | sdk/core/Azure.Core |
 | core | Azure.Core.Amqp | sdk/core/Azure.Core.Amqp |
 | core | Azure.Core.Experimental | sdk/core/Azure.Core.Experimental |
-| core | Microsoft.Azure.Core.NewtonsoftJson | sdk/core/Microsoft.Azure.Core.NewtonsoftJson |
-| core | Microsoft.Azure.Core.Spatial | sdk/core/Microsoft.Azure.Core.Spatial |
-| core | Microsoft.Azure.Core.Spatial.NewtonsoftJson | sdk/core/Microsoft.Azure.Core.Spatial.NewtonsoftJson |
 | core | System.ClientModel | sdk/core/System.ClientModel |
-| entra | Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents | sdk/entra/Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents |
-| eventgrid | Microsoft.Azure.Messaging.EventGrid.CloudNativeCloudEvents | sdk/eventgrid/Microsoft.Azure.Messaging.EventGrid.CloudNativeCloudEvents |
-| eventgrid | Microsoft.Azure.WebJobs.Extensions.EventGrid | sdk/eventgrid/Microsoft.Azure.WebJobs.Extensions.EventGrid |
 | eventhub | Azure.Messaging.EventHubs | sdk/eventhub/Azure.Messaging.EventHubs |
 | eventhub | Azure.Messaging.EventHubs.Processor | sdk/eventhub/Azure.Messaging.EventHubs.Processor |
 | eventhub | Azure.Messaging.EventHubs.Shared | sdk/eventhub/Azure.Messaging.EventHubs.Shared |
-| eventhub | Microsoft.Azure.EventHubs | sdk/eventhub/Microsoft.Azure.EventHubs |
-| eventhub | Microsoft.Azure.EventHubs.Processor | sdk/eventhub/Microsoft.Azure.EventHubs.Processor |
-| eventhub | Microsoft.Azure.EventHubs.ServiceFabricProcessor | sdk/eventhub/Microsoft.Azure.EventHubs.ServiceFabricProcessor |
-| eventhub | Microsoft.Azure.WebJobs.Extensions.EventHubs | sdk/eventhub/Microsoft.Azure.WebJobs.Extensions.EventHubs |
-| extension-wcf | Microsoft.CoreWCF.Azure.StorageQueues | sdk/extension-wcf/Microsoft.CoreWCF.Azure.StorageQueues |
-| extension-wcf | Microsoft.WCF.Azure.StorageQueues | sdk/extension-wcf/Microsoft.WCF.Azure.StorageQueues |
 | extensions | Azure.Extensions.AspNetCore.Configuration.Secrets | sdk/extensions/Azure.Extensions.AspNetCore.Configuration.Secrets |
 | extensions | Azure.Extensions.AspNetCore.DataProtection.Blobs | sdk/extensions/Azure.Extensions.AspNetCore.DataProtection.Blobs |
 | extensions | Azure.Extensions.AspNetCore.DataProtection.Keys | sdk/extensions/Azure.Extensions.AspNetCore.DataProtection.Keys |
-| extensions | Microsoft.Azure.WebJobs.Extensions.Clients | sdk/extensions/Microsoft.Azure.WebJobs.Extensions.Clients |
-| extensions | Microsoft.Extensions.Azure | sdk/extensions/Microsoft.Extensions.Azure |
 | identity | Azure.Identity | sdk/identity/Azure.Identity |
 | identity | Azure.Identity.Broker | sdk/identity/Azure.Identity.Broker |
 | keyvault | Azure.Security.KeyVault.Certificates | sdk/keyvault/Azure.Security.KeyVault.Certificates |
@@ -460,25 +443,11 @@ TSP with old generator is detected by the presence of a tsp-location.yaml file w
 | playwrighttesting | Azure.Developer.MicrosoftPlaywrightTesting.NUnit | sdk/playwrighttesting/Azure.Developer.MicrosoftPlaywrightTesting.NUnit |
 | provisioning | Azure.Provisioning.Deployment | sdk/provisioning/Azure.Provisioning.Deployment |
 | provisioning | Generator | sdk/provisioning/Generator |
-| schemaregistry | Microsoft.Azure.Data.SchemaRegistry.ApacheAvro | sdk/schemaregistry/Microsoft.Azure.Data.SchemaRegistry.ApacheAvro |
 | servicebus | Azure.Messaging.ServiceBus | sdk/servicebus/Azure.Messaging.ServiceBus |
-| servicebus | Microsoft.Azure.ServiceBus | sdk/servicebus/Microsoft.Azure.ServiceBus |
-| servicebus | Microsoft.Azure.WebJobs.Extensions.ServiceBus | sdk/servicebus/Microsoft.Azure.WebJobs.Extensions.ServiceBus |
-| signalr | Microsoft.Azure.WebJobs.Extensions.SignalRService | sdk/signalr/Microsoft.Azure.WebJobs.Extensions.SignalRService |
 | storage | Azure.Storage.Blobs.ChangeFeed | sdk/storage/Azure.Storage.Blobs.ChangeFeed |
 | storage | Azure.Storage.DataMovement | sdk/storage/Azure.Storage.DataMovement |
 | storage | Azure.Storage.DataMovement.Blobs | sdk/storage/Azure.Storage.DataMovement.Blobs |
 | storage | Azure.Storage.DataMovement.Files.Shares | sdk/storage/Azure.Storage.DataMovement.Files.Shares |
 | storage | Azure.Storage.Internal.Avro | sdk/storage/Azure.Storage.Internal.Avro |
-| storage | Microsoft.Azure.WebJobs.Extensions.Storage | sdk/storage/Microsoft.Azure.WebJobs.Extensions.Storage |
-| storage | Microsoft.Azure.WebJobs.Extensions.Storage.Blobs | sdk/storage/Microsoft.Azure.WebJobs.Extensions.Storage.Blobs |
-| storage | Microsoft.Azure.WebJobs.Extensions.Storage.Common | sdk/storage/Microsoft.Azure.WebJobs.Extensions.Storage.Common |
-| storage | Microsoft.Azure.WebJobs.Extensions.Storage.Queues | sdk/storage/Microsoft.Azure.WebJobs.Extensions.Storage.Queues |
 | synapse | Azure.Analytics.Synapse.Shared | sdk/synapse/Azure.Analytics.Synapse.Shared |
-| tables | Microsoft.Azure.WebJobs.Extensions.Tables | sdk/tables/Microsoft.Azure.WebJobs.Extensions.Tables |
 | webpubsub | Azure.Messaging.WebPubSub.Client | sdk/webpubsub/Azure.Messaging.WebPubSub.Client |
-| webpubsub | Microsoft.Azure.Functions.Worker.Extensions.WebPubSub | sdk/webpubsub/Microsoft.Azure.Functions.Worker.Extensions.WebPubSub |
-| webpubsub | Microsoft.Azure.WebJobs.Extensions.WebPubSub | sdk/webpubsub/Microsoft.Azure.WebJobs.Extensions.WebPubSub |
-| webpubsub | Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO | sdk/webpubsub/Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO |
-| webpubsub | Microsoft.Azure.WebPubSub.AspNetCore | sdk/webpubsub/Microsoft.Azure.WebPubSub.AspNetCore |
-| webpubsub | Microsoft.Azure.WebPubSub.Common | sdk/webpubsub/Microsoft.Azure.WebPubSub.Common |

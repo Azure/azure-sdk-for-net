@@ -53,7 +53,7 @@
     "library": "Azure.Communication.Common",
     "path": "sdk/communication/Azure.Communication.Common",
     "type": "Data Plane",
-    "generator": "Unknown"
+    "generator": "No Generator"
   },
   {
     "service": "communication",
@@ -81,7 +81,7 @@
     "library": "Shared",
     "path": "sdk/communication/Shared",
     "type": "Data Plane",
-    "generator": "Unknown"
+    "generator": "No Generator"
   },
   {
     "service": "communication",
@@ -414,24 +414,10 @@
   },
   {
     "service": "core",
-    "library": "Microsoft.Azure.Core.Spatial",
-    "path": "sdk/core/Microsoft.Azure.Core.Spatial",
-    "type": "Data Plane",
-    "generator": "Unknown"
-  },
-  {
-    "service": "core",
     "library": "Azure.Core.Expressions.DataFactory",
     "path": "sdk/core/Azure.Core.Expressions.DataFactory",
     "type": "Data Plane",
     "generator": "Swagger"
-  },
-  {
-    "service": "core",
-    "library": "Microsoft.Azure.Core.Spatial.NewtonsoftJson",
-    "path": "sdk/core/Microsoft.Azure.Core.Spatial.NewtonsoftJson",
-    "type": "Data Plane",
-    "generator": "Unknown"
   },
   {
     "service": "core",
@@ -445,35 +431,28 @@
     "library": "Azure.Core.Amqp",
     "path": "sdk/core/Azure.Core.Amqp",
     "type": "Data Plane",
-    "generator": "Unknown"
+    "generator": "No Generator"
   },
   {
     "service": "core",
     "library": "Azure.Core",
     "path": "sdk/core/Azure.Core",
     "type": "Data Plane",
-    "generator": "Unknown"
+    "generator": "No Generator"
   },
   {
     "service": "core",
     "library": "Azure.Core.Experimental",
     "path": "sdk/core/Azure.Core.Experimental",
     "type": "Data Plane",
-    "generator": "Unknown"
-  },
-  {
-    "service": "core",
-    "library": "Microsoft.Azure.Core.NewtonsoftJson",
-    "path": "sdk/core/Microsoft.Azure.Core.NewtonsoftJson",
-    "type": "Data Plane",
-    "generator": "Unknown"
+    "generator": "No Generator"
   },
   {
     "service": "core",
     "library": "System.ClientModel",
     "path": "sdk/core/System.ClientModel",
     "type": "Data Plane",
-    "generator": "Unknown"
+    "generator": "No Generator"
   },
   {
     "service": "healthbot",
@@ -637,13 +616,6 @@
     "generator": "Swagger"
   },
   {
-    "service": "entra",
-    "library": "Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents",
-    "path": "sdk/entra/Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents",
-    "type": "Data Plane",
-    "generator": "Unknown"
-  },
-  {
     "service": "workloadssapvirtualinstance",
     "library": "Azure.ResourceManager.WorkloadsSapVirtualInstance",
     "path": "sdk/workloadssapvirtualinstance/Azure.ResourceManager.WorkloadsSapVirtualInstance",
@@ -683,35 +655,21 @@
     "library": "Azure.Extensions.AspNetCore.DataProtection.Keys",
     "path": "sdk/extensions/Azure.Extensions.AspNetCore.DataProtection.Keys",
     "type": "Data Plane",
-    "generator": "Unknown"
-  },
-  {
-    "service": "extensions",
-    "library": "Microsoft.Extensions.Azure",
-    "path": "sdk/extensions/Microsoft.Extensions.Azure",
-    "type": "Data Plane",
-    "generator": "Unknown"
+    "generator": "No Generator"
   },
   {
     "service": "extensions",
     "library": "Azure.Extensions.AspNetCore.DataProtection.Blobs",
     "path": "sdk/extensions/Azure.Extensions.AspNetCore.DataProtection.Blobs",
     "type": "Data Plane",
-    "generator": "Unknown"
+    "generator": "No Generator"
   },
   {
     "service": "extensions",
     "library": "Azure.Extensions.AspNetCore.Configuration.Secrets",
     "path": "sdk/extensions/Azure.Extensions.AspNetCore.Configuration.Secrets",
     "type": "Data Plane",
-    "generator": "Unknown"
-  },
-  {
-    "service": "extensions",
-    "library": "Microsoft.Azure.WebJobs.Extensions.Clients",
-    "path": "sdk/extensions/Microsoft.Azure.WebJobs.Extensions.Clients",
-    "type": "Data Plane",
-    "generator": "Unknown"
+    "generator": "No Generator"
   },
   {
     "service": "vision",
@@ -789,13 +747,6 @@
     "path": "sdk/tables/Azure.Data.Tables",
     "type": "Data Plane",
     "generator": "Swagger"
-  },
-  {
-    "service": "tables",
-    "library": "Microsoft.Azure.WebJobs.Extensions.Tables",
-    "path": "sdk/tables/Microsoft.Azure.WebJobs.Extensions.Tables",
-    "type": "Data Plane",
-    "generator": "Unknown"
   },
   {
     "service": "lambdatesthyperexecute",
@@ -949,7 +900,7 @@
     "library": "Azure.Messaging.ServiceBus",
     "path": "sdk/servicebus/Azure.Messaging.ServiceBus",
     "type": "Data Plane",
-    "generator": "Unknown"
+    "generator": "No Generator"
   },
   {
     "service": "servicebus",
@@ -957,20 +908,6 @@
     "path": "sdk/servicebus/Azure.ResourceManager.ServiceBus",
     "type": "Management",
     "generator": "Swagger"
-  },
-  {
-    "service": "servicebus",
-    "library": "Microsoft.Azure.ServiceBus",
-    "path": "sdk/servicebus/Microsoft.Azure.ServiceBus",
-    "type": "Data Plane",
-    "generator": "Unknown"
-  },
-  {
-    "service": "servicebus",
-    "library": "Microsoft.Azure.WebJobs.Extensions.ServiceBus",
-    "path": "sdk/servicebus/Microsoft.Azure.WebJobs.Extensions.ServiceBus",
-    "type": "Data Plane",
-    "generator": "Unknown"
   },
   {
     "service": "redis",
@@ -985,13 +922,6 @@
     "path": "sdk/signalr/Azure.ResourceManager.SignalR",
     "type": "Management",
     "generator": "Swagger"
-  },
-  {
-    "service": "signalr",
-    "library": "Microsoft.Azure.WebJobs.Extensions.SignalRService",
-    "path": "sdk/signalr/Microsoft.Azure.WebJobs.Extensions.SignalRService",
-    "type": "Data Plane",
-    "generator": "Unknown"
   },
   {
     "service": "reservations",
@@ -1176,20 +1106,6 @@
     "generator": "Swagger"
   },
   {
-    "service": "extension-wcf",
-    "library": "Microsoft.WCF.Azure.StorageQueues",
-    "path": "sdk/extension-wcf/Microsoft.WCF.Azure.StorageQueues",
-    "type": "Data Plane",
-    "generator": "Unknown"
-  },
-  {
-    "service": "extension-wcf",
-    "library": "Microsoft.CoreWCF.Azure.StorageQueues",
-    "path": "sdk/extension-wcf/Microsoft.CoreWCF.Azure.StorageQueues",
-    "type": "Data Plane",
-    "generator": "Unknown"
-  },
-  {
     "service": "labservices",
     "library": "Azure.ResourceManager.LabServices",
     "path": "sdk/labservices/Azure.ResourceManager.LabServices",
@@ -1278,7 +1194,7 @@
     "library": "Generator",
     "path": "sdk/provisioning/Generator",
     "type": "Data Plane",
-    "generator": "Unknown"
+    "generator": "No Generator"
   },
   {
     "service": "provisioning",
@@ -1383,7 +1299,7 @@
     "library": "Azure.Provisioning.Deployment",
     "path": "sdk/provisioning/Azure.Provisioning.Deployment",
     "type": "Data Plane",
-    "generator": "Unknown"
+    "generator": "No Generator"
   },
   {
     "service": "provisioning",
@@ -1418,35 +1334,7 @@
     "library": "Azure.Messaging.EventHubs.Shared",
     "path": "sdk/eventhub/Azure.Messaging.EventHubs.Shared",
     "type": "Data Plane",
-    "generator": "Unknown"
-  },
-  {
-    "service": "eventhub",
-    "library": "Microsoft.Azure.WebJobs.Extensions.EventHubs",
-    "path": "sdk/eventhub/Microsoft.Azure.WebJobs.Extensions.EventHubs",
-    "type": "Data Plane",
-    "generator": "Unknown"
-  },
-  {
-    "service": "eventhub",
-    "library": "Microsoft.Azure.EventHubs.Processor",
-    "path": "sdk/eventhub/Microsoft.Azure.EventHubs.Processor",
-    "type": "Data Plane",
-    "generator": "Unknown"
-  },
-  {
-    "service": "eventhub",
-    "library": "Microsoft.Azure.EventHubs",
-    "path": "sdk/eventhub/Microsoft.Azure.EventHubs",
-    "type": "Data Plane",
-    "generator": "Unknown"
-  },
-  {
-    "service": "eventhub",
-    "library": "Microsoft.Azure.EventHubs.ServiceFabricProcessor",
-    "path": "sdk/eventhub/Microsoft.Azure.EventHubs.ServiceFabricProcessor",
-    "type": "Data Plane",
-    "generator": "Unknown"
+    "generator": "No Generator"
   },
   {
     "service": "eventhub",
@@ -1460,14 +1348,14 @@
     "library": "Azure.Messaging.EventHubs.Processor",
     "path": "sdk/eventhub/Azure.Messaging.EventHubs.Processor",
     "type": "Data Plane",
-    "generator": "Unknown"
+    "generator": "No Generator"
   },
   {
     "service": "eventhub",
     "library": "Azure.Messaging.EventHubs",
     "path": "sdk/eventhub/Azure.Messaging.EventHubs",
     "type": "Data Plane",
-    "generator": "Unknown"
+    "generator": "No Generator"
   },
   {
     "service": "defendereasm",
@@ -1597,20 +1485,6 @@
   },
   {
     "service": "webpubsub",
-    "library": "Microsoft.Azure.Functions.Worker.Extensions.WebPubSub",
-    "path": "sdk/webpubsub/Microsoft.Azure.Functions.Worker.Extensions.WebPubSub",
-    "type": "Data Plane",
-    "generator": "Unknown"
-  },
-  {
-    "service": "webpubsub",
-    "library": "Microsoft.Azure.WebPubSub.AspNetCore",
-    "path": "sdk/webpubsub/Microsoft.Azure.WebPubSub.AspNetCore",
-    "type": "Data Plane",
-    "generator": "Unknown"
-  },
-  {
-    "service": "webpubsub",
     "library": "Azure.ResourceManager.WebPubSub",
     "path": "sdk/webpubsub/Azure.ResourceManager.WebPubSub",
     "type": "Management",
@@ -1618,31 +1492,10 @@
   },
   {
     "service": "webpubsub",
-    "library": "Microsoft.Azure.WebPubSub.Common",
-    "path": "sdk/webpubsub/Microsoft.Azure.WebPubSub.Common",
-    "type": "Data Plane",
-    "generator": "Unknown"
-  },
-  {
-    "service": "webpubsub",
-    "library": "Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO",
-    "path": "sdk/webpubsub/Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO",
-    "type": "Data Plane",
-    "generator": "Unknown"
-  },
-  {
-    "service": "webpubsub",
-    "library": "Microsoft.Azure.WebJobs.Extensions.WebPubSub",
-    "path": "sdk/webpubsub/Microsoft.Azure.WebJobs.Extensions.WebPubSub",
-    "type": "Data Plane",
-    "generator": "Unknown"
-  },
-  {
-    "service": "webpubsub",
     "library": "Azure.Messaging.WebPubSub.Client",
     "path": "sdk/webpubsub/Azure.Messaging.WebPubSub.Client",
     "type": "Data Plane",
-    "generator": "Unknown"
+    "generator": "No Generator"
   },
   {
     "service": "webpubsub",
@@ -1663,7 +1516,7 @@
     "library": "Azure.Monitor.OpenTelemetry.AspNetCore",
     "path": "sdk/monitor/Azure.Monitor.OpenTelemetry.AspNetCore",
     "type": "Data Plane",
-    "generator": "Unknown"
+    "generator": "No Generator"
   },
   {
     "service": "monitor",
@@ -1873,7 +1726,7 @@
     "library": "Azure.IoT.ModelsRepository",
     "path": "sdk/modelsrepository/Azure.IoT.ModelsRepository",
     "type": "Data Plane",
-    "generator": "Unknown"
+    "generator": "No Generator"
   },
   {
     "service": "healthdataaiservices",
@@ -1943,14 +1796,14 @@
     "library": "Azure.Security.KeyVault.Secrets",
     "path": "sdk/keyvault/Azure.Security.KeyVault.Secrets",
     "type": "Data Plane",
-    "generator": "Unknown"
+    "generator": "No Generator"
   },
   {
     "service": "keyvault",
     "library": "Azure.Security.KeyVault.Shared",
     "path": "sdk/keyvault/Azure.Security.KeyVault.Shared",
     "type": "Data Plane",
-    "generator": "Unknown"
+    "generator": "No Generator"
   },
   {
     "service": "keyvault",
@@ -1971,14 +1824,14 @@
     "library": "Azure.Security.KeyVault.Keys",
     "path": "sdk/keyvault/Azure.Security.KeyVault.Keys",
     "type": "Data Plane",
-    "generator": "Unknown"
+    "generator": "No Generator"
   },
   {
     "service": "keyvault",
     "library": "Azure.Security.KeyVault.Certificates",
     "path": "sdk/keyvault/Azure.Security.KeyVault.Certificates",
     "type": "Data Plane",
-    "generator": "Unknown"
+    "generator": "No Generator"
   },
   {
     "service": "databoxedge",
@@ -2031,24 +1884,17 @@
   },
   {
     "service": "storage",
-    "library": "Microsoft.Azure.WebJobs.Extensions.Storage.Queues",
-    "path": "sdk/storage/Microsoft.Azure.WebJobs.Extensions.Storage.Queues",
-    "type": "Data Plane",
-    "generator": "Unknown"
-  },
-  {
-    "service": "storage",
     "library": "Azure.Storage.DataMovement.Files.Shares",
     "path": "sdk/storage/Azure.Storage.DataMovement.Files.Shares",
     "type": "Data Plane",
-    "generator": "Unknown"
+    "generator": "No Generator"
   },
   {
     "service": "storage",
     "library": "Azure.Storage.Internal.Avro",
     "path": "sdk/storage/Azure.Storage.Internal.Avro",
     "type": "Data Plane",
-    "generator": "Unknown"
+    "generator": "No Generator"
   },
   {
     "service": "storage",
@@ -2062,7 +1908,7 @@
     "library": "Azure.Storage.DataMovement",
     "path": "sdk/storage/Azure.Storage.DataMovement",
     "type": "Data Plane",
-    "generator": "Unknown"
+    "generator": "No Generator"
   },
   {
     "service": "storage",
@@ -2076,28 +1922,14 @@
     "library": "Azure.Storage.Blobs.ChangeFeed",
     "path": "sdk/storage/Azure.Storage.Blobs.ChangeFeed",
     "type": "Data Plane",
-    "generator": "Unknown"
-  },
-  {
-    "service": "storage",
-    "library": "Microsoft.Azure.WebJobs.Extensions.Storage",
-    "path": "sdk/storage/Microsoft.Azure.WebJobs.Extensions.Storage",
-    "type": "Data Plane",
-    "generator": "Unknown"
+    "generator": "No Generator"
   },
   {
     "service": "storage",
     "library": "Azure.Storage.DataMovement.Blobs",
     "path": "sdk/storage/Azure.Storage.DataMovement.Blobs",
     "type": "Data Plane",
-    "generator": "Unknown"
-  },
-  {
-    "service": "storage",
-    "library": "Microsoft.Azure.WebJobs.Extensions.Storage.Common",
-    "path": "sdk/storage/Microsoft.Azure.WebJobs.Extensions.Storage.Common",
-    "type": "Data Plane",
-    "generator": "Unknown"
+    "generator": "No Generator"
   },
   {
     "service": "storage",
@@ -2105,13 +1937,6 @@
     "path": "sdk/storage/Azure.Storage.Blobs",
     "type": "Data Plane",
     "generator": "Swagger"
-  },
-  {
-    "service": "storage",
-    "library": "Microsoft.Azure.WebJobs.Extensions.Storage.Blobs",
-    "path": "sdk/storage/Microsoft.Azure.WebJobs.Extensions.Storage.Blobs",
-    "type": "Data Plane",
-    "generator": "Unknown"
   },
   {
     "service": "storage",
@@ -2143,24 +1968,10 @@
   },
   {
     "service": "eventgrid",
-    "library": "Microsoft.Azure.Messaging.EventGrid.CloudNativeCloudEvents",
-    "path": "sdk/eventgrid/Microsoft.Azure.Messaging.EventGrid.CloudNativeCloudEvents",
-    "type": "Data Plane",
-    "generator": "Unknown"
-  },
-  {
-    "service": "eventgrid",
     "library": "Azure.Messaging.EventGrid",
     "path": "sdk/eventgrid/Azure.Messaging.EventGrid",
     "type": "Data Plane",
     "generator": "Swagger"
-  },
-  {
-    "service": "eventgrid",
-    "library": "Microsoft.Azure.WebJobs.Extensions.EventGrid",
-    "path": "sdk/eventgrid/Microsoft.Azure.WebJobs.Extensions.EventGrid",
-    "type": "Data Plane",
-    "generator": "Unknown"
   },
   {
     "service": "eventgrid",
@@ -2391,7 +2202,7 @@
     "library": "Azure.Developer.MicrosoftPlaywrightTesting.NUnit",
     "path": "sdk/playwrighttesting/Azure.Developer.MicrosoftPlaywrightTesting.NUnit",
     "type": "Data Plane",
-    "generator": "Unknown"
+    "generator": "No Generator"
   },
   {
     "service": "remoterendering",
@@ -2447,13 +2258,6 @@
     "library": "Azure.ResourceManager.HDInsight",
     "path": "sdk/hdinsight/Azure.ResourceManager.HDInsight",
     "type": "Management",
-    "generator": "Swagger"
-  },
-  {
-    "service": "hdinsight",
-    "library": "Microsoft.Azure.HDInsight.Job",
-    "path": "sdk/hdinsight/Microsoft.Azure.HDInsight.Job",
-    "type": "Data Plane",
     "generator": "Swagger"
   },
   {
@@ -2580,14 +2384,7 @@
     "library": "Azure.Analytics.Synapse.Shared",
     "path": "sdk/synapse/Azure.Analytics.Synapse.Shared",
     "type": "Data Plane",
-    "generator": "Unknown"
-  },
-  {
-    "service": "synapse",
-    "library": "Microsoft.Azure.Synapse",
-    "path": "sdk/synapse/Microsoft.Azure.Synapse",
-    "type": "Data Plane",
-    "generator": "Swagger"
+    "generator": "No Generator"
   },
   {
     "service": "synapse",
@@ -2615,56 +2412,56 @@
     "library": "Azure.Projects.Provisioning",
     "path": "sdk/cloudmachine/Azure.Projects.Provisioning",
     "type": "Data Plane",
-    "generator": "Unknown"
+    "generator": "No Generator"
   },
   {
     "service": "cloudmachine",
     "library": "Azure.Projects.Tsp",
     "path": "sdk/cloudmachine/Azure.Projects.Tsp",
     "type": "Data Plane",
-    "generator": "Unknown"
+    "generator": "No Generator"
   },
   {
     "service": "cloudmachine",
     "library": "Azure.Projects.AI",
     "path": "sdk/cloudmachine/Azure.Projects.AI",
     "type": "Data Plane",
-    "generator": "Unknown"
+    "generator": "No Generator"
   },
   {
     "service": "cloudmachine",
     "library": "Azure.Projects.AI.Foundry",
     "path": "sdk/cloudmachine/Azure.Projects.AI.Foundry",
     "type": "Data Plane",
-    "generator": "Unknown"
+    "generator": "No Generator"
   },
   {
     "service": "cloudmachine",
     "library": "Azure.Projects",
     "path": "sdk/cloudmachine/Azure.Projects",
     "type": "Data Plane",
-    "generator": "Unknown"
+    "generator": "No Generator"
   },
   {
     "service": "cloudmachine",
     "library": "Azure.Projects.Web",
     "path": "sdk/cloudmachine/Azure.Projects.Web",
     "type": "Data Plane",
-    "generator": "Unknown"
+    "generator": "No Generator"
   },
   {
     "service": "identity",
     "library": "Azure.Identity.Broker",
     "path": "sdk/identity/Azure.Identity.Broker",
     "type": "Data Plane",
-    "generator": "Unknown"
+    "generator": "No Generator"
   },
   {
     "service": "identity",
     "library": "Azure.Identity",
     "path": "sdk/identity/Azure.Identity",
     "type": "Data Plane",
-    "generator": "Unknown"
+    "generator": "No Generator"
   },
   {
     "service": "recoveryservices-backup",
@@ -2696,27 +2493,6 @@
   },
   {
     "service": "batch",
-    "library": "Microsoft.Azure.Batch.Conventions.Files",
-    "path": "sdk/batch/Microsoft.Azure.Batch.Conventions.Files",
-    "type": "Data Plane",
-    "generator": "Unknown"
-  },
-  {
-    "service": "batch",
-    "library": "Microsoft.Azure.Batch",
-    "path": "sdk/batch/Microsoft.Azure.Batch",
-    "type": "Data Plane",
-    "generator": "Swagger"
-  },
-  {
-    "service": "batch",
-    "library": "Microsoft.Azure.Batch.FileStaging",
-    "path": "sdk/batch/Microsoft.Azure.Batch.FileStaging",
-    "type": "Data Plane",
-    "generator": "Unknown"
-  },
-  {
-    "service": "batch",
     "library": "Azure.Compute.Batch",
     "path": "sdk/batch/Azure.Compute.Batch",
     "type": "Data Plane",
@@ -2728,13 +2504,6 @@
     "path": "sdk/resourcegraph/Azure.ResourceManager.ResourceGraph",
     "type": "Management",
     "generator": "Swagger"
-  },
-  {
-    "service": "schemaregistry",
-    "library": "Microsoft.Azure.Data.SchemaRegistry.ApacheAvro",
-    "path": "sdk/schemaregistry/Microsoft.Azure.Data.SchemaRegistry.ApacheAvro",
-    "type": "Data Plane",
-    "generator": "Unknown"
   },
   {
     "service": "schemaregistry",

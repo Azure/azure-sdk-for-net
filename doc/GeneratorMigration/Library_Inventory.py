@@ -23,7 +23,7 @@ def is_mgmt_library(path):
 def identify_generator(path):
     """
     Identify if a library is generated using swagger or tsp.
-    Returns: "Swagger", "TSP-New", "TSP-Old", or "Unknown"
+    Returns: "Swagger", "TSP-New", "TSP-Old", or "No Generator"
     """
     # Special case for Azure.AI.OpenAI which uses TypeSpec with new generator via special handling
     if os.path.basename(path) == "Azure.AI.OpenAI" and "openai" in path:
@@ -102,7 +102,8 @@ def identify_generator(path):
                     except:
                         pass
     
-    return "Unknown"
+    # If we couldn't identify a generator, it's "No Generator" instead of "Unknown"
+    return "No Generator"
 
 def scan_libraries(sdk_root):
     """
@@ -130,6 +131,10 @@ def scan_libraries(sdk_root):
                 
             # Skip directories that don't look like libraries
             if library_dir in ["tests", "samples", "perf", "assets", "docs"]:
+                continue
+                
+            # Skip libraries that start with "Microsoft."
+            if library_dir.startswith("Microsoft."):
                 continue
                 
             # If it has a /src directory or a csproj file, it's likely a library
@@ -164,7 +169,7 @@ def generate_markdown_report(libraries):
     data_swagger = [lib for lib in libraries if lib["type"] == "Data Plane" and lib["generator"] == "Swagger"]
     data_tsp_old = [lib for lib in libraries if lib["type"] == "Data Plane" and lib["generator"] == "TSP-Old"]
     data_tsp_new = [lib for lib in libraries if lib["type"] == "Data Plane" and lib["generator"] == "TSP-New"]
-    unknown = [lib for lib in libraries if lib["generator"] == "Unknown"]
+    no_generator = [lib for lib in libraries if lib["generator"] == "No Generator"]
     
     # Combined TSP counts for backward compatibility
     mgmt_tsp = mgmt_tsp_old + mgmt_tsp_new
@@ -179,7 +184,7 @@ def generate_markdown_report(libraries):
     report.append(f"- Management Plane (TSP): {len(mgmt_tsp)} (New Generator: {len(mgmt_tsp_new)}, Old Generator: {len(mgmt_tsp_old)})")
     report.append(f"- Data Plane (Swagger): {len(data_swagger)}")
     report.append(f"- Data Plane (TSP): {len(data_tsp)} (New Generator: {len(data_tsp_new)}, Old Generator: {len(data_tsp_old)})")
-    report.append(f"- Unknown generator: {len(unknown)}")
+    report.append(f"- No generator: {len(no_generator)}")
     report.append("\n")
     
     report.append("## Data Plane Libraries using TSP (New Generator)\n")
@@ -228,10 +233,11 @@ def generate_markdown_report(libraries):
         report.append(f"| {lib['service']} | {lib['library']} | {lib['path']} |")
     report.append("\n")
     
-    report.append("## Libraries with Unknown Generator\n")
+    report.append("## Libraries with No Generator\n")
+    report.append("Libraries with no generator have neither autorest.md nor tsp-location.yaml files.\n")
     report.append("| Service | Library | Path |")
     report.append("| ------- | ------- | ---- |")
-    for lib in sorted(unknown, key=lambda x: (x["service"], x["library"])):
+    for lib in sorted(no_generator, key=lambda x: (x["service"], x["library"])):
         report.append(f"| {lib['service']} | {lib['library']} | {lib['path']} |")
     
     return "\n".join(report)
@@ -254,14 +260,14 @@ if __name__ == "__main__":
     data_tsp_new = sum(1 for lib in libraries if lib["type"] == "Data Plane" and lib["generator"] == "TSP-New")
     data_tsp = data_tsp_old + data_tsp_new
     
-    unknown = sum(1 for lib in libraries if lib["generator"] == "Unknown")
+    no_generator = sum(1 for lib in libraries if lib["generator"] == "No Generator")
     
     print(f"Total libraries found: {len(libraries)}")
     print(f"Management Plane (Swagger): {mgmt_swagger}")
     print(f"Management Plane (TSP): {mgmt_tsp} (New Generator: {mgmt_tsp_new}, Old Generator: {mgmt_tsp_old})")
     print(f"Data Plane (Swagger): {data_swagger}")
     print(f"Data Plane (TSP): {data_tsp} (New Generator: {data_tsp_new}, Old Generator: {data_tsp_old})")
-    print(f"Unknown generator: {unknown}")
+    print(f"No generator: {no_generator}")
     
     # Generate the inventory markdown file
     markdown_report = generate_markdown_report(libraries)
