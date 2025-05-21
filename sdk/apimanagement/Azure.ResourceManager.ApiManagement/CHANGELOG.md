@@ -1,14 +1,17 @@
 # Release History
 
-## 1.3.0-beta.3 (Unreleased)
+## 1.3.0 (2025-05-21)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Upgraded api-version tag to 'package-2024-05' from 'package-preview-2023-03'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/2d973fccf9f28681a481e9760fa12b2334216e21/specification/apimanagement/resource-manager/readme.md.
+    - Added Gateway resource operation.
+    - Added Workspace Backend operations.
+    - Added Workspace Certificate Operations.
+    - Added Workspace Logger Operations
+    - Added WorkspaceLinks Operations
+    - Added Workspace Api diagnostics Operations
+    - Added OperationStatus Operations which follow the Azure-AsyncOperation flow
 
 ## 1.3.0-beta.2 (2025-03-11)
 
