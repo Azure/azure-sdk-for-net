@@ -1,14 +1,12 @@
 # Release History
 
-## 1.1.0-beta.1 (Unreleased)
+## 1.1.0-beta.1 (2025-05-21)
 
 ### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Set API version to 2025-05-15-preview.
+- Added Bing Custom search tool.
+- Added Sharepoint grounding tool.
+- Added Microsoft Fabric tool.
 
 ## 1.0.0 (2025-05-15)
 
