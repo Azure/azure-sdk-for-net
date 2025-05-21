@@ -36,6 +36,7 @@ namespace Azure.Generator.Providers
         private readonly InputResponseLocation? _nextPageLocation;
         private readonly string _getNextResponseMethodName;
         private readonly int? _nextTokenParameterIndex;
+        private readonly string _createRequestMethodName;
 
         private readonly IReadOnlyList<ParameterProvider> _createRequestParameters;
         private readonly FieldProvider? _contextField;
@@ -64,7 +65,9 @@ namespace Azure.Generator.Providers
             _operation = serviceMethod.Operation;
             _itemModelType = itemModelType ?? new CSharpType(typeof(BinaryData));
             _isAsync = isAsync;
-            _createRequestParameters = _client.RestClient.GetCreateRequestMethod(_operation).Signature.Parameters;
+            var createRequestMethodSignature = _client.RestClient.GetCreateRequestMethod(_operation).Signature;
+            _createRequestMethodName = createRequestMethodSignature.Name;
+            _createRequestParameters = createRequestMethodSignature.Parameters;
             var fields = new List<FieldProvider>();
             for (int paramIndex = 0; paramIndex < _createRequestParameters.Count; paramIndex++)
             {
@@ -256,7 +259,7 @@ namespace Azure.Generator.Providers
                 }
                 else if (_paging.ContinuationToken is not null)
                 {
-                    return InvokeCreateRequestForContinuationToken(_requestFields[_nextTokenParameterIndex!.Value]);
+                    return InvokeCreateRequestForContinuationToken(ContinuationTokenParameter);
                 }
                 else
                 {
@@ -293,8 +296,7 @@ namespace Azure.Generator.Providers
         }
 
         private ScopedApi<HttpMessage> InvokeCreateRequestForNextLink(ValueExpression nextPageUri) => _clientField.Invoke(
-            // TODO - may need to expose ToCleanName for the operation
-            $"Create{_operation.Name}Request",
+            _createRequestMethodName,
             // we replace the first argument (the initialUri) with the nextPageUri
             [nextPageUri, .. _requestFields.Skip(1)])
             .As<HttpMessage>();
@@ -306,20 +308,14 @@ namespace Azure.Generator.Providers
             // Replace the nextToken field with the nextToken variable
             arguments[_nextTokenParameterIndex!.Value] = continuationToken;
 
-            return _clientField.Invoke(
-                    $"Create{_operation.Name}Request", // TODO: may need to expose ToCleanName for the operation
-                    arguments)
-                .As<HttpMessage>();
+            return _clientField.Invoke(_createRequestMethodName, arguments).As<HttpMessage>();
         }
 
         private ScopedApi<HttpMessage> InvokeCreateRequestForSingle()
         {
             ValueExpression[] arguments = [.. _requestFields.Select(f => f.AsValueExpression)];
 
-            return _clientField.Invoke(
-                    $"Create{_operation.Name}Request", // TODO: may need to expose ToCleanName for the operation
-                    arguments)
-                .As<HttpMessage>();
+            return _clientField.Invoke(_createRequestMethodName,arguments).As<HttpMessage>();
         }
 
         protected override ConstructorProvider[] BuildConstructors()
