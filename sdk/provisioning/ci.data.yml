@@ -53,6 +53,64 @@ pr:
     exclude:
     - sdk/provisioning/Generator/
 
+parameters:
+  - name: release_Azure.Provisioning
+    displayName: 'Azure.Provisioning'
+    type: boolean
+    default: false
+  - name: release_Azure.Provisioning.AppConfiguration
+    displayName: 'Azure.Provisioning.AppConfiguration'
+    type: boolean
+    default: false
+  - name: release_Azure.Provisioning.CognitiveServices
+    displayName: 'Azure.Provisioning.CognitiveServices'
+    type: boolean
+    default: false
+  - name: release_Azure.Provisioning.CosmosDB
+    displayName: 'Azure.Provisioning.CosmosDB'
+    type: boolean
+    default: false
+  - name: release_Azure.Provisioning.EventHubs
+    displayName: 'Azure.Provisioning.EventHubs'
+    type: boolean
+    default: false
+  - name: release_Azure.Provisioning.KeyVault
+    displayName: 'Azure.Provisioning.KeyVault'
+    type: boolean
+    default: false
+  - name: release_Azure.Provisioning.PostgreSql
+    displayName: 'Azure.Provisioning.PostgreSql'
+    type: boolean
+    default: false
+  - name: release_Azure.Provisioning.Redis
+    displayName: 'Azure.Provisioning.Redis'
+    type: boolean
+    default: false
+  - name: release_Azure.Provisioning.Search
+    displayName: 'Azure.Provisioning.Search'
+    type: boolean
+    default: false
+  - name: release_Azure.Provisioning.ServiceBus
+    displayName: 'Azure.Provisioning.ServiceBus'
+    type: boolean
+    default: false
+  - name: release_Azure.Provisioning.SignalR
+    displayName: 'Azure.Provisioning.SignalR'
+    type: boolean
+    default: false
+  - name: release_Azure.Provisioning.Sql
+    displayName: 'Azure.Provisioning.Sql'
+    type: boolean
+    default: false
+  - name: release_Azure.Provisioning.Storage
+    displayName: 'Azure.Provisioning.Storage'
+    type: boolean
+    default: false
+  - name: release_Azure.Provisioning.WebPubSub
+    displayName: 'Azure.Provisioning.WebPubSub'
+    type: boolean
+    default: false
+
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
@@ -62,29 +120,43 @@ extends:
     Artifacts:
     - name: Azure.Provisioning
       safeName: AzureProvisioning
+      createReleaseStage: ${{ parameters.release_Azure.Provisioning }}
     - name: Azure.Provisioning.AppConfiguration
       safeName: AzureProvisioningAppConfiguration
+      createReleaseStage: ${{ parameters.release_Azure.Provisioning.AppConfiguration }}
     - name: Azure.Provisioning.CognitiveServices
       safeName: AzureProvisioningCognitiveServices
+      createReleaseStage: ${{ parameters.release_Azure.Provisioning.CognitiveServices }}
     - name: Azure.Provisioning.CosmosDB
       safeName: AzureProvisioningCosmosDB
+      createReleaseStage: ${{ parameters.release_Azure.Provisioning.CosmosDB }}
     - name: Azure.Provisioning.EventHubs
       safeName: AzureProvisioningEventHubs
+      createReleaseStage: ${{ parameters.release_Azure.Provisioning.EventHubs }}
     - name: Azure.Provisioning.KeyVault
       safeName: AzureProvisioningKeyVault
+      createReleaseStage: ${{ parameters.release_Azure.Provisioning.KeyVault }}
     - name: Azure.Provisioning.PostgreSql
       safeName: AzureProvisioningPostgreSql
+      createReleaseStage: ${{ parameters.release_Azure.Provisioning.PostgreSql }}
     - name: Azure.Provisioning.Redis
       safeName: AzureProvisioningRedis
+      createReleaseStage: ${{ parameters.release_Azure.Provisioning.Redis }}
     - name: Azure.Provisioning.Search
       safeName: AzureProvisioningSearch
+      createReleaseStage: ${{ parameters.release_Azure.Provisioning.Search }}
     - name: Azure.Provisioning.ServiceBus
       safeName: AzureProvisioningServiceBus
+      createReleaseStage: ${{ parameters.release_Azure.Provisioning.ServiceBus }}
     - name: Azure.Provisioning.SignalR
       safeName: AzureProvisioningSignalR
+      createReleaseStage: ${{ parameters.release_Azure.Provisioning.SignalR }}
     - name: Azure.Provisioning.Sql
       safeName: AzureProvisioningSql
+      createReleaseStage: ${{ parameters.release_Azure.Provisioning.Sql }}
     - name: Azure.Provisioning.Storage
       safeName: AzureProvisioningStorage
+      createReleaseStage: ${{ parameters.release_Azure.Provisioning.Storage }}
     - name: Azure.Provisioning.WebPubSub
       safeName: AzureProvisioningWebPubSub
+      createReleaseStage: ${{ parameters.release_Azure.Provisioning.WebPubSub }}
