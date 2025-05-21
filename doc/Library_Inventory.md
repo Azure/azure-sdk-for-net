@@ -4,15 +4,23 @@
 
 - Total libraries: 424
 - Management Plane (Swagger): 206
-- Management Plane (TSP): 0
+- Management Plane (TSP): 0 (New Generator: 0, Old Generator: 0)
 - Data Plane (Swagger): 151
-- Data Plane (TSP): 0
+- Data Plane (TSP): 0 (New Generator: 0, Old Generator: 0)
 - Unknown generator: 67
 
 
-## Data Plane Libraries using TSP
+## Data Plane Libraries using TSP (New Generator)
 
-TSP is detected by the presence of a tsplocation.yaml file with an emitterPackageJsonPath value, tspconfig.yaml file, tsp directory, or *.tsp files.
+TSP with new generator is detected by the presence of a tsplocation.yaml file with an emitterPackageJsonPath value.
+
+| Service | Library | Path |
+| ------- | ------- | ---- |
+
+
+## Data Plane Libraries using TSP (Old Generator)
+
+TSP with old generator is detected by the presence of a tsplocation.yaml file without an emitterPackageJsonPath value, tspconfig.yaml file, tsp directory, or *.tsp files.
 
 | Service | Library | Path |
 | ------- | ------- | ---- |
@@ -175,9 +183,17 @@ TSP is detected by the presence of a tsplocation.yaml file with an emitterPackag
 | webpubsub | Azure.Messaging.WebPubSub | sdk/webpubsub/Azure.Messaging.WebPubSub |
 
 
-## Management Plane Libraries using TSP
+## Management Plane Libraries using TSP (New Generator)
 
-TSP is detected by the presence of a tsplocation.yaml file with an emitterPackageJsonPath value, tspconfig.yaml file, tsp directory, or *.tsp files.
+TSP with new generator is detected by the presence of a tsplocation.yaml file with an emitterPackageJsonPath value.
+
+| Service | Library | Path |
+| ------- | ------- | ---- |
+
+
+## Management Plane Libraries using TSP (Old Generator)
+
+TSP with old generator is detected by the presence of a tsplocation.yaml file without an emitterPackageJsonPath value, tspconfig.yaml file, tsp directory, or *.tsp files.
 
 | Service | Library | Path |
 | ------- | ------- | ---- |
