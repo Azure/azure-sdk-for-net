@@ -18,15 +18,21 @@ To generate the library inventory:
 1. Run the `Library_Inventory.py` script from the repository root:
 
 ```bash
-python doc/Library_Inventory.py
+python doc/GeneratorMigration/Library_Inventory.py
 ```
 
 2. The script will:
    - Scan all libraries in the `sdk/` directory
    - Categorize them by type (data plane or management plane)
    - Identify the generator used (Swagger or TypeSpec)
-   - Generate a markdown report (`doc/Library_Inventory.md`)
-   - Generate a JSON file (`doc/Library_Inventory.json`) for programmatic use
+   - Generate a markdown report (`doc/GeneratorMigration/Library_Inventory.md`)
+
+3. If you need JSON output for programmatic use, use the `--json` flag:
+
+```bash
+python doc/GeneratorMigration/Library_Inventory.py --json
+```
+   - This will generate an additional `Library_Inventory.json` file with the raw inventory data
 
 ## Inventory Classification Logic
 

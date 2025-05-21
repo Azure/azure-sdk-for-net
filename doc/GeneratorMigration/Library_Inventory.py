@@ -6,12 +6,19 @@ Azure SDK for .NET Libraries Inventory Generator
 This script generates an inventory of libraries in the Azure SDK for .NET repository,
 categorizing them as data plane or management plane, and by the type of generator used
 (Swagger or TypeSpec).
+
+Usage:
+    python Library_Inventory.py [--json]
+    
+Options:
+    --json    Generate a JSON file with the inventory data
 """
 
 import os
 import re
 import json
 import glob
+import sys
 from pathlib import Path
 
 def is_mgmt_library(path):
@@ -312,6 +319,9 @@ def generate_markdown_report(libraries):
     return "\n".join(report)
 
 if __name__ == "__main__":
+    # Parse command line arguments
+    generate_json = "--json" in sys.argv
+    
     # Define the path to the SDK root directory
     SDK_ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "sdk")
     
@@ -361,9 +371,11 @@ if __name__ == "__main__":
     
     print(f"Library inventory markdown generated at: {inventory_md_path}")
     
-    # Export JSON too for programmatic use
-    json_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "Library_Inventory.json")
-    with open(json_path, 'w') as f:
-        json.dump(libraries, f, indent=2)
-    
-    print(f"Library inventory JSON generated at: {json_path}")
+    # Export JSON only if requested via the --json flag
+    if generate_json:
+        json_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "Library_Inventory.json")
+        with open(json_path, 'w') as f:
+            json.dump(libraries, f, indent=2)
+        print(f"Library inventory JSON generated at: {json_path}")
+    else:
+        print("JSON file generation skipped. Use --json flag to generate the JSON file.")
