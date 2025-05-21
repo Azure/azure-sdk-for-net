@@ -363,7 +363,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
         /// Serialized Name: DnsSecurityRule.properties.provisioningState
         /// </param>
         /// <returns> A new <see cref="DnsResolver.DnsSecurityRuleData"/> instance for mocking. </returns>
-        public static DnsSecurityRuleData DnsSecurityRuleData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ETag? etag = null, int priority = default, ActionType? actionType = null, IEnumerable<WritableSubResource> dnsResolverDomainLists = null, DnsSecurityRuleState? dnsSecurityRuleState = null, DnsResolverProvisioningState? provisioningState = null)
+        public static DnsSecurityRuleData DnsSecurityRuleData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ETag? etag = null, int priority = default, DnsSecurityRuleActionType? actionType = null, IEnumerable<WritableSubResource> dnsResolverDomainLists = null, DnsSecurityRuleState? dnsSecurityRuleState = null, DnsResolverProvisioningState? provisioningState = null)
         {
             tags ??= new Dictionary<string, string>();
             dnsResolverDomainLists ??= new List<WritableSubResource>();

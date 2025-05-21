@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
                 return null;
             }
             Uri storageUrl = default;
-            Action action = default;
+            DnsResolverDomainListBulkAction action = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
                         }
                         if (property0.NameEquals("action"u8))
                         {
-                            action = new Action(property0.Value.GetString());
+                            action = new DnsResolverDomainListBulkAction(property0.Value.GetString());
                             continue;
                         }
                     }

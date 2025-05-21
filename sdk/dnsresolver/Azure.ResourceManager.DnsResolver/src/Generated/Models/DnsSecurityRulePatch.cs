@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
         /// The type of action to take.
         /// Serialized Name: DnsSecurityRuleAction.actionType
         /// </summary>
-        public ActionType? ActionType
+        public DnsSecurityRuleActionType? ActionType
         {
             get => Action is null ? default : Action.ActionType;
             set

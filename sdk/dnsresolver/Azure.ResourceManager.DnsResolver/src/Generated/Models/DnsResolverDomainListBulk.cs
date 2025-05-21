@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
         /// Serialized Name: DnsResolverDomainListBulk.properties.action
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="storageUri"/> is null. </exception>
-        public DnsResolverDomainListBulk(Uri storageUri, Action action)
+        public DnsResolverDomainListBulk(Uri storageUri, DnsResolverDomainListBulkAction action)
         {
             Argument.AssertNotNull(storageUri, nameof(storageUri));
 
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
         /// Serialized Name: DnsResolverDomainListBulk.properties.action
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DnsResolverDomainListBulk(Uri storageUri, Action action, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DnsResolverDomainListBulk(Uri storageUri, DnsResolverDomainListBulkAction action, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             StorageUri = storageUri;
             Action = action;
@@ -97,6 +97,6 @@ namespace Azure.ResourceManager.DnsResolver.Models
         /// The action to take in the request, Upload or Download.
         /// Serialized Name: DnsResolverDomainListBulk.properties.action
         /// </summary>
-        public Action Action { get; }
+        public DnsResolverDomainListBulkAction Action { get; }
     }
 }

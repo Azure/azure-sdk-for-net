@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
         /// Serialized Name: DnsSecurityRuleAction.actionType
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DnsSecurityRuleAction(ActionType? actionType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DnsSecurityRuleAction(DnsSecurityRuleActionType? actionType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ActionType = actionType;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -69,6 +69,6 @@ namespace Azure.ResourceManager.DnsResolver.Models
         /// The type of action to take.
         /// Serialized Name: DnsSecurityRuleAction.actionType
         /// </summary>
-        public ActionType? ActionType { get; set; }
+        public DnsSecurityRuleActionType? ActionType { get; set; }
     }
 }
