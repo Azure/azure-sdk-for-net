@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
-    internal partial class UnknownServiceResourceProperties : IUtf8JsonSerializable, IJsonModel<ManagedServiceProperties>
+    internal partial class UnknownManagedServiceProperties : IUtf8JsonSerializable, IJsonModel<ManagedServiceProperties>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedServiceProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             return DeserializeManagedServiceProperties(document.RootElement, options);
         }
 
-        internal static UnknownServiceResourceProperties DeserializeUnknownServiceResourceProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static UnknownManagedServiceProperties DeserializeUnknownManagedServiceProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new UnknownServiceResourceProperties(
+            return new UnknownManagedServiceProperties(
                 placementConstraints,
                 correlationScheme ?? new ChangeTrackingList<ManagedServiceCorrelation>(),
                 serviceLoadMetrics ?? new ChangeTrackingList<ManagedServiceLoadMetric>(),

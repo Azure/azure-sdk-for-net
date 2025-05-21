@@ -78,11 +78,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Mocking
         /// <param name="location"> The location for the cluster code versions. This is different from cluster location. </param>
         /// <param name="clusterVersion"> The cluster code version. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> or <paramref name="clusterVersion"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="clusterVersion"/> is null. </exception>
-        public virtual async Task<Response<ServiceFabricManagedClusterVersion>> GetManagedClusterVersionAsync(string location, string clusterVersion, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="clusterVersion"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="clusterVersion"/> is null. </exception>
+        public virtual async Task<Response<ServiceFabricManagedClusterVersion>> GetManagedClusterVersionAsync(AzureLocation location, string clusterVersion, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
             Argument.AssertNotNullOrEmpty(clusterVersion, nameof(clusterVersion));
 
             using var scope = ManagedClusterVersionClientDiagnostics.CreateScope("MockableServiceFabricManagedClustersSubscriptionResource.GetManagedClusterVersion");
@@ -119,11 +118,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Mocking
         /// <param name="location"> The location for the cluster code versions. This is different from cluster location. </param>
         /// <param name="clusterVersion"> The cluster code version. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> or <paramref name="clusterVersion"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="clusterVersion"/> is null. </exception>
-        public virtual Response<ServiceFabricManagedClusterVersion> GetManagedClusterVersion(string location, string clusterVersion, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="clusterVersion"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="clusterVersion"/> is null. </exception>
+        public virtual Response<ServiceFabricManagedClusterVersion> GetManagedClusterVersion(AzureLocation location, string clusterVersion, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
             Argument.AssertNotNullOrEmpty(clusterVersion, nameof(clusterVersion));
 
             using var scope = ManagedClusterVersionClientDiagnostics.CreateScope("MockableServiceFabricManagedClustersSubscriptionResource.GetManagedClusterVersion");
@@ -159,13 +157,9 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Mocking
         /// </summary>
         /// <param name="location"> The location for the cluster code versions. This is different from cluster location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         /// <returns> An async collection of <see cref="ServiceFabricManagedClusterVersion"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ServiceFabricManagedClusterVersion> GetManagedClusterVersionsAsync(string location, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ServiceFabricManagedClusterVersion> GetManagedClusterVersionsAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
-
             HttpMessage FirstPageRequest(int? pageSizeHint) => ManagedClusterVersionRestClient.CreateListRequest(Id.SubscriptionId, location);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => ServiceFabricManagedClusterVersion.DeserializeServiceFabricManagedClusterVersion(e), ManagedClusterVersionClientDiagnostics, Pipeline, "MockableServiceFabricManagedClustersSubscriptionResource.GetManagedClusterVersions", "", null, cancellationToken);
         }
@@ -189,13 +183,9 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Mocking
         /// </summary>
         /// <param name="location"> The location for the cluster code versions. This is different from cluster location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         /// <returns> A collection of <see cref="ServiceFabricManagedClusterVersion"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ServiceFabricManagedClusterVersion> GetManagedClusterVersions(string location, CancellationToken cancellationToken = default)
+        public virtual Pageable<ServiceFabricManagedClusterVersion> GetManagedClusterVersions(AzureLocation location, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
-
             HttpMessage FirstPageRequest(int? pageSizeHint) => ManagedClusterVersionRestClient.CreateListRequest(Id.SubscriptionId, location);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => ServiceFabricManagedClusterVersion.DeserializeServiceFabricManagedClusterVersion(e), ManagedClusterVersionClientDiagnostics, Pipeline, "MockableServiceFabricManagedClustersSubscriptionResource.GetManagedClusterVersions", "", null, cancellationToken);
         }
@@ -221,11 +211,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Mocking
         /// <param name="environment"> The operating system of the cluster. </param>
         /// <param name="clusterVersion"> The cluster code version. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> or <paramref name="clusterVersion"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="clusterVersion"/> is null. </exception>
-        public virtual async Task<Response<ServiceFabricManagedClusterVersion>> GetManagedClusterVersionByEnvironmentAsync(string location, ManagedClusterVersionEnvironment environment, string clusterVersion, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="clusterVersion"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="clusterVersion"/> is null. </exception>
+        public virtual async Task<Response<ServiceFabricManagedClusterVersion>> GetManagedClusterVersionByEnvironmentAsync(AzureLocation location, ManagedClusterVersionEnvironment environment, string clusterVersion, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
             Argument.AssertNotNullOrEmpty(clusterVersion, nameof(clusterVersion));
 
             using var scope = ManagedClusterVersionClientDiagnostics.CreateScope("MockableServiceFabricManagedClustersSubscriptionResource.GetManagedClusterVersionByEnvironment");
@@ -263,11 +252,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Mocking
         /// <param name="environment"> The operating system of the cluster. </param>
         /// <param name="clusterVersion"> The cluster code version. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> or <paramref name="clusterVersion"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="clusterVersion"/> is null. </exception>
-        public virtual Response<ServiceFabricManagedClusterVersion> GetManagedClusterVersionByEnvironment(string location, ManagedClusterVersionEnvironment environment, string clusterVersion, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="clusterVersion"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="clusterVersion"/> is null. </exception>
+        public virtual Response<ServiceFabricManagedClusterVersion> GetManagedClusterVersionByEnvironment(AzureLocation location, ManagedClusterVersionEnvironment environment, string clusterVersion, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
             Argument.AssertNotNullOrEmpty(clusterVersion, nameof(clusterVersion));
 
             using var scope = ManagedClusterVersionClientDiagnostics.CreateScope("MockableServiceFabricManagedClustersSubscriptionResource.GetManagedClusterVersionByEnvironment");
@@ -304,13 +292,9 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Mocking
         /// <param name="location"> The location for the cluster code versions. This is different from cluster location. </param>
         /// <param name="environment"> The operating system of the cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         /// <returns> An async collection of <see cref="ServiceFabricManagedClusterVersion"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ServiceFabricManagedClusterVersion> GetManagedClusterVersionsByEnvironmentAsync(string location, ManagedClusterVersionEnvironment environment, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ServiceFabricManagedClusterVersion> GetManagedClusterVersionsByEnvironmentAsync(AzureLocation location, ManagedClusterVersionEnvironment environment, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
-
             HttpMessage FirstPageRequest(int? pageSizeHint) => ManagedClusterVersionRestClient.CreateListByEnvironmentRequest(Id.SubscriptionId, location, environment);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => ServiceFabricManagedClusterVersion.DeserializeServiceFabricManagedClusterVersion(e), ManagedClusterVersionClientDiagnostics, Pipeline, "MockableServiceFabricManagedClustersSubscriptionResource.GetManagedClusterVersionsByEnvironment", "", null, cancellationToken);
         }
@@ -335,13 +319,9 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Mocking
         /// <param name="location"> The location for the cluster code versions. This is different from cluster location. </param>
         /// <param name="environment"> The operating system of the cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         /// <returns> A collection of <see cref="ServiceFabricManagedClusterVersion"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ServiceFabricManagedClusterVersion> GetManagedClusterVersionsByEnvironment(string location, ManagedClusterVersionEnvironment environment, CancellationToken cancellationToken = default)
+        public virtual Pageable<ServiceFabricManagedClusterVersion> GetManagedClusterVersionsByEnvironment(AzureLocation location, ManagedClusterVersionEnvironment environment, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
-
             HttpMessage FirstPageRequest(int? pageSizeHint) => ManagedClusterVersionRestClient.CreateListByEnvironmentRequest(Id.SubscriptionId, location, environment);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => ServiceFabricManagedClusterVersion.DeserializeServiceFabricManagedClusterVersion(e), ManagedClusterVersionClientDiagnostics, Pipeline, "MockableServiceFabricManagedClustersSubscriptionResource.GetManagedClusterVersionsByEnvironment", "", null, cancellationToken);
         }
@@ -366,11 +346,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Mocking
         /// <param name="location"> The location for the cluster code versions. This is different from cluster location. </param>
         /// <param name="vmSize"> VM Size name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> or <paramref name="vmSize"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="vmSize"/> is null. </exception>
-        public virtual async Task<Response<ServiceFabricManagedUnsupportedVmSize>> GetManagedUnsupportedVmSizeAsync(string location, string vmSize, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="vmSize"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="vmSize"/> is null. </exception>
+        public virtual async Task<Response<ServiceFabricManagedUnsupportedVmSize>> GetManagedUnsupportedVmSizeAsync(AzureLocation location, string vmSize, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
             Argument.AssertNotNullOrEmpty(vmSize, nameof(vmSize));
 
             using var scope = ManagedUnsupportedVMSizesClientDiagnostics.CreateScope("MockableServiceFabricManagedClustersSubscriptionResource.GetManagedUnsupportedVmSize");
@@ -407,11 +386,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Mocking
         /// <param name="location"> The location for the cluster code versions. This is different from cluster location. </param>
         /// <param name="vmSize"> VM Size name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> or <paramref name="vmSize"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="vmSize"/> is null. </exception>
-        public virtual Response<ServiceFabricManagedUnsupportedVmSize> GetManagedUnsupportedVmSize(string location, string vmSize, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="vmSize"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="vmSize"/> is null. </exception>
+        public virtual Response<ServiceFabricManagedUnsupportedVmSize> GetManagedUnsupportedVmSize(AzureLocation location, string vmSize, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
             Argument.AssertNotNullOrEmpty(vmSize, nameof(vmSize));
 
             using var scope = ManagedUnsupportedVMSizesClientDiagnostics.CreateScope("MockableServiceFabricManagedClustersSubscriptionResource.GetManagedUnsupportedVmSize");
@@ -447,13 +425,9 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Mocking
         /// </summary>
         /// <param name="location"> The location for the cluster code versions. This is different from cluster location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         /// <returns> An async collection of <see cref="ServiceFabricManagedUnsupportedVmSize"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ServiceFabricManagedUnsupportedVmSize> GetManagedUnsupportedVmSizesAsync(string location, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ServiceFabricManagedUnsupportedVmSize> GetManagedUnsupportedVmSizesAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
-
             HttpMessage FirstPageRequest(int? pageSizeHint) => ManagedUnsupportedVMSizesRestClient.CreateGetManagedUnsupportedVmSizesRequest(Id.SubscriptionId, location);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ManagedUnsupportedVMSizesRestClient.CreateGetManagedUnsupportedVmSizesNextPageRequest(nextLink, Id.SubscriptionId, location);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ServiceFabricManagedUnsupportedVmSize.DeserializeServiceFabricManagedUnsupportedVmSize(e), ManagedUnsupportedVMSizesClientDiagnostics, Pipeline, "MockableServiceFabricManagedClustersSubscriptionResource.GetManagedUnsupportedVmSizes", "value", "nextLink", cancellationToken);
@@ -478,13 +452,9 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Mocking
         /// </summary>
         /// <param name="location"> The location for the cluster code versions. This is different from cluster location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         /// <returns> A collection of <see cref="ServiceFabricManagedUnsupportedVmSize"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ServiceFabricManagedUnsupportedVmSize> GetManagedUnsupportedVmSizes(string location, CancellationToken cancellationToken = default)
+        public virtual Pageable<ServiceFabricManagedUnsupportedVmSize> GetManagedUnsupportedVmSizes(AzureLocation location, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
-
             HttpMessage FirstPageRequest(int? pageSizeHint) => ManagedUnsupportedVMSizesRestClient.CreateGetManagedUnsupportedVmSizesRequest(Id.SubscriptionId, location);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ManagedUnsupportedVMSizesRestClient.CreateGetManagedUnsupportedVmSizesNextPageRequest(nextLink, Id.SubscriptionId, location);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ServiceFabricManagedUnsupportedVmSize.DeserializeServiceFabricManagedUnsupportedVmSize(e), ManagedUnsupportedVMSizesClientDiagnostics, Pipeline, "MockableServiceFabricManagedClustersSubscriptionResource.GetManagedUnsupportedVmSizes", "value", "nextLink", cancellationToken);

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
     /// Please note <see cref="ManagedServiceProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="StatefulServiceProperties"/> and <see cref="StatelessServiceProperties"/>.
     /// </summary>
-    public abstract partial class ManagedServiceProperties : ManagedServiceBaseProperties
+    public partial class ManagedServiceProperties : ManagedServiceBaseProperties
     {
         /// <summary> Initializes a new instance of <see cref="ManagedServiceProperties"/>. </summary>
         /// <param name="serviceTypeName"> The name of the service type. </param>
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// The available derived classes include <see cref="NamedPartitionScheme"/>, <see cref="SingletonPartitionScheme"/> and <see cref="UniformInt64RangePartitionScheme"/>.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceTypeName"/> or <paramref name="partitionDescription"/> is null. </exception>
-        protected ManagedServiceProperties(string serviceTypeName, ManagedServicePartitionScheme partitionDescription)
+        public ManagedServiceProperties(string serviceTypeName, ManagedServicePartitionScheme partitionDescription)
         {
             Argument.AssertNotNull(serviceTypeName, nameof(serviceTypeName));
             Argument.AssertNotNull(partitionDescription, nameof(partitionDescription));

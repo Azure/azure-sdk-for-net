@@ -44,6 +44,16 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(ManagedIdentities))
+            {
+                writer.WritePropertyName("managedIdentities"u8);
+                writer.WriteStartArray();
+                foreach (var item in ManagedIdentities)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
@@ -69,16 +79,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             {
                 writer.WritePropertyName("upgradePolicy"u8);
                 writer.WriteObjectValue(UpgradePolicy, options);
-            }
-            if (Optional.IsCollectionDefined(ManagedIdentities))
-            {
-                writer.WritePropertyName("managedIdentities"u8);
-                writer.WriteStartArray();
-                foreach (var item in ManagedIdentities)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
             }
             writer.WriteEndObject();
         }
@@ -110,11 +110,11 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
+            IList<ApplicationUserAssignedIdentityInfo> managedIdentities = default;
             string provisioningState = default;
             string version = default;
             IDictionary<string, string> parameters = default;
             ApplicationUpgradePolicy upgradePolicy = default;
-            IList<ApplicationUserAssignedIdentityInfo> managedIdentities = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -180,6 +180,20 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
+                        if (property0.NameEquals("managedIdentities"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<ApplicationUserAssignedIdentityInfo> array = new List<ApplicationUserAssignedIdentityInfo>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(ApplicationUserAssignedIdentityInfo.DeserializeApplicationUserAssignedIdentityInfo(item, options));
+                            }
+                            managedIdentities = array;
+                            continue;
+                        }
                         if (property0.NameEquals("provisioningState"u8))
                         {
                             provisioningState = property0.Value.GetString();
@@ -213,20 +227,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                             upgradePolicy = ApplicationUpgradePolicy.DeserializeApplicationUpgradePolicy(property0.Value, options);
                             continue;
                         }
-                        if (property0.NameEquals("managedIdentities"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<ApplicationUserAssignedIdentityInfo> array = new List<ApplicationUserAssignedIdentityInfo>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(ApplicationUserAssignedIdentityInfo.DeserializeApplicationUserAssignedIdentityInfo(item, options));
-                            }
-                            managedIdentities = array;
-                            continue;
-                        }
                     }
                     continue;
                 }
@@ -243,11 +243,11 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
+                managedIdentities ?? new ChangeTrackingList<ApplicationUserAssignedIdentityInfo>(),
                 provisioningState,
                 version,
                 parameters ?? new ChangeTrackingDictionary<string, string>(),
                 upgradePolicy,
-                managedIdentities ?? new ChangeTrackingList<ApplicationUserAssignedIdentityInfo>(),
                 identity,
                 serializedAdditionalRawData);
         }

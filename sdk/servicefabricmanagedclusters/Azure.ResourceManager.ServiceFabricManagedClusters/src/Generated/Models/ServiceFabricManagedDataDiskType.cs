@@ -22,23 +22,23 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string StandardLRSValue = "Standard_LRS";
-        private const string StandardSSDLRSValue = "StandardSSD_LRS";
-        private const string PremiumLRSValue = "Premium_LRS";
+        private const string StandardLrsValue = "Standard_LRS";
+        private const string StandardSsdLrsValue = "StandardSSD_LRS";
+        private const string PremiumLrsValue = "Premium_LRS";
         private const string PremiumV2LRSValue = "PremiumV2_LRS";
-        private const string StandardSSDZRSValue = "StandardSSD_ZRS";
+        private const string PremiumZrsValue = "StandardSSD_ZRS";
         private const string PremiumZRSValue = "Premium_ZRS";
 
         /// <summary> Standard HDD locally redundant storage. Best for backup, non-critical, and infrequent access. </summary>
-        public static ServiceFabricManagedDataDiskType StandardLRS { get; } = new ServiceFabricManagedDataDiskType(StandardLRSValue);
+        public static ServiceFabricManagedDataDiskType StandardLrs { get; } = new ServiceFabricManagedDataDiskType(StandardLrsValue);
         /// <summary> Standard SSD locally redundant storage. Best for web servers, lightly used enterprise applications and dev/test. </summary>
-        public static ServiceFabricManagedDataDiskType StandardSSDLRS { get; } = new ServiceFabricManagedDataDiskType(StandardSSDLRSValue);
+        public static ServiceFabricManagedDataDiskType StandardSsdLrs { get; } = new ServiceFabricManagedDataDiskType(StandardSsdLrsValue);
         /// <summary> Premium SSD locally redundant storage. Best for production and performance sensitive workloads. </summary>
-        public static ServiceFabricManagedDataDiskType PremiumLRS { get; } = new ServiceFabricManagedDataDiskType(PremiumLRSValue);
+        public static ServiceFabricManagedDataDiskType PremiumLrs { get; } = new ServiceFabricManagedDataDiskType(PremiumLrsValue);
         /// <summary> Premium SSD V2 locally redundant storage. Best for production and performance sensitive workloads that consistently require low latency and high IOPS and throughput. </summary>
         public static ServiceFabricManagedDataDiskType PremiumV2LRS { get; } = new ServiceFabricManagedDataDiskType(PremiumV2LRSValue);
         /// <summary> Standard SSD zone redundant storage. Best for web servers, lightly used enterprise applications and dev/test that need storage resiliency against zone failures. </summary>
-        public static ServiceFabricManagedDataDiskType StandardSSDZRS { get; } = new ServiceFabricManagedDataDiskType(StandardSSDZRSValue);
+        public static ServiceFabricManagedDataDiskType PremiumZrs { get; } = new ServiceFabricManagedDataDiskType(PremiumZrsValue);
         /// <summary> Premium SSD zone redundant storage. Best for production workloads that need storage resiliency against zone failures. </summary>
         public static ServiceFabricManagedDataDiskType PremiumZRS { get; } = new ServiceFabricManagedDataDiskType(PremiumZRSValue);
         /// <summary> Determines if two <see cref="ServiceFabricManagedDataDiskType"/> values are the same. </summary>

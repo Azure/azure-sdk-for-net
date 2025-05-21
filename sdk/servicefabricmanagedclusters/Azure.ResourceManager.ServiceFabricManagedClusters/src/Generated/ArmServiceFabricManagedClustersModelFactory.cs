@@ -54,6 +54,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
+        /// <param name="managedIdentities"> List of user assigned identities for the application, each mapped to a friendly name. </param>
         /// <param name="provisioningState"> The current deployment or provisioning state, which only appears in the response. </param>
         /// <param name="version">
         /// The version of the application type as defined in the application manifest.
@@ -61,14 +62,13 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// </param>
         /// <param name="parameters"> List of application parameters with overridden values from their default values specified in the application manifest. </param>
         /// <param name="upgradePolicy"> Describes the policy for a monitored application upgrade. </param>
-        /// <param name="managedIdentities"> List of user assigned identities for the application, each mapped to a friendly name. </param>
         /// <param name="identity"> Describes the managed identities for an Azure resource. </param>
         /// <returns> A new <see cref="ServiceFabricManagedClusters.ServiceFabricManagedApplicationData"/> instance for mocking. </returns>
-        public static ServiceFabricManagedApplicationData ServiceFabricManagedApplicationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string provisioningState = null, string version = null, IDictionary<string, string> parameters = null, ApplicationUpgradePolicy upgradePolicy = null, IEnumerable<ApplicationUserAssignedIdentityInfo> managedIdentities = null, ManagedServiceIdentity identity = null)
+        public static ServiceFabricManagedApplicationData ServiceFabricManagedApplicationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, IEnumerable<ApplicationUserAssignedIdentityInfo> managedIdentities = null, string provisioningState = null, string version = null, IDictionary<string, string> parameters = null, ApplicationUpgradePolicy upgradePolicy = null, ManagedServiceIdentity identity = null)
         {
             tags ??= new Dictionary<string, string>();
-            parameters ??= new Dictionary<string, string>();
             managedIdentities ??= new List<ApplicationUserAssignedIdentityInfo>();
+            parameters ??= new Dictionary<string, string>();
 
             return new ServiceFabricManagedApplicationData(
                 id,
@@ -77,11 +77,11 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 systemData,
                 tags,
                 location,
+                managedIdentities?.ToList(),
                 provisioningState,
                 version,
                 parameters,
                 upgradePolicy,
-                managedIdentities?.ToList(),
                 identity,
                 serializedAdditionalRawData: null);
         }
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             servicePlacementPolicies ??= new List<ManagedServicePlacementPolicy>();
             scalingPolicies ??= new List<ManagedServiceScalingPolicy>();
 
-            return new UnknownManagedServiceProperties(
+            return new ManagedServiceProperties(
                 placementConstraints,
                 correlationScheme?.ToList(),
                 serviceLoadMetrics?.ToList(),
@@ -720,7 +720,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <summary> Initializes a new instance of <see cref="Models.NodeTypeVmssExtension"/>. </summary>
         /// <param name="name"> The name of the extension. </param>
         /// <param name="publisher"> The name of the extension handler publisher. </param>
-        /// <param name="type"> Specifies the type of the extension; an example is "CustomScriptExtension". </param>
+        /// <param name="vmssExtensionPropertiesType"> Specifies the type of the extension; an example is "CustomScriptExtension". </param>
         /// <param name="typeHandlerVersion"> Specifies the version of the script handler. </param>
         /// <param name="autoUpgradeMinorVersion"> Indicates whether the extension should use a newer minor version if one is available at deployment time. Once deployed, however, the extension will not upgrade minor versions unless redeployed, even with this property set to true. </param>
         /// <param name="settings"> Json formatted public settings for the extension. </param>
@@ -731,7 +731,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <param name="isAutomaticUpgradeEnabled"> Indicates whether the extension should be automatically upgraded by the platform if there is a newer version of the extension available. </param>
         /// <param name="setupOrder"> Indicates the setup order for the extension. </param>
         /// <returns> A new <see cref="Models.NodeTypeVmssExtension"/> instance for mocking. </returns>
-        public static NodeTypeVmssExtension NodeTypeVmssExtension(string name = null, string publisher = null, string type = null, string typeHandlerVersion = null, bool? autoUpgradeMinorVersion = null, BinaryData settings = null, BinaryData protectedSettings = null, string forceUpdateTag = null, IEnumerable<string> provisionAfterExtensions = null, string provisioningState = null, bool? isAutomaticUpgradeEnabled = null, IEnumerable<VmssExtensionSetupOrder> setupOrder = null)
+        public static NodeTypeVmssExtension NodeTypeVmssExtension(string name = null, string publisher = null, string vmssExtensionPropertiesType = null, string typeHandlerVersion = null, bool? autoUpgradeMinorVersion = null, BinaryData settings = null, BinaryData protectedSettings = null, string forceUpdateTag = null, IEnumerable<string> provisionAfterExtensions = null, string provisioningState = null, bool? isAutomaticUpgradeEnabled = null, IEnumerable<VmssExtensionSetupOrder> setupOrder = null)
         {
             provisionAfterExtensions ??= new List<string>();
             setupOrder ??= new List<VmssExtensionSetupOrder>();
@@ -739,7 +739,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             return new NodeTypeVmssExtension(
                 name,
                 publisher,
-                type,
+                vmssExtensionPropertiesType,
                 typeHandlerVersion,
                 autoUpgradeMinorVersion,
                 settings,
