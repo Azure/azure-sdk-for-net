@@ -1,6 +1,6 @@
 # Release History
 
-## 1.4.0-beta.1 (Unreleased)
+## 1.4.0-beta.1 (2025-05-21)
 
 ### Features Added
 - Adds support for the Browse Available Phone Numbers and Reservations APIs
