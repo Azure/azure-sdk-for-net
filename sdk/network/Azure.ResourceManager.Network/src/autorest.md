@@ -8,11 +8,11 @@ azure-arm: true
 library-name: Network
 namespace: Azure.ResourceManager.Network
 require: https://github.com/Azure/azure-rest-api-specs/blob/e09cd33f2f497a30aff4d6ca706e4fd01cbb384d/specification/network/resource-manager/readme.md
-tag: package-2024-07-01
+#tag: package-2024-07-01
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
-  output-folder: $(this-folder)/../samples/Generated
+  output-folder: $(this-folder)/../tests/Generated
   clear-output-folder: true
   skipped-operations:
     # Not support generate samples from customized operations
@@ -134,6 +134,7 @@ rename-mapping:
   IsGlobal: GlobalMeshSupportFlag
   IssueType: ConnectivityIssueType
   IsWorkloadProtected: WorkloadProtectedFlag
+  LoadBalancerHealthPerRulePerBackendAddress.networkInterfaceIPConfigurationId: NetworkInterfaceIPConfigurationResourceId|arm-id
   LoadBalancingRulePropertiesFormat: LoadBalancingRuleProperties
   MigratedPools: MigrateLoadBalancerToIPBasedResult
   NetworkManagerConnection.properties.networkManagerId: -|arm-id
@@ -144,6 +145,7 @@ rename-mapping:
   NextStep: RouteMapNextStepBehavior
   OrderBy: IdpsQueryOrderBy
   Origin: IssueOrigin
+  P2SConnectionConfiguration.properties.configurationPolicyGroupAssociations: ConfigurationPolicyGroups
   PacketCapture.properties.continuousCapture: IsContinuousCapture
   PacketCapture: PacketCaptureInput
   PacketCaptureResult.properties.continuousCapture: IsContinuousCapture

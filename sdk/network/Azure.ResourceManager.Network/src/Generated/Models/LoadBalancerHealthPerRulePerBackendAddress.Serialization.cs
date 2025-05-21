@@ -39,10 +39,10 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("ipAddress"u8);
                 writer.WriteStringValue(IPAddress);
             }
-            if (Optional.IsDefined(NetworkInterfaceIPConfigurationId))
+            if (Optional.IsDefined(NetworkInterfaceIPConfigurationResourceId))
             {
                 writer.WritePropertyName("networkInterfaceIPConfigurationId"u8);
-                writer.WriteStringValue(NetworkInterfaceIPConfigurationId);
+                writer.WriteStringValue(NetworkInterfaceIPConfigurationResourceId);
             }
             if (Optional.IsDefined(State))
             {
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Network.Models
                 return null;
             }
             string ipAddress = default;
-            string networkInterfaceIPConfigurationId = default;
+            ResourceIdentifier networkInterfaceIPConfigurationId = default;
             string state = default;
             string reason = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -106,7 +106,11 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("networkInterfaceIPConfigurationId"u8))
                 {
-                    networkInterfaceIPConfigurationId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    networkInterfaceIPConfigurationId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("state"u8))

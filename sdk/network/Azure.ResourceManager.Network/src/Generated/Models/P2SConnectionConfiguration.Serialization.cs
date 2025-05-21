@@ -58,11 +58,11 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("enableInternetSecurity"u8);
                 writer.WriteBooleanValue(EnableInternetSecurity.Value);
             }
-            if (Optional.IsCollectionDefined(ConfigurationPolicyGroupAssociations))
+            if (Optional.IsCollectionDefined(ConfigurationPolicyGroups))
             {
                 writer.WritePropertyName("configurationPolicyGroupAssociations"u8);
                 writer.WriteStartArray();
-                foreach (var item in ConfigurationPolicyGroupAssociations)
+                foreach (var item in ConfigurationPolicyGroups)
                 {
                     JsonSerializer.Serialize(writer, item);
                 }

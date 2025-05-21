@@ -4177,13 +4177,13 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Initializes a new instance of <see cref="Models.LoadBalancerHealthPerRulePerBackendAddress"/>. </summary>
         /// <param name="ipAddress"> The IP address belonging to the backend address. </param>
-        /// <param name="networkInterfaceIPConfigurationId"> Resource ID of the Network Interface IP Configuration. </param>
+        /// <param name="networkInterfaceIPConfigurationResourceId"> Resource ID of the Network Interface IP Configuration. </param>
         /// <param name="state"> The current health of the backend instances that is associated to the LB rule. </param>
         /// <param name="reason"> The explanation of the State. </param>
         /// <returns> A new <see cref="Models.LoadBalancerHealthPerRulePerBackendAddress"/> instance for mocking. </returns>
-        public static LoadBalancerHealthPerRulePerBackendAddress LoadBalancerHealthPerRulePerBackendAddress(string ipAddress = null, string networkInterfaceIPConfigurationId = null, string state = null, string reason = null)
+        public static LoadBalancerHealthPerRulePerBackendAddress LoadBalancerHealthPerRulePerBackendAddress(string ipAddress = null, ResourceIdentifier networkInterfaceIPConfigurationResourceId = null, string state = null, string reason = null)
         {
-            return new LoadBalancerHealthPerRulePerBackendAddress(ipAddress, networkInterfaceIPConfigurationId, state, reason, serializedAdditionalRawData: null);
+            return new LoadBalancerHealthPerRulePerBackendAddress(ipAddress, networkInterfaceIPConfigurationResourceId, state, reason, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MigrateLoadBalancerToIPBasedResult"/>. </summary>
@@ -7898,13 +7898,13 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="vpnClientAddressPool"> The reference to the address space resource which represents Address space for P2S VpnClient. </param>
         /// <param name="routingConfiguration"> The Routing Configuration indicating the associated and propagated route tables on this connection. </param>
         /// <param name="enableInternetSecurity"> Flag indicating whether the enable internet security flag is turned on for the P2S Connections or not. </param>
-        /// <param name="configurationPolicyGroupAssociations"> List of Configuration Policy Groups that this P2SConnectionConfiguration is attached to. </param>
+        /// <param name="configurationPolicyGroups"> List of Configuration Policy Groups that this P2SConnectionConfiguration is attached to. </param>
         /// <param name="previousConfigurationPolicyGroupAssociations"> List of previous Configuration Policy Groups that this P2SConnectionConfiguration was attached to. </param>
         /// <param name="provisioningState"> The provisioning state of the P2SConnectionConfiguration resource. </param>
         /// <returns> A new <see cref="Models.P2SConnectionConfiguration"/> instance for mocking. </returns>
-        public static P2SConnectionConfiguration P2SConnectionConfiguration(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, ETag? etag = null, VirtualNetworkAddressSpace vpnClientAddressPool = null, RoutingConfiguration routingConfiguration = null, bool? enableInternetSecurity = null, IEnumerable<WritableSubResource> configurationPolicyGroupAssociations = null, IEnumerable<VpnServerConfigurationPolicyGroupData> previousConfigurationPolicyGroupAssociations = null, NetworkProvisioningState? provisioningState = null)
+        public static P2SConnectionConfiguration P2SConnectionConfiguration(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, ETag? etag = null, VirtualNetworkAddressSpace vpnClientAddressPool = null, RoutingConfiguration routingConfiguration = null, bool? enableInternetSecurity = null, IEnumerable<WritableSubResource> configurationPolicyGroups = null, IEnumerable<VpnServerConfigurationPolicyGroupData> previousConfigurationPolicyGroupAssociations = null, NetworkProvisioningState? provisioningState = null)
         {
-            configurationPolicyGroupAssociations ??= new List<WritableSubResource>();
+            configurationPolicyGroups ??= new List<WritableSubResource>();
             previousConfigurationPolicyGroupAssociations ??= new List<VpnServerConfigurationPolicyGroupData>();
 
             return new P2SConnectionConfiguration(
@@ -7916,7 +7916,7 @@ namespace Azure.ResourceManager.Network.Models
                 vpnClientAddressPool,
                 routingConfiguration,
                 enableInternetSecurity,
-                configurationPolicyGroupAssociations?.ToList(),
+                configurationPolicyGroups?.ToList(),
                 previousConfigurationPolicyGroupAssociations?.ToList(),
                 provisioningState);
         }
@@ -9064,6 +9064,47 @@ namespace Azure.ResourceManager.Network.Models
                 direction,
                 provisioningState,
                 resourceGuid);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ConnectionStateSnapshot"/>. </summary>
+        /// <param name="networkConnectionState"> The connection state. </param>
+        /// <param name="startOn"> The start time of the connection snapshot. </param>
+        /// <param name="endOn"> The end time of the connection snapshot. </param>
+        /// <param name="evaluationState"> Connectivity analysis evaluation state. </param>
+        /// <param name="avgLatencyInMs"> Average latency in ms. </param>
+        /// <param name="minLatencyInMs"> Minimum latency in ms. </param>
+        /// <param name="maxLatencyInMs"> Maximum latency in ms. </param>
+        /// <param name="probesSent"> The number of sent probes. </param>
+        /// <param name="probesFailed"> The number of failed probes. </param>
+        /// <param name="hops"> List of hops between the source and the destination. </param>
+        /// <returns> A new <see cref="Models.ConnectionStateSnapshot"/> instance for mocking. </returns>
+        public static ConnectionStateSnapshot ConnectionStateSnapshot(NetworkConnectionState? networkConnectionState = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, EvaluationState? evaluationState = null, long? avgLatencyInMs = null, long? minLatencyInMs = null, long? maxLatencyInMs = null, long? probesSent = null, long? probesFailed = null, IEnumerable<ConnectivityHopInfo> hops = null)
+        {
+            hops ??= new List<ConnectivityHopInfo>();
+
+            return new ConnectionStateSnapshot(
+                networkConnectionState,
+                startOn,
+                endOn,
+                evaluationState,
+                avgLatencyInMs,
+                minLatencyInMs,
+                maxLatencyInMs,
+                probesSent,
+                probesFailed,
+                hops?.ToList(),
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ConnectionMonitorQueryResult"/>. </summary>
+        /// <param name="sourceStatus"> Status of connection monitor source. </param>
+        /// <param name="states"> Information about connection states. </param>
+        /// <returns> A new <see cref="Models.ConnectionMonitorQueryResult"/> instance for mocking. </returns>
+        public static ConnectionMonitorQueryResult ConnectionMonitorQueryResult(ConnectionMonitorSourceStatus? sourceStatus = null, IEnumerable<ConnectionStateSnapshot> states = null)
+        {
+            states ??= new List<ConnectionStateSnapshot>();
+
+            return new ConnectionMonitorQueryResult(sourceStatus, states?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of BackendAddressPoolData. </summary>
