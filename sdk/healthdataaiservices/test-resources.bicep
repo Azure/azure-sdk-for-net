@@ -187,7 +187,7 @@ resource storageRoleAssignment 'Microsoft.Authorization/roleAssignments@2020-04-
   scope: storageAccount
 }
 
-resource testDeidService 'microsoft.healthdataaiservices/deidservices@2024-02-28-preview' = {
+resource testDeidService 'microsoft.healthdataaiservices/deidservices@2024-09-20' = {
   name: deidServiceName
   location: deidLocation
   identity: {
