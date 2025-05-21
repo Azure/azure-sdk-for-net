@@ -87,30 +87,11 @@ def identify_generator(path):
     if os.path.exists(tsp_config_path) or os.path.exists(tsp_dir) or tsp_files:
         return "TSP-Old"
     
-    # Check autorest.md for TypeSpec indicators
+    # Check autorest.md for generator information
     autorest_md_path = os.path.join(path, "src", "autorest.md")
     if os.path.exists(autorest_md_path):
-        with open(autorest_md_path, 'r', encoding='utf-8', errors='ignore') as f:
-            content = f.read().lower()
-            
-            # Check for TypeSpec markers
-            tsp_markers = [
-                "typespec",
-                "emit-yaml-tags: tsp",
-                "output-folder: $(typescript-sdks-folder)",
-                "azure-typespec"
-            ]
-            
-            for marker in tsp_markers:
-                if marker in content:
-                    return "TSP-Old"
-            
-            # If input-file points to a swagger spec, it's Swagger
-            if "input-file:" in content and ("json" in content or "swagger" in content):
-                return "Swagger"
-            
-            # If it's using autorest but not specifically TSP, assume Swagger
-            return "Swagger"
+        # If autorest.md exists, assume it's a Swagger library
+        return "Swagger"
     
     # No autorest.md but Generated folder exists, assume Swagger
     if os.path.exists(os.path.join(path, "src", "Generated")):
