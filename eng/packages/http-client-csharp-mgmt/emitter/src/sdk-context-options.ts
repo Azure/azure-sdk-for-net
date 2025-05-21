@@ -34,7 +34,24 @@ const armResourceCreateOrUpdateRegex =
 export const singleton = "Azure.ResourceManager.@singleton";
 const singletonRegex = "Azure\\.ResourceManager\\.@singleton";
 
-const armResourceInternalRegex = "Azure\\.ResourceManager\\.Private\\.@armResourceInternal";
+const armResourceInternalRegex =
+  "Azure\\.ResourceManager\\.Private\\.@armResourceInternal";
+
+// https://github.com/Azure/typespec-azure/blob/main/packages/typespec-azure-resource-manager/README.md#subscriptionresource
+export const subscriptionResource =
+  "Azure.ResourceManager.@subscriptionResource";
+const subscriptionResourceRegex =
+  "Azure\\.ResourceManager\\.@subscriptionResource";
+
+// https://github.com/Azure/typespec-azure/blob/main/packages/typespec-azure-resource-manager/README.md#tenantresource
+export const tenantResource = "Azure.ResourceManager.@tenantResource";
+const tenantResourceRegex = "Azure\\.ResourceManager\\.@tenantResource";
+
+// https://github.com/Azure/typespec-azure/blob/main/packages/typespec-azure-resource-manager/README.md#resourcegroupresource
+export const resourceGroupResource =
+  "Azure.ResourceManager.@resourceGroupResource";
+const resourceGroupResourceRegex =
+  "Azure\\.ResourceManager\\.@resourceGroupResource";
 
 // TODO: add this decorator to TCGC
 export const resourceMetadata = "Azure.ClientGenerator.Core.@resourceSchema";
@@ -55,5 +72,8 @@ export const azureSDKContextOptions: CreateSdkContextOptions = {
     parentResourceRegex,
     singletonRegex,
     armResourceInternalRegex,
+    subscriptionResourceRegex,
+    resourceGroupResourceRegex,
+    tenantResourceRegex
   ]
 };

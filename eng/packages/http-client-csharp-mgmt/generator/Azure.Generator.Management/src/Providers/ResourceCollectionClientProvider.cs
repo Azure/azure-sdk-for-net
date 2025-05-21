@@ -1,5 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
+using Azure.Generator.Management.Models;
 using Azure.Generator.Management.Primitives;
 using Azure.Generator.Management.Utilities;
 using Azure.ResourceManager;
@@ -26,7 +27,7 @@ namespace Azure.Generator.Management.Providers
         private InputServiceMethod? _create;
         private InputServiceMethod? _get;
 
-        public ResourceCollectionClientProvider(InputClient inputClient, ResourceClientProvider resource) : base(inputClient)
+        public ResourceCollectionClientProvider(InputClient inputClient, ResourceMetadata resourceMetadata, ResourceClientProvider resource) : base(inputClient, resourceMetadata)
         {
             _resource = resource;
 

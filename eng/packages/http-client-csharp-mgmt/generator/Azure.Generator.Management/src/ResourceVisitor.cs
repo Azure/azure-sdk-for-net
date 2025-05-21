@@ -23,7 +23,7 @@ namespace Azure.Generator.Management
 
         private void TransformResource(InputModelType model, TypeProvider type)
         {
-            if (type is ModelProvider && model.Decorators.Any(d => d.Name.Equals(KnownDecorators.ArmResourceInternal)))
+            if (type is ModelProvider && ManagementClientGenerator.Instance.InputLibrary.IsResourceModel(model))
             {
                 type.Update(relativeFilePath: TransformRelativeFilePath(type));
                 type.Type.Update(TransformName(type));

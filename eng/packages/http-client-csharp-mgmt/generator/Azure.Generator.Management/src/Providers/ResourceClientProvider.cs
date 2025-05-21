@@ -34,19 +34,17 @@ namespace Azure.Generator.Management.Providers
         private IReadOnlyCollection<InputServiceMethod> _resourceServiceMethods;
 
         private FieldProvider _dataField;
-        private FieldProvider _resourcetypeField;
+        private FieldProvider _resourceTypeField;
         protected ClientProvider _clientProvider;
         protected FieldProvider _clientDiagonosticsField;
         protected FieldProvider _restClientField;
 
-        public ResourceClientProvider(InputClient inputClient)
+        public ResourceClientProvider(InputClient inputClient, ResourceMetadata resourceMetadata)
         {
-            var resourceMetadata = inputClient.Decorators.Single(d => d.Name.Equals(KnownDecorators.ResourceMetadata));
-            var codeModelId = resourceMetadata.Arguments?[KnownDecorators.ResourceModel].ToObjectFromJson<string>()!;
-            IsSingleton = resourceMetadata.Arguments?.TryGetValue("isSingleton", out var isSingleton) == true ? isSingleton.ToObjectFromJson<bool>() : false;
-            var resourceType = resourceMetadata.Arguments?[KnownDecorators.ResourceType].ToObjectFromJson<string>()!;
-            _resourcetypeField = new FieldProvider(FieldModifiers.Public | FieldModifiers.Static | FieldModifiers.ReadOnly, typeof(ResourceType), "ResourceType", this, description: $"Gets the resource type for the operations.", initializationValue: Literal(resourceType));
-            var resourceModel = ManagementClientGenerator.Instance.InputLibrary.GetModelByCrossLanguageDefinitionId(codeModelId)!;
+            IsSingleton = resourceMetadata.IsSingleton;
+            var resourceType = resourceMetadata.ResourceType;
+            _resourceTypeField = new FieldProvider(FieldModifiers.Public | FieldModifiers.Static | FieldModifiers.ReadOnly, typeof(ResourceType), "ResourceType", this, description: $"Gets the resource type for the operations.", initializationValue: Literal(resourceType));
+            var resourceModel = resourceMetadata.ResourceModel;
             SpecName = resourceModel.Name;
 
             // We should be able to assume that all operations in the resource client are for the same resource
@@ -90,7 +88,7 @@ namespace Azure.Generator.Management.Providers
 
         protected override string BuildRelativeFilePath() => Path.Combine("src", "Generated", $"{Name}.cs");
 
-        protected override FieldProvider[] BuildFields() => [_clientDiagonosticsField, _restClientField, _dataField, _resourcetypeField];
+        protected override FieldProvider[] BuildFields() => [_clientDiagonosticsField, _restClientField, _dataField, _resourceTypeField];
 
         protected override PropertyProvider[] BuildProperties()
         {
@@ -196,9 +194,9 @@ namespace Azure.Generator.Management.Providers
             return new MethodProvider(signature, bodyStatements, this);
         }
 
-        protected virtual ValueExpression ResourceTypeExpression => _resourcetypeField;
+        protected virtual ValueExpression ResourceTypeExpression => _resourceTypeField;
 
-        protected virtual ValueExpression ExpectedResourceTypeForValidation => _resourcetypeField;
+        protected virtual ValueExpression ExpectedResourceTypeForValidation => _resourceTypeField;
 
         protected virtual CSharpType ResourceClientCSharpType => this.Type;
 
