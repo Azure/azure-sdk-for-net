@@ -702,6 +702,13 @@ namespace Azure.Communication.CallAutomation
         public void AddSipX(string key, string value) { }
         public void AddVoip(string key, string value) { }
     }
+    public partial class DtmfData : Azure.Communication.CallAutomation.StreamingData
+    {
+        public DtmfData(string data) { }
+        public string Data { get { throw null; } }
+        public Azure.Communication.CommunicationIdentifier Participant { get { throw null; } }
+        public System.DateTimeOffset Timestamp { get { throw null; } }
+    }
     public partial class DtmfResult : Azure.Communication.CallAutomation.RecognizeResult
     {
         internal DtmfResult() { }
@@ -1444,6 +1451,7 @@ namespace Azure.Communication.CallAutomation
         AudioMetadata = 1,
         TranscriptionData = 2,
         TranscriptionMetadata = 3,
+        DtmfData = 4,
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct StreamingTransport : System.IEquatable<Azure.Communication.CallAutomation.StreamingTransport>
@@ -1498,6 +1506,7 @@ namespace Azure.Communication.CallAutomation
         public string CallConnectionId { get { throw null; } }
         public string CorrelationId { get { throw null; } }
         public string Locale { get { throw null; } }
+        public string SpeechRecognitionModelEndpointId { get { throw null; } }
         public string TranscriptionSubscriptionId { get { throw null; } }
     }
     public partial class TranscriptionOptions

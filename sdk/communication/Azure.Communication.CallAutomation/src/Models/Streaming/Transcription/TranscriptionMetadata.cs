@@ -16,6 +16,7 @@ namespace Azure.Communication.CallAutomation
             Locale = transcriptionMetadataInternal.Locale;
             CallConnectionId = transcriptionMetadataInternal.CallConnectionId;
             CorrelationId = transcriptionMetadataInternal.CorrelationId;
+            SpeechRecognitionModelEndpointId = transcriptionMetadataInternal.SpeechRecognitionModelEndpointId;
         }
         /// <summary>
         /// Transcription Subscription Id.
@@ -35,6 +36,11 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// correlation Id.
         /// </summary>
-        public string CorrelationId { get;  }
+        public string CorrelationId { get; }
+
+        /// <summary>
+        /// The custom speech recognition model endpoint id
+        /// </summary>
+        public string SpeechRecognitionModelEndpointId { get; }
     }
 }
