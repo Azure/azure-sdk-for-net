@@ -320,6 +320,8 @@ namespace Azure.Storage.DataMovement.Files.Shares
             _isDirectoryMetadataSet = options?._isDirectoryMetadataSet ?? false;
             FileMetadata = options?.FileMetadata;
             _isFileMetadataSet = options?._isFileMetadataSet ?? false;
+            SkipProtocolValidation = options?.SkipProtocolValidation ?? false;
+            ShareProtocol = options?.ShareProtocol ?? ShareProtocols.Smb;
         }
     }
 }
