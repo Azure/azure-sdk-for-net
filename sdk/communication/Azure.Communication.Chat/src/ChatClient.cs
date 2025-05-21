@@ -62,7 +62,17 @@ namespace Azure.Communication.Chat
             scope.Start();
             try
             {
-                Response<CreateChatThreadResultInternal> createChatThreadResultInternal = await _chatRestClient.CreateChatThreadAsync(topic, idempotencyToken, participants.Select(x => x.ToChatParticipantInternal()), null, cancellationToken).ConfigureAwait(false);
+                var createChatThreadOptions = new CreateChatThreadOptions(topic)
+                {
+                    IdempotencyToken = idempotencyToken,
+                };
+
+                foreach (var value in participants.ToList())
+                {
+                    createChatThreadOptions.Participants.Add(value);
+                }
+
+                Response<CreateChatThreadResultInternal> createChatThreadResultInternal = await _chatRestClient.CreateChatThreadAsync(createChatThreadOptions, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new CreateChatThreadResult(createChatThreadResultInternal.Value), createChatThreadResultInternal.GetRawResponse());
             }
             catch (Exception ex)
@@ -82,7 +92,7 @@ namespace Azure.Communication.Chat
             scope.Start();
             try
             {
-                Response<CreateChatThreadResultInternal> createChatThreadResultInternal = await _chatRestClient.CreateChatThreadAsync(options.Topic, options.IdempotencyToken, options.Participants.Select(x => x.ToChatParticipantInternal()), options.Metadata, cancellationToken).ConfigureAwait(false);
+                Response<CreateChatThreadResultInternal> createChatThreadResultInternal = await _chatRestClient.CreateChatThreadAsync(options).ConfigureAwait(false);
                 return Response.FromValue(new CreateChatThreadResult(createChatThreadResultInternal.Value), createChatThreadResultInternal.GetRawResponse());
             }
             catch (Exception ex)
@@ -102,7 +112,7 @@ namespace Azure.Communication.Chat
             scope.Start();
             try
             {
-                Response<CreateChatThreadResultInternal> createChatThreadResultInternal = _chatRestClient.CreateChatThread(options.Topic, options.IdempotencyToken, options.Participants.Select(x => x.ToChatParticipantInternal()), options.Metadata, cancellationToken);
+                Response<CreateChatThreadResultInternal> createChatThreadResultInternal = _chatRestClient.CreateChatThread(options, cancellationToken);
                 return Response.FromValue(new CreateChatThreadResult(createChatThreadResultInternal.Value), createChatThreadResultInternal.GetRawResponse());
             }
             catch (Exception ex)
@@ -124,7 +134,17 @@ namespace Azure.Communication.Chat
             scope.Start();
             try
             {
-                Response<CreateChatThreadResultInternal> createChatThreadResultInternal = _chatRestClient.CreateChatThread(topic, idempotencyToken, participants.Select(x => x.ToChatParticipantInternal()));
+                var createChatThreadOptions = new CreateChatThreadOptions(topic)
+                {
+                    IdempotencyToken = idempotencyToken,
+                };
+
+                foreach (var value in participants.ToList())
+                {
+                    createChatThreadOptions.Participants.Add(value);
+                }
+
+                Response<CreateChatThreadResultInternal> createChatThreadResultInternal = _chatRestClient.CreateChatThread(createChatThreadOptions);
                 return Response.FromValue(new CreateChatThreadResult(createChatThreadResultInternal.Value), createChatThreadResultInternal.GetRawResponse());
             }
             catch (Exception ex)
