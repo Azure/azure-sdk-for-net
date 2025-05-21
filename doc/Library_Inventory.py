@@ -30,6 +30,23 @@ def identify_generator(path):
     tsp_dir = os.path.join(path, "src", "tsp")
     tsp_files = glob.glob(os.path.join(path, "src", "*.tsp"))
     
+    # Check for tspLocation.yaml files
+    tsp_location_paths = []
+    for root, dirs, files in os.walk(path):
+        for file in files:
+            if file.lower() == "tsplocation.yaml":
+                tsp_location_paths.append(os.path.join(root, file))
+    
+    # If there's a tspLocation.yaml file and it contains emitterPackageJsonPath, it's using TypeSpec
+    for tsp_location_path in tsp_location_paths:
+        try:
+            with open(tsp_location_path, 'r', encoding='utf-8', errors='ignore') as f:
+                content = f.read().lower()
+                if "emitterpackagejsonpath" in content:
+                    return "TSP"
+        except:
+            pass
+    
     if os.path.exists(tsp_config_path) or os.path.exists(tsp_dir) or tsp_files:
         return "TSP"
     
@@ -175,6 +192,7 @@ def generate_markdown_report(libraries):
     report.append("\n")
     
     report.append("## Data Plane Libraries using TSP\n")
+    report.append("TSP is detected by the presence of a tsplocation.yaml file with an emitterPackageJsonPath value, tspconfig.yaml file, tsp directory, or *.tsp files.\n")
     report.append("| Service | Library | Path |")
     report.append("| ------- | ------- | ---- |")
     for lib in sorted(data_tsp, key=lambda x: (x["service"], x["library"])):
@@ -189,6 +207,7 @@ def generate_markdown_report(libraries):
     report.append("\n")
     
     report.append("## Management Plane Libraries using TSP\n")
+    report.append("TSP is detected by the presence of a tsplocation.yaml file with an emitterPackageJsonPath value, tspconfig.yaml file, tsp directory, or *.tsp files.\n")
     report.append("| Service | Library | Path |")
     report.append("| ------- | ------- | ---- |")
     for lib in sorted(mgmt_tsp, key=lambda x: (x["service"], x["library"])):

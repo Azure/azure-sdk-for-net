@@ -12,6 +12,8 @@
 
 ## Data Plane Libraries using TSP
 
+TSP is detected by the presence of a tsplocation.yaml file with an emitterPackageJsonPath value, tspconfig.yaml file, tsp directory, or *.tsp files.
+
 | Service | Library | Path |
 | ------- | ------- | ---- |
 
@@ -174,6 +176,8 @@
 
 
 ## Management Plane Libraries using TSP
+
+TSP is detected by the presence of a tsplocation.yaml file with an emitterPackageJsonPath value, tspconfig.yaml file, tsp directory, or *.tsp files.
 
 | Service | Library | Path |
 | ------- | ------- | ---- |

@@ -42,6 +42,7 @@ The script uses the following logic to categorize libraries:
 The script looks for evidence of TypeSpec usage in the following order:
 
 1. Direct TypeSpec indicators:
+   - `tsplocation.yaml` file with an `emitterPackageJsonPath` value
    - `src/tspconfig.yaml` file
    - `src/tsp` directory
    - `.tsp` files in the src directory
