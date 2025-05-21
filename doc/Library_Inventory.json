@@ -347,7 +347,7 @@
     "library": "Azure.ResourceManager.BillingBenefits",
     "path": "sdk/billingbenefits/Azure.ResourceManager.BillingBenefits",
     "type": "Management",
-    "generator": "TSP"
+    "generator": "Swagger"
   },
   {
     "service": "containerregistry",
@@ -501,7 +501,7 @@
     "library": "Azure.ResourceManager.OperationalInsights",
     "path": "sdk/operationalinsights/Azure.ResourceManager.OperationalInsights",
     "type": "Management",
-    "generator": "TSP"
+    "generator": "Swagger"
   },
   {
     "service": "databasewatcher",
@@ -606,7 +606,7 @@
     "library": "Azure.ResourceManager.Sphere",
     "path": "sdk/sphere/Azure.ResourceManager.Sphere",
     "type": "Management",
-    "generator": "TSP"
+    "generator": "Swagger"
   },
   {
     "service": "apimanagement",
@@ -634,7 +634,7 @@
     "library": "Azure.ResourceManager.EdgeOrder",
     "path": "sdk/edgeorder/Azure.ResourceManager.EdgeOrder",
     "type": "Management",
-    "generator": "TSP"
+    "generator": "Swagger"
   },
   {
     "service": "entra",
@@ -655,7 +655,7 @@
     "library": "Azure.ResourceManager.ProviderHub",
     "path": "sdk/providerhub/Azure.ResourceManager.ProviderHub",
     "type": "Management",
-    "generator": "TSP"
+    "generator": "Swagger"
   },
   {
     "service": "healthcareapis",
@@ -809,7 +809,7 @@
     "library": "Azure.ResourceManager.Compute",
     "path": "sdk/compute/Azure.ResourceManager.Compute",
     "type": "Management",
-    "generator": "TSP"
+    "generator": "Swagger"
   },
   {
     "service": "privatedns",
@@ -1068,7 +1068,7 @@
     "library": "Azure.ResourceManager.RecoveryServicesSiteRecovery",
     "path": "sdk/recoveryservices-siterecovery/Azure.ResourceManager.RecoveryServicesSiteRecovery",
     "type": "Management",
-    "generator": "TSP"
+    "generator": "Swagger"
   },
   {
     "service": "applicationinsights",
@@ -1096,7 +1096,7 @@
     "library": "Azure.ResourceManager.HDInsight.Containers",
     "path": "sdk/hdinsightcontainers/Azure.ResourceManager.HDInsight.Containers",
     "type": "Management",
-    "generator": "TSP"
+    "generator": "Swagger"
   },
   {
     "service": "streamanalytics",
@@ -1495,7 +1495,7 @@
     "library": "Azure.AI.MetricsAdvisor",
     "path": "sdk/metricsadvisor/Azure.AI.MetricsAdvisor",
     "type": "Data Plane",
-    "generator": "TSP"
+    "generator": "Swagger"
   },
   {
     "service": "informaticadatamanagement",
@@ -1838,7 +1838,7 @@
     "library": "Azure.ResourceManager.MachineLearning",
     "path": "sdk/machinelearningservices/Azure.ResourceManager.MachineLearning",
     "type": "Management",
-    "generator": "TSP"
+    "generator": "Swagger"
   },
   {
     "service": "resourcemanager",
@@ -2118,7 +2118,7 @@
     "library": "Azure.ResourceManager.Storage",
     "path": "sdk/storage/Azure.ResourceManager.Storage",
     "type": "Management",
-    "generator": "TSP"
+    "generator": "Swagger"
   },
   {
     "service": "storage",
@@ -2258,7 +2258,7 @@
     "library": "Azure.ResourceManager.SecurityInsights",
     "path": "sdk/securityinsights/Azure.ResourceManager.SecurityInsights",
     "type": "Management",
-    "generator": "TSP"
+    "generator": "Swagger"
   },
   {
     "service": "devcenter",
@@ -2328,7 +2328,7 @@
     "library": "Azure.ResourceManager.Orbital",
     "path": "sdk/orbital/Azure.ResourceManager.Orbital",
     "type": "Management",
-    "generator": "TSP"
+    "generator": "Swagger"
   },
   {
     "service": "ai",
@@ -2489,7 +2489,7 @@
     "library": "Azure.ResourceManager.Sql",
     "path": "sdk/sqlmanagement/Azure.ResourceManager.Sql",
     "type": "Management",
-    "generator": "TSP"
+    "generator": "Swagger"
   },
   {
     "service": "datafactory",
@@ -2853,7 +2853,7 @@
     "library": "Azure.ResourceManager.Consumption",
     "path": "sdk/consumption/Azure.ResourceManager.Consumption",
     "type": "Management",
-    "generator": "TSP"
+    "generator": "Swagger"
   },
   {
     "service": "portalservices",
@@ -2867,7 +2867,7 @@
     "library": "Azure.ResourceManager.Network",
     "path": "sdk/network/Azure.ResourceManager.Network",
     "type": "Management",
-    "generator": "TSP"
+    "generator": "Swagger"
   },
   {
     "service": "dnsresolver",

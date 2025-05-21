@@ -3,10 +3,10 @@
 ## Summary
 
 - Total libraries: 424
-- Management Plane (Swagger): 191
-- Management Plane (TSP): 15
-- Data Plane (Swagger): 150
-- Data Plane (TSP): 1
+- Management Plane (Swagger): 206
+- Management Plane (TSP): 0
+- Data Plane (Swagger): 151
+- Data Plane (TSP): 0
 - Unknown generator: 67
 
 
@@ -14,7 +14,6 @@
 
 | Service | Library | Path |
 | ------- | ------- | ---- |
-| metricsadvisor | Azure.AI.MetricsAdvisor | sdk/metricsadvisor/Azure.AI.MetricsAdvisor |
 
 
 ## Data Plane Libraries using Swagger
@@ -102,6 +101,7 @@
 | maps | Azure.Maps.Search | sdk/maps/Azure.Maps.Search |
 | maps | Azure.Maps.TimeZones | sdk/maps/Azure.Maps.TimeZones |
 | maps | Azure.Maps.Weather | sdk/maps/Azure.Maps.Weather |
+| metricsadvisor | Azure.AI.MetricsAdvisor | sdk/metricsadvisor/Azure.AI.MetricsAdvisor |
 | mixedreality | Azure.MixedReality.Authentication | sdk/mixedreality/Azure.MixedReality.Authentication |
 | monitor | Azure.Monitor.Ingestion | sdk/monitor/Azure.Monitor.Ingestion |
 | monitor | Azure.Monitor.OpenTelemetry.Exporter | sdk/monitor/Azure.Monitor.OpenTelemetry.Exporter |
@@ -177,21 +177,6 @@
 
 | Service | Library | Path |
 | ------- | ------- | ---- |
-| billingbenefits | Azure.ResourceManager.BillingBenefits | sdk/billingbenefits/Azure.ResourceManager.BillingBenefits |
-| compute | Azure.ResourceManager.Compute | sdk/compute/Azure.ResourceManager.Compute |
-| consumption | Azure.ResourceManager.Consumption | sdk/consumption/Azure.ResourceManager.Consumption |
-| edgeorder | Azure.ResourceManager.EdgeOrder | sdk/edgeorder/Azure.ResourceManager.EdgeOrder |
-| hdinsightcontainers | Azure.ResourceManager.HDInsight.Containers | sdk/hdinsightcontainers/Azure.ResourceManager.HDInsight.Containers |
-| machinelearningservices | Azure.ResourceManager.MachineLearning | sdk/machinelearningservices/Azure.ResourceManager.MachineLearning |
-| network | Azure.ResourceManager.Network | sdk/network/Azure.ResourceManager.Network |
-| operationalinsights | Azure.ResourceManager.OperationalInsights | sdk/operationalinsights/Azure.ResourceManager.OperationalInsights |
-| orbital | Azure.ResourceManager.Orbital | sdk/orbital/Azure.ResourceManager.Orbital |
-| providerhub | Azure.ResourceManager.ProviderHub | sdk/providerhub/Azure.ResourceManager.ProviderHub |
-| recoveryservices-siterecovery | Azure.ResourceManager.RecoveryServicesSiteRecovery | sdk/recoveryservices-siterecovery/Azure.ResourceManager.RecoveryServicesSiteRecovery |
-| securityinsights | Azure.ResourceManager.SecurityInsights | sdk/securityinsights/Azure.ResourceManager.SecurityInsights |
-| sphere | Azure.ResourceManager.Sphere | sdk/sphere/Azure.ResourceManager.Sphere |
-| sqlmanagement | Azure.ResourceManager.Sql | sdk/sqlmanagement/Azure.ResourceManager.Sql |
-| storage | Azure.ResourceManager.Storage | sdk/storage/Azure.ResourceManager.Storage |
 
 
 ## Management Plane Libraries using Swagger
@@ -221,6 +206,7 @@
 | azurestackhci | Azure.ResourceManager.Hci | sdk/azurestackhci/Azure.ResourceManager.Hci |
 | batch | Azure.ResourceManager.Batch | sdk/batch/Azure.ResourceManager.Batch |
 | billing | Azure.ResourceManager.Billing | sdk/billing/Azure.ResourceManager.Billing |
+| billingbenefits | Azure.ResourceManager.BillingBenefits | sdk/billingbenefits/Azure.ResourceManager.BillingBenefits |
 | blueprint | Azure.ResourceManager.Blueprint | sdk/blueprint/Azure.ResourceManager.Blueprint |
 | botservice | Azure.ResourceManager.BotService | sdk/botservice/Azure.ResourceManager.BotService |
 | carbon | Azure.ResourceManager.CarbonOptimization | sdk/carbon/Azure.ResourceManager.CarbonOptimization |
@@ -229,11 +215,13 @@
 | chaos | Azure.ResourceManager.Chaos | sdk/chaos/Azure.ResourceManager.Chaos |
 | cognitiveservices | Azure.ResourceManager.CognitiveServices | sdk/cognitiveservices/Azure.ResourceManager.CognitiveServices |
 | communication | Azure.ResourceManager.Communication | sdk/communication/Azure.ResourceManager.Communication |
+| compute | Azure.ResourceManager.Compute | sdk/compute/Azure.ResourceManager.Compute |
 | computefleet | Azure.ResourceManager.ComputeFleet | sdk/computefleet/Azure.ResourceManager.ComputeFleet |
 | computeschedule | Azure.ResourceManager.ComputeSchedule | sdk/computeschedule/Azure.ResourceManager.ComputeSchedule |
 | confidentialledger | Azure.ResourceManager.ConfidentialLedger | sdk/confidentialledger/Azure.ResourceManager.ConfidentialLedger |
 | confluent | Azure.ResourceManager.Confluent | sdk/confluent/Azure.ResourceManager.Confluent |
 | connectedvmwarevsphere | Azure.ResourceManager.ConnectedVMwarevSphere | sdk/connectedvmwarevsphere/Azure.ResourceManager.ConnectedVMwarevSphere |
+| consumption | Azure.ResourceManager.Consumption | sdk/consumption/Azure.ResourceManager.Consumption |
 | containerapps | Azure.ResourceManager.AppContainers | sdk/containerapps/Azure.ResourceManager.AppContainers |
 | containerinstance | Azure.ResourceManager.ContainerInstance | sdk/containerinstance/Azure.ResourceManager.ContainerInstance |
 | containerorchestratorruntime | Azure.ResourceManager.ContainerOrchestratorRuntime | sdk/containerorchestratorruntime/Azure.ResourceManager.ContainerOrchestratorRuntime |
@@ -268,6 +256,7 @@
 | dnsresolver | Azure.ResourceManager.DnsResolver | sdk/dnsresolver/Azure.ResourceManager.DnsResolver |
 | durabletask | Azure.ResourceManager.DurableTask | sdk/durabletask/Azure.ResourceManager.DurableTask |
 | dynatrace | Azure.ResourceManager.Dynatrace | sdk/dynatrace/Azure.ResourceManager.Dynatrace |
+| edgeorder | Azure.ResourceManager.EdgeOrder | sdk/edgeorder/Azure.ResourceManager.EdgeOrder |
 | edgezones | Azure.ResourceManager.EdgeZones | sdk/edgezones/Azure.ResourceManager.EdgeZones |
 | elastic | Azure.ResourceManager.Elastic | sdk/elastic/Azure.ResourceManager.Elastic |
 | elasticsan | Azure.ResourceManager.ElasticSan | sdk/elasticsan/Azure.ResourceManager.ElasticSan |
@@ -283,6 +272,7 @@
 | guestconfiguration | Azure.ResourceManager.GuestConfiguration | sdk/guestconfiguration/Azure.ResourceManager.GuestConfiguration |
 | hardwaresecuritymodules | Azure.ResourceManager.HardwareSecurityModules | sdk/hardwaresecuritymodules/Azure.ResourceManager.HardwareSecurityModules |
 | hdinsight | Azure.ResourceManager.HDInsight | sdk/hdinsight/Azure.ResourceManager.HDInsight |
+| hdinsightcontainers | Azure.ResourceManager.HDInsight.Containers | sdk/hdinsightcontainers/Azure.ResourceManager.HDInsight.Containers |
 | healthbot | Azure.ResourceManager.HealthBot | sdk/healthbot/Azure.ResourceManager.HealthBot |
 | healthcareapis | Azure.ResourceManager.HealthcareApis | sdk/healthcareapis/Azure.ResourceManager.HealthcareApis |
 | healthdataaiservices | Azure.ResourceManager.HealthDataAIServices | sdk/healthdataaiservices/Azure.ResourceManager.HealthDataAIServices |
@@ -304,6 +294,7 @@
 | loadtestservice | Azure.ResourceManager.LoadTesting | sdk/loadtestservice/Azure.ResourceManager.LoadTesting |
 | logic | Azure.ResourceManager.Logic | sdk/logic/Azure.ResourceManager.Logic |
 | machinelearningcompute | Azure.ResourceManager.MachineLearningCompute | sdk/machinelearningcompute/Azure.ResourceManager.MachineLearningCompute |
+| machinelearningservices | Azure.ResourceManager.MachineLearning | sdk/machinelearningservices/Azure.ResourceManager.MachineLearning |
 | maintenance | Azure.ResourceManager.Maintenance | sdk/maintenance/Azure.ResourceManager.Maintenance |
 | managednetwork | Azure.ResourceManager.ManagedNetwork | sdk/managednetwork/Azure.ResourceManager.ManagedNetwork |
 | managednetworkfabric | Azure.ResourceManager.ManagedNetworkFabric | sdk/managednetworkfabric/Azure.ResourceManager.ManagedNetworkFabric |
@@ -323,6 +314,7 @@
 | mysql | Azure.ResourceManager.MySql | sdk/mysql/Azure.ResourceManager.MySql |
 | neonpostgres | Azure.ResourceManager.NeonPostgres | sdk/neonpostgres/Azure.ResourceManager.NeonPostgres |
 | netapp | Azure.ResourceManager.NetApp | sdk/netapp/Azure.ResourceManager.NetApp |
+| network | Azure.ResourceManager.Network | sdk/network/Azure.ResourceManager.Network |
 | networkanalytics | Azure.ResourceManager.NetworkAnalytics | sdk/networkanalytics/Azure.ResourceManager.NetworkAnalytics |
 | networkcloud | Azure.ResourceManager.NetworkCloud | sdk/networkcloud/Azure.ResourceManager.NetworkCloud |
 | networkfunction | Azure.ResourceManager.NetworkFunction | sdk/networkfunction/Azure.ResourceManager.NetworkFunction |
@@ -330,7 +322,9 @@
 | nginx | Azure.ResourceManager.Nginx | sdk/nginx/Azure.ResourceManager.Nginx |
 | notificationhubs | Azure.ResourceManager.NotificationHubs | sdk/notificationhubs/Azure.ResourceManager.NotificationHubs |
 | openenergyplatform | Azure.ResourceManager.EnergyServices | sdk/openenergyplatform/Azure.ResourceManager.EnergyServices |
+| operationalinsights | Azure.ResourceManager.OperationalInsights | sdk/operationalinsights/Azure.ResourceManager.OperationalInsights |
 | oracle | Azure.ResourceManager.OracleDatabase | sdk/oracle/Azure.ResourceManager.OracleDatabase |
+| orbital | Azure.ResourceManager.Orbital | sdk/orbital/Azure.ResourceManager.Orbital |
 | paloaltonetworks.ngfw | Azure.ResourceManager.PaloAltoNetworks.Ngfw | sdk/paloaltonetworks.ngfw/Azure.ResourceManager.PaloAltoNetworks.Ngfw |
 | peering | Azure.ResourceManager.Peering | sdk/peering/Azure.ResourceManager.Peering |
 | pineconevectordb | Azure.ResourceManager.PineconeVectorDB | sdk/pineconevectordb/Azure.ResourceManager.PineconeVectorDB |
@@ -340,6 +334,7 @@
 | postgresql | Azure.ResourceManager.PostgreSql | sdk/postgresql/Azure.ResourceManager.PostgreSql |
 | powerbidedicated | Azure.ResourceManager.PowerBIDedicated | sdk/powerbidedicated/Azure.ResourceManager.PowerBIDedicated |
 | privatedns | Azure.ResourceManager.PrivateDns | sdk/privatedns/Azure.ResourceManager.PrivateDns |
+| providerhub | Azure.ResourceManager.ProviderHub | sdk/providerhub/Azure.ResourceManager.ProviderHub |
 | purview | Azure.ResourceManager.Purview | sdk/purview/Azure.ResourceManager.Purview |
 | quantum | Azure.ResourceManager.Quantum | sdk/quantum/Azure.ResourceManager.Quantum |
 | qumulo | Azure.ResourceManager.Qumulo | sdk/qumulo/Azure.ResourceManager.Qumulo |
@@ -347,6 +342,7 @@
 | recoveryservices | Azure.ResourceManager.RecoveryServices | sdk/recoveryservices/Azure.ResourceManager.RecoveryServices |
 | recoveryservices-backup | Azure.ResourceManager.RecoveryServicesBackup | sdk/recoveryservices-backup/Azure.ResourceManager.RecoveryServicesBackup |
 | recoveryservices-datareplication | Azure.ResourceManager.RecoveryServicesDataReplication | sdk/recoveryservices-datareplication/Azure.ResourceManager.RecoveryServicesDataReplication |
+| recoveryservices-siterecovery | Azure.ResourceManager.RecoveryServicesSiteRecovery | sdk/recoveryservices-siterecovery/Azure.ResourceManager.RecoveryServicesSiteRecovery |
 | redis | Azure.ResourceManager.Redis | sdk/redis/Azure.ResourceManager.Redis |
 | redisenterprise | Azure.ResourceManager.RedisEnterprise | sdk/redisenterprise/Azure.ResourceManager.RedisEnterprise |
 | relay | Azure.ResourceManager.Relay | sdk/relay/Azure.ResourceManager.Relay |
@@ -360,6 +356,7 @@
 | search | Azure.ResourceManager.Search | sdk/search/Azure.ResourceManager.Search |
 | securitycenter | Azure.ResourceManager.SecurityCenter | sdk/securitycenter/Azure.ResourceManager.SecurityCenter |
 | securitydevops | Azure.ResourceManager.SecurityDevOps | sdk/securitydevops/Azure.ResourceManager.SecurityDevOps |
+| securityinsights | Azure.ResourceManager.SecurityInsights | sdk/securityinsights/Azure.ResourceManager.SecurityInsights |
 | selfhelp | Azure.ResourceManager.SelfHelp | sdk/selfhelp/Azure.ResourceManager.SelfHelp |
 | servicebus | Azure.ResourceManager.ServiceBus | sdk/servicebus/Azure.ResourceManager.ServiceBus |
 | servicefabric | Azure.ResourceManager.ServiceFabric | sdk/servicefabric/Azure.ResourceManager.ServiceFabric |
@@ -367,9 +364,12 @@
 | servicelinker | Azure.ResourceManager.ServiceLinker | sdk/servicelinker/Azure.ResourceManager.ServiceLinker |
 | servicenetworking | Azure.ResourceManager.ServiceNetworking | sdk/servicenetworking/Azure.ResourceManager.ServiceNetworking |
 | signalr | Azure.ResourceManager.SignalR | sdk/signalr/Azure.ResourceManager.SignalR |
+| sphere | Azure.ResourceManager.Sphere | sdk/sphere/Azure.ResourceManager.Sphere |
 | springappdiscovery | Azure.ResourceManager.SpringAppDiscovery | sdk/springappdiscovery/Azure.ResourceManager.SpringAppDiscovery |
+| sqlmanagement | Azure.ResourceManager.Sql | sdk/sqlmanagement/Azure.ResourceManager.Sql |
 | sqlvirtualmachine | Azure.ResourceManager.SqlVirtualMachine | sdk/sqlvirtualmachine/Azure.ResourceManager.SqlVirtualMachine |
 | standbypool | Azure.ResourceManager.StandbyPool | sdk/standbypool/Azure.ResourceManager.StandbyPool |
+| storage | Azure.ResourceManager.Storage | sdk/storage/Azure.ResourceManager.Storage |
 | storageactions | Azure.ResourceManager.StorageActions | sdk/storageactions/Azure.ResourceManager.StorageActions |
 | storagecache | Azure.ResourceManager.StorageCache | sdk/storagecache/Azure.ResourceManager.StorageCache |
 | storagemover | Azure.ResourceManager.StorageMover | sdk/storagemover/Azure.ResourceManager.StorageMover |
