@@ -39,10 +39,10 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(LifecycleHookType);
             }
-            if (Optional.IsDefined(WaitUntilTime))
+            if (Optional.IsDefined(WaitDuration))
             {
-                writer.WritePropertyName("waitUntilTime"u8);
-                writer.WriteStringValue(WaitUntilTime);
+                writer.WritePropertyName("waitDuration"u8);
+                writer.WriteStringValue(WaitDuration.Value, "P");
             }
             if (Optional.IsDefined(DefaultAction))
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Compute.Models
                 return null;
             }
             string type = default;
-            string waitUntilTime = default;
+            TimeSpan? waitDuration = default;
             LifecycleHookAction? defaultAction = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -98,9 +98,13 @@ namespace Azure.ResourceManager.Compute.Models
                     type = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("waitUntilTime"u8))
+                if (property.NameEquals("waitDuration"u8))
                 {
-                    waitUntilTime = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    waitDuration = property.Value.GetTimeSpan("P");
                     continue;
                 }
                 if (property.NameEquals("defaultAction"u8))
@@ -118,7 +122,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new LifecycleHook(type, waitUntilTime, defaultAction, serializedAdditionalRawData);
+            return new LifecycleHook(type, waitDuration, defaultAction, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LifecycleHook>.Write(ModelReaderWriterOptions options)

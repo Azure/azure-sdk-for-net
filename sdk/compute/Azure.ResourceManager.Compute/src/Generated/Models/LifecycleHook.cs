@@ -52,13 +52,13 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Initializes a new instance of <see cref="LifecycleHook"/>. </summary>
         /// <param name="lifecycleHookType"> Specifies the type of the lifecycle hook. </param>
-        /// <param name="waitUntilTime"> Specifies the time duration an LCH event (that is sent to the customer) waits for a response from the customer. It should be in ISO 8601 format. </param>
+        /// <param name="waitDuration"> Specifies the time duration an LCH event (that is sent to the customer) waits for a response from the customer. It should be in ISO 8601 format. </param>
         /// <param name="defaultAction"> Specifies the default action for the lifecycle hook. This action will be applied on the the target resources if the customer does not take any action for the target resource before waitUntil. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal LifecycleHook(string lifecycleHookType, string waitUntilTime, LifecycleHookAction? defaultAction, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal LifecycleHook(string lifecycleHookType, TimeSpan? waitDuration, LifecycleHookAction? defaultAction, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             LifecycleHookType = lifecycleHookType;
-            WaitUntilTime = waitUntilTime;
+            WaitDuration = waitDuration;
             DefaultAction = defaultAction;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Specifies the type of the lifecycle hook. </summary>
         public string LifecycleHookType { get; set; }
         /// <summary> Specifies the time duration an LCH event (that is sent to the customer) waits for a response from the customer. It should be in ISO 8601 format. </summary>
-        public string WaitUntilTime { get; set; }
+        public TimeSpan? WaitDuration { get; set; }
         /// <summary> Specifies the default action for the lifecycle hook. This action will be applied on the the target resources if the customer does not take any action for the target resource before waitUntil. </summary>
         public LifecycleHookAction? DefaultAction { get; set; }
     }
