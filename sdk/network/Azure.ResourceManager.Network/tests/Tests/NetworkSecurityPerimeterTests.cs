@@ -15,7 +15,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Network.Tests
 {
-    public class NetworkSecurityParameterTests : NetworkServiceClientTestBase
+    public class NetworkSecurityPerimeterTests : NetworkServiceClientTestBase
     {
         private string _rgNamePrefix = "rg-nsp-dot-net-sdk-test-";
         private string _nspNamePrefix = "nsp-dot-net-sdk-test-";
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Network.Tests
         private ResourceGroupResource _resourceGroup;
         private SubscriptionResource _subscription;
 
-        public NetworkSecurityParameterTests(bool isAsync) : base(isAsync)
+        public NetworkSecurityPerimeterTests(bool isAsync) : base(isAsync)
         {
         }
 
