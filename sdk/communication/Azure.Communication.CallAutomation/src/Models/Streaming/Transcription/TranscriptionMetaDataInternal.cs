@@ -5,7 +5,10 @@ using System.Text.Json.Serialization;
 
 namespace Azure.Communication.CallAutomation
 {
-    internal class TranscriptionMetaDataInternal
+    /// <summary>
+    /// Metadata for Transcription Streaming.
+    /// </summary>
+    internal class TranscriptionMetadataInternal
     {
         /// <summary>
         /// Transcription Subscription Id.
@@ -29,12 +32,6 @@ namespace Azure.Communication.CallAutomation
         /// correlation Id.
         /// </summary>
         [JsonPropertyName("correlationId")]
-        public string CorrelationId { get; set; }
-
-        /// <summary>
-        /// The custom speech recognition model endpoint id
-        /// </summary>
-        [JsonPropertyName("speechRecognitionModelEndpointId")]
-        public string SpeechRecognitionModelEndpointId { get; set; }
+        public string CorrelationId { get;  set; }
     }
 }

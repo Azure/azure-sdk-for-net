@@ -36,13 +36,11 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// correlation Id.
         /// </summary>
-        [JsonPropertyName("correlationId")]
         public string CorrelationId { get; internal set; }
 
         /// <summary>
         /// The custom speech recognition model endpoint id
         /// </summary>
-        [JsonPropertyName("speechRecognitionModelEndpointId")]
         public string SpeechRecognitionModelEndpointId { get; internal set; }
     }
 }
