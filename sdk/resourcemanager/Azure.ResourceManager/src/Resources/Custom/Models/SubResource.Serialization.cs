@@ -96,12 +96,21 @@ namespace Azure.ResourceManager.Resources.Models
 
         string IPersistableModel<SubResource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        internal partial class SubResourceConverter : JsonConverter<SubResource>
+        /// <summary>
+        /// Converter for SubResource type.
+        /// </summary>
+        public partial class SubResourceConverter : JsonConverter<SubResource>
         {
+            /// <summary>
+            /// Converter for SubResource type.
+            /// </summary>
             public override void Write(Utf8JsonWriter writer, SubResource model, JsonSerializerOptions options)
             {
                 writer.WriteObjectValue(model);
             }
+            /// <summary>
+            /// Converter for SubResource type.
+            /// </summary>
             public override SubResource Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

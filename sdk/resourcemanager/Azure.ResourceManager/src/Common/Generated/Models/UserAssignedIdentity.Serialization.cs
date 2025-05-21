@@ -173,13 +173,21 @@ namespace Azure.ResourceManager.Models
 
         string IPersistableModel<UserAssignedIdentity>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        internal partial class UserAssignedIdentityConverter : JsonConverter<UserAssignedIdentity>
+        /// <summary>
+        /// Converter for UserAssignedIdentity type.
+        /// </summary>
+        public partial class UserAssignedIdentityConverter : JsonConverter<UserAssignedIdentity>
         {
+            /// <summary>
+            /// Converter for UserAssignedIdentity type.
+            /// </summary>
             public override void Write(Utf8JsonWriter writer, UserAssignedIdentity model, JsonSerializerOptions options)
             {
                 writer.WriteObjectValue(model, ModelSerializationExtensions.WireOptions);
             }
-
+            /// <summary>
+            /// Converter for UserAssignedIdentity type.
+            /// </summary>
             public override UserAssignedIdentity Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

@@ -309,13 +309,21 @@ namespace Azure.ResourceManager.Models
 
         string IPersistableModel<SystemData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        internal partial class SystemDataConverter : JsonConverter<SystemData>
+        /// <summary>
+        /// Converter for SystemData type.
+        /// </summary>
+        public partial class SystemDataConverter : JsonConverter<SystemData>
         {
+            /// <summary>
+            /// Converter for SystemData type.
+            /// </summary>
             public override void Write(Utf8JsonWriter writer, SystemData model, JsonSerializerOptions options)
             {
                 writer.WriteObjectValue(model, ModelSerializationExtensions.WireOptions);
             }
-
+            /// <summary>
+            /// Converter for SystemData type.
+            /// </summary>
             public override SystemData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

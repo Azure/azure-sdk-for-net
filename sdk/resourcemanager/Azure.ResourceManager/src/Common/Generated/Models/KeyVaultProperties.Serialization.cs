@@ -181,13 +181,21 @@ namespace Azure.ResourceManager.Models
 
         string IPersistableModel<KeyVaultProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        internal partial class KeyVaultPropertiesConverter : JsonConverter<KeyVaultProperties>
+        /// <summary>
+        /// Converter for KeyVaultProperties type.
+        /// </summary>
+        public partial class KeyVaultPropertiesConverter : JsonConverter<KeyVaultProperties>
         {
+            /// <summary>
+            /// Converter for KeyVaultProperties type.
+            /// </summary>
             public override void Write(Utf8JsonWriter writer, KeyVaultProperties model, JsonSerializerOptions options)
             {
                 writer.WriteObjectValue(model, ModelSerializationExtensions.WireOptions);
             }
-
+            /// <summary>
+            /// Converter for KeyVaultProperties type.
+            /// </summary>
             public override KeyVaultProperties Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

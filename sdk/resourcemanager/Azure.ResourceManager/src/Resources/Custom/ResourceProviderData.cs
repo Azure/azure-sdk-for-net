@@ -47,12 +47,21 @@ namespace Azure.ResourceManager.Resources
         /// <summary> The provider ID. </summary>
         public ResourceIdentifier Id { get; }
 
-        internal partial class ProviderDataConverter : JsonConverter<ResourceProviderData>
+        /// <summary>
+        /// Converter for ResourceProviderData type.
+        /// </summary>
+        public partial class ProviderDataConverter : JsonConverter<ResourceProviderData>
         {
+            /// <summary>
+            /// Converter for ResourceProviderData type.
+            /// </summary>
             public override void Write(Utf8JsonWriter writer, ResourceProviderData providerData, JsonSerializerOptions options)
             {
                 writer.WriteObjectValue(providerData);
             }
+            /// <summary>
+            /// Converter for ResourceProviderData type.
+            /// </summary>
             public override ResourceProviderData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

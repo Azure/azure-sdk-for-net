@@ -274,13 +274,22 @@ namespace Azure.ResourceManager.Models
 
         string IPersistableModel<ArmPlan>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        internal partial class ArmPlanConverter : JsonConverter<ArmPlan>
+        /// <summary>
+        /// Converter for ArmPlan type.
+        /// </summary>
+        public partial class ArmPlanConverter : JsonConverter<ArmPlan>
         {
+            /// <summary>
+            /// Converter for ArmPlan type.
+            /// </summary>
             public override void Write(Utf8JsonWriter writer, ArmPlan model, JsonSerializerOptions options)
             {
                 writer.WriteObjectValue(model, ModelSerializationExtensions.WireOptions);
             }
 
+            /// <summary>
+            /// Converter for ArmPlan type.
+            /// </summary>
             public override ArmPlan Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

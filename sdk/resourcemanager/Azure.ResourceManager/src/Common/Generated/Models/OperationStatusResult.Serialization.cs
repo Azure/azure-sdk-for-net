@@ -390,13 +390,21 @@ namespace Azure.ResourceManager.Models
 
         string IPersistableModel<OperationStatusResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        internal partial class OperationStatusResultConverter : JsonConverter<OperationStatusResult>
+        /// <summary>
+        /// Converter for OperationStatusResult type.
+        /// </summary>
+        public partial class OperationStatusResultConverter : JsonConverter<OperationStatusResult>
         {
+            /// <summary>
+            /// Converter for OperationStatusResult type.
+            /// </summary>
             public override void Write(Utf8JsonWriter writer, OperationStatusResult model, JsonSerializerOptions options)
             {
                 writer.WriteObjectValue(model, ModelSerializationExtensions.WireOptions);
             }
-
+            /// <summary>
+            /// Converter for OperationStatusResult type.
+            /// </summary>
             public override OperationStatusResult Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);
