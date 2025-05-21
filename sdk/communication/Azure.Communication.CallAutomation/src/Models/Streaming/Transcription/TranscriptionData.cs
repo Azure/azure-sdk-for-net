@@ -15,7 +15,7 @@ namespace Azure.Communication.CallAutomation
         internal TranscriptionData(string text, string format, double confidence, long offset, long duration, IEnumerable<WordDataInternal> words, string participantRawID, TranscriptionResultState resultState)
         {
             Text = text;
-            Format = ConvertToTextFormatEnum(format);
+            Format = format;
             Confidence = confidence;
             Offset = TimeSpan.FromTicks(offset);
             Duration = TimeSpan.FromTicks(duration);
@@ -36,7 +36,7 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// The format of text
         /// </summary>
-        public TextFormat Format { get; }
+        public string Format { get; }
 
         /// <summary>
         /// Confidence of recognition of the whole phrase, from 0.0 (no confidence) to 1.0 (full confidence)
@@ -68,14 +68,6 @@ namespace Azure.Communication.CallAutomation
         /// Status of the result of transcription
         /// </summary>
         public TranscriptionResultState ResultState { get; }
-
-        private static TextFormat ConvertToTextFormatEnum(string format)
-        {
-            if (TextFormat.Display.ToString().Equals(format, StringComparison.OrdinalIgnoreCase))
-                return TextFormat.Display;
-            else
-                throw new NotSupportedException(format);
-        }
 
         private static IEnumerable<WordData> ConvertToWordData(IEnumerable<WordDataInternal> wordData)
         {
