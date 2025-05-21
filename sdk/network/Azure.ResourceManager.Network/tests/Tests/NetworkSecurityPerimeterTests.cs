@@ -26,7 +26,6 @@ namespace Azure.ResourceManager.Network.Tests
         private string _saNamePrefix = "sadotnetsdktest";
 
         private ResourceGroupResource _resourceGroup;
-        private SubscriptionResource _subscription;
 
         public NetworkSecurityPerimeterTests(bool isAsync) : base(isAsync)
         {
@@ -39,7 +38,6 @@ namespace Azure.ResourceManager.Network.Tests
             {
                 Initialize();
             }
-            _subscription = await ArmClient.GetDefaultSubscriptionAsync();
             _resourceGroup = (await CreateResourceGroup(Recording.GenerateAssetName(_rgNamePrefix)));
         }
 
