@@ -13,12 +13,26 @@ public class BearerTokenPolicy : AuthenticationPolicy
     private readonly AuthenticationTokenProvider _tokenProvider;
     private readonly GetTokenOptions _flowContext;
 
-    /// <param name="tokenProvider"></param>
-    /// <param name="contexts"></param>
+    /// <summary>
+    /// Creates a new instance of <see cref="BearerTokenPolicy"/>.
+    /// </summary>
+    /// <param name="tokenProvider">The <see cref="AuthenticationTokenProvider"/>.</param>
+    /// <param name="contexts">The authentication flow contexts supported by the client. This would typically be provided by generated code.</param>
     public BearerTokenPolicy(AuthenticationTokenProvider tokenProvider, IEnumerable<IReadOnlyDictionary<string, object>> contexts)
     {
         _tokenProvider = tokenProvider;
         _flowContext = GetOptionsFromContexts(contexts, tokenProvider);
+    }
+
+    /// <summary>
+    /// Creates a new instance of <see cref="BearerTokenPolicy"/>.
+    /// </summary>
+    /// <param name="tokenProvider">The <see cref="AuthenticationTokenProvider"/>.</param>
+    /// <param name="scope">The scope to be used for authentication requests made by the <paramref name="tokenProvider"/>.</param>
+    public BearerTokenPolicy(AuthenticationTokenProvider tokenProvider, string scope)
+    {
+        _tokenProvider = tokenProvider;
+        _flowContext = new GetTokenOptions(new[] { scope }, new Dictionary<string, object>());
     }
 
     /// <inheritdoc />
