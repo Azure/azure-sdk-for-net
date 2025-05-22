@@ -6,61 +6,22 @@
 #nullable disable
 
 using System;
-using System.Threading;
 using Azure.Core.Pipeline;
 
 namespace Encode.Duration
 {
-    /// <summary> Test for encode decorator on duration. </summary>
     public partial class DurationClient
     {
-        private readonly Uri _endpoint;
-        private Query _cachedQuery;
-        private Property _cachedProperty;
-        private Header _cachedHeader;
+        public DurationClient() : this(new Uri("http://localhost:3000"), new DurationClientOptions()) => throw null;
 
-        /// <summary> Initializes a new instance of DurationClient. </summary>
-        public DurationClient() : this(new Uri("http://localhost:3000"), new DurationClientOptions())
-        {
-        }
+        public DurationClient(Uri endpoint, DurationClientOptions options) => throw null;
 
-        /// <summary> Initializes a new instance of DurationClient. </summary>
-        /// <param name="endpoint"> Service endpoint. </param>
-        /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
-        public DurationClient(Uri endpoint, DurationClientOptions options)
-        {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
+        public virtual HttpPipeline Pipeline => throw null;
 
-            options ??= new DurationClientOptions();
+        public virtual Query GetQueryClient() => throw null;
 
-            _endpoint = endpoint;
-            Pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>());
-            ClientDiagnostics = new ClientDiagnostics(options, true);
-        }
+        public virtual Property GetPropertyClient() => throw null;
 
-        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
-        public virtual HttpPipeline Pipeline { get; }
-
-        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
-        internal ClientDiagnostics ClientDiagnostics { get; }
-
-        /// <summary> Initializes a new instance of Query. </summary>
-        public virtual Query GetQueryClient()
-        {
-            return Volatile.Read(ref _cachedQuery) ?? Interlocked.CompareExchange(ref _cachedQuery, new Query(ClientDiagnostics, Pipeline, _endpoint), null) ?? _cachedQuery;
-        }
-
-        /// <summary> Initializes a new instance of Property. </summary>
-        public virtual Property GetPropertyClient()
-        {
-            return Volatile.Read(ref _cachedProperty) ?? Interlocked.CompareExchange(ref _cachedProperty, new Property(ClientDiagnostics, Pipeline, _endpoint), null) ?? _cachedProperty;
-        }
-
-        /// <summary> Initializes a new instance of Header. </summary>
-        public virtual Header GetHeaderClient()
-        {
-            return Volatile.Read(ref _cachedHeader) ?? Interlocked.CompareExchange(ref _cachedHeader, new Header(ClientDiagnostics, Pipeline, _endpoint), null) ?? _cachedHeader;
-        }
+        public virtual Header GetHeaderClient() => throw null;
     }
 }

@@ -12,12 +12,6 @@ namespace _Type.Model.Inheritance.SingleDiscriminator
 {
     internal partial class UnknownDinosaur : Dinosaur
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownDinosaur"/>. </summary>
-        /// <param name="kind"> Discriminator property for Dinosaur. </param>
-        /// <param name="size"></param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownDinosaur(string kind, int size, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(kind ?? "unknown", size, additionalBinaryDataProperties)
-        {
-        }
+        internal UnknownDinosaur(string kind, int size, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(kind ?? "unknown", size, additionalBinaryDataProperties) => throw null;
     }
 }

@@ -6,110 +6,36 @@
 #nullable disable
 
 using System;
-using System.Threading;
 using Azure.Core.Pipeline;
 
 namespace _Type.Union
 {
-    /// <summary> Describe scenarios for various combinations of unions. </summary>
     public partial class UnionClient
     {
-        private readonly Uri _endpoint;
-        private StringsOnly _cachedStringsOnly;
-        private StringExtensible _cachedStringExtensible;
-        private StringExtensibleNamed _cachedStringExtensibleNamed;
-        private IntsOnly _cachedIntsOnly;
-        private FloatsOnly _cachedFloatsOnly;
-        private ModelsOnly _cachedModelsOnly;
-        private EnumsOnly _cachedEnumsOnly;
-        private StringAndArray _cachedStringAndArray;
-        private MixedLiterals _cachedMixedLiterals;
-        private MixedTypes _cachedMixedTypes;
+        public UnionClient() : this(new Uri("http://localhost:3000"), new UnionClientOptions()) => throw null;
 
-        /// <summary> Initializes a new instance of UnionClient. </summary>
-        public UnionClient() : this(new Uri("http://localhost:3000"), new UnionClientOptions())
-        {
-        }
+        public UnionClient(Uri endpoint, UnionClientOptions options) => throw null;
 
-        /// <summary> Initializes a new instance of UnionClient. </summary>
-        /// <param name="endpoint"> Service endpoint. </param>
-        /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
-        public UnionClient(Uri endpoint, UnionClientOptions options)
-        {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
+        public virtual HttpPipeline Pipeline => throw null;
 
-            options ??= new UnionClientOptions();
+        public virtual StringsOnly GetStringsOnlyClient() => throw null;
 
-            _endpoint = endpoint;
-            Pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>());
-            ClientDiagnostics = new ClientDiagnostics(options, true);
-        }
+        public virtual StringExtensible GetStringExtensibleClient() => throw null;
 
-        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
-        public virtual HttpPipeline Pipeline { get; }
+        public virtual StringExtensibleNamed GetStringExtensibleNamedClient() => throw null;
 
-        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
-        internal ClientDiagnostics ClientDiagnostics { get; }
+        public virtual IntsOnly GetIntsOnlyClient() => throw null;
 
-        /// <summary> Initializes a new instance of StringsOnly. </summary>
-        public virtual StringsOnly GetStringsOnlyClient()
-        {
-            return Volatile.Read(ref _cachedStringsOnly) ?? Interlocked.CompareExchange(ref _cachedStringsOnly, new StringsOnly(ClientDiagnostics, Pipeline, _endpoint), null) ?? _cachedStringsOnly;
-        }
+        public virtual FloatsOnly GetFloatsOnlyClient() => throw null;
 
-        /// <summary> Initializes a new instance of StringExtensible. </summary>
-        public virtual StringExtensible GetStringExtensibleClient()
-        {
-            return Volatile.Read(ref _cachedStringExtensible) ?? Interlocked.CompareExchange(ref _cachedStringExtensible, new StringExtensible(ClientDiagnostics, Pipeline, _endpoint), null) ?? _cachedStringExtensible;
-        }
+        public virtual ModelsOnly GetModelsOnlyClient() => throw null;
 
-        /// <summary> Initializes a new instance of StringExtensibleNamed. </summary>
-        public virtual StringExtensibleNamed GetStringExtensibleNamedClient()
-        {
-            return Volatile.Read(ref _cachedStringExtensibleNamed) ?? Interlocked.CompareExchange(ref _cachedStringExtensibleNamed, new StringExtensibleNamed(ClientDiagnostics, Pipeline, _endpoint), null) ?? _cachedStringExtensibleNamed;
-        }
+        public virtual EnumsOnly GetEnumsOnlyClient() => throw null;
 
-        /// <summary> Initializes a new instance of IntsOnly. </summary>
-        public virtual IntsOnly GetIntsOnlyClient()
-        {
-            return Volatile.Read(ref _cachedIntsOnly) ?? Interlocked.CompareExchange(ref _cachedIntsOnly, new IntsOnly(ClientDiagnostics, Pipeline, _endpoint), null) ?? _cachedIntsOnly;
-        }
+        public virtual StringAndArray GetStringAndArrayClient() => throw null;
 
-        /// <summary> Initializes a new instance of FloatsOnly. </summary>
-        public virtual FloatsOnly GetFloatsOnlyClient()
-        {
-            return Volatile.Read(ref _cachedFloatsOnly) ?? Interlocked.CompareExchange(ref _cachedFloatsOnly, new FloatsOnly(ClientDiagnostics, Pipeline, _endpoint), null) ?? _cachedFloatsOnly;
-        }
+        public virtual MixedLiterals GetMixedLiteralsClient() => throw null;
 
-        /// <summary> Initializes a new instance of ModelsOnly. </summary>
-        public virtual ModelsOnly GetModelsOnlyClient()
-        {
-            return Volatile.Read(ref _cachedModelsOnly) ?? Interlocked.CompareExchange(ref _cachedModelsOnly, new ModelsOnly(ClientDiagnostics, Pipeline, _endpoint), null) ?? _cachedModelsOnly;
-        }
-
-        /// <summary> Initializes a new instance of EnumsOnly. </summary>
-        public virtual EnumsOnly GetEnumsOnlyClient()
-        {
-            return Volatile.Read(ref _cachedEnumsOnly) ?? Interlocked.CompareExchange(ref _cachedEnumsOnly, new EnumsOnly(ClientDiagnostics, Pipeline, _endpoint), null) ?? _cachedEnumsOnly;
-        }
-
-        /// <summary> Initializes a new instance of StringAndArray. </summary>
-        public virtual StringAndArray GetStringAndArrayClient()
-        {
-            return Volatile.Read(ref _cachedStringAndArray) ?? Interlocked.CompareExchange(ref _cachedStringAndArray, new StringAndArray(ClientDiagnostics, Pipeline, _endpoint), null) ?? _cachedStringAndArray;
-        }
-
-        /// <summary> Initializes a new instance of MixedLiterals. </summary>
-        public virtual MixedLiterals GetMixedLiteralsClient()
-        {
-            return Volatile.Read(ref _cachedMixedLiterals) ?? Interlocked.CompareExchange(ref _cachedMixedLiterals, new MixedLiterals(ClientDiagnostics, Pipeline, _endpoint), null) ?? _cachedMixedLiterals;
-        }
-
-        /// <summary> Initializes a new instance of MixedTypes. </summary>
-        public virtual MixedTypes GetMixedTypesClient()
-        {
-            return Volatile.Read(ref _cachedMixedTypes) ?? Interlocked.CompareExchange(ref _cachedMixedTypes, new MixedTypes(ClientDiagnostics, Pipeline, _endpoint), null) ?? _cachedMixedTypes;
-        }
+        public virtual MixedTypes GetMixedTypesClient() => throw null;
     }
 }

@@ -7,220 +7,37 @@
 
 using System;
 using System.ClientModel.Primitives;
-using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
 
 namespace _Type.Model.Inheritance.NestedDiscriminator
 {
-    /// <summary></summary>
     public partial class Salmon : IJsonModel<Salmon>
     {
-        /// <summary> Initializes a new instance of <see cref="Salmon"/> for deserialization. </summary>
-        internal Salmon()
-        {
-        }
+        internal Salmon() => throw null;
 
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<Salmon>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-        {
-            writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
-            writer.WriteEndObject();
-        }
+        void IJsonModel<Salmon>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<Salmon>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
-            {
-                throw new FormatException($"The model {nameof(Salmon)} does not support writing '{format}' format.");
-            }
-            base.JsonModelWriteCore(writer, options);
-            if (Optional.IsCollectionDefined(Friends))
-            {
-                writer.WritePropertyName("friends"u8);
-                writer.WriteStartArray();
-                foreach (Fish item in Friends)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsCollectionDefined(Hate))
-            {
-                writer.WritePropertyName("hate"u8);
-                writer.WriteStartObject();
-                foreach (var item in Hate)
-                {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value, options);
-                }
-                writer.WriteEndObject();
-            }
-            if (Optional.IsDefined(Partner))
-            {
-                writer.WritePropertyName("partner"u8);
-                writer.WriteObjectValue(Partner, options);
-            }
-        }
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        Salmon IJsonModel<Salmon>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (Salmon)JsonModelCreateCore(ref reader, options);
+        Salmon IJsonModel<Salmon>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override Fish JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<Salmon>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
-            {
-                throw new FormatException($"The model {nameof(Salmon)} does not support reading '{format}' format.");
-            }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeSalmon(document.RootElement, options);
-        }
+        protected override Fish JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static Salmon DeserializeSalmon(JsonElement element, ModelReaderWriterOptions options)
-        {
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            string kind = "salmon";
-            int age = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            IList<Fish> friends = default;
-            IDictionary<string, Fish> hate = default;
-            Fish partner = default;
-            foreach (var prop in element.EnumerateObject())
-            {
-                if (prop.NameEquals("kind"u8))
-                {
-                    kind = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("age"u8))
-                {
-                    age = prop.Value.GetInt32();
-                    continue;
-                }
-                if (prop.NameEquals("friends"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<Fish> array = new List<Fish>();
-                    foreach (var item in prop.Value.EnumerateArray())
-                    {
-                        array.Add(DeserializeFish(item, options));
-                    }
-                    friends = array;
-                    continue;
-                }
-                if (prop.NameEquals("hate"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    Dictionary<string, Fish> dictionary = new Dictionary<string, Fish>();
-                    foreach (var prop0 in prop.Value.EnumerateObject())
-                    {
-                        dictionary.Add(prop0.Name, DeserializeFish(prop0.Value, options));
-                    }
-                    hate = dictionary;
-                    continue;
-                }
-                if (prop.NameEquals("partner"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    partner = DeserializeFish(prop.Value, options);
-                    continue;
-                }
-                if (options.Format != "W")
-                {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
-                }
-            }
-            return new Salmon(
-                kind,
-                age,
-                additionalBinaryDataProperties,
-                friends ?? new ChangeTrackingList<Fish>(),
-                hate ?? new ChangeTrackingDictionary<string, Fish>(),
-                partner);
-        }
+        BinaryData IPersistableModel<Salmon>.Write(ModelReaderWriterOptions options) => throw null;
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<Salmon>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<Salmon>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, _TypeModelInheritanceNestedDiscriminatorContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(Salmon)} does not support writing '{options.Format}' format.");
-            }
-        }
+        Salmon IPersistableModel<Salmon>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        Salmon IPersistableModel<Salmon>.Create(BinaryData data, ModelReaderWriterOptions options) => (Salmon)PersistableModelCreateCore(data, options);
+        protected override Fish PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override Fish PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<Salmon>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
-                    {
-                        return DeserializeSalmon(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(Salmon)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<Salmon>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<Salmon>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
         /// <param name="salmon"> The <see cref="Salmon"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(Salmon salmon)
-        {
-            if (salmon == null)
-            {
-                return null;
-            }
-            Utf8JsonBinaryContent content = new Utf8JsonBinaryContent();
-            content.JsonWriter.WriteObjectValue(salmon, ModelSerializationExtensions.WireOptions);
-            return content;
-        }
+        public static implicit operator RequestContent(Salmon salmon) => throw null;
 
-        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="Salmon"/> from. </param>
-        public static explicit operator Salmon(Response result)
-        {
-            using Response response = result;
-            using JsonDocument document = JsonDocument.Parse(response.Content);
-            return DeserializeSalmon(document.RootElement, ModelSerializationExtensions.WireOptions);
-        }
+        public static explicit operator Salmon(Response result) => throw null;
     }
 }

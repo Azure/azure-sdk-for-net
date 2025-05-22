@@ -5,34 +5,16 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
-
 namespace _Type.Property.ValueTypes
 {
-    /// <summary> Model with a int property. </summary>
     public partial class IntProperty
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        public IntProperty(int @property) => throw null;
 
-        /// <summary> Initializes a new instance of <see cref="IntProperty"/>. </summary>
-        /// <param name="property"> Property. </param>
-        public IntProperty(int @property)
+        public int Property
         {
-            Property = @property;
+            get => throw null;
+            set => throw null;
         }
-
-        /// <summary> Initializes a new instance of <see cref="IntProperty"/>. </summary>
-        /// <param name="property"> Property. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal IntProperty(int @property, IDictionary<string, BinaryData> additionalBinaryDataProperties)
-        {
-            Property = @property;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
-        }
-
-        /// <summary> Property. </summary>
-        public int Property { get; set; }
     }
 }

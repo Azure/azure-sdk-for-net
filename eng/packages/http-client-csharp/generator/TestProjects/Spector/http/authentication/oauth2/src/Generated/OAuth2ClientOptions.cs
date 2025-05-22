@@ -9,7 +9,6 @@ using Azure.Core;
 
 namespace Authentication.OAuth2
 {
-    /// <summary> Client options for <see cref="OAuth2Client"/>. </summary>
     public partial class OAuth2ClientOptions : ClientOptions
     {
     }

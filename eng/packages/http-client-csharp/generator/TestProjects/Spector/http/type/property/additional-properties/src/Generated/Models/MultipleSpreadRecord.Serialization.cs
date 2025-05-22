@@ -7,183 +7,37 @@
 
 using System;
 using System.ClientModel.Primitives;
-using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
 
 namespace _Type.Property.AdditionalProperties
 {
-    /// <summary></summary>
     public partial class MultipleSpreadRecord : IJsonModel<MultipleSpreadRecord>
     {
-        /// <summary> Initializes a new instance of <see cref="MultipleSpreadRecord"/> for deserialization. </summary>
-        internal MultipleSpreadRecord()
-        {
-        }
+        internal MultipleSpreadRecord() => throw null;
 
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<MultipleSpreadRecord>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-        {
-            writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
-            writer.WriteEndObject();
-        }
+        void IJsonModel<MultipleSpreadRecord>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<MultipleSpreadRecord>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
-            {
-                throw new FormatException($"The model {nameof(MultipleSpreadRecord)} does not support writing '{format}' format.");
-            }
-            writer.WritePropertyName("flag"u8);
-            writer.WriteBooleanValue(Flag);
-            foreach (var item in AdditionalProperties)
-            {
-                writer.WritePropertyName(item.Key);
-                writer.WriteStringValue(item.Value);
-            }
-            foreach (var item in AdditionalSingleProperties)
-            {
-                writer.WritePropertyName(item.Key);
-                writer.WriteNumberValue(item.Value);
-            }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
-            {
-                foreach (var item in _additionalBinaryDataProperties)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
-        }
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        MultipleSpreadRecord IJsonModel<MultipleSpreadRecord>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        MultipleSpreadRecord IJsonModel<MultipleSpreadRecord>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual MultipleSpreadRecord JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<MultipleSpreadRecord>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
-            {
-                throw new FormatException($"The model {nameof(MultipleSpreadRecord)} does not support reading '{format}' format.");
-            }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeMultipleSpreadRecord(document.RootElement, options);
-        }
+        protected virtual MultipleSpreadRecord JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static MultipleSpreadRecord DeserializeMultipleSpreadRecord(JsonElement element, ModelReaderWriterOptions options)
-        {
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            bool flag = default;
-            IDictionary<string, string> additionalProperties = new ChangeTrackingDictionary<string, string>();
-            IDictionary<string, float> additionalSingleProperties = new ChangeTrackingDictionary<string, float>();
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
-            {
-                if (prop.NameEquals("flag"u8))
-                {
-                    flag = prop.Value.GetBoolean();
-                    continue;
-                }
-                switch (prop.Value.ValueKind)
-                {
-                    case JsonValueKind.String:
-                        additionalProperties.Add(prop.Name, prop.Value.GetString());
-                        continue;
-                    case JsonValueKind.Number:
-                        if (prop.Value.TryGetSingle(out float floatValue))
-                        {
-                            additionalSingleProperties.Add(prop.Name, floatValue);
-                            continue;
-                        }
-                        break;
-                }
-                if (options.Format != "W")
-                {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
-                }
-            }
-            return new MultipleSpreadRecord(flag, additionalProperties, additionalSingleProperties, additionalBinaryDataProperties);
-        }
+        BinaryData IPersistableModel<MultipleSpreadRecord>.Write(ModelReaderWriterOptions options) => throw null;
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<MultipleSpreadRecord>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<MultipleSpreadRecord>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, _TypePropertyAdditionalPropertiesContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(MultipleSpreadRecord)} does not support writing '{options.Format}' format.");
-            }
-        }
+        MultipleSpreadRecord IPersistableModel<MultipleSpreadRecord>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        MultipleSpreadRecord IPersistableModel<MultipleSpreadRecord>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        protected virtual MultipleSpreadRecord PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual MultipleSpreadRecord PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<MultipleSpreadRecord>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
-                    {
-                        return DeserializeMultipleSpreadRecord(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(MultipleSpreadRecord)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<MultipleSpreadRecord>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<MultipleSpreadRecord>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
         /// <param name="multipleSpreadRecord"> The <see cref="MultipleSpreadRecord"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(MultipleSpreadRecord multipleSpreadRecord)
-        {
-            if (multipleSpreadRecord == null)
-            {
-                return null;
-            }
-            Utf8JsonBinaryContent content = new Utf8JsonBinaryContent();
-            content.JsonWriter.WriteObjectValue(multipleSpreadRecord, ModelSerializationExtensions.WireOptions);
-            return content;
-        }
+        public static implicit operator RequestContent(MultipleSpreadRecord multipleSpreadRecord) => throw null;
 
-        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="MultipleSpreadRecord"/> from. </param>
-        public static explicit operator MultipleSpreadRecord(Response result)
-        {
-            using Response response = result;
-            using JsonDocument document = JsonDocument.Parse(response.Content);
-            return DeserializeMultipleSpreadRecord(document.RootElement, ModelSerializationExtensions.WireOptions);
-        }
+        public static explicit operator MultipleSpreadRecord(Response result) => throw null;
     }
 }

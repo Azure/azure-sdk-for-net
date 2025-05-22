@@ -6,47 +6,18 @@
 #nullable disable
 
 using System;
-using System.Threading;
 using Azure.Core.Pipeline;
 
 namespace Encode.Numeric
 {
-    /// <summary> Test for encode decorator on integer. </summary>
     public partial class NumericClient
     {
-        private readonly Uri _endpoint;
-        private Property _cachedProperty;
+        public NumericClient() : this(new Uri("http://localhost:3000"), new NumericClientOptions()) => throw null;
 
-        /// <summary> Initializes a new instance of NumericClient. </summary>
-        public NumericClient() : this(new Uri("http://localhost:3000"), new NumericClientOptions())
-        {
-        }
+        public NumericClient(Uri endpoint, NumericClientOptions options) => throw null;
 
-        /// <summary> Initializes a new instance of NumericClient. </summary>
-        /// <param name="endpoint"> Service endpoint. </param>
-        /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
-        public NumericClient(Uri endpoint, NumericClientOptions options)
-        {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
+        public virtual HttpPipeline Pipeline => throw null;
 
-            options ??= new NumericClientOptions();
-
-            _endpoint = endpoint;
-            Pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>());
-            ClientDiagnostics = new ClientDiagnostics(options, true);
-        }
-
-        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
-        public virtual HttpPipeline Pipeline { get; }
-
-        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
-        internal ClientDiagnostics ClientDiagnostics { get; }
-
-        /// <summary> Initializes a new instance of Property. </summary>
-        public virtual Property GetPropertyClient()
-        {
-            return Volatile.Read(ref _cachedProperty) ?? Interlocked.CompareExchange(ref _cachedProperty, new Property(ClientDiagnostics, Pipeline, _endpoint), null) ?? _cachedProperty;
-        }
+        public virtual Property GetPropertyClient() => throw null;
     }
 }

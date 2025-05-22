@@ -9,16 +9,8 @@ using TypeSpec.Http.Streams;
 
 namespace Streaming.Jsonl
 {
-    /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class StreamingJsonlModelFactory
     {
-        /// <summary> The JsonlStreamInfo. </summary>
-        /// <param name="contentType"></param>
-        /// <returns> A new <see cref="TypeSpec.Http.Streams.JsonlStreamInfo"/> instance for mocking. </returns>
-        public static JsonlStreamInfo JsonlStreamInfo(string contentType = default)
-        {
-
-            return new JsonlStreamInfo(contentType, additionalBinaryDataProperties: null);
-        }
+        public static JsonlStreamInfo JsonlStreamInfo(string contentType = default) => throw null;
     }
 }

@@ -5,37 +5,16 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
-
 namespace _Type.Property.AdditionalProperties
 {
-    /// <summary> model for record. </summary>
     public partial class ModelForRecord
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        public ModelForRecord(string state) => throw null;
 
-        /// <summary> Initializes a new instance of <see cref="ModelForRecord"/>. </summary>
-        /// <param name="state"> The state property. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="state"/> is null. </exception>
-        public ModelForRecord(string state)
+        public string State
         {
-            Argument.AssertNotNull(state, nameof(state));
-
-            State = state;
+            get => throw null;
+            set => throw null;
         }
-
-        /// <summary> Initializes a new instance of <see cref="ModelForRecord"/>. </summary>
-        /// <param name="state"> The state property. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ModelForRecord(string state, IDictionary<string, BinaryData> additionalBinaryDataProperties)
-        {
-            State = state;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
-        }
-
-        /// <summary> The state property. </summary>
-        public string State { get; set; }
     }
 }

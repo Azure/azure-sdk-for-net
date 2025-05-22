@@ -5,127 +5,26 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
-using Azure.Core;
 using Azure.Core.Pipeline;
 
 namespace Parameters.CollectionFormat
 {
-    /// <summary></summary>
     public partial class Header
     {
-        private readonly Uri _endpoint;
+        protected Header() => throw null;
 
-        /// <summary> Initializes a new instance of Header for mocking. </summary>
-        protected Header()
-        {
-        }
+        public virtual HttpPipeline Pipeline => throw null;
 
-        /// <summary> Initializes a new instance of Header. </summary>
-        /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
-        /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
-        /// <param name="endpoint"> Service endpoint. </param>
-        internal Header(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint)
-        {
-            ClientDiagnostics = clientDiagnostics;
-            _endpoint = endpoint;
-            Pipeline = pipeline;
-        }
+        public virtual Response Csv(IEnumerable<string> colors, RequestContext context) => throw null;
 
-        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
-        public virtual HttpPipeline Pipeline { get; }
+        public virtual Task<Response> CsvAsync(IEnumerable<string> colors, RequestContext context) => throw null;
 
-        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
-        internal ClientDiagnostics ClientDiagnostics { get; }
+        public virtual Response Csv(IEnumerable<string> colors, CancellationToken cancellationToken = default) => throw null;
 
-        /// <summary>
-        /// [Protocol Method] csv
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="colors"> Possible values for colors are [blue,red,green]. </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="colors"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual Response Csv(IEnumerable<string> colors, RequestContext context)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Header.Csv");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNull(colors, nameof(colors));
-
-                using HttpMessage message = CreateCsvRequest(colors, context);
-                return Pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] csv
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="colors"> Possible values for colors are [blue,red,green]. </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="colors"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> CsvAsync(IEnumerable<string> colors, RequestContext context)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Header.Csv");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNull(colors, nameof(colors));
-
-                using HttpMessage message = CreateCsvRequest(colors, context);
-                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> csv. </summary>
-        /// <param name="colors"> Possible values for colors are [blue,red,green]. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="colors"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response Csv(IEnumerable<string> colors, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(colors, nameof(colors));
-
-            return Csv(colors, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
-        }
-
-        /// <summary> csv. </summary>
-        /// <param name="colors"> Possible values for colors are [blue,red,green]. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="colors"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> CsvAsync(IEnumerable<string> colors, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(colors, nameof(colors));
-
-            return await CsvAsync(colors, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
-        }
+        public virtual Task<Response> CsvAsync(IEnumerable<string> colors, CancellationToken cancellationToken = default) => throw null;
     }
 }

@@ -14,216 +14,30 @@ using Azure.Core.Pipeline;
 
 namespace Parameters.BodyOptionality
 {
-    /// <summary> Test describing optionality of the request body. </summary>
     public partial class BodyOptionalityClient
     {
-        private readonly Uri _endpoint;
-        private OptionalExplicit _cachedOptionalExplicit;
+        public BodyOptionalityClient() : this(new Uri("http://localhost:3000"), new BodyOptionalityClientOptions()) => throw null;
 
-        /// <summary> Initializes a new instance of BodyOptionalityClient. </summary>
-        public BodyOptionalityClient() : this(new Uri("http://localhost:3000"), new BodyOptionalityClientOptions())
-        {
-        }
+        public BodyOptionalityClient(Uri endpoint, BodyOptionalityClientOptions options) => throw null;
 
-        /// <summary> Initializes a new instance of BodyOptionalityClient. </summary>
-        /// <param name="endpoint"> Service endpoint. </param>
-        /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
-        public BodyOptionalityClient(Uri endpoint, BodyOptionalityClientOptions options)
-        {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
+        public virtual HttpPipeline Pipeline => throw null;
 
-            options ??= new BodyOptionalityClientOptions();
+        public virtual Response RequiredExplicit(RequestContent content, RequestContext context = null) => throw null;
 
-            _endpoint = endpoint;
-            Pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>());
-            ClientDiagnostics = new ClientDiagnostics(options, true);
-        }
+        public virtual Task<Response> RequiredExplicitAsync(RequestContent content, RequestContext context = null) => throw null;
 
-        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
-        public virtual HttpPipeline Pipeline { get; }
+        public virtual Response RequiredExplicit(BodyModel body, CancellationToken cancellationToken = default) => throw null;
 
-        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
-        internal ClientDiagnostics ClientDiagnostics { get; }
+        public virtual Task<Response> RequiredExplicitAsync(BodyModel body, CancellationToken cancellationToken = default) => throw null;
 
-        /// <summary>
-        /// [Protocol Method] requiredExplicit
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual Response RequiredExplicit(RequestContent content, RequestContext context = null)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BodyOptionalityClient.RequiredExplicit");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNull(content, nameof(content));
+        public virtual Response RequiredImplicit(RequestContent content, RequestContext context = null) => throw null;
 
-                using HttpMessage message = CreateRequiredExplicitRequest(content, context);
-                return Pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
+        public virtual Task<Response> RequiredImplicitAsync(RequestContent content, RequestContext context = null) => throw null;
 
-        /// <summary>
-        /// [Protocol Method] requiredExplicit
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> RequiredExplicitAsync(RequestContent content, RequestContext context = null)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BodyOptionalityClient.RequiredExplicit");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNull(content, nameof(content));
+        public virtual Response RequiredImplicit(string name, CancellationToken cancellationToken = default) => throw null;
 
-                using HttpMessage message = CreateRequiredExplicitRequest(content, context);
-                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
+        public virtual Task<Response> RequiredImplicitAsync(string name, CancellationToken cancellationToken = default) => throw null;
 
-        /// <summary> requiredExplicit. </summary>
-        /// <param name="body"></param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response RequiredExplicit(BodyModel body, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(body, nameof(body));
-
-            return RequiredExplicit(body, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
-        }
-
-        /// <summary> requiredExplicit. </summary>
-        /// <param name="body"></param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> RequiredExplicitAsync(BodyModel body, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(body, nameof(body));
-
-            return await RequiredExplicitAsync(body, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// [Protocol Method] requiredImplicit
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual Response RequiredImplicit(RequestContent content, RequestContext context = null)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BodyOptionalityClient.RequiredImplicit");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNull(content, nameof(content));
-
-                using HttpMessage message = CreateRequiredImplicitRequest(content, context);
-                return Pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] requiredImplicit
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> RequiredImplicitAsync(RequestContent content, RequestContext context = null)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BodyOptionalityClient.RequiredImplicit");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNull(content, nameof(content));
-
-                using HttpMessage message = CreateRequiredImplicitRequest(content, context);
-                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> requiredImplicit. </summary>
-        /// <param name="name"></param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response RequiredImplicit(string name, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(name, nameof(name));
-
-            BodyModel spreadModel = new BodyModel(name, null);
-            return RequiredImplicit(spreadModel, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
-        }
-
-        /// <summary> requiredImplicit. </summary>
-        /// <param name="name"></param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> RequiredImplicitAsync(string name, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(name, nameof(name));
-
-            BodyModel spreadModel = new BodyModel(name, null);
-            return await RequiredImplicitAsync(spreadModel, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
-        }
-
-        /// <summary> Initializes a new instance of OptionalExplicit. </summary>
-        public virtual OptionalExplicit GetOptionalExplicitClient()
-        {
-            return Volatile.Read(ref _cachedOptionalExplicit) ?? Interlocked.CompareExchange(ref _cachedOptionalExplicit, new OptionalExplicit(ClientDiagnostics, Pipeline, _endpoint), null) ?? _cachedOptionalExplicit;
-        }
+        public virtual OptionalExplicit GetOptionalExplicitClient() => throw null;
     }
 }

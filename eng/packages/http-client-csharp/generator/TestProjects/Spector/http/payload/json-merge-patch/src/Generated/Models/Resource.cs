@@ -5,75 +5,48 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 
 namespace Payload.JsonMergePatch
 {
-    /// <summary> Details about a resource. </summary>
     public partial class Resource
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        public Resource(string name) => throw null;
 
-        /// <summary> Initializes a new instance of <see cref="Resource"/>. </summary>
-        /// <param name="name"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public Resource(string name)
+        public string Name
         {
-            Argument.AssertNotNull(name, nameof(name));
-
-            Name = name;
-            Map = new ChangeTrackingDictionary<string, InnerModel>();
-            Array = new ChangeTrackingList<InnerModel>();
-            IntArray = new ChangeTrackingList<int>();
+            get => throw null;
+            set => throw null;
         }
 
-        /// <summary> Initializes a new instance of <see cref="Resource"/>. </summary>
-        /// <param name="name"></param>
-        /// <param name="description"></param>
-        /// <param name="map"></param>
-        /// <param name="array"></param>
-        /// <param name="intValue"></param>
-        /// <param name="floatValue"></param>
-        /// <param name="innerModel"></param>
-        /// <param name="intArray"></param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal Resource(string name, string description, IDictionary<string, InnerModel> map, IList<InnerModel> array, int? intValue, float? floatValue, InnerModel innerModel, IList<int> intArray, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        public string Description
         {
-            Name = name;
-            Description = description;
-            Map = map;
-            Array = array;
-            IntValue = intValue;
-            FloatValue = floatValue;
-            InnerModel = innerModel;
-            IntArray = intArray;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            get => throw null;
+            set => throw null;
         }
 
-        /// <summary> Gets or sets the Name. </summary>
-        public string Name { get; set; }
+        public IDictionary<string, InnerModel> Map => throw null;
 
-        /// <summary> Gets or sets the Description. </summary>
-        public string Description { get; set; }
+        public IList<InnerModel> Array => throw null;
 
-        /// <summary> Gets the Map. </summary>
-        public IDictionary<string, InnerModel> Map { get; }
+        public int? IntValue
+        {
+            get => throw null;
+            set => throw null;
+        }
 
-        /// <summary> Gets the Array. </summary>
-        public IList<InnerModel> Array { get; }
+        public float? FloatValue
+        {
+            get => throw null;
+            set => throw null;
+        }
 
-        /// <summary> Gets or sets the IntValue. </summary>
-        public int? IntValue { get; set; }
+        public InnerModel InnerModel
+        {
+            get => throw null;
+            set => throw null;
+        }
 
-        /// <summary> Gets or sets the FloatValue. </summary>
-        public float? FloatValue { get; set; }
-
-        /// <summary> Gets or sets the InnerModel. </summary>
-        public InnerModel InnerModel { get; set; }
-
-        /// <summary> Gets the IntArray. </summary>
-        public IList<int> IntArray { get; }
+        public IList<int> IntArray => throw null;
     }
 }

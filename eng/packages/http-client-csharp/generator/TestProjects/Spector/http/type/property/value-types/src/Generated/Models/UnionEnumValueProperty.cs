@@ -5,32 +5,12 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
-
 namespace _Type.Property.ValueTypes
 {
-    /// <summary> Template type for testing models with specific properties. Pass in the type of the property you are looking for. </summary>
     public partial class UnionEnumValueProperty
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        public UnionEnumValueProperty() => throw null;
 
-        /// <summary> Initializes a new instance of <see cref="UnionEnumValueProperty"/>. </summary>
-        public UnionEnumValueProperty()
-        {
-        }
-
-        /// <summary> Initializes a new instance of <see cref="UnionEnumValueProperty"/>. </summary>
-        /// <param name="property"> Property. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnionEnumValueProperty(ExtendedEnum @property, IDictionary<string, BinaryData> additionalBinaryDataProperties)
-        {
-            Property = @property;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
-        }
-
-        /// <summary> Property. </summary>
-        public ExtendedEnum Property { get; } = "value2";
+        public ExtendedEnum Property => throw null;
     }
 }

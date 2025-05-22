@@ -5,37 +5,16 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
-
 namespace _Type.Union
 {
-    /// <summary> The Dog. </summary>
     public partial class Dog
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        public Dog(string bark) => throw null;
 
-        /// <summary> Initializes a new instance of <see cref="Dog"/>. </summary>
-        /// <param name="bark"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="bark"/> is null. </exception>
-        public Dog(string bark)
+        public string Bark
         {
-            Argument.AssertNotNull(bark, nameof(bark));
-
-            Bark = bark;
+            get => throw null;
+            set => throw null;
         }
-
-        /// <summary> Initializes a new instance of <see cref="Dog"/>. </summary>
-        /// <param name="bark"></param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal Dog(string bark, IDictionary<string, BinaryData> additionalBinaryDataProperties)
-        {
-            Bark = bark;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
-        }
-
-        /// <summary> Gets or sets the Bark. </summary>
-        public string Bark { get; set; }
     }
 }

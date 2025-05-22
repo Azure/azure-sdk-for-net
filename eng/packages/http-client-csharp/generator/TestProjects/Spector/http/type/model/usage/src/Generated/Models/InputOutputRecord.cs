@@ -5,37 +5,16 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
-
 namespace _Type.Model.Usage
 {
-    /// <summary> Record used both as operation parameter and return type. </summary>
     public partial class InputOutputRecord
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        public InputOutputRecord(string requiredProp) => throw null;
 
-        /// <summary> Initializes a new instance of <see cref="InputOutputRecord"/>. </summary>
-        /// <param name="requiredProp"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="requiredProp"/> is null. </exception>
-        public InputOutputRecord(string requiredProp)
+        public string RequiredProp
         {
-            Argument.AssertNotNull(requiredProp, nameof(requiredProp));
-
-            RequiredProp = requiredProp;
+            get => throw null;
+            set => throw null;
         }
-
-        /// <summary> Initializes a new instance of <see cref="InputOutputRecord"/>. </summary>
-        /// <param name="requiredProp"></param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal InputOutputRecord(string requiredProp, IDictionary<string, BinaryData> additionalBinaryDataProperties)
-        {
-            RequiredProp = requiredProp;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
-        }
-
-        /// <summary> Gets or sets the RequiredProp. </summary>
-        public string RequiredProp { get; set; }
     }
 }

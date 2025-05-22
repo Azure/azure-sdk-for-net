@@ -7,442 +7,83 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace _Type.Property.AdditionalProperties
 {
-    /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class TypePropertyAdditionalPropertiesModelFactory
     {
-        /// <summary> The model extends from Record&lt;unknown&gt; type. </summary>
-        /// <param name="name"> The name property. </param>
-        /// <param name="additionalProperties"></param>
-        /// <returns> A new <see cref="AdditionalProperties.ExtendsUnknownAdditionalProperties"/> instance for mocking. </returns>
-        public static ExtendsUnknownAdditionalProperties ExtendsUnknownAdditionalProperties(string name = default, IDictionary<string, BinaryData> additionalProperties = default)
-        {
-            additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
-
-            return new ExtendsUnknownAdditionalProperties(name, additionalProperties);
-        }
-
-        /// <summary> The model extends from a type that extends from Record&lt;unknown&gt;. </summary>
-        /// <param name="name"> The name property. </param>
-        /// <param name="additionalProperties"></param>
-        /// <param name="index"> The index property. </param>
-        /// <param name="age"> The age property. </param>
-        /// <returns> A new <see cref="AdditionalProperties.ExtendsUnknownAdditionalPropertiesDerived"/> instance for mocking. </returns>
-        public static ExtendsUnknownAdditionalPropertiesDerived ExtendsUnknownAdditionalPropertiesDerived(string name = default, IDictionary<string, BinaryData> additionalProperties = default, int index = default, float? age = default)
-        {
-            additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
-
-            return new ExtendsUnknownAdditionalPropertiesDerived(name, additionalProperties, index, age);
-        }
-
-        /// <summary>
-        /// The model extends from Record&lt;unknown&gt; with a discriminator.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ExtendsUnknownAdditionalPropertiesDiscriminatedDerived"/>.
-        /// </summary>
-        /// <param name="name"> The name property. </param>
-        /// <param name="kind"> The discriminator. </param>
-        /// <param name="additionalProperties"></param>
-        /// <returns> A new <see cref="AdditionalProperties.ExtendsUnknownAdditionalPropertiesDiscriminated"/> instance for mocking. </returns>
-        public static ExtendsUnknownAdditionalPropertiesDiscriminated ExtendsUnknownAdditionalPropertiesDiscriminated(string name = default, string kind = default, IDictionary<string, BinaryData> additionalProperties = default)
-        {
-            additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
-
-            return new UnknownExtendsUnknownAdditionalPropertiesDiscriminated(name, kind, additionalProperties);
-        }
-
-        /// <summary> The derived discriminated type. </summary>
-        /// <param name="name"> The name property. </param>
-        /// <param name="additionalProperties"></param>
-        /// <param name="index"> The index property. </param>
-        /// <param name="age"> The age property. </param>
-        /// <returns> A new <see cref="AdditionalProperties.ExtendsUnknownAdditionalPropertiesDiscriminatedDerived"/> instance for mocking. </returns>
-        public static ExtendsUnknownAdditionalPropertiesDiscriminatedDerived ExtendsUnknownAdditionalPropertiesDiscriminatedDerived(string name = default, IDictionary<string, BinaryData> additionalProperties = default, int index = default, float? age = default)
-        {
-            additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
-
-            return new ExtendsUnknownAdditionalPropertiesDiscriminatedDerived(name, "derived", additionalProperties, index, age);
-        }
-
-        /// <summary> The model is from Record&lt;unknown&gt; type. </summary>
-        /// <param name="name"> The name property. </param>
-        /// <param name="additionalProperties"></param>
-        /// <returns> A new <see cref="AdditionalProperties.IsUnknownAdditionalProperties"/> instance for mocking. </returns>
-        public static IsUnknownAdditionalProperties IsUnknownAdditionalProperties(string name = default, IDictionary<string, BinaryData> additionalProperties = default)
-        {
-            additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
-
-            return new IsUnknownAdditionalProperties(name, additionalProperties);
-        }
-
-        /// <summary> The model extends from a type that is Record&lt;unknown&gt; type. </summary>
-        /// <param name="name"> The name property. </param>
-        /// <param name="additionalProperties"></param>
-        /// <param name="index"> The index property. </param>
-        /// <param name="age"> The age property. </param>
-        /// <returns> A new <see cref="AdditionalProperties.IsUnknownAdditionalPropertiesDerived"/> instance for mocking. </returns>
-        public static IsUnknownAdditionalPropertiesDerived IsUnknownAdditionalPropertiesDerived(string name = default, IDictionary<string, BinaryData> additionalProperties = default, int index = default, float? age = default)
-        {
-            additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
-
-            return new IsUnknownAdditionalPropertiesDerived(name, additionalProperties, index, age);
-        }
-
-        /// <summary>
-        /// The model is Record&lt;unknown&gt; with a discriminator.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="IsUnknownAdditionalPropertiesDiscriminatedDerived"/>.
-        /// </summary>
-        /// <param name="name"> The name property. </param>
-        /// <param name="kind"> The discriminator. </param>
-        /// <param name="additionalProperties"></param>
-        /// <returns> A new <see cref="AdditionalProperties.IsUnknownAdditionalPropertiesDiscriminated"/> instance for mocking. </returns>
-        public static IsUnknownAdditionalPropertiesDiscriminated IsUnknownAdditionalPropertiesDiscriminated(string name = default, string kind = default, IDictionary<string, BinaryData> additionalProperties = default)
-        {
-            additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
-
-            return new UnknownIsUnknownAdditionalPropertiesDiscriminated(name, kind, additionalProperties);
-        }
-
-        /// <summary> The derived discriminated type. </summary>
-        /// <param name="name"> The name property. </param>
-        /// <param name="additionalProperties"></param>
-        /// <param name="index"> The index property. </param>
-        /// <param name="age"> The age property. </param>
-        /// <returns> A new <see cref="AdditionalProperties.IsUnknownAdditionalPropertiesDiscriminatedDerived"/> instance for mocking. </returns>
-        public static IsUnknownAdditionalPropertiesDiscriminatedDerived IsUnknownAdditionalPropertiesDiscriminatedDerived(string name = default, IDictionary<string, BinaryData> additionalProperties = default, int index = default, float? age = default)
-        {
-            additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
-
-            return new IsUnknownAdditionalPropertiesDiscriminatedDerived(name, "derived", additionalProperties, index, age);
-        }
-
-        /// <summary> The model extends from Record&lt;string&gt; type. </summary>
-        /// <param name="name"> The name property. </param>
-        /// <param name="additionalProperties"></param>
-        /// <returns> A new <see cref="AdditionalProperties.ExtendsStringAdditionalProperties"/> instance for mocking. </returns>
-        public static ExtendsStringAdditionalProperties ExtendsStringAdditionalProperties(string name = default, IDictionary<string, string> additionalProperties = default)
-        {
-            additionalProperties ??= new ChangeTrackingDictionary<string, string>();
-
-            return new ExtendsStringAdditionalProperties(name, additionalProperties, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The model is from Record&lt;string&gt; type. </summary>
-        /// <param name="name"> The name property. </param>
-        /// <param name="additionalProperties"></param>
-        /// <returns> A new <see cref="AdditionalProperties.IsStringAdditionalProperties"/> instance for mocking. </returns>
-        public static IsStringAdditionalProperties IsStringAdditionalProperties(string name = default, IDictionary<string, string> additionalProperties = default)
-        {
-            additionalProperties ??= new ChangeTrackingDictionary<string, string>();
-
-            return new IsStringAdditionalProperties(name, additionalProperties, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The model spread Record&lt;string&gt; with the same known property type. </summary>
-        /// <param name="name"> The name property. </param>
-        /// <param name="additionalProperties"></param>
-        /// <returns> A new <see cref="AdditionalProperties.SpreadStringRecord"/> instance for mocking. </returns>
-        public static SpreadStringRecord SpreadStringRecord(string name = default, IDictionary<string, string> additionalProperties = default)
-        {
-            additionalProperties ??= new ChangeTrackingDictionary<string, string>();
-
-            return new SpreadStringRecord(name, additionalProperties, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The model extends from Record&lt;float32&gt; type. </summary>
-        /// <param name="id"> The id property. </param>
-        /// <param name="additionalProperties"></param>
-        /// <returns> A new <see cref="AdditionalProperties.ExtendsFloatAdditionalProperties"/> instance for mocking. </returns>
-        public static ExtendsFloatAdditionalProperties ExtendsFloatAdditionalProperties(float id = default, IDictionary<string, float> additionalProperties = default)
-        {
-            additionalProperties ??= new ChangeTrackingDictionary<string, float>();
-
-            return new ExtendsFloatAdditionalProperties(id, additionalProperties, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The model is from Record&lt;float32&gt; type. </summary>
-        /// <param name="id"> The id property. </param>
-        /// <param name="additionalProperties"></param>
-        /// <returns> A new <see cref="AdditionalProperties.IsFloatAdditionalProperties"/> instance for mocking. </returns>
-        public static IsFloatAdditionalProperties IsFloatAdditionalProperties(float id = default, IDictionary<string, float> additionalProperties = default)
-        {
-            additionalProperties ??= new ChangeTrackingDictionary<string, float>();
-
-            return new IsFloatAdditionalProperties(id, additionalProperties, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The model spread Record&lt;float32&gt; with the same known property type. </summary>
-        /// <param name="id"> The id property. </param>
-        /// <param name="additionalProperties"></param>
-        /// <returns> A new <see cref="AdditionalProperties.SpreadFloatRecord"/> instance for mocking. </returns>
-        public static SpreadFloatRecord SpreadFloatRecord(float id = default, IDictionary<string, float> additionalProperties = default)
-        {
-            additionalProperties ??= new ChangeTrackingDictionary<string, float>();
-
-            return new SpreadFloatRecord(id, additionalProperties, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The model extends from Record&lt;ModelForRecord&gt; type. </summary>
-        /// <param name="knownProp"></param>
-        /// <param name="additionalProperties"></param>
-        /// <returns> A new <see cref="AdditionalProperties.ExtendsModelAdditionalProperties"/> instance for mocking. </returns>
-        public static ExtendsModelAdditionalProperties ExtendsModelAdditionalProperties(ModelForRecord knownProp = default, IDictionary<string, BinaryData> additionalProperties = default)
-        {
-            additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
-
-            return new ExtendsModelAdditionalProperties(knownProp, additionalProperties);
-        }
-
-        /// <summary> model for record. </summary>
-        /// <param name="state"> The state property. </param>
-        /// <returns> A new <see cref="AdditionalProperties.ModelForRecord"/> instance for mocking. </returns>
-        public static ModelForRecord ModelForRecord(string state = default)
-        {
-
-            return new ModelForRecord(state, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The model is from Record&lt;ModelForRecord&gt; type. </summary>
-        /// <param name="knownProp"></param>
-        /// <param name="additionalProperties"></param>
-        /// <returns> A new <see cref="AdditionalProperties.IsModelAdditionalProperties"/> instance for mocking. </returns>
-        public static IsModelAdditionalProperties IsModelAdditionalProperties(ModelForRecord knownProp = default, IDictionary<string, BinaryData> additionalProperties = default)
-        {
-            additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
-
-            return new IsModelAdditionalProperties(knownProp, additionalProperties);
-        }
-
-        /// <summary> The model spread Record&lt;ModelForRecord&gt; with the same known property type. </summary>
-        /// <param name="knownProp"></param>
-        /// <param name="additionalProperties"></param>
-        /// <returns> A new <see cref="AdditionalProperties.SpreadModelRecord"/> instance for mocking. </returns>
-        public static SpreadModelRecord SpreadModelRecord(ModelForRecord knownProp = default, IDictionary<string, BinaryData> additionalProperties = default)
-        {
-            additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
-
-            return new SpreadModelRecord(knownProp, additionalProperties);
-        }
-
-        /// <summary> The model extends from Record&lt;ModelForRecord[]&gt; type. </summary>
-        /// <param name="knownProp"></param>
-        /// <param name="additionalProperties"></param>
-        /// <returns> A new <see cref="AdditionalProperties.ExtendsModelArrayAdditionalProperties"/> instance for mocking. </returns>
-        public static ExtendsModelArrayAdditionalProperties ExtendsModelArrayAdditionalProperties(IEnumerable<ModelForRecord> knownProp = default, IDictionary<string, IList<BinaryData>> additionalProperties = default)
-        {
-            knownProp ??= new ChangeTrackingList<ModelForRecord>();
-            additionalProperties ??= new ChangeTrackingDictionary<string, IList<BinaryData>>();
-
-            return new ExtendsModelArrayAdditionalProperties(knownProp?.ToList(), additionalProperties, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The model is from Record&lt;ModelForRecord[]&gt; type. </summary>
-        /// <param name="knownProp"></param>
-        /// <param name="additionalProperties"></param>
-        /// <returns> A new <see cref="AdditionalProperties.IsModelArrayAdditionalProperties"/> instance for mocking. </returns>
-        public static IsModelArrayAdditionalProperties IsModelArrayAdditionalProperties(IEnumerable<ModelForRecord> knownProp = default, IDictionary<string, IList<BinaryData>> additionalProperties = default)
-        {
-            knownProp ??= new ChangeTrackingList<ModelForRecord>();
-            additionalProperties ??= new ChangeTrackingDictionary<string, IList<BinaryData>>();
-
-            return new IsModelArrayAdditionalProperties(knownProp?.ToList(), additionalProperties, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The SpreadModelArrayRecord. </summary>
-        /// <param name="knownProp"></param>
-        /// <param name="additionalProperties"></param>
-        /// <returns> A new <see cref="AdditionalProperties.SpreadModelArrayRecord"/> instance for mocking. </returns>
-        public static SpreadModelArrayRecord SpreadModelArrayRecord(IEnumerable<ModelForRecord> knownProp = default, IDictionary<string, IList<BinaryData>> additionalProperties = default)
-        {
-            knownProp ??= new ChangeTrackingList<ModelForRecord>();
-            additionalProperties ??= new ChangeTrackingDictionary<string, IList<BinaryData>>();
-
-            return new SpreadModelArrayRecord(knownProp?.ToList(), additionalProperties, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The model spread Record&lt;string&gt; with the different known property type. </summary>
-        /// <param name="id"> The name property. </param>
-        /// <param name="additionalProperties"></param>
-        /// <returns> A new <see cref="AdditionalProperties.DifferentSpreadStringRecord"/> instance for mocking. </returns>
-        public static DifferentSpreadStringRecord DifferentSpreadStringRecord(float id = default, IDictionary<string, string> additionalProperties = default)
-        {
-            additionalProperties ??= new ChangeTrackingDictionary<string, string>();
-
-            return new DifferentSpreadStringRecord(id, additionalProperties, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The model spread Record&lt;float32&gt; with the different known property type. </summary>
-        /// <param name="name"> The id property. </param>
-        /// <param name="additionalProperties"></param>
-        /// <returns> A new <see cref="AdditionalProperties.DifferentSpreadFloatRecord"/> instance for mocking. </returns>
-        public static DifferentSpreadFloatRecord DifferentSpreadFloatRecord(string name = default, IDictionary<string, float> additionalProperties = default)
-        {
-            additionalProperties ??= new ChangeTrackingDictionary<string, float>();
-
-            return new DifferentSpreadFloatRecord(name, additionalProperties, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The model spread Record&lt;ModelForRecord&gt; with the different known property type. </summary>
-        /// <param name="knownProp"></param>
-        /// <param name="additionalProperties"></param>
-        /// <returns> A new <see cref="AdditionalProperties.DifferentSpreadModelRecord"/> instance for mocking. </returns>
-        public static DifferentSpreadModelRecord DifferentSpreadModelRecord(string knownProp = default, IDictionary<string, BinaryData> additionalProperties = default)
-        {
-            additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
-
-            return new DifferentSpreadModelRecord(knownProp, additionalProperties);
-        }
-
-        /// <summary> The model spread Record&lt;ModelForRecord[]&gt; with the different known property type. </summary>
-        /// <param name="knownProp"></param>
-        /// <param name="additionalProperties"></param>
-        /// <returns> A new <see cref="AdditionalProperties.DifferentSpreadModelArrayRecord"/> instance for mocking. </returns>
-        public static DifferentSpreadModelArrayRecord DifferentSpreadModelArrayRecord(string knownProp = default, IDictionary<string, IList<BinaryData>> additionalProperties = default)
-        {
-            additionalProperties ??= new ChangeTrackingDictionary<string, IList<BinaryData>>();
-
-            return new DifferentSpreadModelArrayRecord(knownProp, additionalProperties, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The model extends from a model that spread Record&lt;string&gt; with the different known property type. </summary>
-        /// <param name="id"> The name property. </param>
-        /// <param name="additionalProperties"></param>
-        /// <param name="derivedProp"> The index property. </param>
-        /// <returns> A new <see cref="AdditionalProperties.DifferentSpreadStringDerived"/> instance for mocking. </returns>
-        public static DifferentSpreadStringDerived DifferentSpreadStringDerived(float id = default, IDictionary<string, string> additionalProperties = default, string derivedProp = default)
-        {
-            additionalProperties ??= new ChangeTrackingDictionary<string, string>();
-
-            return new DifferentSpreadStringDerived(id, additionalProperties, additionalBinaryDataProperties: null, derivedProp);
-        }
-
-        /// <summary> The model extends from a model that spread Record&lt;float32&gt; with the different known property type. </summary>
-        /// <param name="name"> The id property. </param>
-        /// <param name="additionalProperties"></param>
-        /// <param name="derivedProp"> The index property. </param>
-        /// <returns> A new <see cref="AdditionalProperties.DifferentSpreadFloatDerived"/> instance for mocking. </returns>
-        public static DifferentSpreadFloatDerived DifferentSpreadFloatDerived(string name = default, IDictionary<string, float> additionalProperties = default, float derivedProp = default)
-        {
-            additionalProperties ??= new ChangeTrackingDictionary<string, float>();
-
-            return new DifferentSpreadFloatDerived(name, additionalProperties, additionalBinaryDataProperties: null, derivedProp);
-        }
-
-        /// <summary> The model extends from a model that spread Record&lt;ModelForRecord&gt; with the different known property type. </summary>
-        /// <param name="knownProp"></param>
-        /// <param name="additionalProperties"></param>
-        /// <param name="derivedProp"> The index property. </param>
-        /// <returns> A new <see cref="AdditionalProperties.DifferentSpreadModelDerived"/> instance for mocking. </returns>
-        public static DifferentSpreadModelDerived DifferentSpreadModelDerived(string knownProp = default, IDictionary<string, BinaryData> additionalProperties = default, ModelForRecord derivedProp = default)
-        {
-            additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
-
-            return new DifferentSpreadModelDerived(knownProp, additionalProperties, derivedProp);
-        }
-
-        /// <summary> The model extends from a model that spread Record&lt;ModelForRecord[]&gt; with the different known property type. </summary>
-        /// <param name="knownProp"></param>
-        /// <param name="additionalProperties"></param>
-        /// <param name="derivedProp"> The index property. </param>
-        /// <returns> A new <see cref="AdditionalProperties.DifferentSpreadModelArrayDerived"/> instance for mocking. </returns>
-        public static DifferentSpreadModelArrayDerived DifferentSpreadModelArrayDerived(string knownProp = default, IDictionary<string, IList<BinaryData>> additionalProperties = default, IEnumerable<ModelForRecord> derivedProp = default)
-        {
-            additionalProperties ??= new ChangeTrackingDictionary<string, IList<BinaryData>>();
-            derivedProp ??= new ChangeTrackingList<ModelForRecord>();
-
-            return new DifferentSpreadModelArrayDerived(knownProp, additionalProperties, additionalBinaryDataProperties: null, derivedProp?.ToList());
-        }
-
-        /// <summary> The model spread Record&lt;string&gt; and Record&lt;float32&gt;. </summary>
-        /// <param name="flag"> The name property. </param>
-        /// <param name="additionalProperties"></param>
-        /// <param name="additionalSingleProperties"></param>
-        /// <returns> A new <see cref="AdditionalProperties.MultipleSpreadRecord"/> instance for mocking. </returns>
-        public static MultipleSpreadRecord MultipleSpreadRecord(bool flag = default, IDictionary<string, string> additionalProperties = default, IDictionary<string, float> additionalSingleProperties = default)
-        {
-            additionalProperties ??= new ChangeTrackingDictionary<string, string>();
-            additionalSingleProperties ??= new ChangeTrackingDictionary<string, float>();
-
-            return new MultipleSpreadRecord(flag, additionalProperties, additionalSingleProperties, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The model spread Record&lt;string | float32&gt;. </summary>
-        /// <param name="flag"> The name property. </param>
-        /// <param name="additionalProperties"></param>
-        /// <param name="additionalSingleProperties"></param>
-        /// <returns> A new <see cref="AdditionalProperties.SpreadRecordForUnion"/> instance for mocking. </returns>
-        public static SpreadRecordForUnion SpreadRecordForUnion(bool flag = default, IDictionary<string, string> additionalProperties = default, IDictionary<string, float> additionalSingleProperties = default)
-        {
-            additionalProperties ??= new ChangeTrackingDictionary<string, string>();
-            additionalSingleProperties ??= new ChangeTrackingDictionary<string, float>();
-
-            return new SpreadRecordForUnion(flag, additionalProperties, additionalSingleProperties, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The model spread Record&lt;WidgetData0 | WidgetData1&gt;. </summary>
-        /// <param name="name"> The name property. </param>
-        /// <param name="additionalProperties"></param>
-        /// <returns> A new <see cref="AdditionalProperties.SpreadRecordForNonDiscriminatedUnion"/> instance for mocking. </returns>
-        public static SpreadRecordForNonDiscriminatedUnion SpreadRecordForNonDiscriminatedUnion(string name = default, IDictionary<string, BinaryData> additionalProperties = default)
-        {
-            additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
-
-            return new SpreadRecordForNonDiscriminatedUnion(name, additionalProperties);
-        }
-
-        /// <summary> The WidgetData0. </summary>
-        /// <param name="kind"></param>
-        /// <param name="fooProp"></param>
-        /// <returns> A new <see cref="AdditionalProperties.WidgetData0"/> instance for mocking. </returns>
-        public static WidgetData0 WidgetData0(string kind = default, string fooProp = default)
-        {
-
-            return new WidgetData0(kind, fooProp, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The WidgetData1. </summary>
-        /// <param name="kind"></param>
-        /// <param name="start"></param>
-        /// <param name="end"></param>
-        /// <returns> A new <see cref="AdditionalProperties.WidgetData1"/> instance for mocking. </returns>
-        public static WidgetData1 WidgetData1(string kind = default, DateTimeOffset start = default, DateTimeOffset? end = default)
-        {
-
-            return new WidgetData1(kind, start, end, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The model spread Record&lt;WidgetData2 | WidgetData1&gt;. </summary>
-        /// <param name="name"> The name property. </param>
-        /// <param name="additionalProperties"></param>
-        /// <returns> A new <see cref="AdditionalProperties.SpreadRecordForNonDiscriminatedUnion2"/> instance for mocking. </returns>
-        public static SpreadRecordForNonDiscriminatedUnion2 SpreadRecordForNonDiscriminatedUnion2(string name = default, IDictionary<string, BinaryData> additionalProperties = default)
-        {
-            additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
-
-            return new SpreadRecordForNonDiscriminatedUnion2(name, additionalProperties);
-        }
-
-        /// <summary> The WidgetData2. </summary>
-        /// <param name="kind"></param>
-        /// <param name="start"></param>
-        /// <returns> A new <see cref="AdditionalProperties.WidgetData2"/> instance for mocking. </returns>
-        public static WidgetData2 WidgetData2(string kind = default, string start = default)
-        {
-
-            return new WidgetData2(kind, start, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The model spread Record&lt;WidgetData2[] | WidgetData1&gt;. </summary>
-        /// <param name="name"> The name property. </param>
-        /// <param name="additionalProperties"></param>
-        /// <returns> A new <see cref="AdditionalProperties.SpreadRecordForNonDiscriminatedUnion3"/> instance for mocking. </returns>
-        public static SpreadRecordForNonDiscriminatedUnion3 SpreadRecordForNonDiscriminatedUnion3(string name = default, IDictionary<string, BinaryData> additionalProperties = default)
-        {
-            additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
-
-            return new SpreadRecordForNonDiscriminatedUnion3(name, additionalProperties);
-        }
+        public static ExtendsUnknownAdditionalProperties ExtendsUnknownAdditionalProperties(string name = default, IDictionary<string, BinaryData> additionalProperties = default) => throw null;
+
+        public static ExtendsUnknownAdditionalPropertiesDerived ExtendsUnknownAdditionalPropertiesDerived(string name = default, IDictionary<string, BinaryData> additionalProperties = default, int index = default, float? age = default) => throw null;
+
+        public static ExtendsUnknownAdditionalPropertiesDiscriminated ExtendsUnknownAdditionalPropertiesDiscriminated(string name = default, string kind = default, IDictionary<string, BinaryData> additionalProperties = default) => throw null;
+
+        public static ExtendsUnknownAdditionalPropertiesDiscriminatedDerived ExtendsUnknownAdditionalPropertiesDiscriminatedDerived(string name = default, IDictionary<string, BinaryData> additionalProperties = default, int index = default, float? age = default) => throw null;
+
+        public static IsUnknownAdditionalProperties IsUnknownAdditionalProperties(string name = default, IDictionary<string, BinaryData> additionalProperties = default) => throw null;
+
+        public static IsUnknownAdditionalPropertiesDerived IsUnknownAdditionalPropertiesDerived(string name = default, IDictionary<string, BinaryData> additionalProperties = default, int index = default, float? age = default) => throw null;
+
+        public static IsUnknownAdditionalPropertiesDiscriminated IsUnknownAdditionalPropertiesDiscriminated(string name = default, string kind = default, IDictionary<string, BinaryData> additionalProperties = default) => throw null;
+
+        public static IsUnknownAdditionalPropertiesDiscriminatedDerived IsUnknownAdditionalPropertiesDiscriminatedDerived(string name = default, IDictionary<string, BinaryData> additionalProperties = default, int index = default, float? age = default) => throw null;
+
+        public static ExtendsStringAdditionalProperties ExtendsStringAdditionalProperties(string name = default, IDictionary<string, string> additionalProperties = default) => throw null;
+
+        public static IsStringAdditionalProperties IsStringAdditionalProperties(string name = default, IDictionary<string, string> additionalProperties = default) => throw null;
+
+        public static SpreadStringRecord SpreadStringRecord(string name = default, IDictionary<string, string> additionalProperties = default) => throw null;
+
+        public static ExtendsFloatAdditionalProperties ExtendsFloatAdditionalProperties(float id = default, IDictionary<string, float> additionalProperties = default) => throw null;
+
+        public static IsFloatAdditionalProperties IsFloatAdditionalProperties(float id = default, IDictionary<string, float> additionalProperties = default) => throw null;
+
+        public static SpreadFloatRecord SpreadFloatRecord(float id = default, IDictionary<string, float> additionalProperties = default) => throw null;
+
+        public static ExtendsModelAdditionalProperties ExtendsModelAdditionalProperties(ModelForRecord knownProp = default, IDictionary<string, BinaryData> additionalProperties = default) => throw null;
+
+        public static ModelForRecord ModelForRecord(string state = default) => throw null;
+
+        public static IsModelAdditionalProperties IsModelAdditionalProperties(ModelForRecord knownProp = default, IDictionary<string, BinaryData> additionalProperties = default) => throw null;
+
+        public static SpreadModelRecord SpreadModelRecord(ModelForRecord knownProp = default, IDictionary<string, BinaryData> additionalProperties = default) => throw null;
+
+        public static ExtendsModelArrayAdditionalProperties ExtendsModelArrayAdditionalProperties(IEnumerable<ModelForRecord> knownProp = default, IDictionary<string, IList<BinaryData>> additionalProperties = default) => throw null;
+
+        public static IsModelArrayAdditionalProperties IsModelArrayAdditionalProperties(IEnumerable<ModelForRecord> knownProp = default, IDictionary<string, IList<BinaryData>> additionalProperties = default) => throw null;
+
+        public static SpreadModelArrayRecord SpreadModelArrayRecord(IEnumerable<ModelForRecord> knownProp = default, IDictionary<string, IList<BinaryData>> additionalProperties = default) => throw null;
+
+        public static DifferentSpreadStringRecord DifferentSpreadStringRecord(float id = default, IDictionary<string, string> additionalProperties = default) => throw null;
+
+        public static DifferentSpreadFloatRecord DifferentSpreadFloatRecord(string name = default, IDictionary<string, float> additionalProperties = default) => throw null;
+
+        public static DifferentSpreadModelRecord DifferentSpreadModelRecord(string knownProp = default, IDictionary<string, BinaryData> additionalProperties = default) => throw null;
+
+        public static DifferentSpreadModelArrayRecord DifferentSpreadModelArrayRecord(string knownProp = default, IDictionary<string, IList<BinaryData>> additionalProperties = default) => throw null;
+
+        public static DifferentSpreadStringDerived DifferentSpreadStringDerived(float id = default, IDictionary<string, string> additionalProperties = default, string derivedProp = default) => throw null;
+
+        public static DifferentSpreadFloatDerived DifferentSpreadFloatDerived(string name = default, IDictionary<string, float> additionalProperties = default, float derivedProp = default) => throw null;
+
+        public static DifferentSpreadModelDerived DifferentSpreadModelDerived(string knownProp = default, IDictionary<string, BinaryData> additionalProperties = default, ModelForRecord derivedProp = default) => throw null;
+
+        public static DifferentSpreadModelArrayDerived DifferentSpreadModelArrayDerived(string knownProp = default, IDictionary<string, IList<BinaryData>> additionalProperties = default, IEnumerable<ModelForRecord> derivedProp = default) => throw null;
+
+        public static MultipleSpreadRecord MultipleSpreadRecord(bool flag = default, IDictionary<string, string> additionalProperties = default, IDictionary<string, float> additionalSingleProperties = default) => throw null;
+
+        public static SpreadRecordForUnion SpreadRecordForUnion(bool flag = default, IDictionary<string, string> additionalProperties = default, IDictionary<string, float> additionalSingleProperties = default) => throw null;
+
+        public static SpreadRecordForNonDiscriminatedUnion SpreadRecordForNonDiscriminatedUnion(string name = default, IDictionary<string, BinaryData> additionalProperties = default) => throw null;
+
+        public static WidgetData0 WidgetData0(string kind = default, string fooProp = default) => throw null;
+
+        public static WidgetData1 WidgetData1(string kind = default, DateTimeOffset start = default, DateTimeOffset? end = default) => throw null;
+
+        public static SpreadRecordForNonDiscriminatedUnion2 SpreadRecordForNonDiscriminatedUnion2(string name = default, IDictionary<string, BinaryData> additionalProperties = default) => throw null;
+
+        public static WidgetData2 WidgetData2(string kind = default, string start = default) => throw null;
+
+        public static SpreadRecordForNonDiscriminatedUnion3 SpreadRecordForNonDiscriminatedUnion3(string name = default, IDictionary<string, BinaryData> additionalProperties = default) => throw null;
     }
 }

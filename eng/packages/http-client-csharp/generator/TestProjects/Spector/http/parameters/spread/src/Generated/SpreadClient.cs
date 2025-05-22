@@ -6,54 +6,20 @@
 #nullable disable
 
 using System;
-using System.Threading;
 using Azure.Core.Pipeline;
 
 namespace Parameters.Spread
 {
-    /// <summary> Test for the spread operator. </summary>
     public partial class SpreadClient
     {
-        private readonly Uri _endpoint;
-        private Model _cachedModel;
-        private Alias _cachedAlias;
+        public SpreadClient() : this(new Uri("http://localhost:3000"), new SpreadClientOptions()) => throw null;
 
-        /// <summary> Initializes a new instance of SpreadClient. </summary>
-        public SpreadClient() : this(new Uri("http://localhost:3000"), new SpreadClientOptions())
-        {
-        }
+        public SpreadClient(Uri endpoint, SpreadClientOptions options) => throw null;
 
-        /// <summary> Initializes a new instance of SpreadClient. </summary>
-        /// <param name="endpoint"> Service endpoint. </param>
-        /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
-        public SpreadClient(Uri endpoint, SpreadClientOptions options)
-        {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
+        public virtual HttpPipeline Pipeline => throw null;
 
-            options ??= new SpreadClientOptions();
+        public virtual Model GetModelClient() => throw null;
 
-            _endpoint = endpoint;
-            Pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>());
-            ClientDiagnostics = new ClientDiagnostics(options, true);
-        }
-
-        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
-        public virtual HttpPipeline Pipeline { get; }
-
-        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
-        internal ClientDiagnostics ClientDiagnostics { get; }
-
-        /// <summary> Initializes a new instance of Model. </summary>
-        public virtual Model GetModelClient()
-        {
-            return Volatile.Read(ref _cachedModel) ?? Interlocked.CompareExchange(ref _cachedModel, new Model(ClientDiagnostics, Pipeline, _endpoint), null) ?? _cachedModel;
-        }
-
-        /// <summary> Initializes a new instance of Alias. </summary>
-        public virtual Alias GetAliasClient()
-        {
-            return Volatile.Read(ref _cachedAlias) ?? Interlocked.CompareExchange(ref _cachedAlias, new Alias(ClientDiagnostics, Pipeline, _endpoint), null) ?? _cachedAlias;
-        }
+        public virtual Alias GetAliasClient() => throw null;
     }
 }

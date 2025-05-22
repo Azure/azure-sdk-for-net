@@ -5,32 +5,12 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
-
 namespace _Specs_.Azure.ClientGenerator.Core.Usage._ModelInOperation
 {
-    /// <summary> The RoundTripModel. </summary>
     public partial class RoundTripModel
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        public RoundTripModel() => throw null;
 
-        /// <summary> Initializes a new instance of <see cref="RoundTripModel"/>. </summary>
-        public RoundTripModel()
-        {
-        }
-
-        /// <summary> Initializes a new instance of <see cref="RoundTripModel"/>. </summary>
-        /// <param name="result"></param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RoundTripModel(ResultModel result, IDictionary<string, BinaryData> additionalBinaryDataProperties)
-        {
-            Result = result;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
-        }
-
-        /// <summary> Gets the Result. </summary>
-        public ResultModel Result { get; }
+        public ResultModel Result => throw null;
     }
 }

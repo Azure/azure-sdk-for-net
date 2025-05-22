@@ -5,32 +5,16 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
-
 namespace _Type.Property.Optional
 {
-    /// <summary> Model with union of int literal property. </summary>
     public partial class UnionIntLiteralProperty
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        public UnionIntLiteralProperty() => throw null;
 
-        /// <summary> Initializes a new instance of <see cref="UnionIntLiteralProperty"/>. </summary>
-        public UnionIntLiteralProperty()
+        public UnionIntLiteralPropertyProperty? Property
         {
+            get => throw null;
+            set => throw null;
         }
-
-        /// <summary> Initializes a new instance of <see cref="UnionIntLiteralProperty"/>. </summary>
-        /// <param name="property"> Property. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnionIntLiteralProperty(UnionIntLiteralPropertyProperty? @property, IDictionary<string, BinaryData> additionalBinaryDataProperties)
-        {
-            Property = @property;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
-        }
-
-        /// <summary> Property. </summary>
-        public UnionIntLiteralPropertyProperty? Property { get; set; }
     }
 }

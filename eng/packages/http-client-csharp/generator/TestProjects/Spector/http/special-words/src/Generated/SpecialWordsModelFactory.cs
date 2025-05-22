@@ -10,313 +10,74 @@ using SpecialWords._Models;
 
 namespace SpecialWords
 {
-    /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class SpecialWordsModelFactory
     {
-        /// <summary> The And. </summary>
-        /// <param name="name"></param>
-        /// <returns> A new <see cref="_Models.And"/> instance for mocking. </returns>
-        public static And And(string name = default)
-        {
-
-            return new And(name, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The As. </summary>
-        /// <param name="name"></param>
-        /// <returns> A new <see cref="_Models.As"/> instance for mocking. </returns>
-        public static As As(string name = default)
-        {
-
-            return new As(name, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The Assert. </summary>
-        /// <param name="name"></param>
-        /// <returns> A new <see cref="_Models.Assert"/> instance for mocking. </returns>
-        public static Assert Assert(string name = default)
-        {
-
-            return new Assert(name, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The Async. </summary>
-        /// <param name="name"></param>
-        /// <returns> A new <see cref="_Models.Async"/> instance for mocking. </returns>
-        public static Async Async(string name = default)
-        {
-
-            return new Async(name, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The Await. </summary>
-        /// <param name="name"></param>
-        /// <returns> A new <see cref="_Models.Await"/> instance for mocking. </returns>
-        public static Await Await(string name = default)
-        {
-
-            return new Await(name, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The Break. </summary>
-        /// <param name="name"></param>
-        /// <returns> A new <see cref="_Models.Break"/> instance for mocking. </returns>
-        public static Break Break(string name = default)
-        {
-
-            return new Break(name, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The Class. </summary>
-        /// <param name="name"></param>
-        /// <returns> A new <see cref="_Models.Class"/> instance for mocking. </returns>
-        public static Class Class(string name = default)
-        {
-
-            return new Class(name, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The Constructor. </summary>
-        /// <param name="name"></param>
-        /// <returns> A new <see cref="_Models.Constructor"/> instance for mocking. </returns>
-        public static Constructor Constructor(string name = default)
-        {
-
-            return new Constructor(name, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The Continue. </summary>
-        /// <param name="name"></param>
-        /// <returns> A new <see cref="_Models.Continue"/> instance for mocking. </returns>
-        public static Continue Continue(string name = default)
-        {
-
-            return new Continue(name, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The Def. </summary>
-        /// <param name="name"></param>
-        /// <returns> A new <see cref="_Models.Def"/> instance for mocking. </returns>
-        public static Def Def(string name = default)
-        {
-
-            return new Def(name, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The Del. </summary>
-        /// <param name="name"></param>
-        /// <returns> A new <see cref="_Models.Del"/> instance for mocking. </returns>
-        public static Del Del(string name = default)
-        {
-
-            return new Del(name, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The Elif. </summary>
-        /// <param name="name"></param>
-        /// <returns> A new <see cref="_Models.Elif"/> instance for mocking. </returns>
-        public static Elif Elif(string name = default)
-        {
-
-            return new Elif(name, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The Else. </summary>
-        /// <param name="name"></param>
-        /// <returns> A new <see cref="_Models.Else"/> instance for mocking. </returns>
-        public static Else Else(string name = default)
-        {
-
-            return new Else(name, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The Except. </summary>
-        /// <param name="name"></param>
-        /// <returns> A new <see cref="_Models.Except"/> instance for mocking. </returns>
-        public static Except Except(string name = default)
-        {
-
-            return new Except(name, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The Exec. </summary>
-        /// <param name="name"></param>
-        /// <returns> A new <see cref="_Models.Exec"/> instance for mocking. </returns>
-        public static Exec Exec(string name = default)
-        {
-
-            return new Exec(name, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The Finally. </summary>
-        /// <param name="name"></param>
-        /// <returns> A new <see cref="_Models.Finally"/> instance for mocking. </returns>
-        public static Finally Finally(string name = default)
-        {
-
-            return new Finally(name, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The For. </summary>
-        /// <param name="name"></param>
-        /// <returns> A new <see cref="_Models.For"/> instance for mocking. </returns>
-        public static For For(string name = default)
-        {
-
-            return new For(name, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The From. </summary>
-        /// <param name="name"></param>
-        /// <returns> A new <see cref="_Models.From"/> instance for mocking. </returns>
-        public static From From(string name = default)
-        {
-
-            return new From(name, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The Global. </summary>
-        /// <param name="name"></param>
-        /// <returns> A new <see cref="_Models.Global"/> instance for mocking. </returns>
-        public static Global Global(string name = default)
-        {
-
-            return new Global(name, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The If. </summary>
-        /// <param name="name"></param>
-        /// <returns> A new <see cref="_Models.If"/> instance for mocking. </returns>
-        public static If If(string name = default)
-        {
-
-            return new If(name, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The Import. </summary>
-        /// <param name="name"></param>
-        /// <returns> A new <see cref="_Models.Import"/> instance for mocking. </returns>
-        public static Import Import(string name = default)
-        {
-
-            return new Import(name, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The In. </summary>
-        /// <param name="name"></param>
-        /// <returns> A new <see cref="_Models.In"/> instance for mocking. </returns>
-        public static In In(string name = default)
-        {
-
-            return new In(name, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The Is. </summary>
-        /// <param name="name"></param>
-        /// <returns> A new <see cref="_Models.Is"/> instance for mocking. </returns>
-        public static Is Is(string name = default)
-        {
-
-            return new Is(name, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The Lambda. </summary>
-        /// <param name="name"></param>
-        /// <returns> A new <see cref="_Models.Lambda"/> instance for mocking. </returns>
-        public static Lambda Lambda(string name = default)
-        {
-
-            return new Lambda(name, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The Not. </summary>
-        /// <param name="name"></param>
-        /// <returns> A new <see cref="_Models.Not"/> instance for mocking. </returns>
-        public static Not Not(string name = default)
-        {
-
-            return new Not(name, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The Or. </summary>
-        /// <param name="name"></param>
-        /// <returns> A new <see cref="_Models.Or"/> instance for mocking. </returns>
-        public static Or Or(string name = default)
-        {
-
-            return new Or(name, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The Pass. </summary>
-        /// <param name="name"></param>
-        /// <returns> A new <see cref="_Models.Pass"/> instance for mocking. </returns>
-        public static Pass Pass(string name = default)
-        {
-
-            return new Pass(name, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The Raise. </summary>
-        /// <param name="name"></param>
-        /// <returns> A new <see cref="_Models.Raise"/> instance for mocking. </returns>
-        public static Raise Raise(string name = default)
-        {
-
-            return new Raise(name, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The Return. </summary>
-        /// <param name="name"></param>
-        /// <returns> A new <see cref="_Models.Return"/> instance for mocking. </returns>
-        public static Return Return(string name = default)
-        {
-
-            return new Return(name, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The Try. </summary>
-        /// <param name="name"></param>
-        /// <returns> A new <see cref="_Models.Try"/> instance for mocking. </returns>
-        public static Try Try(string name = default)
-        {
-
-            return new Try(name, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The While. </summary>
-        /// <param name="name"></param>
-        /// <returns> A new <see cref="_Models.While"/> instance for mocking. </returns>
-        public static While While(string name = default)
-        {
-
-            return new While(name, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The With. </summary>
-        /// <param name="name"></param>
-        /// <returns> A new <see cref="_Models.With"/> instance for mocking. </returns>
-        public static With With(string name = default)
-        {
-
-            return new With(name, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The Yield. </summary>
-        /// <param name="name"></param>
-        /// <returns> A new <see cref="_Models.Yield"/> instance for mocking. </returns>
-        public static Yield Yield(string name = default)
-        {
-
-            return new Yield(name, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The SameAsModel. </summary>
-        /// <param name="sameAsModelProperty"></param>
-        /// <returns> A new <see cref="_ModelProperties.SameAsModel"/> instance for mocking. </returns>
-        public static SameAsModel SameAsModel(string sameAsModelProperty = default)
-        {
-
-            return new SameAsModel(sameAsModelProperty, additionalBinaryDataProperties: null);
-        }
+        public static And And(string name = default) => throw null;
+
+        public static As As(string name = default) => throw null;
+
+        public static Assert Assert(string name = default) => throw null;
+
+        public static Async Async(string name = default) => throw null;
+
+        public static Await Await(string name = default) => throw null;
+
+        public static Break Break(string name = default) => throw null;
+
+        public static Class Class(string name = default) => throw null;
+
+        public static Constructor Constructor(string name = default) => throw null;
+
+        public static Continue Continue(string name = default) => throw null;
+
+        public static Def Def(string name = default) => throw null;
+
+        public static Del Del(string name = default) => throw null;
+
+        public static Elif Elif(string name = default) => throw null;
+
+        public static Else Else(string name = default) => throw null;
+
+        public static Except Except(string name = default) => throw null;
+
+        public static Exec Exec(string name = default) => throw null;
+
+        public static Finally Finally(string name = default) => throw null;
+
+        public static For For(string name = default) => throw null;
+
+        public static From From(string name = default) => throw null;
+
+        public static Global Global(string name = default) => throw null;
+
+        public static If If(string name = default) => throw null;
+
+        public static Import Import(string name = default) => throw null;
+
+        public static In In(string name = default) => throw null;
+
+        public static Is Is(string name = default) => throw null;
+
+        public static Lambda Lambda(string name = default) => throw null;
+
+        public static Not Not(string name = default) => throw null;
+
+        public static Or Or(string name = default) => throw null;
+
+        public static Pass Pass(string name = default) => throw null;
+
+        public static Raise Raise(string name = default) => throw null;
+
+        public static Return Return(string name = default) => throw null;
+
+        public static Try Try(string name = default) => throw null;
+
+        public static While While(string name = default) => throw null;
+
+        public static With With(string name = default) => throw null;
+
+        public static Yield Yield(string name = default) => throw null;
+
+        public static SameAsModel SameAsModel(string sameAsModelProperty = default) => throw null;
     }
 }

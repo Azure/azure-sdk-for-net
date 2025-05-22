@@ -6,62 +6,17 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
-using System.Text.Json;
 
 namespace _Type.Property.ValueTypes
 {
-    /// <summary> Model with a property unknown, and the data is a int32. </summary>
     public partial class UnknownIntProperty
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        public UnknownIntProperty(BinaryData @property) => throw null;
 
-        /// <summary> Initializes a new instance of <see cref="UnknownIntProperty"/>. </summary>
-        /// <param name="property"> Property. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="property"/> is null. </exception>
-        public UnknownIntProperty(BinaryData @property)
+        public BinaryData Property
         {
-            Argument.AssertNotNull(@property, nameof(@property));
-
-            Property = @property;
+            get => throw null;
+            set => throw null;
         }
-
-        /// <summary> Initializes a new instance of <see cref="UnknownIntProperty"/>. </summary>
-        /// <param name="property"> Property. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownIntProperty(BinaryData @property, IDictionary<string, BinaryData> additionalBinaryDataProperties)
-        {
-            Property = @property;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
-        }
-
-        /// <summary>
-        /// Property
-        /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
-        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term> BinaryData.FromObjectAsJson("foo"). </term>
-        /// <description> Creates a payload of "foo". </description>
-        /// </item>
-        /// <item>
-        /// <term> BinaryData.FromString("\"foo\""). </term>
-        /// <description> Creates a payload of "foo". </description>
-        /// </item>
-        /// <item>
-        /// <term> BinaryData.FromObjectAsJson(new { key = "value" }). </term>
-        /// <description> Creates a payload of { "key": "value" }. </description>
-        /// </item>
-        /// <item>
-        /// <term> BinaryData.FromString("{\"key\": \"value\"}"). </term>
-        /// <description> Creates a payload of { "key": "value" }. </description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData Property { get; set; }
     }
 }

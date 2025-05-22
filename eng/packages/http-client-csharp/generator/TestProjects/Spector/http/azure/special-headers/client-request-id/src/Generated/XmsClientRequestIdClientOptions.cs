@@ -9,7 +9,6 @@ using Azure.Core;
 
 namespace Azure.SpecialHeaders.XmsClientRequestId
 {
-    /// <summary> Client options for <see cref="XmsClientRequestIdClient"/>. </summary>
     public partial class XmsClientRequestIdClientOptions : ClientOptions
     {
     }

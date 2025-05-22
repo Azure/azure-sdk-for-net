@@ -9,7 +9,6 @@ using Azure.Core;
 
 namespace Routes
 {
-    /// <summary> Client options for <see cref="RoutesClient"/>. </summary>
     public partial class RoutesClientOptions : ClientOptions
     {
     }

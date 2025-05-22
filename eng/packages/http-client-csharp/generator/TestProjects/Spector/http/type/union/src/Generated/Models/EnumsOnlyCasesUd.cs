@@ -7,7 +7,6 @@
 
 namespace _Type.Union
 {
-    /// <summary></summary>
     public enum EnumsOnlyCasesUd
     {
         /// <summary> Up. </summary>

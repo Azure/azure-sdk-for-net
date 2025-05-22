@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace _Type.Property.AdditionalProperties
 {
-    /// <summary> The model is from Record&lt;ModelForRecord[]&gt; type. </summary>
     public partial class IsModelArrayAdditionalProperties
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-        private IDictionary<string, IList<BinaryData>> _additionalIListBinaryDataProperties;
+        public IsModelArrayAdditionalProperties(IEnumerable<ModelForRecord> knownProp) => throw null;
 
-        /// <summary> Initializes a new instance of <see cref="IsModelArrayAdditionalProperties"/>. </summary>
-        /// <param name="knownProp"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="knownProp"/> is null. </exception>
-        public IsModelArrayAdditionalProperties(IEnumerable<ModelForRecord> knownProp)
-        {
-            Argument.AssertNotNull(knownProp, nameof(knownProp));
+        public IList<ModelForRecord> KnownProp => throw null;
 
-            KnownProp = knownProp.ToList();
-            _additionalIListBinaryDataProperties = new ChangeTrackingDictionary<string, IList<BinaryData>>();
-        }
-
-        /// <summary> Initializes a new instance of <see cref="IsModelArrayAdditionalProperties"/>. </summary>
-        /// <param name="knownProp"></param>
-        /// <param name="additionalProperties"></param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal IsModelArrayAdditionalProperties(IList<ModelForRecord> knownProp, IDictionary<string, IList<BinaryData>> additionalProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
-        {
-            KnownProp = knownProp;
-            _additionalIListBinaryDataProperties = additionalProperties;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
-        }
-
-        /// <summary> Gets the KnownProp. </summary>
-        public IList<ModelForRecord> KnownProp { get; }
-
-        /// <summary> Gets the AdditionalProperties. </summary>
-        public IDictionary<string, IList<BinaryData>> AdditionalProperties => _additionalIListBinaryDataProperties;
+        public IDictionary<string, IList<BinaryData>> AdditionalProperties => throw null;
     }
 }

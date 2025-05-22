@@ -7,157 +7,37 @@
 
 using System;
 using System.ClientModel.Primitives;
-using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
 
 namespace _Type.Property.AdditionalProperties
 {
-    /// <summary></summary>
     public partial class DifferentSpreadStringDerived : IJsonModel<DifferentSpreadStringDerived>
     {
-        /// <summary> Initializes a new instance of <see cref="DifferentSpreadStringDerived"/> for deserialization. </summary>
-        internal DifferentSpreadStringDerived()
-        {
-        }
+        internal DifferentSpreadStringDerived() => throw null;
 
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<DifferentSpreadStringDerived>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-        {
-            writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
-            writer.WriteEndObject();
-        }
+        void IJsonModel<DifferentSpreadStringDerived>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<DifferentSpreadStringDerived>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
-            {
-                throw new FormatException($"The model {nameof(DifferentSpreadStringDerived)} does not support writing '{format}' format.");
-            }
-            base.JsonModelWriteCore(writer, options);
-            writer.WritePropertyName("derivedProp"u8);
-            writer.WriteStringValue(DerivedProp);
-        }
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        DifferentSpreadStringDerived IJsonModel<DifferentSpreadStringDerived>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (DifferentSpreadStringDerived)JsonModelCreateCore(ref reader, options);
+        DifferentSpreadStringDerived IJsonModel<DifferentSpreadStringDerived>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override DifferentSpreadStringRecord JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<DifferentSpreadStringDerived>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
-            {
-                throw new FormatException($"The model {nameof(DifferentSpreadStringDerived)} does not support reading '{format}' format.");
-            }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDifferentSpreadStringDerived(document.RootElement, options);
-        }
+        protected override DifferentSpreadStringRecord JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static DifferentSpreadStringDerived DeserializeDifferentSpreadStringDerived(JsonElement element, ModelReaderWriterOptions options)
-        {
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            float id = default;
-            IDictionary<string, string> additionalProperties = new ChangeTrackingDictionary<string, string>();
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            string derivedProp = default;
-            foreach (var prop in element.EnumerateObject())
-            {
-                if (prop.NameEquals("id"u8))
-                {
-                    id = prop.Value.GetSingle();
-                    continue;
-                }
-                if (prop.NameEquals("derivedProp"u8))
-                {
-                    derivedProp = prop.Value.GetString();
-                    continue;
-                }
-                switch (prop.Value.ValueKind)
-                {
-                    case JsonValueKind.String:
-                        additionalProperties.Add(prop.Name, prop.Value.GetString());
-                        continue;
-                }
-                if (options.Format != "W")
-                {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
-                }
-            }
-            return new DifferentSpreadStringDerived(id, additionalProperties, additionalBinaryDataProperties, derivedProp);
-        }
+        BinaryData IPersistableModel<DifferentSpreadStringDerived>.Write(ModelReaderWriterOptions options) => throw null;
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DifferentSpreadStringDerived>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<DifferentSpreadStringDerived>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, _TypePropertyAdditionalPropertiesContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(DifferentSpreadStringDerived)} does not support writing '{options.Format}' format.");
-            }
-        }
+        DifferentSpreadStringDerived IPersistableModel<DifferentSpreadStringDerived>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        DifferentSpreadStringDerived IPersistableModel<DifferentSpreadStringDerived>.Create(BinaryData data, ModelReaderWriterOptions options) => (DifferentSpreadStringDerived)PersistableModelCreateCore(data, options);
+        protected override DifferentSpreadStringRecord PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override DifferentSpreadStringRecord PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<DifferentSpreadStringDerived>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
-                    {
-                        return DeserializeDifferentSpreadStringDerived(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(DifferentSpreadStringDerived)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DifferentSpreadStringDerived>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<DifferentSpreadStringDerived>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
         /// <param name="differentSpreadStringDerived"> The <see cref="DifferentSpreadStringDerived"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(DifferentSpreadStringDerived differentSpreadStringDerived)
-        {
-            if (differentSpreadStringDerived == null)
-            {
-                return null;
-            }
-            Utf8JsonBinaryContent content = new Utf8JsonBinaryContent();
-            content.JsonWriter.WriteObjectValue(differentSpreadStringDerived, ModelSerializationExtensions.WireOptions);
-            return content;
-        }
+        public static implicit operator RequestContent(DifferentSpreadStringDerived differentSpreadStringDerived) => throw null;
 
-        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="DifferentSpreadStringDerived"/> from. </param>
-        public static explicit operator DifferentSpreadStringDerived(Response result)
-        {
-            using Response response = result;
-            using JsonDocument document = JsonDocument.Parse(response.Content);
-            return DeserializeDifferentSpreadStringDerived(document.RootElement, ModelSerializationExtensions.WireOptions);
-        }
+        public static explicit operator DifferentSpreadStringDerived(Response result) => throw null;
     }
 }

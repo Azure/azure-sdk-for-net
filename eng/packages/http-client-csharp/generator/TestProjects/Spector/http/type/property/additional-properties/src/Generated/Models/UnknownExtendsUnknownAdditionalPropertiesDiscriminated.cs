@@ -12,12 +12,6 @@ namespace _Type.Property.AdditionalProperties
 {
     internal partial class UnknownExtendsUnknownAdditionalPropertiesDiscriminated : ExtendsUnknownAdditionalPropertiesDiscriminated
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownExtendsUnknownAdditionalPropertiesDiscriminated"/>. </summary>
-        /// <param name="name"> The name property. </param>
-        /// <param name="kind"> The discriminator. </param>
-        /// <param name="additionalProperties"></param>
-        internal UnknownExtendsUnknownAdditionalPropertiesDiscriminated(string name, string kind, IDictionary<string, BinaryData> additionalProperties) : base(name, kind ?? "unknown", additionalProperties)
-        {
-        }
+        internal UnknownExtendsUnknownAdditionalPropertiesDiscriminated(string name, string kind, IDictionary<string, BinaryData> additionalProperties) : base(name, kind ?? "unknown", additionalProperties) => throw null;
     }
 }

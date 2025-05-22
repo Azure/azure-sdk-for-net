@@ -6,46 +6,17 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 
 namespace _Type.Property.Optional
 {
-    /// <summary> Template type for testing models with optional property. Pass in the type of the property you are looking for. </summary>
     public partial class BytesProperty
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        public BytesProperty() => throw null;
 
-        /// <summary> Initializes a new instance of <see cref="BytesProperty"/>. </summary>
-        public BytesProperty()
+        public BinaryData Property
         {
+            get => throw null;
+            set => throw null;
         }
-
-        /// <summary> Initializes a new instance of <see cref="BytesProperty"/>. </summary>
-        /// <param name="property"> Property. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BytesProperty(BinaryData @property, IDictionary<string, BinaryData> additionalBinaryDataProperties)
-        {
-            Property = @property;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
-        }
-
-        /// <summary>
-        /// Property
-        /// <para>
-        /// To assign a byte[] to this property use <see cref="BinaryData.FromBytes(byte[])"/>.
-        /// The byte[] will be serialized to a Base64 encoded string.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term> BinaryData.FromBytes(new byte[] { 1, 2, 3 }). </term>
-        /// <description> Creates a payload of "AQID". </description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData Property { get; set; }
     }
 }

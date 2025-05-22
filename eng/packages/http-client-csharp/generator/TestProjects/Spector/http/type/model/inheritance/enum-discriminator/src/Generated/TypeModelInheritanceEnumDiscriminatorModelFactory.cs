@@ -7,51 +7,14 @@
 
 namespace _Type.Model.Inheritance.EnumDiscriminator
 {
-    /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class TypeModelInheritanceEnumDiscriminatorModelFactory
     {
-        /// <summary>
-        /// Test extensible enum type for discriminator
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Golden"/>.
-        /// </summary>
-        /// <param name="kind"> discriminator property. </param>
-        /// <param name="weight"> Weight of the dog. </param>
-        /// <returns> A new <see cref="EnumDiscriminator.Dog"/> instance for mocking. </returns>
-        public static Dog Dog(string kind = default, int weight = default)
-        {
+        public static Dog Dog(string kind = default, int weight = default) => throw null;
 
-            return new UnknownDog(new DogKind(kind), weight, additionalBinaryDataProperties: null);
-        }
+        public static Golden Golden(int weight = default) => throw null;
 
-        /// <summary> Golden dog model. </summary>
-        /// <param name="weight"> Weight of the dog. </param>
-        /// <returns> A new <see cref="EnumDiscriminator.Golden"/> instance for mocking. </returns>
-        public static Golden Golden(int weight = default)
-        {
+        public static Snake Snake(string kind = default, int length = default) => throw null;
 
-            return new Golden(DogKind.Golden, weight, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary>
-        /// Test fixed enum type for discriminator
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Cobra"/>.
-        /// </summary>
-        /// <param name="kind"> discriminator property. </param>
-        /// <param name="length"> Length of the snake. </param>
-        /// <returns> A new <see cref="EnumDiscriminator.Snake"/> instance for mocking. </returns>
-        public static Snake Snake(string kind = default, int length = default)
-        {
-
-            return new UnknownSnake(kind.ToSnakeKind(), length, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Cobra model. </summary>
-        /// <param name="length"> Length of the snake. </param>
-        /// <returns> A new <see cref="EnumDiscriminator.Cobra"/> instance for mocking. </returns>
-        public static Cobra Cobra(int length = default)
-        {
-
-            return new Cobra(SnakeKind.Cobra, length, additionalBinaryDataProperties: null);
-        }
+        public static Cobra Cobra(int length = default) => throw null;
     }
 }

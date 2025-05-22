@@ -5,34 +5,16 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
-
 namespace Serialization.EncodedName.Json._Property
 {
-    /// <summary> The JsonEncodedNameModel. </summary>
     public partial class JsonEncodedNameModel
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        public JsonEncodedNameModel(bool defaultName) => throw null;
 
-        /// <summary> Initializes a new instance of <see cref="JsonEncodedNameModel"/>. </summary>
-        /// <param name="defaultName"> Pass in true. </param>
-        public JsonEncodedNameModel(bool defaultName)
+        public bool DefaultName
         {
-            DefaultName = defaultName;
+            get => throw null;
+            set => throw null;
         }
-
-        /// <summary> Initializes a new instance of <see cref="JsonEncodedNameModel"/>. </summary>
-        /// <param name="defaultName"> Pass in true. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal JsonEncodedNameModel(bool defaultName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
-        {
-            DefaultName = defaultName;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
-        }
-
-        /// <summary> Pass in true. </summary>
-        public bool DefaultName { get; set; }
     }
 }

@@ -6,31 +6,15 @@
 #nullable disable
 
 using System.Collections.Generic;
-using System.Linq;
 using Azure;
 using Azure.Core;
 
 namespace _Specs_.Azure.Core.Lro.Rpc
 {
-    /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class _Specs_AzureCoreLroRpcModelFactory
     {
-        /// <summary> Options for the generation. </summary>
-        /// <param name="prompt"> Prompt. </param>
-        /// <returns> A new <see cref="Rpc.GenerationOptions"/> instance for mocking. </returns>
-        public static GenerationOptions GenerationOptions(string prompt = default)
-        {
+        public static GenerationOptions GenerationOptions(string prompt = default) => throw null;
 
-            return new GenerationOptions(prompt, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Result of the generation. </summary>
-        /// <param name="data"> The data. </param>
-        /// <returns> A new <see cref="Rpc.GenerationResult"/> instance for mocking. </returns>
-        public static GenerationResult GenerationResult(string data = default)
-        {
-
-            return new GenerationResult(data, additionalBinaryDataProperties: null);
-        }
+        public static GenerationResult GenerationResult(string data = default) => throw null;
     }
 }

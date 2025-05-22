@@ -10,57 +10,30 @@ using System.ComponentModel;
 
 namespace _Type.Property.ValueTypes
 {
-    /// <summary> Enum that will be used as a property for model EnumProperty. Extensible. </summary>
     public readonly partial struct InnerEnum : IEquatable<InnerEnum>
     {
-        private readonly string _value;
-        /// <summary> First value. </summary>
-        private const string ValueOneValue = "ValueOne";
-        /// <summary> Second value. </summary>
-        private const string ValueTwoValue = "ValueTwo";
+        public InnerEnum(string value) => throw null;
 
-        /// <summary> Initializes a new instance of <see cref="InnerEnum"/>. </summary>
-        /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public InnerEnum(string value)
-        {
-            Argument.AssertNotNull(value, nameof(value));
+        public static InnerEnum ValueOne => throw null;
 
-            _value = value;
-        }
+        public static InnerEnum ValueTwo => throw null;
 
-        /// <summary> First value. </summary>
-        public static InnerEnum ValueOne { get; } = new InnerEnum(ValueOneValue);
+        public static bool operator ==(InnerEnum left, InnerEnum right) => throw null;
 
-        /// <summary> Second value. </summary>
-        public static InnerEnum ValueTwo { get; } = new InnerEnum(ValueTwoValue);
-
-        /// <summary> Determines if two <see cref="InnerEnum"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(InnerEnum left, InnerEnum right) => left.Equals(right);
-
-        /// <summary> Determines if two <see cref="InnerEnum"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(InnerEnum left, InnerEnum right) => !left.Equals(right);
+        public static bool operator !=(InnerEnum left, InnerEnum right) => throw null;
 
         /// <summary> Converts a string to a <see cref="InnerEnum"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator InnerEnum(string value) => new InnerEnum(value);
+        public static implicit operator InnerEnum(string value) => throw null;
 
-        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is InnerEnum other && Equals(other);
+        public override bool Equals(object obj) => throw null;
 
-        /// <inheritdoc/>
-        public bool Equals(InnerEnum other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(InnerEnum other) => throw null;
 
-        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        public override int GetHashCode() => throw null;
 
-        /// <inheritdoc/>
-        public override string ToString() => _value;
+        public override string ToString() => throw null;
     }
 }

@@ -5,27 +5,9 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
-
 namespace _Type.Model.Empty
 {
-    /// <summary> Empty model used in operation return type. </summary>
     public partial class EmptyOutput
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
-        /// <summary> Initializes a new instance of <see cref="EmptyOutput"/>. </summary>
-        internal EmptyOutput()
-        {
-        }
-
-        /// <summary> Initializes a new instance of <see cref="EmptyOutput"/>. </summary>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EmptyOutput(IDictionary<string, BinaryData> additionalBinaryDataProperties)
-        {
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
-        }
     }
 }

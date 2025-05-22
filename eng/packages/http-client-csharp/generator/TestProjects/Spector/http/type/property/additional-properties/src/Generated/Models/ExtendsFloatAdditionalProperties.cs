@@ -5,41 +5,20 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 
 namespace _Type.Property.AdditionalProperties
 {
-    /// <summary> The model extends from Record&lt;float32&gt; type. </summary>
     public partial class ExtendsFloatAdditionalProperties
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-        private IDictionary<string, float> _additionalSingleProperties;
+        public ExtendsFloatAdditionalProperties(float id) => throw null;
 
-        /// <summary> Initializes a new instance of <see cref="ExtendsFloatAdditionalProperties"/>. </summary>
-        /// <param name="id"> The id property. </param>
-        public ExtendsFloatAdditionalProperties(float id)
+        public float Id
         {
-            Id = id;
-            _additionalSingleProperties = new ChangeTrackingDictionary<string, float>();
+            get => throw null;
+            set => throw null;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ExtendsFloatAdditionalProperties"/>. </summary>
-        /// <param name="id"> The id property. </param>
-        /// <param name="additionalProperties"></param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ExtendsFloatAdditionalProperties(float id, IDictionary<string, float> additionalProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
-        {
-            Id = id;
-            _additionalSingleProperties = additionalProperties;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
-        }
-
-        /// <summary> The id property. </summary>
-        public float Id { get; set; }
-
-        /// <summary> Gets the AdditionalProperties. </summary>
-        public IDictionary<string, float> AdditionalProperties => _additionalSingleProperties;
+        public IDictionary<string, float> AdditionalProperties => throw null;
     }
 }

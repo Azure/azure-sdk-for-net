@@ -6,58 +6,23 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 
 namespace _Type.Property.Nullable
 {
-    /// <summary> Template type for testing models with nullable property. Pass in the type of the property you are looking for. </summary>
     public partial class BytesProperty
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        public BytesProperty(string requiredProperty, BinaryData nullableProperty) => throw null;
 
-        /// <summary> Initializes a new instance of <see cref="BytesProperty"/>. </summary>
-        /// <param name="requiredProperty"> Required property. </param>
-        /// <param name="nullableProperty"> Property. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="requiredProperty"/> is null. </exception>
-        public BytesProperty(string requiredProperty, BinaryData nullableProperty)
+        public string RequiredProperty
         {
-            Argument.AssertNotNull(requiredProperty, nameof(requiredProperty));
-
-            RequiredProperty = requiredProperty;
-            NullableProperty = nullableProperty;
+            get => throw null;
+            set => throw null;
         }
 
-        /// <summary> Initializes a new instance of <see cref="BytesProperty"/>. </summary>
-        /// <param name="requiredProperty"> Required property. </param>
-        /// <param name="nullableProperty"> Property. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BytesProperty(string requiredProperty, BinaryData nullableProperty, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        public BinaryData NullableProperty
         {
-            RequiredProperty = requiredProperty;
-            NullableProperty = nullableProperty;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            get => throw null;
+            set => throw null;
         }
-
-        /// <summary> Required property. </summary>
-        public string RequiredProperty { get; set; }
-
-        /// <summary>
-        /// Property
-        /// <para>
-        /// To assign a byte[] to this property use <see cref="BinaryData.FromBytes(byte[])"/>.
-        /// The byte[] will be serialized to a Base64 encoded string.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term> BinaryData.FromBytes(new byte[] { 1, 2, 3 }). </term>
-        /// <description> Creates a payload of "AQID". </description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData NullableProperty { get; set; }
     }
 }

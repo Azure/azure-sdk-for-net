@@ -6,71 +6,19 @@
 #nullable disable
 
 using System.Collections.Generic;
-using System.Linq;
 
 namespace _Type.Model.Inheritance.NestedDiscriminator
 {
-    /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class TypeModelInheritanceNestedDiscriminatorModelFactory
     {
-        /// <summary>
-        /// This is base model for polymorphic multiple levels inheritance with a discriminator.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Shark"/> and <see cref="Salmon"/>.
-        /// </summary>
-        /// <param name="kind"> Discriminator property for Fish. </param>
-        /// <param name="age"></param>
-        /// <returns> A new <see cref="NestedDiscriminator.Fish"/> instance for mocking. </returns>
-        public static Fish Fish(string kind = default, int age = default)
-        {
+        public static Fish Fish(string kind = default, int age = default) => throw null;
 
-            return new UnknownFish(kind, age, additionalBinaryDataProperties: null);
-        }
+        public static Shark Shark(int age = default) => throw null;
 
-        /// <summary> The second level model in polymorphic multiple levels inheritance and it defines a new discriminator. </summary>
-        /// <param name="age"></param>
-        /// <returns> A new <see cref="NestedDiscriminator.Shark"/> instance for mocking. </returns>
-        public static Shark Shark(int age = default)
-        {
+        public static SawShark SawShark(int age = default) => throw null;
 
-            return new Shark("shark", age, additionalBinaryDataProperties: null, "shark");
-        }
+        public static GoblinShark GoblinShark(int age = default) => throw null;
 
-        /// <summary> The third level model SawShark in polymorphic multiple levels inheritance. </summary>
-        /// <param name="age"></param>
-        /// <returns> A new <see cref="NestedDiscriminator.SawShark"/> instance for mocking. </returns>
-        public static SawShark SawShark(int age = default)
-        {
-
-            return new SawShark("saw", age, additionalBinaryDataProperties: null, "saw");
-        }
-
-        /// <summary> The third level model GoblinShark in polymorphic multiple levels inheritance. </summary>
-        /// <param name="age"></param>
-        /// <returns> A new <see cref="NestedDiscriminator.GoblinShark"/> instance for mocking. </returns>
-        public static GoblinShark GoblinShark(int age = default)
-        {
-
-            return new GoblinShark("goblin", age, additionalBinaryDataProperties: null, "goblin");
-        }
-
-        /// <summary> The second level model in polymorphic multiple levels inheritance which contains references to other polymorphic instances. </summary>
-        /// <param name="age"></param>
-        /// <param name="friends"></param>
-        /// <param name="hate"></param>
-        /// <param name="partner"></param>
-        /// <returns> A new <see cref="NestedDiscriminator.Salmon"/> instance for mocking. </returns>
-        public static Salmon Salmon(int age = default, IEnumerable<Fish> friends = default, IDictionary<string, Fish> hate = default, Fish partner = default)
-        {
-            friends ??= new ChangeTrackingList<Fish>();
-            hate ??= new ChangeTrackingDictionary<string, Fish>();
-
-            return new Salmon(
-                "salmon",
-                age,
-                additionalBinaryDataProperties: null,
-                friends?.ToList(),
-                hate,
-                partner);
-        }
+        public static Salmon Salmon(int age = default, IEnumerable<Fish> friends = default, IDictionary<string, Fish> hate = default, Fish partner = default) => throw null;
     }
 }

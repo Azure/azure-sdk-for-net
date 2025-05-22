@@ -6,47 +6,18 @@
 #nullable disable
 
 using System;
-using System.Threading;
 using Azure.Core.Pipeline;
 
 namespace Streaming.Jsonl
 {
-    /// <summary> Test of jsonl streaming. </summary>
     public partial class JsonlClient
     {
-        private readonly Uri _endpoint;
-        private Basic _cachedBasic;
+        public JsonlClient() : this(new Uri("http://localhost:3000"), new JsonlClientOptions()) => throw null;
 
-        /// <summary> Initializes a new instance of JsonlClient. </summary>
-        public JsonlClient() : this(new Uri("http://localhost:3000"), new JsonlClientOptions())
-        {
-        }
+        public JsonlClient(Uri endpoint, JsonlClientOptions options) => throw null;
 
-        /// <summary> Initializes a new instance of JsonlClient. </summary>
-        /// <param name="endpoint"> Service endpoint. </param>
-        /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
-        public JsonlClient(Uri endpoint, JsonlClientOptions options)
-        {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
+        public virtual HttpPipeline Pipeline => throw null;
 
-            options ??= new JsonlClientOptions();
-
-            _endpoint = endpoint;
-            Pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>());
-            ClientDiagnostics = new ClientDiagnostics(options, true);
-        }
-
-        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
-        public virtual HttpPipeline Pipeline { get; }
-
-        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
-        internal ClientDiagnostics ClientDiagnostics { get; }
-
-        /// <summary> Initializes a new instance of Basic. </summary>
-        public virtual Basic GetBasicClient()
-        {
-            return Volatile.Read(ref _cachedBasic) ?? Interlocked.CompareExchange(ref _cachedBasic, new Basic(ClientDiagnostics, Pipeline, _endpoint), null) ?? _cachedBasic;
-        }
+        public virtual Basic GetBasicClient() => throw null;
     }
 }

@@ -10,36 +10,16 @@ using System.Collections.Generic;
 
 namespace _Type.Property.AdditionalProperties
 {
-    /// <summary> The model spread Record&lt;WidgetData0 | WidgetData1&gt;. </summary>
     public partial class SpreadRecordForNonDiscriminatedUnion
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        public SpreadRecordForNonDiscriminatedUnion(string name) => throw null;
 
-        /// <summary> Initializes a new instance of <see cref="SpreadRecordForNonDiscriminatedUnion"/>. </summary>
-        /// <param name="name"> The name property. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public SpreadRecordForNonDiscriminatedUnion(string name)
+        public string Name
         {
-            Argument.AssertNotNull(name, nameof(name));
-
-            Name = name;
-            _additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            get => throw null;
+            set => throw null;
         }
 
-        /// <summary> Initializes a new instance of <see cref="SpreadRecordForNonDiscriminatedUnion"/>. </summary>
-        /// <param name="name"> The name property. </param>
-        /// <param name="additionalProperties"></param>
-        internal SpreadRecordForNonDiscriminatedUnion(string name, IDictionary<string, BinaryData> additionalProperties)
-        {
-            Name = name;
-            _additionalBinaryDataProperties = additionalProperties;
-        }
-
-        /// <summary> The name property. </summary>
-        public string Name { get; set; }
-
-        /// <summary> Gets the AdditionalProperties. </summary>
-        public IDictionary<string, BinaryData> AdditionalProperties => _additionalBinaryDataProperties;
+        public IDictionary<string, BinaryData> AdditionalProperties => throw null;
     }
 }

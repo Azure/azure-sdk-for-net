@@ -5,37 +5,22 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
-
 namespace Payload.JsonMergePatch
 {
-    /// <summary> It is the model used by Resource model. </summary>
     public partial class InnerModel
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        public InnerModel() => throw null;
 
-        /// <summary> Initializes a new instance of <see cref="InnerModel"/>. </summary>
-        public InnerModel()
+        public string Name
         {
+            get => throw null;
+            set => throw null;
         }
 
-        /// <summary> Initializes a new instance of <see cref="InnerModel"/>. </summary>
-        /// <param name="name"></param>
-        /// <param name="description"></param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal InnerModel(string name, string description, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        public string Description
         {
-            Name = name;
-            Description = description;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            get => throw null;
+            set => throw null;
         }
-
-        /// <summary> Gets or sets the Name. </summary>
-        public string Name { get; set; }
-
-        /// <summary> Gets or sets the Description. </summary>
-        public string Description { get; set; }
     }
 }

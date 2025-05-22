@@ -6,152 +6,48 @@
 #nullable disable
 
 using System;
-using System.Threading;
 using Azure.Core.Pipeline;
 
 namespace _Type.Property.Optional
 {
-    /// <summary> Illustrates models with optional properties. </summary>
     public partial class OptionalClient
     {
-        private readonly Uri _endpoint;
-        private String _cachedString;
-        private Bytes _cachedBytes;
-        private Datetime _cachedDatetime;
-        private Duration _cachedDuration;
-        private PlainDate _cachedPlainDate;
-        private PlainTime _cachedPlainTime;
-        private CollectionsByte _cachedCollectionsByte;
-        private CollectionsModel _cachedCollectionsModel;
-        private StringLiteral _cachedStringLiteral;
-        private IntLiteral _cachedIntLiteral;
-        private FloatLiteral _cachedFloatLiteral;
-        private BooleanLiteral _cachedBooleanLiteral;
-        private UnionStringLiteral _cachedUnionStringLiteral;
-        private UnionIntLiteral _cachedUnionIntLiteral;
-        private UnionFloatLiteral _cachedUnionFloatLiteral;
-        private RequiredAndOptional _cachedRequiredAndOptional;
+        public OptionalClient() : this(new Uri("http://localhost:3000"), new OptionalClientOptions()) => throw null;
 
-        /// <summary> Initializes a new instance of OptionalClient. </summary>
-        public OptionalClient() : this(new Uri("http://localhost:3000"), new OptionalClientOptions())
-        {
-        }
+        public OptionalClient(Uri endpoint, OptionalClientOptions options) => throw null;
 
-        /// <summary> Initializes a new instance of OptionalClient. </summary>
-        /// <param name="endpoint"> Service endpoint. </param>
-        /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
-        public OptionalClient(Uri endpoint, OptionalClientOptions options)
-        {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
+        public virtual HttpPipeline Pipeline => throw null;
 
-            options ??= new OptionalClientOptions();
+        public virtual String GetStringClient() => throw null;
 
-            _endpoint = endpoint;
-            Pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>());
-            ClientDiagnostics = new ClientDiagnostics(options, true);
-        }
+        public virtual Bytes GetBytesClient() => throw null;
 
-        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
-        public virtual HttpPipeline Pipeline { get; }
+        public virtual Datetime GetDatetimeClient() => throw null;
 
-        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
-        internal ClientDiagnostics ClientDiagnostics { get; }
+        public virtual Duration GetDurationClient() => throw null;
 
-        /// <summary> Initializes a new instance of String. </summary>
-        public virtual String GetStringClient()
-        {
-            return Volatile.Read(ref _cachedString) ?? Interlocked.CompareExchange(ref _cachedString, new String(ClientDiagnostics, Pipeline, _endpoint), null) ?? _cachedString;
-        }
+        public virtual PlainDate GetPlainDateClient() => throw null;
 
-        /// <summary> Initializes a new instance of Bytes. </summary>
-        public virtual Bytes GetBytesClient()
-        {
-            return Volatile.Read(ref _cachedBytes) ?? Interlocked.CompareExchange(ref _cachedBytes, new Bytes(ClientDiagnostics, Pipeline, _endpoint), null) ?? _cachedBytes;
-        }
+        public virtual PlainTime GetPlainTimeClient() => throw null;
 
-        /// <summary> Initializes a new instance of Datetime. </summary>
-        public virtual Datetime GetDatetimeClient()
-        {
-            return Volatile.Read(ref _cachedDatetime) ?? Interlocked.CompareExchange(ref _cachedDatetime, new Datetime(ClientDiagnostics, Pipeline, _endpoint), null) ?? _cachedDatetime;
-        }
+        public virtual CollectionsByte GetCollectionsByteClient() => throw null;
 
-        /// <summary> Initializes a new instance of Duration. </summary>
-        public virtual Duration GetDurationClient()
-        {
-            return Volatile.Read(ref _cachedDuration) ?? Interlocked.CompareExchange(ref _cachedDuration, new Duration(ClientDiagnostics, Pipeline, _endpoint), null) ?? _cachedDuration;
-        }
+        public virtual CollectionsModel GetCollectionsModelClient() => throw null;
 
-        /// <summary> Initializes a new instance of PlainDate. </summary>
-        public virtual PlainDate GetPlainDateClient()
-        {
-            return Volatile.Read(ref _cachedPlainDate) ?? Interlocked.CompareExchange(ref _cachedPlainDate, new PlainDate(ClientDiagnostics, Pipeline, _endpoint), null) ?? _cachedPlainDate;
-        }
+        public virtual StringLiteral GetStringLiteralClient() => throw null;
 
-        /// <summary> Initializes a new instance of PlainTime. </summary>
-        public virtual PlainTime GetPlainTimeClient()
-        {
-            return Volatile.Read(ref _cachedPlainTime) ?? Interlocked.CompareExchange(ref _cachedPlainTime, new PlainTime(ClientDiagnostics, Pipeline, _endpoint), null) ?? _cachedPlainTime;
-        }
+        public virtual IntLiteral GetIntLiteralClient() => throw null;
 
-        /// <summary> Initializes a new instance of CollectionsByte. </summary>
-        public virtual CollectionsByte GetCollectionsByteClient()
-        {
-            return Volatile.Read(ref _cachedCollectionsByte) ?? Interlocked.CompareExchange(ref _cachedCollectionsByte, new CollectionsByte(ClientDiagnostics, Pipeline, _endpoint), null) ?? _cachedCollectionsByte;
-        }
+        public virtual FloatLiteral GetFloatLiteralClient() => throw null;
 
-        /// <summary> Initializes a new instance of CollectionsModel. </summary>
-        public virtual CollectionsModel GetCollectionsModelClient()
-        {
-            return Volatile.Read(ref _cachedCollectionsModel) ?? Interlocked.CompareExchange(ref _cachedCollectionsModel, new CollectionsModel(ClientDiagnostics, Pipeline, _endpoint), null) ?? _cachedCollectionsModel;
-        }
+        public virtual BooleanLiteral GetBooleanLiteralClient() => throw null;
 
-        /// <summary> Initializes a new instance of StringLiteral. </summary>
-        public virtual StringLiteral GetStringLiteralClient()
-        {
-            return Volatile.Read(ref _cachedStringLiteral) ?? Interlocked.CompareExchange(ref _cachedStringLiteral, new StringLiteral(ClientDiagnostics, Pipeline, _endpoint), null) ?? _cachedStringLiteral;
-        }
+        public virtual UnionStringLiteral GetUnionStringLiteralClient() => throw null;
 
-        /// <summary> Initializes a new instance of IntLiteral. </summary>
-        public virtual IntLiteral GetIntLiteralClient()
-        {
-            return Volatile.Read(ref _cachedIntLiteral) ?? Interlocked.CompareExchange(ref _cachedIntLiteral, new IntLiteral(ClientDiagnostics, Pipeline, _endpoint), null) ?? _cachedIntLiteral;
-        }
+        public virtual UnionIntLiteral GetUnionIntLiteralClient() => throw null;
 
-        /// <summary> Initializes a new instance of FloatLiteral. </summary>
-        public virtual FloatLiteral GetFloatLiteralClient()
-        {
-            return Volatile.Read(ref _cachedFloatLiteral) ?? Interlocked.CompareExchange(ref _cachedFloatLiteral, new FloatLiteral(ClientDiagnostics, Pipeline, _endpoint), null) ?? _cachedFloatLiteral;
-        }
+        public virtual UnionFloatLiteral GetUnionFloatLiteralClient() => throw null;
 
-        /// <summary> Initializes a new instance of BooleanLiteral. </summary>
-        public virtual BooleanLiteral GetBooleanLiteralClient()
-        {
-            return Volatile.Read(ref _cachedBooleanLiteral) ?? Interlocked.CompareExchange(ref _cachedBooleanLiteral, new BooleanLiteral(ClientDiagnostics, Pipeline, _endpoint), null) ?? _cachedBooleanLiteral;
-        }
-
-        /// <summary> Initializes a new instance of UnionStringLiteral. </summary>
-        public virtual UnionStringLiteral GetUnionStringLiteralClient()
-        {
-            return Volatile.Read(ref _cachedUnionStringLiteral) ?? Interlocked.CompareExchange(ref _cachedUnionStringLiteral, new UnionStringLiteral(ClientDiagnostics, Pipeline, _endpoint), null) ?? _cachedUnionStringLiteral;
-        }
-
-        /// <summary> Initializes a new instance of UnionIntLiteral. </summary>
-        public virtual UnionIntLiteral GetUnionIntLiteralClient()
-        {
-            return Volatile.Read(ref _cachedUnionIntLiteral) ?? Interlocked.CompareExchange(ref _cachedUnionIntLiteral, new UnionIntLiteral(ClientDiagnostics, Pipeline, _endpoint), null) ?? _cachedUnionIntLiteral;
-        }
-
-        /// <summary> Initializes a new instance of UnionFloatLiteral. </summary>
-        public virtual UnionFloatLiteral GetUnionFloatLiteralClient()
-        {
-            return Volatile.Read(ref _cachedUnionFloatLiteral) ?? Interlocked.CompareExchange(ref _cachedUnionFloatLiteral, new UnionFloatLiteral(ClientDiagnostics, Pipeline, _endpoint), null) ?? _cachedUnionFloatLiteral;
-        }
-
-        /// <summary> Initializes a new instance of RequiredAndOptional. </summary>
-        public virtual RequiredAndOptional GetRequiredAndOptionalClient()
-        {
-            return Volatile.Read(ref _cachedRequiredAndOptional) ?? Interlocked.CompareExchange(ref _cachedRequiredAndOptional, new RequiredAndOptional(ClientDiagnostics, Pipeline, _endpoint), null) ?? _cachedRequiredAndOptional;
-        }
+        public virtual RequiredAndOptional GetRequiredAndOptionalClient() => throw null;
     }
 }

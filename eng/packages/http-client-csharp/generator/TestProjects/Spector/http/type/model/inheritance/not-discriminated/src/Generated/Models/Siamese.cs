@@ -10,32 +10,16 @@ using System.Collections.Generic;
 
 namespace _Type.Model.Inheritance.NotDiscriminated
 {
-    /// <summary> The third level model in the normal multiple levels inheritance. </summary>
     public partial class Siamese : Cat
     {
-        /// <summary> Initializes a new instance of <see cref="Siamese"/>. </summary>
-        /// <param name="name"></param>
-        /// <param name="age"></param>
-        /// <param name="smart"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public Siamese(string name, int age, bool smart) : base(name, age)
+        public Siamese(string name, int age, bool smart) : base(name, age) => throw null;
+
+        internal Siamese(string name, IDictionary<string, BinaryData> additionalBinaryDataProperties, int age, bool smart) : base(name, additionalBinaryDataProperties, age) => throw null;
+
+        public bool Smart
         {
-            Argument.AssertNotNull(name, nameof(name));
-
-            Smart = smart;
+            get => throw null;
+            set => throw null;
         }
-
-        /// <summary> Initializes a new instance of <see cref="Siamese"/>. </summary>
-        /// <param name="name"></param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="age"></param>
-        /// <param name="smart"></param>
-        internal Siamese(string name, IDictionary<string, BinaryData> additionalBinaryDataProperties, int age, bool smart) : base(name, additionalBinaryDataProperties, age)
-        {
-            Smart = smart;
-        }
-
-        /// <summary> Gets or sets the Smart. </summary>
-        public bool Smart { get; set; }
     }
 }

@@ -7,93 +7,25 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace _Type.Property.Nullable
 {
-    /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class TypePropertyNullableModelFactory
     {
-        /// <summary> Template type for testing models with nullable property. Pass in the type of the property you are looking for. </summary>
-        /// <param name="requiredProperty"> Required property. </param>
-        /// <param name="nullableProperty"> Property. </param>
-        /// <returns> A new <see cref="Nullable.StringProperty"/> instance for mocking. </returns>
-        public static StringProperty StringProperty(string requiredProperty = default, string nullableProperty = default)
-        {
+        public static StringProperty StringProperty(string requiredProperty = default, string nullableProperty = default) => throw null;
 
-            return new StringProperty(requiredProperty, nullableProperty, additionalBinaryDataProperties: null);
-        }
+        public static BytesProperty BytesProperty(string requiredProperty = default, BinaryData nullableProperty = default) => throw null;
 
-        /// <summary> Template type for testing models with nullable property. Pass in the type of the property you are looking for. </summary>
-        /// <param name="requiredProperty"> Required property. </param>
-        /// <param name="nullableProperty"> Property. </param>
-        /// <returns> A new <see cref="Nullable.BytesProperty"/> instance for mocking. </returns>
-        public static BytesProperty BytesProperty(string requiredProperty = default, BinaryData nullableProperty = default)
-        {
+        public static DatetimeProperty DatetimeProperty(string requiredProperty = default, DateTimeOffset? nullableProperty = default) => throw null;
 
-            return new BytesProperty(requiredProperty, nullableProperty, additionalBinaryDataProperties: null);
-        }
+        public static DurationProperty DurationProperty(string requiredProperty = default, TimeSpan? nullableProperty = default) => throw null;
 
-        /// <summary> Model with a datetime property. </summary>
-        /// <param name="requiredProperty"> Required property. </param>
-        /// <param name="nullableProperty"> Property. </param>
-        /// <returns> A new <see cref="Nullable.DatetimeProperty"/> instance for mocking. </returns>
-        public static DatetimeProperty DatetimeProperty(string requiredProperty = default, DateTimeOffset? nullableProperty = default)
-        {
+        public static CollectionsByteProperty CollectionsByteProperty(string requiredProperty = default, IEnumerable<BinaryData> nullableProperty = default) => throw null;
 
-            return new DatetimeProperty(requiredProperty, nullableProperty, additionalBinaryDataProperties: null);
-        }
+        public static CollectionsModelProperty CollectionsModelProperty(string requiredProperty = default, IEnumerable<InnerModel> nullableProperty = default) => throw null;
 
-        /// <summary> Model with a duration property. </summary>
-        /// <param name="requiredProperty"> Required property. </param>
-        /// <param name="nullableProperty"> Property. </param>
-        /// <returns> A new <see cref="Nullable.DurationProperty"/> instance for mocking. </returns>
-        public static DurationProperty DurationProperty(string requiredProperty = default, TimeSpan? nullableProperty = default)
-        {
+        public static InnerModel InnerModel(string @property = default) => throw null;
 
-            return new DurationProperty(requiredProperty, nullableProperty, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Model with collection bytes properties. </summary>
-        /// <param name="requiredProperty"> Required property. </param>
-        /// <param name="nullableProperty"> Property. </param>
-        /// <returns> A new <see cref="Nullable.CollectionsByteProperty"/> instance for mocking. </returns>
-        public static CollectionsByteProperty CollectionsByteProperty(string requiredProperty = default, IEnumerable<BinaryData> nullableProperty = default)
-        {
-            nullableProperty ??= new ChangeTrackingList<BinaryData>();
-
-            return new CollectionsByteProperty(requiredProperty, nullableProperty?.ToList(), additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Model with collection models properties. </summary>
-        /// <param name="requiredProperty"> Required property. </param>
-        /// <param name="nullableProperty"> Property. </param>
-        /// <returns> A new <see cref="Nullable.CollectionsModelProperty"/> instance for mocking. </returns>
-        public static CollectionsModelProperty CollectionsModelProperty(string requiredProperty = default, IEnumerable<InnerModel> nullableProperty = default)
-        {
-            nullableProperty ??= new ChangeTrackingList<InnerModel>();
-
-            return new CollectionsModelProperty(requiredProperty, nullableProperty?.ToList(), additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Inner model used in collections model property. </summary>
-        /// <param name="property"> Inner model property. </param>
-        /// <returns> A new <see cref="Nullable.InnerModel"/> instance for mocking. </returns>
-        public static InnerModel InnerModel(string @property = default)
-        {
-
-            return new InnerModel(@property, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Model with collection string properties. </summary>
-        /// <param name="requiredProperty"> Required property. </param>
-        /// <param name="nullableProperty"> Property. </param>
-        /// <returns> A new <see cref="Nullable.CollectionsStringProperty"/> instance for mocking. </returns>
-        public static CollectionsStringProperty CollectionsStringProperty(string requiredProperty = default, IEnumerable<string> nullableProperty = default)
-        {
-            nullableProperty ??= new ChangeTrackingList<string>();
-
-            return new CollectionsStringProperty(requiredProperty, nullableProperty?.ToList(), additionalBinaryDataProperties: null);
-        }
+        public static CollectionsStringProperty CollectionsStringProperty(string requiredProperty = default, IEnumerable<string> nullableProperty = default) => throw null;
     }
 }

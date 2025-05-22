@@ -10,36 +10,18 @@ using System.Collections.Generic;
 
 namespace _Type.Property.AdditionalProperties
 {
-    /// <summary> The model is from Record&lt;unknown&gt; type. </summary>
     public partial class IsUnknownAdditionalProperties
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        public IsUnknownAdditionalProperties(string name) => throw null;
 
-        /// <summary> Initializes a new instance of <see cref="IsUnknownAdditionalProperties"/>. </summary>
-        /// <param name="name"> The name property. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public IsUnknownAdditionalProperties(string name)
+        internal IsUnknownAdditionalProperties(string name, IDictionary<string, BinaryData> additionalProperties) => throw null;
+
+        public string Name
         {
-            Argument.AssertNotNull(name, nameof(name));
-
-            Name = name;
-            _additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            get => throw null;
+            set => throw null;
         }
 
-        /// <summary> Initializes a new instance of <see cref="IsUnknownAdditionalProperties"/>. </summary>
-        /// <param name="name"> The name property. </param>
-        /// <param name="additionalProperties"></param>
-        internal IsUnknownAdditionalProperties(string name, IDictionary<string, BinaryData> additionalProperties)
-        {
-            Name = name;
-            _additionalBinaryDataProperties = additionalProperties;
-        }
-
-        /// <summary> The name property. </summary>
-        public string Name { get; set; }
-
-        /// <summary> Gets the AdditionalProperties. </summary>
-        public IDictionary<string, BinaryData> AdditionalProperties => _additionalBinaryDataProperties;
+        public IDictionary<string, BinaryData> AdditionalProperties => throw null;
     }
 }

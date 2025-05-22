@@ -10,43 +10,24 @@ using System.Collections.Generic;
 
 namespace _Type.Property.AdditionalProperties
 {
-    /// <summary>
-    /// The model is Record&lt;unknown&gt; with a discriminator.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="IsUnknownAdditionalPropertiesDiscriminatedDerived"/>.
-    /// </summary>
     public abstract partial class IsUnknownAdditionalPropertiesDiscriminated
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected IsUnknownAdditionalPropertiesDiscriminated(string name, string kind) => throw null;
 
-        /// <summary> Initializes a new instance of <see cref="IsUnknownAdditionalPropertiesDiscriminated"/>. </summary>
-        /// <param name="name"> The name property. </param>
-        /// <param name="kind"> The discriminator. </param>
-        private protected IsUnknownAdditionalPropertiesDiscriminated(string name, string kind)
+        internal IsUnknownAdditionalPropertiesDiscriminated(string name, string kind, IDictionary<string, BinaryData> additionalProperties) => throw null;
+
+        public string Name
         {
-            Name = name;
-            Kind = kind;
-            _additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            get => throw null;
+            set => throw null;
         }
 
-        /// <summary> Initializes a new instance of <see cref="IsUnknownAdditionalPropertiesDiscriminated"/>. </summary>
-        /// <param name="name"> The name property. </param>
-        /// <param name="kind"> The discriminator. </param>
-        /// <param name="additionalProperties"></param>
-        internal IsUnknownAdditionalPropertiesDiscriminated(string name, string kind, IDictionary<string, BinaryData> additionalProperties)
+        internal string Kind
         {
-            Name = name;
-            Kind = kind;
-            _additionalBinaryDataProperties = additionalProperties;
+            get => throw null;
+            set => throw null;
         }
 
-        /// <summary> The name property. </summary>
-        public string Name { get; set; }
-
-        /// <summary> The discriminator. </summary>
-        internal string Kind { get; set; }
-
-        /// <summary> Gets the AdditionalProperties. </summary>
-        public IDictionary<string, BinaryData> AdditionalProperties => _additionalBinaryDataProperties;
+        public IDictionary<string, BinaryData> AdditionalProperties => throw null;
     }
 }

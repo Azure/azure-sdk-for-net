@@ -10,36 +10,16 @@ using System.Collections.Generic;
 
 namespace _Type.Property.AdditionalProperties
 {
-    /// <summary> The model is from Record&lt;ModelForRecord&gt; type. </summary>
     public partial class IsModelAdditionalProperties
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        public IsModelAdditionalProperties(ModelForRecord knownProp) => throw null;
 
-        /// <summary> Initializes a new instance of <see cref="IsModelAdditionalProperties"/>. </summary>
-        /// <param name="knownProp"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="knownProp"/> is null. </exception>
-        public IsModelAdditionalProperties(ModelForRecord knownProp)
+        public ModelForRecord KnownProp
         {
-            Argument.AssertNotNull(knownProp, nameof(knownProp));
-
-            KnownProp = knownProp;
-            _additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            get => throw null;
+            set => throw null;
         }
 
-        /// <summary> Initializes a new instance of <see cref="IsModelAdditionalProperties"/>. </summary>
-        /// <param name="knownProp"></param>
-        /// <param name="additionalProperties"></param>
-        internal IsModelAdditionalProperties(ModelForRecord knownProp, IDictionary<string, BinaryData> additionalProperties)
-        {
-            KnownProp = knownProp;
-            _additionalBinaryDataProperties = additionalProperties;
-        }
-
-        /// <summary> Gets or sets the KnownProp. </summary>
-        public ModelForRecord KnownProp { get; set; }
-
-        /// <summary> Gets the AdditionalProperties. </summary>
-        public IDictionary<string, BinaryData> AdditionalProperties => _additionalBinaryDataProperties;
+        public IDictionary<string, BinaryData> AdditionalProperties => throw null;
     }
 }

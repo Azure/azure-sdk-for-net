@@ -10,55 +10,30 @@ using System.ComponentModel;
 
 namespace _Type.Union
 {
-    /// <summary></summary>
     public readonly partial struct StringExtensibleNamedUnion : IEquatable<StringExtensibleNamedUnion>
     {
-        private readonly string _value;
-        private const string OptionBValue = "b";
-        private const string CValue = "c";
+        public StringExtensibleNamedUnion(string value) => throw null;
 
-        /// <summary> Initializes a new instance of <see cref="StringExtensibleNamedUnion"/>. </summary>
-        /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public StringExtensibleNamedUnion(string value)
-        {
-            Argument.AssertNotNull(value, nameof(value));
+        public static StringExtensibleNamedUnion OptionB => throw null;
 
-            _value = value;
-        }
+        public static StringExtensibleNamedUnion C => throw null;
 
-        /// <summary> Gets the OptionB. </summary>
-        public static StringExtensibleNamedUnion OptionB { get; } = new StringExtensibleNamedUnion(OptionBValue);
+        public static bool operator ==(StringExtensibleNamedUnion left, StringExtensibleNamedUnion right) => throw null;
 
-        /// <summary> Gets the C. </summary>
-        public static StringExtensibleNamedUnion C { get; } = new StringExtensibleNamedUnion(CValue);
-
-        /// <summary> Determines if two <see cref="StringExtensibleNamedUnion"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(StringExtensibleNamedUnion left, StringExtensibleNamedUnion right) => left.Equals(right);
-
-        /// <summary> Determines if two <see cref="StringExtensibleNamedUnion"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(StringExtensibleNamedUnion left, StringExtensibleNamedUnion right) => !left.Equals(right);
+        public static bool operator !=(StringExtensibleNamedUnion left, StringExtensibleNamedUnion right) => throw null;
 
         /// <summary> Converts a string to a <see cref="StringExtensibleNamedUnion"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator StringExtensibleNamedUnion(string value) => new StringExtensibleNamedUnion(value);
+        public static implicit operator StringExtensibleNamedUnion(string value) => throw null;
 
-        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is StringExtensibleNamedUnion other && Equals(other);
+        public override bool Equals(object obj) => throw null;
 
-        /// <inheritdoc/>
-        public bool Equals(StringExtensibleNamedUnion other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(StringExtensibleNamedUnion other) => throw null;
 
-        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        public override int GetHashCode() => throw null;
 
-        /// <inheritdoc/>
-        public override string ToString() => _value;
+        public override string ToString() => throw null;
     }
 }

@@ -6,43 +6,25 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 
 namespace _Type.Property.AdditionalProperties
 {
-    /// <summary> The WidgetData1. </summary>
     public partial class WidgetData1
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        public WidgetData1(DateTimeOffset start) => throw null;
 
-        /// <summary> Initializes a new instance of <see cref="WidgetData1"/>. </summary>
-        /// <param name="start"></param>
-        public WidgetData1(DateTimeOffset start)
+        public string Kind => throw null;
+
+        public DateTimeOffset Start
         {
-            Start = start;
+            get => throw null;
+            set => throw null;
         }
 
-        /// <summary> Initializes a new instance of <see cref="WidgetData1"/>. </summary>
-        /// <param name="kind"></param>
-        /// <param name="start"></param>
-        /// <param name="end"></param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal WidgetData1(string kind, DateTimeOffset start, DateTimeOffset? end, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        public DateTimeOffset? End
         {
-            Kind = kind;
-            Start = start;
-            End = end;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            get => throw null;
+            set => throw null;
         }
-
-        /// <summary> Gets the Kind. </summary>
-        public string Kind { get; } = "kind1";
-
-        /// <summary> Gets or sets the Start. </summary>
-        public DateTimeOffset Start { get; set; }
-
-        /// <summary> Gets or sets the End. </summary>
-        public DateTimeOffset? End { get; set; }
     }
 }

@@ -10,39 +10,22 @@ using System.Collections.Generic;
 
 namespace _Type.Model.Inheritance.SingleDiscriminator
 {
-    /// <summary>
-    /// This is base model for polymorphic single level inheritance with a discriminator.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="SeaGull"/>, <see cref="Sparrow"/>, <see cref="Goose"/>, and <see cref="Eagle"/>.
-    /// </summary>
     public abstract partial class Bird
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected Bird(string kind, int wingspan) => throw null;
 
-        /// <summary> Initializes a new instance of <see cref="Bird"/>. </summary>
-        /// <param name="kind"></param>
-        /// <param name="wingspan"></param>
-        private protected Bird(string kind, int wingspan)
+        internal Bird(string kind, int wingspan, IDictionary<string, BinaryData> additionalBinaryDataProperties) => throw null;
+
+        internal string Kind
         {
-            Kind = kind;
-            Wingspan = wingspan;
+            get => throw null;
+            set => throw null;
         }
 
-        /// <summary> Initializes a new instance of <see cref="Bird"/>. </summary>
-        /// <param name="kind"></param>
-        /// <param name="wingspan"></param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal Bird(string kind, int wingspan, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        public int Wingspan
         {
-            Kind = kind;
-            Wingspan = wingspan;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            get => throw null;
+            set => throw null;
         }
-
-        /// <summary> Gets or sets the Kind. </summary>
-        internal string Kind { get; set; }
-
-        /// <summary> Gets or sets the Wingspan. </summary>
-        public int Wingspan { get; set; }
     }
 }

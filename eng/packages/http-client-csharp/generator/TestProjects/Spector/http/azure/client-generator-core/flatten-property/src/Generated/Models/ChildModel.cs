@@ -5,44 +5,22 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
-
 namespace _Specs_.Azure.ClientGenerator.Core.FlattenProperty
 {
-    /// <summary> This is the child model to be flattened. </summary>
     public partial class ChildModel
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        public ChildModel(string description, int age) => throw null;
 
-        /// <summary> Initializes a new instance of <see cref="ChildModel"/>. </summary>
-        /// <param name="description"></param>
-        /// <param name="age"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="description"/> is null. </exception>
-        public ChildModel(string description, int age)
+        public string Description
         {
-            Argument.AssertNotNull(description, nameof(description));
-
-            Description = description;
-            Age = age;
+            get => throw null;
+            set => throw null;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ChildModel"/>. </summary>
-        /// <param name="description"></param>
-        /// <param name="age"></param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ChildModel(string description, int age, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        public int Age
         {
-            Description = description;
-            Age = age;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            get => throw null;
+            set => throw null;
         }
-
-        /// <summary> Gets or sets the Description. </summary>
-        public string Description { get; set; }
-
-        /// <summary> Gets or sets the Age. </summary>
-        public int Age { get; set; }
     }
 }

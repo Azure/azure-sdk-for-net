@@ -9,7 +9,6 @@ using Azure.Core;
 
 namespace _Type.Model.Inheritance.EnumDiscriminator
 {
-    /// <summary> Client options for <see cref="EnumDiscriminatorClient"/>. </summary>
     public partial class EnumDiscriminatorClientOptions : ClientOptions
     {
     }

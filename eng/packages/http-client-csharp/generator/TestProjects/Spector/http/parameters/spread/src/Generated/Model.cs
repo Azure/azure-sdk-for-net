@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -15,505 +14,50 @@ using Parameters.Spread.Models;
 
 namespace Parameters.Spread
 {
-    /// <summary></summary>
     public partial class Model
     {
-        private readonly Uri _endpoint;
+        protected Model() => throw null;
 
-        /// <summary> Initializes a new instance of Model for mocking. </summary>
-        protected Model()
-        {
-        }
+        public virtual HttpPipeline Pipeline => throw null;
 
-        /// <summary> Initializes a new instance of Model. </summary>
-        /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
-        /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
-        /// <param name="endpoint"> Service endpoint. </param>
-        internal Model(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint)
-        {
-            ClientDiagnostics = clientDiagnostics;
-            _endpoint = endpoint;
-            Pipeline = pipeline;
-        }
+        public virtual Response SpreadAsRequestBody(RequestContent content, RequestContext context = null) => throw null;
 
-        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
-        public virtual HttpPipeline Pipeline { get; }
+        public virtual Task<Response> SpreadAsRequestBodyAsync(RequestContent content, RequestContext context = null) => throw null;
 
-        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
-        internal ClientDiagnostics ClientDiagnostics { get; }
+        public virtual Response SpreadAsRequestBody(string name, CancellationToken cancellationToken = default) => throw null;
 
-        /// <summary>
-        /// [Protocol Method] spreadAsRequestBody
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual Response SpreadAsRequestBody(RequestContent content, RequestContext context = null)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Model.SpreadAsRequestBody");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNull(content, nameof(content));
+        public virtual Task<Response> SpreadAsRequestBodyAsync(string name, CancellationToken cancellationToken = default) => throw null;
 
-                using HttpMessage message = CreateSpreadAsRequestBodyRequest(content, context);
-                return Pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
+        public virtual Response SpreadCompositeRequestOnlyWithBody(RequestContent content, RequestContext context = null) => throw null;
 
-        /// <summary>
-        /// [Protocol Method] spreadAsRequestBody
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> SpreadAsRequestBodyAsync(RequestContent content, RequestContext context = null)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Model.SpreadAsRequestBody");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNull(content, nameof(content));
+        public virtual Task<Response> SpreadCompositeRequestOnlyWithBodyAsync(RequestContent content, RequestContext context = null) => throw null;
 
-                using HttpMessage message = CreateSpreadAsRequestBodyRequest(content, context);
-                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
+        public virtual Response SpreadCompositeRequestOnlyWithBody(BodyParameter body, CancellationToken cancellationToken = default) => throw null;
 
-        /// <summary> spreadAsRequestBody. </summary>
-        /// <param name="name"></param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response SpreadAsRequestBody(string name, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(name, nameof(name));
+        public virtual Task<Response> SpreadCompositeRequestOnlyWithBodyAsync(BodyParameter body, CancellationToken cancellationToken = default) => throw null;
 
-            BodyParameter spreadModel = new BodyParameter(name, null);
-            return SpreadAsRequestBody(spreadModel, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
-        }
+        public virtual Response SpreadCompositeRequestWithoutBody(string name, string testHeader, RequestContext context) => throw null;
 
-        /// <summary> spreadAsRequestBody. </summary>
-        /// <param name="name"></param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> SpreadAsRequestBodyAsync(string name, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(name, nameof(name));
+        public virtual Task<Response> SpreadCompositeRequestWithoutBodyAsync(string name, string testHeader, RequestContext context) => throw null;
 
-            BodyParameter spreadModel = new BodyParameter(name, null);
-            return await SpreadAsRequestBodyAsync(spreadModel, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
-        }
+        public virtual Response SpreadCompositeRequestWithoutBody(string name, string testHeader, CancellationToken cancellationToken = default) => throw null;
 
-        /// <summary>
-        /// [Protocol Method] spreadCompositeRequestOnlyWithBody
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual Response SpreadCompositeRequestOnlyWithBody(RequestContent content, RequestContext context = null)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Model.SpreadCompositeRequestOnlyWithBody");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNull(content, nameof(content));
+        public virtual Task<Response> SpreadCompositeRequestWithoutBodyAsync(string name, string testHeader, CancellationToken cancellationToken = default) => throw null;
 
-                using HttpMessage message = CreateSpreadCompositeRequestOnlyWithBodyRequest(content, context);
-                return Pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
+        public virtual Response SpreadCompositeRequest(string name, string testHeader, RequestContent content, RequestContext context = null) => throw null;
 
-        /// <summary>
-        /// [Protocol Method] spreadCompositeRequestOnlyWithBody
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> SpreadCompositeRequestOnlyWithBodyAsync(RequestContent content, RequestContext context = null)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Model.SpreadCompositeRequestOnlyWithBody");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNull(content, nameof(content));
+        public virtual Task<Response> SpreadCompositeRequestAsync(string name, string testHeader, RequestContent content, RequestContext context = null) => throw null;
 
-                using HttpMessage message = CreateSpreadCompositeRequestOnlyWithBodyRequest(content, context);
-                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
+        public virtual Response SpreadCompositeRequest(string name, string testHeader, BodyParameter body, CancellationToken cancellationToken = default) => throw null;
 
-        /// <summary> spreadCompositeRequestOnlyWithBody. </summary>
-        /// <param name="body"></param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response SpreadCompositeRequestOnlyWithBody(BodyParameter body, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(body, nameof(body));
+        public virtual Task<Response> SpreadCompositeRequestAsync(string name, string testHeader, BodyParameter body, CancellationToken cancellationToken = default) => throw null;
 
-            return SpreadCompositeRequestOnlyWithBody(body, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
-        }
+        public virtual Response SpreadCompositeRequestMix(string name, string testHeader, RequestContent content, RequestContext context = null) => throw null;
 
-        /// <summary> spreadCompositeRequestOnlyWithBody. </summary>
-        /// <param name="body"></param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> SpreadCompositeRequestOnlyWithBodyAsync(BodyParameter body, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(body, nameof(body));
+        public virtual Task<Response> SpreadCompositeRequestMixAsync(string name, string testHeader, RequestContent content, RequestContext context = null) => throw null;
 
-            return await SpreadCompositeRequestOnlyWithBodyAsync(body, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
-        }
+        public virtual Response SpreadCompositeRequestMix(string name, string testHeader, string prop, CancellationToken cancellationToken = default) => throw null;
 
-        /// <summary>
-        /// [Protocol Method] spreadCompositeRequestWithoutBody
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="name"></param>
-        /// <param name="testHeader"></param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="testHeader"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual Response SpreadCompositeRequestWithoutBody(string name, string testHeader, RequestContext context)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Model.SpreadCompositeRequestWithoutBody");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNull(name, nameof(name));
-                Argument.AssertNotNull(testHeader, nameof(testHeader));
-
-                using HttpMessage message = CreateSpreadCompositeRequestWithoutBodyRequest(name, testHeader, context);
-                return Pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] spreadCompositeRequestWithoutBody
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="name"></param>
-        /// <param name="testHeader"></param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="testHeader"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> SpreadCompositeRequestWithoutBodyAsync(string name, string testHeader, RequestContext context)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Model.SpreadCompositeRequestWithoutBody");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNull(name, nameof(name));
-                Argument.AssertNotNull(testHeader, nameof(testHeader));
-
-                using HttpMessage message = CreateSpreadCompositeRequestWithoutBodyRequest(name, testHeader, context);
-                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> spreadCompositeRequestWithoutBody. </summary>
-        /// <param name="name"></param>
-        /// <param name="testHeader"></param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="testHeader"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response SpreadCompositeRequestWithoutBody(string name, string testHeader, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(testHeader, nameof(testHeader));
-
-            return SpreadCompositeRequestWithoutBody(name, testHeader, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
-        }
-
-        /// <summary> spreadCompositeRequestWithoutBody. </summary>
-        /// <param name="name"></param>
-        /// <param name="testHeader"></param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="testHeader"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> SpreadCompositeRequestWithoutBodyAsync(string name, string testHeader, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(testHeader, nameof(testHeader));
-
-            return await SpreadCompositeRequestWithoutBodyAsync(name, testHeader, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// [Protocol Method] spreadCompositeRequest
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="name"></param>
-        /// <param name="testHeader"></param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="testHeader"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual Response SpreadCompositeRequest(string name, string testHeader, RequestContent content, RequestContext context = null)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Model.SpreadCompositeRequest");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNull(name, nameof(name));
-                Argument.AssertNotNull(testHeader, nameof(testHeader));
-                Argument.AssertNotNull(content, nameof(content));
-
-                using HttpMessage message = CreateSpreadCompositeRequestRequest(name, testHeader, content, context);
-                return Pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] spreadCompositeRequest
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="name"></param>
-        /// <param name="testHeader"></param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="testHeader"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> SpreadCompositeRequestAsync(string name, string testHeader, RequestContent content, RequestContext context = null)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Model.SpreadCompositeRequest");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNull(name, nameof(name));
-                Argument.AssertNotNull(testHeader, nameof(testHeader));
-                Argument.AssertNotNull(content, nameof(content));
-
-                using HttpMessage message = CreateSpreadCompositeRequestRequest(name, testHeader, content, context);
-                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> spreadCompositeRequest. </summary>
-        /// <param name="name"></param>
-        /// <param name="testHeader"></param>
-        /// <param name="body"></param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="testHeader"/> or <paramref name="body"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response SpreadCompositeRequest(string name, string testHeader, BodyParameter body, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(testHeader, nameof(testHeader));
-            Argument.AssertNotNull(body, nameof(body));
-
-            return SpreadCompositeRequest(name, testHeader, body, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
-        }
-
-        /// <summary> spreadCompositeRequest. </summary>
-        /// <param name="name"></param>
-        /// <param name="testHeader"></param>
-        /// <param name="body"></param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="testHeader"/> or <paramref name="body"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> SpreadCompositeRequestAsync(string name, string testHeader, BodyParameter body, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(testHeader, nameof(testHeader));
-            Argument.AssertNotNull(body, nameof(body));
-
-            return await SpreadCompositeRequestAsync(name, testHeader, body, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// [Protocol Method] spreadCompositeRequestMix
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="name"></param>
-        /// <param name="testHeader"></param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="testHeader"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual Response SpreadCompositeRequestMix(string name, string testHeader, RequestContent content, RequestContext context = null)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Model.SpreadCompositeRequestMix");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNull(name, nameof(name));
-                Argument.AssertNotNull(testHeader, nameof(testHeader));
-                Argument.AssertNotNull(content, nameof(content));
-
-                using HttpMessage message = CreateSpreadCompositeRequestMixRequest(name, testHeader, content, context);
-                return Pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] spreadCompositeRequestMix
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="name"></param>
-        /// <param name="testHeader"></param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="testHeader"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> SpreadCompositeRequestMixAsync(string name, string testHeader, RequestContent content, RequestContext context = null)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Model.SpreadCompositeRequestMix");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNull(name, nameof(name));
-                Argument.AssertNotNull(testHeader, nameof(testHeader));
-                Argument.AssertNotNull(content, nameof(content));
-
-                using HttpMessage message = CreateSpreadCompositeRequestMixRequest(name, testHeader, content, context);
-                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> spreadCompositeRequestMix. </summary>
-        /// <param name="name"></param>
-        /// <param name="testHeader"></param>
-        /// <param name="prop"></param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="testHeader"/> or <paramref name="prop"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response SpreadCompositeRequestMix(string name, string testHeader, string prop, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(testHeader, nameof(testHeader));
-            Argument.AssertNotNull(prop, nameof(prop));
-
-            SpreadCompositeRequestMixRequest spreadModel = new SpreadCompositeRequestMixRequest(prop, null);
-            return SpreadCompositeRequestMix(name, testHeader, spreadModel, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
-        }
-
-        /// <summary> spreadCompositeRequestMix. </summary>
-        /// <param name="name"></param>
-        /// <param name="testHeader"></param>
-        /// <param name="prop"></param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="testHeader"/> or <paramref name="prop"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> SpreadCompositeRequestMixAsync(string name, string testHeader, string prop, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(testHeader, nameof(testHeader));
-            Argument.AssertNotNull(prop, nameof(prop));
-
-            SpreadCompositeRequestMixRequest spreadModel = new SpreadCompositeRequestMixRequest(prop, null);
-            return await SpreadCompositeRequestMixAsync(name, testHeader, spreadModel, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
-        }
+        public virtual Task<Response> SpreadCompositeRequestMixAsync(string name, string testHeader, string prop, CancellationToken cancellationToken = default) => throw null;
     }
 }

@@ -5,51 +5,18 @@
 
 #nullable disable
 
-using System;
-using System.Threading;
 using Azure.Core.Pipeline;
 
 namespace Routes
 {
-    /// <summary></summary>
     public partial class PathParametersMatrixExpansion
     {
-        private readonly Uri _endpoint;
-        private PathParametersMatrixExpansionStandard _cachedPathParametersMatrixExpansionStandard;
-        private PathParametersMatrixExpansionExplode _cachedPathParametersMatrixExpansionExplode;
+        protected PathParametersMatrixExpansion() => throw null;
 
-        /// <summary> Initializes a new instance of PathParametersMatrixExpansion for mocking. </summary>
-        protected PathParametersMatrixExpansion()
-        {
-        }
+        public virtual HttpPipeline Pipeline => throw null;
 
-        /// <summary> Initializes a new instance of PathParametersMatrixExpansion. </summary>
-        /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
-        /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
-        /// <param name="endpoint"> Service endpoint. </param>
-        internal PathParametersMatrixExpansion(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint)
-        {
-            ClientDiagnostics = clientDiagnostics;
-            _endpoint = endpoint;
-            Pipeline = pipeline;
-        }
+        public virtual PathParametersMatrixExpansionStandard GetPathParametersMatrixExpansionStandardClient() => throw null;
 
-        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
-        public virtual HttpPipeline Pipeline { get; }
-
-        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
-        internal ClientDiagnostics ClientDiagnostics { get; }
-
-        /// <summary> Initializes a new instance of PathParametersMatrixExpansionStandard. </summary>
-        public virtual PathParametersMatrixExpansionStandard GetPathParametersMatrixExpansionStandardClient()
-        {
-            return Volatile.Read(ref _cachedPathParametersMatrixExpansionStandard) ?? Interlocked.CompareExchange(ref _cachedPathParametersMatrixExpansionStandard, new PathParametersMatrixExpansionStandard(ClientDiagnostics, Pipeline, _endpoint), null) ?? _cachedPathParametersMatrixExpansionStandard;
-        }
-
-        /// <summary> Initializes a new instance of PathParametersMatrixExpansionExplode. </summary>
-        public virtual PathParametersMatrixExpansionExplode GetPathParametersMatrixExpansionExplodeClient()
-        {
-            return Volatile.Read(ref _cachedPathParametersMatrixExpansionExplode) ?? Interlocked.CompareExchange(ref _cachedPathParametersMatrixExpansionExplode, new PathParametersMatrixExpansionExplode(ClientDiagnostics, Pipeline, _endpoint), null) ?? _cachedPathParametersMatrixExpansionExplode;
-        }
+        public virtual PathParametersMatrixExpansionExplode GetPathParametersMatrixExpansionExplodeClient() => throw null;
     }
 }

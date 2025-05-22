@@ -5,37 +5,16 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
-
 namespace _Type.Union
 {
-    /// <summary> The Cat. </summary>
     public partial class Cat
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        public Cat(string name) => throw null;
 
-        /// <summary> Initializes a new instance of <see cref="Cat"/>. </summary>
-        /// <param name="name"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public Cat(string name)
+        public string Name
         {
-            Argument.AssertNotNull(name, nameof(name));
-
-            Name = name;
+            get => throw null;
+            set => throw null;
         }
-
-        /// <summary> Initializes a new instance of <see cref="Cat"/>. </summary>
-        /// <param name="name"></param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal Cat(string name, IDictionary<string, BinaryData> additionalBinaryDataProperties)
-        {
-            Name = name;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
-        }
-
-        /// <summary> Gets or sets the Name. </summary>
-        public string Name { get; set; }
     }
 }

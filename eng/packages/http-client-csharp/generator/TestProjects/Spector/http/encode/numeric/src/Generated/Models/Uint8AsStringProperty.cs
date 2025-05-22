@@ -5,34 +5,16 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
-
 namespace Encode.Numeric._Property
 {
-    /// <summary> The Uint8AsStringProperty. </summary>
     public partial class Uint8AsStringProperty
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        public Uint8AsStringProperty(byte value) => throw null;
 
-        /// <summary> Initializes a new instance of <see cref="Uint8AsStringProperty"/>. </summary>
-        /// <param name="value"></param>
-        public Uint8AsStringProperty(byte value)
+        public byte Value
         {
-            Value = value;
+            get => throw null;
+            set => throw null;
         }
-
-        /// <summary> Initializes a new instance of <see cref="Uint8AsStringProperty"/>. </summary>
-        /// <param name="value"></param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal Uint8AsStringProperty(byte value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
-        {
-            Value = value;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
-        }
-
-        /// <summary> Gets or sets the Value. </summary>
-        public byte Value { get; set; }
     }
 }

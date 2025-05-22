@@ -9,227 +9,42 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
-using Azure.Core;
 using Azure.Core.Pipeline;
 
 namespace Client.Structure.Service
 {
-    /// <summary>
-    /// Test that we can use @client and @operationGroup decorators to customize client side code structure, such as:
-    /// 1. have everything as default.
-    /// 2. to rename client or operation group
-    /// 3. one client can have more than one operations groups
-    /// 4. split one interface into two clients
-    /// 5. have two clients with operations come from different interfaces
-    /// 6. have two clients with a hierarchy relation.
-    /// </summary>
     public partial class ServiceClient
     {
-        private readonly Uri _endpoint;
-        private readonly ClientType _client;
-        private Baz _cachedBaz;
-        private Qux _cachedQux;
-        private Foo _cachedFoo;
-        private Bar _cachedBar;
+        protected ServiceClient() => throw null;
 
-        /// <summary> Initializes a new instance of ServiceClient for mocking. </summary>
-        protected ServiceClient()
-        {
-        }
+        public ServiceClient(Uri endpoint, ClientType client) : this(endpoint, client, new ServiceClientOptions()) => throw null;
 
-        /// <summary> Initializes a new instance of ServiceClient. </summary>
-        /// <param name="endpoint"> Service endpoint. </param>
-        /// <param name="client"> Need to be set as 'default', 'multi-client', 'renamed-operation', 'two-operation-group' in client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
-        public ServiceClient(Uri endpoint, ClientType client) : this(endpoint, client, new ServiceClientOptions())
-        {
-        }
+        public ServiceClient(Uri endpoint, ClientType client, ServiceClientOptions options) => throw null;
 
-        /// <summary> Initializes a new instance of ServiceClient. </summary>
-        /// <param name="endpoint"> Service endpoint. </param>
-        /// <param name="client"> Need to be set as 'default', 'multi-client', 'renamed-operation', 'two-operation-group' in client. </param>
-        /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
-        public ServiceClient(Uri endpoint, ClientType client, ServiceClientOptions options)
-        {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
+        public virtual HttpPipeline Pipeline => throw null;
 
-            options ??= new ServiceClientOptions();
+        public virtual Response One(RequestContext context) => throw null;
 
-            _endpoint = endpoint;
-            _client = client;
-            Pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>());
-            ClientDiagnostics = new ClientDiagnostics(options, true);
-        }
+        public virtual Task<Response> OneAsync(RequestContext context) => throw null;
 
-        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
-        public virtual HttpPipeline Pipeline { get; }
+        public virtual Response One(CancellationToken cancellationToken = default) => throw null;
 
-        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
-        internal ClientDiagnostics ClientDiagnostics { get; }
+        public virtual Task<Response> OneAsync(CancellationToken cancellationToken = default) => throw null;
 
-        /// <summary>
-        /// [Protocol Method] one
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual Response One(RequestContext context)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ServiceClient.One");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateOneRequest(context);
-                return Pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
+        public virtual Response Two(RequestContext context) => throw null;
 
-        /// <summary>
-        /// [Protocol Method] one
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> OneAsync(RequestContext context)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ServiceClient.One");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateOneRequest(context);
-                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
+        public virtual Task<Response> TwoAsync(RequestContext context) => throw null;
 
-        /// <summary> one. </summary>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response One(CancellationToken cancellationToken = default)
-        {
-            return One(cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
-        }
+        public virtual Response Two(CancellationToken cancellationToken = default) => throw null;
 
-        /// <summary> one. </summary>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> OneAsync(CancellationToken cancellationToken = default)
-        {
-            return await OneAsync(cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
-        }
+        public virtual Task<Response> TwoAsync(CancellationToken cancellationToken = default) => throw null;
 
-        /// <summary>
-        /// [Protocol Method] two
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual Response Two(RequestContext context)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ServiceClient.Two");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateTwoRequest(context);
-                return Pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
+        public virtual Baz GetBazClient() => throw null;
 
-        /// <summary>
-        /// [Protocol Method] two
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> TwoAsync(RequestContext context)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ServiceClient.Two");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateTwoRequest(context);
-                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
+        public virtual Qux GetQuxClient() => throw null;
 
-        /// <summary> two. </summary>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response Two(CancellationToken cancellationToken = default)
-        {
-            return Two(cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
-        }
+        public virtual Foo GetFooClient() => throw null;
 
-        /// <summary> two. </summary>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> TwoAsync(CancellationToken cancellationToken = default)
-        {
-            return await TwoAsync(cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
-        }
-
-        /// <summary> Initializes a new instance of Baz. </summary>
-        public virtual Baz GetBazClient()
-        {
-            return Volatile.Read(ref _cachedBaz) ?? Interlocked.CompareExchange(ref _cachedBaz, new Baz(ClientDiagnostics, Pipeline, _endpoint, _client), null) ?? _cachedBaz;
-        }
-
-        /// <summary> Initializes a new instance of Qux. </summary>
-        public virtual Qux GetQuxClient()
-        {
-            return Volatile.Read(ref _cachedQux) ?? Interlocked.CompareExchange(ref _cachedQux, new Qux(ClientDiagnostics, Pipeline, _endpoint, _client), null) ?? _cachedQux;
-        }
-
-        /// <summary> Initializes a new instance of Foo. </summary>
-        public virtual Foo GetFooClient()
-        {
-            return Volatile.Read(ref _cachedFoo) ?? Interlocked.CompareExchange(ref _cachedFoo, new Foo(ClientDiagnostics, Pipeline, _endpoint, _client), null) ?? _cachedFoo;
-        }
-
-        /// <summary> Initializes a new instance of Bar. </summary>
-        public virtual Bar GetBarClient()
-        {
-            return Volatile.Read(ref _cachedBar) ?? Interlocked.CompareExchange(ref _cachedBar, new Bar(ClientDiagnostics, Pipeline, _endpoint, _client), null) ?? _cachedBar;
-        }
+        public virtual Bar GetBarClient() => throw null;
     }
 }

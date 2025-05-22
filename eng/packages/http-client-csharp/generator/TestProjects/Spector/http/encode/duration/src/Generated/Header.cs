@@ -10,492 +10,62 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
-using Azure.Core;
 using Azure.Core.Pipeline;
 
 namespace Encode.Duration
 {
-    /// <summary></summary>
     public partial class Header
     {
-        private readonly Uri _endpoint;
+        protected Header() => throw null;
 
-        /// <summary> Initializes a new instance of Header for mocking. </summary>
-        protected Header()
-        {
-        }
+        public virtual HttpPipeline Pipeline => throw null;
 
-        /// <summary> Initializes a new instance of Header. </summary>
-        /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
-        /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
-        /// <param name="endpoint"> Service endpoint. </param>
-        internal Header(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint)
-        {
-            ClientDiagnostics = clientDiagnostics;
-            _endpoint = endpoint;
-            Pipeline = pipeline;
-        }
+        public virtual Response Default(TimeSpan duration, RequestContext context) => throw null;
 
-        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
-        public virtual HttpPipeline Pipeline { get; }
+        public virtual Task<Response> DefaultAsync(TimeSpan duration, RequestContext context) => throw null;
 
-        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
-        internal ClientDiagnostics ClientDiagnostics { get; }
+        public virtual Response Default(TimeSpan duration, CancellationToken cancellationToken = default) => throw null;
 
-        /// <summary>
-        /// [Protocol Method] default
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="duration"></param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual Response Default(TimeSpan duration, RequestContext context)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Header.Default");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateDefaultRequest(duration, context);
-                return Pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
+        public virtual Task<Response> DefaultAsync(TimeSpan duration, CancellationToken cancellationToken = default) => throw null;
 
-        /// <summary>
-        /// [Protocol Method] default
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="duration"></param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> DefaultAsync(TimeSpan duration, RequestContext context)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Header.Default");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateDefaultRequest(duration, context);
-                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
+        public virtual Response Iso8601(TimeSpan duration, RequestContext context) => throw null;
 
-        /// <summary> default. </summary>
-        /// <param name="duration"></param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response Default(TimeSpan duration, CancellationToken cancellationToken = default)
-        {
-            return Default(duration, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
-        }
+        public virtual Task<Response> Iso8601Async(TimeSpan duration, RequestContext context) => throw null;
 
-        /// <summary> default. </summary>
-        /// <param name="duration"></param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> DefaultAsync(TimeSpan duration, CancellationToken cancellationToken = default)
-        {
-            return await DefaultAsync(duration, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
-        }
+        public virtual Response Iso8601(TimeSpan duration, CancellationToken cancellationToken = default) => throw null;
 
-        /// <summary>
-        /// [Protocol Method] iso8601
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="duration"></param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual Response Iso8601(TimeSpan duration, RequestContext context)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Header.Iso8601");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateIso8601Request(duration, context);
-                return Pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
+        public virtual Task<Response> Iso8601Async(TimeSpan duration, CancellationToken cancellationToken = default) => throw null;
 
-        /// <summary>
-        /// [Protocol Method] iso8601
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="duration"></param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> Iso8601Async(TimeSpan duration, RequestContext context)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Header.Iso8601");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateIso8601Request(duration, context);
-                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
+        public virtual Response Iso8601Array(IEnumerable<TimeSpan> duration, RequestContext context) => throw null;
 
-        /// <summary> iso8601. </summary>
-        /// <param name="duration"></param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response Iso8601(TimeSpan duration, CancellationToken cancellationToken = default)
-        {
-            return Iso8601(duration, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
-        }
+        public virtual Task<Response> Iso8601ArrayAsync(IEnumerable<TimeSpan> duration, RequestContext context) => throw null;
 
-        /// <summary> iso8601. </summary>
-        /// <param name="duration"></param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> Iso8601Async(TimeSpan duration, CancellationToken cancellationToken = default)
-        {
-            return await Iso8601Async(duration, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
-        }
+        public virtual Response Iso8601Array(IEnumerable<TimeSpan> duration, CancellationToken cancellationToken = default) => throw null;
 
-        /// <summary>
-        /// [Protocol Method] iso8601Array
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="duration"></param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="duration"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual Response Iso8601Array(IEnumerable<TimeSpan> duration, RequestContext context)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Header.Iso8601Array");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNull(duration, nameof(duration));
+        public virtual Task<Response> Iso8601ArrayAsync(IEnumerable<TimeSpan> duration, CancellationToken cancellationToken = default) => throw null;
 
-                using HttpMessage message = CreateIso8601ArrayRequest(duration, context);
-                return Pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
+        public virtual Response Int32Seconds(TimeSpan duration, RequestContext context) => throw null;
 
-        /// <summary>
-        /// [Protocol Method] iso8601Array
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="duration"></param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="duration"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> Iso8601ArrayAsync(IEnumerable<TimeSpan> duration, RequestContext context)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Header.Iso8601Array");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNull(duration, nameof(duration));
+        public virtual Task<Response> Int32SecondsAsync(TimeSpan duration, RequestContext context) => throw null;
 
-                using HttpMessage message = CreateIso8601ArrayRequest(duration, context);
-                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
+        public virtual Response Int32Seconds(TimeSpan duration, CancellationToken cancellationToken = default) => throw null;
 
-        /// <summary> iso8601Array. </summary>
-        /// <param name="duration"></param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="duration"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response Iso8601Array(IEnumerable<TimeSpan> duration, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(duration, nameof(duration));
+        public virtual Task<Response> Int32SecondsAsync(TimeSpan duration, CancellationToken cancellationToken = default) => throw null;
 
-            return Iso8601Array(duration, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
-        }
+        public virtual Response FloatSeconds(TimeSpan duration, RequestContext context) => throw null;
 
-        /// <summary> iso8601Array. </summary>
-        /// <param name="duration"></param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="duration"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> Iso8601ArrayAsync(IEnumerable<TimeSpan> duration, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(duration, nameof(duration));
+        public virtual Task<Response> FloatSecondsAsync(TimeSpan duration, RequestContext context) => throw null;
 
-            return await Iso8601ArrayAsync(duration, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
-        }
+        public virtual Response FloatSeconds(TimeSpan duration, CancellationToken cancellationToken = default) => throw null;
 
-        /// <summary>
-        /// [Protocol Method] int32Seconds
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="duration"></param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual Response Int32Seconds(TimeSpan duration, RequestContext context)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Header.Int32Seconds");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateInt32SecondsRequest(duration, context);
-                return Pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
+        public virtual Task<Response> FloatSecondsAsync(TimeSpan duration, CancellationToken cancellationToken = default) => throw null;
 
-        /// <summary>
-        /// [Protocol Method] int32Seconds
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="duration"></param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> Int32SecondsAsync(TimeSpan duration, RequestContext context)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Header.Int32Seconds");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateInt32SecondsRequest(duration, context);
-                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
+        public virtual Response Float64Seconds(TimeSpan duration, RequestContext context) => throw null;
 
-        /// <summary> int32Seconds. </summary>
-        /// <param name="duration"></param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response Int32Seconds(TimeSpan duration, CancellationToken cancellationToken = default)
-        {
-            return Int32Seconds(duration, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
-        }
+        public virtual Task<Response> Float64SecondsAsync(TimeSpan duration, RequestContext context) => throw null;
 
-        /// <summary> int32Seconds. </summary>
-        /// <param name="duration"></param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> Int32SecondsAsync(TimeSpan duration, CancellationToken cancellationToken = default)
-        {
-            return await Int32SecondsAsync(duration, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
-        }
+        public virtual Response Float64Seconds(TimeSpan duration, CancellationToken cancellationToken = default) => throw null;
 
-        /// <summary>
-        /// [Protocol Method] floatSeconds
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="duration"></param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual Response FloatSeconds(TimeSpan duration, RequestContext context)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Header.FloatSeconds");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateFloatSecondsRequest(duration, context);
-                return Pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] floatSeconds
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="duration"></param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> FloatSecondsAsync(TimeSpan duration, RequestContext context)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Header.FloatSeconds");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateFloatSecondsRequest(duration, context);
-                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> floatSeconds. </summary>
-        /// <param name="duration"></param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response FloatSeconds(TimeSpan duration, CancellationToken cancellationToken = default)
-        {
-            return FloatSeconds(duration, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
-        }
-
-        /// <summary> floatSeconds. </summary>
-        /// <param name="duration"></param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> FloatSecondsAsync(TimeSpan duration, CancellationToken cancellationToken = default)
-        {
-            return await FloatSecondsAsync(duration, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// [Protocol Method] float64Seconds
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="duration"></param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual Response Float64Seconds(TimeSpan duration, RequestContext context)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Header.Float64Seconds");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateFloat64SecondsRequest(duration, context);
-                return Pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] float64Seconds
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="duration"></param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> Float64SecondsAsync(TimeSpan duration, RequestContext context)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Header.Float64Seconds");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateFloat64SecondsRequest(duration, context);
-                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> float64Seconds. </summary>
-        /// <param name="duration"></param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response Float64Seconds(TimeSpan duration, CancellationToken cancellationToken = default)
-        {
-            return Float64Seconds(duration, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
-        }
-
-        /// <summary> float64Seconds. </summary>
-        /// <param name="duration"></param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> Float64SecondsAsync(TimeSpan duration, CancellationToken cancellationToken = default)
-        {
-            return await Float64SecondsAsync(duration, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
-        }
+        public virtual Task<Response> Float64SecondsAsync(TimeSpan duration, CancellationToken cancellationToken = default) => throw null;
     }
 }

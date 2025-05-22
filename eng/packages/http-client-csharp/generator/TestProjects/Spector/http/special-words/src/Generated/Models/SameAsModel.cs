@@ -5,38 +5,12 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
-using SpecialWords;
-
 namespace SpecialWords._ModelProperties
 {
-    /// <summary> The SameAsModel. </summary>
     public partial class SameAsModel
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        public SameAsModel(string sameAsModelProperty) => throw null;
 
-        /// <summary> Initializes a new instance of <see cref="SameAsModel"/>. </summary>
-        /// <param name="sameAsModelProperty"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sameAsModelProperty"/> is null. </exception>
-        public SameAsModel(string sameAsModelProperty)
-        {
-            Argument.AssertNotNull(sameAsModelProperty, nameof(sameAsModelProperty));
-
-            SameAsModelProperty = sameAsModelProperty;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="SameAsModel"/>. </summary>
-        /// <param name="sameAsModelProperty"></param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SameAsModel(string sameAsModelProperty, IDictionary<string, BinaryData> additionalBinaryDataProperties)
-        {
-            SameAsModelProperty = sameAsModelProperty;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
-        }
-
-        /// <summary> Gets the SameAsModelProperty. </summary>
-        public string SameAsModelProperty { get; }
+        public string SameAsModelProperty => throw null;
     }
 }

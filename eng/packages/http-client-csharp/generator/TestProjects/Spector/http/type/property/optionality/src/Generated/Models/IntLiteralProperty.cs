@@ -5,32 +5,16 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
-
 namespace _Type.Property.Optional
 {
-    /// <summary> Model with int literal property. </summary>
     public partial class IntLiteralProperty
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        public IntLiteralProperty() => throw null;
 
-        /// <summary> Initializes a new instance of <see cref="IntLiteralProperty"/>. </summary>
-        public IntLiteralProperty()
+        public int? Property
         {
+            get => throw null;
+            set => throw null;
         }
-
-        /// <summary> Initializes a new instance of <see cref="IntLiteralProperty"/>. </summary>
-        /// <param name="property"> Property. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal IntLiteralProperty(int? @property, IDictionary<string, BinaryData> additionalBinaryDataProperties)
-        {
-            Property = @property;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
-        }
-
-        /// <summary> Property. </summary>
-        public int? Property { get; set; }
     }
 }

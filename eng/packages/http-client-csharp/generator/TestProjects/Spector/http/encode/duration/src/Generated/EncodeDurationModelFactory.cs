@@ -7,67 +7,22 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Encode.Duration._Property;
 
 namespace Encode.Duration
 {
-    /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class EncodeDurationModelFactory
     {
-        /// <summary> The DefaultDurationProperty. </summary>
-        /// <param name="value"></param>
-        /// <returns> A new <see cref="_Property.DefaultDurationProperty"/> instance for mocking. </returns>
-        public static DefaultDurationProperty DefaultDurationProperty(TimeSpan value = default)
-        {
+        public static DefaultDurationProperty DefaultDurationProperty(TimeSpan value = default) => throw null;
 
-            return new DefaultDurationProperty(value, additionalBinaryDataProperties: null);
-        }
+        public static ISO8601DurationProperty ISO8601DurationProperty(TimeSpan value = default) => throw null;
 
-        /// <summary> The ISO8601DurationProperty. </summary>
-        /// <param name="value"></param>
-        /// <returns> A new <see cref="_Property.ISO8601DurationProperty"/> instance for mocking. </returns>
-        public static ISO8601DurationProperty ISO8601DurationProperty(TimeSpan value = default)
-        {
+        public static Int32SecondsDurationProperty Int32SecondsDurationProperty(TimeSpan value = default) => throw null;
 
-            return new ISO8601DurationProperty(value, additionalBinaryDataProperties: null);
-        }
+        public static FloatSecondsDurationProperty FloatSecondsDurationProperty(TimeSpan value = default) => throw null;
 
-        /// <summary> The Int32SecondsDurationProperty. </summary>
-        /// <param name="value"></param>
-        /// <returns> A new <see cref="_Property.Int32SecondsDurationProperty"/> instance for mocking. </returns>
-        public static Int32SecondsDurationProperty Int32SecondsDurationProperty(TimeSpan value = default)
-        {
+        public static Float64SecondsDurationProperty Float64SecondsDurationProperty(TimeSpan value = default) => throw null;
 
-            return new Int32SecondsDurationProperty(value, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The FloatSecondsDurationProperty. </summary>
-        /// <param name="value"></param>
-        /// <returns> A new <see cref="_Property.FloatSecondsDurationProperty"/> instance for mocking. </returns>
-        public static FloatSecondsDurationProperty FloatSecondsDurationProperty(TimeSpan value = default)
-        {
-
-            return new FloatSecondsDurationProperty(value, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The Float64SecondsDurationProperty. </summary>
-        /// <param name="value"></param>
-        /// <returns> A new <see cref="_Property.Float64SecondsDurationProperty"/> instance for mocking. </returns>
-        public static Float64SecondsDurationProperty Float64SecondsDurationProperty(TimeSpan value = default)
-        {
-
-            return new Float64SecondsDurationProperty(value, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The FloatSecondsDurationArrayProperty. </summary>
-        /// <param name="value"></param>
-        /// <returns> A new <see cref="_Property.FloatSecondsDurationArrayProperty"/> instance for mocking. </returns>
-        public static FloatSecondsDurationArrayProperty FloatSecondsDurationArrayProperty(IEnumerable<TimeSpan> value = default)
-        {
-            value ??= new ChangeTrackingList<TimeSpan>();
-
-            return new FloatSecondsDurationArrayProperty(value?.ToList(), additionalBinaryDataProperties: null);
-        }
+        public static FloatSecondsDurationArrayProperty FloatSecondsDurationArrayProperty(IEnumerable<TimeSpan> value = default) => throw null;
     }
 }

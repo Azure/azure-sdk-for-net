@@ -5,39 +5,22 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
-
 namespace _Type.Property.Optional
 {
-    /// <summary> Model with required and optional properties. </summary>
     public partial class RequiredAndOptionalProperty
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        public RequiredAndOptionalProperty(int requiredProperty) => throw null;
 
-        /// <summary> Initializes a new instance of <see cref="RequiredAndOptionalProperty"/>. </summary>
-        /// <param name="requiredProperty"> required int property. </param>
-        public RequiredAndOptionalProperty(int requiredProperty)
+        public string OptionalProperty
         {
-            RequiredProperty = requiredProperty;
+            get => throw null;
+            set => throw null;
         }
 
-        /// <summary> Initializes a new instance of <see cref="RequiredAndOptionalProperty"/>. </summary>
-        /// <param name="optionalProperty"> optional string property. </param>
-        /// <param name="requiredProperty"> required int property. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RequiredAndOptionalProperty(string optionalProperty, int requiredProperty, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        public int RequiredProperty
         {
-            OptionalProperty = optionalProperty;
-            RequiredProperty = requiredProperty;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            get => throw null;
+            set => throw null;
         }
-
-        /// <summary> optional string property. </summary>
-        public string OptionalProperty { get; set; }
-
-        /// <summary> required int property. </summary>
-        public int RequiredProperty { get; set; }
     }
 }

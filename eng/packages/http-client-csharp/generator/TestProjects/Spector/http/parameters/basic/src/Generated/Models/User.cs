@@ -5,38 +5,12 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
-using Parameters.Basic;
-
 namespace Parameters.Basic.Models
 {
-    /// <summary> This is a simple model. </summary>
     public partial class User
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        public User(string name) => throw null;
 
-        /// <summary> Initializes a new instance of <see cref="User"/>. </summary>
-        /// <param name="name"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public User(string name)
-        {
-            Argument.AssertNotNull(name, nameof(name));
-
-            Name = name;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="User"/>. </summary>
-        /// <param name="name"></param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal User(string name, IDictionary<string, BinaryData> additionalBinaryDataProperties)
-        {
-            Name = name;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
-        }
-
-        /// <summary> Gets the Name. </summary>
-        public string Name { get; }
+        public string Name => throw null;
     }
 }

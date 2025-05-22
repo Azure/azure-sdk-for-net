@@ -5,38 +5,14 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace _Type.Property.ValueTypes
 {
-    /// <summary> Model with collection model properties. </summary>
     public partial class CollectionsModelProperty
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        public CollectionsModelProperty(IEnumerable<InnerModel> @property) => throw null;
 
-        /// <summary> Initializes a new instance of <see cref="CollectionsModelProperty"/>. </summary>
-        /// <param name="property"> Property. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="property"/> is null. </exception>
-        public CollectionsModelProperty(IEnumerable<InnerModel> @property)
-        {
-            Argument.AssertNotNull(@property, nameof(@property));
-
-            Property = @property.ToList();
-        }
-
-        /// <summary> Initializes a new instance of <see cref="CollectionsModelProperty"/>. </summary>
-        /// <param name="property"> Property. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CollectionsModelProperty(IList<InnerModel> @property, IDictionary<string, BinaryData> additionalBinaryDataProperties)
-        {
-            Property = @property;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
-        }
-
-        /// <summary> Property. </summary>
-        public IList<InnerModel> Property { get; }
+        public IList<InnerModel> Property => throw null;
     }
 }

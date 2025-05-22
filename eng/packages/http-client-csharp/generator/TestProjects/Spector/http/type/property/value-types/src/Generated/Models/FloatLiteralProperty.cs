@@ -5,32 +5,12 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
-
 namespace _Type.Property.ValueTypes
 {
-    /// <summary> Model with a float literal property. </summary>
     public partial class FloatLiteralProperty
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        public FloatLiteralProperty() => throw null;
 
-        /// <summary> Initializes a new instance of <see cref="FloatLiteralProperty"/>. </summary>
-        public FloatLiteralProperty()
-        {
-        }
-
-        /// <summary> Initializes a new instance of <see cref="FloatLiteralProperty"/>. </summary>
-        /// <param name="property"> Property. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FloatLiteralProperty(float @property, IDictionary<string, BinaryData> additionalBinaryDataProperties)
-        {
-            Property = @property;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
-        }
-
-        /// <summary> Property. </summary>
-        public float Property { get; } = 43.125F;
+        public float Property => throw null;
     }
 }

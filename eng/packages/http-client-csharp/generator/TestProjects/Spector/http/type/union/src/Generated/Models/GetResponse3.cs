@@ -5,34 +5,10 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
-
 namespace _Type.Union
 {
-    /// <summary> The GetResponse3. </summary>
     public partial class GetResponse3
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
-        /// <summary> Initializes a new instance of <see cref="GetResponse3"/>. </summary>
-        /// <param name="prop"></param>
-        internal GetResponse3(GetResponseProp2 prop)
-        {
-            Prop = prop;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="GetResponse3"/>. </summary>
-        /// <param name="prop"></param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal GetResponse3(GetResponseProp2 prop, IDictionary<string, BinaryData> additionalBinaryDataProperties)
-        {
-            Prop = prop;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
-        }
-
-        /// <summary> Gets the Prop. </summary>
-        public GetResponseProp2 Prop { get; }
+        public GetResponseProp2 Prop => throw null;
     }
 }

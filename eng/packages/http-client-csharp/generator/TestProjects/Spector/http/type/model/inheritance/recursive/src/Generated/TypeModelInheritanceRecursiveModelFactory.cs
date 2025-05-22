@@ -6,32 +6,13 @@
 #nullable disable
 
 using System.Collections.Generic;
-using System.Linq;
 
 namespace _Type.Model.Inheritance.Recursive
 {
-    /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class TypeModelInheritanceRecursiveModelFactory
     {
-        /// <summary> extension. </summary>
-        /// <param name="extension"></param>
-        /// <param name="level"></param>
-        /// <returns> A new <see cref="Recursive.Extension"/> instance for mocking. </returns>
-        public static Extension Extension(IEnumerable<Extension> extension = default, sbyte level = default)
-        {
-            extension ??= new ChangeTrackingList<Extension>();
+        public static Extension Extension(IEnumerable<Extension> extension = default, sbyte level = default) => throw null;
 
-            return new Extension(extension?.ToList(), additionalBinaryDataProperties: null, level);
-        }
-
-        /// <summary> element. </summary>
-        /// <param name="extension"></param>
-        /// <returns> A new <see cref="Recursive.Element"/> instance for mocking. </returns>
-        public static Element Element(IEnumerable<Extension> extension = default)
-        {
-            extension ??= new ChangeTrackingList<Extension>();
-
-            return new Element(extension?.ToList(), additionalBinaryDataProperties: null);
-        }
+        public static Element Element(IEnumerable<Extension> extension = default) => throw null;
     }
 }

@@ -10,31 +10,16 @@ using System.Collections.Generic;
 
 namespace _Type.Property.AdditionalProperties
 {
-    /// <summary> The model extends from a model that spread Record&lt;ModelForRecord&gt; with the different known property type. </summary>
     public partial class DifferentSpreadModelDerived : DifferentSpreadModelRecord
     {
-        /// <summary> Initializes a new instance of <see cref="DifferentSpreadModelDerived"/>. </summary>
-        /// <param name="knownProp"></param>
-        /// <param name="derivedProp"> The index property. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="knownProp"/> or <paramref name="derivedProp"/> is null. </exception>
-        public DifferentSpreadModelDerived(string knownProp, ModelForRecord derivedProp) : base(knownProp)
+        public DifferentSpreadModelDerived(string knownProp, ModelForRecord derivedProp) : base(knownProp) => throw null;
+
+        internal DifferentSpreadModelDerived(string knownProp, IDictionary<string, BinaryData> additionalProperties, ModelForRecord derivedProp) : base(knownProp, additionalProperties) => throw null;
+
+        public ModelForRecord DerivedProp
         {
-            Argument.AssertNotNull(knownProp, nameof(knownProp));
-            Argument.AssertNotNull(derivedProp, nameof(derivedProp));
-
-            DerivedProp = derivedProp;
+            get => throw null;
+            set => throw null;
         }
-
-        /// <summary> Initializes a new instance of <see cref="DifferentSpreadModelDerived"/>. </summary>
-        /// <param name="knownProp"></param>
-        /// <param name="additionalProperties"></param>
-        /// <param name="derivedProp"> The index property. </param>
-        internal DifferentSpreadModelDerived(string knownProp, IDictionary<string, BinaryData> additionalProperties, ModelForRecord derivedProp) : base(knownProp, additionalProperties)
-        {
-            DerivedProp = derivedProp;
-        }
-
-        /// <summary> The index property. </summary>
-        public ModelForRecord DerivedProp { get; set; }
     }
 }

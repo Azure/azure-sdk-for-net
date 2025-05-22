@@ -7,7 +7,6 @@
 
 namespace _Type.Property.ValueTypes
 {
-    /// <summary></summary>
     public enum UnionFloatLiteralPropertyProperty
     {
         /// <summary> _43125. </summary>

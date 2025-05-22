@@ -5,32 +5,16 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
-
 namespace _Type.Property.Optional
 {
-    /// <summary> Model with boolean literal property. </summary>
     public partial class BooleanLiteralProperty
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        public BooleanLiteralProperty() => throw null;
 
-        /// <summary> Initializes a new instance of <see cref="BooleanLiteralProperty"/>. </summary>
-        public BooleanLiteralProperty()
+        public bool? Property
         {
+            get => throw null;
+            set => throw null;
         }
-
-        /// <summary> Initializes a new instance of <see cref="BooleanLiteralProperty"/>. </summary>
-        /// <param name="property"> Property. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BooleanLiteralProperty(bool? @property, IDictionary<string, BinaryData> additionalBinaryDataProperties)
-        {
-            Property = @property;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
-        }
-
-        /// <summary> Property. </summary>
-        public bool? Property { get; set; }
     }
 }

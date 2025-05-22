@@ -9,7 +9,6 @@ using Azure.Core;
 
 namespace _Type.Property.Optional
 {
-    /// <summary> Client options for <see cref="OptionalClient"/>. </summary>
     public partial class OptionalClientOptions : ClientOptions
     {
     }

@@ -5,44 +5,20 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 
 namespace _Type.Property.AdditionalProperties
 {
-    /// <summary> The model spread Record&lt;string&gt; with the same known property type. </summary>
     public partial class SpreadStringRecord
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-        private IDictionary<string, string> _additionalStringProperties;
+        public SpreadStringRecord(string name) => throw null;
 
-        /// <summary> Initializes a new instance of <see cref="SpreadStringRecord"/>. </summary>
-        /// <param name="name"> The name property. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public SpreadStringRecord(string name)
+        public string Name
         {
-            Argument.AssertNotNull(name, nameof(name));
-
-            Name = name;
-            _additionalStringProperties = new ChangeTrackingDictionary<string, string>();
+            get => throw null;
+            set => throw null;
         }
 
-        /// <summary> Initializes a new instance of <see cref="SpreadStringRecord"/>. </summary>
-        /// <param name="name"> The name property. </param>
-        /// <param name="additionalProperties"></param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SpreadStringRecord(string name, IDictionary<string, string> additionalProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
-        {
-            Name = name;
-            _additionalStringProperties = additionalProperties;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
-        }
-
-        /// <summary> The name property. </summary>
-        public string Name { get; set; }
-
-        /// <summary> Gets the AdditionalProperties. </summary>
-        public IDictionary<string, string> AdditionalProperties => _additionalStringProperties;
+        public IDictionary<string, string> AdditionalProperties => throw null;
     }
 }

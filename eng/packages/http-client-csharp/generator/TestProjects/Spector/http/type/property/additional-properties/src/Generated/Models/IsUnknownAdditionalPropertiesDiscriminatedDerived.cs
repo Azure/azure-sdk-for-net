@@ -10,36 +10,22 @@ using System.Collections.Generic;
 
 namespace _Type.Property.AdditionalProperties
 {
-    /// <summary> The derived discriminated type. </summary>
     public partial class IsUnknownAdditionalPropertiesDiscriminatedDerived : IsUnknownAdditionalPropertiesDiscriminated
     {
-        /// <summary> Initializes a new instance of <see cref="IsUnknownAdditionalPropertiesDiscriminatedDerived"/>. </summary>
-        /// <param name="name"> The name property. </param>
-        /// <param name="index"> The index property. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public IsUnknownAdditionalPropertiesDiscriminatedDerived(string name, int index) : base(name, "derived")
-        {
-            Argument.AssertNotNull(name, nameof(name));
+        public IsUnknownAdditionalPropertiesDiscriminatedDerived(string name, int index) : base(name, "derived") => throw null;
 
-            Index = index;
+        internal IsUnknownAdditionalPropertiesDiscriminatedDerived(string name, string kind, IDictionary<string, BinaryData> additionalProperties, int index, float? age) : base(name, kind, additionalProperties) => throw null;
+
+        public int Index
+        {
+            get => throw null;
+            set => throw null;
         }
 
-        /// <summary> Initializes a new instance of <see cref="IsUnknownAdditionalPropertiesDiscriminatedDerived"/>. </summary>
-        /// <param name="name"> The name property. </param>
-        /// <param name="kind"> The discriminator. </param>
-        /// <param name="additionalProperties"></param>
-        /// <param name="index"> The index property. </param>
-        /// <param name="age"> The age property. </param>
-        internal IsUnknownAdditionalPropertiesDiscriminatedDerived(string name, string kind, IDictionary<string, BinaryData> additionalProperties, int index, float? age) : base(name, kind, additionalProperties)
+        public float? Age
         {
-            Index = index;
-            Age = age;
+            get => throw null;
+            set => throw null;
         }
-
-        /// <summary> The index property. </summary>
-        public int Index { get; set; }
-
-        /// <summary> The age property. </summary>
-        public float? Age { get; set; }
     }
 }

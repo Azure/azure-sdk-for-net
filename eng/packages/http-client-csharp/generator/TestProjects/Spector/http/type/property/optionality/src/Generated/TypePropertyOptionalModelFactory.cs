@@ -7,158 +7,41 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace _Type.Property.Optional
 {
-    /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class TypePropertyOptionalModelFactory
     {
-        /// <summary> Template type for testing models with optional property. Pass in the type of the property you are looking for. </summary>
-        /// <param name="property"> Property. </param>
-        /// <returns> A new <see cref="Property.Optional.StringProperty"/> instance for mocking. </returns>
-        public static StringProperty StringProperty(string @property = default)
-        {
+        public static StringProperty StringProperty(string @property = default) => throw null;
 
-            return new StringProperty(@property, additionalBinaryDataProperties: null);
-        }
+        public static BytesProperty BytesProperty(BinaryData @property = default) => throw null;
 
-        /// <summary> Template type for testing models with optional property. Pass in the type of the property you are looking for. </summary>
-        /// <param name="property"> Property. </param>
-        /// <returns> A new <see cref="Property.Optional.BytesProperty"/> instance for mocking. </returns>
-        public static BytesProperty BytesProperty(BinaryData @property = default)
-        {
+        public static DatetimeProperty DatetimeProperty(DateTimeOffset? @property = default) => throw null;
 
-            return new BytesProperty(@property, additionalBinaryDataProperties: null);
-        }
+        public static DurationProperty DurationProperty(TimeSpan? @property = default) => throw null;
 
-        /// <summary> Model with a datetime property. </summary>
-        /// <param name="property"> Property. </param>
-        /// <returns> A new <see cref="Property.Optional.DatetimeProperty"/> instance for mocking. </returns>
-        public static DatetimeProperty DatetimeProperty(DateTimeOffset? @property = default)
-        {
+        public static PlainDateProperty PlainDateProperty(DateTimeOffset? @property = default) => throw null;
 
-            return new DatetimeProperty(@property, additionalBinaryDataProperties: null);
-        }
+        public static PlainTimeProperty PlainTimeProperty(TimeSpan? @property = default) => throw null;
 
-        /// <summary> Model with a duration property. </summary>
-        /// <param name="property"> Property. </param>
-        /// <returns> A new <see cref="Property.Optional.DurationProperty"/> instance for mocking. </returns>
-        public static DurationProperty DurationProperty(TimeSpan? @property = default)
-        {
+        public static CollectionsByteProperty CollectionsByteProperty(IEnumerable<BinaryData> @property = default) => throw null;
 
-            return new DurationProperty(@property, additionalBinaryDataProperties: null);
-        }
+        public static CollectionsModelProperty CollectionsModelProperty(IEnumerable<StringProperty> @property = default) => throw null;
 
-        /// <summary> Model with a plainDate property. </summary>
-        /// <param name="property"> Property. </param>
-        /// <returns> A new <see cref="Property.Optional.PlainDateProperty"/> instance for mocking. </returns>
-        public static PlainDateProperty PlainDateProperty(DateTimeOffset? @property = default)
-        {
+        public static StringLiteralProperty StringLiteralProperty(string @property = default) => throw null;
 
-            return new PlainDateProperty(@property, additionalBinaryDataProperties: null);
-        }
+        public static IntLiteralProperty IntLiteralProperty(int? @property = default) => throw null;
 
-        /// <summary> Model with a plainTime property. </summary>
-        /// <param name="property"> Property. </param>
-        /// <returns> A new <see cref="Property.Optional.PlainTimeProperty"/> instance for mocking. </returns>
-        public static PlainTimeProperty PlainTimeProperty(TimeSpan? @property = default)
-        {
+        public static FloatLiteralProperty FloatLiteralProperty(float? @property = default) => throw null;
 
-            return new PlainTimeProperty(@property, additionalBinaryDataProperties: null);
-        }
+        public static BooleanLiteralProperty BooleanLiteralProperty(bool? @property = default) => throw null;
 
-        /// <summary> Model with collection bytes properties. </summary>
-        /// <param name="property"> Property. </param>
-        /// <returns> A new <see cref="Property.Optional.CollectionsByteProperty"/> instance for mocking. </returns>
-        public static CollectionsByteProperty CollectionsByteProperty(IEnumerable<BinaryData> @property = default)
-        {
-            @property ??= new ChangeTrackingList<BinaryData>();
+        public static UnionStringLiteralProperty UnionStringLiteralProperty(UnionStringLiteralPropertyProperty? @property = default) => throw null;
 
-            return new CollectionsByteProperty(@property?.ToList(), additionalBinaryDataProperties: null);
-        }
+        public static UnionIntLiteralProperty UnionIntLiteralProperty(UnionIntLiteralPropertyProperty? @property = default) => throw null;
 
-        /// <summary> Model with collection models properties. </summary>
-        /// <param name="property"> Property. </param>
-        /// <returns> A new <see cref="Property.Optional.CollectionsModelProperty"/> instance for mocking. </returns>
-        public static CollectionsModelProperty CollectionsModelProperty(IEnumerable<StringProperty> @property = default)
-        {
-            @property ??= new ChangeTrackingList<StringProperty>();
+        public static UnionFloatLiteralProperty UnionFloatLiteralProperty(UnionFloatLiteralPropertyProperty? @property = default) => throw null;
 
-            return new CollectionsModelProperty(@property?.ToList(), additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Model with string literal property. </summary>
-        /// <param name="property"> Property. </param>
-        /// <returns> A new <see cref="Property.Optional.StringLiteralProperty"/> instance for mocking. </returns>
-        public static StringLiteralProperty StringLiteralProperty(string @property = default)
-        {
-
-            return new StringLiteralProperty(@property, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Model with int literal property. </summary>
-        /// <param name="property"> Property. </param>
-        /// <returns> A new <see cref="Property.Optional.IntLiteralProperty"/> instance for mocking. </returns>
-        public static IntLiteralProperty IntLiteralProperty(int? @property = default)
-        {
-
-            return new IntLiteralProperty(@property, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Model with float literal property. </summary>
-        /// <param name="property"> Property. </param>
-        /// <returns> A new <see cref="Property.Optional.FloatLiteralProperty"/> instance for mocking. </returns>
-        public static FloatLiteralProperty FloatLiteralProperty(float? @property = default)
-        {
-
-            return new FloatLiteralProperty(@property, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Model with boolean literal property. </summary>
-        /// <param name="property"> Property. </param>
-        /// <returns> A new <see cref="Property.Optional.BooleanLiteralProperty"/> instance for mocking. </returns>
-        public static BooleanLiteralProperty BooleanLiteralProperty(bool? @property = default)
-        {
-
-            return new BooleanLiteralProperty(@property, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Model with union of string literal property. </summary>
-        /// <param name="property"> Property. </param>
-        /// <returns> A new <see cref="Property.Optional.UnionStringLiteralProperty"/> instance for mocking. </returns>
-        public static UnionStringLiteralProperty UnionStringLiteralProperty(UnionStringLiteralPropertyProperty? @property = default)
-        {
-
-            return new UnionStringLiteralProperty(@property, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Model with union of int literal property. </summary>
-        /// <param name="property"> Property. </param>
-        /// <returns> A new <see cref="Property.Optional.UnionIntLiteralProperty"/> instance for mocking. </returns>
-        public static UnionIntLiteralProperty UnionIntLiteralProperty(UnionIntLiteralPropertyProperty? @property = default)
-        {
-
-            return new UnionIntLiteralProperty(@property, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Model with union of float literal property. </summary>
-        /// <param name="property"> Property. </param>
-        /// <returns> A new <see cref="Property.Optional.UnionFloatLiteralProperty"/> instance for mocking. </returns>
-        public static UnionFloatLiteralProperty UnionFloatLiteralProperty(UnionFloatLiteralPropertyProperty? @property = default)
-        {
-
-            return new UnionFloatLiteralProperty(@property, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Model with required and optional properties. </summary>
-        /// <param name="optionalProperty"> optional string property. </param>
-        /// <param name="requiredProperty"> required int property. </param>
-        /// <returns> A new <see cref="Property.Optional.RequiredAndOptionalProperty"/> instance for mocking. </returns>
-        public static RequiredAndOptionalProperty RequiredAndOptionalProperty(string optionalProperty = default, int requiredProperty = default)
-        {
-
-            return new RequiredAndOptionalProperty(optionalProperty, requiredProperty, additionalBinaryDataProperties: null);
-        }
+        public static RequiredAndOptionalProperty RequiredAndOptionalProperty(string optionalProperty = default, int requiredProperty = default) => throw null;
     }
 }

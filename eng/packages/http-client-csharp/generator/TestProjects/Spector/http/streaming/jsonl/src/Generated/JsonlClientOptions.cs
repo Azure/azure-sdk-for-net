@@ -9,7 +9,6 @@ using Azure.Core;
 
 namespace Streaming.Jsonl
 {
-    /// <summary> Client options for <see cref="JsonlClient"/>. </summary>
     public partial class JsonlClientOptions : ClientOptions
     {
     }

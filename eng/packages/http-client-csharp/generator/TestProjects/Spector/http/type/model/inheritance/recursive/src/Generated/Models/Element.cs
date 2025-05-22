@@ -10,28 +10,12 @@ using System.Collections.Generic;
 
 namespace _Type.Model.Inheritance.Recursive
 {
-    /// <summary> element. </summary>
     public partial class Element
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        public Element() => throw null;
 
-        /// <summary> Initializes a new instance of <see cref="Element"/>. </summary>
-        public Element()
-        {
-            Extension = new ChangeTrackingList<Extension>();
-        }
+        internal Element(IList<Extension> extension, IDictionary<string, BinaryData> additionalBinaryDataProperties) => throw null;
 
-        /// <summary> Initializes a new instance of <see cref="Element"/>. </summary>
-        /// <param name="extension"></param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal Element(IList<Extension> extension, IDictionary<string, BinaryData> additionalBinaryDataProperties)
-        {
-            Extension = extension;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
-        }
-
-        /// <summary> Gets the Extension. </summary>
-        public IList<Extension> Extension { get; }
+        public IList<Extension> Extension => throw null;
     }
 }

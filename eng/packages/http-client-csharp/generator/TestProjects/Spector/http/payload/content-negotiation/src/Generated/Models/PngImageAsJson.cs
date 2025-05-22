@@ -6,53 +6,13 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 
 namespace Payload.ContentNegotiation._DifferentBody
 {
-    /// <summary> The PngImageAsJson. </summary>
     public partial class PngImageAsJson
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        public string ContentType => throw null;
 
-        /// <summary> Initializes a new instance of <see cref="PngImageAsJson"/>. </summary>
-        /// <param name="content"></param>
-        internal PngImageAsJson(BinaryData content)
-        {
-            Content = content;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="PngImageAsJson"/>. </summary>
-        /// <param name="contentType"></param>
-        /// <param name="content"></param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PngImageAsJson(string contentType, BinaryData content, IDictionary<string, BinaryData> additionalBinaryDataProperties)
-        {
-            ContentType = contentType;
-            Content = content;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
-        }
-
-        /// <summary> Gets the ContentType. </summary>
-        public string ContentType { get; } = "application/json";
-
-        /// <summary>
-        /// Gets the Content.
-        /// <para>
-        /// To assign a byte[] to this property use <see cref="BinaryData.FromBytes(byte[])"/>.
-        /// The byte[] will be serialized to a Base64 encoded string.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term> BinaryData.FromBytes(new byte[] { 1, 2, 3 }). </term>
-        /// <description> Creates a payload of "AQID". </description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData Content { get; }
+        public BinaryData Content => throw null;
     }
 }

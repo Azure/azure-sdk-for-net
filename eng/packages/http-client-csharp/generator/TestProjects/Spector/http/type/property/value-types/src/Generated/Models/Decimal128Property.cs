@@ -5,34 +5,16 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
-
 namespace _Type.Property.ValueTypes
 {
-    /// <summary> Model with a decimal128 property. </summary>
     public partial class Decimal128Property
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        public Decimal128Property(decimal @property) => throw null;
 
-        /// <summary> Initializes a new instance of <see cref="Decimal128Property"/>. </summary>
-        /// <param name="property"> Property. </param>
-        public Decimal128Property(decimal @property)
+        public decimal Property
         {
-            Property = @property;
+            get => throw null;
+            set => throw null;
         }
-
-        /// <summary> Initializes a new instance of <see cref="Decimal128Property"/>. </summary>
-        /// <param name="property"> Property. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal Decimal128Property(decimal @property, IDictionary<string, BinaryData> additionalBinaryDataProperties)
-        {
-            Property = @property;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
-        }
-
-        /// <summary> Property. </summary>
-        public decimal Property { get; set; }
     }
 }

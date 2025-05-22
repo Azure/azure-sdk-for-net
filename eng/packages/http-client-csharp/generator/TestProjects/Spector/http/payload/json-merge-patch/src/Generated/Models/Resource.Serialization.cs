@@ -7,299 +7,37 @@
 
 using System;
 using System.ClientModel.Primitives;
-using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
 
 namespace Payload.JsonMergePatch
 {
-    /// <summary></summary>
     public partial class Resource : IJsonModel<Resource>
     {
-        /// <summary> Initializes a new instance of <see cref="Resource"/> for deserialization. </summary>
-        internal Resource()
-        {
-        }
+        internal Resource() => throw null;
 
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<Resource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-        {
-            writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
-            writer.WriteEndObject();
-        }
+        void IJsonModel<Resource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<Resource>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
-            {
-                throw new FormatException($"The model {nameof(Resource)} does not support writing '{format}' format.");
-            }
-            writer.WritePropertyName("name"u8);
-            writer.WriteStringValue(Name);
-            if (Optional.IsDefined(Description))
-            {
-                writer.WritePropertyName("description"u8);
-                writer.WriteStringValue(Description);
-            }
-            if (Optional.IsCollectionDefined(Map))
-            {
-                writer.WritePropertyName("map"u8);
-                writer.WriteStartObject();
-                foreach (var item in Map)
-                {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value, options);
-                }
-                writer.WriteEndObject();
-            }
-            if (Optional.IsCollectionDefined(Array))
-            {
-                writer.WritePropertyName("array"u8);
-                writer.WriteStartArray();
-                foreach (InnerModel item in Array)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(IntValue))
-            {
-                writer.WritePropertyName("intValue"u8);
-                writer.WriteNumberValue(IntValue.Value);
-            }
-            if (Optional.IsDefined(FloatValue))
-            {
-                writer.WritePropertyName("floatValue"u8);
-                writer.WriteNumberValue(FloatValue.Value);
-            }
-            if (Optional.IsDefined(InnerModel))
-            {
-                writer.WritePropertyName("innerModel"u8);
-                writer.WriteObjectValue(InnerModel, options);
-            }
-            if (Optional.IsCollectionDefined(IntArray))
-            {
-                writer.WritePropertyName("intArray"u8);
-                writer.WriteStartArray();
-                foreach (int item in IntArray)
-                {
-                    writer.WriteNumberValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
-            {
-                foreach (var item in _additionalBinaryDataProperties)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
-        }
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        Resource IJsonModel<Resource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        Resource IJsonModel<Resource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual Resource JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<Resource>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
-            {
-                throw new FormatException($"The model {nameof(Resource)} does not support reading '{format}' format.");
-            }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeResource(document.RootElement, options);
-        }
+        protected virtual Resource JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static Resource DeserializeResource(JsonElement element, ModelReaderWriterOptions options)
-        {
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            string name = default;
-            string description = default;
-            IDictionary<string, InnerModel> map = default;
-            IList<InnerModel> array = default;
-            int? intValue = default;
-            float? floatValue = default;
-            InnerModel innerModel = default;
-            IList<int> intArray = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
-            {
-                if (prop.NameEquals("name"u8))
-                {
-                    name = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("description"u8))
-                {
-                    description = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("map"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    Dictionary<string, InnerModel> dictionary = new Dictionary<string, InnerModel>();
-                    foreach (var prop0 in prop.Value.EnumerateObject())
-                    {
-                        dictionary.Add(prop0.Name, InnerModel.DeserializeInnerModel(prop0.Value, options));
-                    }
-                    map = dictionary;
-                    continue;
-                }
-                if (prop.NameEquals("array"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<InnerModel> array0 = new List<InnerModel>();
-                    foreach (var item in prop.Value.EnumerateArray())
-                    {
-                        array0.Add(InnerModel.DeserializeInnerModel(item, options));
-                    }
-                    array = array0;
-                    continue;
-                }
-                if (prop.NameEquals("intValue"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    intValue = prop.Value.GetInt32();
-                    continue;
-                }
-                if (prop.NameEquals("floatValue"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    floatValue = prop.Value.GetSingle();
-                    continue;
-                }
-                if (prop.NameEquals("innerModel"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    innerModel = InnerModel.DeserializeInnerModel(prop.Value, options);
-                    continue;
-                }
-                if (prop.NameEquals("intArray"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<int> array0 = new List<int>();
-                    foreach (var item in prop.Value.EnumerateArray())
-                    {
-                        array0.Add(item.GetInt32());
-                    }
-                    intArray = array0;
-                    continue;
-                }
-                if (options.Format != "W")
-                {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
-                }
-            }
-            return new Resource(
-                name,
-                description,
-                map ?? new ChangeTrackingDictionary<string, InnerModel>(),
-                array ?? new ChangeTrackingList<InnerModel>(),
-                intValue,
-                floatValue,
-                innerModel,
-                intArray ?? new ChangeTrackingList<int>(),
-                additionalBinaryDataProperties);
-        }
+        BinaryData IPersistableModel<Resource>.Write(ModelReaderWriterOptions options) => throw null;
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<Resource>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<Resource>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, PayloadJsonMergePatchContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(Resource)} does not support writing '{options.Format}' format.");
-            }
-        }
+        Resource IPersistableModel<Resource>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        Resource IPersistableModel<Resource>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        protected virtual Resource PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual Resource PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<Resource>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
-                    {
-                        return DeserializeResource(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(Resource)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<Resource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<Resource>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
         /// <param name="resource"> The <see cref="Resource"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(Resource resource)
-        {
-            if (resource == null)
-            {
-                return null;
-            }
-            Utf8JsonBinaryContent content = new Utf8JsonBinaryContent();
-            content.JsonWriter.WriteObjectValue(resource, ModelSerializationExtensions.WireOptions);
-            return content;
-        }
+        public static implicit operator RequestContent(Resource resource) => throw null;
 
-        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="Resource"/> from. </param>
-        public static explicit operator Resource(Response result)
-        {
-            using Response response = result;
-            using JsonDocument document = JsonDocument.Parse(response.Content);
-            return DeserializeResource(document.RootElement, ModelSerializationExtensions.WireOptions);
-        }
+        public static explicit operator Resource(Response result) => throw null;
     }
 }

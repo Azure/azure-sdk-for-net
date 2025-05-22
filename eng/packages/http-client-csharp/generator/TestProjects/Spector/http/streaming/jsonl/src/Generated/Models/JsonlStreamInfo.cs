@@ -5,32 +5,10 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
-
 namespace TypeSpec.Http.Streams
 {
-    /// <summary> The JsonlStreamInfo. </summary>
     public partial class JsonlStreamInfo
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
-        /// <summary> Initializes a new instance of <see cref="JsonlStreamInfo"/>. </summary>
-        internal JsonlStreamInfo()
-        {
-        }
-
-        /// <summary> Initializes a new instance of <see cref="JsonlStreamInfo"/>. </summary>
-        /// <param name="contentType"></param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal JsonlStreamInfo(string contentType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
-        {
-            ContentType = contentType;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
-        }
-
-        /// <summary> Gets the ContentType. </summary>
-        public string ContentType { get; } = "application/jsonl";
+        public string ContentType => throw null;
     }
 }

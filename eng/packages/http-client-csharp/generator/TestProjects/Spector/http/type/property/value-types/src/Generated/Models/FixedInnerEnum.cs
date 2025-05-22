@@ -7,7 +7,6 @@
 
 namespace _Type.Property.ValueTypes
 {
-    /// <summary> Enum that will be used as a property for model EnumProperty. Non-extensible. </summary>
     public enum FixedInnerEnum
     {
         /// <summary> First value. </summary>

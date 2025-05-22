@@ -10,31 +10,16 @@ using System.Collections.Generic;
 
 namespace _Type.Property.AdditionalProperties
 {
-    /// <summary> The model extends from a model that spread Record&lt;float32&gt; with the different known property type. </summary>
     public partial class DifferentSpreadFloatDerived : DifferentSpreadFloatRecord
     {
-        /// <summary> Initializes a new instance of <see cref="DifferentSpreadFloatDerived"/>. </summary>
-        /// <param name="name"> The id property. </param>
-        /// <param name="derivedProp"> The index property. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public DifferentSpreadFloatDerived(string name, float derivedProp) : base(name)
+        public DifferentSpreadFloatDerived(string name, float derivedProp) : base(name) => throw null;
+
+        internal DifferentSpreadFloatDerived(string name, IDictionary<string, float> additionalProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties, float derivedProp) : base(name, additionalProperties, additionalBinaryDataProperties) => throw null;
+
+        public float DerivedProp
         {
-            Argument.AssertNotNull(name, nameof(name));
-
-            DerivedProp = derivedProp;
+            get => throw null;
+            set => throw null;
         }
-
-        /// <summary> Initializes a new instance of <see cref="DifferentSpreadFloatDerived"/>. </summary>
-        /// <param name="name"> The id property. </param>
-        /// <param name="additionalProperties"></param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="derivedProp"> The index property. </param>
-        internal DifferentSpreadFloatDerived(string name, IDictionary<string, float> additionalProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties, float derivedProp) : base(name, additionalProperties, additionalBinaryDataProperties)
-        {
-            DerivedProp = derivedProp;
-        }
-
-        /// <summary> The index property. </summary>
-        public float DerivedProp { get; set; }
     }
 }

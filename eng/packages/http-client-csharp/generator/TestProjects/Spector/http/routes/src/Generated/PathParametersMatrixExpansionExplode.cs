@@ -5,299 +5,42 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
-using Azure.Core;
 using Azure.Core.Pipeline;
 
 namespace Routes
 {
-    /// <summary></summary>
     public partial class PathParametersMatrixExpansionExplode
     {
-        private readonly Uri _endpoint;
+        protected PathParametersMatrixExpansionExplode() => throw null;
 
-        /// <summary> Initializes a new instance of PathParametersMatrixExpansionExplode for mocking. </summary>
-        protected PathParametersMatrixExpansionExplode()
-        {
-        }
+        public virtual HttpPipeline Pipeline => throw null;
 
-        /// <summary> Initializes a new instance of PathParametersMatrixExpansionExplode. </summary>
-        /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
-        /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
-        /// <param name="endpoint"> Service endpoint. </param>
-        internal PathParametersMatrixExpansionExplode(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint)
-        {
-            ClientDiagnostics = clientDiagnostics;
-            _endpoint = endpoint;
-            Pipeline = pipeline;
-        }
+        public virtual Response Primitive(string @param, RequestContext context) => throw null;
 
-        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
-        public virtual HttpPipeline Pipeline { get; }
+        public virtual Task<Response> PrimitiveAsync(string @param, RequestContext context) => throw null;
 
-        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
-        internal ClientDiagnostics ClientDiagnostics { get; }
+        public virtual Response Primitive(string @param, CancellationToken cancellationToken = default) => throw null;
 
-        /// <summary>
-        /// [Protocol Method] primitive
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="param"></param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="param"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual Response Primitive(string @param, RequestContext context)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("PathParametersMatrixExpansionExplode.Primitive");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNull(@param, nameof(@param));
+        public virtual Task<Response> PrimitiveAsync(string @param, CancellationToken cancellationToken = default) => throw null;
 
-                using HttpMessage message = CreatePrimitiveRequest(@param, context);
-                return Pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
+        public virtual Response Array(IEnumerable<string> @param, RequestContext context) => throw null;
 
-        /// <summary>
-        /// [Protocol Method] primitive
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="param"></param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="param"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> PrimitiveAsync(string @param, RequestContext context)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("PathParametersMatrixExpansionExplode.Primitive");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNull(@param, nameof(@param));
+        public virtual Task<Response> ArrayAsync(IEnumerable<string> @param, RequestContext context) => throw null;
 
-                using HttpMessage message = CreatePrimitiveRequest(@param, context);
-                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
+        public virtual Response Array(IEnumerable<string> @param, CancellationToken cancellationToken = default) => throw null;
 
-        /// <summary> primitive. </summary>
-        /// <param name="param"></param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="param"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response Primitive(string @param, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(@param, nameof(@param));
+        public virtual Task<Response> ArrayAsync(IEnumerable<string> @param, CancellationToken cancellationToken = default) => throw null;
 
-            return Primitive(@param, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
-        }
+        public virtual Response Record(IDictionary<string, int> @param, RequestContext context) => throw null;
 
-        /// <summary> primitive. </summary>
-        /// <param name="param"></param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="param"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> PrimitiveAsync(string @param, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(@param, nameof(@param));
+        public virtual Task<Response> RecordAsync(IDictionary<string, int> @param, RequestContext context) => throw null;
 
-            return await PrimitiveAsync(@param, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
-        }
+        public virtual Response Record(IDictionary<string, int> @param, CancellationToken cancellationToken = default) => throw null;
 
-        /// <summary>
-        /// [Protocol Method] array
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="param"></param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="param"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual Response Array(IEnumerable<string> @param, RequestContext context)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("PathParametersMatrixExpansionExplode.Array");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNull(@param, nameof(@param));
-
-                using HttpMessage message = CreateArrayRequest(@param, context);
-                return Pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] array
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="param"></param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="param"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> ArrayAsync(IEnumerable<string> @param, RequestContext context)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("PathParametersMatrixExpansionExplode.Array");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNull(@param, nameof(@param));
-
-                using HttpMessage message = CreateArrayRequest(@param, context);
-                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> array. </summary>
-        /// <param name="param"></param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="param"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response Array(IEnumerable<string> @param, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(@param, nameof(@param));
-
-            return Array(@param, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
-        }
-
-        /// <summary> array. </summary>
-        /// <param name="param"></param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="param"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> ArrayAsync(IEnumerable<string> @param, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(@param, nameof(@param));
-
-            return await ArrayAsync(@param, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// [Protocol Method] record
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="param"></param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="param"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual Response Record(IDictionary<string, int> @param, RequestContext context)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("PathParametersMatrixExpansionExplode.Record");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNull(@param, nameof(@param));
-
-                using HttpMessage message = CreateRecordRequest(@param, context);
-                return Pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] record
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="param"></param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="param"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> RecordAsync(IDictionary<string, int> @param, RequestContext context)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("PathParametersMatrixExpansionExplode.Record");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNull(@param, nameof(@param));
-
-                using HttpMessage message = CreateRecordRequest(@param, context);
-                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> record. </summary>
-        /// <param name="param"></param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="param"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response Record(IDictionary<string, int> @param, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(@param, nameof(@param));
-
-            return Record(@param, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
-        }
-
-        /// <summary> record. </summary>
-        /// <param name="param"></param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="param"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> RecordAsync(IDictionary<string, int> @param, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(@param, nameof(@param));
-
-            return await RecordAsync(@param, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
-        }
+        public virtual Task<Response> RecordAsync(IDictionary<string, int> @param, CancellationToken cancellationToken = default) => throw null;
     }
 }

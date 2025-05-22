@@ -6,93 +6,23 @@
 #nullable disable
 
 using System.Collections.Generic;
-using System.Linq;
 
 namespace _Type.Model.Inheritance.SingleDiscriminator
 {
-    /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class TypeModelInheritanceSingleDiscriminatorModelFactory
     {
-        /// <summary>
-        /// This is base model for polymorphic single level inheritance with a discriminator.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="SeaGull"/>, <see cref="Sparrow"/>, <see cref="Goose"/>, and <see cref="Eagle"/>.
-        /// </summary>
-        /// <param name="kind"></param>
-        /// <param name="wingspan"></param>
-        /// <returns> A new <see cref="SingleDiscriminator.Bird"/> instance for mocking. </returns>
-        public static Bird Bird(string kind = default, int wingspan = default)
-        {
+        public static Bird Bird(string kind = default, int wingspan = default) => throw null;
 
-            return new UnknownBird(kind, wingspan, additionalBinaryDataProperties: null);
-        }
+        public static SeaGull SeaGull(int wingspan = default) => throw null;
 
-        /// <summary> The second level model in polymorphic single level inheritance. </summary>
-        /// <param name="wingspan"></param>
-        /// <returns> A new <see cref="SingleDiscriminator.SeaGull"/> instance for mocking. </returns>
-        public static SeaGull SeaGull(int wingspan = default)
-        {
+        public static Sparrow Sparrow(int wingspan = default) => throw null;
 
-            return new SeaGull("seagull", wingspan, additionalBinaryDataProperties: null);
-        }
+        public static Goose Goose(int wingspan = default) => throw null;
 
-        /// <summary> The second level model in polymorphic single level inheritance. </summary>
-        /// <param name="wingspan"></param>
-        /// <returns> A new <see cref="SingleDiscriminator.Sparrow"/> instance for mocking. </returns>
-        public static Sparrow Sparrow(int wingspan = default)
-        {
+        public static Eagle Eagle(int wingspan = default, IEnumerable<Bird> friends = default, IDictionary<string, Bird> hate = default, Bird partner = default) => throw null;
 
-            return new Sparrow("sparrow", wingspan, additionalBinaryDataProperties: null);
-        }
+        public static Dinosaur Dinosaur(string kind = default, int size = default) => throw null;
 
-        /// <summary> The second level model in polymorphic single level inheritance. </summary>
-        /// <param name="wingspan"></param>
-        /// <returns> A new <see cref="SingleDiscriminator.Goose"/> instance for mocking. </returns>
-        public static Goose Goose(int wingspan = default)
-        {
-
-            return new Goose("goose", wingspan, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The second level model in polymorphic single levels inheritance which contains references to other polymorphic instances. </summary>
-        /// <param name="wingspan"></param>
-        /// <param name="friends"></param>
-        /// <param name="hate"></param>
-        /// <param name="partner"></param>
-        /// <returns> A new <see cref="SingleDiscriminator.Eagle"/> instance for mocking. </returns>
-        public static Eagle Eagle(int wingspan = default, IEnumerable<Bird> friends = default, IDictionary<string, Bird> hate = default, Bird partner = default)
-        {
-            friends ??= new ChangeTrackingList<Bird>();
-            hate ??= new ChangeTrackingDictionary<string, Bird>();
-
-            return new Eagle(
-                "eagle",
-                wingspan,
-                additionalBinaryDataProperties: null,
-                friends?.ToList(),
-                hate,
-                partner);
-        }
-
-        /// <summary>
-        /// Define a base class in the legacy way. Discriminator property is not explicitly defined in the model.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="TRex"/>.
-        /// </summary>
-        /// <param name="kind"> Discriminator property for Dinosaur. </param>
-        /// <param name="size"></param>
-        /// <returns> A new <see cref="SingleDiscriminator.Dinosaur"/> instance for mocking. </returns>
-        public static Dinosaur Dinosaur(string kind = default, int size = default)
-        {
-
-            return new UnknownDinosaur(kind, size, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The second level legacy model in polymorphic single level inheritance. </summary>
-        /// <param name="size"></param>
-        /// <returns> A new <see cref="SingleDiscriminator.TRex"/> instance for mocking. </returns>
-        public static TRex TRex(int size = default)
-        {
-
-            return new TRex("t-rex", size, additionalBinaryDataProperties: null);
-        }
+        public static TRex TRex(int size = default) => throw null;
     }
 }

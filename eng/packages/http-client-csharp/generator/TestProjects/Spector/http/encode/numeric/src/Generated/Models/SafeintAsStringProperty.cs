@@ -5,34 +5,16 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
-
 namespace Encode.Numeric._Property
 {
-    /// <summary> The SafeintAsStringProperty. </summary>
     public partial class SafeintAsStringProperty
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        public SafeintAsStringProperty(long value) => throw null;
 
-        /// <summary> Initializes a new instance of <see cref="SafeintAsStringProperty"/>. </summary>
-        /// <param name="value"></param>
-        public SafeintAsStringProperty(long value)
+        public long Value
         {
-            Value = value;
+            get => throw null;
+            set => throw null;
         }
-
-        /// <summary> Initializes a new instance of <see cref="SafeintAsStringProperty"/>. </summary>
-        /// <param name="value"></param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SafeintAsStringProperty(long value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
-        {
-            Value = value;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
-        }
-
-        /// <summary> Gets or sets the Value. </summary>
-        public long Value { get; set; }
     }
 }

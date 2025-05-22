@@ -10,32 +10,16 @@ using System.Collections.Generic;
 
 namespace _Type.Model.Inheritance.NotDiscriminated
 {
-    /// <summary> This is base model for not-discriminated normal multiple levels inheritance. </summary>
     public partial class Pet
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        public Pet(string name) => throw null;
 
-        /// <summary> Initializes a new instance of <see cref="Pet"/>. </summary>
-        /// <param name="name"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public Pet(string name)
+        internal Pet(string name, IDictionary<string, BinaryData> additionalBinaryDataProperties) => throw null;
+
+        public string Name
         {
-            Argument.AssertNotNull(name, nameof(name));
-
-            Name = name;
+            get => throw null;
+            set => throw null;
         }
-
-        /// <summary> Initializes a new instance of <see cref="Pet"/>. </summary>
-        /// <param name="name"></param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal Pet(string name, IDictionary<string, BinaryData> additionalBinaryDataProperties)
-        {
-            Name = name;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
-        }
-
-        /// <summary> Gets or sets the Name. </summary>
-        public string Name { get; set; }
     }
 }

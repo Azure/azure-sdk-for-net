@@ -6,33 +6,17 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 
 namespace Encode.Duration._Property
 {
-    /// <summary> The DefaultDurationProperty. </summary>
     public partial class DefaultDurationProperty
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        public DefaultDurationProperty(TimeSpan value) => throw null;
 
-        /// <summary> Initializes a new instance of <see cref="DefaultDurationProperty"/>. </summary>
-        /// <param name="value"></param>
-        public DefaultDurationProperty(TimeSpan value)
+        public TimeSpan Value
         {
-            Value = value;
+            get => throw null;
+            set => throw null;
         }
-
-        /// <summary> Initializes a new instance of <see cref="DefaultDurationProperty"/>. </summary>
-        /// <param name="value"></param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DefaultDurationProperty(TimeSpan value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
-        {
-            Value = value;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
-        }
-
-        /// <summary> Gets or sets the Value. </summary>
-        public TimeSpan Value { get; set; }
     }
 }

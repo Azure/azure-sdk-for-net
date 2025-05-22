@@ -5,65 +5,30 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace _Type.Model.Visibility
 {
-    /// <summary> Output model with visibility properties. </summary>
     public partial class VisibilityModel
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        public VisibilityModel(int queryProp, IEnumerable<string> createProp, IEnumerable<int> updateProp, bool deleteProp) => throw null;
 
-        /// <summary> Initializes a new instance of <see cref="VisibilityModel"/>. </summary>
-        /// <param name="queryProp"> Required int32, illustrating a query property. </param>
-        /// <param name="createProp"> Required string[], illustrating a create property. </param>
-        /// <param name="updateProp"> Required int32[], illustrating a update property. </param>
-        /// <param name="deleteProp"> Required bool, illustrating a delete property. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="createProp"/> or <paramref name="updateProp"/> is null. </exception>
-        public VisibilityModel(int queryProp, IEnumerable<string> createProp, IEnumerable<int> updateProp, bool deleteProp)
+        public string ReadProp => throw null;
+
+        public int QueryProp
         {
-            Argument.AssertNotNull(createProp, nameof(createProp));
-            Argument.AssertNotNull(updateProp, nameof(updateProp));
-
-            QueryProp = queryProp;
-            CreateProp = createProp.ToList();
-            UpdateProp = updateProp.ToList();
-            DeleteProp = deleteProp;
+            get => throw null;
+            set => throw null;
         }
 
-        /// <summary> Initializes a new instance of <see cref="VisibilityModel"/>. </summary>
-        /// <param name="readProp"> Required string, illustrating a readonly property. </param>
-        /// <param name="queryProp"> Required int32, illustrating a query property. </param>
-        /// <param name="createProp"> Required string[], illustrating a create property. </param>
-        /// <param name="updateProp"> Required int32[], illustrating a update property. </param>
-        /// <param name="deleteProp"> Required bool, illustrating a delete property. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VisibilityModel(string readProp, int queryProp, IList<string> createProp, IList<int> updateProp, bool deleteProp, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        public IList<string> CreateProp => throw null;
+
+        public IList<int> UpdateProp => throw null;
+
+        public bool DeleteProp
         {
-            ReadProp = readProp;
-            QueryProp = queryProp;
-            CreateProp = createProp;
-            UpdateProp = updateProp;
-            DeleteProp = deleteProp;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            get => throw null;
+            set => throw null;
         }
-
-        /// <summary> Required string, illustrating a readonly property. </summary>
-        public string ReadProp { get; }
-
-        /// <summary> Required int32, illustrating a query property. </summary>
-        public int QueryProp { get; set; }
-
-        /// <summary> Required string[], illustrating a create property. </summary>
-        public IList<string> CreateProp { get; }
-
-        /// <summary> Required int32[], illustrating a update property. </summary>
-        public IList<int> UpdateProp { get; }
-
-        /// <summary> Required bool, illustrating a delete property. </summary>
-        public bool DeleteProp { get; set; }
     }
 }

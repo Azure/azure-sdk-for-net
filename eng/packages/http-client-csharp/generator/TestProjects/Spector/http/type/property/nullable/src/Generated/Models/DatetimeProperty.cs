@@ -6,43 +6,23 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 
 namespace _Type.Property.Nullable
 {
-    /// <summary> Model with a datetime property. </summary>
     public partial class DatetimeProperty
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        public DatetimeProperty(string requiredProperty, DateTimeOffset? nullableProperty) => throw null;
 
-        /// <summary> Initializes a new instance of <see cref="DatetimeProperty"/>. </summary>
-        /// <param name="requiredProperty"> Required property. </param>
-        /// <param name="nullableProperty"> Property. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="requiredProperty"/> is null. </exception>
-        public DatetimeProperty(string requiredProperty, DateTimeOffset? nullableProperty)
+        public string RequiredProperty
         {
-            Argument.AssertNotNull(requiredProperty, nameof(requiredProperty));
-
-            RequiredProperty = requiredProperty;
-            NullableProperty = nullableProperty;
+            get => throw null;
+            set => throw null;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DatetimeProperty"/>. </summary>
-        /// <param name="requiredProperty"> Required property. </param>
-        /// <param name="nullableProperty"> Property. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DatetimeProperty(string requiredProperty, DateTimeOffset? nullableProperty, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        public DateTimeOffset? NullableProperty
         {
-            RequiredProperty = requiredProperty;
-            NullableProperty = nullableProperty;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            get => throw null;
+            set => throw null;
         }
-
-        /// <summary> Required property. </summary>
-        public string RequiredProperty { get; set; }
-
-        /// <summary> Property. </summary>
-        public DateTimeOffset? NullableProperty { get; set; }
     }
 }

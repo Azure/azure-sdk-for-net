@@ -6,257 +6,78 @@
 #nullable disable
 
 using System;
-using System.Threading;
 using Azure.Core.Pipeline;
 
 namespace _Type.Property.AdditionalProperties
 {
-    /// <summary> Tests for additional properties of models. </summary>
     public partial class AdditionalPropertiesClient
     {
-        private readonly Uri _endpoint;
-        private ExtendsUnknown _cachedExtendsUnknown;
-        private ExtendsUnknownDerived _cachedExtendsUnknownDerived;
-        private ExtendsUnknownDiscriminated _cachedExtendsUnknownDiscriminated;
-        private IsUnknown _cachedIsUnknown;
-        private IsUnknownDerived _cachedIsUnknownDerived;
-        private IsUnknownDiscriminated _cachedIsUnknownDiscriminated;
-        private ExtendsString _cachedExtendsString;
-        private IsString _cachedIsString;
-        private SpreadString _cachedSpreadString;
-        private ExtendsFloat _cachedExtendsFloat;
-        private IsFloat _cachedIsFloat;
-        private SpreadFloat _cachedSpreadFloat;
-        private ExtendsModel _cachedExtendsModel;
-        private IsModel _cachedIsModel;
-        private SpreadModel _cachedSpreadModel;
-        private ExtendsModelArray _cachedExtendsModelArray;
-        private IsModelArray _cachedIsModelArray;
-        private SpreadModelArray _cachedSpreadModelArray;
-        private SpreadDifferentString _cachedSpreadDifferentString;
-        private SpreadDifferentFloat _cachedSpreadDifferentFloat;
-        private SpreadDifferentModel _cachedSpreadDifferentModel;
-        private SpreadDifferentModelArray _cachedSpreadDifferentModelArray;
-        private ExtendsDifferentSpreadString _cachedExtendsDifferentSpreadString;
-        private ExtendsDifferentSpreadFloat _cachedExtendsDifferentSpreadFloat;
-        private ExtendsDifferentSpreadModel _cachedExtendsDifferentSpreadModel;
-        private ExtendsDifferentSpreadModelArray _cachedExtendsDifferentSpreadModelArray;
-        private MultipleSpread _cachedMultipleSpread;
-        private SpreadRecordUnion _cachedSpreadRecordUnion;
-        private SpreadRecordNonDiscriminatedUnion _cachedSpreadRecordNonDiscriminatedUnion;
-        private SpreadRecordNonDiscriminatedUnion2 _cachedSpreadRecordNonDiscriminatedUnion2;
-        private SpreadRecordNonDiscriminatedUnion3 _cachedSpreadRecordNonDiscriminatedUnion3;
+        public AdditionalPropertiesClient() : this(new Uri("http://localhost:3000"), new AdditionalPropertiesClientOptions()) => throw null;
 
-        /// <summary> Initializes a new instance of AdditionalPropertiesClient. </summary>
-        public AdditionalPropertiesClient() : this(new Uri("http://localhost:3000"), new AdditionalPropertiesClientOptions())
-        {
-        }
+        public AdditionalPropertiesClient(Uri endpoint, AdditionalPropertiesClientOptions options) => throw null;
 
-        /// <summary> Initializes a new instance of AdditionalPropertiesClient. </summary>
-        /// <param name="endpoint"> Service endpoint. </param>
-        /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
-        public AdditionalPropertiesClient(Uri endpoint, AdditionalPropertiesClientOptions options)
-        {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
+        public virtual HttpPipeline Pipeline => throw null;
 
-            options ??= new AdditionalPropertiesClientOptions();
+        public virtual ExtendsUnknown GetExtendsUnknownClient() => throw null;
 
-            _endpoint = endpoint;
-            Pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>());
-            ClientDiagnostics = new ClientDiagnostics(options, true);
-        }
+        public virtual ExtendsUnknownDerived GetExtendsUnknownDerivedClient() => throw null;
 
-        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
-        public virtual HttpPipeline Pipeline { get; }
+        public virtual ExtendsUnknownDiscriminated GetExtendsUnknownDiscriminatedClient() => throw null;
 
-        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
-        internal ClientDiagnostics ClientDiagnostics { get; }
+        public virtual IsUnknown GetIsUnknownClient() => throw null;
 
-        /// <summary> Initializes a new instance of ExtendsUnknown. </summary>
-        public virtual ExtendsUnknown GetExtendsUnknownClient()
-        {
-            return Volatile.Read(ref _cachedExtendsUnknown) ?? Interlocked.CompareExchange(ref _cachedExtendsUnknown, new ExtendsUnknown(ClientDiagnostics, Pipeline, _endpoint), null) ?? _cachedExtendsUnknown;
-        }
+        public virtual IsUnknownDerived GetIsUnknownDerivedClient() => throw null;
 
-        /// <summary> Initializes a new instance of ExtendsUnknownDerived. </summary>
-        public virtual ExtendsUnknownDerived GetExtendsUnknownDerivedClient()
-        {
-            return Volatile.Read(ref _cachedExtendsUnknownDerived) ?? Interlocked.CompareExchange(ref _cachedExtendsUnknownDerived, new ExtendsUnknownDerived(ClientDiagnostics, Pipeline, _endpoint), null) ?? _cachedExtendsUnknownDerived;
-        }
+        public virtual IsUnknownDiscriminated GetIsUnknownDiscriminatedClient() => throw null;
 
-        /// <summary> Initializes a new instance of ExtendsUnknownDiscriminated. </summary>
-        public virtual ExtendsUnknownDiscriminated GetExtendsUnknownDiscriminatedClient()
-        {
-            return Volatile.Read(ref _cachedExtendsUnknownDiscriminated) ?? Interlocked.CompareExchange(ref _cachedExtendsUnknownDiscriminated, new ExtendsUnknownDiscriminated(ClientDiagnostics, Pipeline, _endpoint), null) ?? _cachedExtendsUnknownDiscriminated;
-        }
+        public virtual ExtendsString GetExtendsStringClient() => throw null;
 
-        /// <summary> Initializes a new instance of IsUnknown. </summary>
-        public virtual IsUnknown GetIsUnknownClient()
-        {
-            return Volatile.Read(ref _cachedIsUnknown) ?? Interlocked.CompareExchange(ref _cachedIsUnknown, new IsUnknown(ClientDiagnostics, Pipeline, _endpoint), null) ?? _cachedIsUnknown;
-        }
+        public virtual IsString GetIsStringClient() => throw null;
 
-        /// <summary> Initializes a new instance of IsUnknownDerived. </summary>
-        public virtual IsUnknownDerived GetIsUnknownDerivedClient()
-        {
-            return Volatile.Read(ref _cachedIsUnknownDerived) ?? Interlocked.CompareExchange(ref _cachedIsUnknownDerived, new IsUnknownDerived(ClientDiagnostics, Pipeline, _endpoint), null) ?? _cachedIsUnknownDerived;
-        }
+        public virtual SpreadString GetSpreadStringClient() => throw null;
 
-        /// <summary> Initializes a new instance of IsUnknownDiscriminated. </summary>
-        public virtual IsUnknownDiscriminated GetIsUnknownDiscriminatedClient()
-        {
-            return Volatile.Read(ref _cachedIsUnknownDiscriminated) ?? Interlocked.CompareExchange(ref _cachedIsUnknownDiscriminated, new IsUnknownDiscriminated(ClientDiagnostics, Pipeline, _endpoint), null) ?? _cachedIsUnknownDiscriminated;
-        }
+        public virtual ExtendsFloat GetExtendsFloatClient() => throw null;
 
-        /// <summary> Initializes a new instance of ExtendsString. </summary>
-        public virtual ExtendsString GetExtendsStringClient()
-        {
-            return Volatile.Read(ref _cachedExtendsString) ?? Interlocked.CompareExchange(ref _cachedExtendsString, new ExtendsString(ClientDiagnostics, Pipeline, _endpoint), null) ?? _cachedExtendsString;
-        }
+        public virtual IsFloat GetIsFloatClient() => throw null;
 
-        /// <summary> Initializes a new instance of IsString. </summary>
-        public virtual IsString GetIsStringClient()
-        {
-            return Volatile.Read(ref _cachedIsString) ?? Interlocked.CompareExchange(ref _cachedIsString, new IsString(ClientDiagnostics, Pipeline, _endpoint), null) ?? _cachedIsString;
-        }
+        public virtual SpreadFloat GetSpreadFloatClient() => throw null;
 
-        /// <summary> Initializes a new instance of SpreadString. </summary>
-        public virtual SpreadString GetSpreadStringClient()
-        {
-            return Volatile.Read(ref _cachedSpreadString) ?? Interlocked.CompareExchange(ref _cachedSpreadString, new SpreadString(ClientDiagnostics, Pipeline, _endpoint), null) ?? _cachedSpreadString;
-        }
+        public virtual ExtendsModel GetExtendsModelClient() => throw null;
 
-        /// <summary> Initializes a new instance of ExtendsFloat. </summary>
-        public virtual ExtendsFloat GetExtendsFloatClient()
-        {
-            return Volatile.Read(ref _cachedExtendsFloat) ?? Interlocked.CompareExchange(ref _cachedExtendsFloat, new ExtendsFloat(ClientDiagnostics, Pipeline, _endpoint), null) ?? _cachedExtendsFloat;
-        }
+        public virtual IsModel GetIsModelClient() => throw null;
 
-        /// <summary> Initializes a new instance of IsFloat. </summary>
-        public virtual IsFloat GetIsFloatClient()
-        {
-            return Volatile.Read(ref _cachedIsFloat) ?? Interlocked.CompareExchange(ref _cachedIsFloat, new IsFloat(ClientDiagnostics, Pipeline, _endpoint), null) ?? _cachedIsFloat;
-        }
+        public virtual SpreadModel GetSpreadModelClient() => throw null;
 
-        /// <summary> Initializes a new instance of SpreadFloat. </summary>
-        public virtual SpreadFloat GetSpreadFloatClient()
-        {
-            return Volatile.Read(ref _cachedSpreadFloat) ?? Interlocked.CompareExchange(ref _cachedSpreadFloat, new SpreadFloat(ClientDiagnostics, Pipeline, _endpoint), null) ?? _cachedSpreadFloat;
-        }
+        public virtual ExtendsModelArray GetExtendsModelArrayClient() => throw null;
 
-        /// <summary> Initializes a new instance of ExtendsModel. </summary>
-        public virtual ExtendsModel GetExtendsModelClient()
-        {
-            return Volatile.Read(ref _cachedExtendsModel) ?? Interlocked.CompareExchange(ref _cachedExtendsModel, new ExtendsModel(ClientDiagnostics, Pipeline, _endpoint), null) ?? _cachedExtendsModel;
-        }
+        public virtual IsModelArray GetIsModelArrayClient() => throw null;
 
-        /// <summary> Initializes a new instance of IsModel. </summary>
-        public virtual IsModel GetIsModelClient()
-        {
-            return Volatile.Read(ref _cachedIsModel) ?? Interlocked.CompareExchange(ref _cachedIsModel, new IsModel(ClientDiagnostics, Pipeline, _endpoint), null) ?? _cachedIsModel;
-        }
+        public virtual SpreadModelArray GetSpreadModelArrayClient() => throw null;
 
-        /// <summary> Initializes a new instance of SpreadModel. </summary>
-        public virtual SpreadModel GetSpreadModelClient()
-        {
-            return Volatile.Read(ref _cachedSpreadModel) ?? Interlocked.CompareExchange(ref _cachedSpreadModel, new SpreadModel(ClientDiagnostics, Pipeline, _endpoint), null) ?? _cachedSpreadModel;
-        }
+        public virtual SpreadDifferentString GetSpreadDifferentStringClient() => throw null;
 
-        /// <summary> Initializes a new instance of ExtendsModelArray. </summary>
-        public virtual ExtendsModelArray GetExtendsModelArrayClient()
-        {
-            return Volatile.Read(ref _cachedExtendsModelArray) ?? Interlocked.CompareExchange(ref _cachedExtendsModelArray, new ExtendsModelArray(ClientDiagnostics, Pipeline, _endpoint), null) ?? _cachedExtendsModelArray;
-        }
+        public virtual SpreadDifferentFloat GetSpreadDifferentFloatClient() => throw null;
 
-        /// <summary> Initializes a new instance of IsModelArray. </summary>
-        public virtual IsModelArray GetIsModelArrayClient()
-        {
-            return Volatile.Read(ref _cachedIsModelArray) ?? Interlocked.CompareExchange(ref _cachedIsModelArray, new IsModelArray(ClientDiagnostics, Pipeline, _endpoint), null) ?? _cachedIsModelArray;
-        }
+        public virtual SpreadDifferentModel GetSpreadDifferentModelClient() => throw null;
 
-        /// <summary> Initializes a new instance of SpreadModelArray. </summary>
-        public virtual SpreadModelArray GetSpreadModelArrayClient()
-        {
-            return Volatile.Read(ref _cachedSpreadModelArray) ?? Interlocked.CompareExchange(ref _cachedSpreadModelArray, new SpreadModelArray(ClientDiagnostics, Pipeline, _endpoint), null) ?? _cachedSpreadModelArray;
-        }
+        public virtual SpreadDifferentModelArray GetSpreadDifferentModelArrayClient() => throw null;
 
-        /// <summary> Initializes a new instance of SpreadDifferentString. </summary>
-        public virtual SpreadDifferentString GetSpreadDifferentStringClient()
-        {
-            return Volatile.Read(ref _cachedSpreadDifferentString) ?? Interlocked.CompareExchange(ref _cachedSpreadDifferentString, new SpreadDifferentString(ClientDiagnostics, Pipeline, _endpoint), null) ?? _cachedSpreadDifferentString;
-        }
+        public virtual ExtendsDifferentSpreadString GetExtendsDifferentSpreadStringClient() => throw null;
 
-        /// <summary> Initializes a new instance of SpreadDifferentFloat. </summary>
-        public virtual SpreadDifferentFloat GetSpreadDifferentFloatClient()
-        {
-            return Volatile.Read(ref _cachedSpreadDifferentFloat) ?? Interlocked.CompareExchange(ref _cachedSpreadDifferentFloat, new SpreadDifferentFloat(ClientDiagnostics, Pipeline, _endpoint), null) ?? _cachedSpreadDifferentFloat;
-        }
+        public virtual ExtendsDifferentSpreadFloat GetExtendsDifferentSpreadFloatClient() => throw null;
 
-        /// <summary> Initializes a new instance of SpreadDifferentModel. </summary>
-        public virtual SpreadDifferentModel GetSpreadDifferentModelClient()
-        {
-            return Volatile.Read(ref _cachedSpreadDifferentModel) ?? Interlocked.CompareExchange(ref _cachedSpreadDifferentModel, new SpreadDifferentModel(ClientDiagnostics, Pipeline, _endpoint), null) ?? _cachedSpreadDifferentModel;
-        }
+        public virtual ExtendsDifferentSpreadModel GetExtendsDifferentSpreadModelClient() => throw null;
 
-        /// <summary> Initializes a new instance of SpreadDifferentModelArray. </summary>
-        public virtual SpreadDifferentModelArray GetSpreadDifferentModelArrayClient()
-        {
-            return Volatile.Read(ref _cachedSpreadDifferentModelArray) ?? Interlocked.CompareExchange(ref _cachedSpreadDifferentModelArray, new SpreadDifferentModelArray(ClientDiagnostics, Pipeline, _endpoint), null) ?? _cachedSpreadDifferentModelArray;
-        }
+        public virtual ExtendsDifferentSpreadModelArray GetExtendsDifferentSpreadModelArrayClient() => throw null;
 
-        /// <summary> Initializes a new instance of ExtendsDifferentSpreadString. </summary>
-        public virtual ExtendsDifferentSpreadString GetExtendsDifferentSpreadStringClient()
-        {
-            return Volatile.Read(ref _cachedExtendsDifferentSpreadString) ?? Interlocked.CompareExchange(ref _cachedExtendsDifferentSpreadString, new ExtendsDifferentSpreadString(ClientDiagnostics, Pipeline, _endpoint), null) ?? _cachedExtendsDifferentSpreadString;
-        }
+        public virtual MultipleSpread GetMultipleSpreadClient() => throw null;
 
-        /// <summary> Initializes a new instance of ExtendsDifferentSpreadFloat. </summary>
-        public virtual ExtendsDifferentSpreadFloat GetExtendsDifferentSpreadFloatClient()
-        {
-            return Volatile.Read(ref _cachedExtendsDifferentSpreadFloat) ?? Interlocked.CompareExchange(ref _cachedExtendsDifferentSpreadFloat, new ExtendsDifferentSpreadFloat(ClientDiagnostics, Pipeline, _endpoint), null) ?? _cachedExtendsDifferentSpreadFloat;
-        }
+        public virtual SpreadRecordUnion GetSpreadRecordUnionClient() => throw null;
 
-        /// <summary> Initializes a new instance of ExtendsDifferentSpreadModel. </summary>
-        public virtual ExtendsDifferentSpreadModel GetExtendsDifferentSpreadModelClient()
-        {
-            return Volatile.Read(ref _cachedExtendsDifferentSpreadModel) ?? Interlocked.CompareExchange(ref _cachedExtendsDifferentSpreadModel, new ExtendsDifferentSpreadModel(ClientDiagnostics, Pipeline, _endpoint), null) ?? _cachedExtendsDifferentSpreadModel;
-        }
+        public virtual SpreadRecordNonDiscriminatedUnion GetSpreadRecordNonDiscriminatedUnionClient() => throw null;
 
-        /// <summary> Initializes a new instance of ExtendsDifferentSpreadModelArray. </summary>
-        public virtual ExtendsDifferentSpreadModelArray GetExtendsDifferentSpreadModelArrayClient()
-        {
-            return Volatile.Read(ref _cachedExtendsDifferentSpreadModelArray) ?? Interlocked.CompareExchange(ref _cachedExtendsDifferentSpreadModelArray, new ExtendsDifferentSpreadModelArray(ClientDiagnostics, Pipeline, _endpoint), null) ?? _cachedExtendsDifferentSpreadModelArray;
-        }
+        public virtual SpreadRecordNonDiscriminatedUnion2 GetSpreadRecordNonDiscriminatedUnion2Client() => throw null;
 
-        /// <summary> Initializes a new instance of MultipleSpread. </summary>
-        public virtual MultipleSpread GetMultipleSpreadClient()
-        {
-            return Volatile.Read(ref _cachedMultipleSpread) ?? Interlocked.CompareExchange(ref _cachedMultipleSpread, new MultipleSpread(ClientDiagnostics, Pipeline, _endpoint), null) ?? _cachedMultipleSpread;
-        }
-
-        /// <summary> Initializes a new instance of SpreadRecordUnion. </summary>
-        public virtual SpreadRecordUnion GetSpreadRecordUnionClient()
-        {
-            return Volatile.Read(ref _cachedSpreadRecordUnion) ?? Interlocked.CompareExchange(ref _cachedSpreadRecordUnion, new SpreadRecordUnion(ClientDiagnostics, Pipeline, _endpoint), null) ?? _cachedSpreadRecordUnion;
-        }
-
-        /// <summary> Initializes a new instance of SpreadRecordNonDiscriminatedUnion. </summary>
-        public virtual SpreadRecordNonDiscriminatedUnion GetSpreadRecordNonDiscriminatedUnionClient()
-        {
-            return Volatile.Read(ref _cachedSpreadRecordNonDiscriminatedUnion) ?? Interlocked.CompareExchange(ref _cachedSpreadRecordNonDiscriminatedUnion, new SpreadRecordNonDiscriminatedUnion(ClientDiagnostics, Pipeline, _endpoint), null) ?? _cachedSpreadRecordNonDiscriminatedUnion;
-        }
-
-        /// <summary> Initializes a new instance of SpreadRecordNonDiscriminatedUnion2. </summary>
-        public virtual SpreadRecordNonDiscriminatedUnion2 GetSpreadRecordNonDiscriminatedUnion2Client()
-        {
-            return Volatile.Read(ref _cachedSpreadRecordNonDiscriminatedUnion2) ?? Interlocked.CompareExchange(ref _cachedSpreadRecordNonDiscriminatedUnion2, new SpreadRecordNonDiscriminatedUnion2(ClientDiagnostics, Pipeline, _endpoint), null) ?? _cachedSpreadRecordNonDiscriminatedUnion2;
-        }
-
-        /// <summary> Initializes a new instance of SpreadRecordNonDiscriminatedUnion3. </summary>
-        public virtual SpreadRecordNonDiscriminatedUnion3 GetSpreadRecordNonDiscriminatedUnion3Client()
-        {
-            return Volatile.Read(ref _cachedSpreadRecordNonDiscriminatedUnion3) ?? Interlocked.CompareExchange(ref _cachedSpreadRecordNonDiscriminatedUnion3, new SpreadRecordNonDiscriminatedUnion3(ClientDiagnostics, Pipeline, _endpoint), null) ?? _cachedSpreadRecordNonDiscriminatedUnion3;
-        }
+        public virtual SpreadRecordNonDiscriminatedUnion3 GetSpreadRecordNonDiscriminatedUnion3Client() => throw null;
     }
 }

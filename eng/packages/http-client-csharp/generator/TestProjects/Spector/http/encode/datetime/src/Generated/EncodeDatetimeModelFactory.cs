@@ -7,57 +7,19 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Encode.Datetime
 {
-    /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class EncodeDatetimeModelFactory
     {
-        /// <summary> The DefaultDatetimeProperty. </summary>
-        /// <param name="value"></param>
-        /// <returns> A new <see cref="Datetime.DefaultDatetimeProperty"/> instance for mocking. </returns>
-        public static DefaultDatetimeProperty DefaultDatetimeProperty(DateTimeOffset value = default)
-        {
+        public static DefaultDatetimeProperty DefaultDatetimeProperty(DateTimeOffset value = default) => throw null;
 
-            return new DefaultDatetimeProperty(value, additionalBinaryDataProperties: null);
-        }
+        public static Rfc3339DatetimeProperty Rfc3339DatetimeProperty(DateTimeOffset value = default) => throw null;
 
-        /// <summary> The Rfc3339DatetimeProperty. </summary>
-        /// <param name="value"></param>
-        /// <returns> A new <see cref="Datetime.Rfc3339DatetimeProperty"/> instance for mocking. </returns>
-        public static Rfc3339DatetimeProperty Rfc3339DatetimeProperty(DateTimeOffset value = default)
-        {
+        public static Rfc7231DatetimeProperty Rfc7231DatetimeProperty(DateTimeOffset value = default) => throw null;
 
-            return new Rfc3339DatetimeProperty(value, additionalBinaryDataProperties: null);
-        }
+        public static UnixTimestampDatetimeProperty UnixTimestampDatetimeProperty(DateTimeOffset value = default) => throw null;
 
-        /// <summary> The Rfc7231DatetimeProperty. </summary>
-        /// <param name="value"></param>
-        /// <returns> A new <see cref="Datetime.Rfc7231DatetimeProperty"/> instance for mocking. </returns>
-        public static Rfc7231DatetimeProperty Rfc7231DatetimeProperty(DateTimeOffset value = default)
-        {
-
-            return new Rfc7231DatetimeProperty(value, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The UnixTimestampDatetimeProperty. </summary>
-        /// <param name="value"></param>
-        /// <returns> A new <see cref="Datetime.UnixTimestampDatetimeProperty"/> instance for mocking. </returns>
-        public static UnixTimestampDatetimeProperty UnixTimestampDatetimeProperty(DateTimeOffset value = default)
-        {
-
-            return new UnixTimestampDatetimeProperty(value, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The UnixTimestampArrayDatetimeProperty. </summary>
-        /// <param name="value"></param>
-        /// <returns> A new <see cref="Datetime.UnixTimestampArrayDatetimeProperty"/> instance for mocking. </returns>
-        public static UnixTimestampArrayDatetimeProperty UnixTimestampArrayDatetimeProperty(IEnumerable<DateTimeOffset> value = default)
-        {
-            value ??= new ChangeTrackingList<DateTimeOffset>();
-
-            return new UnixTimestampArrayDatetimeProperty(value?.ToList(), additionalBinaryDataProperties: null);
-        }
+        public static UnixTimestampArrayDatetimeProperty UnixTimestampArrayDatetimeProperty(IEnumerable<DateTimeOffset> value = default) => throw null;
     }
 }

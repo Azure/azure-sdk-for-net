@@ -9,7 +9,6 @@ using Azure.Core;
 
 namespace Parameters.CollectionFormat
 {
-    /// <summary> Client options for <see cref="CollectionFormatClient"/>. </summary>
     public partial class CollectionFormatClientOptions : ClientOptions
     {
     }

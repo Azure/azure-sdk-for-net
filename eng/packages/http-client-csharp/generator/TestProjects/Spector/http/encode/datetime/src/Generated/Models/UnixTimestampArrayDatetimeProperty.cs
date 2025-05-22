@@ -7,36 +7,13 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Encode.Datetime
 {
-    /// <summary> The UnixTimestampArrayDatetimeProperty. </summary>
     public partial class UnixTimestampArrayDatetimeProperty
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        public UnixTimestampArrayDatetimeProperty(IEnumerable<DateTimeOffset> value) => throw null;
 
-        /// <summary> Initializes a new instance of <see cref="UnixTimestampArrayDatetimeProperty"/>. </summary>
-        /// <param name="value"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public UnixTimestampArrayDatetimeProperty(IEnumerable<DateTimeOffset> value)
-        {
-            Argument.AssertNotNull(value, nameof(value));
-
-            Value = value.ToList();
-        }
-
-        /// <summary> Initializes a new instance of <see cref="UnixTimestampArrayDatetimeProperty"/>. </summary>
-        /// <param name="value"></param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnixTimestampArrayDatetimeProperty(IList<DateTimeOffset> value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
-        {
-            Value = value;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
-        }
-
-        /// <summary> Gets the Value. </summary>
-        public IList<DateTimeOffset> Value { get; }
+        public IList<DateTimeOffset> Value => throw null;
     }
 }

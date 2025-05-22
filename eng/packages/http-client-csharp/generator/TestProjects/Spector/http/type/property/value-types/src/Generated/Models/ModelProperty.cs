@@ -5,37 +5,16 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
-
 namespace _Type.Property.ValueTypes
 {
-    /// <summary> Model with model properties. </summary>
     public partial class ModelProperty
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        public ModelProperty(InnerModel @property) => throw null;
 
-        /// <summary> Initializes a new instance of <see cref="ModelProperty"/>. </summary>
-        /// <param name="property"> Property. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="property"/> is null. </exception>
-        public ModelProperty(InnerModel @property)
+        public InnerModel Property
         {
-            Argument.AssertNotNull(@property, nameof(@property));
-
-            Property = @property;
+            get => throw null;
+            set => throw null;
         }
-
-        /// <summary> Initializes a new instance of <see cref="ModelProperty"/>. </summary>
-        /// <param name="property"> Property. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ModelProperty(InnerModel @property, IDictionary<string, BinaryData> additionalBinaryDataProperties)
-        {
-            Property = @property;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
-        }
-
-        /// <summary> Property. </summary>
-        public InnerModel Property { get; set; }
     }
 }

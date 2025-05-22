@@ -14,273 +14,36 @@ using Azure.Core.Pipeline;
 
 namespace _Specs_.Azure.Core.Lro.Standard
 {
-    /// <summary> Illustrates bodies templated with Azure Core with long-running operation. </summary>
     public partial class StandardClient
     {
-        private readonly Uri _endpoint;
-        private readonly string _apiVersion;
+        public StandardClient() : this(new Uri("http://localhost:3000"), new StandardClientOptions()) => throw null;
 
-        /// <summary> Initializes a new instance of StandardClient. </summary>
-        public StandardClient() : this(new Uri("http://localhost:3000"), new StandardClientOptions())
-        {
-        }
+        public StandardClient(Uri endpoint, StandardClientOptions options) => throw null;
 
-        /// <summary> Initializes a new instance of StandardClient. </summary>
-        /// <param name="endpoint"> Service endpoint. </param>
-        /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
-        public StandardClient(Uri endpoint, StandardClientOptions options)
-        {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
+        public virtual HttpPipeline Pipeline => throw null;
 
-            options ??= new StandardClientOptions();
+        public virtual Operation<BinaryData> CreateOrReplace(WaitUntil waitUntil, string name, RequestContent content, RequestContext context = null) => throw null;
 
-            _endpoint = endpoint;
-            Pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>());
-            _apiVersion = options.Version;
-            ClientDiagnostics = new ClientDiagnostics(options, true);
-        }
+        public virtual Task<Operation<BinaryData>> CreateOrReplaceAsync(WaitUntil waitUntil, string name, RequestContent content, RequestContext context = null) => throw null;
 
-        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
-        public virtual HttpPipeline Pipeline { get; }
+        public virtual Operation<User> CreateOrReplace(WaitUntil waitUntil, string name, User resource, CancellationToken cancellationToken = default) => throw null;
 
-        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
-        internal ClientDiagnostics ClientDiagnostics { get; }
+        public virtual Task<Operation<User>> CreateOrReplaceAsync(WaitUntil waitUntil, string name, User resource, CancellationToken cancellationToken = default) => throw null;
 
-        /// <summary> Creates or replaces a User. </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="name"> The name of user. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="content"/> is null. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual Operation<BinaryData> CreateOrReplace(WaitUntil waitUntil, string name, RequestContent content, RequestContext context = null)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("StandardClient.CreateOrReplace");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNull(name, nameof(name));
-                Argument.AssertNotNull(content, nameof(content));
+        public virtual Operation Delete(WaitUntil waitUntil, string name, RequestContext context) => throw null;
 
-                using HttpMessage message = CreateCreateOrReplaceRequest(name, content, context);
-                return ProtocolOperationHelpers.ProcessMessage(Pipeline, message, ClientDiagnostics, "StandardClient.CreateOrReplace", OperationFinalStateVia.OriginalUri, context, waitUntil);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
+        public virtual Task<Operation> DeleteAsync(WaitUntil waitUntil, string name, RequestContext context) => throw null;
 
-        /// <summary> Creates or replaces a User. </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="name"> The name of user. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="content"/> is null. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Operation<BinaryData>> CreateOrReplaceAsync(WaitUntil waitUntil, string name, RequestContent content, RequestContext context = null)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("StandardClient.CreateOrReplace");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNull(name, nameof(name));
-                Argument.AssertNotNull(content, nameof(content));
+        public virtual Operation Delete(WaitUntil waitUntil, string name, CancellationToken cancellationToken = default) => throw null;
 
-                using HttpMessage message = CreateCreateOrReplaceRequest(name, content, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "StandardClient.CreateOrReplaceAsync", OperationFinalStateVia.OriginalUri, context, waitUntil).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
+        public virtual Task<Operation> DeleteAsync(WaitUntil waitUntil, string name, CancellationToken cancellationToken = default) => throw null;
 
-        /// <summary> Creates or replaces a User. </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="name"> The name of user. </param>
-        /// <param name="resource"> The resource instance. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="resource"/> is null. </exception>
-        public virtual Operation<User> CreateOrReplace(WaitUntil waitUntil, string name, User resource, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(resource, nameof(resource));
+        public virtual Operation<BinaryData> Export(WaitUntil waitUntil, string name, string format, RequestContext context) => throw null;
 
-            Operation<BinaryData> result = CreateOrReplace(waitUntil, name, resource, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
-            return ProtocolOperationHelpers.Convert(result, response => (User)response, ClientDiagnostics, "StandardClient.CreateOrReplace");
-        }
+        public virtual Task<Operation<BinaryData>> ExportAsync(WaitUntil waitUntil, string name, string format, RequestContext context) => throw null;
 
-        /// <summary> Creates or replaces a User. </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="name"> The name of user. </param>
-        /// <param name="resource"> The resource instance. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="resource"/> is null. </exception>
-        public virtual async Task<Operation<User>> CreateOrReplaceAsync(WaitUntil waitUntil, string name, User resource, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(resource, nameof(resource));
+        public virtual Operation<ExportedUser> Export(WaitUntil waitUntil, string name, string format, CancellationToken cancellationToken = default) => throw null;
 
-            Operation<BinaryData> result = await CreateOrReplaceAsync(waitUntil, name, resource, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
-            return ProtocolOperationHelpers.Convert(result, response => (User)response, ClientDiagnostics, "StandardClient.CreateOrReplaceAsync");
-        }
-
-        /// <summary> Deletes a User. </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="name"> The name of user. </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual Operation Delete(WaitUntil waitUntil, string name, RequestContext context)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("StandardClient.Delete");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNull(name, nameof(name));
-
-                using HttpMessage message = CreateDeleteRequest(name, context);
-                return ProtocolOperationHelpers.ProcessMessage(Pipeline, message, ClientDiagnostics, "StandardClient.Delete", OperationFinalStateVia.OperationLocation, context, waitUntil);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Deletes a User. </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="name"> The name of user. </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Operation> DeleteAsync(WaitUntil waitUntil, string name, RequestContext context)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("StandardClient.Delete");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNull(name, nameof(name));
-
-                using HttpMessage message = CreateDeleteRequest(name, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "StandardClient.DeleteAsync", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Deletes a User. </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="name"> The name of user. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public virtual Operation Delete(WaitUntil waitUntil, string name, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(name, nameof(name));
-
-            return Delete(waitUntil, name, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
-        }
-
-        /// <summary> Deletes a User. </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="name"> The name of user. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public virtual async Task<Operation> DeleteAsync(WaitUntil waitUntil, string name, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(name, nameof(name));
-
-            return await DeleteAsync(waitUntil, name, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
-        }
-
-        /// <summary> Exports a User. </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="name"> The name of user. </param>
-        /// <param name="format"> The format of the data. </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="format"/> is null. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual Operation<BinaryData> Export(WaitUntil waitUntil, string name, string format, RequestContext context)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("StandardClient.Export");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNull(name, nameof(name));
-                Argument.AssertNotNull(format, nameof(format));
-
-                using HttpMessage message = CreateExportRequest(name, format, context);
-                return ProtocolOperationHelpers.ProcessMessage(Pipeline, message, ClientDiagnostics, "StandardClient.Export", OperationFinalStateVia.OperationLocation, context, waitUntil);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Exports a User. </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="name"> The name of user. </param>
-        /// <param name="format"> The format of the data. </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="format"/> is null. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Operation<BinaryData>> ExportAsync(WaitUntil waitUntil, string name, string format, RequestContext context)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("StandardClient.Export");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNull(name, nameof(name));
-                Argument.AssertNotNull(format, nameof(format));
-
-                using HttpMessage message = CreateExportRequest(name, format, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "StandardClient.ExportAsync", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Exports a User. </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="name"> The name of user. </param>
-        /// <param name="format"> The format of the data. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="format"/> is null. </exception>
-        public virtual Operation<ExportedUser> Export(WaitUntil waitUntil, string name, string format, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(format, nameof(format));
-
-            Operation<BinaryData> result = Export(waitUntil, name, format, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
-            return ProtocolOperationHelpers.Convert(result, response => (ExportedUser)response, ClientDiagnostics, "StandardClient.Export");
-        }
-
-        /// <summary> Exports a User. </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="name"> The name of user. </param>
-        /// <param name="format"> The format of the data. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="format"/> is null. </exception>
-        public virtual async Task<Operation<ExportedUser>> ExportAsync(WaitUntil waitUntil, string name, string format, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(format, nameof(format));
-
-            Operation<BinaryData> result = await ExportAsync(waitUntil, name, format, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
-            return ProtocolOperationHelpers.Convert(result, response => (ExportedUser)response, ClientDiagnostics, "StandardClient.ExportAsync");
-        }
+        public virtual Task<Operation<ExportedUser>> ExportAsync(WaitUntil waitUntil, string name, string format, CancellationToken cancellationToken = default) => throw null;
     }
 }

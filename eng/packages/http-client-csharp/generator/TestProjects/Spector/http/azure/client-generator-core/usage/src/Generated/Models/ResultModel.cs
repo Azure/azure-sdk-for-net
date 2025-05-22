@@ -5,34 +5,10 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
-
 namespace _Specs_.Azure.ClientGenerator.Core.Usage._ModelInOperation
 {
-    /// <summary> The ResultModel. </summary>
     public partial class ResultModel
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
-        /// <summary> Initializes a new instance of <see cref="ResultModel"/>. </summary>
-        /// <param name="name"></param>
-        internal ResultModel(string name)
-        {
-            Name = name;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ResultModel"/>. </summary>
-        /// <param name="name"></param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResultModel(string name, IDictionary<string, BinaryData> additionalBinaryDataProperties)
-        {
-            Name = name;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
-        }
-
-        /// <summary> Gets the Name. </summary>
-        public string Name { get; }
+        public string Name => throw null;
     }
 }

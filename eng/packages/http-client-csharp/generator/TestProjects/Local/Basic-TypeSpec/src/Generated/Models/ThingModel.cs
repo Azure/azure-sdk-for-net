@@ -52,7 +52,7 @@ namespace BasicTypeSpec
         /// <param name="optionalNullableList"> optional nullable collection. </param>
         /// <param name="requiredNullableList"> required nullable collection. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ThingModel(string name, BinaryData requiredUnion, ThingModelRequiredLiteralString requiredLiteralString, ThingModelRequiredLiteralInt requiredLiteralInt, ThingModelRequiredLiteralFloat requiredLiteralFloat, bool requiredLiteralBool, ThingModelOptionalLiteralString? optionalLiteralString, ThingModelOptionalLiteralInt? optionalLiteralInt, ThingModelOptionalLiteralFloat? optionalLiteralFloat, bool? optionalLiteralBool, string requiredBadDescription, IList<int> optionalNullableList, IList<int> requiredNullableList, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ThingModel(string name, BinaryData requiredUnion, string requiredLiteralString, int requiredLiteralInt, float requiredLiteralFloat, bool requiredLiteralBool, string optionalLiteralString, int? optionalLiteralInt, float? optionalLiteralFloat, bool? optionalLiteralBool, string requiredBadDescription, IList<int> optionalNullableList, IList<int> requiredNullableList, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             RequiredUnion = requiredUnion;
@@ -118,25 +118,25 @@ namespace BasicTypeSpec
         public BinaryData RequiredUnion { get; set; }
 
         /// <summary> required literal string. </summary>
-        public ThingModelRequiredLiteralString RequiredLiteralString { get; } = "accept";
+        public string RequiredLiteralString { get; } = "accept";
 
         /// <summary> required literal int. </summary>
-        public ThingModelRequiredLiteralInt RequiredLiteralInt { get; } = 123;
+        public int RequiredLiteralInt { get; } = 123;
 
         /// <summary> required literal float. </summary>
-        public ThingModelRequiredLiteralFloat RequiredLiteralFloat { get; } = 1.23F;
+        public float RequiredLiteralFloat { get; } = 1.23F;
 
         /// <summary> required literal bool. </summary>
         public bool RequiredLiteralBool { get; } = false;
 
         /// <summary> optional literal string. </summary>
-        public ThingModelOptionalLiteralString? OptionalLiteralString { get; set; }
+        public string OptionalLiteralString { get; set; }
 
         /// <summary> optional literal int. </summary>
-        public ThingModelOptionalLiteralInt? OptionalLiteralInt { get; set; }
+        public int? OptionalLiteralInt { get; set; }
 
         /// <summary> optional literal float. </summary>
-        public ThingModelOptionalLiteralFloat? OptionalLiteralFloat { get; set; }
+        public float? OptionalLiteralFloat { get; set; }
 
         /// <summary> optional literal bool. </summary>
         public bool? OptionalLiteralBool { get; set; }

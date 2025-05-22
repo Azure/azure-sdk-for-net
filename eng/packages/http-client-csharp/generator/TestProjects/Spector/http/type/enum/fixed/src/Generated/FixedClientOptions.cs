@@ -9,7 +9,6 @@ using Azure.Core;
 
 namespace _Type._Enum.Fixed
 {
-    /// <summary> Client options for <see cref="FixedClient"/>. </summary>
     public partial class FixedClientOptions : ClientOptions
     {
     }

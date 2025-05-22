@@ -10,21 +10,10 @@ using System.Collections.Generic;
 
 namespace _Type.Model.Inheritance.EnumDiscriminator
 {
-    /// <summary> Golden dog model. </summary>
     public partial class Golden : Dog
     {
-        /// <summary> Initializes a new instance of <see cref="Golden"/>. </summary>
-        /// <param name="weight"> Weight of the dog. </param>
-        public Golden(int weight) : base(DogKind.Golden, weight)
-        {
-        }
+        public Golden(int weight) : base(DogKind.Golden, weight) => throw null;
 
-        /// <summary> Initializes a new instance of <see cref="Golden"/>. </summary>
-        /// <param name="kind"> discriminator property. </param>
-        /// <param name="weight"> Weight of the dog. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal Golden(DogKind kind, int weight, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(kind, weight, additionalBinaryDataProperties)
-        {
-        }
+        internal Golden(DogKind kind, int weight, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(kind, weight, additionalBinaryDataProperties) => throw null;
     }
 }

@@ -7,7 +7,6 @@
 
 namespace _Type.Property.Optional
 {
-    /// <summary></summary>
     public enum UnionStringLiteralPropertyProperty
     {
         /// <summary> Hello. </summary>

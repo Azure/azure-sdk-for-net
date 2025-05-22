@@ -12,13 +12,6 @@ namespace _Type.Model.Inheritance.NestedDiscriminator
 {
     internal partial class UnknownShark : Shark
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownShark"/>. </summary>
-        /// <param name="kind"> Discriminator property for Fish. </param>
-        /// <param name="age"></param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="sharktype"></param>
-        internal UnknownShark(string kind, int age, IDictionary<string, BinaryData> additionalBinaryDataProperties, string sharktype) : base(kind ?? "unknown", age, additionalBinaryDataProperties, sharktype ?? "unknown")
-        {
-        }
+        internal UnknownShark(string kind, int age, IDictionary<string, BinaryData> additionalBinaryDataProperties, string sharktype) : base(kind ?? "unknown", age, additionalBinaryDataProperties, sharktype ?? "unknown") => throw null;
     }
 }

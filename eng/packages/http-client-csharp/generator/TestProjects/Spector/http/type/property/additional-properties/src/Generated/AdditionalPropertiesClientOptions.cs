@@ -9,7 +9,6 @@ using Azure.Core;
 
 namespace _Type.Property.AdditionalProperties
 {
-    /// <summary> Client options for <see cref="AdditionalPropertiesClient"/>. </summary>
     public partial class AdditionalPropertiesClientOptions : ClientOptions
     {
     }
