@@ -1,4 +1,4 @@
-# Azure.Communication.CallAutomation
+﻿# Azure.Communication.CallAutomation
 
 From Folder that contains autorest.md, Run `dotnet msbuild /t:GenerateCode` to generate code.
 
@@ -9,9 +9,7 @@ From Folder that contains autorest.md, Run `dotnet msbuild /t:GenerateCode` to g
 model-namespace: false
 tag: package-2023-10-03-preview
 
-require:
-    - https://github.com/Azure/azure-rest-api-specs/blob/156ff363e44f764ddd8a0a6adcd371610240ba15/specification/communication/data-plane/CallAutomation/readme.md
-
+input-file: /workspaces/ACS-API-SDK/alpha4/incremental.json
 
 title: Azure Communication Services
 
