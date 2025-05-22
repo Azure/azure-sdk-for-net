@@ -61,7 +61,7 @@ namespace Azure.Generator.Management.Providers
 
         protected override PropertyProvider[] BuildProperties() => [];
 
-        protected override FieldProvider[] BuildFields() => [_clientDiagonosticsField, _restClientField];
+        protected override FieldProvider[] BuildFields() => [_clientDiagnosticsField, _restClientField];
 
         protected override ConstructorProvider[] BuildConstructors()
             => [ConstructorProviderHelper.BuildMockingConstructor(this), BuildResourceIdentifierConstructor()];

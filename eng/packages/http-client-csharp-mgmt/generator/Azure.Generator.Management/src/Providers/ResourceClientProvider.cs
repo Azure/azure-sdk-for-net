@@ -35,7 +35,7 @@ namespace Azure.Generator.Management.Providers
         private FieldProvider _dataField;
         private FieldProvider _resourceTypeField;
         protected ClientProvider _clientProvider;
-        protected FieldProvider _clientDiagonosticsField;
+        protected FieldProvider _clientDiagnosticsField;
         protected FieldProvider _restClientField;
 
         public ResourceClientProvider(InputClient inputClient, ResourceMetadata resourceMetadata)
@@ -55,7 +55,7 @@ namespace Azure.Generator.Management.Providers
             ContextualParameters = GetContextualParameters(requestPath);
 
             _dataField = new FieldProvider(FieldModifiers.Private | FieldModifiers.ReadOnly, ResourceData.Type, "_data", this);
-            _clientDiagonosticsField = new FieldProvider(FieldModifiers.Private | FieldModifiers.ReadOnly, typeof(ClientDiagnostics), $"_{SpecName.ToLower()}ClientDiagnostics", this);
+            _clientDiagnosticsField = new FieldProvider(FieldModifiers.Private | FieldModifiers.ReadOnly, typeof(ClientDiagnostics), $"_{SpecName.ToLower()}ClientDiagnostics", this);
             _restClientField = new FieldProvider(FieldModifiers.Private | FieldModifiers.ReadOnly, _clientProvider.Type, $"_{SpecName.ToLower()}RestClient", this);
         }
 
@@ -87,7 +87,7 @@ namespace Azure.Generator.Management.Providers
 
         protected override string BuildRelativeFilePath() => Path.Combine("src", "Generated", $"{Name}.cs");
 
-        protected override FieldProvider[] BuildFields() => [_clientDiagonosticsField, _restClientField, _dataField, _resourceTypeField];
+        protected override FieldProvider[] BuildFields() => [_clientDiagnosticsField, _restClientField, _dataField, _resourceTypeField];
 
         protected override PropertyProvider[] BuildProperties()
         {
@@ -163,9 +163,9 @@ namespace Azure.Generator.Management.Providers
 
             var bodyStatements = new MethodBodyStatement[]
             {
-                _clientDiagonosticsField.Assign(New.Instance(typeof(ClientDiagnostics), Literal(Type.Namespace), ResourceTypeExpression.Property(nameof(ResourceType.Namespace)), This.Property("Diagnostics"))).Terminate(),
+                _clientDiagnosticsField.Assign(New.Instance(typeof(ClientDiagnostics), Literal(Type.Namespace), ResourceTypeExpression.Property(nameof(ResourceType.Namespace)), This.Property("Diagnostics"))).Terminate(),
                 TryGetApiVersion(out var apiVersion).Terminate(),
-                _restClientField.Assign(New.Instance(_clientProvider.Type, _clientDiagonosticsField, This.Property("Pipeline"), This.Property("Endpoint"), apiVersion)).Terminate(),
+                _restClientField.Assign(New.Instance(_clientProvider.Type, _clientDiagnosticsField, This.Property("Pipeline"), This.Property("Endpoint"), apiVersion)).Terminate(),
                 Static(Type).Invoke(ValidateResourceIdMethodName, idParameter).Terminate()
             };
 
@@ -246,7 +246,7 @@ namespace Azure.Generator.Management.Providers
         {
             var bodyStatements = new MethodBodyStatement[]
                 {
-                    UsingDeclare("scope", typeof(DiagnosticScope), _clientDiagonosticsField.Invoke(nameof(ClientDiagnostics.CreateScope), [Literal($"{Name}.{signature.Name}")]), out var scopeVariable),
+                    UsingDeclare("scope", typeof(DiagnosticScope), _clientDiagnosticsField.Invoke(nameof(ClientDiagnostics.CreateScope), [Literal($"{Name}.{signature.Name}")]), out var scopeVariable),
                     scopeVariable.Invoke(nameof(DiagnosticScope.Start)).Terminate(),
                     new TryCatchFinallyStatement
                     (BuildOperationMethodTryStatement(method, convenienceMethod, signature, isAsync),
@@ -378,7 +378,7 @@ namespace Azure.Generator.Management.Providers
                 : ManagementClientGenerator.Instance.OutputLibrary.GenericArmOperation.Type.MakeGenericType([resourceClientType]);
 
             ValueExpression[] armOperationArguments = [
-                _clientDiagonosticsField,
+                _clientDiagnosticsField,
                 This.Property("Pipeline"),
                 messageVariable.Property("Request"),
                 isNullBody ? responseVariable : responseVariable.Invoke("GetRawResponse"),
