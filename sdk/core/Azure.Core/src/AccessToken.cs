@@ -93,7 +93,7 @@ namespace Azure.Core
         /// Converts this <see cref="AccessToken"/> to an <see cref="AuthenticationToken"/>.
         /// </summary>
         /// <returns></returns>
-        public AuthenticationToken ToAuthenticationToken()
+        internal AuthenticationToken ToAuthenticationToken()
         {
             return new AuthenticationToken(Token, TokenType, ExpiresOn, RefreshOn);
         }

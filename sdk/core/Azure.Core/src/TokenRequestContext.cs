@@ -153,7 +153,7 @@ namespace Azure.Core
         /// <summary>
         /// Creates a new instance of <see cref="TokenRequestContext"/> from the specified <see cref="GetTokenOptions"/>.
         /// </summary>
-        public static TokenRequestContext FromGetTokenOptions(GetTokenOptions getTokenOptions)
+        internal static TokenRequestContext FromGetTokenOptions(GetTokenOptions getTokenOptions)
         {
             var scopes = getTokenOptions.Scopes.Span.ToArray();
             string? parentRequestId = getTokenOptions.Properties.TryGetValue("parentRequestId", out var parentRequestIdValue) && parentRequestIdValue is string ? (string)parentRequestIdValue : default;

@@ -16,8 +16,8 @@ namespace System.ClientModel
     {
         protected AuthenticationTokenProvider() { }
         public abstract System.ClientModel.Primitives.GetTokenOptions? CreateTokenOptions(System.Collections.Generic.IReadOnlyDictionary<string, object> properties);
-        public abstract System.ClientModel.Primitives.AuthenticationToken GetToken(System.ClientModel.Primitives.GetTokenOptions properties, System.Threading.CancellationToken cancellationToken);
-        public abstract System.Threading.Tasks.ValueTask<System.ClientModel.Primitives.AuthenticationToken> GetTokenAsync(System.ClientModel.Primitives.GetTokenOptions properties, System.Threading.CancellationToken cancellationToken);
+        public abstract System.ClientModel.Primitives.AuthenticationToken GetToken(System.ClientModel.Primitives.GetTokenOptions options, System.Threading.CancellationToken cancellationToken);
+        public abstract System.Threading.Tasks.ValueTask<System.ClientModel.Primitives.AuthenticationToken> GetTokenAsync(System.ClientModel.Primitives.GetTokenOptions options, System.Threading.CancellationToken cancellationToken);
     }
     public abstract partial class BinaryContent : System.IDisposable
     {
@@ -104,6 +104,7 @@ namespace System.ClientModel.Primitives
     public partial class BearerTokenPolicy : System.ClientModel.Primitives.AuthenticationPolicy
     {
         public BearerTokenPolicy(System.ClientModel.AuthenticationTokenProvider tokenProvider, System.Collections.Generic.IEnumerable<System.Collections.Generic.IReadOnlyDictionary<string, object>> contexts) { }
+        public BearerTokenPolicy(System.ClientModel.AuthenticationTokenProvider tokenProvider, string scope) { }
         public override void Process(System.ClientModel.Primitives.PipelineMessage message, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.PipelinePolicy> pipeline, int currentIndex) { }
         public override System.Threading.Tasks.ValueTask ProcessAsync(System.ClientModel.Primitives.PipelineMessage message, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.PipelinePolicy> pipeline, int currentIndex) { throw null; }
     }
