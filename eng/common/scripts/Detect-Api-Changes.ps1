@@ -58,7 +58,6 @@ function Submit-Request($filePath, $packageName)
 
     $correlationId = [System.Guid]::NewGuid().ToString()
     $headers = @{
-      "Content-Type"  = "application/json"
       "x-correlation-id" = $correlationId
     }
     LogInfo "Request URI: $($uri.Uri.OriginalString)"
@@ -67,8 +66,10 @@ function Submit-Request($filePath, $packageName)
     {
         $Response = Invoke-WebRequest -Method 'GET' -Uri $uri.Uri -Headers $headers -MaximumRetryCount 3
         $StatusCode = $Response.StatusCode
-        $responseContent = $Response.Content | ConvertFrom-Json | ConvertTo-Json -Depth 10
-        LogSuccess $responseContent
+        if ($Response.Headers['Content-Type'] -like 'application/json*') {
+            $responseContent = $Response.Content | ConvertFrom-Json | ConvertTo-Json -Depth 10
+            LogSuccess $responseContent
+        }
     }
     catch
     {
