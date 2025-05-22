@@ -508,6 +508,133 @@ namespace Azure.Communication.CallAutomation
             }
         }
 
+        /// <summary>
+        /// Move multiple participants from another call to this call.
+        /// </summary>
+        /// <param name="fromCall">The call to move the participants from.</param>
+        /// <param name="targetParticipants">The participants to move.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>A <see cref="MoveParticipantsResult"/> containing the result of the operation.</returns>
+        public virtual async Task<Response<MoveParticipantsResult>> MoveParticipantsAsync(
+            string fromCall,
+            IEnumerable<CommunicationIdentifier> targetParticipants,
+            CancellationToken cancellationToken = default)
+        {
+            MoveParticipantsOptions options = new MoveParticipantsOptions(targetParticipants, fromCall);
+            return await MoveParticipantsAsync(options, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Move multiple participants from another call to this call.
+        /// </summary>
+        /// <param name="fromCall">The call to move the participants from.</param>
+        /// <param name="targetParticipants">The participants to move.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>A <see cref="MoveParticipantsResult"/> containing the result of the operation.</returns>
+        public virtual Response<MoveParticipantsResult> MoveParticipants(
+            string fromCall,
+            IEnumerable<CommunicationIdentifier> targetParticipants,
+            CancellationToken cancellationToken = default)
+        {
+            MoveParticipantsOptions options = new MoveParticipantsOptions(targetParticipants, fromCall);
+
+            return MoveParticipants(options, cancellationToken);
+        }
+
+        /// <summary>
+        /// Move multiple participants from another call to this call using the provided options.
+        /// </summary>
+        /// <param name="options">Options for the MoveParticipants operation.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>A <see cref="MoveParticipantsResult"/> containing the result of the operation.</returns>
+        public virtual async Task<Response<MoveParticipantsResult>> MoveParticipantsAsync(
+            MoveParticipantsOptions options,
+            CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(MoveParticipants)}");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(options, nameof(options));
+
+                MoveParticipantsRequestInternal request = new MoveParticipantsRequestInternal(
+                    options.TargetParticipants.Select(p => CommunicationIdentifierSerializer.Serialize(p)),
+                    options.FromCall);
+
+                request.OperationContext = options.OperationContext ?? Guid.NewGuid().ToString();
+                if (options.OperationCallbackUri != null)
+                {
+                    request.OperationCallbackUri = options.OperationCallbackUri.AbsoluteUri;
+                }
+
+                var response = await RestClient.MoveParticipantsAsync(
+                    callConnectionId: CallConnectionId,
+                    request,
+                    cancellationToken: cancellationToken).ConfigureAwait(false);
+
+                var result = new MoveParticipantsResult(response.Value);
+
+                if (EventProcessor != null)
+                {
+                    result.SetEventProcessor(EventProcessor, CallConnectionId, request.OperationContext);
+                }
+
+                return Response.FromValue(result, response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Move multiple participants from another call to this call using the provided options.
+        /// </summary>
+        /// <param name="options">Options for the MoveParticipants operation.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>A <see cref="MoveParticipantsResult"/> containing the result of the operation.</returns>
+        public virtual Response<MoveParticipantsResult> MoveParticipants(
+            MoveParticipantsOptions options,
+            CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(MoveParticipants)}");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(options, nameof(options));
+
+                MoveParticipantsRequestInternal request = new MoveParticipantsRequestInternal(
+                    options.TargetParticipants.Select(p => CommunicationIdentifierSerializer.Serialize(p)),
+                    options.FromCall);
+
+                request.OperationContext = options.OperationContext ?? Guid.NewGuid().ToString();
+                if (options.OperationCallbackUri != null)
+                {
+                    request.OperationCallbackUri = options.OperationCallbackUri.AbsoluteUri;
+                }
+
+                var response = RestClient.MoveParticipants(
+                    callConnectionId: CallConnectionId,
+                    request,
+                    cancellationToken: cancellationToken);
+
+                var result = new MoveParticipantsResult(response.Value);
+
+                if (EventProcessor != null)
+                {
+                    result.SetEventProcessor(EventProcessor, CallConnectionId, request.OperationContext);
+                }
+
+                return Response.FromValue(result, response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
         /// <summary> Remove participants from the call. </summary>
         /// <param name="participantToRemove"> The list of identity of participants to be removed from the call. </param>
         /// <param name="operationContext"> The Operation Context. </param>
