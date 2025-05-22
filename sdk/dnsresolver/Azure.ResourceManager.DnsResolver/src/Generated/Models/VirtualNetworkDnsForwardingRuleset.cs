@@ -12,10 +12,7 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.DnsResolver.Models
 {
-    /// <summary>
-    /// Reference to DNS forwarding ruleset and associated virtual network link.
-    /// Serialized Name: VirtualNetworkDnsForwardingRuleset
-    /// </summary>
+    /// <summary> Reference to DNS forwarding ruleset and associated virtual network link. </summary>
     public partial class VirtualNetworkDnsForwardingRuleset
     {
         /// <summary>
@@ -56,14 +53,8 @@ namespace Azure.ResourceManager.DnsResolver.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="VirtualNetworkDnsForwardingRuleset"/>. </summary>
-        /// <param name="id">
-        /// DNS Forwarding Ruleset Resource ID.
-        /// Serialized Name: VirtualNetworkDnsForwardingRuleset.id
-        /// </param>
-        /// <param name="virtualNetworkLink">
-        /// The reference to the virtual network link.
-        /// Serialized Name: VirtualNetworkDnsForwardingRuleset.properties.virtualNetworkLink
-        /// </param>
+        /// <param name="id"> DNS Forwarding Ruleset Resource ID. </param>
+        /// <param name="virtualNetworkLink"> The reference to the virtual network link. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal VirtualNetworkDnsForwardingRuleset(ResourceIdentifier id, WritableSubResource virtualNetworkLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -72,15 +63,9 @@ namespace Azure.ResourceManager.DnsResolver.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// DNS Forwarding Ruleset Resource ID.
-        /// Serialized Name: VirtualNetworkDnsForwardingRuleset.id
-        /// </summary>
+        /// <summary> DNS Forwarding Ruleset Resource ID. </summary>
         public ResourceIdentifier Id { get; }
-        /// <summary>
-        /// The reference to the virtual network link.
-        /// Serialized Name: VirtualNetworkDnsForwardingRuleset.properties.virtualNetworkLink
-        /// </summary>
+        /// <summary> The reference to the virtual network link. </summary>
         internal WritableSubResource VirtualNetworkLink { get; }
         /// <summary> Gets or sets Id. </summary>
         public ResourceIdentifier VirtualNetworkLinkId

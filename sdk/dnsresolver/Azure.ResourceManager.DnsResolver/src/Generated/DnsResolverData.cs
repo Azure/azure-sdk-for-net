@@ -17,7 +17,6 @@ namespace Azure.ResourceManager.DnsResolver
     /// <summary>
     /// A class representing the DnsResolver data model.
     /// Describes a DNS resolver.
-    /// Serialized Name: DnsResolver
     /// </summary>
     public partial class DnsResolverData : TrackedResourceData
     {
@@ -55,10 +54,7 @@ namespace Azure.ResourceManager.DnsResolver
 
         /// <summary> Initializes a new instance of <see cref="DnsResolverData"/>. </summary>
         /// <param name="location"> The location. </param>
-        /// <param name="virtualNetwork">
-        /// The reference to the virtual network. This cannot be changed after creation.
-        /// Serialized Name: DnsResolver.properties.virtualNetwork
-        /// </param>
+        /// <param name="virtualNetwork"> The reference to the virtual network. This cannot be changed after creation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetwork"/> is null. </exception>
         public DnsResolverData(AzureLocation location, WritableSubResource virtualNetwork) : base(location)
         {
@@ -74,26 +70,11 @@ namespace Azure.ResourceManager.DnsResolver
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="etag">
-        /// ETag of the DNS resolver.
-        /// Serialized Name: DnsResolver.etag
-        /// </param>
-        /// <param name="virtualNetwork">
-        /// The reference to the virtual network. This cannot be changed after creation.
-        /// Serialized Name: DnsResolver.properties.virtualNetwork
-        /// </param>
-        /// <param name="dnsResolverState">
-        /// The current status of the DNS resolver. This is a read-only property and any attempt to set this value will be ignored.
-        /// Serialized Name: DnsResolver.properties.dnsResolverState
-        /// </param>
-        /// <param name="provisioningState">
-        /// The current provisioning state of the DNS resolver. This is a read-only property and any attempt to set this value will be ignored.
-        /// Serialized Name: DnsResolver.properties.provisioningState
-        /// </param>
-        /// <param name="resourceGuid">
-        /// The resourceGuid property of the DNS resolver resource.
-        /// Serialized Name: DnsResolver.properties.resourceGuid
-        /// </param>
+        /// <param name="etag"> ETag of the DNS resolver. </param>
+        /// <param name="virtualNetwork"> The reference to the virtual network. This cannot be changed after creation. </param>
+        /// <param name="dnsResolverState"> The current status of the DNS resolver. This is a read-only property and any attempt to set this value will be ignored. </param>
+        /// <param name="provisioningState"> The current provisioning state of the DNS resolver. This is a read-only property and any attempt to set this value will be ignored. </param>
+        /// <param name="resourceGuid"> The resourceGuid property of the DNS resolver resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal DnsResolverData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, WritableSubResource virtualNetwork, DnsResolverState? dnsResolverState, DnsResolverProvisioningState? provisioningState, Guid? resourceGuid, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
@@ -110,15 +91,9 @@ namespace Azure.ResourceManager.DnsResolver
         {
         }
 
-        /// <summary>
-        /// ETag of the DNS resolver.
-        /// Serialized Name: DnsResolver.etag
-        /// </summary>
+        /// <summary> ETag of the DNS resolver. </summary>
         public ETag? ETag { get; }
-        /// <summary>
-        /// The reference to the virtual network. This cannot be changed after creation.
-        /// Serialized Name: DnsResolver.properties.virtualNetwork
-        /// </summary>
+        /// <summary> The reference to the virtual network. This cannot be changed after creation. </summary>
         internal WritableSubResource VirtualNetwork { get; set; }
         /// <summary> Gets or sets Id. </summary>
         public ResourceIdentifier VirtualNetworkId
@@ -132,20 +107,11 @@ namespace Azure.ResourceManager.DnsResolver
             }
         }
 
-        /// <summary>
-        /// The current status of the DNS resolver. This is a read-only property and any attempt to set this value will be ignored.
-        /// Serialized Name: DnsResolver.properties.dnsResolverState
-        /// </summary>
+        /// <summary> The current status of the DNS resolver. This is a read-only property and any attempt to set this value will be ignored. </summary>
         public DnsResolverState? DnsResolverState { get; }
-        /// <summary>
-        /// The current provisioning state of the DNS resolver. This is a read-only property and any attempt to set this value will be ignored.
-        /// Serialized Name: DnsResolver.properties.provisioningState
-        /// </summary>
+        /// <summary> The current provisioning state of the DNS resolver. This is a read-only property and any attempt to set this value will be ignored. </summary>
         public DnsResolverProvisioningState? ProvisioningState { get; }
-        /// <summary>
-        /// The resourceGuid property of the DNS resolver resource.
-        /// Serialized Name: DnsResolver.properties.resourceGuid
-        /// </summary>
+        /// <summary> The resourceGuid property of the DNS resolver resource. </summary>
         public Guid? ResourceGuid { get; }
     }
 }

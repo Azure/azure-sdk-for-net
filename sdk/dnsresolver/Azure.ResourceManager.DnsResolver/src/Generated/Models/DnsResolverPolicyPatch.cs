@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DnsResolver.Models
 {
-    /// <summary>
-    /// Describes a DNS resolver policy for PATCH operation.
-    /// Serialized Name: DnsResolverPolicyPatch
-    /// </summary>
+    /// <summary> Describes a DNS resolver policy for PATCH operation. </summary>
     public partial class DnsResolverPolicyPatch
     {
         /// <summary>
@@ -55,10 +52,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DnsResolverPolicyPatch"/>. </summary>
-        /// <param name="tags">
-        /// Tags for DNS resolver policy.
-        /// Serialized Name: DnsResolverPolicyPatch.tags
-        /// </param>
+        /// <param name="tags"> Tags for DNS resolver policy. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal DnsResolverPolicyPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -66,10 +60,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Tags for DNS resolver policy.
-        /// Serialized Name: DnsResolverPolicyPatch.tags
-        /// </summary>
+        /// <summary> Tags for DNS resolver policy. </summary>
         public IDictionary<string, string> Tags { get; }
     }
 }

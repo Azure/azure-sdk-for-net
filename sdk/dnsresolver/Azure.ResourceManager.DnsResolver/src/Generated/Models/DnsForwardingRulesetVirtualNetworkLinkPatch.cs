@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DnsResolver.Models
 {
-    /// <summary>
-    /// Describes a virtual network link for PATCH operation.
-    /// Serialized Name: VirtualNetworkLinkPatch
-    /// </summary>
+    /// <summary> Describes a virtual network link for PATCH operation. </summary>
     public partial class DnsForwardingRulesetVirtualNetworkLinkPatch
     {
         /// <summary>
@@ -55,10 +52,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DnsForwardingRulesetVirtualNetworkLinkPatch"/>. </summary>
-        /// <param name="metadata">
-        /// Metadata attached to the virtual network link.
-        /// Serialized Name: VirtualNetworkLinkPatch.properties.metadata
-        /// </param>
+        /// <param name="metadata"> Metadata attached to the virtual network link. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal DnsForwardingRulesetVirtualNetworkLinkPatch(IDictionary<string, string> metadata, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -66,10 +60,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Metadata attached to the virtual network link.
-        /// Serialized Name: VirtualNetworkLinkPatch.properties.metadata
-        /// </summary>
+        /// <summary> Metadata attached to the virtual network link. </summary>
         public IDictionary<string, string> Metadata { get; }
     }
 }

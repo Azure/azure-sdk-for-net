@@ -11,10 +11,7 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.DnsResolver.Models
 {
-    /// <summary>
-    /// The response to an enumeration operation on sub-resources.
-    /// Serialized Name: SubResourceListResult
-    /// </summary>
+    /// <summary> The response to an enumeration operation on sub-resources. </summary>
     internal partial class SubResourceListResult
     {
         /// <summary>
@@ -56,14 +53,8 @@ namespace Azure.ResourceManager.DnsResolver.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SubResourceListResult"/>. </summary>
-        /// <param name="value">
-        /// Enumeration of the sub-resources.
-        /// Serialized Name: SubResourceListResult.value
-        /// </param>
-        /// <param name="nextLink">
-        /// The continuation token for the next page of results.
-        /// Serialized Name: SubResourceListResult.nextLink
-        /// </param>
+        /// <param name="value"> Enumeration of the sub-resources. </param>
+        /// <param name="nextLink"> The continuation token for the next page of results. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SubResourceListResult(IReadOnlyList<WritableSubResource> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -72,15 +63,9 @@ namespace Azure.ResourceManager.DnsResolver.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Enumeration of the sub-resources.
-        /// Serialized Name: SubResourceListResult.value
-        /// </summary>
+        /// <summary> Enumeration of the sub-resources. </summary>
         public IReadOnlyList<WritableSubResource> Value { get; }
-        /// <summary>
-        /// The continuation token for the next page of results.
-        /// Serialized Name: SubResourceListResult.nextLink
-        /// </summary>
+        /// <summary> The continuation token for the next page of results. </summary>
         public string NextLink { get; }
     }
 }

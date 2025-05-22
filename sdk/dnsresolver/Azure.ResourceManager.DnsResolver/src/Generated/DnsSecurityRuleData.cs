@@ -18,7 +18,6 @@ namespace Azure.ResourceManager.DnsResolver
     /// <summary>
     /// A class representing the DnsSecurityRule data model.
     /// Describes a DNS security rule.
-    /// Serialized Name: DnsSecurityRule
     /// </summary>
     public partial class DnsSecurityRuleData : TrackedResourceData
     {
@@ -56,18 +55,9 @@ namespace Azure.ResourceManager.DnsResolver
 
         /// <summary> Initializes a new instance of <see cref="DnsSecurityRuleData"/>. </summary>
         /// <param name="location"> The location. </param>
-        /// <param name="priority">
-        /// The priority of the DNS security rule.
-        /// Serialized Name: DnsSecurityRule.properties.priority
-        /// </param>
-        /// <param name="action">
-        /// The action to take on DNS requests that match the DNS security rule.
-        /// Serialized Name: DnsSecurityRule.properties.action
-        /// </param>
-        /// <param name="dnsResolverDomainLists">
-        /// DNS resolver policy domains lists that the DNS security rule applies to.
-        /// Serialized Name: DnsSecurityRule.properties.dnsResolverDomainLists
-        /// </param>
+        /// <param name="priority"> The priority of the DNS security rule. </param>
+        /// <param name="action"> The action to take on DNS requests that match the DNS security rule. </param>
+        /// <param name="dnsResolverDomainLists"> DNS resolver policy domains lists that the DNS security rule applies to. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="action"/> or <paramref name="dnsResolverDomainLists"/> is null. </exception>
         public DnsSecurityRuleData(AzureLocation location, int priority, DnsSecurityRuleAction action, IEnumerable<WritableSubResource> dnsResolverDomainLists) : base(location)
         {
@@ -86,30 +76,12 @@ namespace Azure.ResourceManager.DnsResolver
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="etag">
-        /// ETag of the DNS security rule.
-        /// Serialized Name: DnsSecurityRule.etag
-        /// </param>
-        /// <param name="priority">
-        /// The priority of the DNS security rule.
-        /// Serialized Name: DnsSecurityRule.properties.priority
-        /// </param>
-        /// <param name="action">
-        /// The action to take on DNS requests that match the DNS security rule.
-        /// Serialized Name: DnsSecurityRule.properties.action
-        /// </param>
-        /// <param name="dnsResolverDomainLists">
-        /// DNS resolver policy domains lists that the DNS security rule applies to.
-        /// Serialized Name: DnsSecurityRule.properties.dnsResolverDomainLists
-        /// </param>
-        /// <param name="dnsSecurityRuleState">
-        /// The state of DNS security rule.
-        /// Serialized Name: DnsSecurityRule.properties.dnsSecurityRuleState
-        /// </param>
-        /// <param name="provisioningState">
-        /// The current provisioning state of the DNS security rule. This is a read-only property and any attempt to set this value will be ignored.
-        /// Serialized Name: DnsSecurityRule.properties.provisioningState
-        /// </param>
+        /// <param name="etag"> ETag of the DNS security rule. </param>
+        /// <param name="priority"> The priority of the DNS security rule. </param>
+        /// <param name="action"> The action to take on DNS requests that match the DNS security rule. </param>
+        /// <param name="dnsResolverDomainLists"> DNS resolver policy domains lists that the DNS security rule applies to. </param>
+        /// <param name="dnsSecurityRuleState"> The state of DNS security rule. </param>
+        /// <param name="provisioningState"> The current provisioning state of the DNS security rule. This is a read-only property and any attempt to set this value will be ignored. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal DnsSecurityRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, int priority, DnsSecurityRuleAction action, IList<WritableSubResource> dnsResolverDomainLists, DnsSecurityRuleState? dnsSecurityRuleState, DnsResolverProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
@@ -127,50 +99,17 @@ namespace Azure.ResourceManager.DnsResolver
         {
         }
 
-        /// <summary>
-        /// ETag of the DNS security rule.
-        /// Serialized Name: DnsSecurityRule.etag
-        /// </summary>
+        /// <summary> ETag of the DNS security rule. </summary>
         public ETag? ETag { get; }
-        /// <summary>
-        /// The priority of the DNS security rule.
-        /// Serialized Name: DnsSecurityRule.properties.priority
-        /// </summary>
+        /// <summary> The priority of the DNS security rule. </summary>
         public int Priority { get; set; }
-        /// <summary>
-        /// The action to take on DNS requests that match the DNS security rule.
-        /// Serialized Name: DnsSecurityRule.properties.action
-        /// </summary>
-        internal DnsSecurityRuleAction Action { get; set; }
-        /// <summary>
-        /// The type of action to take.
-        /// Serialized Name: DnsSecurityRuleAction.actionType
-        /// </summary>
-        public DnsSecurityRuleActionType? ActionType
-        {
-            get => Action is null ? default : Action.ActionType;
-            set
-            {
-                if (Action is null)
-                    Action = new DnsSecurityRuleAction();
-                Action.ActionType = value;
-            }
-        }
-
-        /// <summary>
-        /// DNS resolver policy domains lists that the DNS security rule applies to.
-        /// Serialized Name: DnsSecurityRule.properties.dnsResolverDomainLists
-        /// </summary>
+        /// <summary> The action to take on DNS requests that match the DNS security rule. </summary>
+        public DnsSecurityRuleAction Action { get; set; }
+        /// <summary> DNS resolver policy domains lists that the DNS security rule applies to. </summary>
         public IList<WritableSubResource> DnsResolverDomainLists { get; }
-        /// <summary>
-        /// The state of DNS security rule.
-        /// Serialized Name: DnsSecurityRule.properties.dnsSecurityRuleState
-        /// </summary>
+        /// <summary> The state of DNS security rule. </summary>
         public DnsSecurityRuleState? DnsSecurityRuleState { get; set; }
-        /// <summary>
-        /// The current provisioning state of the DNS security rule. This is a read-only property and any attempt to set this value will be ignored.
-        /// Serialized Name: DnsSecurityRule.properties.provisioningState
-        /// </summary>
+        /// <summary> The current provisioning state of the DNS security rule. This is a read-only property and any attempt to set this value will be ignored. </summary>
         public DnsResolverProvisioningState? ProvisioningState { get; }
     }
 }

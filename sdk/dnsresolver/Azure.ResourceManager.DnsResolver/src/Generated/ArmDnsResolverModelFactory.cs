@@ -24,26 +24,11 @@ namespace Azure.ResourceManager.DnsResolver.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="etag">
-        /// ETag of the DNS resolver.
-        /// Serialized Name: DnsResolver.etag
-        /// </param>
-        /// <param name="virtualNetworkId">
-        /// The reference to the virtual network. This cannot be changed after creation.
-        /// Serialized Name: DnsResolver.properties.virtualNetwork
-        /// </param>
-        /// <param name="dnsResolverState">
-        /// The current status of the DNS resolver. This is a read-only property and any attempt to set this value will be ignored.
-        /// Serialized Name: DnsResolver.properties.dnsResolverState
-        /// </param>
-        /// <param name="provisioningState">
-        /// The current provisioning state of the DNS resolver. This is a read-only property and any attempt to set this value will be ignored.
-        /// Serialized Name: DnsResolver.properties.provisioningState
-        /// </param>
-        /// <param name="resourceGuid">
-        /// The resourceGuid property of the DNS resolver resource.
-        /// Serialized Name: DnsResolver.properties.resourceGuid
-        /// </param>
+        /// <param name="etag"> ETag of the DNS resolver. </param>
+        /// <param name="virtualNetworkId"> The reference to the virtual network. This cannot be changed after creation. </param>
+        /// <param name="dnsResolverState"> The current status of the DNS resolver. This is a read-only property and any attempt to set this value will be ignored. </param>
+        /// <param name="provisioningState"> The current provisioning state of the DNS resolver. This is a read-only property and any attempt to set this value will be ignored. </param>
+        /// <param name="resourceGuid"> The resourceGuid property of the DNS resolver resource. </param>
         /// <returns> A new <see cref="DnsResolver.DnsResolverData"/> instance for mocking. </returns>
         public static DnsResolverData DnsResolverData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ETag? etag = null, ResourceIdentifier virtualNetworkId = null, DnsResolverState? dnsResolverState = null, DnsResolverProvisioningState? provisioningState = null, Guid? resourceGuid = null)
         {
@@ -71,22 +56,10 @@ namespace Azure.ResourceManager.DnsResolver.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="etag">
-        /// ETag of the inbound endpoint.
-        /// Serialized Name: InboundEndpoint.etag
-        /// </param>
-        /// <param name="ipConfigurations">
-        /// IP configurations for the inbound endpoint.
-        /// Serialized Name: InboundEndpoint.properties.ipConfigurations
-        /// </param>
-        /// <param name="provisioningState">
-        /// The current provisioning state of the inbound endpoint. This is a read-only property and any attempt to set this value will be ignored.
-        /// Serialized Name: InboundEndpoint.properties.provisioningState
-        /// </param>
-        /// <param name="resourceGuid">
-        /// The resourceGuid property of the inbound endpoint resource.
-        /// Serialized Name: InboundEndpoint.properties.resourceGuid
-        /// </param>
+        /// <param name="etag"> ETag of the inbound endpoint. </param>
+        /// <param name="ipConfigurations"> IP configurations for the inbound endpoint. </param>
+        /// <param name="provisioningState"> The current provisioning state of the inbound endpoint. This is a read-only property and any attempt to set this value will be ignored. </param>
+        /// <param name="resourceGuid"> The resourceGuid property of the inbound endpoint resource. </param>
         /// <returns> A new <see cref="DnsResolver.DnsResolverInboundEndpointData"/> instance for mocking. </returns>
         public static DnsResolverInboundEndpointData DnsResolverInboundEndpointData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ETag? etag = null, IEnumerable<InboundEndpointIPConfiguration> ipConfigurations = null, DnsResolverProvisioningState? provisioningState = null, Guid? resourceGuid = null)
         {
@@ -114,22 +87,10 @@ namespace Azure.ResourceManager.DnsResolver.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="etag">
-        /// ETag of the outbound endpoint.
-        /// Serialized Name: OutboundEndpoint.etag
-        /// </param>
-        /// <param name="subnetId">
-        /// The reference to the subnet used for the outbound endpoint.
-        /// Serialized Name: OutboundEndpoint.properties.subnet
-        /// </param>
-        /// <param name="provisioningState">
-        /// The current provisioning state of the outbound endpoint. This is a read-only property and any attempt to set this value will be ignored.
-        /// Serialized Name: OutboundEndpoint.properties.provisioningState
-        /// </param>
-        /// <param name="resourceGuid">
-        /// The resourceGuid property of the outbound endpoint resource.
-        /// Serialized Name: OutboundEndpoint.properties.resourceGuid
-        /// </param>
+        /// <param name="etag"> ETag of the outbound endpoint. </param>
+        /// <param name="subnetId"> The reference to the subnet used for the outbound endpoint. </param>
+        /// <param name="provisioningState"> The current provisioning state of the outbound endpoint. This is a read-only property and any attempt to set this value will be ignored. </param>
+        /// <param name="resourceGuid"> The resourceGuid property of the outbound endpoint resource. </param>
         /// <returns> A new <see cref="DnsResolver.DnsResolverOutboundEndpointData"/> instance for mocking. </returns>
         public static DnsResolverOutboundEndpointData DnsResolverOutboundEndpointData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ETag? etag = null, ResourceIdentifier subnetId = null, DnsResolverProvisioningState? provisioningState = null, Guid? resourceGuid = null)
         {
@@ -156,22 +117,10 @@ namespace Azure.ResourceManager.DnsResolver.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="etag">
-        /// ETag of the DNS forwarding ruleset.
-        /// Serialized Name: DnsForwardingRuleset.etag
-        /// </param>
-        /// <param name="dnsResolverOutboundEndpoints">
-        /// The reference to the DNS resolver outbound endpoints that are used to route DNS queries matching the forwarding rules in the ruleset to the target DNS servers.
-        /// Serialized Name: DnsForwardingRuleset.properties.dnsResolverOutboundEndpoints
-        /// </param>
-        /// <param name="provisioningState">
-        /// The current provisioning state of the DNS forwarding ruleset. This is a read-only property and any attempt to set this value will be ignored.
-        /// Serialized Name: DnsForwardingRuleset.properties.provisioningState
-        /// </param>
-        /// <param name="resourceGuid">
-        /// The resourceGuid for the DNS forwarding ruleset.
-        /// Serialized Name: DnsForwardingRuleset.properties.resourceGuid
-        /// </param>
+        /// <param name="etag"> ETag of the DNS forwarding ruleset. </param>
+        /// <param name="dnsResolverOutboundEndpoints"> The reference to the DNS resolver outbound endpoints that are used to route DNS queries matching the forwarding rules in the ruleset to the target DNS servers. </param>
+        /// <param name="provisioningState"> The current provisioning state of the DNS forwarding ruleset. This is a read-only property and any attempt to set this value will be ignored. </param>
+        /// <param name="resourceGuid"> The resourceGuid for the DNS forwarding ruleset. </param>
         /// <returns> A new <see cref="DnsResolver.DnsForwardingRulesetData"/> instance for mocking. </returns>
         public static DnsForwardingRulesetData DnsForwardingRulesetData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ETag? etag = null, IEnumerable<WritableSubResource> dnsResolverOutboundEndpoints = null, DnsResolverProvisioningState? provisioningState = null, Guid? resourceGuid = null)
         {
@@ -197,30 +146,12 @@ namespace Azure.ResourceManager.DnsResolver.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="etag">
-        /// ETag of the forwarding rule.
-        /// Serialized Name: ForwardingRule.etag
-        /// </param>
-        /// <param name="domainName">
-        /// The domain name for the forwarding rule.
-        /// Serialized Name: ForwardingRule.properties.domainName
-        /// </param>
-        /// <param name="targetDnsServers">
-        /// DNS servers to forward the DNS query to.
-        /// Serialized Name: ForwardingRule.properties.targetDnsServers
-        /// </param>
-        /// <param name="metadata">
-        /// Metadata attached to the forwarding rule.
-        /// Serialized Name: ForwardingRule.properties.metadata
-        /// </param>
-        /// <param name="dnsForwardingRuleState">
-        /// The state of forwarding rule.
-        /// Serialized Name: ForwardingRule.properties.forwardingRuleState
-        /// </param>
-        /// <param name="provisioningState">
-        /// The current provisioning state of the forwarding rule. This is a read-only property and any attempt to set this value will be ignored.
-        /// Serialized Name: ForwardingRule.properties.provisioningState
-        /// </param>
+        /// <param name="etag"> ETag of the forwarding rule. </param>
+        /// <param name="domainName"> The domain name for the forwarding rule. </param>
+        /// <param name="targetDnsServers"> DNS servers to forward the DNS query to. </param>
+        /// <param name="metadata"> Metadata attached to the forwarding rule. </param>
+        /// <param name="dnsForwardingRuleState"> The state of forwarding rule. </param>
+        /// <param name="provisioningState"> The current provisioning state of the forwarding rule. This is a read-only property and any attempt to set this value will be ignored. </param>
         /// <returns> A new <see cref="DnsResolver.DnsForwardingRuleData"/> instance for mocking. </returns>
         public static DnsForwardingRuleData DnsForwardingRuleData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, string domainName = null, IEnumerable<TargetDnsServer> targetDnsServers = null, IDictionary<string, string> metadata = null, DnsForwardingRuleState? dnsForwardingRuleState = null, DnsResolverProvisioningState? provisioningState = null)
         {
@@ -246,22 +177,10 @@ namespace Azure.ResourceManager.DnsResolver.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="etag">
-        /// ETag of the virtual network link.
-        /// Serialized Name: VirtualNetworkLink.etag
-        /// </param>
-        /// <param name="virtualNetworkId">
-        /// The reference to the virtual network. This cannot be changed after creation.
-        /// Serialized Name: VirtualNetworkLink.properties.virtualNetwork
-        /// </param>
-        /// <param name="metadata">
-        /// Metadata attached to the virtual network link.
-        /// Serialized Name: VirtualNetworkLink.properties.metadata
-        /// </param>
-        /// <param name="provisioningState">
-        /// The current provisioning state of the virtual network link. This is a read-only property and any attempt to set this value will be ignored.
-        /// Serialized Name: VirtualNetworkLink.properties.provisioningState
-        /// </param>
+        /// <param name="etag"> ETag of the virtual network link. </param>
+        /// <param name="virtualNetworkId"> The reference to the virtual network. This cannot be changed after creation. </param>
+        /// <param name="metadata"> Metadata attached to the virtual network link. </param>
+        /// <param name="provisioningState"> The current provisioning state of the virtual network link. This is a read-only property and any attempt to set this value will be ignored. </param>
         /// <returns> A new <see cref="DnsResolver.DnsForwardingRulesetVirtualNetworkLinkData"/> instance for mocking. </returns>
         public static DnsForwardingRulesetVirtualNetworkLinkData DnsForwardingRulesetVirtualNetworkLinkData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, ResourceIdentifier virtualNetworkId = null, IDictionary<string, string> metadata = null, DnsResolverProvisioningState? provisioningState = null)
         {
@@ -280,14 +199,8 @@ namespace Azure.ResourceManager.DnsResolver.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.VirtualNetworkDnsForwardingRuleset"/>. </summary>
-        /// <param name="id">
-        /// DNS Forwarding Ruleset Resource ID.
-        /// Serialized Name: VirtualNetworkDnsForwardingRuleset.id
-        /// </param>
-        /// <param name="virtualNetworkLinkId">
-        /// The reference to the virtual network link.
-        /// Serialized Name: VirtualNetworkDnsForwardingRuleset.properties.virtualNetworkLink
-        /// </param>
+        /// <param name="id"> DNS Forwarding Ruleset Resource ID. </param>
+        /// <param name="virtualNetworkLinkId"> The reference to the virtual network link. </param>
         /// <returns> A new <see cref="Models.VirtualNetworkDnsForwardingRuleset"/> instance for mocking. </returns>
         public static VirtualNetworkDnsForwardingRuleset VirtualNetworkDnsForwardingRuleset(ResourceIdentifier id = null, ResourceIdentifier virtualNetworkLinkId = null)
         {
@@ -301,18 +214,9 @@ namespace Azure.ResourceManager.DnsResolver.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="etag">
-        /// ETag of the DNS resolver policy.
-        /// Serialized Name: DnsResolverPolicy.etag
-        /// </param>
-        /// <param name="provisioningState">
-        /// The current provisioning state of the DNS resolver policy. This is a read-only property and any attempt to set this value will be ignored.
-        /// Serialized Name: DnsResolverPolicy.properties.provisioningState
-        /// </param>
-        /// <param name="resourceGuid">
-        /// The resourceGuid property of the DNS resolver policy resource.
-        /// Serialized Name: DnsResolverPolicy.properties.resourceGuid
-        /// </param>
+        /// <param name="etag"> ETag of the DNS resolver policy. </param>
+        /// <param name="provisioningState"> The current provisioning state of the DNS resolver policy. This is a read-only property and any attempt to set this value will be ignored. </param>
+        /// <param name="resourceGuid"> The resourceGuid property of the DNS resolver policy resource. </param>
         /// <returns> A new <see cref="DnsResolver.DnsResolverPolicyData"/> instance for mocking. </returns>
         public static DnsResolverPolicyData DnsResolverPolicyData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ETag? etag = null, DnsResolverProvisioningState? provisioningState = null, Guid? resourceGuid = null)
         {
@@ -338,32 +242,14 @@ namespace Azure.ResourceManager.DnsResolver.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="etag">
-        /// ETag of the DNS security rule.
-        /// Serialized Name: DnsSecurityRule.etag
-        /// </param>
-        /// <param name="priority">
-        /// The priority of the DNS security rule.
-        /// Serialized Name: DnsSecurityRule.properties.priority
-        /// </param>
-        /// <param name="actionType">
-        /// The action to take on DNS requests that match the DNS security rule.
-        /// Serialized Name: DnsSecurityRule.properties.action
-        /// </param>
-        /// <param name="dnsResolverDomainLists">
-        /// DNS resolver policy domains lists that the DNS security rule applies to.
-        /// Serialized Name: DnsSecurityRule.properties.dnsResolverDomainLists
-        /// </param>
-        /// <param name="dnsSecurityRuleState">
-        /// The state of DNS security rule.
-        /// Serialized Name: DnsSecurityRule.properties.dnsSecurityRuleState
-        /// </param>
-        /// <param name="provisioningState">
-        /// The current provisioning state of the DNS security rule. This is a read-only property and any attempt to set this value will be ignored.
-        /// Serialized Name: DnsSecurityRule.properties.provisioningState
-        /// </param>
+        /// <param name="etag"> ETag of the DNS security rule. </param>
+        /// <param name="priority"> The priority of the DNS security rule. </param>
+        /// <param name="action"> The action to take on DNS requests that match the DNS security rule. </param>
+        /// <param name="dnsResolverDomainLists"> DNS resolver policy domains lists that the DNS security rule applies to. </param>
+        /// <param name="dnsSecurityRuleState"> The state of DNS security rule. </param>
+        /// <param name="provisioningState"> The current provisioning state of the DNS security rule. This is a read-only property and any attempt to set this value will be ignored. </param>
         /// <returns> A new <see cref="DnsResolver.DnsSecurityRuleData"/> instance for mocking. </returns>
-        public static DnsSecurityRuleData DnsSecurityRuleData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ETag? etag = null, int priority = default, DnsSecurityRuleActionType? actionType = null, IEnumerable<WritableSubResource> dnsResolverDomainLists = null, DnsSecurityRuleState? dnsSecurityRuleState = null, DnsResolverProvisioningState? provisioningState = null)
+        public static DnsSecurityRuleData DnsSecurityRuleData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ETag? etag = null, int priority = default, DnsSecurityRuleAction action = null, IEnumerable<WritableSubResource> dnsResolverDomainLists = null, DnsSecurityRuleState? dnsSecurityRuleState = null, DnsResolverProvisioningState? provisioningState = null)
         {
             tags ??= new Dictionary<string, string>();
             dnsResolverDomainLists ??= new List<WritableSubResource>();
@@ -377,7 +263,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
                 location,
                 etag,
                 priority,
-                actionType != null ? new DnsSecurityRuleAction(actionType, serializedAdditionalRawData: null) : null,
+                action,
                 dnsResolverDomainLists?.ToList(),
                 dnsSecurityRuleState,
                 provisioningState,
@@ -391,18 +277,9 @@ namespace Azure.ResourceManager.DnsResolver.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="etag">
-        /// ETag of the DNS resolver policy virtual network link.
-        /// Serialized Name: DnsResolverPolicyVirtualNetworkLink.etag
-        /// </param>
-        /// <param name="virtualNetworkId">
-        /// The reference to the virtual network. This cannot be changed after creation.
-        /// Serialized Name: DnsResolverPolicyVirtualNetworkLink.properties.virtualNetwork
-        /// </param>
-        /// <param name="provisioningState">
-        /// The current provisioning state of the DNS resolver policy virtual network link. This is a read-only property and any attempt to set this value will be ignored.
-        /// Serialized Name: DnsResolverPolicyVirtualNetworkLink.properties.provisioningState
-        /// </param>
+        /// <param name="etag"> ETag of the DNS resolver policy virtual network link. </param>
+        /// <param name="virtualNetworkId"> The reference to the virtual network. This cannot be changed after creation. </param>
+        /// <param name="provisioningState"> The current provisioning state of the DNS resolver policy virtual network link. This is a read-only property and any attempt to set this value will be ignored. </param>
         /// <returns> A new <see cref="DnsResolver.DnsResolverPolicyVirtualNetworkLinkData"/> instance for mocking. </returns>
         public static DnsResolverPolicyVirtualNetworkLinkData DnsResolverPolicyVirtualNetworkLinkData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ETag? etag = null, ResourceIdentifier virtualNetworkId = null, DnsResolverProvisioningState? provisioningState = null)
         {
@@ -428,28 +305,12 @@ namespace Azure.ResourceManager.DnsResolver.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="etag">
-        /// ETag of the DNS resolver domain list.
-        /// Serialized Name: DnsResolverDomainList.etag
-        /// </param>
-        /// <param name="domains">
-        /// The domains in the domain list.
-        /// Serialized Name: DnsResolverDomainList.properties.domains
-        /// </param>
-        /// <param name="domainsUri">
-        /// The URL for bulk upload or download for domain lists containing larger set of domains.
-        /// Serialized Name: DnsResolverDomainList.properties.domainsUrl
-        /// </param>
-        /// <param name="provisioningState">
-        /// The current provisioning state of the DNS resolver domain list. This is a read-only property and any attempt to set this value will be ignored.
-        /// Serialized Name: DnsResolverDomainList.properties.provisioningState
-        /// </param>
-        /// <param name="resourceGuid">
-        /// The resourceGuid property of the DNS resolver domain list resource.
-        /// Serialized Name: DnsResolverDomainList.properties.resourceGuid
-        /// </param>
+        /// <param name="etag"> ETag of the DNS resolver domain list. </param>
+        /// <param name="domains"> The domains in the domain list. </param>
+        /// <param name="provisioningState"> The current provisioning state of the DNS resolver domain list. This is a read-only property and any attempt to set this value will be ignored. </param>
+        /// <param name="resourceGuid"> The resourceGuid property of the DNS resolver domain list resource. </param>
         /// <returns> A new <see cref="DnsResolver.DnsResolverDomainListData"/> instance for mocking. </returns>
-        public static DnsResolverDomainListData DnsResolverDomainListData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ETag? etag = null, IEnumerable<string> domains = null, Uri domainsUri = null, DnsResolverProvisioningState? provisioningState = null, Guid? resourceGuid = null)
+        public static DnsResolverDomainListData DnsResolverDomainListData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ETag? etag = null, IEnumerable<string> domains = null, DnsResolverProvisioningState? provisioningState = null, Guid? resourceGuid = null)
         {
             tags ??= new Dictionary<string, string>();
             domains ??= new List<string>();
@@ -463,7 +324,6 @@ namespace Azure.ResourceManager.DnsResolver.Models
                 location,
                 etag,
                 domains?.ToList(),
-                domainsUri,
                 provisioningState,
                 resourceGuid,
                 serializedAdditionalRawData: null);

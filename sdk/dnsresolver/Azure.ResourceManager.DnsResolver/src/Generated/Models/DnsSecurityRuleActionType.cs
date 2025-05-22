@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.DnsResolver.Models
 {
-    /// <summary>
-    /// The type of action to take.
-    /// Serialized Name: ActionType
-    /// </summary>
+    /// <summary> The type of action to take. </summary>
     public readonly partial struct DnsSecurityRuleActionType : IEquatable<DnsSecurityRuleActionType>
     {
         private readonly string _value;
@@ -29,20 +26,11 @@ namespace Azure.ResourceManager.DnsResolver.Models
         private const string AlertValue = "Alert";
         private const string BlockValue = "Block";
 
-        /// <summary>
-        /// Allow
-        /// Serialized Name: ActionType.Allow
-        /// </summary>
+        /// <summary> Allow. </summary>
         public static DnsSecurityRuleActionType Allow { get; } = new DnsSecurityRuleActionType(AllowValue);
-        /// <summary>
-        /// Alert
-        /// Serialized Name: ActionType.Alert
-        /// </summary>
+        /// <summary> Alert. </summary>
         public static DnsSecurityRuleActionType Alert { get; } = new DnsSecurityRuleActionType(AlertValue);
-        /// <summary>
-        /// Block
-        /// Serialized Name: ActionType.Block
-        /// </summary>
+        /// <summary> Block. </summary>
         public static DnsSecurityRuleActionType Block { get; } = new DnsSecurityRuleActionType(BlockValue);
         /// <summary> Determines if two <see cref="DnsSecurityRuleActionType"/> values are the same. </summary>
         public static bool operator ==(DnsSecurityRuleActionType left, DnsSecurityRuleActionType right) => left.Equals(right);

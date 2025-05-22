@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DnsResolver.Models
 {
-    /// <summary>
-    /// The response to an enumeration operation on virtual network links.
-    /// Serialized Name: VirtualNetworkLinkListResult
-    /// </summary>
+    /// <summary> The response to an enumeration operation on virtual network links. </summary>
     internal partial class VirtualNetworkLinkListResult
     {
         /// <summary>
@@ -55,14 +52,8 @@ namespace Azure.ResourceManager.DnsResolver.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="VirtualNetworkLinkListResult"/>. </summary>
-        /// <param name="value">
-        /// Enumeration of the virtual network links.
-        /// Serialized Name: VirtualNetworkLinkListResult.value
-        /// </param>
-        /// <param name="nextLink">
-        /// The continuation token for the next page of results.
-        /// Serialized Name: VirtualNetworkLinkListResult.nextLink
-        /// </param>
+        /// <param name="value"> Enumeration of the virtual network links. </param>
+        /// <param name="nextLink"> The continuation token for the next page of results. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal VirtualNetworkLinkListResult(IReadOnlyList<DnsForwardingRulesetVirtualNetworkLinkData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -71,15 +62,9 @@ namespace Azure.ResourceManager.DnsResolver.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Enumeration of the virtual network links.
-        /// Serialized Name: VirtualNetworkLinkListResult.value
-        /// </summary>
+        /// <summary> Enumeration of the virtual network links. </summary>
         public IReadOnlyList<DnsForwardingRulesetVirtualNetworkLinkData> Value { get; }
-        /// <summary>
-        /// The continuation token for the next page of results.
-        /// Serialized Name: VirtualNetworkLinkListResult.nextLink
-        /// </summary>
+        /// <summary> The continuation token for the next page of results. </summary>
         public string NextLink { get; }
     }
 }

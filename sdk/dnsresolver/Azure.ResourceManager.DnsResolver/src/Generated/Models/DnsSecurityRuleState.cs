@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.DnsResolver.Models
 {
-    /// <summary>
-    /// The state of DNS security rule.
-    /// Serialized Name: DnsSecurityRuleState
-    /// </summary>
+    /// <summary> The state of DNS security rule. </summary>
     public readonly partial struct DnsSecurityRuleState : IEquatable<DnsSecurityRuleState>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.DnsResolver.Models
         private const string EnabledValue = "Enabled";
         private const string DisabledValue = "Disabled";
 
-        /// <summary>
-        /// Enabled
-        /// Serialized Name: DnsSecurityRuleState.Enabled
-        /// </summary>
+        /// <summary> Enabled. </summary>
         public static DnsSecurityRuleState Enabled { get; } = new DnsSecurityRuleState(EnabledValue);
-        /// <summary>
-        /// Disabled
-        /// Serialized Name: DnsSecurityRuleState.Disabled
-        /// </summary>
+        /// <summary> Disabled. </summary>
         public static DnsSecurityRuleState Disabled { get; } = new DnsSecurityRuleState(DisabledValue);
         /// <summary> Determines if two <see cref="DnsSecurityRuleState"/> values are the same. </summary>
         public static bool operator ==(DnsSecurityRuleState left, DnsSecurityRuleState right) => left.Equals(right);

@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DnsResolver.Models
 {
-    /// <summary>
-    /// The response to an enumeration operation on DNS resolvers.
-    /// Serialized Name: DnsResolverListResult
-    /// </summary>
+    /// <summary> The response to an enumeration operation on DNS resolvers. </summary>
     internal partial class DnsResolverListResult
     {
         /// <summary>
@@ -55,14 +52,8 @@ namespace Azure.ResourceManager.DnsResolver.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DnsResolverListResult"/>. </summary>
-        /// <param name="value">
-        /// Enumeration of the DNS resolvers.
-        /// Serialized Name: DnsResolverListResult.value
-        /// </param>
-        /// <param name="nextLink">
-        /// The continuation token for the next page of results.
-        /// Serialized Name: DnsResolverListResult.nextLink
-        /// </param>
+        /// <param name="value"> Enumeration of the DNS resolvers. </param>
+        /// <param name="nextLink"> The continuation token for the next page of results. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal DnsResolverListResult(IReadOnlyList<DnsResolverData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -71,15 +62,9 @@ namespace Azure.ResourceManager.DnsResolver.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Enumeration of the DNS resolvers.
-        /// Serialized Name: DnsResolverListResult.value
-        /// </summary>
+        /// <summary> Enumeration of the DNS resolvers. </summary>
         public IReadOnlyList<DnsResolverData> Value { get; }
-        /// <summary>
-        /// The continuation token for the next page of results.
-        /// Serialized Name: DnsResolverListResult.nextLink
-        /// </summary>
+        /// <summary> The continuation token for the next page of results. </summary>
         public string NextLink { get; }
     }
 }

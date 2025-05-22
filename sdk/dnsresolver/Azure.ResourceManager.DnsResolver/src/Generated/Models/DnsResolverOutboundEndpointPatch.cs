@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DnsResolver.Models
 {
-    /// <summary>
-    /// Describes an outbound endpoint for a DNS resolver for PATCH operation.
-    /// Serialized Name: OutboundEndpointPatch
-    /// </summary>
+    /// <summary> Describes an outbound endpoint for a DNS resolver for PATCH operation. </summary>
     public partial class DnsResolverOutboundEndpointPatch
     {
         /// <summary>
@@ -55,10 +52,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DnsResolverOutboundEndpointPatch"/>. </summary>
-        /// <param name="tags">
-        /// Tags for outbound endpoint.
-        /// Serialized Name: OutboundEndpointPatch.tags
-        /// </param>
+        /// <param name="tags"> Tags for outbound endpoint. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal DnsResolverOutboundEndpointPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -66,10 +60,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Tags for outbound endpoint.
-        /// Serialized Name: OutboundEndpointPatch.tags
-        /// </summary>
+        /// <summary> Tags for outbound endpoint. </summary>
         public IDictionary<string, string> Tags { get; }
     }
 }

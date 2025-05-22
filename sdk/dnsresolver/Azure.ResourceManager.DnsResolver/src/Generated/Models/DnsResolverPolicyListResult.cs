@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DnsResolver.Models
 {
-    /// <summary>
-    /// The response to an enumeration operation on DNS resolver policies.
-    /// Serialized Name: DnsResolverPolicyListResult
-    /// </summary>
+    /// <summary> The response to an enumeration operation on DNS resolver policies. </summary>
     internal partial class DnsResolverPolicyListResult
     {
         /// <summary>
@@ -55,14 +52,8 @@ namespace Azure.ResourceManager.DnsResolver.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DnsResolverPolicyListResult"/>. </summary>
-        /// <param name="value">
-        /// Enumeration of the DNS resolver policies.
-        /// Serialized Name: DnsResolverPolicyListResult.value
-        /// </param>
-        /// <param name="nextLink">
-        /// The continuation token for the next page of results.
-        /// Serialized Name: DnsResolverPolicyListResult.nextLink
-        /// </param>
+        /// <param name="value"> Enumeration of the DNS resolver policies. </param>
+        /// <param name="nextLink"> The continuation token for the next page of results. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal DnsResolverPolicyListResult(IReadOnlyList<DnsResolverPolicyData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -71,15 +62,9 @@ namespace Azure.ResourceManager.DnsResolver.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Enumeration of the DNS resolver policies.
-        /// Serialized Name: DnsResolverPolicyListResult.value
-        /// </summary>
+        /// <summary> Enumeration of the DNS resolver policies. </summary>
         public IReadOnlyList<DnsResolverPolicyData> Value { get; }
-        /// <summary>
-        /// The continuation token for the next page of results.
-        /// Serialized Name: DnsResolverPolicyListResult.nextLink
-        /// </summary>
+        /// <summary> The continuation token for the next page of results. </summary>
         public string NextLink { get; }
     }
 }

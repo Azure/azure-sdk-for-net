@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DnsResolver.Models
 {
-    /// <summary>
-    /// The response to an enumeration operation on Virtual Network DNS Forwarding Ruleset.
-    /// Serialized Name: VirtualNetworkDnsForwardingRulesetListResult
-    /// </summary>
+    /// <summary> The response to an enumeration operation on Virtual Network DNS Forwarding Ruleset. </summary>
     internal partial class VirtualNetworkDnsForwardingRulesetListResult
     {
         /// <summary>
@@ -55,14 +52,8 @@ namespace Azure.ResourceManager.DnsResolver.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="VirtualNetworkDnsForwardingRulesetListResult"/>. </summary>
-        /// <param name="value">
-        /// Enumeration of the Virtual Network DNS Forwarding Ruleset.
-        /// Serialized Name: VirtualNetworkDnsForwardingRulesetListResult.value
-        /// </param>
-        /// <param name="nextLink">
-        /// The continuation token for the next page of results.
-        /// Serialized Name: VirtualNetworkDnsForwardingRulesetListResult.nextLink
-        /// </param>
+        /// <param name="value"> Enumeration of the Virtual Network DNS Forwarding Ruleset. </param>
+        /// <param name="nextLink"> The continuation token for the next page of results. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal VirtualNetworkDnsForwardingRulesetListResult(IReadOnlyList<VirtualNetworkDnsForwardingRuleset> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -71,15 +62,9 @@ namespace Azure.ResourceManager.DnsResolver.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Enumeration of the Virtual Network DNS Forwarding Ruleset.
-        /// Serialized Name: VirtualNetworkDnsForwardingRulesetListResult.value
-        /// </summary>
+        /// <summary> Enumeration of the Virtual Network DNS Forwarding Ruleset. </summary>
         public IReadOnlyList<VirtualNetworkDnsForwardingRuleset> Value { get; }
-        /// <summary>
-        /// The continuation token for the next page of results.
-        /// Serialized Name: VirtualNetworkDnsForwardingRulesetListResult.nextLink
-        /// </summary>
+        /// <summary> The continuation token for the next page of results. </summary>
         public string NextLink { get; }
     }
 }

@@ -11,10 +11,7 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.DnsResolver.Models
 {
-    /// <summary>
-    /// Describes a DNS forwarding ruleset PATCH operation.
-    /// Serialized Name: DnsForwardingRulesetPatch
-    /// </summary>
+    /// <summary> Describes a DNS forwarding ruleset PATCH operation. </summary>
     public partial class DnsForwardingRulesetPatch
     {
         /// <summary>
@@ -57,14 +54,8 @@ namespace Azure.ResourceManager.DnsResolver.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DnsForwardingRulesetPatch"/>. </summary>
-        /// <param name="dnsResolverOutboundEndpoints">
-        /// The reference to the DNS resolver outbound endpoints that are used to route DNS queries matching the forwarding rules in the ruleset to the target DNS servers.
-        /// Serialized Name: DnsForwardingRulesetPatch.dnsResolverOutboundEndpoints
-        /// </param>
-        /// <param name="tags">
-        /// Tags for DNS Resolver.
-        /// Serialized Name: DnsForwardingRulesetPatch.tags
-        /// </param>
+        /// <param name="dnsResolverOutboundEndpoints"> The reference to the DNS resolver outbound endpoints that are used to route DNS queries matching the forwarding rules in the ruleset to the target DNS servers. </param>
+        /// <param name="tags"> Tags for DNS Resolver. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal DnsForwardingRulesetPatch(IList<WritableSubResource> dnsResolverOutboundEndpoints, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -73,15 +64,9 @@ namespace Azure.ResourceManager.DnsResolver.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The reference to the DNS resolver outbound endpoints that are used to route DNS queries matching the forwarding rules in the ruleset to the target DNS servers.
-        /// Serialized Name: DnsForwardingRulesetPatch.dnsResolverOutboundEndpoints
-        /// </summary>
+        /// <summary> The reference to the DNS resolver outbound endpoints that are used to route DNS queries matching the forwarding rules in the ruleset to the target DNS servers. </summary>
         public IList<WritableSubResource> DnsResolverOutboundEndpoints { get; }
-        /// <summary>
-        /// Tags for DNS Resolver.
-        /// Serialized Name: DnsForwardingRulesetPatch.tags
-        /// </summary>
+        /// <summary> Tags for DNS Resolver. </summary>
         public IDictionary<string, string> Tags { get; }
     }
 }
