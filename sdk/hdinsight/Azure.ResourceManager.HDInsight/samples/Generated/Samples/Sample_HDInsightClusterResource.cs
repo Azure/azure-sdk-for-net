@@ -417,6 +417,42 @@ MaxInstanceCount = 4,
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task UpdateGatewaySettings_UpdateEntraUserInHDInsight()
+        {
+            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/preview/2025-01-15-preview/examples/HDI_Clusters_UpdateGatewaySettings_EntraUser.json
+            // this example is just showing the usage of "Clusters_UpdateGatewaySettings" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this HDInsightClusterResource created on azure
+            // for more information of creating HDInsightClusterResource, please refer to the document of HDInsightClusterResource
+            string subscriptionId = "subid";
+            string resourceGroupName = "rg1";
+            string clusterName = "cluster1";
+            ResourceIdentifier hdInsightClusterResourceId = HDInsightClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName);
+            HDInsightClusterResource hdInsightCluster = client.GetHDInsightClusterResource(hdInsightClusterResourceId);
+
+            // invoke the operation
+            HDInsightClusterUpdateGatewaySettingsContent content = new HDInsightClusterUpdateGatewaySettingsContent
+            {
+                IsCredentialEnabled = false,
+                RestAuthEntraUsers = {new EntraUserInfo
+{
+ObjectId = "00000000-0000-0000-0000-000000000000",
+DisplayName = "displayName",
+Upn = "user@microsoft.com",
+}},
+            };
+            await hdInsightCluster.UpdateGatewaySettingsAsync(WaitUntil.Completed, content);
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAsyncOperationStatus_GetAsyncOperationStatusOfCreatingCluster()
         {
             // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/preview/2025-01-15-preview/examples/GetClusterCreatingAsyncOperationStatus.json
