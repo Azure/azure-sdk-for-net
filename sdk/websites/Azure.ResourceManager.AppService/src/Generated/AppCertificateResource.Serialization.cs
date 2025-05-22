@@ -11,7 +11,7 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.AppService
 {
-    public partial class CertificateResource : IJsonModel<AppCertificateData>
+    public partial class AppCertificateResource : IJsonModel<AppCertificateData>
     {
         private static AppCertificateData s_dataDeserializationInstance;
         private static AppCertificateData DataDeserializationInstance => s_dataDeserializationInstance ??= new();

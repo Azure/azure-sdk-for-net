@@ -12,25 +12,25 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService
 {
-    internal class CertificateOperationSource : IOperationSource<CertificateResource>
+    internal class AppCertificateOperationSource : IOperationSource<AppCertificateResource>
     {
         private readonly ArmClient _client;
 
-        internal CertificateOperationSource(ArmClient client)
+        internal AppCertificateOperationSource(ArmClient client)
         {
             _client = client;
         }
 
-        CertificateResource IOperationSource<CertificateResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        AppCertificateResource IOperationSource<AppCertificateResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             var data = ModelReaderWriter.Read<AppCertificateData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerAppServiceContext.Default);
-            return new CertificateResource(_client, data);
+            return new AppCertificateResource(_client, data);
         }
 
-        async ValueTask<CertificateResource> IOperationSource<CertificateResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<AppCertificateResource> IOperationSource<AppCertificateResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             var data = ModelReaderWriter.Read<AppCertificateData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerAppServiceContext.Default);
-            return await Task.FromResult(new CertificateResource(_client, data)).ConfigureAwait(false);
+            return await Task.FromResult(new AppCertificateResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

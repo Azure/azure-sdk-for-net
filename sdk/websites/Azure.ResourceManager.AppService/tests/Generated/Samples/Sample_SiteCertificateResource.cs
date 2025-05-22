@@ -96,11 +96,11 @@ namespace Azure.ResourceManager.AppService.Samples
             SiteCertificateResource siteCertificate = client.GetSiteCertificateResource(siteCertificateResourceId);
 
             // invoke the operation
-            CertificatePatchResource certificateEnvelope = new CertificatePatchResource
+            AppCertificatePatch patch = new AppCertificatePatch
             {
                 KeyVaultId = new ResourceIdentifier("/subscriptions/34adfa4f-cedf-4dc0-ba29-b6d1a69ab345/resourceGroups/testrg123/providers/Microsoft.KeyVault/vaults/testKV"),
             };
-            SiteCertificateResource result = await siteCertificate.UpdateAsync(certificateEnvelope);
+            SiteCertificateResource result = await siteCertificate.UpdateAsync(patch);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance

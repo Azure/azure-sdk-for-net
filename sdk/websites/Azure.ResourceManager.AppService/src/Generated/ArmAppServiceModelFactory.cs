@@ -1407,13 +1407,13 @@ namespace Azure.ResourceManager.AppService.Models
         /// If &lt;code&gt;true&lt;/code&gt;, this App Service Plan will perform availability zone balancing.
         /// If &lt;code&gt;false&lt;/code&gt;, this App Service Plan will not perform availability zone balancing.
         /// </param>
-        /// <param name="asyncScalingEnabled">
+        /// <param name="isAsyncScalingEnabled">
         /// If &lt;code&gt;true&lt;/code&gt;, this App Service Plan will attempt to scale asynchronously if there are insufficient workers to scale synchronously.
         /// If &lt;code&gt;false&lt;/code&gt;, this App Service Plan will only attempt sync scaling.
         /// </param>
         /// <param name="kind"> Kind of resource. If the resource is an app, you can refer to https://github.com/Azure/app-service-linux-docs/blob/master/Things_You_Should_Know/kind_property.md#app-service-resource-kind-reference for details supported values for kind. </param>
         /// <returns> A new <see cref="AppService.AppServicePlanData"/> instance for mocking. </returns>
-        public static AppServicePlanData AppServicePlanData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, AppServiceSkuDescription sku = null, ExtendedLocation extendedLocation = null, string workerTierName = null, AppServicePlanStatus? status = null, string subscription = null, HostingEnvironmentProfile hostingEnvironmentProfile = null, int? maximumNumberOfWorkers = null, int? numberOfWorkers = null, string geoRegion = null, bool? isPerSiteScaling = null, bool? isElasticScaleEnabled = null, int? maximumElasticWorkerCount = null, int? numberOfSites = null, bool? isSpot = null, DateTimeOffset? spotExpireOn = null, DateTimeOffset? freeOfferExpireOn = null, string resourceGroup = null, bool? isReserved = null, bool? isXenon = null, bool? isHyperV = null, int? targetWorkerCount = null, int? targetWorkerSizeId = null, ProvisioningState? provisioningState = null, KubeEnvironmentProfile kubeEnvironmentProfile = null, bool? isZoneRedundant = null, bool? asyncScalingEnabled = null, string kind = null)
+        public static AppServicePlanData AppServicePlanData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, AppServiceSkuDescription sku = null, ExtendedLocation extendedLocation = null, string workerTierName = null, AppServicePlanStatus? status = null, string subscription = null, HostingEnvironmentProfile hostingEnvironmentProfile = null, int? maximumNumberOfWorkers = null, int? numberOfWorkers = null, string geoRegion = null, bool? isPerSiteScaling = null, bool? isElasticScaleEnabled = null, int? maximumElasticWorkerCount = null, int? numberOfSites = null, bool? isSpot = null, DateTimeOffset? spotExpireOn = null, DateTimeOffset? freeOfferExpireOn = null, string resourceGroup = null, bool? isReserved = null, bool? isXenon = null, bool? isHyperV = null, int? targetWorkerCount = null, int? targetWorkerSizeId = null, ProvisioningState? provisioningState = null, KubeEnvironmentProfile kubeEnvironmentProfile = null, bool? isZoneRedundant = null, bool? isAsyncScalingEnabled = null, string kind = null)
         {
             tags ??= new Dictionary<string, string>();
 
@@ -1449,7 +1449,7 @@ namespace Azure.ResourceManager.AppService.Models
                 provisioningState,
                 kubeEnvironmentProfile,
                 isZoneRedundant,
-                asyncScalingEnabled,
+                isAsyncScalingEnabled,
                 kind,
                 serializedAdditionalRawData: null);
         }
@@ -1511,8 +1511,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="targetSwapSlot"> Specifies which deployment slot this app will swap into. Read-only. </param>
         /// <param name="hostingEnvironmentProfile"> App Service Environment to use for the app. </param>
         /// <param name="isClientAffinityEnabled"> &lt;code&gt;true&lt;/code&gt; to enable client affinity; &lt;code&gt;false&lt;/code&gt; to stop sending session affinity cookies, which route client requests in the same session to the same instance. Default is &lt;code&gt;true&lt;/code&gt;. </param>
-        /// <param name="clientAffinityPartitioningEnabled"> &lt;code&gt;true&lt;/code&gt; to enable client affinity partitioning using CHIPS cookies, this will add the &lt;code&gt;partitioned&lt;/code&gt; property to the affinity cookies; &lt;code&gt;false&lt;/code&gt; to stop sending partitioned affinity cookies. Default is &lt;code&gt;false&lt;/code&gt;. </param>
-        /// <param name="clientAffinityProxyEnabled"> &lt;code&gt;true&lt;/code&gt; to override client affinity cookie domain with X-Forwarded-Host request header. &lt;code&gt;false&lt;/code&gt; to use default domain. Default is &lt;code&gt;false&lt;/code&gt;. </param>
+        /// <param name="isClientAffinityPartitioningEnabled"> &lt;code&gt;true&lt;/code&gt; to enable client affinity partitioning using CHIPS cookies, this will add the &lt;code&gt;partitioned&lt;/code&gt; property to the affinity cookies; &lt;code&gt;false&lt;/code&gt; to stop sending partitioned affinity cookies. Default is &lt;code&gt;false&lt;/code&gt;. </param>
+        /// <param name="isClientAffinityProxyEnabled"> &lt;code&gt;true&lt;/code&gt; to override client affinity cookie domain with X-Forwarded-Host request header. &lt;code&gt;false&lt;/code&gt; to use default domain. Default is &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="isClientCertEnabled"> &lt;code&gt;true&lt;/code&gt; to enable client certificate authentication (TLS mutual authentication); otherwise, &lt;code&gt;false&lt;/code&gt;. Default is &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="clientCertMode">
         /// This composes with ClientCertEnabled setting.
@@ -1523,7 +1523,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="clientCertExclusionPaths"> client certificate authentication comma-separated exclusion paths. </param>
         /// <param name="ipMode"> Specifies the IP mode of the app. </param>
         /// <param name="isEndToEndEncryptionEnabled"> Whether to use end to end encryption between the FrontEnd and the Worker. </param>
-        /// <param name="sshEnabled"> Whether to enable ssh access. </param>
+        /// <param name="isSshEnabled"> Whether to enable ssh access. </param>
         /// <param name="isHostNameDisabled">
         /// &lt;code&gt;true&lt;/code&gt; to disable the public hostnames of the app; otherwise, &lt;code&gt;false&lt;/code&gt;.
         ///  If &lt;code&gt;true&lt;/code&gt;, the app is only accessible via API management process.
@@ -1561,7 +1561,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="sku"> Current SKU of application based on associated App Service Plan. Some valid SKU values are Free, Shared, Basic, Dynamic, FlexConsumption, Standard, Premium, PremiumV2, PremiumV3, Isolated, IsolatedV2. </param>
         /// <param name="kind"> Kind of resource. If the resource is an app, you can refer to https://github.com/Azure/app-service-linux-docs/blob/master/Things_You_Should_Know/kind_property.md#app-service-resource-kind-reference for details supported values for kind. </param>
         /// <returns> A new <see cref="AppService.WebSiteData"/> instance for mocking. </returns>
-        public static WebSiteData WebSiteData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, ExtendedLocation extendedLocation = null, string state = null, IEnumerable<string> hostNames = null, string repositorySiteName = null, AppServiceUsageState? usageState = null, bool? isEnabled = null, IEnumerable<string> enabledHostNames = null, WebSiteAvailabilityState? availabilityState = null, IEnumerable<HostNameSslState> hostNameSslStates = null, ResourceIdentifier appServicePlanId = null, bool? isReserved = null, bool? isXenon = null, bool? isHyperV = null, DateTimeOffset? lastModifiedTimeUtc = null, SiteDnsConfig dnsConfiguration = null, OutboundVnetRouting outboundVnetRouting = null, SiteConfigProperties siteConfig = null, FunctionAppConfig functionAppConfig = null, AppDaprConfig daprConfig = null, string workloadProfileName = null, FunctionAppResourceConfig resourceConfig = null, IEnumerable<string> trafficManagerHostNames = null, bool? isScmSiteAlsoStopped = null, string targetSwapSlot = null, HostingEnvironmentProfile hostingEnvironmentProfile = null, bool? isClientAffinityEnabled = null, bool? clientAffinityPartitioningEnabled = null, bool? clientAffinityProxyEnabled = null, bool? isClientCertEnabled = null, ClientCertMode? clientCertMode = null, string clientCertExclusionPaths = null, AppServiceIPMode? ipMode = null, bool? isEndToEndEncryptionEnabled = null, bool? sshEnabled = null, bool? isHostNameDisabled = null, string customDomainVerificationId = null, string outboundIPAddresses = null, string possibleOutboundIPAddresses = null, int? containerSize = null, int? dailyMemoryTimeQuota = null, DateTimeOffset? suspendOn = null, int? maxNumberOfWorkers = null, CloningInfo cloningInfo = null, string resourceGroup = null, bool? isDefaultContainer = null, string defaultHostName = null, SlotSwapStatus slotSwapStatus = null, bool? isHttpsOnly = null, RedundancyMode? redundancyMode = null, Guid? inProgressOperationId = null, string publicNetworkAccess = null, bool? isStorageAccountRequired = null, string keyVaultReferenceIdentity = null, AutoGeneratedDomainNameLabelScope? autoGeneratedDomainNameLabelScope = null, ResourceIdentifier virtualNetworkSubnetId = null, string managedEnvironmentId = null, string sku = null, string kind = null)
+        public static WebSiteData WebSiteData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, ExtendedLocation extendedLocation = null, string state = null, IEnumerable<string> hostNames = null, string repositorySiteName = null, AppServiceUsageState? usageState = null, bool? isEnabled = null, IEnumerable<string> enabledHostNames = null, WebSiteAvailabilityState? availabilityState = null, IEnumerable<HostNameSslState> hostNameSslStates = null, ResourceIdentifier appServicePlanId = null, bool? isReserved = null, bool? isXenon = null, bool? isHyperV = null, DateTimeOffset? lastModifiedTimeUtc = null, SiteDnsConfig dnsConfiguration = null, OutboundVnetRouting outboundVnetRouting = null, SiteConfigProperties siteConfig = null, FunctionAppConfig functionAppConfig = null, AppDaprConfig daprConfig = null, string workloadProfileName = null, FunctionAppResourceConfig resourceConfig = null, IEnumerable<string> trafficManagerHostNames = null, bool? isScmSiteAlsoStopped = null, string targetSwapSlot = null, HostingEnvironmentProfile hostingEnvironmentProfile = null, bool? isClientAffinityEnabled = null, bool? isClientAffinityPartitioningEnabled = null, bool? isClientAffinityProxyEnabled = null, bool? isClientCertEnabled = null, ClientCertMode? clientCertMode = null, string clientCertExclusionPaths = null, AppServiceIPMode? ipMode = null, bool? isEndToEndEncryptionEnabled = null, bool? isSshEnabled = null, bool? isHostNameDisabled = null, string customDomainVerificationId = null, string outboundIPAddresses = null, string possibleOutboundIPAddresses = null, int? containerSize = null, int? dailyMemoryTimeQuota = null, DateTimeOffset? suspendOn = null, int? maxNumberOfWorkers = null, CloningInfo cloningInfo = null, string resourceGroup = null, bool? isDefaultContainer = null, string defaultHostName = null, SlotSwapStatus slotSwapStatus = null, bool? isHttpsOnly = null, RedundancyMode? redundancyMode = null, Guid? inProgressOperationId = null, string publicNetworkAccess = null, bool? isStorageAccountRequired = null, string keyVaultReferenceIdentity = null, AutoGeneratedDomainNameLabelScope? autoGeneratedDomainNameLabelScope = null, ResourceIdentifier virtualNetworkSubnetId = null, string managedEnvironmentId = null, string sku = null, string kind = null)
         {
             tags ??= new Dictionary<string, string>();
             hostNames ??= new List<string>();
@@ -1603,14 +1603,14 @@ namespace Azure.ResourceManager.AppService.Models
                 targetSwapSlot,
                 hostingEnvironmentProfile,
                 isClientAffinityEnabled,
-                clientAffinityPartitioningEnabled,
-                clientAffinityProxyEnabled,
+                isClientAffinityPartitioningEnabled,
+                isClientAffinityProxyEnabled,
                 isClientCertEnabled,
                 clientCertMode,
                 clientCertExclusionPaths,
                 ipMode,
                 isEndToEndEncryptionEnabled,
-                sshEnabled,
+                isSshEnabled,
                 isHostNameDisabled,
                 customDomainVerificationId,
                 outboundIPAddresses,
@@ -2277,7 +2277,7 @@ namespace Azure.ResourceManager.AppService.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.CertificatePatchResource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AppCertificatePatch"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -2304,12 +2304,12 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="canonicalName"> CNAME of the certificate to be issued via free certificate. </param>
         /// <param name="domainValidationMethod"> Method of domain validation for free cert. </param>
         /// <param name="kind"> Kind of resource. </param>
-        /// <returns> A new <see cref="Models.CertificatePatchResource"/> instance for mocking. </returns>
-        public static CertificatePatchResource CertificatePatchResource(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string password = null, string friendlyName = null, string subjectName = null, IEnumerable<string> hostNames = null, byte[] pfxBlob = null, string siteName = null, string selfLink = null, string issuer = null, DateTimeOffset? issueOn = null, DateTimeOffset? expireOn = null, string thumbprintString = null, bool? isValid = null, byte[] cerBlob = null, string publicKeyHash = null, HostingEnvironmentProfile hostingEnvironmentProfile = null, ResourceIdentifier keyVaultId = null, string keyVaultSecretName = null, KeyVaultSecretStatus? keyVaultSecretStatus = null, ResourceIdentifier serverFarmId = null, string canonicalName = null, string domainValidationMethod = null, string kind = null)
+        /// <returns> A new <see cref="Models.AppCertificatePatch"/> instance for mocking. </returns>
+        public static AppCertificatePatch AppCertificatePatch(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string password = null, string friendlyName = null, string subjectName = null, IEnumerable<string> hostNames = null, byte[] pfxBlob = null, string siteName = null, string selfLink = null, string issuer = null, DateTimeOffset? issueOn = null, DateTimeOffset? expireOn = null, string thumbprintString = null, bool? isValid = null, byte[] cerBlob = null, string publicKeyHash = null, HostingEnvironmentProfile hostingEnvironmentProfile = null, ResourceIdentifier keyVaultId = null, string keyVaultSecretName = null, KeyVaultSecretStatus? keyVaultSecretStatus = null, ResourceIdentifier serverFarmId = null, string canonicalName = null, string domainValidationMethod = null, string kind = null)
         {
             hostNames ??= new List<string>();
 
-            return new CertificatePatchResource(
+            return new AppCertificatePatch(
                 id,
                 name,
                 resourceType,
@@ -3162,25 +3162,25 @@ namespace Azure.ResourceManager.AppService.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ResourceNameAvailabilityContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AppServiceNameAvailabilityContent"/>. </summary>
         /// <param name="name"> Resource name to verify. </param>
         /// <param name="resourceType"> Resource type used for verification. </param>
         /// <param name="isFqdn"> Is fully qualified domain name. </param>
         /// <param name="environmentId"> Azure Resource Manager ID of the customer's selected Container Apps Environment on which to host the Function app. This must be of the form /subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.App/managedEnvironments/{managedEnvironmentName}. </param>
-        /// <returns> A new <see cref="Models.ResourceNameAvailabilityContent"/> instance for mocking. </returns>
-        public static ResourceNameAvailabilityContent ResourceNameAvailabilityContent(string name = null, CheckNameResourceType resourceType = default, bool? isFqdn = null, string environmentId = null)
+        /// <returns> A new <see cref="Models.AppServiceNameAvailabilityContent"/> instance for mocking. </returns>
+        public static AppServiceNameAvailabilityContent AppServiceNameAvailabilityContent(string name = null, CheckNameResourceType resourceType = default, bool? isFqdn = null, string environmentId = null)
         {
-            return new ResourceNameAvailabilityContent(name, resourceType, isFqdn, environmentId, serializedAdditionalRawData: null);
+            return new AppServiceNameAvailabilityContent(name, resourceType, isFqdn, environmentId, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ResourceNameAvailability"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AppServiceNameAvailabilityResult"/>. </summary>
         /// <param name="isNameAvailable"> &lt;code&gt;true&lt;/code&gt; indicates name is valid and available. &lt;code&gt;false&lt;/code&gt; indicates the name is invalid, unavailable, or both. </param>
         /// <param name="reason"> &lt;code&gt;Invalid&lt;/code&gt; indicates the name provided does not match Azure App Service naming requirements. &lt;code&gt;AlreadyExists&lt;/code&gt; indicates that the name is already in use and is therefore unavailable. </param>
         /// <param name="message"> If reason == invalid, provide the user with the reason why the given name is invalid, and provide the resource naming requirements so that the user can select a valid name. If reason == AlreadyExists, explain that resource name is already in use, and direct them to select a different name. </param>
-        /// <returns> A new <see cref="Models.ResourceNameAvailability"/> instance for mocking. </returns>
-        public static ResourceNameAvailability ResourceNameAvailability(bool? isNameAvailable = null, InAvailabilityReasonType? reason = null, string message = null)
+        /// <returns> A new <see cref="Models.AppServiceNameAvailabilityResult"/> instance for mocking. </returns>
+        public static AppServiceNameAvailabilityResult AppServiceNameAvailabilityResult(bool? isNameAvailable = null, AppServiceNameUnavailableReason? reason = null, string message = null)
         {
-            return new ResourceNameAvailability(isNameAvailable, reason, message, serializedAdditionalRawData: null);
+            return new AppServiceNameAvailabilityResult(isNameAvailable, reason, message, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.CustomHostnameSites"/>. </summary>
@@ -3323,15 +3323,15 @@ namespace Azure.ResourceManager.AppService.Models
             return new DnlResourceNameAvailabilityContent(resourceGroupName, autoGeneratedDomainNameLabelScope, name, resourceType, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.DnlResourceNameAvailability"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DnlResourceNameAvailabilityResult"/>. </summary>
         /// <param name="hostName"></param>
         /// <param name="nameAvailable"> &lt;code&gt;true&lt;/code&gt; indicates name is valid and available. &lt;code&gt;false&lt;/code&gt; indicates the name is invalid, unavailable, or both. </param>
         /// <param name="reason"> &lt;code&gt;Invalid&lt;/code&gt; indicates the name provided does not match Azure App Service naming requirements. &lt;code&gt;AlreadyExists&lt;/code&gt; indicates that the name is already in use and is therefore unavailable. </param>
         /// <param name="message"> If reason == invalid, provide the user with the reason why the given name is invalid, and provide the resource naming requirements so that the user can select a valid name. If reason == AlreadyExists, explain that resource name is already in use, and direct them to select a different name. </param>
-        /// <returns> A new <see cref="Models.DnlResourceNameAvailability"/> instance for mocking. </returns>
-        public static DnlResourceNameAvailability DnlResourceNameAvailability(string hostName = null, bool? nameAvailable = null, InAvailabilityReasonType? reason = null, string message = null)
+        /// <returns> A new <see cref="Models.DnlResourceNameAvailabilityResult"/> instance for mocking. </returns>
+        public static DnlResourceNameAvailabilityResult DnlResourceNameAvailabilityResult(string hostName = null, bool? nameAvailable = null, AppServiceNameUnavailableReason? reason = null, string message = null)
         {
-            return new DnlResourceNameAvailability(hostName, nameAvailable, reason, message, serializedAdditionalRawData: null);
+            return new DnlResourceNameAvailabilityResult(hostName, nameAvailable, reason, message, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PremierAddOnOffer"/>. </summary>
@@ -4265,7 +4265,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="targetSwapSlot"> Specifies which deployment slot this app will swap into. Read-only. </param>
         /// <param name="hostingEnvironmentProfile"> App Service Environment to use for the app. </param>
         /// <param name="isClientAffinityEnabled"> &lt;code&gt;true&lt;/code&gt; to enable client affinity; &lt;code&gt;false&lt;/code&gt; to stop sending session affinity cookies, which route client requests in the same session to the same instance. Default is &lt;code&gt;true&lt;/code&gt;. </param>
-        /// <param name="clientAffinityProxyEnabled"> &lt;code&gt;true&lt;/code&gt; to override client affinity cookie domain with X-Forwarded-Host request header. &lt;code&gt;false&lt;/code&gt; to use default domain. Default is &lt;code&gt;false&lt;/code&gt;. </param>
+        /// <param name="isClientAffinityProxyEnabled"> &lt;code&gt;true&lt;/code&gt; to override client affinity cookie domain with X-Forwarded-Host request header. &lt;code&gt;false&lt;/code&gt; to use default domain. Default is &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="isClientCertEnabled"> &lt;code&gt;true&lt;/code&gt; to enable client certificate authentication (TLS mutual authentication); otherwise, &lt;code&gt;false&lt;/code&gt;. Default is &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="clientCertMode">
         /// This composes with ClientCertEnabled setting.
@@ -4307,7 +4307,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="Models.SitePatchInfo"/> instance for mocking. </returns>
-        public static SitePatchInfo SitePatchInfo(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ManagedServiceIdentity identity = null, string state = null, IEnumerable<string> hostNames = null, string repositorySiteName = null, AppServiceUsageState? usageState = null, bool? isEnabled = null, IEnumerable<string> enabledHostNames = null, WebSiteAvailabilityState? availabilityState = null, IEnumerable<HostNameSslState> hostNameSslStates = null, ResourceIdentifier serverFarmId = null, bool? isReserved = null, bool? isXenon = null, bool? isHyperV = null, DateTimeOffset? lastModifiedOn = null, SiteDnsConfig dnsConfiguration = null, SiteConfigProperties siteConfig = null, IEnumerable<string> trafficManagerHostNames = null, bool? isScmSiteAlsoStopped = null, string targetSwapSlot = null, HostingEnvironmentProfile hostingEnvironmentProfile = null, bool? isClientAffinityEnabled = null, bool? clientAffinityProxyEnabled = null, bool? isClientCertEnabled = null, ClientCertMode? clientCertMode = null, string clientCertExclusionPaths = null, bool? isHostNameDisabled = null, string customDomainVerificationId = null, string outboundIPAddresses = null, string possibleOutboundIPAddresses = null, int? containerSize = null, int? dailyMemoryTimeQuota = null, DateTimeOffset? suspendOn = null, int? maxNumberOfWorkers = null, CloningInfo cloningInfo = null, string resourceGroup = null, bool? isDefaultContainer = null, string defaultHostName = null, SlotSwapStatus slotSwapStatus = null, bool? isHttpsOnly = null, RedundancyMode? redundancyMode = null, Guid? inProgressOperationId = null, bool? isStorageAccountRequired = null, string keyVaultReferenceIdentity = null, ResourceIdentifier virtualNetworkSubnetId = null, string kind = null)
+        public static SitePatchInfo SitePatchInfo(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ManagedServiceIdentity identity = null, string state = null, IEnumerable<string> hostNames = null, string repositorySiteName = null, AppServiceUsageState? usageState = null, bool? isEnabled = null, IEnumerable<string> enabledHostNames = null, WebSiteAvailabilityState? availabilityState = null, IEnumerable<HostNameSslState> hostNameSslStates = null, ResourceIdentifier serverFarmId = null, bool? isReserved = null, bool? isXenon = null, bool? isHyperV = null, DateTimeOffset? lastModifiedOn = null, SiteDnsConfig dnsConfiguration = null, SiteConfigProperties siteConfig = null, IEnumerable<string> trafficManagerHostNames = null, bool? isScmSiteAlsoStopped = null, string targetSwapSlot = null, HostingEnvironmentProfile hostingEnvironmentProfile = null, bool? isClientAffinityEnabled = null, bool? isClientAffinityProxyEnabled = null, bool? isClientCertEnabled = null, ClientCertMode? clientCertMode = null, string clientCertExclusionPaths = null, bool? isHostNameDisabled = null, string customDomainVerificationId = null, string outboundIPAddresses = null, string possibleOutboundIPAddresses = null, int? containerSize = null, int? dailyMemoryTimeQuota = null, DateTimeOffset? suspendOn = null, int? maxNumberOfWorkers = null, CloningInfo cloningInfo = null, string resourceGroup = null, bool? isDefaultContainer = null, string defaultHostName = null, SlotSwapStatus slotSwapStatus = null, bool? isHttpsOnly = null, RedundancyMode? redundancyMode = null, Guid? inProgressOperationId = null, bool? isStorageAccountRequired = null, string keyVaultReferenceIdentity = null, ResourceIdentifier virtualNetworkSubnetId = null, string kind = null)
         {
             hostNames ??= new List<string>();
             enabledHostNames ??= new List<string>();
@@ -4340,7 +4340,7 @@ namespace Azure.ResourceManager.AppService.Models
                 targetSwapSlot,
                 hostingEnvironmentProfile,
                 isClientAffinityEnabled,
-                clientAffinityProxyEnabled,
+                isClientAffinityProxyEnabled,
                 isClientCertEnabled,
                 clientCertMode,
                 clientCertExclusionPaths,
@@ -7106,7 +7106,7 @@ namespace Azure.ResourceManager.AppService.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static AppServicePlanData AppServicePlanData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, AppServiceSkuDescription sku, ExtendedLocation extendedLocation, string workerTierName, AppServicePlanStatus? status, string subscription, HostingEnvironmentProfile hostingEnvironmentProfile, int? maximumNumberOfWorkers, int? numberOfWorkers, string geoRegion, bool? isPerSiteScaling, bool? isElasticScaleEnabled, int? maximumElasticWorkerCount, int? numberOfSites, bool? isSpot, DateTimeOffset? spotExpireOn, DateTimeOffset? freeOfferExpireOn, string resourceGroup, bool? isReserved, bool? isXenon, bool? isHyperV, int? targetWorkerCount, int? targetWorkerSizeId, ProvisioningState? provisioningState, KubeEnvironmentProfile kubeEnvironmentProfile, bool? isZoneRedundant, string kind)
         {
-            return AppServicePlanData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, sku: sku, extendedLocation: extendedLocation, workerTierName: workerTierName, status: status, subscription: subscription, hostingEnvironmentProfile: hostingEnvironmentProfile, maximumNumberOfWorkers: maximumNumberOfWorkers, numberOfWorkers: numberOfWorkers, geoRegion: geoRegion, isPerSiteScaling: isPerSiteScaling, isElasticScaleEnabled: isElasticScaleEnabled, maximumElasticWorkerCount: maximumElasticWorkerCount, numberOfSites: numberOfSites, isSpot: isSpot, spotExpireOn: spotExpireOn, freeOfferExpireOn: freeOfferExpireOn, resourceGroup: resourceGroup, isReserved: isReserved, isXenon: isXenon, isHyperV: isHyperV, targetWorkerCount: targetWorkerCount, targetWorkerSizeId: targetWorkerSizeId, provisioningState: provisioningState, kubeEnvironmentProfile: kubeEnvironmentProfile, isZoneRedundant: isZoneRedundant, asyncScalingEnabled: default, kind: kind);
+            return AppServicePlanData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, sku: sku, extendedLocation: extendedLocation, workerTierName: workerTierName, status: status, subscription: subscription, hostingEnvironmentProfile: hostingEnvironmentProfile, maximumNumberOfWorkers: maximumNumberOfWorkers, numberOfWorkers: numberOfWorkers, geoRegion: geoRegion, isPerSiteScaling: isPerSiteScaling, isElasticScaleEnabled: isElasticScaleEnabled, maximumElasticWorkerCount: maximumElasticWorkerCount, numberOfSites: numberOfSites, isSpot: isSpot, spotExpireOn: spotExpireOn, freeOfferExpireOn: freeOfferExpireOn, resourceGroup: resourceGroup, isReserved: isReserved, isXenon: isXenon, isHyperV: isHyperV, targetWorkerCount: targetWorkerCount, targetWorkerSizeId: targetWorkerSizeId, provisioningState: provisioningState, kubeEnvironmentProfile: kubeEnvironmentProfile, isZoneRedundant: isZoneRedundant, isAsyncScalingEnabled: default, kind: kind);
         }
 
         /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.AppService.Models.SiteConfigProperties" />. </summary>
@@ -7278,7 +7278,7 @@ namespace Azure.ResourceManager.AppService.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static SitePatchInfo SitePatchInfo(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ManagedServiceIdentity identity, string state, IEnumerable<string> hostNames, string repositorySiteName, AppServiceUsageState? usageState, bool? isEnabled, IEnumerable<string> enabledHostNames, WebSiteAvailabilityState? availabilityState, IEnumerable<HostNameSslState> hostNameSslStates, ResourceIdentifier serverFarmId, bool? isReserved, bool? isXenon, bool? isHyperV, DateTimeOffset? lastModifiedOn, SiteDnsConfig dnsConfiguration, SiteConfigProperties siteConfig, IEnumerable<string> trafficManagerHostNames, bool? isScmSiteAlsoStopped, string targetSwapSlot, HostingEnvironmentProfile hostingEnvironmentProfile, bool? isClientAffinityEnabled, bool? isClientCertEnabled, ClientCertMode? clientCertMode, string clientCertExclusionPaths, bool? isHostNameDisabled, string customDomainVerificationId, string outboundIPAddresses, string possibleOutboundIPAddresses, int? containerSize, int? dailyMemoryTimeQuota, DateTimeOffset? suspendOn, int? maxNumberOfWorkers, CloningInfo cloningInfo, string resourceGroup, bool? isDefaultContainer, string defaultHostName, SlotSwapStatus slotSwapStatus, bool? isHttpsOnly, RedundancyMode? redundancyMode, Guid? inProgressOperationId, bool? isStorageAccountRequired, string keyVaultReferenceIdentity, ResourceIdentifier virtualNetworkSubnetId, string kind)
         {
-            return SitePatchInfo(id: id, name: name, resourceType: resourceType, systemData: systemData, identity: identity, state: state, hostNames: hostNames, repositorySiteName: repositorySiteName, usageState: usageState, isEnabled: isEnabled, enabledHostNames: enabledHostNames, availabilityState: availabilityState, hostNameSslStates: hostNameSslStates, serverFarmId: serverFarmId, isReserved: isReserved, isXenon: isXenon, isHyperV: isHyperV, lastModifiedOn: lastModifiedOn, dnsConfiguration: dnsConfiguration, siteConfig: siteConfig, trafficManagerHostNames: trafficManagerHostNames, isScmSiteAlsoStopped: isScmSiteAlsoStopped, targetSwapSlot: targetSwapSlot, hostingEnvironmentProfile: hostingEnvironmentProfile, isClientAffinityEnabled: isClientAffinityEnabled, clientAffinityProxyEnabled: default, isClientCertEnabled: isClientCertEnabled, clientCertMode: clientCertMode, clientCertExclusionPaths: clientCertExclusionPaths, isHostNameDisabled: isHostNameDisabled, customDomainVerificationId: customDomainVerificationId, outboundIPAddresses: outboundIPAddresses, possibleOutboundIPAddresses: possibleOutboundIPAddresses, containerSize: containerSize, dailyMemoryTimeQuota: dailyMemoryTimeQuota, suspendOn: suspendOn, maxNumberOfWorkers: maxNumberOfWorkers, cloningInfo: cloningInfo, resourceGroup: resourceGroup, isDefaultContainer: isDefaultContainer, defaultHostName: defaultHostName, slotSwapStatus: slotSwapStatus, isHttpsOnly: isHttpsOnly, redundancyMode: redundancyMode, inProgressOperationId: inProgressOperationId, isStorageAccountRequired: isStorageAccountRequired, keyVaultReferenceIdentity: keyVaultReferenceIdentity, virtualNetworkSubnetId: virtualNetworkSubnetId, kind: kind);
+            return SitePatchInfo(id: id, name: name, resourceType: resourceType, systemData: systemData, identity: identity, state: state, hostNames: hostNames, repositorySiteName: repositorySiteName, usageState: usageState, isEnabled: isEnabled, enabledHostNames: enabledHostNames, availabilityState: availabilityState, hostNameSslStates: hostNameSslStates, serverFarmId: serverFarmId, isReserved: isReserved, isXenon: isXenon, isHyperV: isHyperV, lastModifiedOn: lastModifiedOn, dnsConfiguration: dnsConfiguration, siteConfig: siteConfig, trafficManagerHostNames: trafficManagerHostNames, isScmSiteAlsoStopped: isScmSiteAlsoStopped, targetSwapSlot: targetSwapSlot, hostingEnvironmentProfile: hostingEnvironmentProfile, isClientAffinityEnabled: isClientAffinityEnabled, isClientAffinityProxyEnabled: default, isClientCertEnabled: isClientCertEnabled, clientCertMode: clientCertMode, clientCertExclusionPaths: clientCertExclusionPaths, isHostNameDisabled: isHostNameDisabled, customDomainVerificationId: customDomainVerificationId, outboundIPAddresses: outboundIPAddresses, possibleOutboundIPAddresses: possibleOutboundIPAddresses, containerSize: containerSize, dailyMemoryTimeQuota: dailyMemoryTimeQuota, suspendOn: suspendOn, maxNumberOfWorkers: maxNumberOfWorkers, cloningInfo: cloningInfo, resourceGroup: resourceGroup, isDefaultContainer: isDefaultContainer, defaultHostName: defaultHostName, slotSwapStatus: slotSwapStatus, isHttpsOnly: isHttpsOnly, redundancyMode: redundancyMode, inProgressOperationId: inProgressOperationId, isStorageAccountRequired: isStorageAccountRequired, keyVaultReferenceIdentity: keyVaultReferenceIdentity, virtualNetworkSubnetId: virtualNetworkSubnetId, kind: kind);
         }
 
         /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.AppService.SiteConfigData" />. </summary>

@@ -51,36 +51,36 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="OutboundVnetRouting"/>. </summary>
-        /// <param name="allTraffic"> Enables all other routing options defined in OutboundVnetRouting if this setting is set to true. </param>
-        /// <param name="applicationTraffic"> This causes all outbound traffic to have Virtual Network Security Groups and User Defined Routes applied. Previously called VnetRouteAllEnabled. </param>
-        /// <param name="contentShareTraffic"> Enables accessing content over virtual network. Previously called VnetContentShareEnabled. </param>
-        /// <param name="imagePullTraffic"> Enables pulling image over Virtual Network. Previously called VnetImagePullEnabled. </param>
-        /// <param name="backupRestoreTraffic"> Enables Backup and Restore operations over virtual network. Previously called VnetBackupRestoreEnabled. </param>
+        /// <param name="isAllTrafficEnabled"> Enables all other routing options defined in OutboundVnetRouting if this setting is set to true. </param>
+        /// <param name="isApplicationTrafficEnabled"> This causes all outbound traffic to have Virtual Network Security Groups and User Defined Routes applied. Previously called VnetRouteAllEnabled. </param>
+        /// <param name="isContentShareTrafficEnabled"> Enables accessing content over virtual network. Previously called VnetContentShareEnabled. </param>
+        /// <param name="isImagePullTrafficEnabled"> Enables pulling image over Virtual Network. Previously called VnetImagePullEnabled. </param>
+        /// <param name="isBackupRestoreTrafficEnabled"> Enables Backup and Restore operations over virtual network. Previously called VnetBackupRestoreEnabled. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal OutboundVnetRouting(bool? allTraffic, bool? applicationTraffic, bool? contentShareTraffic, bool? imagePullTraffic, bool? backupRestoreTraffic, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal OutboundVnetRouting(bool? isAllTrafficEnabled, bool? isApplicationTrafficEnabled, bool? isContentShareTrafficEnabled, bool? isImagePullTrafficEnabled, bool? isBackupRestoreTrafficEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            AllTraffic = allTraffic;
-            ApplicationTraffic = applicationTraffic;
-            ContentShareTraffic = contentShareTraffic;
-            ImagePullTraffic = imagePullTraffic;
-            BackupRestoreTraffic = backupRestoreTraffic;
+            IsAllTrafficEnabled = isAllTrafficEnabled;
+            IsApplicationTrafficEnabled = isApplicationTrafficEnabled;
+            IsContentShareTrafficEnabled = isContentShareTrafficEnabled;
+            IsImagePullTrafficEnabled = isImagePullTrafficEnabled;
+            IsBackupRestoreTrafficEnabled = isBackupRestoreTrafficEnabled;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Enables all other routing options defined in OutboundVnetRouting if this setting is set to true. </summary>
         [WirePath("allTraffic")]
-        public bool? AllTraffic { get; set; }
+        public bool? IsAllTrafficEnabled { get; set; }
         /// <summary> This causes all outbound traffic to have Virtual Network Security Groups and User Defined Routes applied. Previously called VnetRouteAllEnabled. </summary>
         [WirePath("applicationTraffic")]
-        public bool? ApplicationTraffic { get; set; }
+        public bool? IsApplicationTrafficEnabled { get; set; }
         /// <summary> Enables accessing content over virtual network. Previously called VnetContentShareEnabled. </summary>
         [WirePath("contentShareTraffic")]
-        public bool? ContentShareTraffic { get; set; }
+        public bool? IsContentShareTrafficEnabled { get; set; }
         /// <summary> Enables pulling image over Virtual Network. Previously called VnetImagePullEnabled. </summary>
         [WirePath("imagePullTraffic")]
-        public bool? ImagePullTraffic { get; set; }
+        public bool? IsImagePullTrafficEnabled { get; set; }
         /// <summary> Enables Backup and Restore operations over virtual network. Previously called VnetBackupRestoreEnabled. </summary>
         [WirePath("backupRestoreTraffic")]
-        public bool? BackupRestoreTraffic { get; set; }
+        public bool? IsBackupRestoreTrafficEnabled { get; set; }
     }
 }

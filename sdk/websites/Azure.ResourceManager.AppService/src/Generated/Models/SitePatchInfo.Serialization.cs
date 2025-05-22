@@ -170,10 +170,10 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("clientAffinityEnabled"u8);
                 writer.WriteBooleanValue(IsClientAffinityEnabled.Value);
             }
-            if (Optional.IsDefined(ClientAffinityProxyEnabled))
+            if (Optional.IsDefined(IsClientAffinityProxyEnabled))
             {
                 writer.WritePropertyName("clientAffinityProxyEnabled"u8);
-                writer.WriteBooleanValue(ClientAffinityProxyEnabled.Value);
+                writer.WriteBooleanValue(IsClientAffinityProxyEnabled.Value);
             }
             if (Optional.IsDefined(IsClientCertEnabled))
             {
@@ -1343,7 +1343,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ClientAffinityProxyEnabled), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsClientAffinityProxyEnabled), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("    clientAffinityProxyEnabled: ");
@@ -1351,10 +1351,10 @@ namespace Azure.ResourceManager.AppService.Models
             }
             else
             {
-                if (Optional.IsDefined(ClientAffinityProxyEnabled))
+                if (Optional.IsDefined(IsClientAffinityProxyEnabled))
                 {
                     builder.Append("    clientAffinityProxyEnabled: ");
-                    var boolValue = ClientAffinityProxyEnabled.Value == true ? "true" : "false";
+                    var boolValue = IsClientAffinityProxyEnabled.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
             }

@@ -35,30 +35,30 @@ namespace Azure.ResourceManager.AppService.Models
                 throw new FormatException($"The model {nameof(OutboundVnetRouting)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsDefined(AllTraffic))
+            if (Optional.IsDefined(IsAllTrafficEnabled))
             {
                 writer.WritePropertyName("allTraffic"u8);
-                writer.WriteBooleanValue(AllTraffic.Value);
+                writer.WriteBooleanValue(IsAllTrafficEnabled.Value);
             }
-            if (Optional.IsDefined(ApplicationTraffic))
+            if (Optional.IsDefined(IsApplicationTrafficEnabled))
             {
                 writer.WritePropertyName("applicationTraffic"u8);
-                writer.WriteBooleanValue(ApplicationTraffic.Value);
+                writer.WriteBooleanValue(IsApplicationTrafficEnabled.Value);
             }
-            if (Optional.IsDefined(ContentShareTraffic))
+            if (Optional.IsDefined(IsContentShareTrafficEnabled))
             {
                 writer.WritePropertyName("contentShareTraffic"u8);
-                writer.WriteBooleanValue(ContentShareTraffic.Value);
+                writer.WriteBooleanValue(IsContentShareTrafficEnabled.Value);
             }
-            if (Optional.IsDefined(ImagePullTraffic))
+            if (Optional.IsDefined(IsImagePullTrafficEnabled))
             {
                 writer.WritePropertyName("imagePullTraffic"u8);
-                writer.WriteBooleanValue(ImagePullTraffic.Value);
+                writer.WriteBooleanValue(IsImagePullTrafficEnabled.Value);
             }
-            if (Optional.IsDefined(BackupRestoreTraffic))
+            if (Optional.IsDefined(IsBackupRestoreTrafficEnabled))
             {
                 writer.WritePropertyName("backupRestoreTraffic"u8);
-                writer.WriteBooleanValue(BackupRestoreTraffic.Value);
+                writer.WriteBooleanValue(IsBackupRestoreTrafficEnabled.Value);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.AppService.Models
 
             builder.AppendLine("{");
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AllTraffic), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsAllTrafficEnabled), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("  allTraffic: ");
@@ -185,15 +185,15 @@ namespace Azure.ResourceManager.AppService.Models
             }
             else
             {
-                if (Optional.IsDefined(AllTraffic))
+                if (Optional.IsDefined(IsAllTrafficEnabled))
                 {
                     builder.Append("  allTraffic: ");
-                    var boolValue = AllTraffic.Value == true ? "true" : "false";
+                    var boolValue = IsAllTrafficEnabled.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ApplicationTraffic), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsApplicationTrafficEnabled), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("  applicationTraffic: ");
@@ -201,15 +201,15 @@ namespace Azure.ResourceManager.AppService.Models
             }
             else
             {
-                if (Optional.IsDefined(ApplicationTraffic))
+                if (Optional.IsDefined(IsApplicationTrafficEnabled))
                 {
                     builder.Append("  applicationTraffic: ");
-                    var boolValue = ApplicationTraffic.Value == true ? "true" : "false";
+                    var boolValue = IsApplicationTrafficEnabled.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ContentShareTraffic), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsContentShareTrafficEnabled), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("  contentShareTraffic: ");
@@ -217,15 +217,15 @@ namespace Azure.ResourceManager.AppService.Models
             }
             else
             {
-                if (Optional.IsDefined(ContentShareTraffic))
+                if (Optional.IsDefined(IsContentShareTrafficEnabled))
                 {
                     builder.Append("  contentShareTraffic: ");
-                    var boolValue = ContentShareTraffic.Value == true ? "true" : "false";
+                    var boolValue = IsContentShareTrafficEnabled.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ImagePullTraffic), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsImagePullTrafficEnabled), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("  imagePullTraffic: ");
@@ -233,15 +233,15 @@ namespace Azure.ResourceManager.AppService.Models
             }
             else
             {
-                if (Optional.IsDefined(ImagePullTraffic))
+                if (Optional.IsDefined(IsImagePullTrafficEnabled))
                 {
                     builder.Append("  imagePullTraffic: ");
-                    var boolValue = ImagePullTraffic.Value == true ? "true" : "false";
+                    var boolValue = IsImagePullTrafficEnabled.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(BackupRestoreTraffic), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsBackupRestoreTrafficEnabled), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("  backupRestoreTraffic: ");
@@ -249,10 +249,10 @@ namespace Azure.ResourceManager.AppService.Models
             }
             else
             {
-                if (Optional.IsDefined(BackupRestoreTraffic))
+                if (Optional.IsDefined(IsBackupRestoreTrafficEnabled))
                 {
                     builder.Append("  backupRestoreTraffic: ");
-                    var boolValue = BackupRestoreTraffic.Value == true ? "true" : "false";
+                    var boolValue = IsBackupRestoreTrafficEnabled.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
             }

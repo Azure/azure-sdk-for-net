@@ -200,10 +200,10 @@ namespace Azure.ResourceManager.AppService
                 writer.WritePropertyName("zoneRedundant"u8);
                 writer.WriteBooleanValue(IsZoneRedundant.Value);
             }
-            if (Optional.IsDefined(AsyncScalingEnabled))
+            if (Optional.IsDefined(IsAsyncScalingEnabled))
             {
                 writer.WritePropertyName("asyncScalingEnabled"u8);
-                writer.WriteBooleanValue(AsyncScalingEnabled.Value);
+                writer.WriteBooleanValue(IsAsyncScalingEnabled.Value);
             }
             writer.WriteEndObject();
         }
@@ -1144,7 +1144,7 @@ namespace Azure.ResourceManager.AppService
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AsyncScalingEnabled), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsAsyncScalingEnabled), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("    asyncScalingEnabled: ");
@@ -1152,10 +1152,10 @@ namespace Azure.ResourceManager.AppService
             }
             else
             {
-                if (Optional.IsDefined(AsyncScalingEnabled))
+                if (Optional.IsDefined(IsAsyncScalingEnabled))
                 {
                     builder.Append("    asyncScalingEnabled: ");
-                    var boolValue = AsyncScalingEnabled.Value == true ? "true" : "false";
+                    var boolValue = IsAsyncScalingEnabled.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
             }

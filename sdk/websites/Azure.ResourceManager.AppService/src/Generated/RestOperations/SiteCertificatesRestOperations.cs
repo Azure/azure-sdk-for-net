@@ -436,7 +436,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string name, string certificateName, CertificatePatchResource certificateEnvelope)
+        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string name, string certificateName, AppCertificatePatch patch)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -452,7 +452,7 @@ namespace Azure.ResourceManager.AppService
             return uri;
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string name, string certificateName, CertificatePatchResource certificateEnvelope)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string name, string certificateName, AppCertificatePatch patch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -472,7 +472,7 @@ namespace Azure.ResourceManager.AppService
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(certificateEnvelope, ModelSerializationExtensions.WireOptions);
+            content.JsonWriter.WriteObjectValue(patch, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -483,19 +483,19 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="name"> Name of the site. </param>
         /// <param name="certificateName"> Name of the certificate. </param>
-        /// <param name="certificateEnvelope"> Details of certificate, if it exists already. </param>
+        /// <param name="patch"> Details of certificate, if it exists already. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="certificateName"/> or <paramref name="certificateEnvelope"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="certificateName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<AppCertificateData>> UpdateAsync(string subscriptionId, string resourceGroupName, string name, string certificateName, CertificatePatchResource certificateEnvelope, CancellationToken cancellationToken = default)
+        public async Task<Response<AppCertificateData>> UpdateAsync(string subscriptionId, string resourceGroupName, string name, string certificateName, AppCertificatePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
-            Argument.AssertNotNull(certificateEnvelope, nameof(certificateEnvelope));
+            Argument.AssertNotNull(patch, nameof(patch));
 
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, name, certificateName, certificateEnvelope);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, name, certificateName, patch);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -516,19 +516,19 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="name"> Name of the site. </param>
         /// <param name="certificateName"> Name of the certificate. </param>
-        /// <param name="certificateEnvelope"> Details of certificate, if it exists already. </param>
+        /// <param name="patch"> Details of certificate, if it exists already. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="certificateName"/> or <paramref name="certificateEnvelope"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="certificateName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<AppCertificateData> Update(string subscriptionId, string resourceGroupName, string name, string certificateName, CertificatePatchResource certificateEnvelope, CancellationToken cancellationToken = default)
+        public Response<AppCertificateData> Update(string subscriptionId, string resourceGroupName, string name, string certificateName, AppCertificatePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
-            Argument.AssertNotNull(certificateEnvelope, nameof(certificateEnvelope));
+            Argument.AssertNotNull(patch, nameof(patch));
 
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, name, certificateName, certificateEnvelope);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, name, certificateName, patch);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -976,7 +976,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal RequestUriBuilder CreateUpdateSlotRequestUri(string subscriptionId, string resourceGroupName, string name, string slot, string certificateName, CertificatePatchResource certificateEnvelope)
+        internal RequestUriBuilder CreateUpdateSlotRequestUri(string subscriptionId, string resourceGroupName, string name, string slot, string certificateName, AppCertificatePatch patch)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -994,7 +994,7 @@ namespace Azure.ResourceManager.AppService
             return uri;
         }
 
-        internal HttpMessage CreateUpdateSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, string certificateName, CertificatePatchResource certificateEnvelope)
+        internal HttpMessage CreateUpdateSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, string certificateName, AppCertificatePatch patch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1016,7 +1016,7 @@ namespace Azure.ResourceManager.AppService
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(certificateEnvelope, ModelSerializationExtensions.WireOptions);
+            content.JsonWriter.WriteObjectValue(patch, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -1028,20 +1028,20 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the site. </param>
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will create a binding for the production slot. </param>
         /// <param name="certificateName"> Name of the certificate. </param>
-        /// <param name="certificateEnvelope"> Details of certificate, if it exists already. </param>
+        /// <param name="patch"> Details of certificate, if it exists already. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="certificateName"/> or <paramref name="certificateEnvelope"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="certificateName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<AppCertificateData>> UpdateSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, string certificateName, CertificatePatchResource certificateEnvelope, CancellationToken cancellationToken = default)
+        public async Task<Response<AppCertificateData>> UpdateSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, string certificateName, AppCertificatePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(slot, nameof(slot));
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
-            Argument.AssertNotNull(certificateEnvelope, nameof(certificateEnvelope));
+            Argument.AssertNotNull(patch, nameof(patch));
 
-            using var message = CreateUpdateSlotRequest(subscriptionId, resourceGroupName, name, slot, certificateName, certificateEnvelope);
+            using var message = CreateUpdateSlotRequest(subscriptionId, resourceGroupName, name, slot, certificateName, patch);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1063,20 +1063,20 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the site. </param>
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will create a binding for the production slot. </param>
         /// <param name="certificateName"> Name of the certificate. </param>
-        /// <param name="certificateEnvelope"> Details of certificate, if it exists already. </param>
+        /// <param name="patch"> Details of certificate, if it exists already. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="certificateName"/> or <paramref name="certificateEnvelope"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="certificateName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<AppCertificateData> UpdateSlot(string subscriptionId, string resourceGroupName, string name, string slot, string certificateName, CertificatePatchResource certificateEnvelope, CancellationToken cancellationToken = default)
+        public Response<AppCertificateData> UpdateSlot(string subscriptionId, string resourceGroupName, string name, string slot, string certificateName, AppCertificatePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(slot, nameof(slot));
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
-            Argument.AssertNotNull(certificateEnvelope, nameof(certificateEnvelope));
+            Argument.AssertNotNull(patch, nameof(patch));
 
-            using var message = CreateUpdateSlotRequest(subscriptionId, resourceGroupName, name, slot, certificateName, certificateEnvelope);
+            using var message = CreateUpdateSlotRequest(subscriptionId, resourceGroupName, name, slot, certificateName, patch);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

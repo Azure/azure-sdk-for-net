@@ -590,22 +590,22 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="CertificateResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="CertificateResource.CreateResourceIdentifier" /> to create a <see cref="CertificateResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="AppCertificateResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AppCertificateResource.CreateResourceIdentifier" /> to create an <see cref="AppCertificateResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetCertificateResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetAppCertificateResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="CertificateResource"/> object. </returns>
-        public static CertificateResource GetCertificateResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="AppCertificateResource"/> object. </returns>
+        public static AppCertificateResource GetAppCertificateResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableAppServiceArmClient(client).GetCertificateResource(id);
+            return GetMockableAppServiceArmClient(client).GetAppCertificateResource(id);
         }
 
         /// <summary>
@@ -2862,20 +2862,20 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Gets a collection of CertificateResources in the ResourceGroupResource.
+        /// Gets a collection of AppCertificateResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAppServiceResourceGroupResource.GetCertificates()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceResourceGroupResource.GetAppCertificates()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of CertificateResources and their operations over a CertificateResource. </returns>
-        public static CertificateCollection GetCertificates(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of AppCertificateResources and their operations over a AppCertificateResource. </returns>
+        public static AppCertificateCollection GetAppCertificates(this ResourceGroupResource resourceGroupResource)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableAppServiceResourceGroupResource(resourceGroupResource).GetCertificates();
+            return GetMockableAppServiceResourceGroupResource(resourceGroupResource).GetAppCertificates();
         }
 
         /// <summary>
@@ -2895,12 +2895,12 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="CertificateResource"/></description>
+        /// <description><see cref="AppCertificateResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAppServiceResourceGroupResource.GetCertificateAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceResourceGroupResource.GetAppCertificateAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -2909,11 +2909,11 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<CertificateResource>> GetCertificateAsync(this ResourceGroupResource resourceGroupResource, string name, CancellationToken cancellationToken = default)
+        public static async Task<Response<AppCertificateResource>> GetAppCertificateAsync(this ResourceGroupResource resourceGroupResource, string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockableAppServiceResourceGroupResource(resourceGroupResource).GetCertificateAsync(name, cancellationToken).ConfigureAwait(false);
+            return await GetMockableAppServiceResourceGroupResource(resourceGroupResource).GetAppCertificateAsync(name, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -2933,12 +2933,12 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="CertificateResource"/></description>
+        /// <description><see cref="AppCertificateResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAppServiceResourceGroupResource.GetCertificate(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceResourceGroupResource.GetAppCertificate(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -2947,11 +2947,11 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public static Response<CertificateResource> GetCertificate(this ResourceGroupResource resourceGroupResource, string name, CancellationToken cancellationToken = default)
+        public static Response<AppCertificateResource> GetAppCertificate(this ResourceGroupResource resourceGroupResource, string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableAppServiceResourceGroupResource(resourceGroupResource).GetCertificate(name, cancellationToken);
+            return GetMockableAppServiceResourceGroupResource(resourceGroupResource).GetAppCertificate(name, cancellationToken);
         }
 
         /// <summary>
@@ -4052,24 +4052,24 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="CertificateResource"/></description>
+        /// <description><see cref="AppCertificateResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.GetCertificates(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.GetAppCertificates(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="filter"> Return only information specified in the filter (using OData syntax). For example: $filter=KeyVaultId eq 'KeyVaultId'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="CertificateResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<CertificateResource> GetCertificatesAsync(this SubscriptionResource subscriptionResource, string filter = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="AppCertificateResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<AppCertificateResource> GetAppCertificatesAsync(this SubscriptionResource subscriptionResource, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableAppServiceSubscriptionResource(subscriptionResource).GetCertificatesAsync(filter, cancellationToken);
+            return GetMockableAppServiceSubscriptionResource(subscriptionResource).GetAppCertificatesAsync(filter, cancellationToken);
         }
 
         /// <summary>
@@ -4089,24 +4089,24 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="CertificateResource"/></description>
+        /// <description><see cref="AppCertificateResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.GetCertificates(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.GetAppCertificates(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="filter"> Return only information specified in the filter (using OData syntax). For example: $filter=KeyVaultId eq 'KeyVaultId'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="CertificateResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<CertificateResource> GetCertificates(this SubscriptionResource subscriptionResource, string filter = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AppCertificateResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<AppCertificateResource> GetAppCertificates(this SubscriptionResource subscriptionResource, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableAppServiceSubscriptionResource(subscriptionResource).GetCertificates(filter, cancellationToken);
+            return GetMockableAppServiceSubscriptionResource(subscriptionResource).GetAppCertificates(filter, cancellationToken);
         }
 
         /// <summary>
@@ -4743,14 +4743,14 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.CheckAppServiceNameAvailability(ResourceNameAvailabilityContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.CheckAppServiceNameAvailability(AppServiceNameAvailabilityContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="content"> Name availability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
-        public static async Task<Response<ResourceNameAvailability>> CheckAppServiceNameAvailabilityAsync(this SubscriptionResource subscriptionResource, ResourceNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public static async Task<Response<AppServiceNameAvailabilityResult>> CheckAppServiceNameAvailabilityAsync(this SubscriptionResource subscriptionResource, AppServiceNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -4775,14 +4775,14 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.CheckAppServiceNameAvailability(ResourceNameAvailabilityContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.CheckAppServiceNameAvailability(AppServiceNameAvailabilityContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="content"> Name availability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
-        public static Response<ResourceNameAvailability> CheckAppServiceNameAvailability(this SubscriptionResource subscriptionResource, ResourceNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public static Response<AppServiceNameAvailabilityResult> CheckAppServiceNameAvailability(this SubscriptionResource subscriptionResource, AppServiceNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -5071,7 +5071,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.RegionalCheckNameAvailability(AzureLocation,DnlResourceNameAvailabilityContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.CheckDnlResourceNameAvailability(AzureLocation,DnlResourceNameAvailabilityContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -5079,11 +5079,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="content"> Name availability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
-        public static async Task<Response<DnlResourceNameAvailability>> RegionalCheckNameAvailabilityAsync(this SubscriptionResource subscriptionResource, AzureLocation location, DnlResourceNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public static async Task<Response<DnlResourceNameAvailabilityResult>> CheckDnlResourceNameAvailabilityAsync(this SubscriptionResource subscriptionResource, AzureLocation location, DnlResourceNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return await GetMockableAppServiceSubscriptionResource(subscriptionResource).RegionalCheckNameAvailabilityAsync(location, content, cancellationToken).ConfigureAwait(false);
+            return await GetMockableAppServiceSubscriptionResource(subscriptionResource).CheckDnlResourceNameAvailabilityAsync(location, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -5104,7 +5104,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.RegionalCheckNameAvailability(AzureLocation,DnlResourceNameAvailabilityContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.CheckDnlResourceNameAvailability(AzureLocation,DnlResourceNameAvailabilityContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -5112,11 +5112,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="content"> Name availability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
-        public static Response<DnlResourceNameAvailability> RegionalCheckNameAvailability(this SubscriptionResource subscriptionResource, AzureLocation location, DnlResourceNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public static Response<DnlResourceNameAvailabilityResult> CheckDnlResourceNameAvailability(this SubscriptionResource subscriptionResource, AzureLocation location, DnlResourceNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableAppServiceSubscriptionResource(subscriptionResource).RegionalCheckNameAvailability(location, content, cancellationToken);
+            return GetMockableAppServiceSubscriptionResource(subscriptionResource).CheckDnlResourceNameAvailability(location, content, cancellationToken);
         }
 
         /// <summary>

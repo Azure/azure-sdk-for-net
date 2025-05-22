@@ -216,15 +216,15 @@ namespace Azure.ResourceManager.AppService
                 writer.WritePropertyName("clientAffinityEnabled"u8);
                 writer.WriteBooleanValue(IsClientAffinityEnabled.Value);
             }
-            if (Optional.IsDefined(ClientAffinityPartitioningEnabled))
+            if (Optional.IsDefined(IsClientAffinityPartitioningEnabled))
             {
                 writer.WritePropertyName("clientAffinityPartitioningEnabled"u8);
-                writer.WriteBooleanValue(ClientAffinityPartitioningEnabled.Value);
+                writer.WriteBooleanValue(IsClientAffinityPartitioningEnabled.Value);
             }
-            if (Optional.IsDefined(ClientAffinityProxyEnabled))
+            if (Optional.IsDefined(IsClientAffinityProxyEnabled))
             {
                 writer.WritePropertyName("clientAffinityProxyEnabled"u8);
-                writer.WriteBooleanValue(ClientAffinityProxyEnabled.Value);
+                writer.WriteBooleanValue(IsClientAffinityProxyEnabled.Value);
             }
             if (Optional.IsDefined(IsClientCertEnabled))
             {
@@ -251,10 +251,10 @@ namespace Azure.ResourceManager.AppService
                 writer.WritePropertyName("endToEndEncryptionEnabled"u8);
                 writer.WriteBooleanValue(IsEndToEndEncryptionEnabled.Value);
             }
-            if (Optional.IsDefined(SshEnabled))
+            if (Optional.IsDefined(IsSshEnabled))
             {
                 writer.WritePropertyName("sshEnabled"u8);
-                writer.WriteBooleanValue(SshEnabled.Value);
+                writer.WriteBooleanValue(IsSshEnabled.Value);
             }
             if (Optional.IsDefined(IsHostNameDisabled))
             {
@@ -1779,7 +1779,7 @@ namespace Azure.ResourceManager.AppService
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ClientAffinityPartitioningEnabled), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsClientAffinityPartitioningEnabled), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("    clientAffinityPartitioningEnabled: ");
@@ -1787,15 +1787,15 @@ namespace Azure.ResourceManager.AppService
             }
             else
             {
-                if (Optional.IsDefined(ClientAffinityPartitioningEnabled))
+                if (Optional.IsDefined(IsClientAffinityPartitioningEnabled))
                 {
                     builder.Append("    clientAffinityPartitioningEnabled: ");
-                    var boolValue = ClientAffinityPartitioningEnabled.Value == true ? "true" : "false";
+                    var boolValue = IsClientAffinityPartitioningEnabled.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ClientAffinityProxyEnabled), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsClientAffinityProxyEnabled), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("    clientAffinityProxyEnabled: ");
@@ -1803,10 +1803,10 @@ namespace Azure.ResourceManager.AppService
             }
             else
             {
-                if (Optional.IsDefined(ClientAffinityProxyEnabled))
+                if (Optional.IsDefined(IsClientAffinityProxyEnabled))
                 {
                     builder.Append("    clientAffinityProxyEnabled: ");
-                    var boolValue = ClientAffinityProxyEnabled.Value == true ? "true" : "false";
+                    var boolValue = IsClientAffinityProxyEnabled.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
             }
@@ -1896,7 +1896,7 @@ namespace Azure.ResourceManager.AppService
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SshEnabled), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsSshEnabled), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("    sshEnabled: ");
@@ -1904,10 +1904,10 @@ namespace Azure.ResourceManager.AppService
             }
             else
             {
-                if (Optional.IsDefined(SshEnabled))
+                if (Optional.IsDefined(IsSshEnabled))
                 {
                     builder.Append("    sshEnabled: ");
-                    var boolValue = SshEnabled.Value == true ? "true" : "false";
+                    var boolValue = IsSshEnabled.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
             }

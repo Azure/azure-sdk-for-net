@@ -272,7 +272,7 @@ KeyVaultSecretName = "SampleSecretName2",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetCertificates_ListCertificatesForSubscription()
+        public async Task GetAppCertificates_ListCertificatesForSubscription()
         {
             // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-11-01/examples/ListCertificates.json
             // this example is just showing the usage of "Certificates_List" operation, for the dependent resources, they will have to be created separately.
@@ -289,7 +289,7 @@ KeyVaultSecretName = "SampleSecretName2",
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (CertificateResource item in subscriptionResource.GetCertificatesAsync())
+            await foreach (AppCertificateResource item in subscriptionResource.GetAppCertificatesAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance

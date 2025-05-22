@@ -383,15 +383,15 @@ namespace Azure.ResourceManager.AppService.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="CertificateResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="CertificateResource.CreateResourceIdentifier" /> to create a <see cref="CertificateResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing an <see cref="AppCertificateResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AppCertificateResource.CreateResourceIdentifier" /> to create an <see cref="AppCertificateResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="CertificateResource"/> object. </returns>
-        public virtual CertificateResource GetCertificateResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="AppCertificateResource"/> object. </returns>
+        public virtual AppCertificateResource GetAppCertificateResource(ResourceIdentifier id)
         {
-            CertificateResource.ValidateResourceId(id);
-            return new CertificateResource(Client, id);
+            AppCertificateResource.ValidateResourceId(id);
+            return new AppCertificateResource(Client, id);
         }
 
         /// <summary>

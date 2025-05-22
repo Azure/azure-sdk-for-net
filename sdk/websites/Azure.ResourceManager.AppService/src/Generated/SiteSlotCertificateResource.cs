@@ -279,18 +279,18 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="certificateEnvelope"> Details of certificate, if it exists already. </param>
+        /// <param name="patch"> Details of certificate, if it exists already. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="certificateEnvelope"/> is null. </exception>
-        public virtual async Task<Response<SiteSlotCertificateResource>> UpdateAsync(CertificatePatchResource certificateEnvelope, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual async Task<Response<SiteSlotCertificateResource>> UpdateAsync(AppCertificatePatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(certificateEnvelope, nameof(certificateEnvelope));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _siteSlotCertificateSiteCertificatesClientDiagnostics.CreateScope("SiteSlotCertificateResource.Update");
             scope.Start();
             try
             {
-                var response = await _siteSlotCertificateSiteCertificatesRestClient.UpdateSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, certificateEnvelope, cancellationToken).ConfigureAwait(false);
+                var response = await _siteSlotCertificateSiteCertificatesRestClient.UpdateSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, patch, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new SiteSlotCertificateResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -321,18 +321,18 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="certificateEnvelope"> Details of certificate, if it exists already. </param>
+        /// <param name="patch"> Details of certificate, if it exists already. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="certificateEnvelope"/> is null. </exception>
-        public virtual Response<SiteSlotCertificateResource> Update(CertificatePatchResource certificateEnvelope, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual Response<SiteSlotCertificateResource> Update(AppCertificatePatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(certificateEnvelope, nameof(certificateEnvelope));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _siteSlotCertificateSiteCertificatesClientDiagnostics.CreateScope("SiteSlotCertificateResource.Update");
             scope.Start();
             try
             {
-                var response = _siteSlotCertificateSiteCertificatesRestClient.UpdateSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, certificateEnvelope, cancellationToken);
+                var response = _siteSlotCertificateSiteCertificatesRestClient.UpdateSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, patch, cancellationToken);
                 return Response.FromValue(new SiteSlotCertificateResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

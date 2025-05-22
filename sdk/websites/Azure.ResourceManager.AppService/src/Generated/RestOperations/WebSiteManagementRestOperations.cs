@@ -506,7 +506,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal RequestUriBuilder CreateCheckNameAvailabilityRequestUri(string subscriptionId, ResourceNameAvailabilityContent content)
+        internal RequestUriBuilder CreateCheckNameAvailabilityRequestUri(string subscriptionId, AppServiceNameAvailabilityContent content)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -517,7 +517,7 @@ namespace Azure.ResourceManager.AppService
             return uri;
         }
 
-        internal HttpMessage CreateCheckNameAvailabilityRequest(string subscriptionId, ResourceNameAvailabilityContent content)
+        internal HttpMessage CreateCheckNameAvailabilityRequest(string subscriptionId, AppServiceNameAvailabilityContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -544,7 +544,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ResourceNameAvailability>> CheckNameAvailabilityAsync(string subscriptionId, ResourceNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public async Task<Response<AppServiceNameAvailabilityResult>> CheckNameAvailabilityAsync(string subscriptionId, AppServiceNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(content, nameof(content));
@@ -555,9 +555,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        ResourceNameAvailability value = default;
+                        AppServiceNameAvailabilityResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = ResourceNameAvailability.DeserializeResourceNameAvailability(document.RootElement);
+                        value = AppServiceNameAvailabilityResult.DeserializeAppServiceNameAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -571,7 +571,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ResourceNameAvailability> CheckNameAvailability(string subscriptionId, ResourceNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public Response<AppServiceNameAvailabilityResult> CheckNameAvailability(string subscriptionId, AppServiceNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(content, nameof(content));
@@ -582,9 +582,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        ResourceNameAvailability value = default;
+                        AppServiceNameAvailabilityResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = ResourceNameAvailability.DeserializeResourceNameAvailability(document.RootElement);
+                        value = AppServiceNameAvailabilityResult.DeserializeAppServiceNameAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1083,7 +1083,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DnlResourceNameAvailability>> RegionalCheckNameAvailabilityAsync(string subscriptionId, AzureLocation location, DnlResourceNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public async Task<Response<DnlResourceNameAvailabilityResult>> RegionalCheckNameAvailabilityAsync(string subscriptionId, AzureLocation location, DnlResourceNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(content, nameof(content));
@@ -1094,9 +1094,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        DnlResourceNameAvailability value = default;
+                        DnlResourceNameAvailabilityResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = DnlResourceNameAvailability.DeserializeDnlResourceNameAvailability(document.RootElement);
+                        value = DnlResourceNameAvailabilityResult.DeserializeDnlResourceNameAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1111,7 +1111,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DnlResourceNameAvailability> RegionalCheckNameAvailability(string subscriptionId, AzureLocation location, DnlResourceNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public Response<DnlResourceNameAvailabilityResult> RegionalCheckNameAvailability(string subscriptionId, AzureLocation location, DnlResourceNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(content, nameof(content));
@@ -1122,9 +1122,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        DnlResourceNameAvailability value = default;
+                        DnlResourceNameAvailabilityResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = DnlResourceNameAvailability.DeserializeDnlResourceNameAvailability(document.RootElement);
+                        value = DnlResourceNameAvailabilityResult.DeserializeDnlResourceNameAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

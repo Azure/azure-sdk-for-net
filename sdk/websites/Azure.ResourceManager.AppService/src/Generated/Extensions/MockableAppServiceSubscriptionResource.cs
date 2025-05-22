@@ -30,8 +30,8 @@ namespace Azure.ResourceManager.AppService.Mocking
         private AppServiceEnvironmentsRestOperations _appServiceEnvironmentRestClient;
         private ClientDiagnostics _appServicePlanClientDiagnostics;
         private AppServicePlansRestOperations _appServicePlanRestClient;
-        private ClientDiagnostics _certificateClientDiagnostics;
-        private CertificatesRestOperations _certificateRestClient;
+        private ClientDiagnostics _appCertificateCertificatesClientDiagnostics;
+        private CertificatesRestOperations _appCertificateCertificatesRestClient;
         private ClientDiagnostics _deletedSiteDeletedWebAppsClientDiagnostics;
         private DeletedWebAppsRestOperations _deletedSiteDeletedWebAppsRestClient;
         private ClientDiagnostics _kubeEnvironmentClientDiagnostics;
@@ -77,8 +77,8 @@ namespace Azure.ResourceManager.AppService.Mocking
         private AppServiceEnvironmentsRestOperations AppServiceEnvironmentRestClient => _appServiceEnvironmentRestClient ??= new AppServiceEnvironmentsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(AppServiceEnvironmentResource.ResourceType));
         private ClientDiagnostics AppServicePlanClientDiagnostics => _appServicePlanClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppService", AppServicePlanResource.ResourceType.Namespace, Diagnostics);
         private AppServicePlansRestOperations AppServicePlanRestClient => _appServicePlanRestClient ??= new AppServicePlansRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(AppServicePlanResource.ResourceType));
-        private ClientDiagnostics CertificateClientDiagnostics => _certificateClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppService", CertificateResource.ResourceType.Namespace, Diagnostics);
-        private CertificatesRestOperations CertificateRestClient => _certificateRestClient ??= new CertificatesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(CertificateResource.ResourceType));
+        private ClientDiagnostics AppCertificateCertificatesClientDiagnostics => _appCertificateCertificatesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppService", AppCertificateResource.ResourceType.Namespace, Diagnostics);
+        private CertificatesRestOperations AppCertificateCertificatesRestClient => _appCertificateCertificatesRestClient ??= new CertificatesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(AppCertificateResource.ResourceType));
         private ClientDiagnostics DeletedSiteDeletedWebAppsClientDiagnostics => _deletedSiteDeletedWebAppsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppService", DeletedSiteResource.ResourceType.Namespace, Diagnostics);
         private DeletedWebAppsRestOperations DeletedSiteDeletedWebAppsRestClient => _deletedSiteDeletedWebAppsRestClient ??= new DeletedWebAppsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(DeletedSiteResource.ResourceType));
         private ClientDiagnostics KubeEnvironmentClientDiagnostics => _kubeEnvironmentClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppService", KubeEnvironmentResource.ResourceType.Namespace, Diagnostics);
@@ -789,18 +789,18 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="CertificateResource"/></description>
+        /// <description><see cref="AppCertificateResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> Return only information specified in the filter (using OData syntax). For example: $filter=KeyVaultId eq 'KeyVaultId'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="CertificateResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<CertificateResource> GetCertificatesAsync(string filter = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="AppCertificateResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<AppCertificateResource> GetAppCertificatesAsync(string filter = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CertificateRestClient.CreateListRequest(Id.SubscriptionId, filter);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CertificateRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, filter);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new CertificateResource(Client, AppCertificateData.DeserializeAppCertificateData(e)), CertificateClientDiagnostics, Pipeline, "MockableAppServiceSubscriptionResource.GetCertificates", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => AppCertificateCertificatesRestClient.CreateListRequest(Id.SubscriptionId, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AppCertificateCertificatesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, filter);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AppCertificateResource(Client, AppCertificateData.DeserializeAppCertificateData(e)), AppCertificateCertificatesClientDiagnostics, Pipeline, "MockableAppServiceSubscriptionResource.GetAppCertificates", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -820,18 +820,18 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="CertificateResource"/></description>
+        /// <description><see cref="AppCertificateResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> Return only information specified in the filter (using OData syntax). For example: $filter=KeyVaultId eq 'KeyVaultId'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="CertificateResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<CertificateResource> GetCertificates(string filter = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AppCertificateResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<AppCertificateResource> GetAppCertificates(string filter = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CertificateRestClient.CreateListRequest(Id.SubscriptionId, filter);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CertificateRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, filter);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new CertificateResource(Client, AppCertificateData.DeserializeAppCertificateData(e)), CertificateClientDiagnostics, Pipeline, "MockableAppServiceSubscriptionResource.GetCertificates", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => AppCertificateCertificatesRestClient.CreateListRequest(Id.SubscriptionId, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AppCertificateCertificatesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, filter);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AppCertificateResource(Client, AppCertificateData.DeserializeAppCertificateData(e)), AppCertificateCertificatesClientDiagnostics, Pipeline, "MockableAppServiceSubscriptionResource.GetAppCertificates", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1428,7 +1428,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <param name="content"> Name availability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<ResourceNameAvailability>> CheckAppServiceNameAvailabilityAsync(ResourceNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AppServiceNameAvailabilityResult>> CheckAppServiceNameAvailabilityAsync(AppServiceNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -1466,7 +1466,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <param name="content"> Name availability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<ResourceNameAvailability> CheckAppServiceNameAvailability(ResourceNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual Response<AppServiceNameAvailabilityResult> CheckAppServiceNameAvailability(AppServiceNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -1739,11 +1739,11 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <param name="content"> Name availability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<DnlResourceNameAvailability>> RegionalCheckNameAvailabilityAsync(AzureLocation location, DnlResourceNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DnlResourceNameAvailabilityResult>> CheckDnlResourceNameAvailabilityAsync(AzureLocation location, DnlResourceNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = DefaultClientDiagnostics.CreateScope("MockableAppServiceSubscriptionResource.RegionalCheckNameAvailability");
+            using var scope = DefaultClientDiagnostics.CreateScope("MockableAppServiceSubscriptionResource.CheckDnlResourceNameAvailability");
             scope.Start();
             try
             {
@@ -1778,11 +1778,11 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <param name="content"> Name availability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<DnlResourceNameAvailability> RegionalCheckNameAvailability(AzureLocation location, DnlResourceNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual Response<DnlResourceNameAvailabilityResult> CheckDnlResourceNameAvailability(AzureLocation location, DnlResourceNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = DefaultClientDiagnostics.CreateScope("MockableAppServiceSubscriptionResource.RegionalCheckNameAvailability");
+            using var scope = DefaultClientDiagnostics.CreateScope("MockableAppServiceSubscriptionResource.CheckDnlResourceNameAvailability");
             scope.Start();
             try
             {
