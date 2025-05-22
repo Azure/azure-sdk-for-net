@@ -32,3 +32,10 @@ extends:
         safeName: AzureHealthInsightsCancerProfiling
       - name: Azure.Health.Insights.RadiologyInsights
         safeName: AzureHealthInsightsRadiologyInsights
+    ExpectedAOTWarnings:
+      - ArtifactName: Azure.Health.Insights.ClinicalMatching
+        ExpectedWarningsFilepath: "Azure.Health.Insights.ClinicalMatching/tests/compatibility/ExpectedWarnings.txt"
+      - ArtifactName: Azure.Health.Insights.CancerProfiling
+        ExpectedWarningsFilepath: "Azure.Health.Insights.CancerProfiling/tests/compatibility/ExpectedWarnings.txt"
+      - ArtifactName: Azure.Health.Insights.RadiologyInsights
+        ExpectedWarningsFilepath: "Azure.Health.Insights.RadiologyInsights/tests/compatibility/ExpectedWarnings.txt"

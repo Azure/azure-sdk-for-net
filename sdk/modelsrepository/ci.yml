@@ -29,4 +29,6 @@ extends:
     Artifacts:
     - name: Azure.IoT.ModelsRepository
       safeName: AzureIoTModelsRepository
-
+    ExpectedAOTWarnings:
+    - ArtifactName: Azure.IoT.ModelsRepository
+      ExpectedWarningsFilepath: Azure.IoT.ModelsRepository/tests/compatibility/ExpectedWarnings.txt

@@ -37,7 +37,8 @@ extends:
       safeName: AzureExtensionsAspNetCoreConfigurationSecrets
     - name: Microsoft.Azure.WebJobs.Extensions.Clients
       safeName: MicrosoftAzureWebJobsExtensionsClients
-    CheckAOTCompat: true
-    AOTTestInputs:
-    - ArtifactName: Microsoft.Extensions.Azure
-      ExpectedWarningsFilepath: None
+    ExpectedAOTWarnings:
+    - ArtifactName: Azure.Extensions.AspNetCore.DataProtection.Keys
+      ExpectedWarningsFilepath: "Azure.Extensions.AspNetCore.DataProtection.Keys/tests/compatibility/ExpectedWarnings.txt"
+    - ArtifactName: Microsoft.Azure.WebJobs.Extensions.Clients
+      ExpectedWarningsFilepath: "Microsoft.Azure.WebJobs.Extensions.Clients/tests/compatibility/ExpectedWarnings.txt"

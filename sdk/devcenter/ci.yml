@@ -38,3 +38,6 @@ extends:
     Artifacts:
     - name: Azure.Developer.DevCenter
       safeName: AzureDeveloperDevCenter
+    ExpectedAOTWarnings:
+    - ArtifactName: Azure.Developer.DevCenter
+      ExpectedWarningsFilepath: "Azure.Developer.DevCenter/tests/compatibility/ExpectedWarnings.txt"

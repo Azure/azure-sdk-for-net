@@ -36,6 +36,11 @@ extends:
       safeName: AzureDeveloperMicrosoftPlaywrightTestingNUnit
     - name: Azure.Developer.MicrosoftPlaywrightTesting.TestLogger
       safeName: AzureDeveloperMicrosoftPlaywrightTestingTestLogger
+    ExpectedAOTWarnings:
+    - ArtifactName: Azure.Developer.MicrosoftPlaywrightTesting.NUnit
+      ExpectedWarningsFilepath: Azure.Developer.MicrosoftPlaywrightTesting.NUnit/tests/compatibility/ExpectedWarnings.txt
+    - ArtifactName: Azure.Developer.MicrosoftPlaywrightTesting.TestLogger
+      ExpectedWarningsFilepath: Azure.Developer.MicrosoftPlaywrightTesting.TestLogger/tests/compatibility/ExpectedWarnings.txt
 
 
 

@@ -33,3 +33,6 @@ extends:
     Artifacts:
     - name: Azure.IoT.DeviceUpdate
       safeName: AzureIoTDeviceUpdate
+    ExpectedAOTWarnings:
+    - ArtifactName: Azure.IoT.DeviceUpdate
+      ExpectedWarningsFilepath: "Azure.IoT.DeviceUpdate/tests/compatibility/ExpectedWarnings.txt"

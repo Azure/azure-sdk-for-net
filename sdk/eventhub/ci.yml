@@ -44,9 +44,3 @@ extends:
       safeName: AzureMessagingEventHubsProcessor
       triggeringPaths:
       - Azure.Messaging.EventHubs.Shared
-    CheckAotCompat: true
-    AOTTestInputs:
-    - ArtifactName: Azure.Messaging.EventHubs
-      ExpectedWarningsFilepath: None
-    - ArtifactName: Azure.Messaging.EventHubs.Processor
-      ExpectedWarningsFilepath: None

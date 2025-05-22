@@ -38,3 +38,6 @@ extends:
     Artifacts:
     - name: Azure.Compute.Batch
       safeName: AzureComputeBatch
+    ExpectedAOTWarnings:
+    - ArtifactName: Azure.Compute.Batch
+      ExpectedWarningsFilepath: "Azure.Compute.Batch/tests/compatibility/ExpectedWarnings.txt"

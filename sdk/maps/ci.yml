@@ -46,3 +46,6 @@ extends:
       safeName: AzureMapsGeolocation
     - name: Azure.Maps.TimeZones
       safeName: AzureMapsTimeZones
+    ExpectedAOTWarnings:
+    - ArtifactName: Azure.Maps.Search
+      ExpectedWarningsFilepath: Azure.Maps.Search/tests/compatibility/ExpectedWarnings.txt
