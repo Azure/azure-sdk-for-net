@@ -267,7 +267,6 @@ function Create-API-Review {
     $correlationId = [System.Guid]::NewGuid().ToString()
 
     $headers = @{
-      "Content-Type"  = "application/json"
       "x-correlation-id" = $correlationId
     }
 
@@ -277,13 +276,20 @@ function Create-API-Review {
     try
     {
       $response = Invoke-WebRequest -Method 'GET' -Uri $requestUri.Uri -Headers $headers -MaximumRetryCount 3
-      if ($response.StatusCode -eq 201) {
-        $responseContent = $Response.Content | ConvertFrom-Json | ConvertTo-Json -Depth 10
-        LogSuccess "Status Code: $($response.StatusCode)`nAPI review request created successfully.`n$($responseContent)"
-      }
-      elseif ($response.StatusCode -eq 208) {
-        $responseContent = $Response.Content | ConvertFrom-Json | ConvertTo-Json -Depth 10
-        LogSuccess "Status Code: $($response.StatusCode)`nThere is no API change compared with the previous version.`n$($responseContent)"
+      if ($response.StatusCode -eq 201 -or $response.StatusCode -eq 208) {
+        if ($response.StatusCode -eq 201) {
+          LogSuccess "Status Code: $($response.StatusCode)`nAPI review request created successfully"
+        }
+        elseif ($response.StatusCode -eq 208) {
+          LogSuccess "Status Code: $($response.StatusCode)`nThere is no API change compared with the previous version."
+        }
+        if ($response.Headers['Content-Type'] -like 'application/json*') {
+          $responseContent = $response.Content | ConvertFrom-Json | ConvertTo-Json -Depth 10
+          LogSuccess "Response:`n$($responseContent)"
+        }
+        else {
+          LogSuccess "Response: $($response.Content)"
+        }
       }
       else {
         LogError "Failed to create API review request. $($response)"
