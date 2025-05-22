@@ -9,24 +9,110 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
+using Azure.Core;
 using Azure.Core.Pipeline;
 
 namespace SpecialHeaders.Repeatability
 {
+    /// <summary> Illustrates OASIS repeatability headers. </summary>
     public partial class RepeatabilityClient
     {
-        public RepeatabilityClient() : this(new Uri("http://localhost:3000"), new RepeatabilityClientOptions()) => throw null;
+        private readonly Uri _endpoint;
 
-        public RepeatabilityClient(Uri endpoint, RepeatabilityClientOptions options) => throw null;
+        /// <summary> Initializes a new instance of RepeatabilityClient. </summary>
+        public RepeatabilityClient() : this(new Uri("http://localhost:3000"), new RepeatabilityClientOptions())
+        {
+        }
 
-        public virtual HttpPipeline Pipeline => throw null;
+        /// <summary> Initializes a new instance of RepeatabilityClient. </summary>
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
+        public RepeatabilityClient(Uri endpoint, RepeatabilityClientOptions options)
+        {
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
 
-        public virtual Response ImmediateSuccess(RequestContext context) => throw null;
+            options ??= new RepeatabilityClientOptions();
 
-        public virtual Task<Response> ImmediateSuccessAsync(RequestContext context) => throw null;
+            _endpoint = endpoint;
+            Pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>());
+            ClientDiagnostics = new ClientDiagnostics(options, true);
+        }
 
-        public virtual Response ImmediateSuccess(CancellationToken cancellationToken = default) => throw null;
+        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
+        public virtual HttpPipeline Pipeline { get; }
 
-        public virtual Task<Response> ImmediateSuccessAsync(CancellationToken cancellationToken = default) => throw null;
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
+
+        /// <summary>
+        /// [Protocol Method] Check we recognize Repeatability-Request-ID and Repeatability-First-Sent.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response ImmediateSuccess(RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("RepeatabilityClient.ImmediateSuccess");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateImmediateSuccessRequest(context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Check we recognize Repeatability-Request-ID and Repeatability-First-Sent.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> ImmediateSuccessAsync(RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("RepeatabilityClient.ImmediateSuccess");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateImmediateSuccessRequest(context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Check we recognize Repeatability-Request-ID and Repeatability-First-Sent. </summary>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response ImmediateSuccess(CancellationToken cancellationToken = default)
+        {
+            return ImmediateSuccess(cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+        }
+
+        /// <summary> Check we recognize Repeatability-Request-ID and Repeatability-First-Sent. </summary>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response> ImmediateSuccessAsync(CancellationToken cancellationToken = default)
+        {
+            return await ImmediateSuccessAsync(cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+        }
     }
 }

@@ -9,6 +9,7 @@ using Azure.Core;
 
 namespace Parameters.Basic
 {
+    /// <summary> Client options for <see cref="BasicClient"/>. </summary>
     public partial class BasicClientOptions : ClientOptions
     {
     }

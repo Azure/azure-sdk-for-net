@@ -7,37 +7,166 @@
 
 using System;
 using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
 
 namespace _Specs_.Azure.ClientGenerator.Core.FlattenProperty
 {
+    /// <summary></summary>
     public partial class ChildFlattenModel : IJsonModel<ChildFlattenModel>
     {
-        internal ChildFlattenModel() => throw null;
+        /// <summary> Initializes a new instance of <see cref="ChildFlattenModel"/> for deserialization. </summary>
+        internal ChildFlattenModel()
+        {
+        }
 
-        void IJsonModel<ChildFlattenModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        void IJsonModel<ChildFlattenModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
 
-        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ChildFlattenModel>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ChildFlattenModel)} does not support writing '{format}' format.");
+            }
+            writer.WritePropertyName("summary"u8);
+            writer.WriteStringValue(Summary);
+            writer.WritePropertyName("properties"u8);
+            writer.WriteObjectValue(Properties, options);
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            {
+                foreach (var item in _additionalBinaryDataProperties)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+                    writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+        }
 
-        ChildFlattenModel IJsonModel<ChildFlattenModel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ChildFlattenModel IJsonModel<ChildFlattenModel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
-        protected virtual ChildFlattenModel JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ChildFlattenModel JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ChildFlattenModel>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ChildFlattenModel)} does not support reading '{format}' format.");
+            }
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeChildFlattenModel(document.RootElement, options);
+        }
 
-        BinaryData IPersistableModel<ChildFlattenModel>.Write(ModelReaderWriterOptions options) => throw null;
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ChildFlattenModel DeserializeChildFlattenModel(JsonElement element, ModelReaderWriterOptions options)
+        {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string summary = default;
+            ChildModel properties = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
+            {
+                if (prop.NameEquals("summary"u8))
+                {
+                    summary = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("properties"u8))
+                {
+                    properties = ChildModel.DeserializeChildModel(prop.Value, options);
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                }
+            }
+            return new ChildFlattenModel(summary, properties, additionalBinaryDataProperties);
+        }
 
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ChildFlattenModel>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
-        ChildFlattenModel IPersistableModel<ChildFlattenModel>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ChildFlattenModel>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, _Specs_AzureClientGeneratorCoreFlattenPropertyContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ChildFlattenModel)} does not support writing '{options.Format}' format.");
+            }
+        }
 
-        protected virtual ChildFlattenModel PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ChildFlattenModel IPersistableModel<ChildFlattenModel>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
-        string IPersistableModel<ChildFlattenModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ChildFlattenModel PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ChildFlattenModel>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data))
+                    {
+                        return DeserializeChildFlattenModel(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ChildFlattenModel)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ChildFlattenModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="childFlattenModel"> The <see cref="ChildFlattenModel"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(ChildFlattenModel childFlattenModel) => throw null;
+        public static implicit operator RequestContent(ChildFlattenModel childFlattenModel)
+        {
+            if (childFlattenModel == null)
+            {
+                return null;
+            }
+            Utf8JsonBinaryContent content = new Utf8JsonBinaryContent();
+            content.JsonWriter.WriteObjectValue(childFlattenModel, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
 
-        public static explicit operator ChildFlattenModel(Response result) => throw null;
+        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="ChildFlattenModel"/> from. </param>
+        public static explicit operator ChildFlattenModel(Response result)
+        {
+            using Response response = result;
+            using JsonDocument document = JsonDocument.Parse(response.Content);
+            return DeserializeChildFlattenModel(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
     }
 }

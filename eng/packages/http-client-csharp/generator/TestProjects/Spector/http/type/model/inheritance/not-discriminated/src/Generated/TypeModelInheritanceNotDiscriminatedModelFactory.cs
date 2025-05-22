@@ -7,12 +7,37 @@
 
 namespace _Type.Model.Inheritance.NotDiscriminated
 {
+    /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class TypeModelInheritanceNotDiscriminatedModelFactory
     {
-        public static Siamese Siamese(string name = default, int age = default, bool smart = default) => throw null;
+        /// <summary> The third level model in the normal multiple levels inheritance. </summary>
+        /// <param name="name"></param>
+        /// <param name="age"></param>
+        /// <param name="smart"></param>
+        /// <returns> A new <see cref="NotDiscriminated.Siamese"/> instance for mocking. </returns>
+        public static Siamese Siamese(string name = default, int age = default, bool smart = default)
+        {
 
-        public static Cat Cat(string name = default, int age = default) => throw null;
+            return new Siamese(name, additionalBinaryDataProperties: null, age, smart);
+        }
 
-        public static Pet Pet(string name = default) => throw null;
+        /// <summary> The second level model in the normal multiple levels inheritance. </summary>
+        /// <param name="name"></param>
+        /// <param name="age"></param>
+        /// <returns> A new <see cref="NotDiscriminated.Cat"/> instance for mocking. </returns>
+        public static Cat Cat(string name = default, int age = default)
+        {
+
+            return new Cat(name, additionalBinaryDataProperties: null, age);
+        }
+
+        /// <summary> This is base model for not-discriminated normal multiple levels inheritance. </summary>
+        /// <param name="name"></param>
+        /// <returns> A new <see cref="NotDiscriminated.Pet"/> instance for mocking. </returns>
+        public static Pet Pet(string name = default)
+        {
+
+            return new Pet(name, additionalBinaryDataProperties: null);
+        }
     }
 }

@@ -7,37 +7,159 @@
 
 using System;
 using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
 
 namespace _Type.Model.Inheritance.Recursive
 {
+    /// <summary></summary>
     public partial class Extension : IJsonModel<Extension>
     {
-        internal Extension() => throw null;
+        /// <summary> Initializes a new instance of <see cref="Extension"/> for deserialization. </summary>
+        internal Extension()
+        {
+        }
 
-        void IJsonModel<Extension>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        void IJsonModel<Extension>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
 
-        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<Extension>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(Recursive.Extension)} does not support writing '{format}' format.");
+            }
+            base.JsonModelWriteCore(writer, options);
+            writer.WritePropertyName("level"u8);
+            writer.WriteNumberValue(Level);
+        }
 
-        Extension IJsonModel<Extension>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        Extension IJsonModel<Extension>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (Extension)JsonModelCreateCore(ref reader, options);
 
-        protected override Element JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override Element JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<Extension>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(Recursive.Extension)} does not support reading '{format}' format.");
+            }
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeExtension(document.RootElement, options);
+        }
 
-        BinaryData IPersistableModel<Extension>.Write(ModelReaderWriterOptions options) => throw null;
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static Extension DeserializeExtension(JsonElement element, ModelReaderWriterOptions options)
+        {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            IList<Extension> extension = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            sbyte level = default;
+            foreach (var prop in element.EnumerateObject())
+            {
+                if (prop.NameEquals("extension"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<Extension> array = new List<Extension>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(DeserializeExtension(item, options));
+                    }
+                    extension = array;
+                    continue;
+                }
+                if (prop.NameEquals("level"u8))
+                {
+                    level = prop.Value.GetSByte();
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                }
+            }
+            return new Extension(extension ?? new ChangeTrackingList<Extension>(), additionalBinaryDataProperties, level);
+        }
 
-        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<Extension>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
-        Extension IPersistableModel<Extension>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<Extension>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, _TypeModelInheritanceRecursiveContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(Recursive.Extension)} does not support writing '{options.Format}' format.");
+            }
+        }
 
-        protected override Element PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        Extension IPersistableModel<Extension>.Create(BinaryData data, ModelReaderWriterOptions options) => (Extension)PersistableModelCreateCore(data, options);
 
-        string IPersistableModel<Extension>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override Element PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<Extension>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data))
+                    {
+                        return DeserializeExtension(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(Recursive.Extension)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<Extension>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="extension"> The <see cref="Extension"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(Extension extension) => throw null;
+        public static implicit operator RequestContent(Extension extension)
+        {
+            if (extension == null)
+            {
+                return null;
+            }
+            Utf8JsonBinaryContent content = new Utf8JsonBinaryContent();
+            content.JsonWriter.WriteObjectValue(extension, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
 
-        public static explicit operator Extension(Response result) => throw null;
+        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="Extension"/> from. </param>
+        public static explicit operator Extension(Response result)
+        {
+            using Response response = result;
+            using JsonDocument document = JsonDocument.Parse(response.Content);
+            return DeserializeExtension(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
     }
 }

@@ -9,6 +9,7 @@ using Azure.Core;
 
 namespace Encode.Duration
 {
+    /// <summary> Client options for <see cref="DurationClient"/>. </summary>
     public partial class DurationClientOptions : ClientOptions
     {
     }

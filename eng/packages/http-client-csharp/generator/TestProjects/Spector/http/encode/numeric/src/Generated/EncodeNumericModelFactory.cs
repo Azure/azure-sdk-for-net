@@ -9,12 +9,34 @@ using Encode.Numeric._Property;
 
 namespace Encode.Numeric
 {
+    /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class EncodeNumericModelFactory
     {
-        public static SafeintAsStringProperty SafeintAsStringProperty(long value = default) => throw null;
+        /// <summary> The SafeintAsStringProperty. </summary>
+        /// <param name="value"></param>
+        /// <returns> A new <see cref="_Property.SafeintAsStringProperty"/> instance for mocking. </returns>
+        public static SafeintAsStringProperty SafeintAsStringProperty(long value = default)
+        {
 
-        public static Uint32AsStringProperty Uint32AsStringProperty(object value = default) => throw null;
+            return new SafeintAsStringProperty(value, additionalBinaryDataProperties: null);
+        }
 
-        public static Uint8AsStringProperty Uint8AsStringProperty(byte value = default) => throw null;
+        /// <summary> The Uint32AsStringProperty. </summary>
+        /// <param name="value"></param>
+        /// <returns> A new <see cref="_Property.Uint32AsStringProperty"/> instance for mocking. </returns>
+        public static Uint32AsStringProperty Uint32AsStringProperty(object value = default)
+        {
+
+            return new Uint32AsStringProperty(value, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The Uint8AsStringProperty. </summary>
+        /// <param name="value"></param>
+        /// <returns> A new <see cref="_Property.Uint8AsStringProperty"/> instance for mocking. </returns>
+        public static Uint8AsStringProperty Uint8AsStringProperty(byte value = default)
+        {
+
+            return new Uint8AsStringProperty(value, additionalBinaryDataProperties: null);
+        }
     }
 }

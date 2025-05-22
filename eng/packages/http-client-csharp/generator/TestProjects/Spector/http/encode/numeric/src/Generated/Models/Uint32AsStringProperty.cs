@@ -5,16 +5,32 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Encode.Numeric._Property
 {
+    /// <summary> The Uint32AsStringProperty. </summary>
     public partial class Uint32AsStringProperty
     {
-        public Uint32AsStringProperty() => throw null;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        public object Value
+        /// <summary> Initializes a new instance of <see cref="Uint32AsStringProperty"/>. </summary>
+        public Uint32AsStringProperty()
         {
-            get => throw null;
-            set => throw null;
         }
+
+        /// <summary> Initializes a new instance of <see cref="Uint32AsStringProperty"/>. </summary>
+        /// <param name="value"></param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal Uint32AsStringProperty(object value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        {
+            Value = value;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+        }
+
+        /// <summary> Gets or sets the Value. </summary>
+        public object Value { get; set; }
     }
 }

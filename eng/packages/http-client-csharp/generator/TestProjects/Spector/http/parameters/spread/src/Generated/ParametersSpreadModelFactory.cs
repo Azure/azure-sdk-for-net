@@ -6,11 +6,21 @@
 #nullable disable
 
 using System.Collections.Generic;
+using System.Linq;
+using Parameters.Spread;
 
 namespace Parameters.Spread.Models
 {
+    /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ParametersSpreadModelFactory
     {
-        public static BodyParameter BodyParameter(string name = default) => throw null;
+        /// <summary> This is a simple model. </summary>
+        /// <param name="name"></param>
+        /// <returns> A new <see cref="Models.BodyParameter"/> instance for mocking. </returns>
+        public static BodyParameter BodyParameter(string name = default)
+        {
+
+            return new BodyParameter(name, additionalBinaryDataProperties: null);
+        }
     }
 }

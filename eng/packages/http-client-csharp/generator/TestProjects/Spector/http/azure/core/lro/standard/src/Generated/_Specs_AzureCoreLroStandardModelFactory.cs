@@ -6,15 +6,33 @@
 #nullable disable
 
 using System.Collections.Generic;
+using System.Linq;
 using Azure;
 using Azure.Core;
 
 namespace _Specs_.Azure.Core.Lro.Standard
 {
+    /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class _Specs_AzureCoreLroStandardModelFactory
     {
-        public static User User(string name = default, string role = default) => throw null;
+        /// <summary> Details about a user. </summary>
+        /// <param name="name"> The name of user. </param>
+        /// <param name="role"> The role of user. </param>
+        /// <returns> A new <see cref="Standard.User"/> instance for mocking. </returns>
+        public static User User(string name = default, string role = default)
+        {
 
-        public static ExportedUser ExportedUser(string name = default, string resourceUri = default) => throw null;
+            return new User(name, role, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The exported user data. </summary>
+        /// <param name="name"> The name of user. </param>
+        /// <param name="resourceUri"> The exported URI. </param>
+        /// <returns> A new <see cref="Standard.ExportedUser"/> instance for mocking. </returns>
+        public static ExportedUser ExportedUser(string name = default, string resourceUri = default)
+        {
+
+            return new ExportedUser(name, resourceUri, additionalBinaryDataProperties: null);
+        }
     }
 }

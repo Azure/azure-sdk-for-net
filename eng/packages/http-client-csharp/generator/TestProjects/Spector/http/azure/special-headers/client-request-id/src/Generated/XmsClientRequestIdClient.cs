@@ -9,24 +9,114 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
+using Azure.Core;
 using Azure.Core.Pipeline;
 
 namespace Azure.SpecialHeaders.XmsClientRequestId
 {
+    /// <summary> Azure client request id header configurations. </summary>
     public partial class XmsClientRequestIdClient
     {
-        public XmsClientRequestIdClient() : this(new Uri("http://localhost:3000"), new XmsClientRequestIdClientOptions()) => throw null;
+        private readonly Uri _endpoint;
 
-        public XmsClientRequestIdClient(Uri endpoint, XmsClientRequestIdClientOptions options) => throw null;
+        /// <summary> Initializes a new instance of XmsClientRequestIdClient. </summary>
+        public XmsClientRequestIdClient() : this(new Uri("http://localhost:3000"), new XmsClientRequestIdClientOptions())
+        {
+        }
 
-        public virtual HttpPipeline Pipeline => throw null;
+        /// <summary> Initializes a new instance of XmsClientRequestIdClient. </summary>
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
+        public XmsClientRequestIdClient(Uri endpoint, XmsClientRequestIdClientOptions options)
+        {
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
 
-        public virtual Response Get(string clientRequestId, RequestContext context) => throw null;
+            options ??= new XmsClientRequestIdClientOptions();
 
-        public virtual Task<Response> GetAsync(string clientRequestId, RequestContext context) => throw null;
+            _endpoint = endpoint;
+            Pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>());
+            ClientDiagnostics = new ClientDiagnostics(options, true);
+        }
 
-        public virtual Response Get(string clientRequestId = default, CancellationToken cancellationToken = default) => throw null;
+        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
+        public virtual HttpPipeline Pipeline { get; }
 
-        public virtual Task<Response> GetAsync(string clientRequestId = default, CancellationToken cancellationToken = default) => throw null;
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
+
+        /// <summary>
+        /// [Protocol Method] Get operation with azure `x-ms-client-request-id` header.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="clientRequestId"></param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response Get(string clientRequestId, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("XmsClientRequestIdClient.Get");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetRequest(clientRequestId, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Get operation with azure `x-ms-client-request-id` header.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="clientRequestId"></param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> GetAsync(string clientRequestId, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("XmsClientRequestIdClient.Get");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetRequest(clientRequestId, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Get operation with azure `x-ms-client-request-id` header. </summary>
+        /// <param name="clientRequestId"></param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response Get(string clientRequestId = default, CancellationToken cancellationToken = default)
+        {
+            return Get(clientRequestId, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+        }
+
+        /// <summary> Get operation with azure `x-ms-client-request-id` header. </summary>
+        /// <param name="clientRequestId"></param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response> GetAsync(string clientRequestId = default, CancellationToken cancellationToken = default)
+        {
+            return await GetAsync(clientRequestId, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+        }
     }
 }

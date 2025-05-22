@@ -5,16 +5,47 @@
 
 #nullable disable
 
+using System;
+using System.Threading;
 using Azure.Core.Pipeline;
 
 namespace Client.Structure.Service
 {
+    /// <summary></summary>
     public partial class Baz
     {
-        protected Baz() => throw null;
+        private readonly Uri _endpoint;
+        private readonly ClientType _client;
+        private BazFoo _cachedBazFoo;
 
-        public virtual HttpPipeline Pipeline => throw null;
+        /// <summary> Initializes a new instance of Baz for mocking. </summary>
+        protected Baz()
+        {
+        }
 
-        public virtual BazFoo GetBazFooClient() => throw null;
+        /// <summary> Initializes a new instance of Baz. </summary>
+        /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
+        /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="client"></param>
+        internal Baz(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, ClientType client)
+        {
+            ClientDiagnostics = clientDiagnostics;
+            _endpoint = endpoint;
+            Pipeline = pipeline;
+            _client = client;
+        }
+
+        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
+        public virtual HttpPipeline Pipeline { get; }
+
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
+
+        /// <summary> Initializes a new instance of BazFoo. </summary>
+        public virtual BazFoo GetBazFooClient()
+        {
+            return Volatile.Read(ref _cachedBazFoo) ?? Interlocked.CompareExchange(ref _cachedBazFoo, new BazFoo(ClientDiagnostics, Pipeline, _endpoint, _client), null) ?? _cachedBazFoo;
+        }
     }
 }

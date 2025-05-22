@@ -7,41 +7,171 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace _Type.Union
 {
+    /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class TypeUnionModelFactory
     {
-        public static GetResponse GetResponse(GetResponseProp prop = default) => throw null;
+        /// <summary> The GetResponse. </summary>
+        /// <param name="prop"></param>
+        /// <returns> A new <see cref="Union.GetResponse"/> instance for mocking. </returns>
+        public static GetResponse GetResponse(GetResponseProp prop = default)
+        {
 
-        public static GetResponse1 GetResponse1(GetResponseProp1 prop = default) => throw null;
+            return new GetResponse(prop, additionalBinaryDataProperties: null);
+        }
 
-        public static GetResponse2 GetResponse2(StringExtensibleNamedUnion prop = default) => throw null;
+        /// <summary> The GetResponse1. </summary>
+        /// <param name="prop"></param>
+        /// <returns> A new <see cref="Union.GetResponse1"/> instance for mocking. </returns>
+        public static GetResponse1 GetResponse1(GetResponseProp1 prop = default)
+        {
 
-        public static GetResponse3 GetResponse3(GetResponseProp2 prop = default) => throw null;
+            return new GetResponse1(prop, additionalBinaryDataProperties: null);
+        }
 
-        public static GetResponse4 GetResponse4(GetResponseProp3 prop = default) => throw null;
+        /// <summary> The GetResponse2. </summary>
+        /// <param name="prop"></param>
+        /// <returns> A new <see cref="Union.GetResponse2"/> instance for mocking. </returns>
+        public static GetResponse2 GetResponse2(StringExtensibleNamedUnion prop = default)
+        {
 
-        public static GetResponse5 GetResponse5(BinaryData prop = default) => throw null;
+            return new GetResponse2(prop, additionalBinaryDataProperties: null);
+        }
 
-        public static Cat Cat(string name = default) => throw null;
+        /// <summary> The GetResponse3. </summary>
+        /// <param name="prop"></param>
+        /// <returns> A new <see cref="Union.GetResponse3"/> instance for mocking. </returns>
+        public static GetResponse3 GetResponse3(GetResponseProp2 prop = default)
+        {
 
-        public static Dog Dog(string bark = default) => throw null;
+            return new GetResponse3(prop, additionalBinaryDataProperties: null);
+        }
 
-        public static GetResponse6 GetResponse6(EnumsOnlyCases prop = default) => throw null;
+        /// <summary> The GetResponse4. </summary>
+        /// <param name="prop"></param>
+        /// <returns> A new <see cref="Union.GetResponse4"/> instance for mocking. </returns>
+        public static GetResponse4 GetResponse4(GetResponseProp3 prop = default)
+        {
 
-        public static EnumsOnlyCases EnumsOnlyCases(EnumsOnlyCasesLr lr = default, EnumsOnlyCasesUd ud = default) => throw null;
+            return new GetResponse4(prop, additionalBinaryDataProperties: null);
+        }
 
-        public static GetResponse7 GetResponse7(StringAndArrayCases prop = default) => throw null;
+        /// <summary> The GetResponse5. </summary>
+        /// <param name="prop"></param>
+        /// <returns> A new <see cref="Union.GetResponse5"/> instance for mocking. </returns>
+        public static GetResponse5 GetResponse5(BinaryData prop = default)
+        {
 
-        public static StringAndArrayCases StringAndArrayCases(BinaryData @string = default, BinaryData array = default) => throw null;
+            return new GetResponse5(prop, additionalBinaryDataProperties: null);
+        }
 
-        public static GetResponse8 GetResponse8(MixedLiteralsCases prop = default) => throw null;
+        /// <summary> The Cat. </summary>
+        /// <param name="name"></param>
+        /// <returns> A new <see cref="Union.Cat"/> instance for mocking. </returns>
+        public static Cat Cat(string name = default)
+        {
 
-        public static MixedLiteralsCases MixedLiteralsCases(BinaryData stringLiteral = default, BinaryData intLiteral = default, BinaryData floatLiteral = default, BinaryData booleanLiteral = default) => throw null;
+            return new Cat(name, additionalBinaryDataProperties: null);
+        }
 
-        public static GetResponse9 GetResponse9(MixedTypesCases prop = default) => throw null;
+        /// <summary> The Dog. </summary>
+        /// <param name="bark"></param>
+        /// <returns> A new <see cref="Union.Dog"/> instance for mocking. </returns>
+        public static Dog Dog(string bark = default)
+        {
 
-        public static MixedTypesCases MixedTypesCases(BinaryData model = default, BinaryData literal = default, BinaryData @int = default, BinaryData boolean = default, IEnumerable<BinaryData> array = default) => throw null;
+            return new Dog(bark, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The GetResponse6. </summary>
+        /// <param name="prop"></param>
+        /// <returns> A new <see cref="Union.GetResponse6"/> instance for mocking. </returns>
+        public static GetResponse6 GetResponse6(EnumsOnlyCases prop = default)
+        {
+
+            return new GetResponse6(prop, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The EnumsOnlyCases. </summary>
+        /// <param name="lr"> This should be receive/send the left variant. </param>
+        /// <param name="ud"> This should be receive/send the up variant. </param>
+        /// <returns> A new <see cref="Union.EnumsOnlyCases"/> instance for mocking. </returns>
+        public static EnumsOnlyCases EnumsOnlyCases(EnumsOnlyCasesLr lr = default, EnumsOnlyCasesUd ud = default)
+        {
+
+            return new EnumsOnlyCases(lr, ud, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The GetResponse7. </summary>
+        /// <param name="prop"></param>
+        /// <returns> A new <see cref="Union.GetResponse7"/> instance for mocking. </returns>
+        public static GetResponse7 GetResponse7(StringAndArrayCases prop = default)
+        {
+
+            return new GetResponse7(prop, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The StringAndArrayCases. </summary>
+        /// <param name="string"> This should be receive/send the string variant. </param>
+        /// <param name="array"> This should be receive/send the array variant. </param>
+        /// <returns> A new <see cref="Union.StringAndArrayCases"/> instance for mocking. </returns>
+        public static StringAndArrayCases StringAndArrayCases(BinaryData @string = default, BinaryData array = default)
+        {
+
+            return new StringAndArrayCases(@string, array, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The GetResponse8. </summary>
+        /// <param name="prop"></param>
+        /// <returns> A new <see cref="Union.GetResponse8"/> instance for mocking. </returns>
+        public static GetResponse8 GetResponse8(MixedLiteralsCases prop = default)
+        {
+
+            return new GetResponse8(prop, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The MixedLiteralsCases. </summary>
+        /// <param name="stringLiteral"> This should be receive/send the "a" variant. </param>
+        /// <param name="intLiteral"> This should be receive/send the 2 variant. </param>
+        /// <param name="floatLiteral"> This should be receive/send the 3.3 variant. </param>
+        /// <param name="booleanLiteral"> This should be receive/send the true variant. </param>
+        /// <returns> A new <see cref="Union.MixedLiteralsCases"/> instance for mocking. </returns>
+        public static MixedLiteralsCases MixedLiteralsCases(BinaryData stringLiteral = default, BinaryData intLiteral = default, BinaryData floatLiteral = default, BinaryData booleanLiteral = default)
+        {
+
+            return new MixedLiteralsCases(stringLiteral, intLiteral, floatLiteral, booleanLiteral, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The GetResponse9. </summary>
+        /// <param name="prop"></param>
+        /// <returns> A new <see cref="Union.GetResponse9"/> instance for mocking. </returns>
+        public static GetResponse9 GetResponse9(MixedTypesCases prop = default)
+        {
+
+            return new GetResponse9(prop, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The MixedTypesCases. </summary>
+        /// <param name="model"> This should be receive/send the Cat variant. </param>
+        /// <param name="literal"> This should be receive/send the "a" variant. </param>
+        /// <param name="int"> This should be receive/send the int variant. </param>
+        /// <param name="boolean"> This should be receive/send the boolean variant. </param>
+        /// <param name="array"> This should be receive/send 4 element with Cat, "a", int, and boolean. </param>
+        /// <returns> A new <see cref="Union.MixedTypesCases"/> instance for mocking. </returns>
+        public static MixedTypesCases MixedTypesCases(BinaryData model = default, BinaryData literal = default, BinaryData @int = default, BinaryData boolean = default, IEnumerable<BinaryData> array = default)
+        {
+            array ??= new ChangeTrackingList<BinaryData>();
+
+            return new MixedTypesCases(
+                model,
+                literal,
+                @int,
+                boolean,
+                array?.ToList(),
+                additionalBinaryDataProperties: null);
+        }
     }
 }

@@ -7,37 +7,162 @@
 
 using System;
 using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
 
 namespace _Type.Property.AdditionalProperties
 {
+    /// <summary></summary>
     public partial class ExtendsUnknownAdditionalPropertiesDerived : IJsonModel<ExtendsUnknownAdditionalPropertiesDerived>
     {
-        internal ExtendsUnknownAdditionalPropertiesDerived() => throw null;
+        /// <summary> Initializes a new instance of <see cref="ExtendsUnknownAdditionalPropertiesDerived"/> for deserialization. </summary>
+        internal ExtendsUnknownAdditionalPropertiesDerived()
+        {
+        }
 
-        void IJsonModel<ExtendsUnknownAdditionalPropertiesDerived>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        void IJsonModel<ExtendsUnknownAdditionalPropertiesDerived>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
 
-        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ExtendsUnknownAdditionalPropertiesDerived>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ExtendsUnknownAdditionalPropertiesDerived)} does not support writing '{format}' format.");
+            }
+            base.JsonModelWriteCore(writer, options);
+            writer.WritePropertyName("index"u8);
+            writer.WriteNumberValue(Index);
+            if (Optional.IsDefined(Age))
+            {
+                writer.WritePropertyName("age"u8);
+                writer.WriteNumberValue(Age.Value);
+            }
+        }
 
-        ExtendsUnknownAdditionalPropertiesDerived IJsonModel<ExtendsUnknownAdditionalPropertiesDerived>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ExtendsUnknownAdditionalPropertiesDerived IJsonModel<ExtendsUnknownAdditionalPropertiesDerived>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ExtendsUnknownAdditionalPropertiesDerived)JsonModelCreateCore(ref reader, options);
 
-        protected override ExtendsUnknownAdditionalProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override ExtendsUnknownAdditionalProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ExtendsUnknownAdditionalPropertiesDerived>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ExtendsUnknownAdditionalPropertiesDerived)} does not support reading '{format}' format.");
+            }
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeExtendsUnknownAdditionalPropertiesDerived(document.RootElement, options);
+        }
 
-        BinaryData IPersistableModel<ExtendsUnknownAdditionalPropertiesDerived>.Write(ModelReaderWriterOptions options) => throw null;
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ExtendsUnknownAdditionalPropertiesDerived DeserializeExtendsUnknownAdditionalPropertiesDerived(JsonElement element, ModelReaderWriterOptions options)
+        {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string name = default;
+            IDictionary<string, BinaryData> additionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            int index = default;
+            float? age = default;
+            foreach (var prop in element.EnumerateObject())
+            {
+                if (prop.NameEquals("name"u8))
+                {
+                    name = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("index"u8))
+                {
+                    index = prop.Value.GetInt32();
+                    continue;
+                }
+                if (prop.NameEquals("age"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    age = prop.Value.GetSingle();
+                    continue;
+                }
+                additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+            }
+            return new ExtendsUnknownAdditionalPropertiesDerived(name, additionalProperties, index, age);
+        }
 
-        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ExtendsUnknownAdditionalPropertiesDerived>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
-        ExtendsUnknownAdditionalPropertiesDerived IPersistableModel<ExtendsUnknownAdditionalPropertiesDerived>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ExtendsUnknownAdditionalPropertiesDerived>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, _TypePropertyAdditionalPropertiesContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ExtendsUnknownAdditionalPropertiesDerived)} does not support writing '{options.Format}' format.");
+            }
+        }
 
-        protected override ExtendsUnknownAdditionalProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ExtendsUnknownAdditionalPropertiesDerived IPersistableModel<ExtendsUnknownAdditionalPropertiesDerived>.Create(BinaryData data, ModelReaderWriterOptions options) => (ExtendsUnknownAdditionalPropertiesDerived)PersistableModelCreateCore(data, options);
 
-        string IPersistableModel<ExtendsUnknownAdditionalPropertiesDerived>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override ExtendsUnknownAdditionalProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ExtendsUnknownAdditionalPropertiesDerived>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data))
+                    {
+                        return DeserializeExtendsUnknownAdditionalPropertiesDerived(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ExtendsUnknownAdditionalPropertiesDerived)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ExtendsUnknownAdditionalPropertiesDerived>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="extendsUnknownAdditionalPropertiesDerived"> The <see cref="ExtendsUnknownAdditionalPropertiesDerived"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(ExtendsUnknownAdditionalPropertiesDerived extendsUnknownAdditionalPropertiesDerived) => throw null;
+        public static implicit operator RequestContent(ExtendsUnknownAdditionalPropertiesDerived extendsUnknownAdditionalPropertiesDerived)
+        {
+            if (extendsUnknownAdditionalPropertiesDerived == null)
+            {
+                return null;
+            }
+            Utf8JsonBinaryContent content = new Utf8JsonBinaryContent();
+            content.JsonWriter.WriteObjectValue(extendsUnknownAdditionalPropertiesDerived, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
 
-        public static explicit operator ExtendsUnknownAdditionalPropertiesDerived(Response result) => throw null;
+        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="ExtendsUnknownAdditionalPropertiesDerived"/> from. </param>
+        public static explicit operator ExtendsUnknownAdditionalPropertiesDerived(Response result)
+        {
+            using Response response = result;
+            using JsonDocument document = JsonDocument.Parse(response.Content);
+            return DeserializeExtendsUnknownAdditionalPropertiesDerived(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
     }
 }

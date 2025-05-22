@@ -6,24 +6,107 @@
 #nullable disable
 
 using System;
+using System.Threading;
 using Azure.Core.Pipeline;
 
 namespace SpecialWords
 {
+    /// <summary>
+    /// Scenarios to verify that reserved words can be used in service and generators will handle it appropriately.
+    /// 
+    /// Current list of special words
+    /// ```txt
+    /// and
+    /// as
+    /// assert
+    /// async
+    /// await
+    /// break
+    /// class
+    /// constructor
+    /// continue
+    /// def
+    /// del
+    /// elif
+    /// else
+    /// except
+    /// exec
+    /// finally
+    /// for
+    /// from
+    /// global
+    /// if
+    /// import
+    /// in
+    /// is
+    /// lambda
+    /// not
+    /// or
+    /// pass
+    /// raise
+    /// return
+    /// try
+    /// while
+    /// with
+    /// yield
+    /// ```
+    /// </summary>
     public partial class SpecialWordsClient
     {
-        public SpecialWordsClient() : this(new Uri("http://localhost:3000"), new SpecialWordsClientOptions()) => throw null;
+        private readonly Uri _endpoint;
+        private Models _cachedModels;
+        private ModelProperties _cachedModelProperties;
+        private Operations _cachedOperations;
+        private Parameters _cachedParameters;
 
-        public SpecialWordsClient(Uri endpoint, SpecialWordsClientOptions options) => throw null;
+        /// <summary> Initializes a new instance of SpecialWordsClient. </summary>
+        public SpecialWordsClient() : this(new Uri("http://localhost:3000"), new SpecialWordsClientOptions())
+        {
+        }
 
-        public virtual HttpPipeline Pipeline => throw null;
+        /// <summary> Initializes a new instance of SpecialWordsClient. </summary>
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
+        public SpecialWordsClient(Uri endpoint, SpecialWordsClientOptions options)
+        {
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
 
-        public virtual Models GetModelsClient() => throw null;
+            options ??= new SpecialWordsClientOptions();
 
-        public virtual ModelProperties GetModelPropertiesClient() => throw null;
+            _endpoint = endpoint;
+            Pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>());
+            ClientDiagnostics = new ClientDiagnostics(options, true);
+        }
 
-        public virtual Operations GetOperationsClient() => throw null;
+        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
+        public virtual HttpPipeline Pipeline { get; }
 
-        public virtual Parameters GetParametersClient() => throw null;
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
+
+        /// <summary> Initializes a new instance of Models. </summary>
+        public virtual Models GetModelsClient()
+        {
+            return Volatile.Read(ref _cachedModels) ?? Interlocked.CompareExchange(ref _cachedModels, new Models(ClientDiagnostics, Pipeline, _endpoint), null) ?? _cachedModels;
+        }
+
+        /// <summary> Initializes a new instance of ModelProperties. </summary>
+        public virtual ModelProperties GetModelPropertiesClient()
+        {
+            return Volatile.Read(ref _cachedModelProperties) ?? Interlocked.CompareExchange(ref _cachedModelProperties, new ModelProperties(ClientDiagnostics, Pipeline, _endpoint), null) ?? _cachedModelProperties;
+        }
+
+        /// <summary> Initializes a new instance of Operations. </summary>
+        public virtual Operations GetOperationsClient()
+        {
+            return Volatile.Read(ref _cachedOperations) ?? Interlocked.CompareExchange(ref _cachedOperations, new Operations(ClientDiagnostics, Pipeline, _endpoint), null) ?? _cachedOperations;
+        }
+
+        /// <summary> Initializes a new instance of Parameters. </summary>
+        public virtual Parameters GetParametersClient()
+        {
+            return Volatile.Read(ref _cachedParameters) ?? Interlocked.CompareExchange(ref _cachedParameters, new Parameters(ClientDiagnostics, Pipeline, _endpoint), null) ?? _cachedParameters;
+        }
     }
 }

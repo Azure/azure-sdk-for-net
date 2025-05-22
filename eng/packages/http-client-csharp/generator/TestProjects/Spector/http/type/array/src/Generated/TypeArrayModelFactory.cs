@@ -6,11 +6,22 @@
 #nullable disable
 
 using System.Collections.Generic;
+using System.Linq;
 
 namespace _Type._Array
 {
+    /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class TypeArrayModelFactory
     {
-        public static InnerModel InnerModel(string @property = default, IEnumerable<InnerModel> children = default) => throw null;
+        /// <summary> Array inner model. </summary>
+        /// <param name="property"> Required string property. </param>
+        /// <param name="children"></param>
+        /// <returns> A new <see cref="_Array.InnerModel"/> instance for mocking. </returns>
+        public static InnerModel InnerModel(string @property = default, IEnumerable<InnerModel> children = default)
+        {
+            children ??= new ChangeTrackingList<InnerModel>();
+
+            return new InnerModel(@property, children?.ToList(), additionalBinaryDataProperties: null);
+        }
     }
 }

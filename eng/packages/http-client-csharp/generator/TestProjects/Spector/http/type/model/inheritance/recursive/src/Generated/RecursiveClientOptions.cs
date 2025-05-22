@@ -9,6 +9,7 @@ using Azure.Core;
 
 namespace _Type.Model.Inheritance.Recursive
 {
+    /// <summary> Client options for <see cref="RecursiveClient"/>. </summary>
     public partial class RecursiveClientOptions : ClientOptions
     {
     }

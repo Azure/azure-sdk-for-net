@@ -9,6 +9,7 @@ using Azure.Core;
 
 namespace Parameters.BodyOptionality
 {
+    /// <summary> Client options for <see cref="BodyOptionalityClient"/>. </summary>
     public partial class BodyOptionalityClientOptions : ClientOptions
     {
     }

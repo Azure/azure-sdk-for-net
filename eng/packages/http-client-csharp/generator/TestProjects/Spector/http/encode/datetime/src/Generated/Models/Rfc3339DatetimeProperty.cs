@@ -6,17 +6,33 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Encode.Datetime
 {
+    /// <summary> The Rfc3339DatetimeProperty. </summary>
     public partial class Rfc3339DatetimeProperty
     {
-        public Rfc3339DatetimeProperty(DateTimeOffset value) => throw null;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        public DateTimeOffset Value
+        /// <summary> Initializes a new instance of <see cref="Rfc3339DatetimeProperty"/>. </summary>
+        /// <param name="value"></param>
+        public Rfc3339DatetimeProperty(DateTimeOffset value)
         {
-            get => throw null;
-            set => throw null;
+            Value = value;
         }
+
+        /// <summary> Initializes a new instance of <see cref="Rfc3339DatetimeProperty"/>. </summary>
+        /// <param name="value"></param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal Rfc3339DatetimeProperty(DateTimeOffset value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        {
+            Value = value;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+        }
+
+        /// <summary> Gets or sets the Value. </summary>
+        public DateTimeOffset Value { get; set; }
     }
 }

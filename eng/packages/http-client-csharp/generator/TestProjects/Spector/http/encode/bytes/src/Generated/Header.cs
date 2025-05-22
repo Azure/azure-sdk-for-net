@@ -10,46 +10,380 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
+using Azure.Core;
 using Azure.Core.Pipeline;
 
 namespace Encode.Bytes
 {
+    /// <summary></summary>
     public partial class Header
     {
-        protected Header() => throw null;
+        private readonly Uri _endpoint;
 
-        public virtual HttpPipeline Pipeline => throw null;
+        /// <summary> Initializes a new instance of Header for mocking. </summary>
+        protected Header()
+        {
+        }
 
-        public virtual Response Default(BinaryData value, RequestContext context) => throw null;
+        /// <summary> Initializes a new instance of Header. </summary>
+        /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
+        /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
+        /// <param name="endpoint"> Service endpoint. </param>
+        internal Header(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint)
+        {
+            ClientDiagnostics = clientDiagnostics;
+            _endpoint = endpoint;
+            Pipeline = pipeline;
+        }
 
-        public virtual Task<Response> DefaultAsync(BinaryData value, RequestContext context) => throw null;
+        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
+        public virtual HttpPipeline Pipeline { get; }
 
-        public virtual Response Default(BinaryData value, CancellationToken cancellationToken = default) => throw null;
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
 
-        public virtual Task<Response> DefaultAsync(BinaryData value, CancellationToken cancellationToken = default) => throw null;
+        /// <summary>
+        /// [Protocol Method] default
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response Default(BinaryData value, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Header.Default");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(value, nameof(value));
 
-        public virtual Response Base64(BinaryData value, RequestContext context) => throw null;
+                using HttpMessage message = CreateDefaultRequest(value, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
 
-        public virtual Task<Response> Base64Async(BinaryData value, RequestContext context) => throw null;
+        /// <summary>
+        /// [Protocol Method] default
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> DefaultAsync(BinaryData value, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Header.Default");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(value, nameof(value));
 
-        public virtual Response Base64(BinaryData value, CancellationToken cancellationToken = default) => throw null;
+                using HttpMessage message = CreateDefaultRequest(value, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
 
-        public virtual Task<Response> Base64Async(BinaryData value, CancellationToken cancellationToken = default) => throw null;
+        /// <summary> default. </summary>
+        /// <param name="value"></param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response Default(BinaryData value, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(value, nameof(value));
 
-        public virtual Response Base64url(BinaryData value, RequestContext context) => throw null;
+            return Default(value, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+        }
 
-        public virtual Task<Response> Base64urlAsync(BinaryData value, RequestContext context) => throw null;
+        /// <summary> default. </summary>
+        /// <param name="value"></param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response> DefaultAsync(BinaryData value, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(value, nameof(value));
 
-        public virtual Response Base64url(BinaryData value, CancellationToken cancellationToken = default) => throw null;
+            return await DefaultAsync(value, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+        }
 
-        public virtual Task<Response> Base64urlAsync(BinaryData value, CancellationToken cancellationToken = default) => throw null;
+        /// <summary>
+        /// [Protocol Method] base64
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response Base64(BinaryData value, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Header.Base64");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(value, nameof(value));
 
-        public virtual Response Base64urlArray(IEnumerable<BinaryData> value, RequestContext context) => throw null;
+                using HttpMessage message = CreateBase64Request(value, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
 
-        public virtual Task<Response> Base64urlArrayAsync(IEnumerable<BinaryData> value, RequestContext context) => throw null;
+        /// <summary>
+        /// [Protocol Method] base64
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> Base64Async(BinaryData value, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Header.Base64");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(value, nameof(value));
 
-        public virtual Response Base64urlArray(IEnumerable<BinaryData> value, CancellationToken cancellationToken = default) => throw null;
+                using HttpMessage message = CreateBase64Request(value, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
 
-        public virtual Task<Response> Base64urlArrayAsync(IEnumerable<BinaryData> value, CancellationToken cancellationToken = default) => throw null;
+        /// <summary> base64. </summary>
+        /// <param name="value"></param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response Base64(BinaryData value, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            return Base64(value, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+        }
+
+        /// <summary> base64. </summary>
+        /// <param name="value"></param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response> Base64Async(BinaryData value, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            return await Base64Async(value, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// [Protocol Method] base64url
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response Base64url(BinaryData value, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Header.Base64url");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(value, nameof(value));
+
+                using HttpMessage message = CreateBase64urlRequest(value, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] base64url
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> Base64urlAsync(BinaryData value, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Header.Base64url");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(value, nameof(value));
+
+                using HttpMessage message = CreateBase64urlRequest(value, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> base64url. </summary>
+        /// <param name="value"></param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response Base64url(BinaryData value, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            return Base64url(value, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+        }
+
+        /// <summary> base64url. </summary>
+        /// <param name="value"></param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response> Base64urlAsync(BinaryData value, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            return await Base64urlAsync(value, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// [Protocol Method] base64urlArray
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response Base64urlArray(IEnumerable<BinaryData> value, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Header.Base64urlArray");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(value, nameof(value));
+
+                using HttpMessage message = CreateBase64urlArrayRequest(value, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] base64urlArray
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> Base64urlArrayAsync(IEnumerable<BinaryData> value, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Header.Base64urlArray");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(value, nameof(value));
+
+                using HttpMessage message = CreateBase64urlArrayRequest(value, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> base64urlArray. </summary>
+        /// <param name="value"></param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response Base64urlArray(IEnumerable<BinaryData> value, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            return Base64urlArray(value, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+        }
+
+        /// <summary> base64urlArray. </summary>
+        /// <param name="value"></param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response> Base64urlArrayAsync(IEnumerable<BinaryData> value, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            return await Base64urlArrayAsync(value, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+        }
     }
 }

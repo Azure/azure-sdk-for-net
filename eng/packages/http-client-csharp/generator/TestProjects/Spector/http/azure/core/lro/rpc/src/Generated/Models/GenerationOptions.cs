@@ -5,12 +5,37 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace _Specs_.Azure.Core.Lro.Rpc
 {
+    /// <summary> Options for the generation. </summary>
     public partial class GenerationOptions
     {
-        public GenerationOptions(string prompt) => throw null;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        public string Prompt => throw null;
+        /// <summary> Initializes a new instance of <see cref="GenerationOptions"/>. </summary>
+        /// <param name="prompt"> Prompt. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="prompt"/> is null. </exception>
+        public GenerationOptions(string prompt)
+        {
+            Argument.AssertNotNull(prompt, nameof(prompt));
+
+            Prompt = prompt;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="GenerationOptions"/>. </summary>
+        /// <param name="prompt"> Prompt. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal GenerationOptions(string prompt, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        {
+            Prompt = prompt;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+        }
+
+        /// <summary> Prompt. </summary>
+        public string Prompt { get; }
     }
 }

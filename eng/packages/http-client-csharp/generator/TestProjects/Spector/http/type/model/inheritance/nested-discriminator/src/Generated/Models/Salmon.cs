@@ -10,20 +10,38 @@ using System.Collections.Generic;
 
 namespace _Type.Model.Inheritance.NestedDiscriminator
 {
+    /// <summary> The second level model in polymorphic multiple levels inheritance which contains references to other polymorphic instances. </summary>
     public partial class Salmon : Fish
     {
-        public Salmon(int age) : base("salmon", age) => throw null;
-
-        internal Salmon(string kind, int age, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<Fish> friends, IDictionary<string, Fish> hate, Fish partner) : base(kind, age, additionalBinaryDataProperties) => throw null;
-
-        public IList<Fish> Friends => throw null;
-
-        public IDictionary<string, Fish> Hate => throw null;
-
-        public Fish Partner
+        /// <summary> Initializes a new instance of <see cref="Salmon"/>. </summary>
+        /// <param name="age"></param>
+        public Salmon(int age) : base("salmon", age)
         {
-            get => throw null;
-            set => throw null;
+            Friends = new ChangeTrackingList<Fish>();
+            Hate = new ChangeTrackingDictionary<string, Fish>();
         }
+
+        /// <summary> Initializes a new instance of <see cref="Salmon"/>. </summary>
+        /// <param name="kind"> Discriminator property for Fish. </param>
+        /// <param name="age"></param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="friends"></param>
+        /// <param name="hate"></param>
+        /// <param name="partner"></param>
+        internal Salmon(string kind, int age, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<Fish> friends, IDictionary<string, Fish> hate, Fish partner) : base(kind, age, additionalBinaryDataProperties)
+        {
+            Friends = friends;
+            Hate = hate;
+            Partner = partner;
+        }
+
+        /// <summary> Gets the Friends. </summary>
+        public IList<Fish> Friends { get; }
+
+        /// <summary> Gets the Hate. </summary>
+        public IDictionary<string, Fish> Hate { get; }
+
+        /// <summary> Gets or sets the Partner. </summary>
+        public Fish Partner { get; set; }
     }
 }

@@ -92,8 +92,7 @@
      "readOnly": false,
      "decorators": [],
      "crossLanguageDefinitionId": "TypeSpec.Http.Streams.JsonlStream.contentType",
-     "discriminator": false,
-     "flatten": false
+     "correspondingMethodParams": []
     }
    ]
   }

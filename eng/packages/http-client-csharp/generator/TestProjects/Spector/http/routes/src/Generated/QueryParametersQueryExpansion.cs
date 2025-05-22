@@ -5,18 +5,51 @@
 
 #nullable disable
 
+using System;
+using System.Threading;
 using Azure.Core.Pipeline;
 
 namespace Routes
 {
+    /// <summary></summary>
     public partial class QueryParametersQueryExpansion
     {
-        protected QueryParametersQueryExpansion() => throw null;
+        private readonly Uri _endpoint;
+        private QueryParametersQueryExpansionStandard _cachedQueryParametersQueryExpansionStandard;
+        private QueryParametersQueryExpansionExplode _cachedQueryParametersQueryExpansionExplode;
 
-        public virtual HttpPipeline Pipeline => throw null;
+        /// <summary> Initializes a new instance of QueryParametersQueryExpansion for mocking. </summary>
+        protected QueryParametersQueryExpansion()
+        {
+        }
 
-        public virtual QueryParametersQueryExpansionStandard GetQueryParametersQueryExpansionStandardClient() => throw null;
+        /// <summary> Initializes a new instance of QueryParametersQueryExpansion. </summary>
+        /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
+        /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
+        /// <param name="endpoint"> Service endpoint. </param>
+        internal QueryParametersQueryExpansion(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint)
+        {
+            ClientDiagnostics = clientDiagnostics;
+            _endpoint = endpoint;
+            Pipeline = pipeline;
+        }
 
-        public virtual QueryParametersQueryExpansionExplode GetQueryParametersQueryExpansionExplodeClient() => throw null;
+        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
+        public virtual HttpPipeline Pipeline { get; }
+
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
+
+        /// <summary> Initializes a new instance of QueryParametersQueryExpansionStandard. </summary>
+        public virtual QueryParametersQueryExpansionStandard GetQueryParametersQueryExpansionStandardClient()
+        {
+            return Volatile.Read(ref _cachedQueryParametersQueryExpansionStandard) ?? Interlocked.CompareExchange(ref _cachedQueryParametersQueryExpansionStandard, new QueryParametersQueryExpansionStandard(ClientDiagnostics, Pipeline, _endpoint), null) ?? _cachedQueryParametersQueryExpansionStandard;
+        }
+
+        /// <summary> Initializes a new instance of QueryParametersQueryExpansionExplode. </summary>
+        public virtual QueryParametersQueryExpansionExplode GetQueryParametersQueryExpansionExplodeClient()
+        {
+            return Volatile.Read(ref _cachedQueryParametersQueryExpansionExplode) ?? Interlocked.CompareExchange(ref _cachedQueryParametersQueryExpansionExplode, new QueryParametersQueryExpansionExplode(ClientDiagnostics, Pipeline, _endpoint), null) ?? _cachedQueryParametersQueryExpansionExplode;
+        }
     }
 }

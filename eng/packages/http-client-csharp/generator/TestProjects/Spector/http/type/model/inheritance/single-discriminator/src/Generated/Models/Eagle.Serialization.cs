@@ -7,37 +7,220 @@
 
 using System;
 using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
 
 namespace _Type.Model.Inheritance.SingleDiscriminator
 {
+    /// <summary></summary>
     public partial class Eagle : IJsonModel<Eagle>
     {
-        internal Eagle() => throw null;
+        /// <summary> Initializes a new instance of <see cref="Eagle"/> for deserialization. </summary>
+        internal Eagle()
+        {
+        }
 
-        void IJsonModel<Eagle>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        void IJsonModel<Eagle>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
 
-        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<Eagle>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(Eagle)} does not support writing '{format}' format.");
+            }
+            base.JsonModelWriteCore(writer, options);
+            if (Optional.IsCollectionDefined(Friends))
+            {
+                writer.WritePropertyName("friends"u8);
+                writer.WriteStartArray();
+                foreach (Bird item in Friends)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(Hate))
+            {
+                writer.WritePropertyName("hate"u8);
+                writer.WriteStartObject();
+                foreach (var item in Hate)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteObjectValue(item.Value, options);
+                }
+                writer.WriteEndObject();
+            }
+            if (Optional.IsDefined(Partner))
+            {
+                writer.WritePropertyName("partner"u8);
+                writer.WriteObjectValue(Partner, options);
+            }
+        }
 
-        Eagle IJsonModel<Eagle>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        Eagle IJsonModel<Eagle>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (Eagle)JsonModelCreateCore(ref reader, options);
 
-        protected override Bird JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override Bird JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<Eagle>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(Eagle)} does not support reading '{format}' format.");
+            }
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeEagle(document.RootElement, options);
+        }
 
-        BinaryData IPersistableModel<Eagle>.Write(ModelReaderWriterOptions options) => throw null;
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static Eagle DeserializeEagle(JsonElement element, ModelReaderWriterOptions options)
+        {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string kind = "eagle";
+            int wingspan = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IList<Bird> friends = default;
+            IDictionary<string, Bird> hate = default;
+            Bird partner = default;
+            foreach (var prop in element.EnumerateObject())
+            {
+                if (prop.NameEquals("kind"u8))
+                {
+                    kind = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("wingspan"u8))
+                {
+                    wingspan = prop.Value.GetInt32();
+                    continue;
+                }
+                if (prop.NameEquals("friends"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<Bird> array = new List<Bird>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(DeserializeBird(item, options));
+                    }
+                    friends = array;
+                    continue;
+                }
+                if (prop.NameEquals("hate"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, Bird> dictionary = new Dictionary<string, Bird>();
+                    foreach (var prop0 in prop.Value.EnumerateObject())
+                    {
+                        dictionary.Add(prop0.Name, DeserializeBird(prop0.Value, options));
+                    }
+                    hate = dictionary;
+                    continue;
+                }
+                if (prop.NameEquals("partner"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    partner = DeserializeBird(prop.Value, options);
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                }
+            }
+            return new Eagle(
+                kind,
+                wingspan,
+                additionalBinaryDataProperties,
+                friends ?? new ChangeTrackingList<Bird>(),
+                hate ?? new ChangeTrackingDictionary<string, Bird>(),
+                partner);
+        }
 
-        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<Eagle>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
-        Eagle IPersistableModel<Eagle>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<Eagle>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, _TypeModelInheritanceSingleDiscriminatorContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(Eagle)} does not support writing '{options.Format}' format.");
+            }
+        }
 
-        protected override Bird PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        Eagle IPersistableModel<Eagle>.Create(BinaryData data, ModelReaderWriterOptions options) => (Eagle)PersistableModelCreateCore(data, options);
 
-        string IPersistableModel<Eagle>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override Bird PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<Eagle>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data))
+                    {
+                        return DeserializeEagle(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(Eagle)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<Eagle>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="eagle"> The <see cref="Eagle"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(Eagle eagle) => throw null;
+        public static implicit operator RequestContent(Eagle eagle)
+        {
+            if (eagle == null)
+            {
+                return null;
+            }
+            Utf8JsonBinaryContent content = new Utf8JsonBinaryContent();
+            content.JsonWriter.WriteObjectValue(eagle, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
 
-        public static explicit operator Eagle(Response result) => throw null;
+        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="Eagle"/> from. </param>
+        public static explicit operator Eagle(Response result)
+        {
+            using Response response = result;
+            using JsonDocument document = JsonDocument.Parse(response.Content);
+            return DeserializeEagle(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
     }
 }

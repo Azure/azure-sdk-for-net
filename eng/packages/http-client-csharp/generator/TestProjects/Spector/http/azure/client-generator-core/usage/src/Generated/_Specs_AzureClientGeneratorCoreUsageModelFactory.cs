@@ -9,14 +9,43 @@ using _Specs_.Azure.ClientGenerator.Core.Usage._ModelInOperation;
 
 namespace _Specs_.Azure.ClientGenerator.Core.Usage
 {
+    /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class _Specs_AzureClientGeneratorCoreUsageModelFactory
     {
-        public static InputModel InputModel(string name = default) => throw null;
+        /// <summary> Usage override to roundtrip. </summary>
+        /// <param name="name"></param>
+        /// <returns> A new <see cref="_ModelInOperation.InputModel"/> instance for mocking. </returns>
+        public static InputModel InputModel(string name = default)
+        {
 
-        public static OutputModel OutputModel(string name = default) => throw null;
+            return new InputModel(name, additionalBinaryDataProperties: null);
+        }
 
-        public static RoundTripModel RoundTripModel(ResultModel result = default) => throw null;
+        /// <summary> Usage override to roundtrip. </summary>
+        /// <param name="name"></param>
+        /// <returns> A new <see cref="_ModelInOperation.OutputModel"/> instance for mocking. </returns>
+        public static OutputModel OutputModel(string name = default)
+        {
 
-        public static ResultModel ResultModel(string name = default) => throw null;
+            return new OutputModel(name, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The RoundTripModel. </summary>
+        /// <param name="result"></param>
+        /// <returns> A new <see cref="_ModelInOperation.RoundTripModel"/> instance for mocking. </returns>
+        public static RoundTripModel RoundTripModel(ResultModel result = default)
+        {
+
+            return new RoundTripModel(result, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The ResultModel. </summary>
+        /// <param name="name"></param>
+        /// <returns> A new <see cref="_ModelInOperation.ResultModel"/> instance for mocking. </returns>
+        public static ResultModel ResultModel(string name = default)
+        {
+
+            return new ResultModel(name, additionalBinaryDataProperties: null);
+        }
     }
 }

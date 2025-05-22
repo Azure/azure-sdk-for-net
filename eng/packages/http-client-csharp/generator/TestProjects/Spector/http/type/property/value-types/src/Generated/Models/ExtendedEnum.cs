@@ -10,28 +10,51 @@ using System.ComponentModel;
 
 namespace _Type.Property.ValueTypes
 {
+    /// <summary></summary>
     public readonly partial struct ExtendedEnum : IEquatable<ExtendedEnum>
     {
-        public ExtendedEnum(string value) => throw null;
+        private readonly string _value;
+        private const string EnumValue2Value = "value2";
 
-        public static ExtendedEnum EnumValue2 => throw null;
+        /// <summary> Initializes a new instance of <see cref="ExtendedEnum"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public ExtendedEnum(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
 
-        public static bool operator ==(ExtendedEnum left, ExtendedEnum right) => throw null;
+            _value = value;
+        }
 
-        public static bool operator !=(ExtendedEnum left, ExtendedEnum right) => throw null;
+        /// <summary> Gets the EnumValue2. </summary>
+        public static ExtendedEnum EnumValue2 { get; } = new ExtendedEnum(EnumValue2Value);
+
+        /// <summary> Determines if two <see cref="ExtendedEnum"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
+        public static bool operator ==(ExtendedEnum left, ExtendedEnum right) => left.Equals(right);
+
+        /// <summary> Determines if two <see cref="ExtendedEnum"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
+        public static bool operator !=(ExtendedEnum left, ExtendedEnum right) => !left.Equals(right);
 
         /// <summary> Converts a string to a <see cref="ExtendedEnum"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ExtendedEnum(string value) => throw null;
+        public static implicit operator ExtendedEnum(string value) => new ExtendedEnum(value);
 
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => throw null;
+        public override bool Equals(object obj) => obj is ExtendedEnum other && Equals(other);
 
-        public bool Equals(ExtendedEnum other) => throw null;
+        /// <inheritdoc/>
+        public bool Equals(ExtendedEnum other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => throw null;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
-        public override string ToString() => throw null;
+        /// <inheritdoc/>
+        public override string ToString() => _value;
     }
 }

@@ -6,38 +6,117 @@
 #nullable disable
 
 using System;
+using System.Threading;
 using Azure.Core.Pipeline;
 
 namespace _Type.Dictionary
 {
+    /// <summary> Illustrates various of dictionaries. </summary>
     public partial class DictionaryClient
     {
-        public DictionaryClient() : this(new Uri("http://localhost:3000"), new DictionaryClientOptions()) => throw null;
+        private readonly Uri _endpoint;
+        private Int32Value _cachedInt32Value;
+        private Int64Value _cachedInt64Value;
+        private BooleanValue _cachedBooleanValue;
+        private StringValue _cachedStringValue;
+        private Float32Value _cachedFloat32Value;
+        private DatetimeValue _cachedDatetimeValue;
+        private DurationValue _cachedDurationValue;
+        private UnknownValue _cachedUnknownValue;
+        private ModelValue _cachedModelValue;
+        private RecursiveModelValue _cachedRecursiveModelValue;
+        private NullableFloatValue _cachedNullableFloatValue;
 
-        public DictionaryClient(Uri endpoint, DictionaryClientOptions options) => throw null;
+        /// <summary> Initializes a new instance of DictionaryClient. </summary>
+        public DictionaryClient() : this(new Uri("http://localhost:3000"), new DictionaryClientOptions())
+        {
+        }
 
-        public virtual HttpPipeline Pipeline => throw null;
+        /// <summary> Initializes a new instance of DictionaryClient. </summary>
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
+        public DictionaryClient(Uri endpoint, DictionaryClientOptions options)
+        {
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
 
-        public virtual Int32Value GetInt32ValueClient() => throw null;
+            options ??= new DictionaryClientOptions();
 
-        public virtual Int64Value GetInt64ValueClient() => throw null;
+            _endpoint = endpoint;
+            Pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>());
+            ClientDiagnostics = new ClientDiagnostics(options, true);
+        }
 
-        public virtual BooleanValue GetBooleanValueClient() => throw null;
+        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
+        public virtual HttpPipeline Pipeline { get; }
 
-        public virtual StringValue GetStringValueClient() => throw null;
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
 
-        public virtual Float32Value GetFloat32ValueClient() => throw null;
+        /// <summary> Initializes a new instance of Int32Value. </summary>
+        public virtual Int32Value GetInt32ValueClient()
+        {
+            return Volatile.Read(ref _cachedInt32Value) ?? Interlocked.CompareExchange(ref _cachedInt32Value, new Int32Value(ClientDiagnostics, Pipeline, _endpoint), null) ?? _cachedInt32Value;
+        }
 
-        public virtual DatetimeValue GetDatetimeValueClient() => throw null;
+        /// <summary> Initializes a new instance of Int64Value. </summary>
+        public virtual Int64Value GetInt64ValueClient()
+        {
+            return Volatile.Read(ref _cachedInt64Value) ?? Interlocked.CompareExchange(ref _cachedInt64Value, new Int64Value(ClientDiagnostics, Pipeline, _endpoint), null) ?? _cachedInt64Value;
+        }
 
-        public virtual DurationValue GetDurationValueClient() => throw null;
+        /// <summary> Initializes a new instance of BooleanValue. </summary>
+        public virtual BooleanValue GetBooleanValueClient()
+        {
+            return Volatile.Read(ref _cachedBooleanValue) ?? Interlocked.CompareExchange(ref _cachedBooleanValue, new BooleanValue(ClientDiagnostics, Pipeline, _endpoint), null) ?? _cachedBooleanValue;
+        }
 
-        public virtual UnknownValue GetUnknownValueClient() => throw null;
+        /// <summary> Initializes a new instance of StringValue. </summary>
+        public virtual StringValue GetStringValueClient()
+        {
+            return Volatile.Read(ref _cachedStringValue) ?? Interlocked.CompareExchange(ref _cachedStringValue, new StringValue(ClientDiagnostics, Pipeline, _endpoint), null) ?? _cachedStringValue;
+        }
 
-        public virtual ModelValue GetModelValueClient() => throw null;
+        /// <summary> Initializes a new instance of Float32Value. </summary>
+        public virtual Float32Value GetFloat32ValueClient()
+        {
+            return Volatile.Read(ref _cachedFloat32Value) ?? Interlocked.CompareExchange(ref _cachedFloat32Value, new Float32Value(ClientDiagnostics, Pipeline, _endpoint), null) ?? _cachedFloat32Value;
+        }
 
-        public virtual RecursiveModelValue GetRecursiveModelValueClient() => throw null;
+        /// <summary> Initializes a new instance of DatetimeValue. </summary>
+        public virtual DatetimeValue GetDatetimeValueClient()
+        {
+            return Volatile.Read(ref _cachedDatetimeValue) ?? Interlocked.CompareExchange(ref _cachedDatetimeValue, new DatetimeValue(ClientDiagnostics, Pipeline, _endpoint), null) ?? _cachedDatetimeValue;
+        }
 
-        public virtual NullableFloatValue GetNullableFloatValueClient() => throw null;
+        /// <summary> Initializes a new instance of DurationValue. </summary>
+        public virtual DurationValue GetDurationValueClient()
+        {
+            return Volatile.Read(ref _cachedDurationValue) ?? Interlocked.CompareExchange(ref _cachedDurationValue, new DurationValue(ClientDiagnostics, Pipeline, _endpoint), null) ?? _cachedDurationValue;
+        }
+
+        /// <summary> Initializes a new instance of UnknownValue. </summary>
+        public virtual UnknownValue GetUnknownValueClient()
+        {
+            return Volatile.Read(ref _cachedUnknownValue) ?? Interlocked.CompareExchange(ref _cachedUnknownValue, new UnknownValue(ClientDiagnostics, Pipeline, _endpoint), null) ?? _cachedUnknownValue;
+        }
+
+        /// <summary> Initializes a new instance of ModelValue. </summary>
+        public virtual ModelValue GetModelValueClient()
+        {
+            return Volatile.Read(ref _cachedModelValue) ?? Interlocked.CompareExchange(ref _cachedModelValue, new ModelValue(ClientDiagnostics, Pipeline, _endpoint), null) ?? _cachedModelValue;
+        }
+
+        /// <summary> Initializes a new instance of RecursiveModelValue. </summary>
+        public virtual RecursiveModelValue GetRecursiveModelValueClient()
+        {
+            return Volatile.Read(ref _cachedRecursiveModelValue) ?? Interlocked.CompareExchange(ref _cachedRecursiveModelValue, new RecursiveModelValue(ClientDiagnostics, Pipeline, _endpoint), null) ?? _cachedRecursiveModelValue;
+        }
+
+        /// <summary> Initializes a new instance of NullableFloatValue. </summary>
+        public virtual NullableFloatValue GetNullableFloatValueClient()
+        {
+            return Volatile.Read(ref _cachedNullableFloatValue) ?? Interlocked.CompareExchange(ref _cachedNullableFloatValue, new NullableFloatValue(ClientDiagnostics, Pipeline, _endpoint), null) ?? _cachedNullableFloatValue;
+        }
     }
 }

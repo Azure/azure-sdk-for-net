@@ -7,8 +7,16 @@
 
 namespace Parameters.BodyOptionality
 {
+    /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ParametersBodyOptionalityModelFactory
     {
-        public static BodyModel BodyModel(string name = default) => throw null;
+        /// <summary> The BodyModel. </summary>
+        /// <param name="name"></param>
+        /// <returns> A new <see cref="BodyOptionality.BodyModel"/> instance for mocking. </returns>
+        public static BodyModel BodyModel(string name = default)
+        {
+
+            return new BodyModel(name, additionalBinaryDataProperties: null);
+        }
     }
 }

@@ -9,8 +9,18 @@ using System.Collections.Generic;
 
 namespace _Type.Dictionary
 {
+    /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class TypeDictionaryModelFactory
     {
-        public static InnerModel InnerModel(string @property = default, IDictionary<string, InnerModel> children = default) => throw null;
+        /// <summary> Dictionary inner model. </summary>
+        /// <param name="property"> Required string property. </param>
+        /// <param name="children"></param>
+        /// <returns> A new <see cref="Dictionary.InnerModel"/> instance for mocking. </returns>
+        public static InnerModel InnerModel(string @property = default, IDictionary<string, InnerModel> children = default)
+        {
+            children ??= new ChangeTrackingDictionary<string, InnerModel>();
+
+            return new InnerModel(@property, children, additionalBinaryDataProperties: null);
+        }
     }
 }

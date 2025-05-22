@@ -9,6 +9,7 @@ using Azure.Core;
 
 namespace Parameters.Path
 {
+    /// <summary> Client options for <see cref="PathClient"/>. </summary>
     public partial class PathClientOptions : ClientOptions
     {
     }

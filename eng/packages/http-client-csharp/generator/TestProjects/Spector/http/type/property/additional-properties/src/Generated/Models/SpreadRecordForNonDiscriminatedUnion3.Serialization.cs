@@ -7,37 +7,152 @@
 
 using System;
 using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
 
 namespace _Type.Property.AdditionalProperties
 {
+    /// <summary></summary>
     public partial class SpreadRecordForNonDiscriminatedUnion3 : IJsonModel<SpreadRecordForNonDiscriminatedUnion3>
     {
-        internal SpreadRecordForNonDiscriminatedUnion3() => throw null;
+        /// <summary> Initializes a new instance of <see cref="SpreadRecordForNonDiscriminatedUnion3"/> for deserialization. </summary>
+        internal SpreadRecordForNonDiscriminatedUnion3()
+        {
+        }
 
-        void IJsonModel<SpreadRecordForNonDiscriminatedUnion3>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        void IJsonModel<SpreadRecordForNonDiscriminatedUnion3>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
 
-        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SpreadRecordForNonDiscriminatedUnion3>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SpreadRecordForNonDiscriminatedUnion3)} does not support writing '{format}' format.");
+            }
+            writer.WritePropertyName("name"u8);
+            writer.WriteStringValue(Name);
+            foreach (var item in AdditionalProperties)
+            {
+                writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+                writer.WriteRawValue(item.Value);
+#else
+                using (JsonDocument document = JsonDocument.Parse(item.Value))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
+            }
+        }
 
-        SpreadRecordForNonDiscriminatedUnion3 IJsonModel<SpreadRecordForNonDiscriminatedUnion3>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SpreadRecordForNonDiscriminatedUnion3 IJsonModel<SpreadRecordForNonDiscriminatedUnion3>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
-        protected virtual SpreadRecordForNonDiscriminatedUnion3 JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual SpreadRecordForNonDiscriminatedUnion3 JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SpreadRecordForNonDiscriminatedUnion3>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SpreadRecordForNonDiscriminatedUnion3)} does not support reading '{format}' format.");
+            }
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSpreadRecordForNonDiscriminatedUnion3(document.RootElement, options);
+        }
 
-        BinaryData IPersistableModel<SpreadRecordForNonDiscriminatedUnion3>.Write(ModelReaderWriterOptions options) => throw null;
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static SpreadRecordForNonDiscriminatedUnion3 DeserializeSpreadRecordForNonDiscriminatedUnion3(JsonElement element, ModelReaderWriterOptions options)
+        {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string name = default;
+            IDictionary<string, BinaryData> additionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
+            {
+                if (prop.NameEquals("name"u8))
+                {
+                    name = prop.Value.GetString();
+                    continue;
+                }
+                additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+            }
+            return new SpreadRecordForNonDiscriminatedUnion3(name, additionalProperties);
+        }
 
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<SpreadRecordForNonDiscriminatedUnion3>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
-        SpreadRecordForNonDiscriminatedUnion3 IPersistableModel<SpreadRecordForNonDiscriminatedUnion3>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SpreadRecordForNonDiscriminatedUnion3>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, _TypePropertyAdditionalPropertiesContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(SpreadRecordForNonDiscriminatedUnion3)} does not support writing '{options.Format}' format.");
+            }
+        }
 
-        protected virtual SpreadRecordForNonDiscriminatedUnion3 PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SpreadRecordForNonDiscriminatedUnion3 IPersistableModel<SpreadRecordForNonDiscriminatedUnion3>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
-        string IPersistableModel<SpreadRecordForNonDiscriminatedUnion3>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual SpreadRecordForNonDiscriminatedUnion3 PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SpreadRecordForNonDiscriminatedUnion3>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data))
+                    {
+                        return DeserializeSpreadRecordForNonDiscriminatedUnion3(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SpreadRecordForNonDiscriminatedUnion3)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<SpreadRecordForNonDiscriminatedUnion3>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="spreadRecordForNonDiscriminatedUnion3"> The <see cref="SpreadRecordForNonDiscriminatedUnion3"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(SpreadRecordForNonDiscriminatedUnion3 spreadRecordForNonDiscriminatedUnion3) => throw null;
+        public static implicit operator RequestContent(SpreadRecordForNonDiscriminatedUnion3 spreadRecordForNonDiscriminatedUnion3)
+        {
+            if (spreadRecordForNonDiscriminatedUnion3 == null)
+            {
+                return null;
+            }
+            Utf8JsonBinaryContent content = new Utf8JsonBinaryContent();
+            content.JsonWriter.WriteObjectValue(spreadRecordForNonDiscriminatedUnion3, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
 
-        public static explicit operator SpreadRecordForNonDiscriminatedUnion3(Response result) => throw null;
+        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="SpreadRecordForNonDiscriminatedUnion3"/> from. </param>
+        public static explicit operator SpreadRecordForNonDiscriminatedUnion3(Response result)
+        {
+            using Response response = result;
+            using JsonDocument document = JsonDocument.Parse(response.Content);
+            return DeserializeSpreadRecordForNonDiscriminatedUnion3(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
     }
 }

@@ -6,18 +6,47 @@
 #nullable disable
 
 using System;
+using System.Threading;
 using Azure.Core.Pipeline;
 
 namespace Payload.MediaType
 {
+    /// <summary> Test the payload with different media types and different types of the payload itself. </summary>
     public partial class MediaTypeClient
     {
-        public MediaTypeClient() : this(new Uri("http://localhost:3000"), new MediaTypeClientOptions()) => throw null;
+        private readonly Uri _endpoint;
+        private StringBody _cachedStringBody;
 
-        public MediaTypeClient(Uri endpoint, MediaTypeClientOptions options) => throw null;
+        /// <summary> Initializes a new instance of MediaTypeClient. </summary>
+        public MediaTypeClient() : this(new Uri("http://localhost:3000"), new MediaTypeClientOptions())
+        {
+        }
 
-        public virtual HttpPipeline Pipeline => throw null;
+        /// <summary> Initializes a new instance of MediaTypeClient. </summary>
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
+        public MediaTypeClient(Uri endpoint, MediaTypeClientOptions options)
+        {
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
 
-        public virtual StringBody GetStringBodyClient() => throw null;
+            options ??= new MediaTypeClientOptions();
+
+            _endpoint = endpoint;
+            Pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>());
+            ClientDiagnostics = new ClientDiagnostics(options, true);
+        }
+
+        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
+        public virtual HttpPipeline Pipeline { get; }
+
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
+
+        /// <summary> Initializes a new instance of StringBody. </summary>
+        public virtual StringBody GetStringBodyClient()
+        {
+            return Volatile.Read(ref _cachedStringBody) ?? Interlocked.CompareExchange(ref _cachedStringBody, new StringBody(ClientDiagnostics, Pipeline, _endpoint), null) ?? _cachedStringBody;
+        }
     }
 }

@@ -9,6 +9,7 @@ using Azure.Core;
 
 namespace SpecialHeaders.ConditionalRequest
 {
+    /// <summary> Client options for <see cref="ConditionalRequestClient"/>. </summary>
     public partial class ConditionalRequestClientOptions : ClientOptions
     {
     }

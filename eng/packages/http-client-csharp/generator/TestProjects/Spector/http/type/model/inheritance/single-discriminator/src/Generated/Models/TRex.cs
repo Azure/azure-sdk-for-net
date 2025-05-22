@@ -10,10 +10,21 @@ using System.Collections.Generic;
 
 namespace _Type.Model.Inheritance.SingleDiscriminator
 {
+    /// <summary> The second level legacy model in polymorphic single level inheritance. </summary>
     public partial class TRex : Dinosaur
     {
-        internal TRex(int size) : base("t-rex", size) => throw null;
+        /// <summary> Initializes a new instance of <see cref="TRex"/>. </summary>
+        /// <param name="size"></param>
+        internal TRex(int size) : base("t-rex", size)
+        {
+        }
 
-        internal TRex(string kind, int size, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(kind, size, additionalBinaryDataProperties) => throw null;
+        /// <summary> Initializes a new instance of <see cref="TRex"/>. </summary>
+        /// <param name="kind"> Discriminator property for Dinosaur. </param>
+        /// <param name="size"></param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal TRex(string kind, int size, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(kind, size, additionalBinaryDataProperties)
+        {
+        }
     }
 }

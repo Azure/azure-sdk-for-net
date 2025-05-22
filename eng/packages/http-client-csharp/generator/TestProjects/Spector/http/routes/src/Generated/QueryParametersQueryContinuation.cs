@@ -5,18 +5,51 @@
 
 #nullable disable
 
+using System;
+using System.Threading;
 using Azure.Core.Pipeline;
 
 namespace Routes
 {
+    /// <summary></summary>
     public partial class QueryParametersQueryContinuation
     {
-        protected QueryParametersQueryContinuation() => throw null;
+        private readonly Uri _endpoint;
+        private QueryParametersQueryContinuationStandard _cachedQueryParametersQueryContinuationStandard;
+        private QueryParametersQueryContinuationExplode _cachedQueryParametersQueryContinuationExplode;
 
-        public virtual HttpPipeline Pipeline => throw null;
+        /// <summary> Initializes a new instance of QueryParametersQueryContinuation for mocking. </summary>
+        protected QueryParametersQueryContinuation()
+        {
+        }
 
-        public virtual QueryParametersQueryContinuationStandard GetQueryParametersQueryContinuationStandardClient() => throw null;
+        /// <summary> Initializes a new instance of QueryParametersQueryContinuation. </summary>
+        /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
+        /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
+        /// <param name="endpoint"> Service endpoint. </param>
+        internal QueryParametersQueryContinuation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint)
+        {
+            ClientDiagnostics = clientDiagnostics;
+            _endpoint = endpoint;
+            Pipeline = pipeline;
+        }
 
-        public virtual QueryParametersQueryContinuationExplode GetQueryParametersQueryContinuationExplodeClient() => throw null;
+        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
+        public virtual HttpPipeline Pipeline { get; }
+
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
+
+        /// <summary> Initializes a new instance of QueryParametersQueryContinuationStandard. </summary>
+        public virtual QueryParametersQueryContinuationStandard GetQueryParametersQueryContinuationStandardClient()
+        {
+            return Volatile.Read(ref _cachedQueryParametersQueryContinuationStandard) ?? Interlocked.CompareExchange(ref _cachedQueryParametersQueryContinuationStandard, new QueryParametersQueryContinuationStandard(ClientDiagnostics, Pipeline, _endpoint), null) ?? _cachedQueryParametersQueryContinuationStandard;
+        }
+
+        /// <summary> Initializes a new instance of QueryParametersQueryContinuationExplode. </summary>
+        public virtual QueryParametersQueryContinuationExplode GetQueryParametersQueryContinuationExplodeClient()
+        {
+            return Volatile.Read(ref _cachedQueryParametersQueryContinuationExplode) ?? Interlocked.CompareExchange(ref _cachedQueryParametersQueryContinuationExplode, new QueryParametersQueryContinuationExplode(ClientDiagnostics, Pipeline, _endpoint), null) ?? _cachedQueryParametersQueryContinuationExplode;
+        }
     }
 }

@@ -9,6 +9,7 @@ using Azure.Core;
 
 namespace Payload.JsonMergePatch
 {
+    /// <summary> Client options for <see cref="JsonMergePatchClient"/>. </summary>
     public partial class JsonMergePatchClientOptions : ClientOptions
     {
     }

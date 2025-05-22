@@ -9,6 +9,7 @@ using Azure.Core;
 
 namespace SpecialHeaders.Repeatability
 {
+    /// <summary> Client options for <see cref="RepeatabilityClient"/>. </summary>
     public partial class RepeatabilityClientOptions : ClientOptions
     {
     }

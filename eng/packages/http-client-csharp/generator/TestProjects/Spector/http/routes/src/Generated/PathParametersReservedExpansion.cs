@@ -5,33 +5,212 @@
 
 #nullable disable
 
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
+using Azure.Core;
 using Azure.Core.Pipeline;
 
 namespace Routes
 {
+    /// <summary></summary>
     public partial class PathParametersReservedExpansion
     {
-        protected PathParametersReservedExpansion() => throw null;
+        private readonly Uri _endpoint;
 
-        public virtual HttpPipeline Pipeline => throw null;
+        /// <summary> Initializes a new instance of PathParametersReservedExpansion for mocking. </summary>
+        protected PathParametersReservedExpansion()
+        {
+        }
 
-        public virtual Response Template(string @param, RequestContext context) => throw null;
+        /// <summary> Initializes a new instance of PathParametersReservedExpansion. </summary>
+        /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
+        /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
+        /// <param name="endpoint"> Service endpoint. </param>
+        internal PathParametersReservedExpansion(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint)
+        {
+            ClientDiagnostics = clientDiagnostics;
+            _endpoint = endpoint;
+            Pipeline = pipeline;
+        }
 
-        public virtual Task<Response> TemplateAsync(string @param, RequestContext context) => throw null;
+        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
+        public virtual HttpPipeline Pipeline { get; }
 
-        public virtual Response Template(string @param, CancellationToken cancellationToken = default) => throw null;
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
 
-        public virtual Task<Response> TemplateAsync(string @param, CancellationToken cancellationToken = default) => throw null;
+        /// <summary>
+        /// [Protocol Method] template
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="param"></param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="param"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response Template(string @param, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("PathParametersReservedExpansion.Template");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(@param, nameof(@param));
 
-        public virtual Response Annotation(string @param, RequestContext context) => throw null;
+                using HttpMessage message = CreateTemplateRequest(@param, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
 
-        public virtual Task<Response> AnnotationAsync(string @param, RequestContext context) => throw null;
+        /// <summary>
+        /// [Protocol Method] template
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="param"></param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="param"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> TemplateAsync(string @param, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("PathParametersReservedExpansion.Template");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(@param, nameof(@param));
 
-        public virtual Response Annotation(string @param, CancellationToken cancellationToken = default) => throw null;
+                using HttpMessage message = CreateTemplateRequest(@param, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
 
-        public virtual Task<Response> AnnotationAsync(string @param, CancellationToken cancellationToken = default) => throw null;
+        /// <summary> template. </summary>
+        /// <param name="param"></param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="param"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response Template(string @param, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(@param, nameof(@param));
+
+            return Template(@param, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+        }
+
+        /// <summary> template. </summary>
+        /// <param name="param"></param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="param"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response> TemplateAsync(string @param, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(@param, nameof(@param));
+
+            return await TemplateAsync(@param, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// [Protocol Method] annotation
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="param"></param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="param"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response Annotation(string @param, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("PathParametersReservedExpansion.Annotation");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(@param, nameof(@param));
+
+                using HttpMessage message = CreateAnnotationRequest(@param, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] annotation
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="param"></param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="param"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> AnnotationAsync(string @param, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("PathParametersReservedExpansion.Annotation");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(@param, nameof(@param));
+
+                using HttpMessage message = CreateAnnotationRequest(@param, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> annotation. </summary>
+        /// <param name="param"></param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="param"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response Annotation(string @param, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(@param, nameof(@param));
+
+            return Annotation(@param, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+        }
+
+        /// <summary> annotation. </summary>
+        /// <param name="param"></param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="param"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response> AnnotationAsync(string @param, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(@param, nameof(@param));
+
+            return await AnnotationAsync(@param, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+        }
     }
 }

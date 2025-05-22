@@ -5,10 +5,27 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace _Type.Model.Empty
 {
+    /// <summary> Empty model used in operation parameters. </summary>
     public partial class EmptyInput
     {
-        public EmptyInput() => throw null;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
+        /// <summary> Initializes a new instance of <see cref="EmptyInput"/>. </summary>
+        public EmptyInput()
+        {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="EmptyInput"/>. </summary>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal EmptyInput(IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+        }
     }
 }

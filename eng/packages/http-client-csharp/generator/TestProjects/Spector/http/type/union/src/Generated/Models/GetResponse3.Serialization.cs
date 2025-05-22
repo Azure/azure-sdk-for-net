@@ -7,37 +7,158 @@
 
 using System;
 using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
 
 namespace _Type.Union
 {
+    /// <summary></summary>
     public partial class GetResponse3 : IJsonModel<GetResponse3>
     {
-        internal GetResponse3() => throw null;
+        /// <summary> Initializes a new instance of <see cref="GetResponse3"/> for deserialization. </summary>
+        internal GetResponse3()
+        {
+        }
 
-        void IJsonModel<GetResponse3>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        void IJsonModel<GetResponse3>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
 
-        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<GetResponse3>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(GetResponse3)} does not support writing '{format}' format.");
+            }
+            writer.WritePropertyName("prop"u8);
+            writer.WriteNumberValue((int)Prop);
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            {
+                foreach (var item in _additionalBinaryDataProperties)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+                    writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+        }
 
-        GetResponse3 IJsonModel<GetResponse3>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        GetResponse3 IJsonModel<GetResponse3>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
-        protected virtual GetResponse3 JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual GetResponse3 JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<GetResponse3>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(GetResponse3)} does not support reading '{format}' format.");
+            }
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeGetResponse3(document.RootElement, options);
+        }
 
-        BinaryData IPersistableModel<GetResponse3>.Write(ModelReaderWriterOptions options) => throw null;
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static GetResponse3 DeserializeGetResponse3(JsonElement element, ModelReaderWriterOptions options)
+        {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            GetResponseProp2 prop = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop0 in element.EnumerateObject())
+            {
+                if (prop0.NameEquals("prop"u8))
+                {
+                    prop = prop0.Value.GetInt32().ToGetResponseProp2();
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    additionalBinaryDataProperties.Add(prop0.Name, BinaryData.FromString(prop0.Value.GetRawText()));
+                }
+            }
+            return new GetResponse3(prop, additionalBinaryDataProperties);
+        }
 
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<GetResponse3>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
-        GetResponse3 IPersistableModel<GetResponse3>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<GetResponse3>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, _TypeUnionContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(GetResponse3)} does not support writing '{options.Format}' format.");
+            }
+        }
 
-        protected virtual GetResponse3 PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        GetResponse3 IPersistableModel<GetResponse3>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
-        string IPersistableModel<GetResponse3>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual GetResponse3 PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<GetResponse3>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data))
+                    {
+                        return DeserializeGetResponse3(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(GetResponse3)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<GetResponse3>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="getResponse3"> The <see cref="GetResponse3"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(GetResponse3 getResponse3) => throw null;
+        public static implicit operator RequestContent(GetResponse3 getResponse3)
+        {
+            if (getResponse3 == null)
+            {
+                return null;
+            }
+            Utf8JsonBinaryContent content = new Utf8JsonBinaryContent();
+            content.JsonWriter.WriteObjectValue(getResponse3, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
 
-        public static explicit operator GetResponse3(Response result) => throw null;
+        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="GetResponse3"/> from. </param>
+        public static explicit operator GetResponse3(Response result)
+        {
+            using Response response = result;
+            using JsonDocument document = JsonDocument.Parse(response.Content);
+            return DeserializeGetResponse3(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
     }
 }

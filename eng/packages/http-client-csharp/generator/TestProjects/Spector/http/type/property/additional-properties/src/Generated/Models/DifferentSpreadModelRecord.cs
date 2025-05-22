@@ -10,18 +10,36 @@ using System.Collections.Generic;
 
 namespace _Type.Property.AdditionalProperties
 {
+    /// <summary> The model spread Record&lt;ModelForRecord&gt; with the different known property type. </summary>
     public partial class DifferentSpreadModelRecord
     {
-        public DifferentSpreadModelRecord(string knownProp) => throw null;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        internal DifferentSpreadModelRecord(string knownProp, IDictionary<string, BinaryData> additionalProperties) => throw null;
-
-        public string KnownProp
+        /// <summary> Initializes a new instance of <see cref="DifferentSpreadModelRecord"/>. </summary>
+        /// <param name="knownProp"></param>
+        /// <exception cref="ArgumentNullException"> <paramref name="knownProp"/> is null. </exception>
+        public DifferentSpreadModelRecord(string knownProp)
         {
-            get => throw null;
-            set => throw null;
+            Argument.AssertNotNull(knownProp, nameof(knownProp));
+
+            KnownProp = knownProp;
+            _additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        public IDictionary<string, BinaryData> AdditionalProperties => throw null;
+        /// <summary> Initializes a new instance of <see cref="DifferentSpreadModelRecord"/>. </summary>
+        /// <param name="knownProp"></param>
+        /// <param name="additionalProperties"></param>
+        internal DifferentSpreadModelRecord(string knownProp, IDictionary<string, BinaryData> additionalProperties)
+        {
+            KnownProp = knownProp;
+            _additionalBinaryDataProperties = additionalProperties;
+        }
+
+        /// <summary> Gets or sets the KnownProp. </summary>
+        public string KnownProp { get; set; }
+
+        /// <summary> Gets the AdditionalProperties. </summary>
+        public IDictionary<string, BinaryData> AdditionalProperties => _additionalBinaryDataProperties;
     }
 }

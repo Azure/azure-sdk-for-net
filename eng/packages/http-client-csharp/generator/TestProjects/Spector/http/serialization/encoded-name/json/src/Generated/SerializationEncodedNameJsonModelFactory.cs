@@ -9,8 +9,16 @@ using Serialization.EncodedName.Json._Property;
 
 namespace Serialization.EncodedName.Json
 {
+    /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class SerializationEncodedNameJsonModelFactory
     {
-        public static JsonEncodedNameModel JsonEncodedNameModel(bool defaultName = default) => throw null;
+        /// <summary> The JsonEncodedNameModel. </summary>
+        /// <param name="defaultName"> Pass in true. </param>
+        /// <returns> A new <see cref="_Property.JsonEncodedNameModel"/> instance for mocking. </returns>
+        public static JsonEncodedNameModel JsonEncodedNameModel(bool defaultName = default)
+        {
+
+            return new JsonEncodedNameModel(defaultName, additionalBinaryDataProperties: null);
+        }
     }
 }

@@ -5,18 +5,42 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace _Type.Property.AdditionalProperties
 {
+    /// <summary> The WidgetData2. </summary>
     public partial class WidgetData2
     {
-        public WidgetData2(string start) => throw null;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        public WidgetData2Kind Kind => throw null;
-
-        public string Start
+        /// <summary> Initializes a new instance of <see cref="WidgetData2"/>. </summary>
+        /// <param name="start"></param>
+        /// <exception cref="ArgumentNullException"> <paramref name="start"/> is null. </exception>
+        public WidgetData2(string start)
         {
-            get => throw null;
-            set => throw null;
+            Argument.AssertNotNull(start, nameof(start));
+
+            Start = start;
         }
+
+        /// <summary> Initializes a new instance of <see cref="WidgetData2"/>. </summary>
+        /// <param name="kind"></param>
+        /// <param name="start"></param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal WidgetData2(string kind, string start, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        {
+            Kind = kind;
+            Start = start;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+        }
+
+        /// <summary> Gets the Kind. </summary>
+        public string Kind { get; } = "kind1";
+
+        /// <summary> Gets or sets the Start. </summary>
+        public string Start { get; set; }
     }
 }

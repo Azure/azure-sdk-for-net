@@ -5,12 +5,38 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using SpecialWords;
+
 namespace SpecialWords._Models
 {
+    /// <summary> The With. </summary>
     public partial class With
     {
-        public With(string name) => throw null;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        public string Name => throw null;
+        /// <summary> Initializes a new instance of <see cref="With"/>. </summary>
+        /// <param name="name"></param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        public With(string name)
+        {
+            Argument.AssertNotNull(name, nameof(name));
+
+            Name = name;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="With"/>. </summary>
+        /// <param name="name"></param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal With(string name, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        {
+            Name = name;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+        }
+
+        /// <summary> Gets the Name. </summary>
+        public string Name { get; }
     }
 }

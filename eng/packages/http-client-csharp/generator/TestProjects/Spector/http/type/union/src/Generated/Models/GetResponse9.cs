@@ -5,10 +5,34 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace _Type.Union
 {
+    /// <summary> The GetResponse9. </summary>
     public partial class GetResponse9
     {
-        public MixedTypesCases Prop => throw null;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
+        /// <summary> Initializes a new instance of <see cref="GetResponse9"/>. </summary>
+        /// <param name="prop"></param>
+        internal GetResponse9(MixedTypesCases prop)
+        {
+            Prop = prop;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="GetResponse9"/>. </summary>
+        /// <param name="prop"></param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal GetResponse9(MixedTypesCases prop, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        {
+            Prop = prop;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+        }
+
+        /// <summary> Gets the Prop. </summary>
+        public MixedTypesCases Prop { get; }
     }
 }

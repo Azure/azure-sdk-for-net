@@ -9,6 +9,7 @@ using Azure.Core;
 
 namespace Encode.Numeric
 {
+    /// <summary> Client options for <see cref="NumericClient"/>. </summary>
     public partial class NumericClientOptions : ClientOptions
     {
     }

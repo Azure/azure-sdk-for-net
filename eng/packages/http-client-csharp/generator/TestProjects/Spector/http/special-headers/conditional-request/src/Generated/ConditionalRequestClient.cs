@@ -9,48 +9,368 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
+using Azure.Core;
 using Azure.Core.Pipeline;
 
 namespace SpecialHeaders.ConditionalRequest
 {
+    /// <summary> Illustrates conditional request headers. </summary>
     public partial class ConditionalRequestClient
     {
-        public ConditionalRequestClient() : this(new Uri("http://localhost:3000"), new ConditionalRequestClientOptions()) => throw null;
+        private readonly Uri _endpoint;
 
-        public ConditionalRequestClient(Uri endpoint, ConditionalRequestClientOptions options) => throw null;
+        /// <summary> Initializes a new instance of ConditionalRequestClient. </summary>
+        public ConditionalRequestClient() : this(new Uri("http://localhost:3000"), new ConditionalRequestClientOptions())
+        {
+        }
 
-        public virtual HttpPipeline Pipeline => throw null;
+        /// <summary> Initializes a new instance of ConditionalRequestClient. </summary>
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
+        public ConditionalRequestClient(Uri endpoint, ConditionalRequestClientOptions options)
+        {
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
 
-        public virtual Response PostIfMatch(string ifMatch, RequestContext context) => throw null;
+            options ??= new ConditionalRequestClientOptions();
 
-        public virtual Task<Response> PostIfMatchAsync(string ifMatch, RequestContext context) => throw null;
+            _endpoint = endpoint;
+            Pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>());
+            ClientDiagnostics = new ClientDiagnostics(options, true);
+        }
 
-        public virtual Response PostIfMatch(string ifMatch = default, CancellationToken cancellationToken = default) => throw null;
+        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
+        public virtual HttpPipeline Pipeline { get; }
 
-        public virtual Task<Response> PostIfMatchAsync(string ifMatch = default, CancellationToken cancellationToken = default) => throw null;
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
 
-        public virtual Response PostIfNoneMatch(string ifNoneMatch, RequestContext context) => throw null;
+        /// <summary>
+        /// [Protocol Method] Check when only If-Match in header is defined.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="ifMatch"> The request should only proceed if an entity matches this string. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response PostIfMatch(string ifMatch, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ConditionalRequestClient.PostIfMatch");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreatePostIfMatchRequest(ifMatch, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
 
-        public virtual Task<Response> PostIfNoneMatchAsync(string ifNoneMatch, RequestContext context) => throw null;
+        /// <summary>
+        /// [Protocol Method] Check when only If-Match in header is defined.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="ifMatch"> The request should only proceed if an entity matches this string. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> PostIfMatchAsync(string ifMatch, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ConditionalRequestClient.PostIfMatch");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreatePostIfMatchRequest(ifMatch, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
 
-        public virtual Response PostIfNoneMatch(string ifNoneMatch = default, CancellationToken cancellationToken = default) => throw null;
+        /// <summary> Check when only If-Match in header is defined. </summary>
+        /// <param name="ifMatch"> The request should only proceed if an entity matches this string. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response PostIfMatch(string ifMatch = default, CancellationToken cancellationToken = default)
+        {
+            return PostIfMatch(ifMatch, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+        }
 
-        public virtual Task<Response> PostIfNoneMatchAsync(string ifNoneMatch = default, CancellationToken cancellationToken = default) => throw null;
+        /// <summary> Check when only If-Match in header is defined. </summary>
+        /// <param name="ifMatch"> The request should only proceed if an entity matches this string. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response> PostIfMatchAsync(string ifMatch = default, CancellationToken cancellationToken = default)
+        {
+            return await PostIfMatchAsync(ifMatch, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+        }
 
-        public virtual Response HeadIfModifiedSince(DateTimeOffset? ifModifiedSince, RequestContext context) => throw null;
+        /// <summary>
+        /// [Protocol Method] Check when only If-None-Match in header is defined.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="ifNoneMatch"> The request should only proceed if no entity matches this string. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response PostIfNoneMatch(string ifNoneMatch, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ConditionalRequestClient.PostIfNoneMatch");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreatePostIfNoneMatchRequest(ifNoneMatch, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
 
-        public virtual Task<Response> HeadIfModifiedSinceAsync(DateTimeOffset? ifModifiedSince, RequestContext context) => throw null;
+        /// <summary>
+        /// [Protocol Method] Check when only If-None-Match in header is defined.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="ifNoneMatch"> The request should only proceed if no entity matches this string. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> PostIfNoneMatchAsync(string ifNoneMatch, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ConditionalRequestClient.PostIfNoneMatch");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreatePostIfNoneMatchRequest(ifNoneMatch, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
 
-        public virtual Response HeadIfModifiedSince(DateTimeOffset? ifModifiedSince = default, CancellationToken cancellationToken = default) => throw null;
+        /// <summary> Check when only If-None-Match in header is defined. </summary>
+        /// <param name="ifNoneMatch"> The request should only proceed if no entity matches this string. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response PostIfNoneMatch(string ifNoneMatch = default, CancellationToken cancellationToken = default)
+        {
+            return PostIfNoneMatch(ifNoneMatch, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+        }
 
-        public virtual Task<Response> HeadIfModifiedSinceAsync(DateTimeOffset? ifModifiedSince = default, CancellationToken cancellationToken = default) => throw null;
+        /// <summary> Check when only If-None-Match in header is defined. </summary>
+        /// <param name="ifNoneMatch"> The request should only proceed if no entity matches this string. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response> PostIfNoneMatchAsync(string ifNoneMatch = default, CancellationToken cancellationToken = default)
+        {
+            return await PostIfNoneMatchAsync(ifNoneMatch, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+        }
 
-        public virtual Response PostIfUnmodifiedSince(DateTimeOffset? ifUnmodifiedSince, RequestContext context) => throw null;
+        /// <summary>
+        /// [Protocol Method] Check when only If-Modified-Since in header is defined.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="ifModifiedSince">
+        /// A timestamp indicating the last modified time of the resource known to the
+        /// client. The operation will be performed only if the resource on the service has
+        /// been modified since the specified time.
+        /// </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response HeadIfModifiedSince(DateTimeOffset? ifModifiedSince, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ConditionalRequestClient.HeadIfModifiedSince");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateHeadIfModifiedSinceRequest(ifModifiedSince, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
 
-        public virtual Task<Response> PostIfUnmodifiedSinceAsync(DateTimeOffset? ifUnmodifiedSince, RequestContext context) => throw null;
+        /// <summary>
+        /// [Protocol Method] Check when only If-Modified-Since in header is defined.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="ifModifiedSince">
+        /// A timestamp indicating the last modified time of the resource known to the
+        /// client. The operation will be performed only if the resource on the service has
+        /// been modified since the specified time.
+        /// </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> HeadIfModifiedSinceAsync(DateTimeOffset? ifModifiedSince, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ConditionalRequestClient.HeadIfModifiedSince");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateHeadIfModifiedSinceRequest(ifModifiedSince, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
 
-        public virtual Response PostIfUnmodifiedSince(DateTimeOffset? ifUnmodifiedSince = default, CancellationToken cancellationToken = default) => throw null;
+        /// <summary> Check when only If-Modified-Since in header is defined. </summary>
+        /// <param name="ifModifiedSince">
+        /// A timestamp indicating the last modified time of the resource known to the
+        /// client. The operation will be performed only if the resource on the service has
+        /// been modified since the specified time.
+        /// </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response HeadIfModifiedSince(DateTimeOffset? ifModifiedSince = default, CancellationToken cancellationToken = default)
+        {
+            return HeadIfModifiedSince(ifModifiedSince, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+        }
 
-        public virtual Task<Response> PostIfUnmodifiedSinceAsync(DateTimeOffset? ifUnmodifiedSince = default, CancellationToken cancellationToken = default) => throw null;
+        /// <summary> Check when only If-Modified-Since in header is defined. </summary>
+        /// <param name="ifModifiedSince">
+        /// A timestamp indicating the last modified time of the resource known to the
+        /// client. The operation will be performed only if the resource on the service has
+        /// been modified since the specified time.
+        /// </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response> HeadIfModifiedSinceAsync(DateTimeOffset? ifModifiedSince = default, CancellationToken cancellationToken = default)
+        {
+            return await HeadIfModifiedSinceAsync(ifModifiedSince, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Check when only If-Unmodified-Since in header is defined.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="ifUnmodifiedSince">
+        /// A timestamp indicating the last modified time of the resource known to the
+        /// client. The operation will be performed only if the resource on the service has
+        /// not been modified since the specified time.
+        /// </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response PostIfUnmodifiedSince(DateTimeOffset? ifUnmodifiedSince, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ConditionalRequestClient.PostIfUnmodifiedSince");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreatePostIfUnmodifiedSinceRequest(ifUnmodifiedSince, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Check when only If-Unmodified-Since in header is defined.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="ifUnmodifiedSince">
+        /// A timestamp indicating the last modified time of the resource known to the
+        /// client. The operation will be performed only if the resource on the service has
+        /// not been modified since the specified time.
+        /// </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> PostIfUnmodifiedSinceAsync(DateTimeOffset? ifUnmodifiedSince, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ConditionalRequestClient.PostIfUnmodifiedSince");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreatePostIfUnmodifiedSinceRequest(ifUnmodifiedSince, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Check when only If-Unmodified-Since in header is defined. </summary>
+        /// <param name="ifUnmodifiedSince">
+        /// A timestamp indicating the last modified time of the resource known to the
+        /// client. The operation will be performed only if the resource on the service has
+        /// not been modified since the specified time.
+        /// </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response PostIfUnmodifiedSince(DateTimeOffset? ifUnmodifiedSince = default, CancellationToken cancellationToken = default)
+        {
+            return PostIfUnmodifiedSince(ifUnmodifiedSince, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+        }
+
+        /// <summary> Check when only If-Unmodified-Since in header is defined. </summary>
+        /// <param name="ifUnmodifiedSince">
+        /// A timestamp indicating the last modified time of the resource known to the
+        /// client. The operation will be performed only if the resource on the service has
+        /// not been modified since the specified time.
+        /// </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response> PostIfUnmodifiedSinceAsync(DateTimeOffset? ifUnmodifiedSince = default, CancellationToken cancellationToken = default)
+        {
+            return await PostIfUnmodifiedSinceAsync(ifUnmodifiedSince, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+        }
     }
 }

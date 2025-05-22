@@ -7,37 +7,154 @@
 
 using System;
 using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
 
 namespace _Type.Model.Inheritance.NestedDiscriminator
 {
+    /// <summary></summary>
     public partial class SawShark : IJsonModel<SawShark>
     {
-        internal SawShark() => throw null;
+        /// <summary> Initializes a new instance of <see cref="SawShark"/> for deserialization. </summary>
+        internal SawShark()
+        {
+        }
 
-        void IJsonModel<SawShark>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        void IJsonModel<SawShark>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
 
-        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SawShark>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SawShark)} does not support writing '{format}' format.");
+            }
+            base.JsonModelWriteCore(writer, options);
+        }
 
-        SawShark IJsonModel<SawShark>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SawShark IJsonModel<SawShark>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (SawShark)JsonModelCreateCore(ref reader, options);
 
-        protected override Fish JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override Fish JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SawShark>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SawShark)} does not support reading '{format}' format.");
+            }
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSawShark(document.RootElement, options);
+        }
 
-        BinaryData IPersistableModel<SawShark>.Write(ModelReaderWriterOptions options) => throw null;
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static SawShark DeserializeSawShark(JsonElement element, ModelReaderWriterOptions options)
+        {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string kind = "saw";
+            int age = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            string sharktype = "saw";
+            foreach (var prop in element.EnumerateObject())
+            {
+                if (prop.NameEquals("kind"u8))
+                {
+                    kind = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("age"u8))
+                {
+                    age = prop.Value.GetInt32();
+                    continue;
+                }
+                if (prop.NameEquals("sharktype"u8))
+                {
+                    sharktype = prop.Value.GetString();
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                }
+            }
+            return new SawShark(kind, age, additionalBinaryDataProperties, sharktype);
+        }
 
-        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<SawShark>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
-        SawShark IPersistableModel<SawShark>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SawShark>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, _TypeModelInheritanceNestedDiscriminatorContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(SawShark)} does not support writing '{options.Format}' format.");
+            }
+        }
 
-        protected override Fish PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SawShark IPersistableModel<SawShark>.Create(BinaryData data, ModelReaderWriterOptions options) => (SawShark)PersistableModelCreateCore(data, options);
 
-        string IPersistableModel<SawShark>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override Fish PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SawShark>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data))
+                    {
+                        return DeserializeSawShark(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SawShark)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<SawShark>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="sawShark"> The <see cref="SawShark"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(SawShark sawShark) => throw null;
+        public static implicit operator RequestContent(SawShark sawShark)
+        {
+            if (sawShark == null)
+            {
+                return null;
+            }
+            Utf8JsonBinaryContent content = new Utf8JsonBinaryContent();
+            content.JsonWriter.WriteObjectValue(sawShark, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
 
-        public static explicit operator SawShark(Response result) => throw null;
+        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="SawShark"/> from. </param>
+        public static explicit operator SawShark(Response result)
+        {
+            using Response response = result;
+            using JsonDocument document = JsonDocument.Parse(response.Content);
+            return DeserializeSawShark(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
     }
 }

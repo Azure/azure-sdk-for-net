@@ -5,27 +5,120 @@
 
 #nullable disable
 
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
+using Azure.Core;
 using Azure.Core.Pipeline;
 
 namespace Client.Structure.Service
 {
+    /// <summary></summary>
     public partial class Qux
     {
-        protected Qux() => throw null;
+        private readonly Uri _endpoint;
+        private readonly ClientType _client;
+        private QuxBar _cachedQuxBar;
 
-        public virtual HttpPipeline Pipeline => throw null;
+        /// <summary> Initializes a new instance of Qux for mocking. </summary>
+        protected Qux()
+        {
+        }
 
-        public virtual Response Eight(RequestContext context) => throw null;
+        /// <summary> Initializes a new instance of Qux. </summary>
+        /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
+        /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="client"></param>
+        internal Qux(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, ClientType client)
+        {
+            ClientDiagnostics = clientDiagnostics;
+            _endpoint = endpoint;
+            Pipeline = pipeline;
+            _client = client;
+        }
 
-        public virtual Task<Response> EightAsync(RequestContext context) => throw null;
+        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
+        public virtual HttpPipeline Pipeline { get; }
 
-        public virtual Response Eight(CancellationToken cancellationToken = default) => throw null;
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
 
-        public virtual Task<Response> EightAsync(CancellationToken cancellationToken = default) => throw null;
+        /// <summary>
+        /// [Protocol Method] eight
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response Eight(RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Qux.Eight");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateEightRequest(context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
 
-        public virtual QuxBar GetQuxBarClient() => throw null;
+        /// <summary>
+        /// [Protocol Method] eight
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> EightAsync(RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Qux.Eight");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateEightRequest(context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> eight. </summary>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response Eight(CancellationToken cancellationToken = default)
+        {
+            return Eight(cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+        }
+
+        /// <summary> eight. </summary>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response> EightAsync(CancellationToken cancellationToken = default)
+        {
+            return await EightAsync(cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+        }
+
+        /// <summary> Initializes a new instance of QuxBar. </summary>
+        public virtual QuxBar GetQuxBarClient()
+        {
+            return Volatile.Read(ref _cachedQuxBar) ?? Interlocked.CompareExchange(ref _cachedQuxBar, new QuxBar(ClientDiagnostics, Pipeline, _endpoint, _client), null) ?? _cachedQuxBar;
+        }
     }
 }

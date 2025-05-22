@@ -5,22 +5,45 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace _Specs_.Azure.ClientGenerator.Core.FlattenProperty
 {
+    /// <summary> This is the model with two levels of flattening. </summary>
     public partial class NestedFlattenModel
     {
-        public NestedFlattenModel(string name, ChildFlattenModel properties) => throw null;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        public string Name
+        /// <summary> Initializes a new instance of <see cref="NestedFlattenModel"/>. </summary>
+        /// <param name="name"></param>
+        /// <param name="properties"></param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="properties"/> is null. </exception>
+        public NestedFlattenModel(string name, ChildFlattenModel properties)
         {
-            get => throw null;
-            set => throw null;
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(properties, nameof(properties));
+
+            Name = name;
+            Properties = properties;
         }
 
-        public ChildFlattenModel Properties
+        /// <summary> Initializes a new instance of <see cref="NestedFlattenModel"/>. </summary>
+        /// <param name="name"></param>
+        /// <param name="properties"></param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal NestedFlattenModel(string name, ChildFlattenModel properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            get => throw null;
-            set => throw null;
+            Name = name;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> Gets or sets the Name. </summary>
+        public string Name { get; set; }
+
+        /// <summary> Gets or sets the Properties. </summary>
+        public ChildFlattenModel Properties { get; set; }
     }
 }

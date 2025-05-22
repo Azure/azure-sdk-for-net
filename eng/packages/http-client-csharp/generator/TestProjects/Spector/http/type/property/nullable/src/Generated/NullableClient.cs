@@ -6,30 +6,89 @@
 #nullable disable
 
 using System;
+using System.Threading;
 using Azure.Core.Pipeline;
 
 namespace _Type.Property.Nullable
 {
+    /// <summary> Illustrates models with nullable properties. </summary>
     public partial class NullableClient
     {
-        public NullableClient() : this(new Uri("http://localhost:3000"), new NullableClientOptions()) => throw null;
+        private readonly Uri _endpoint;
+        private String _cachedString;
+        private Bytes _cachedBytes;
+        private Datetime _cachedDatetime;
+        private Duration _cachedDuration;
+        private CollectionsByte _cachedCollectionsByte;
+        private CollectionsModel _cachedCollectionsModel;
+        private CollectionsString _cachedCollectionsString;
 
-        public NullableClient(Uri endpoint, NullableClientOptions options) => throw null;
+        /// <summary> Initializes a new instance of NullableClient. </summary>
+        public NullableClient() : this(new Uri("http://localhost:3000"), new NullableClientOptions())
+        {
+        }
 
-        public virtual HttpPipeline Pipeline => throw null;
+        /// <summary> Initializes a new instance of NullableClient. </summary>
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
+        public NullableClient(Uri endpoint, NullableClientOptions options)
+        {
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
 
-        public virtual String GetStringClient() => throw null;
+            options ??= new NullableClientOptions();
 
-        public virtual Bytes GetBytesClient() => throw null;
+            _endpoint = endpoint;
+            Pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>());
+            ClientDiagnostics = new ClientDiagnostics(options, true);
+        }
 
-        public virtual Datetime GetDatetimeClient() => throw null;
+        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
+        public virtual HttpPipeline Pipeline { get; }
 
-        public virtual Duration GetDurationClient() => throw null;
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
 
-        public virtual CollectionsByte GetCollectionsByteClient() => throw null;
+        /// <summary> Initializes a new instance of String. </summary>
+        public virtual String GetStringClient()
+        {
+            return Volatile.Read(ref _cachedString) ?? Interlocked.CompareExchange(ref _cachedString, new String(ClientDiagnostics, Pipeline, _endpoint), null) ?? _cachedString;
+        }
 
-        public virtual CollectionsModel GetCollectionsModelClient() => throw null;
+        /// <summary> Initializes a new instance of Bytes. </summary>
+        public virtual Bytes GetBytesClient()
+        {
+            return Volatile.Read(ref _cachedBytes) ?? Interlocked.CompareExchange(ref _cachedBytes, new Bytes(ClientDiagnostics, Pipeline, _endpoint), null) ?? _cachedBytes;
+        }
 
-        public virtual CollectionsString GetCollectionsStringClient() => throw null;
+        /// <summary> Initializes a new instance of Datetime. </summary>
+        public virtual Datetime GetDatetimeClient()
+        {
+            return Volatile.Read(ref _cachedDatetime) ?? Interlocked.CompareExchange(ref _cachedDatetime, new Datetime(ClientDiagnostics, Pipeline, _endpoint), null) ?? _cachedDatetime;
+        }
+
+        /// <summary> Initializes a new instance of Duration. </summary>
+        public virtual Duration GetDurationClient()
+        {
+            return Volatile.Read(ref _cachedDuration) ?? Interlocked.CompareExchange(ref _cachedDuration, new Duration(ClientDiagnostics, Pipeline, _endpoint), null) ?? _cachedDuration;
+        }
+
+        /// <summary> Initializes a new instance of CollectionsByte. </summary>
+        public virtual CollectionsByte GetCollectionsByteClient()
+        {
+            return Volatile.Read(ref _cachedCollectionsByte) ?? Interlocked.CompareExchange(ref _cachedCollectionsByte, new CollectionsByte(ClientDiagnostics, Pipeline, _endpoint), null) ?? _cachedCollectionsByte;
+        }
+
+        /// <summary> Initializes a new instance of CollectionsModel. </summary>
+        public virtual CollectionsModel GetCollectionsModelClient()
+        {
+            return Volatile.Read(ref _cachedCollectionsModel) ?? Interlocked.CompareExchange(ref _cachedCollectionsModel, new CollectionsModel(ClientDiagnostics, Pipeline, _endpoint), null) ?? _cachedCollectionsModel;
+        }
+
+        /// <summary> Initializes a new instance of CollectionsString. </summary>
+        public virtual CollectionsString GetCollectionsStringClient()
+        {
+            return Volatile.Read(ref _cachedCollectionsString) ?? Interlocked.CompareExchange(ref _cachedCollectionsString, new CollectionsString(ClientDiagnostics, Pipeline, _endpoint), null) ?? _cachedCollectionsString;
+        }
     }
 }

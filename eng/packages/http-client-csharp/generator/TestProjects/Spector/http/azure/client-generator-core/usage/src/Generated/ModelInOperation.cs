@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -14,38 +15,467 @@ using _Specs_.Azure.ClientGenerator.Core.Usage._ModelInOperation;
 
 namespace _Specs_.Azure.ClientGenerator.Core.Usage
 {
+    /// <summary></summary>
     public partial class ModelInOperation
     {
-        protected ModelInOperation() => throw null;
+        private readonly Uri _endpoint;
 
-        public virtual HttpPipeline Pipeline => throw null;
+        /// <summary> Initializes a new instance of ModelInOperation for mocking. </summary>
+        protected ModelInOperation()
+        {
+        }
 
-        public virtual Response InputToInputOutput(RequestContent content, RequestContext context = null) => throw null;
+        /// <summary> Initializes a new instance of ModelInOperation. </summary>
+        /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
+        /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
+        /// <param name="endpoint"> Service endpoint. </param>
+        internal ModelInOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint)
+        {
+            ClientDiagnostics = clientDiagnostics;
+            _endpoint = endpoint;
+            Pipeline = pipeline;
+        }
 
-        public virtual Task<Response> InputToInputOutputAsync(RequestContent content, RequestContext context = null) => throw null;
+        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
+        public virtual HttpPipeline Pipeline { get; }
 
-        public virtual Response InputToInputOutput(InputModel body, CancellationToken cancellationToken = default) => throw null;
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
 
-        public virtual Task<Response> InputToInputOutputAsync(InputModel body, CancellationToken cancellationToken = default) => throw null;
+        /// <summary>
+        /// [Protocol Method] Expected body parameter: 
+        /// ```json
+        /// {
+        ///   "name": "Madge"
+        /// }
+        /// ```
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response InputToInputOutput(RequestContent content, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ModelInOperation.InputToInputOutput");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(content, nameof(content));
 
-        public virtual Response OutputToInputOutput(RequestContext context) => throw null;
+                using HttpMessage message = CreateInputToInputOutputRequest(content, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
 
-        public virtual Task<Response> OutputToInputOutputAsync(RequestContext context) => throw null;
+        /// <summary>
+        /// [Protocol Method] Expected body parameter: 
+        /// ```json
+        /// {
+        ///   "name": "Madge"
+        /// }
+        /// ```
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> InputToInputOutputAsync(RequestContent content, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ModelInOperation.InputToInputOutput");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(content, nameof(content));
 
-        public virtual Response<OutputModel> OutputToInputOutput(CancellationToken cancellationToken = default) => throw null;
+                using HttpMessage message = CreateInputToInputOutputRequest(content, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
 
-        public virtual Task<Response<OutputModel>> OutputToInputOutputAsync(CancellationToken cancellationToken = default) => throw null;
+        /// <summary>
+        /// Expected body parameter: 
+        /// ```json
+        /// {
+        ///   "name": "Madge"
+        /// }
+        /// ```
+        /// </summary>
+        /// <param name="body"></param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response InputToInputOutput(InputModel body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(body, nameof(body));
 
-        public virtual Response ModelInReadOnlyProperty(RequestContent content, RequestContext context = null) => throw null;
+            return InputToInputOutput(body, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+        }
 
-        public virtual Task<Response> ModelInReadOnlyPropertyAsync(RequestContent content, RequestContext context = null) => throw null;
+        /// <summary>
+        /// Expected body parameter: 
+        /// ```json
+        /// {
+        ///   "name": "Madge"
+        /// }
+        /// ```
+        /// </summary>
+        /// <param name="body"></param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response> InputToInputOutputAsync(InputModel body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(body, nameof(body));
 
-        public virtual Response<RoundTripModel> ModelInReadOnlyProperty(RoundTripModel body, CancellationToken cancellationToken = default) => throw null;
+            return await InputToInputOutputAsync(body, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+        }
 
-        public virtual Task<Response<RoundTripModel>> ModelInReadOnlyPropertyAsync(RoundTripModel body, CancellationToken cancellationToken = default) => throw null;
+        /// <summary>
+        /// [Protocol Method] Expected response body: 
+        /// ```json
+        /// {
+        ///   "name": "Madge"
+        /// }
+        /// ```
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response OutputToInputOutput(RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ModelInOperation.OutputToInputOutput");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateOutputToInputOutputRequest(context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
 
-        public virtual Response OrphanModelSerializable(RequestContent content, RequestContext context = null) => throw null;
+        /// <summary>
+        /// [Protocol Method] Expected response body: 
+        /// ```json
+        /// {
+        ///   "name": "Madge"
+        /// }
+        /// ```
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> OutputToInputOutputAsync(RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ModelInOperation.OutputToInputOutput");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateOutputToInputOutputRequest(context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
 
-        public virtual Task<Response> OrphanModelSerializableAsync(RequestContent content, RequestContext context = null) => throw null;
+        /// <summary>
+        /// Expected response body: 
+        /// ```json
+        /// {
+        ///   "name": "Madge"
+        /// }
+        /// ```
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<OutputModel> OutputToInputOutput(CancellationToken cancellationToken = default)
+        {
+            Response result = OutputToInputOutput(cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            return Response.FromValue((OutputModel)result, result);
+        }
+
+        /// <summary>
+        /// Expected response body: 
+        /// ```json
+        /// {
+        ///   "name": "Madge"
+        /// }
+        /// ```
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response<OutputModel>> OutputToInputOutputAsync(CancellationToken cancellationToken = default)
+        {
+            Response result = await OutputToInputOutputAsync(cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            return Response.FromValue((OutputModel)result, result);
+        }
+
+        /// <summary>
+        /// [Protocol Method] "ResultModel" should be usage=output, as it is read-only and does not exist in request body.
+        /// 
+        /// Expected body parameter: 
+        /// ```json
+        /// {
+        /// }
+        /// ```
+        /// 
+        /// Expected response body: 
+        /// ```json
+        /// {
+        ///   "result": {
+        ///     "name": "Madge"
+        ///   }
+        /// }
+        /// ```
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response ModelInReadOnlyProperty(RequestContent content, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ModelInOperation.ModelInReadOnlyProperty");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(content, nameof(content));
+
+                using HttpMessage message = CreateModelInReadOnlyPropertyRequest(content, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] "ResultModel" should be usage=output, as it is read-only and does not exist in request body.
+        /// 
+        /// Expected body parameter: 
+        /// ```json
+        /// {
+        /// }
+        /// ```
+        /// 
+        /// Expected response body: 
+        /// ```json
+        /// {
+        ///   "result": {
+        ///     "name": "Madge"
+        ///   }
+        /// }
+        /// ```
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> ModelInReadOnlyPropertyAsync(RequestContent content, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ModelInOperation.ModelInReadOnlyProperty");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(content, nameof(content));
+
+                using HttpMessage message = CreateModelInReadOnlyPropertyRequest(content, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// "ResultModel" should be usage=output, as it is read-only and does not exist in request body.
+        /// 
+        /// Expected body parameter: 
+        /// ```json
+        /// {
+        /// }
+        /// ```
+        /// 
+        /// Expected response body: 
+        /// ```json
+        /// {
+        ///   "result": {
+        ///     "name": "Madge"
+        ///   }
+        /// }
+        /// ```
+        /// </summary>
+        /// <param name="body"></param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<RoundTripModel> ModelInReadOnlyProperty(RoundTripModel body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(body, nameof(body));
+
+            Response result = ModelInReadOnlyProperty(body, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            return Response.FromValue((RoundTripModel)result, result);
+        }
+
+        /// <summary>
+        /// "ResultModel" should be usage=output, as it is read-only and does not exist in request body.
+        /// 
+        /// Expected body parameter: 
+        /// ```json
+        /// {
+        /// }
+        /// ```
+        /// 
+        /// Expected response body: 
+        /// ```json
+        /// {
+        ///   "result": {
+        ///     "name": "Madge"
+        ///   }
+        /// }
+        /// ```
+        /// </summary>
+        /// <param name="body"></param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response<RoundTripModel>> ModelInReadOnlyPropertyAsync(RoundTripModel body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(body, nameof(body));
+
+            Response result = await ModelInReadOnlyPropertyAsync(body, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            return Response.FromValue((RoundTripModel)result, result);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Serialize the 'OrphanModel' as request body.
+        /// 
+        /// Expected body parameter: 
+        /// ```json
+        /// {
+        ///   "name": "name",
+        ///   "desc": "desc"
+        /// }
+        /// ```
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response OrphanModelSerializable(RequestContent content, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ModelInOperation.OrphanModelSerializable");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(content, nameof(content));
+
+                using HttpMessage message = CreateOrphanModelSerializableRequest(content, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Serialize the 'OrphanModel' as request body.
+        /// 
+        /// Expected body parameter: 
+        /// ```json
+        /// {
+        ///   "name": "name",
+        ///   "desc": "desc"
+        /// }
+        /// ```
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> OrphanModelSerializableAsync(RequestContent content, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ModelInOperation.OrphanModelSerializable");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(content, nameof(content));
+
+                using HttpMessage message = CreateOrphanModelSerializableRequest(content, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
     }
 }

@@ -7,6 +7,7 @@
 
 namespace _Type.Union
 {
+    /// <summary></summary>
     public enum EnumsOnlyCasesLr
     {
         /// <summary> Left. </summary>

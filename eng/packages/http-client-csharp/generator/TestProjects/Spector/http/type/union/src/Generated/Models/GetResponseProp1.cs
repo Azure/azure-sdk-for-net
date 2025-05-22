@@ -10,30 +10,55 @@ using System.ComponentModel;
 
 namespace _Type.Union
 {
+    /// <summary></summary>
     public readonly partial struct GetResponseProp1 : IEquatable<GetResponseProp1>
     {
-        public GetResponseProp1(string value) => throw null;
+        private readonly string _value;
+        private const string BValue = "b";
+        private const string CValue = "c";
 
-        public static GetResponseProp1 B => throw null;
+        /// <summary> Initializes a new instance of <see cref="GetResponseProp1"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public GetResponseProp1(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
 
-        public static GetResponseProp1 C => throw null;
+            _value = value;
+        }
 
-        public static bool operator ==(GetResponseProp1 left, GetResponseProp1 right) => throw null;
+        /// <summary> Gets the B. </summary>
+        public static GetResponseProp1 B { get; } = new GetResponseProp1(BValue);
 
-        public static bool operator !=(GetResponseProp1 left, GetResponseProp1 right) => throw null;
+        /// <summary> Gets the C. </summary>
+        public static GetResponseProp1 C { get; } = new GetResponseProp1(CValue);
+
+        /// <summary> Determines if two <see cref="GetResponseProp1"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
+        public static bool operator ==(GetResponseProp1 left, GetResponseProp1 right) => left.Equals(right);
+
+        /// <summary> Determines if two <see cref="GetResponseProp1"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
+        public static bool operator !=(GetResponseProp1 left, GetResponseProp1 right) => !left.Equals(right);
 
         /// <summary> Converts a string to a <see cref="GetResponseProp1"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator GetResponseProp1(string value) => throw null;
+        public static implicit operator GetResponseProp1(string value) => new GetResponseProp1(value);
 
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => throw null;
+        public override bool Equals(object obj) => obj is GetResponseProp1 other && Equals(other);
 
-        public bool Equals(GetResponseProp1 other) => throw null;
+        /// <inheritdoc/>
+        public bool Equals(GetResponseProp1 other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => throw null;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
-        public override string ToString() => throw null;
+        /// <inheritdoc/>
+        public override string ToString() => _value;
     }
 }

@@ -5,59 +5,557 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Parameters.Spread.Models;
 
 namespace Parameters.Spread
 {
+    /// <summary></summary>
     public partial class Alias
     {
-        protected Alias() => throw null;
+        private readonly Uri _endpoint;
 
-        public virtual HttpPipeline Pipeline => throw null;
+        /// <summary> Initializes a new instance of Alias for mocking. </summary>
+        protected Alias()
+        {
+        }
 
-        public virtual Response SpreadAsRequestBody(RequestContent content, RequestContext context = null) => throw null;
+        /// <summary> Initializes a new instance of Alias. </summary>
+        /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
+        /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
+        /// <param name="endpoint"> Service endpoint. </param>
+        internal Alias(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint)
+        {
+            ClientDiagnostics = clientDiagnostics;
+            _endpoint = endpoint;
+            Pipeline = pipeline;
+        }
 
-        public virtual Task<Response> SpreadAsRequestBodyAsync(RequestContent content, RequestContext context = null) => throw null;
+        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
+        public virtual HttpPipeline Pipeline { get; }
 
-        public virtual Response SpreadAsRequestBody(string name, CancellationToken cancellationToken = default) => throw null;
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
 
-        public virtual Task<Response> SpreadAsRequestBodyAsync(string name, CancellationToken cancellationToken = default) => throw null;
+        /// <summary>
+        /// [Protocol Method] spreadAsRequestBody
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response SpreadAsRequestBody(RequestContent content, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Alias.SpreadAsRequestBody");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(content, nameof(content));
 
-        public virtual Response SpreadParameterWithInnerModel(string id, string xMsTestHeader, RequestContent content, RequestContext context = null) => throw null;
+                using HttpMessage message = CreateSpreadAsRequestBodyRequest(content, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
 
-        public virtual Task<Response> SpreadParameterWithInnerModelAsync(string id, string xMsTestHeader, RequestContent content, RequestContext context = null) => throw null;
+        /// <summary>
+        /// [Protocol Method] spreadAsRequestBody
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> SpreadAsRequestBodyAsync(RequestContent content, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Alias.SpreadAsRequestBody");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(content, nameof(content));
 
-        public virtual Response SpreadParameterWithInnerModel(string id, string xMsTestHeader, string name, CancellationToken cancellationToken = default) => throw null;
+                using HttpMessage message = CreateSpreadAsRequestBodyRequest(content, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
 
-        public virtual Task<Response> SpreadParameterWithInnerModelAsync(string id, string xMsTestHeader, string name, CancellationToken cancellationToken = default) => throw null;
+        /// <summary> spreadAsRequestBody. </summary>
+        /// <param name="name"></param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response SpreadAsRequestBody(string name, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(name, nameof(name));
 
-        public virtual Response SpreadAsRequestParameter(string id, string xMsTestHeader, RequestContent content, RequestContext context = null) => throw null;
+            SpreadAsRequestBodyRequest spreadModel = new SpreadAsRequestBodyRequest(name, null);
+            return SpreadAsRequestBody(spreadModel, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+        }
 
-        public virtual Task<Response> SpreadAsRequestParameterAsync(string id, string xMsTestHeader, RequestContent content, RequestContext context = null) => throw null;
+        /// <summary> spreadAsRequestBody. </summary>
+        /// <param name="name"></param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response> SpreadAsRequestBodyAsync(string name, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(name, nameof(name));
 
-        public virtual Response SpreadAsRequestParameter(string id, string xMsTestHeader, string name, CancellationToken cancellationToken = default) => throw null;
+            SpreadAsRequestBodyRequest spreadModel = new SpreadAsRequestBodyRequest(name, null);
+            return await SpreadAsRequestBodyAsync(spreadModel, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+        }
 
-        public virtual Task<Response> SpreadAsRequestParameterAsync(string id, string xMsTestHeader, string name, CancellationToken cancellationToken = default) => throw null;
+        /// <summary>
+        /// [Protocol Method] spreadParameterWithInnerModel
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="xMsTestHeader"></param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="xMsTestHeader"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response SpreadParameterWithInnerModel(string id, string xMsTestHeader, RequestContent content, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Alias.SpreadParameterWithInnerModel");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(id, nameof(id));
+                Argument.AssertNotNull(xMsTestHeader, nameof(xMsTestHeader));
+                Argument.AssertNotNull(content, nameof(content));
 
-        public virtual Response SpreadWithMultipleParameters(string id, string xMsTestHeader, RequestContent content, RequestContext context = null) => throw null;
+                using HttpMessage message = CreateSpreadParameterWithInnerModelRequest(id, xMsTestHeader, content, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
 
-        public virtual Task<Response> SpreadWithMultipleParametersAsync(string id, string xMsTestHeader, RequestContent content, RequestContext context = null) => throw null;
+        /// <summary>
+        /// [Protocol Method] spreadParameterWithInnerModel
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="xMsTestHeader"></param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="xMsTestHeader"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> SpreadParameterWithInnerModelAsync(string id, string xMsTestHeader, RequestContent content, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Alias.SpreadParameterWithInnerModel");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(id, nameof(id));
+                Argument.AssertNotNull(xMsTestHeader, nameof(xMsTestHeader));
+                Argument.AssertNotNull(content, nameof(content));
 
-        public virtual Response SpreadWithMultipleParameters(string id, string xMsTestHeader, string requiredString, IEnumerable<int> requiredIntList, int? optionalInt = default, IEnumerable<string> optionalStringList = default, CancellationToken cancellationToken = default) => throw null;
+                using HttpMessage message = CreateSpreadParameterWithInnerModelRequest(id, xMsTestHeader, content, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
 
-        public virtual Task<Response> SpreadWithMultipleParametersAsync(string id, string xMsTestHeader, string requiredString, IEnumerable<int> requiredIntList, int? optionalInt = default, IEnumerable<string> optionalStringList = default, CancellationToken cancellationToken = default) => throw null;
+        /// <summary> spreadParameterWithInnerModel. </summary>
+        /// <param name="id"></param>
+        /// <param name="xMsTestHeader"></param>
+        /// <param name="name"></param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="xMsTestHeader"/> or <paramref name="name"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response SpreadParameterWithInnerModel(string id, string xMsTestHeader, string name, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(id, nameof(id));
+            Argument.AssertNotNull(xMsTestHeader, nameof(xMsTestHeader));
+            Argument.AssertNotNull(name, nameof(name));
 
-        public virtual Response SpreadParameterWithInnerAlias(string id, string xMsTestHeader, RequestContent content, RequestContext context = null) => throw null;
+            SpreadParameterWithInnerModelRequest spreadModel = new SpreadParameterWithInnerModelRequest(name, null);
+            return SpreadParameterWithInnerModel(id, xMsTestHeader, spreadModel, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+        }
 
-        public virtual Task<Response> SpreadParameterWithInnerAliasAsync(string id, string xMsTestHeader, RequestContent content, RequestContext context = null) => throw null;
+        /// <summary> spreadParameterWithInnerModel. </summary>
+        /// <param name="id"></param>
+        /// <param name="xMsTestHeader"></param>
+        /// <param name="name"></param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="xMsTestHeader"/> or <paramref name="name"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response> SpreadParameterWithInnerModelAsync(string id, string xMsTestHeader, string name, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(id, nameof(id));
+            Argument.AssertNotNull(xMsTestHeader, nameof(xMsTestHeader));
+            Argument.AssertNotNull(name, nameof(name));
 
-        public virtual Response SpreadParameterWithInnerAlias(string id, string xMsTestHeader, string name, int age, CancellationToken cancellationToken = default) => throw null;
+            SpreadParameterWithInnerModelRequest spreadModel = new SpreadParameterWithInnerModelRequest(name, null);
+            return await SpreadParameterWithInnerModelAsync(id, xMsTestHeader, spreadModel, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+        }
 
-        public virtual Task<Response> SpreadParameterWithInnerAliasAsync(string id, string xMsTestHeader, string name, int age, CancellationToken cancellationToken = default) => throw null;
+        /// <summary>
+        /// [Protocol Method] spreadAsRequestParameter
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="xMsTestHeader"></param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="xMsTestHeader"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response SpreadAsRequestParameter(string id, string xMsTestHeader, RequestContent content, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Alias.SpreadAsRequestParameter");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(id, nameof(id));
+                Argument.AssertNotNull(xMsTestHeader, nameof(xMsTestHeader));
+                Argument.AssertNotNull(content, nameof(content));
+
+                using HttpMessage message = CreateSpreadAsRequestParameterRequest(id, xMsTestHeader, content, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] spreadAsRequestParameter
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="xMsTestHeader"></param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="xMsTestHeader"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> SpreadAsRequestParameterAsync(string id, string xMsTestHeader, RequestContent content, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Alias.SpreadAsRequestParameter");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(id, nameof(id));
+                Argument.AssertNotNull(xMsTestHeader, nameof(xMsTestHeader));
+                Argument.AssertNotNull(content, nameof(content));
+
+                using HttpMessage message = CreateSpreadAsRequestParameterRequest(id, xMsTestHeader, content, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> spreadAsRequestParameter. </summary>
+        /// <param name="id"></param>
+        /// <param name="xMsTestHeader"></param>
+        /// <param name="name"></param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="xMsTestHeader"/> or <paramref name="name"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response SpreadAsRequestParameter(string id, string xMsTestHeader, string name, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(id, nameof(id));
+            Argument.AssertNotNull(xMsTestHeader, nameof(xMsTestHeader));
+            Argument.AssertNotNull(name, nameof(name));
+
+            SpreadAsRequestParameterRequest spreadModel = new SpreadAsRequestParameterRequest(name, null);
+            return SpreadAsRequestParameter(id, xMsTestHeader, spreadModel, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+        }
+
+        /// <summary> spreadAsRequestParameter. </summary>
+        /// <param name="id"></param>
+        /// <param name="xMsTestHeader"></param>
+        /// <param name="name"></param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="xMsTestHeader"/> or <paramref name="name"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response> SpreadAsRequestParameterAsync(string id, string xMsTestHeader, string name, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(id, nameof(id));
+            Argument.AssertNotNull(xMsTestHeader, nameof(xMsTestHeader));
+            Argument.AssertNotNull(name, nameof(name));
+
+            SpreadAsRequestParameterRequest spreadModel = new SpreadAsRequestParameterRequest(name, null);
+            return await SpreadAsRequestParameterAsync(id, xMsTestHeader, spreadModel, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// [Protocol Method] spreadWithMultipleParameters
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="xMsTestHeader"></param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="xMsTestHeader"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response SpreadWithMultipleParameters(string id, string xMsTestHeader, RequestContent content, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Alias.SpreadWithMultipleParameters");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(id, nameof(id));
+                Argument.AssertNotNull(xMsTestHeader, nameof(xMsTestHeader));
+                Argument.AssertNotNull(content, nameof(content));
+
+                using HttpMessage message = CreateSpreadWithMultipleParametersRequest(id, xMsTestHeader, content, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] spreadWithMultipleParameters
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="xMsTestHeader"></param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="xMsTestHeader"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> SpreadWithMultipleParametersAsync(string id, string xMsTestHeader, RequestContent content, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Alias.SpreadWithMultipleParameters");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(id, nameof(id));
+                Argument.AssertNotNull(xMsTestHeader, nameof(xMsTestHeader));
+                Argument.AssertNotNull(content, nameof(content));
+
+                using HttpMessage message = CreateSpreadWithMultipleParametersRequest(id, xMsTestHeader, content, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> spreadWithMultipleParameters. </summary>
+        /// <param name="id"></param>
+        /// <param name="xMsTestHeader"></param>
+        /// <param name="requiredString"> required string. </param>
+        /// <param name="requiredIntList"> required int. </param>
+        /// <param name="optionalInt"> optional int. </param>
+        /// <param name="optionalStringList"> optional string. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="xMsTestHeader"/>, <paramref name="requiredString"/> or <paramref name="requiredIntList"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response SpreadWithMultipleParameters(string id, string xMsTestHeader, string requiredString, IEnumerable<int> requiredIntList, int? optionalInt = default, IEnumerable<string> optionalStringList = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(id, nameof(id));
+            Argument.AssertNotNull(xMsTestHeader, nameof(xMsTestHeader));
+            Argument.AssertNotNull(requiredString, nameof(requiredString));
+            Argument.AssertNotNull(requiredIntList, nameof(requiredIntList));
+
+            SpreadWithMultipleParametersRequest spreadModel = new SpreadWithMultipleParametersRequest(requiredString, optionalInt, requiredIntList?.ToList() as IList<int> ?? new ChangeTrackingList<int>(), optionalStringList?.ToList() as IList<string> ?? new ChangeTrackingList<string>(), null);
+            return SpreadWithMultipleParameters(id, xMsTestHeader, spreadModel, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+        }
+
+        /// <summary> spreadWithMultipleParameters. </summary>
+        /// <param name="id"></param>
+        /// <param name="xMsTestHeader"></param>
+        /// <param name="requiredString"> required string. </param>
+        /// <param name="requiredIntList"> required int. </param>
+        /// <param name="optionalInt"> optional int. </param>
+        /// <param name="optionalStringList"> optional string. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="xMsTestHeader"/>, <paramref name="requiredString"/> or <paramref name="requiredIntList"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response> SpreadWithMultipleParametersAsync(string id, string xMsTestHeader, string requiredString, IEnumerable<int> requiredIntList, int? optionalInt = default, IEnumerable<string> optionalStringList = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(id, nameof(id));
+            Argument.AssertNotNull(xMsTestHeader, nameof(xMsTestHeader));
+            Argument.AssertNotNull(requiredString, nameof(requiredString));
+            Argument.AssertNotNull(requiredIntList, nameof(requiredIntList));
+
+            SpreadWithMultipleParametersRequest spreadModel = new SpreadWithMultipleParametersRequest(requiredString, optionalInt, requiredIntList?.ToList() as IList<int> ?? new ChangeTrackingList<int>(), optionalStringList?.ToList() as IList<string> ?? new ChangeTrackingList<string>(), null);
+            return await SpreadWithMultipleParametersAsync(id, xMsTestHeader, spreadModel, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// [Protocol Method] spread an alias with contains another alias property as body.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="xMsTestHeader"></param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="xMsTestHeader"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response SpreadParameterWithInnerAlias(string id, string xMsTestHeader, RequestContent content, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Alias.SpreadParameterWithInnerAlias");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(id, nameof(id));
+                Argument.AssertNotNull(xMsTestHeader, nameof(xMsTestHeader));
+                Argument.AssertNotNull(content, nameof(content));
+
+                using HttpMessage message = CreateSpreadParameterWithInnerAliasRequest(id, xMsTestHeader, content, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] spread an alias with contains another alias property as body.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="xMsTestHeader"></param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="xMsTestHeader"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> SpreadParameterWithInnerAliasAsync(string id, string xMsTestHeader, RequestContent content, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Alias.SpreadParameterWithInnerAlias");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(id, nameof(id));
+                Argument.AssertNotNull(xMsTestHeader, nameof(xMsTestHeader));
+                Argument.AssertNotNull(content, nameof(content));
+
+                using HttpMessage message = CreateSpreadParameterWithInnerAliasRequest(id, xMsTestHeader, content, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> spread an alias with contains another alias property as body. </summary>
+        /// <param name="id"></param>
+        /// <param name="xMsTestHeader"></param>
+        /// <param name="name"> name of the Thing. </param>
+        /// <param name="age"> age of the Thing. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="xMsTestHeader"/> or <paramref name="name"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response SpreadParameterWithInnerAlias(string id, string xMsTestHeader, string name, int age, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(id, nameof(id));
+            Argument.AssertNotNull(xMsTestHeader, nameof(xMsTestHeader));
+            Argument.AssertNotNull(name, nameof(name));
+
+            SpreadParameterWithInnerAliasRequest spreadModel = new SpreadParameterWithInnerAliasRequest(name, age, null);
+            return SpreadParameterWithInnerAlias(id, xMsTestHeader, spreadModel, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+        }
+
+        /// <summary> spread an alias with contains another alias property as body. </summary>
+        /// <param name="id"></param>
+        /// <param name="xMsTestHeader"></param>
+        /// <param name="name"> name of the Thing. </param>
+        /// <param name="age"> age of the Thing. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="xMsTestHeader"/> or <paramref name="name"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response> SpreadParameterWithInnerAliasAsync(string id, string xMsTestHeader, string name, int age, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(id, nameof(id));
+            Argument.AssertNotNull(xMsTestHeader, nameof(xMsTestHeader));
+            Argument.AssertNotNull(name, nameof(name));
+
+            SpreadParameterWithInnerAliasRequest spreadModel = new SpreadParameterWithInnerAliasRequest(name, age, null);
+            return await SpreadParameterWithInnerAliasAsync(id, xMsTestHeader, spreadModel, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+        }
     }
 }

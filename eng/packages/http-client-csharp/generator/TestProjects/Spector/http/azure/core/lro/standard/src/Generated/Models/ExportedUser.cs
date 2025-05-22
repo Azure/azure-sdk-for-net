@@ -5,12 +5,41 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace _Specs_.Azure.Core.Lro.Standard
 {
+    /// <summary> The exported user data. </summary>
     public partial class ExportedUser
     {
-        public string Name => throw null;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        public string ResourceUri => throw null;
+        /// <summary> Initializes a new instance of <see cref="ExportedUser"/>. </summary>
+        /// <param name="name"> The name of user. </param>
+        /// <param name="resourceUri"> The exported URI. </param>
+        internal ExportedUser(string name, string resourceUri)
+        {
+            Name = name;
+            ResourceUri = resourceUri;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ExportedUser"/>. </summary>
+        /// <param name="name"> The name of user. </param>
+        /// <param name="resourceUri"> The exported URI. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ExportedUser(string name, string resourceUri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        {
+            Name = name;
+            ResourceUri = resourceUri;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+        }
+
+        /// <summary> The name of user. </summary>
+        public string Name { get; }
+
+        /// <summary> The exported URI. </summary>
+        public string ResourceUri { get; }
     }
 }

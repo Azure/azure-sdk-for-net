@@ -10,8 +10,17 @@ using Payload.ContentNegotiation._DifferentBody;
 
 namespace Payload.ContentNegotiation
 {
+    /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class PayloadContentNegotiationModelFactory
     {
-        public static PngImageAsJson PngImageAsJson(PngImageAsJsonContentType contentType = default, BinaryData content = default) => throw null;
+        /// <summary> The PngImageAsJson. </summary>
+        /// <param name="contentType"></param>
+        /// <param name="content"></param>
+        /// <returns> A new <see cref="_DifferentBody.PngImageAsJson"/> instance for mocking. </returns>
+        public static PngImageAsJson PngImageAsJson(string contentType = default, BinaryData content = default)
+        {
+
+            return new PngImageAsJson(contentType, content, additionalBinaryDataProperties: null);
+        }
     }
 }

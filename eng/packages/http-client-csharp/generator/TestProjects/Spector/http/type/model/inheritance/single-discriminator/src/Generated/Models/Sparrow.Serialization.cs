@@ -7,37 +7,148 @@
 
 using System;
 using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
 
 namespace _Type.Model.Inheritance.SingleDiscriminator
 {
+    /// <summary></summary>
     public partial class Sparrow : IJsonModel<Sparrow>
     {
-        internal Sparrow() => throw null;
+        /// <summary> Initializes a new instance of <see cref="Sparrow"/> for deserialization. </summary>
+        internal Sparrow()
+        {
+        }
 
-        void IJsonModel<Sparrow>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        void IJsonModel<Sparrow>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
 
-        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<Sparrow>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(Sparrow)} does not support writing '{format}' format.");
+            }
+            base.JsonModelWriteCore(writer, options);
+        }
 
-        Sparrow IJsonModel<Sparrow>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        Sparrow IJsonModel<Sparrow>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (Sparrow)JsonModelCreateCore(ref reader, options);
 
-        protected override Bird JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override Bird JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<Sparrow>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(Sparrow)} does not support reading '{format}' format.");
+            }
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSparrow(document.RootElement, options);
+        }
 
-        BinaryData IPersistableModel<Sparrow>.Write(ModelReaderWriterOptions options) => throw null;
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static Sparrow DeserializeSparrow(JsonElement element, ModelReaderWriterOptions options)
+        {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string kind = "sparrow";
+            int wingspan = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
+            {
+                if (prop.NameEquals("kind"u8))
+                {
+                    kind = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("wingspan"u8))
+                {
+                    wingspan = prop.Value.GetInt32();
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                }
+            }
+            return new Sparrow(kind, wingspan, additionalBinaryDataProperties);
+        }
 
-        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<Sparrow>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
-        Sparrow IPersistableModel<Sparrow>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<Sparrow>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, _TypeModelInheritanceSingleDiscriminatorContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(Sparrow)} does not support writing '{options.Format}' format.");
+            }
+        }
 
-        protected override Bird PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        Sparrow IPersistableModel<Sparrow>.Create(BinaryData data, ModelReaderWriterOptions options) => (Sparrow)PersistableModelCreateCore(data, options);
 
-        string IPersistableModel<Sparrow>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override Bird PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<Sparrow>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data))
+                    {
+                        return DeserializeSparrow(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(Sparrow)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<Sparrow>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="sparrow"> The <see cref="Sparrow"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(Sparrow sparrow) => throw null;
+        public static implicit operator RequestContent(Sparrow sparrow)
+        {
+            if (sparrow == null)
+            {
+                return null;
+            }
+            Utf8JsonBinaryContent content = new Utf8JsonBinaryContent();
+            content.JsonWriter.WriteObjectValue(sparrow, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
 
-        public static explicit operator Sparrow(Response result) => throw null;
+        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="Sparrow"/> from. </param>
+        public static explicit operator Sparrow(Response result)
+        {
+            using Response response = result;
+            using JsonDocument document = JsonDocument.Parse(response.Content);
+            return DeserializeSparrow(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
     }
 }

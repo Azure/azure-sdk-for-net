@@ -5,18 +5,42 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace _Type.Property.AdditionalProperties
 {
+    /// <summary> The WidgetData0. </summary>
     public partial class WidgetData0
     {
-        public WidgetData0(string fooProp) => throw null;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        public WidgetData0Kind Kind => throw null;
-
-        public string FooProp
+        /// <summary> Initializes a new instance of <see cref="WidgetData0"/>. </summary>
+        /// <param name="fooProp"></param>
+        /// <exception cref="ArgumentNullException"> <paramref name="fooProp"/> is null. </exception>
+        public WidgetData0(string fooProp)
         {
-            get => throw null;
-            set => throw null;
+            Argument.AssertNotNull(fooProp, nameof(fooProp));
+
+            FooProp = fooProp;
         }
+
+        /// <summary> Initializes a new instance of <see cref="WidgetData0"/>. </summary>
+        /// <param name="kind"></param>
+        /// <param name="fooProp"></param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal WidgetData0(string kind, string fooProp, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        {
+            Kind = kind;
+            FooProp = fooProp;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+        }
+
+        /// <summary> Gets the Kind. </summary>
+        public string Kind { get; } = "kind0";
+
+        /// <summary> Gets or sets the FooProp. </summary>
+        public string FooProp { get; set; }
     }
 }

@@ -5,12 +5,38 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using SpecialWords;
+
 namespace SpecialWords._Models
 {
+    /// <summary> The As. </summary>
     public partial class As
     {
-        public As(string name) => throw null;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        public string Name => throw null;
+        /// <summary> Initializes a new instance of <see cref="As"/>. </summary>
+        /// <param name="name"></param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        public As(string name)
+        {
+            Argument.AssertNotNull(name, nameof(name));
+
+            Name = name;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="As"/>. </summary>
+        /// <param name="name"></param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal As(string name, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        {
+            Name = name;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+        }
+
+        /// <summary> Gets the Name. </summary>
+        public string Name { get; }
     }
 }

@@ -9,6 +9,7 @@ using Azure.Core;
 
 namespace Authentication.Http.Custom
 {
+    /// <summary> Client options for <see cref="CustomClient"/>. </summary>
     public partial class CustomClientOptions : ClientOptions
     {
     }

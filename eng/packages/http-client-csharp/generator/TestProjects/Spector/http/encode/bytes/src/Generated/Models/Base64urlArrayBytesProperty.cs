@@ -7,13 +7,51 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Encode.Bytes
 {
+    /// <summary> The Base64urlArrayBytesProperty. </summary>
     public partial class Base64urlArrayBytesProperty
     {
-        public Base64urlArrayBytesProperty(IEnumerable<BinaryData> value) => throw null;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        public IList<BinaryData> Value => throw null;
+        /// <summary> Initializes a new instance of <see cref="Base64urlArrayBytesProperty"/>. </summary>
+        /// <param name="value"></param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public Base64urlArrayBytesProperty(IEnumerable<BinaryData> value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Base64urlArrayBytesProperty"/>. </summary>
+        /// <param name="value"></param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal Base64urlArrayBytesProperty(IList<BinaryData> value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        {
+            Value = value;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+        }
+
+        /// <summary>
+        /// Gets the Value.
+        /// <para>
+        /// To assign a byte[] to the element of this property use <see cref="BinaryData.FromBytes(byte[])"/>.
+        /// The byte[] will be serialized to a Base64 encoded string.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term> BinaryData.FromBytes(new byte[] { 1, 2, 3 }). </term>
+        /// <description> Creates a payload of "AQID". </description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        public IList<BinaryData> Value { get; }
     }
 }

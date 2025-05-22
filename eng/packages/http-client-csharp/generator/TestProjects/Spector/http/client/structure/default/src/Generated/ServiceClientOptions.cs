@@ -9,6 +9,7 @@ using Azure.Core;
 
 namespace Client.Structure.Service
 {
+    /// <summary> Client options for <see cref="ServiceClient"/>. </summary>
     public partial class ServiceClientOptions : ClientOptions
     {
     }

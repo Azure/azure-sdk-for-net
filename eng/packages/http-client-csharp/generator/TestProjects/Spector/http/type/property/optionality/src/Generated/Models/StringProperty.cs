@@ -5,16 +5,32 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace _Type.Property.Optional
 {
+    /// <summary> Template type for testing models with optional property. Pass in the type of the property you are looking for. </summary>
     public partial class StringProperty
     {
-        public StringProperty() => throw null;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        public string Property
+        /// <summary> Initializes a new instance of <see cref="StringProperty"/>. </summary>
+        public StringProperty()
         {
-            get => throw null;
-            set => throw null;
         }
+
+        /// <summary> Initializes a new instance of <see cref="StringProperty"/>. </summary>
+        /// <param name="property"> Property. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal StringProperty(string @property, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        {
+            Property = @property;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+        }
+
+        /// <summary> Property. </summary>
+        public string Property { get; set; }
     }
 }

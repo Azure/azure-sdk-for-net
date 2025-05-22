@@ -5,10 +5,34 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace _Specs_.Azure.Core.Lro.Rpc
 {
+    /// <summary> Result of the generation. </summary>
     public partial class GenerationResult
     {
-        public string Data => throw null;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
+        /// <summary> Initializes a new instance of <see cref="GenerationResult"/>. </summary>
+        /// <param name="data"> The data. </param>
+        internal GenerationResult(string data)
+        {
+            Data = data;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="GenerationResult"/>. </summary>
+        /// <param name="data"> The data. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal GenerationResult(string data, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        {
+            Data = data;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+        }
+
+        /// <summary> The data. </summary>
+        public string Data { get; }
     }
 }
