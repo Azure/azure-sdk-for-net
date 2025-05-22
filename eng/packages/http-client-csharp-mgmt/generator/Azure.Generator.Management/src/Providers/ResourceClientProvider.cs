@@ -310,7 +310,7 @@ namespace Azure.Generator.Management.Providers
             else
             {
                 var returnStmts = BuildReturnStatements(responseVariable, signature);
-                foreach (var stmt in returnStmts) // BuildReturnStatements now returns IReadOnlyList
+                foreach (var stmt in returnStmts)
                 {
                     tryStatement.Add(stmt);
                 }
