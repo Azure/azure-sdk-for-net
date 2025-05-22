@@ -1598,5 +1598,62 @@ SuppressFailures = true,
 
             Console.WriteLine("Succeeded");
         }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task UpdateVirtualMachineScaleSetLifeCycleHookEvent_VirtualMachineScaleSetLifeCycleHookEventUpdateGen()
+        {
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-11-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSetLifeCycleHookEvent_Update_Gen.json
+            // this example is just showing the usage of "VirtualMachineScaleSetLifeCycleHookEvents_Update" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this VirtualMachineScaleSetResource created on azure
+            // for more information of creating VirtualMachineScaleSetResource, please refer to the document of VirtualMachineScaleSetResource
+            string subscriptionId = "{subscription-id}";
+            string resourceGroupName = "RG01";
+            string virtualMachineScaleSetName = "VMSS01";
+            ResourceIdentifier virtualMachineScaleSetResourceId = VirtualMachineScaleSetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineScaleSetName);
+            VirtualMachineScaleSetResource virtualMachineScaleSet = client.GetVirtualMachineScaleSetResource(virtualMachineScaleSetResourceId);
+
+            // invoke the operation
+            string lifeCycleHookEventName = "445c0a08-cfc5-4ef6-bb89-fe77c5178628";
+            VmScaleSetLifecycleHookEvent vmssLchEvent = new VmScaleSetLifecycleHookEvent();
+            VmScaleSetLifecycleHookEvent result = await virtualMachineScaleSet.UpdateVirtualMachineScaleSetLifeCycleHookEventAsync(lifeCycleHookEventName, vmssLchEvent);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetVirtualMachineScaleSetLifeCycleHookEvents_VirtualMachineScaleSetLifeCycleHookEventListGenJson()
+        {
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-11-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSetLifeCycleHookEvent_List_Gen.json
+            // this example is just showing the usage of "VirtualMachineScaleSetLifeCycleHookEvents_List" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this VirtualMachineScaleSetResource created on azure
+            // for more information of creating VirtualMachineScaleSetResource, please refer to the document of VirtualMachineScaleSetResource
+            string subscriptionId = "{subscription-id}";
+            string resourceGroupName = "RG01";
+            string virtualMachineScaleSetName = "VMSS01";
+            ResourceIdentifier virtualMachineScaleSetResourceId = VirtualMachineScaleSetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineScaleSetName);
+            VirtualMachineScaleSetResource virtualMachineScaleSet = client.GetVirtualMachineScaleSetResource(virtualMachineScaleSetResourceId);
+
+            // invoke the operation and iterate over the result
+            await foreach (VmScaleSetLifecycleHookEvent item in virtualMachineScaleSet.GetVirtualMachineScaleSetLifeCycleHookEventsAsync())
+            {
+                Console.WriteLine($"Succeeded: {item}");
+            }
+
+            Console.WriteLine("Succeeded");
+        }
     }
 }

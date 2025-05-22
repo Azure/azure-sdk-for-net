@@ -105,6 +105,11 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("skuProfile"u8);
                 writer.WriteObjectValue(SkuProfile, options);
             }
+            if (Optional.IsDefined(LifecycleHooksProfile))
+            {
+                writer.WritePropertyName("lifecycleHooksProfile"u8);
+                writer.WriteObjectValue(LifecycleHooksProfile, options);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -156,6 +161,7 @@ namespace Azure.ResourceManager.Compute.Models
             ResiliencyPolicy resiliencyPolicy = default;
             ZonalPlatformFaultDomainAlignMode? zonalPlatformFaultDomainAlignMode = default;
             ComputeSkuProfile skuProfile = default;
+            LifecycleHooksProfile lifecycleHooksProfile = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -286,6 +292,15 @@ namespace Azure.ResourceManager.Compute.Models
                     skuProfile = ComputeSkuProfile.DeserializeComputeSkuProfile(property.Value, options);
                     continue;
                 }
+                if (property.NameEquals("lifecycleHooksProfile"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    lifecycleHooksProfile = LifecycleHooksProfile.DeserializeLifecycleHooksProfile(property.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -307,6 +322,7 @@ namespace Azure.ResourceManager.Compute.Models
                 resiliencyPolicy,
                 zonalPlatformFaultDomainAlignMode,
                 skuProfile,
+                lifecycleHooksProfile,
                 serializedAdditionalRawData);
         }
 
