@@ -65,7 +65,8 @@ namespace Azure.Communication.CallAutomation
                 new TranscriptionSubscription(
                     callConnectionPropertiesDtoInternal.TranscriptionSubscription.Id,
                     callConnectionPropertiesDtoInternal.TranscriptionSubscription.State,
-                    callConnectionPropertiesDtoInternal.TranscriptionSubscription.SubscribedResultTypes)
+                    callConnectionPropertiesDtoInternal.TranscriptionSubscription.SubscribedResultTypes,
+                    callConnectionPropertiesDtoInternal.TranscriptionSubscription.Locale)
                 : null;
             Source = callConnectionPropertiesDtoInternal.Source == null ? null : CommunicationIdentifierSerializer.Deserialize(callConnectionPropertiesDtoInternal.Source);
             SourceDisplayName = callConnectionPropertiesDtoInternal.SourceDisplayName;
