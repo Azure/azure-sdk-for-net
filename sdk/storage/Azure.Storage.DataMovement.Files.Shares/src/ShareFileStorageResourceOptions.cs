@@ -63,7 +63,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
         /// For NFS Share-to-Share Copy and Download transfers, Hardlinks will be copied as regular files and Symbolic links are skipped.
         /// For NFS Upload transfers, Hardlinks will be copied as regular files and Symbolic links are not supported.
         /// </summary>
-        public ShareProtocols ShareProtocol { get; set; } = ShareProtocols.Smb;
+        public ShareProtocol ShareProtocol { get; set; } = ShareProtocol.Smb;
 
         /// <summary>
         /// Optional. See <see cref="ShareFileRequestConditions"/>.
@@ -321,7 +321,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
             FileMetadata = options?.FileMetadata;
             _isFileMetadataSet = options?._isFileMetadataSet ?? false;
             SkipProtocolValidation = options?.SkipProtocolValidation ?? false;
-            ShareProtocol = options?.ShareProtocol ?? ShareProtocols.Smb;
+            ShareProtocol = options?.ShareProtocol ?? ShareProtocol.Smb;
         }
     }
 }

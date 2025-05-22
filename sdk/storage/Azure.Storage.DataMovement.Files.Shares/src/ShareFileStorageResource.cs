@@ -283,8 +283,8 @@ namespace Azure.Storage.DataMovement.Files.Shares
             {
                 ShareFileStorageResource sourceShareFile = (ShareFileStorageResource)sourceResource;
                 // both source and destination must be SMB and destination FilePermission option must be set.
-                if (((sourceShareFile._options?.ShareProtocol ?? ShareProtocols.Smb) == ShareProtocols.Smb)
-                    && ((_options?.ShareProtocol ?? ShareProtocols.Smb) == ShareProtocols.Smb)
+                if (((sourceShareFile._options?.ShareProtocol ?? ShareProtocol.Smb) == ShareProtocol.Smb)
+                    && ((_options?.ShareProtocol ?? ShareProtocol.Smb) == ShareProtocol.Smb)
                     && (_options?.FilePermissions ?? false))
                 {
                     string permissionsValue = sourceProperties?.RawProperties?.GetPermission();
@@ -394,8 +394,8 @@ namespace Azure.Storage.DataMovement.Files.Shares
             if (sourceResource is ShareFileStorageResource sourceShareFileResource)
             {
                 // Ensure the transfer is supported (NFS -> NFS and SMB -> SMB)
-                if ((_options?.ShareProtocol ?? ShareProtocols.Smb)
-                    != (sourceShareFileResource._options?.ShareProtocol ?? ShareProtocols.Smb))
+                if ((_options?.ShareProtocol ?? ShareProtocol.Smb)
+                    != (sourceShareFileResource._options?.ShareProtocol ?? ShareProtocol.Smb))
                 {
                     throw Errors.ShareTransferNotSupported();
                 }
@@ -428,7 +428,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
         public static InvalidOperationException ShareFileAlreadyExists(string pathName)
             => new InvalidOperationException($"Share File `{pathName}` already exists. Cannot overwrite file.");
 
-        public static ArgumentException ProtocolSetMismatch(string endpoint, ShareProtocols setProtocol, ShareProtocols actualProtocol)
+        public static ArgumentException ProtocolSetMismatch(string endpoint, ShareProtocol setProtocol, ShareProtocol actualProtocol)
             => new ArgumentException($"The Protocol set on the {endpoint} '{setProtocol}' does not match the actual Protocol of the share '{actualProtocol}'.");
 
         public static UnauthorizedAccessException ProtocolValidationAuthorizationFailure(RequestFailedException ex, string endpoint)
