@@ -30,6 +30,12 @@
     <PackageReference Include="System.Memory.Data" />
   </ItemGroup>
 
+<!-- Remove when the package reference is restored to System.ClientModel -->
+  <ItemGroup>
+    <ProjectReference Include="..\..\System.ClientModel\gen\System.ClientModel.SourceGeneration.csproj" ReferenceOutputAssembly="false" OutputItemType="Analyzer" />
+  </ItemGroup>
+<!-- End remove -->
+
   <ItemGroup Condition="'$(TargetFramework)' == 'net472'">
     <Reference Include="System.Net.Http" />
   </ItemGroup>
