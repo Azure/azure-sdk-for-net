@@ -14,4 +14,9 @@
     <!-- Disable warning IDE0130: Namespace does not match folder structure-->
     <NoWarn>CS1591;AZC0012;IDE0130;$(NoWarn)</NoWarn>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Azure.Core" />
+  </ItemGroup>
+
 </Project>
