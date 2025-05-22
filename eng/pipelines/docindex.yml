@@ -33,8 +33,9 @@ jobs:
 
   - job: UpdateDocsMsBuildConfig
     pool:
-      name: azsdk-pool
-      demands: ImageOverride -equals ubuntu-22.04
+      name: $(LINUXPOOL)
+      demands: ImageOverride -equals $(LINUXVMIMAGE)
+
     variables:
       DocRepoLocation: $(Pipeline.Workspace)/docs
     steps:
