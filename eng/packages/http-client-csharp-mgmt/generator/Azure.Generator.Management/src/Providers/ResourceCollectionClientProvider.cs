@@ -189,7 +189,7 @@ namespace Azure.Generator.Management.Providers
                 convenienceMethod.Signature.GenericParameterConstraints,
                 convenienceMethod.Signature.ExplicitInterface,
                 convenienceMethod.Signature.NonDocumentComment);
-                result.Add(BuildOperationMethodCore(_get, convenienceMethod, signature, isAsync, IsReturnTypeGeneric(_get)));
+                result.Add(BuildOperationMethodCore(_get, convenienceMethod, signature, isAsync));
             }
 
             return result;
@@ -218,7 +218,7 @@ namespace Azure.Generator.Management.Providers
                 convenienceMethod.Signature.GenericParameterConstraints,
                 convenienceMethod.Signature.ExplicitInterface,
                 convenienceMethod.Signature.NonDocumentComment);
-                result.Add(BuildOperationMethodCore(_get, convenienceMethod, signature, isAsync, IsReturnTypeGeneric(_get)));
+                result.Add(BuildOperationMethodCore(_get, convenienceMethod, signature, isAsync));
             }
 
             return result;
