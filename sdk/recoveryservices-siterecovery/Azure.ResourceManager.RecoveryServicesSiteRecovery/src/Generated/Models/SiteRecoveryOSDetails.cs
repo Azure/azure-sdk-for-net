@@ -57,8 +57,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="osVersion"> The OS Version. </param>
         /// <param name="osMajorVersion"> The OS Major Version. </param>
         /// <param name="osMinorVersion"> The OS Minor Version. </param>
+        /// <param name="userSelectedOSName"> The OS name selected by user. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SiteRecoveryOSDetails(string osType, string productType, string osEdition, string osVersion, string osMajorVersion, string osMinorVersion, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SiteRecoveryOSDetails(string osType, string productType, string osEdition, string osVersion, string osMajorVersion, string osMinorVersion, string userSelectedOSName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             OSType = osType;
             ProductType = productType;
@@ -66,6 +67,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             OSVersion = osVersion;
             OSMajorVersion = osMajorVersion;
             OSMinorVersion = osMinorVersion;
+            UserSelectedOSName = userSelectedOSName;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -81,5 +83,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public string OSMajorVersion { get; }
         /// <summary> The OS Minor Version. </summary>
         public string OSMinorVersion { get; }
+        /// <summary> The OS name selected by user. </summary>
+        public string UserSelectedOSName { get; }
     }
 }

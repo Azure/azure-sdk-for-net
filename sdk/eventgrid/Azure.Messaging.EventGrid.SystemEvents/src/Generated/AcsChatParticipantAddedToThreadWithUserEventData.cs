@@ -15,12 +15,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         /// <summary> Initializes a new instance of <see cref="AcsChatParticipantAddedToThreadWithUserEventData"/>. </summary>
         /// <param name="recipientCommunicationIdentifier"> The communication identifier of the target user. </param>
+        /// <param name="threadId"> The chat thread id. </param>
         /// <param name="addedByCommunicationIdentifier"> The communication identifier of the user who added the user. </param>
         /// <param name="participantAdded"> The details of the user who was added. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="recipientCommunicationIdentifier"/>, <paramref name="addedByCommunicationIdentifier"/> or <paramref name="participantAdded"/> is null. </exception>
-        internal AcsChatParticipantAddedToThreadWithUserEventData(CommunicationIdentifierModel recipientCommunicationIdentifier, CommunicationIdentifierModel addedByCommunicationIdentifier, AcsChatThreadParticipantProperties participantAdded) : base(recipientCommunicationIdentifier)
+        /// <exception cref="ArgumentNullException"> <paramref name="recipientCommunicationIdentifier"/>, <paramref name="threadId"/>, <paramref name="addedByCommunicationIdentifier"/> or <paramref name="participantAdded"/> is null. </exception>
+        internal AcsChatParticipantAddedToThreadWithUserEventData(CommunicationIdentifierModel recipientCommunicationIdentifier, string threadId, CommunicationIdentifierModel addedByCommunicationIdentifier, AcsChatThreadParticipantProperties participantAdded) : base(recipientCommunicationIdentifier, threadId)
         {
             Argument.AssertNotNull(recipientCommunicationIdentifier, nameof(recipientCommunicationIdentifier));
+            Argument.AssertNotNull(threadId, nameof(threadId));
             Argument.AssertNotNull(addedByCommunicationIdentifier, nameof(addedByCommunicationIdentifier));
             Argument.AssertNotNull(participantAdded, nameof(participantAdded));
 

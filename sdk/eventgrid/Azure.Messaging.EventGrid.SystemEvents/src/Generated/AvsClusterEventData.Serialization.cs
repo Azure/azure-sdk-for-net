@@ -36,7 +36,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 
             writer.WritePropertyName("operationId"u8);
             writer.WriteStringValue(OperationId);
-            if (Optional.IsCollectionDefined(AddedHostNames))
+            if (options.Format != "W" && Optional.IsCollectionDefined(AddedHostNames))
             {
                 writer.WritePropertyName("addedHostNames"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(RemovedHostNames))
+            if (options.Format != "W" && Optional.IsCollectionDefined(RemovedHostNames))
             {
                 writer.WritePropertyName("removedHostNames"u8);
                 writer.WriteStartArray();
@@ -56,7 +56,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(InMaintenanceHostNames))
+            if (options.Format != "W" && Optional.IsCollectionDefined(InMaintenanceHostNames))
             {
                 writer.WritePropertyName("inMaintenanceHostNames"u8);
                 writer.WriteStartArray();
@@ -174,7 +174,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureMessagingEventGridSystemEventsContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(AvsClusterEventData)} does not support writing '{options.Format}' format.");
             }

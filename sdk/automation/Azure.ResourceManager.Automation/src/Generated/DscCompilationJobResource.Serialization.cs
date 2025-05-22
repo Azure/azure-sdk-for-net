@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Automation
 {
     public partial class DscCompilationJobResource : IJsonModel<DscCompilationJobData>
     {
+        private static DscCompilationJobData s_dataDeserializationInstance;
+        private static DscCompilationJobData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<DscCompilationJobData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DscCompilationJobData>)Data).Write(writer, options);
 
-        DscCompilationJobData IJsonModel<DscCompilationJobData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DscCompilationJobData>)Data).Create(ref reader, options);
+        DscCompilationJobData IJsonModel<DscCompilationJobData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DscCompilationJobData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<DscCompilationJobData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<DscCompilationJobData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DscCompilationJobData>(Data, options, AzureResourceManagerAutomationContext.Default);
 
-        DscCompilationJobData IPersistableModel<DscCompilationJobData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DscCompilationJobData>(data, options);
+        DscCompilationJobData IPersistableModel<DscCompilationJobData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DscCompilationJobData>(data, options, AzureResourceManagerAutomationContext.Default);
 
-        string IPersistableModel<DscCompilationJobData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DscCompilationJobData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<DscCompilationJobData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DscCompilationJobData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

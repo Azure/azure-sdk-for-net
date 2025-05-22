@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Workloads
 {
     public partial class SapApplicationServerInstanceResource : IJsonModel<SapApplicationServerInstanceData>
     {
+        private static SapApplicationServerInstanceData s_dataDeserializationInstance;
+        private static SapApplicationServerInstanceData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<SapApplicationServerInstanceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SapApplicationServerInstanceData>)Data).Write(writer, options);
 
-        SapApplicationServerInstanceData IJsonModel<SapApplicationServerInstanceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SapApplicationServerInstanceData>)Data).Create(ref reader, options);
+        SapApplicationServerInstanceData IJsonModel<SapApplicationServerInstanceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SapApplicationServerInstanceData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SapApplicationServerInstanceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<SapApplicationServerInstanceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SapApplicationServerInstanceData>(Data, options, AzureResourceManagerWorkloadsContext.Default);
 
-        SapApplicationServerInstanceData IPersistableModel<SapApplicationServerInstanceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SapApplicationServerInstanceData>(data, options);
+        SapApplicationServerInstanceData IPersistableModel<SapApplicationServerInstanceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SapApplicationServerInstanceData>(data, options, AzureResourceManagerWorkloadsContext.Default);
 
-        string IPersistableModel<SapApplicationServerInstanceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SapApplicationServerInstanceData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<SapApplicationServerInstanceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SapApplicationServerInstanceData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

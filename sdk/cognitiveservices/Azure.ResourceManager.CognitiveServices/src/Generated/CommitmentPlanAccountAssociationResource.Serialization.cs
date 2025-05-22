@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.CognitiveServices
 {
     public partial class CommitmentPlanAccountAssociationResource : IJsonModel<CommitmentPlanAccountAssociationData>
     {
+        private static CommitmentPlanAccountAssociationData s_dataDeserializationInstance;
+        private static CommitmentPlanAccountAssociationData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<CommitmentPlanAccountAssociationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<CommitmentPlanAccountAssociationData>)Data).Write(writer, options);
 
-        CommitmentPlanAccountAssociationData IJsonModel<CommitmentPlanAccountAssociationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<CommitmentPlanAccountAssociationData>)Data).Create(ref reader, options);
+        CommitmentPlanAccountAssociationData IJsonModel<CommitmentPlanAccountAssociationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<CommitmentPlanAccountAssociationData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<CommitmentPlanAccountAssociationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<CommitmentPlanAccountAssociationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<CommitmentPlanAccountAssociationData>(Data, options, AzureResourceManagerCognitiveServicesContext.Default);
 
-        CommitmentPlanAccountAssociationData IPersistableModel<CommitmentPlanAccountAssociationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CommitmentPlanAccountAssociationData>(data, options);
+        CommitmentPlanAccountAssociationData IPersistableModel<CommitmentPlanAccountAssociationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CommitmentPlanAccountAssociationData>(data, options, AzureResourceManagerCognitiveServicesContext.Default);
 
-        string IPersistableModel<CommitmentPlanAccountAssociationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<CommitmentPlanAccountAssociationData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<CommitmentPlanAccountAssociationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<CommitmentPlanAccountAssociationData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

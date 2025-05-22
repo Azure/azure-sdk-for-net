@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Monitor
 {
     public partial class DataCollectionEndpointResource : IJsonModel<DataCollectionEndpointData>
     {
+        private static DataCollectionEndpointData s_dataDeserializationInstance;
+        private static DataCollectionEndpointData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<DataCollectionEndpointData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DataCollectionEndpointData>)Data).Write(writer, options);
 
-        DataCollectionEndpointData IJsonModel<DataCollectionEndpointData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DataCollectionEndpointData>)Data).Create(ref reader, options);
+        DataCollectionEndpointData IJsonModel<DataCollectionEndpointData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DataCollectionEndpointData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<DataCollectionEndpointData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<DataCollectionEndpointData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DataCollectionEndpointData>(Data, options, AzureResourceManagerMonitorContext.Default);
 
-        DataCollectionEndpointData IPersistableModel<DataCollectionEndpointData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DataCollectionEndpointData>(data, options);
+        DataCollectionEndpointData IPersistableModel<DataCollectionEndpointData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DataCollectionEndpointData>(data, options, AzureResourceManagerMonitorContext.Default);
 
-        string IPersistableModel<DataCollectionEndpointData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DataCollectionEndpointData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<DataCollectionEndpointData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DataCollectionEndpointData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

@@ -15,6 +15,8 @@ namespace Encode.Bytes
 {
     public partial class Base64urlArrayBytesProperty : IJsonModel<Base64urlArrayBytesProperty>
     {
+        internal Base64urlArrayBytesProperty() => throw null;
+
         void IJsonModel<Base64urlArrayBytesProperty>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
