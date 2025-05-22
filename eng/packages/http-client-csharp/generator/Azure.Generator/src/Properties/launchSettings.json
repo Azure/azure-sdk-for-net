@@ -1,5 +1,10 @@
 {
   "profiles": {
+    "AppConfig": {
+      "commandLineArgs": "$(SolutionDir)/../dist/generator/Microsoft.TypeSpec.Generator.dll  C:\\Users\\jorgerangel\\Development\\AzureSdk\\azure-sdk-for-net\\sdk\\appconfiguration\\Azure.Data.AppConfiguration -g ScmCodeModelGenerator",
+       "commandName": "Executable",
+      "executablePath": "dotnet"
+    },
     "Basic-TypeSpec": {
       "commandLineArgs": "$(SolutionDir)/../dist/generator/Microsoft.TypeSpec.Generator.dll $(SolutionDir)/TestProjects/Local/Basic-TypeSpec -g AzureClientGenerator",
       "commandName": "Executable",
