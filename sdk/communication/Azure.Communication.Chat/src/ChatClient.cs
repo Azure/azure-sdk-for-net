@@ -92,7 +92,7 @@ namespace Azure.Communication.Chat
             scope.Start();
             try
             {
-                Response<CreateChatThreadResultInternal> createChatThreadResultInternal = await _chatRestClient.CreateChatThreadAsync(options).ConfigureAwait(false);
+                Response<CreateChatThreadResultInternal> createChatThreadResultInternal = await _chatRestClient.CreateChatThreadAsync(options, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new CreateChatThreadResult(createChatThreadResultInternal.Value), createChatThreadResultInternal.GetRawResponse());
             }
             catch (Exception ex)
