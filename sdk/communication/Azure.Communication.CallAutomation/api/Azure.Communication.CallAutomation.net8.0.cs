@@ -1609,6 +1609,7 @@ namespace Azure.Communication.CallAutomation
     {
         internal TranscriptionSubscription() { }
         public string Id { get { throw null; } }
+        public string Locale { get { throw null; } }
         public Azure.Communication.CallAutomation.TranscriptionSubscriptionState? State { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.Communication.CallAutomation.TranscriptionResultState> SubscribedResultStates { get { throw null; } }
     }
@@ -1672,6 +1673,7 @@ namespace Azure.Communication.CallAutomation
     public partial class UnholdOptions
     {
         public UnholdOptions(Azure.Communication.CommunicationIdentifier targetParticipant) { }
+        public System.Uri OperationCallbackUri { get { throw null; } set { } }
         public string OperationContext { get { throw null; } set { } }
         public Azure.Communication.CommunicationIdentifier TargetParticipant { get { throw null; } }
     }
