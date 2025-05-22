@@ -24,8 +24,8 @@ namespace Microsoft.Extensions.Azure
         /// <summary>
         /// Registers an <see cref="ArmClient"/> instance with connection options loaded from the provided <paramref name="configuration"/> instance.
         /// </summary>
-        [RequiresUnreferencedCode("Uses reflection for registration")]
-        [RequiresDynamicCode("Uses code generation for registration")]
+        [RequiresUnreferencedCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
+        [RequiresDynamicCode("Requires code generation until we opt into EnableConfigurationBindingGenerator.")]
         public static IAzureClientBuilder<ArmClient, ArmClientOptions> AddArmClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
             where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration>
         {
