@@ -11,7 +11,7 @@ using Azure.Core.Pipeline;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Input;
-using Microsoft.TypeSpec.Generator.Input.Utilities;
+using Microsoft.TypeSpec.Generator.Input.Extensions;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using Microsoft.TypeSpec.Generator.Snippets;
@@ -43,9 +43,9 @@ namespace Azure.Generator.Providers
 
         private static readonly ParameterProvider ContinuationTokenParameter =
             new("continuationToken", $"A continuation token indicating where to resume paging.", new CSharpType(typeof(string), isNullable: true));
-
         private static readonly ParameterProvider PageSizeHintParameter =
             new("pageSizeHint", $"The number of items per page.", new CSharpType(typeof(int?)));
+        private const string GetResponseMethodName = "GetResponse";
 
         public CollectionResultDefinition(ClientProvider client, InputPagingServiceMethod serviceMethod, CSharpType? itemModelType, bool isAsync)
         {
@@ -126,7 +126,7 @@ namespace Azure.Generator.Providers
         protected override string BuildRelativeFilePath() => Path.Combine("src", "Generated", $"{Name}.cs");
 
         protected override string BuildName()
-            => $"{_client.Type.Name}{_operation.Name.ToCleanIdentifierName()}{(_isAsync ? "Async" : "")}CollectionResult{(IsProtocolMethod() ? "" : "OfT")}";
+            => $"{_client.Type.Name}{_operation.Name.ToIdentifierName()}{(_isAsync ? "Async" : "")}CollectionResult{(IsProtocolMethod() ? "" : "OfT")}";
 
         // Model type is BinaryData fro protocol methods
         private bool IsProtocolMethod() => _itemModelType.Equals(typeof(BinaryData));
@@ -180,7 +180,7 @@ namespace Azure.Generator.Providers
 
             if (isProtocol)
             {
-                // Decalre items array
+                // Declare items array
                 doWhileStatement.Add(Declare("items", new CSharpType(typeof(List<>), _itemModelType),
                     New.Instance(new CSharpType(typeof(List<>), _itemModelType)), out var itemsVariable));
 
@@ -272,7 +272,6 @@ namespace Azure.Generator.Providers
             return new MethodProvider(signature, body, this);
         }
 
-        private const string GetResponseMethodName = "GetResponse";
         private MethodProvider BuildGetResponseMethod()
         {
             var messageParameter = new ParameterProvider("message", $"Http message", typeof(HttpMessage));
