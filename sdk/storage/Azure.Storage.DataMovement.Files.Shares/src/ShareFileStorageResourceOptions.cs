@@ -49,17 +49,21 @@ namespace Azure.Storage.DataMovement.Files.Shares
         /// <summary>
         /// Optional. Specifies whether protocol validation for the resource should be skipped before starting the transfer.
         /// By default this value is set to false.
-        /// Applies to copy, upload, and download transfers.
+        /// Applies to only Share-to-Share copy transfers.
         /// Note: Protocol validation requires share-level read access.
         /// </summary>
         public bool SkipProtocolValidation { get; set; } = false;
 
         /// <summary>
         /// Optional. Specifies whether the Share uses NFS or SMB protocol.
-        /// By default this value is set to false. If true is selected, the account used must support NFS.
+        /// By default this value is set to SMB.
         /// Applies to copy, upload, and download transfers.
+        ///
+        /// Note: Only NFS -> NFS and SMB -> SMB transfers are currently supported.
+        /// For NFS Share-to-Share Copy and Download transfers, Hardlinks will be copied as regular files and Symbolic links are skipped.
+        /// For NFS Upload transfers, Hardlinks will be copied as regular files and Symbolic links are not supported.
         /// </summary>
-        public bool IsNfs { get; set; } = false;
+        public ShareProtocols ShareProtocol { get; set; } = ShareProtocols.Smb;
 
         /// <summary>
         /// Optional. See <see cref="ShareFileRequestConditions"/>.
@@ -316,6 +320,8 @@ namespace Azure.Storage.DataMovement.Files.Shares
             _isDirectoryMetadataSet = options?._isDirectoryMetadataSet ?? false;
             FileMetadata = options?.FileMetadata;
             _isFileMetadataSet = options?._isFileMetadataSet ?? false;
+            SkipProtocolValidation = options?.SkipProtocolValidation ?? false;
+            ShareProtocol = options?.ShareProtocol ?? ShareProtocols.Smb;
         }
     }
 }
