@@ -7,7 +7,7 @@ trigger:
       - eng/packages/http-client-csharp-mgmt
       - eng/scripts/typespec
     exclude:
-      - eng/packages/http-client-csharp-mgmt/eng/packages/http-client-csharp-mgmt/ci.yml
+      - eng/packages/http-client-csharp-mgmt/ci.yml
 pr:
   branches:
     include:
@@ -20,7 +20,7 @@ pr:
       - eng/packages/http-client-csharp-mgmt
       - eng/scripts/typespec
     exclude:
-      - eng/packages/http-client-csharp-mgmt/eng/packages/http-client-csharp-mgmt/ci.yml  
+      - eng/packages/http-client-csharp-mgmt/ci.yml  
 
 parameters:
   - name: UseTypeSpecNext
