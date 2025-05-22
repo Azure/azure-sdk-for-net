@@ -50,7 +50,8 @@ namespace Azure.Generator.Management
         protected override TypeProvider[] BuildTypeProviders()
         {
             var (resources, collections) = BuildResources();
-            return [.. base.BuildTypeProviders().Where(t => t is not InheritableSystemObjectModelProvider), ArmOperation, GenericArmOperation, .. resources, .. collections, .. resources.Select(r => r.Source)];
+            var serializationProviders = resources.SelectMany(r => r.SerializationProviders);
+            return [.. base.BuildTypeProviders().Where(t => t is not InheritableSystemObjectModelProvider), ArmOperation, GenericArmOperation, .. resources, .. collections, .. resources.Select(r => r.Source), .. resources.SelectMany(r => r.SerializationProviders)];
         }
     }
 }

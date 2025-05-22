@@ -118,6 +118,9 @@ namespace Azure.Generator.Management.Providers
             return [hasDataProperty, dataProperty];
         }
 
+        protected override TypeProvider[] BuildSerializationProviders()
+            => [new ResourceSerializationProvider(this)];
+
         protected override ConstructorProvider[] BuildConstructors()
             => [ConstructorProviderHelper.BuildMockingConstructor(this), BuildResourceDataConstructor(), BuildResourceIdentifierConstructor()];
 
