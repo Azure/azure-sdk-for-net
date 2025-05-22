@@ -6,8 +6,6 @@ trigger:
     include:
       - eng/packages/http-client-csharp-mgmt
       - eng/scripts/typespec
-    exclude:
-      - eng/packages/http-client-csharp-mgmt/ci.yml
 pr:
   branches:
     include:
@@ -19,9 +17,7 @@ pr:
     include:
       - eng/packages/http-client-csharp-mgmt
       - eng/scripts/typespec
-    exclude:
-      - eng/packages/http-client-csharp-mgmt/ci.yml  
-
+      
 parameters:
   - name: UseTypeSpecNext
     displayName: "Use TypeSpec Next"

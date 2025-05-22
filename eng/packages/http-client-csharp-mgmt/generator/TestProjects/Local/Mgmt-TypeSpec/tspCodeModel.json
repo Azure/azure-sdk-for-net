@@ -1801,8 +1801,10 @@
          "readOnly": true,
          "decorators": [],
          "crossLanguageDefinitionId": "MgmtTypeSpec.PrivateLinkResource.name",
-         "discriminator": false,
-         "flatten": false
+         "explode": false,
+         "style": "simple",
+         "allowReserved": false,
+         "correspondingMethodParams": []
         },
         {
          "$id": "229",
@@ -2503,8 +2505,10 @@
      "readOnly": false,
      "decorators": [],
      "crossLanguageDefinitionId": "Azure.ResourceManager.ArmOperationStatus.id",
-     "discriminator": false,
-     "flatten": false
+     "explode": false,
+     "style": "simple",
+     "allowReserved": false,
+     "correspondingMethodParams": []
     },
     {
      "$id": "322",
@@ -2947,8 +2951,10 @@
      "readOnly": true,
      "decorators": [],
      "crossLanguageDefinitionId": "MgmtTypeSpec.Foo.name",
-     "discriminator": false,
-     "flatten": false
+     "explode": false,
+     "style": "simple",
+     "allowReserved": false,
+     "correspondingMethodParams": []
     },
     {
      "$id": "385",
