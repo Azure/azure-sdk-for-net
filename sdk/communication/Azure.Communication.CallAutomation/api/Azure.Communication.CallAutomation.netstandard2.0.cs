@@ -704,6 +704,13 @@ namespace Azure.Communication.CallAutomation
         public void AddSipX(string key, string value) { }
         public void AddVoip(string key, string value) { }
     }
+    public partial class DtmfData : Azure.Communication.CallAutomation.StreamingData
+    {
+        public DtmfData(string data) { }
+        public string Data { get { throw null; } }
+        public Azure.Communication.CommunicationIdentifier Participant { get { throw null; } }
+        public System.DateTimeOffset Timestamp { get { throw null; } }
+    }
     public partial class DtmfResult : Azure.Communication.CallAutomation.RecognizeResult
     {
         internal DtmfResult() { }
@@ -865,13 +872,12 @@ namespace Azure.Communication.CallAutomation
     }
     public partial class MediaStreamingOptions
     {
-        public MediaStreamingOptions(Azure.Communication.CallAutomation.MediaStreamingAudioChannel audioChannelType) { }
-        public MediaStreamingOptions(System.Uri transportUri, Azure.Communication.CallAutomation.MediaStreamingContent contentType, Azure.Communication.CallAutomation.MediaStreamingAudioChannel audioChannelType, Azure.Communication.CallAutomation.StreamingTransport transportType = default(Azure.Communication.CallAutomation.StreamingTransport), bool? startMediaStreaming = default(bool?)) { }
+        public MediaStreamingOptions(System.Uri transportUri, Azure.Communication.CallAutomation.MediaStreamingAudioChannel audioChannelType) { }
         public Azure.Communication.CallAutomation.AudioFormat? AudioFormat { get { throw null; } set { } }
         public bool? EnableBidirectional { get { throw null; } set { } }
         public bool? EnableDtmfTones { get { throw null; } set { } }
         public Azure.Communication.CallAutomation.MediaStreamingAudioChannel MediaStreamingAudioChannel { get { throw null; } }
-        public Azure.Communication.CallAutomation.MediaStreamingContent MediaStreamingContent { get { throw null; } }
+        public Azure.Communication.CallAutomation.MediaStreamingContent MediaStreamingContent { get { throw null; } set { } }
         public Azure.Communication.CallAutomation.StreamingTransport MediaStreamingTransport { get { throw null; } }
         public bool? StartMediaStreaming { get { throw null; } set { } }
         public System.Uri TransportUri { get { throw null; } }
@@ -1447,6 +1453,7 @@ namespace Azure.Communication.CallAutomation
         AudioMetadata = 1,
         TranscriptionData = 2,
         TranscriptionMetadata = 3,
+        DtmfData = 4,
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct StreamingTransport : System.IEquatable<Azure.Communication.CallAutomation.StreamingTransport>
@@ -1465,10 +1472,6 @@ namespace Azure.Communication.CallAutomation
         public static bool operator !=(Azure.Communication.CallAutomation.StreamingTransport left, Azure.Communication.CallAutomation.StreamingTransport right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public enum TextFormat
-    {
-        Display = 0,
-    }
     public partial class TextSource : Azure.Communication.CallAutomation.PlaySource
     {
         public TextSource(string text) { }
@@ -1485,7 +1488,7 @@ namespace Azure.Communication.CallAutomation
         internal TranscriptionData() { }
         public double Confidence { get { throw null; } }
         public System.TimeSpan Duration { get { throw null; } }
-        public Azure.Communication.CallAutomation.TextFormat Format { get { throw null; } }
+        public string Format { get { throw null; } }
         public System.TimeSpan Offset { get { throw null; } }
         public Azure.Communication.CommunicationIdentifier Participant { get { throw null; } }
         public Azure.Communication.CallAutomation.TranscriptionResultState ResultState { get { throw null; } }
@@ -1505,17 +1508,17 @@ namespace Azure.Communication.CallAutomation
         public string CallConnectionId { get { throw null; } }
         public string CorrelationId { get { throw null; } }
         public string Locale { get { throw null; } }
+        public string SpeechRecognitionModelEndpointId { get { throw null; } }
         public string TranscriptionSubscriptionId { get { throw null; } }
     }
     public partial class TranscriptionOptions
     {
-        public TranscriptionOptions(string locale) { }
-        public TranscriptionOptions(System.Uri transportUri, string locale, bool? startTranscription = default(bool?), Azure.Communication.CallAutomation.StreamingTransport transcriptionTransport = default(Azure.Communication.CallAutomation.StreamingTransport)) { }
+        public TranscriptionOptions(System.Uri transportUri, string locale) { }
         public bool? EnableIntermediateResults { get { throw null; } set { } }
         public string Locale { get { throw null; } }
         public string SpeechRecognitionModelEndpointId { get { throw null; } set { } }
-        public bool? StartTranscription { get { throw null; } }
-        public Azure.Communication.CallAutomation.StreamingTransport TranscriptionTransport { get { throw null; } }
+        public bool? StartTranscription { get { throw null; } set { } }
+        public Azure.Communication.CallAutomation.StreamingTransport TranscriptionTransport { get { throw null; } set { } }
         public System.Uri TransportUri { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
