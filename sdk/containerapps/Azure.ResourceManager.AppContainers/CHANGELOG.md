@@ -1,19 +1,16 @@
 # Release History
 
-## 1.4.0-beta.2 (Unreleased)
+## 1.4.0-beta.2 (2025-05-22)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+Stable release of api-version tag 'package-2025-01-01'.
 
 ## 1.4.0-beta.1 (2025-04-01)
 
 ### Features Added
-- Add api version 2025-01-01
+
+- Upgraded api-version tag 'package-2024-03' to 'package-2025-01-01'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/24b224b17e698746d3c34e32f84dab7de5e4f2a8/specification/app/resource-manager/readme.md.
   - Support keda scaler auth using MSI
   - Support RunningStatus for ContainerApp
   - Support Java Components 
@@ -36,7 +33,7 @@
 
 ### Features Added
 
-- Upgraded api-version tag from 'package-2023-05' to 'package-2024-03'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/07f22664203dc215a564e00329b81a8a94cc11ee/specification/app/resource-manager/readme.md
+- Upgraded api-version tag from 'package-2023-05' to 'package-2024-03'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/07f22664203dc215a564e00329b81a8a94cc11ee/specification/app/resource-manager/readme.md.
 - Enabled the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
 - Added `ArmOperation.Rehydrate` and `ArmOperation.Rehydrate<T>` static methods to rehydrate a long-running operation.
 
