@@ -4,6 +4,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.TypeSpec.Generator.Input;
+using Microsoft.TypeSpec.Generator.Input.Extensions;
 
 namespace Azure.Generator.Tests.Common
 {
@@ -194,9 +195,8 @@ namespace Azure.Generator.Tests.Common
         /// <param name="isDiscriminator"></param>
         /// <param name="wireName"></param>
         /// <param name="summary"></param>
-        /// <param name="description"></param>
         /// <param name="serializedName"></param>
-        /// <param name="kind"></param>
+        /// <param name="doc"></param>
         /// <returns></returns>
         public static InputModelProperty Property(
             string name,
@@ -206,20 +206,19 @@ namespace Azure.Generator.Tests.Common
             bool isDiscriminator = false,
             string? wireName = null,
             string? summary = null,
-            string? description = null,
             string? serializedName = null,
-            InputModelPropertyKind kind = InputModelPropertyKind.Property)
+            string? doc = null)
         {
             return new InputModelProperty(
                 name,
-                kind,
                 summary,
-                description ?? $"Description for {name}",
+                doc ?? $"Description for {name}",
                 type,
                 isRequired,
                 isReadOnly,
+                access: null,
                 isDiscriminator,
-                serializedName,
+                serializedName ?? wireName ?? name.ToVariableName(),
                 new(json: new(wireName ?? name)));
         }
 
