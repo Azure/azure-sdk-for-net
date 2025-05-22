@@ -168,10 +168,16 @@ function Set-ApiViewCommentForPR {
   $apiviewEndpoint = "$APIViewHost/api/pullrequests?pullRequestNumber=$PrNumber&repoName=$repoFullName&commitSHA=$HeadCommitish"
   LogDebug "Get APIView information for PR using endpoint: $apiviewEndpoint"
 
+  $correlationId = [System.Guid]::NewGuid().ToString()
+  $headers = @{
+    "x-correlation-id" = $correlationId
+  }
+  LogInfo "Correlation ID: $correlationId"
+
   $commentText = @()
   $commentText += "## API Change Check"
   try {
-    $response = Invoke-WebRequest -Uri $apiviewEndpoint -Method Get -MaximumRetryCount 3
+    $response = Invoke-WebRequest -Uri $apiviewEndpoint -Method Get -Headers $headers -MaximumRetryCount 3
     LogInfo "OperationId: $($response.Headers['X-Operation-Id'])"
     if ($response.StatusCode -ne 200) {
       LogInfo "API changes are not detected in this pull request."
@@ -272,10 +278,12 @@ function Create-API-Review {
     {
       $response = Invoke-WebRequest -Method 'GET' -Uri $requestUri.Uri -Headers $headers -MaximumRetryCount 3
       if ($response.StatusCode -eq 201) {
-        LogSuccess "Status Code: $($response.StatusCode)`nAPI review request created successfully.`n$($response.Content)"
+        $responseContent = $Response.Content | ConvertFrom-Json | ConvertTo-Json -Depth 10
+        LogSuccess "Status Code: $($response.StatusCode)`nAPI review request created successfully.`n$($responseContent)"
       }
       elseif ($response.StatusCode -eq 208) {
-        LogSuccess "Status Code: $($response.StatusCode)`nThere is no API change compared with the previous version."
+        $responseContent = $Response.Content | ConvertFrom-Json | ConvertTo-Json -Depth 10
+        LogSuccess "Status Code: $($response.StatusCode)`nThere is no API change compared with the previous version.`n$($responseContent)"
       }
       else {
         LogError "Failed to create API review request. $($response)"

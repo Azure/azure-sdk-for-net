@@ -55,11 +55,20 @@ function Submit-Request($filePath, $packageName)
     }
     $uri = [System.UriBuilder]$APIViewUri
     $uri.query = $query.toString()
+
+    $correlationId = [System.Guid]::NewGuid().ToString()
+    $headers = @{
+      "Content-Type"  = "application/json"
+      "x-correlation-id" = $correlationId
+    }
     LogInfo "Request URI: $($uri.Uri.OriginalString)"
+    LogInfo "Correlation ID: $correlationId"
     try
     {
-        $Response = Invoke-WebRequest -Method 'GET' -Uri $uri.Uri -MaximumRetryCount 3
+        $Response = Invoke-WebRequest -Method 'GET' -Uri $uri.Uri -Headers $headers -MaximumRetryCount 3
         $StatusCode = $Response.StatusCode
+        $responseContent = $Response.Content | ConvertFrom-Json | ConvertTo-Json -Depth 10
+        LogSuccess $responseContent
     }
     catch
     {
