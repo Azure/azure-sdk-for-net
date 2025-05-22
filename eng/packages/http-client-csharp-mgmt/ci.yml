@@ -4,9 +4,10 @@ trigger:
       - main
   paths:
     include:
-      - eng/packages/http-client-csharp
       - eng/packages/http-client-csharp-mgmt
       - eng/scripts/typespec
+    exclude:
+      - eng/packages/http-client-csharp-mgmt/ci.yml
 pr:
   branches:
     include:
@@ -16,9 +17,10 @@ pr:
       - release/*
   paths:
     include:
-      - eng/packages/http-client-csharp
       - eng/packages/http-client-csharp-mgmt
       - eng/scripts/typespec
+    exclude:
+      - eng/packages/http-client-csharp-mgmt/ci.yml  
 
 parameters:
   - name: UseTypeSpecNext

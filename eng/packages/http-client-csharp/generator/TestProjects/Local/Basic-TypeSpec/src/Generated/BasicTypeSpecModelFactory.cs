@@ -29,7 +29,7 @@ namespace BasicTypeSpec
         /// <param name="optionalNullableList"> optional nullable collection. </param>
         /// <param name="requiredNullableList"> required nullable collection. </param>
         /// <returns> A new <see cref="BasicTypeSpec.ThingModel"/> instance for mocking. </returns>
-        public static ThingModel ThingModel(string name = default, BinaryData requiredUnion = default, ThingModelRequiredLiteralString requiredLiteralString = default, ThingModelRequiredLiteralInt requiredLiteralInt = default, ThingModelRequiredLiteralFloat requiredLiteralFloat = default, bool requiredLiteralBool = default, ThingModelOptionalLiteralString? optionalLiteralString = default, ThingModelOptionalLiteralInt? optionalLiteralInt = default, ThingModelOptionalLiteralFloat? optionalLiteralFloat = default, bool? optionalLiteralBool = default, string requiredBadDescription = default, IEnumerable<int> optionalNullableList = default, IEnumerable<int> requiredNullableList = default)
+        public static ThingModel ThingModel(string name = default, BinaryData requiredUnion = default, string requiredLiteralString = default, int requiredLiteralInt = default, float requiredLiteralFloat = default, bool requiredLiteralBool = default, string optionalLiteralString = default, int? optionalLiteralInt = default, float? optionalLiteralFloat = default, bool? optionalLiteralBool = default, string requiredBadDescription = default, IEnumerable<int> optionalNullableList = default, IEnumerable<int> requiredNullableList = default)
         {
             optionalNullableList ??= new ChangeTrackingList<int>();
             requiredNullableList ??= new ChangeTrackingList<int>();

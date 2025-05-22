@@ -11,7 +11,7 @@ namespace _Type.Property.Optional
     {
         public FloatLiteralProperty() => throw null;
 
-        public FloatLiteralPropertyProperty? Property
+        public float? Property
         {
             get => throw null;
             set => throw null;
