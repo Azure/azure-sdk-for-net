@@ -14,7 +14,7 @@ namespace Azure.Communication.CallAutomation
         public MediaStreamingOptions(Uri transportUri, MediaStreamingAudioChannel audioChannelType)
         {
             MediaStreamingAudioChannel = audioChannelType ;
-            transportUri = transportUri ?? throw new ArgumentNullException(nameof(transportUri));
+            TransportUri = transportUri ?? throw new ArgumentNullException(nameof(transportUri));
             MediaStreamingTransport = StreamingTransport.Websocket;
             MediaStreamingContent = MediaStreamingContent.Audio;
         }
