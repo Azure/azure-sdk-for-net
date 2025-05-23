@@ -1,6 +1,6 @@
 # Release History
 
-## 1.11.0-beta.2 (Unreleased)
+## 1.11.0-beta.3 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,12 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.11.0-beta.2 (2025-05-15)
+
+### Bugs Fixed
+
+- Fix issue #49779, add custom serialization and deserialization methods for `ResourceUri` in `VirtualHubInboundRoutesContent` & `VirtualHubOutboundRoutesContent`.
 
 ## 1.11.0-beta.1 (2025-02-14)
 

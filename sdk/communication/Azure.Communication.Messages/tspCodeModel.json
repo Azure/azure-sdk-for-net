@@ -7315,8 +7315,7 @@
      "readOnly": false,
      "decorators": [],
      "crossLanguageDefinitionId": "Azure.Core.Foundations.CustomPage.clientRequestId",
-     "discriminator": false,
-     "flatten": false
+     "correspondingMethodParams": []
     }
    ]
   },
@@ -7418,8 +7417,7 @@
      "readOnly": false,
      "decorators": [],
      "crossLanguageDefinitionId": "Azure.Core.Foundations.CustomPage.clientRequestId",
-     "discriminator": false,
-     "flatten": false
+     "correspondingMethodParams": []
     }
    ]
   },
@@ -7521,8 +7519,7 @@
      "readOnly": false,
      "decorators": [],
      "crossLanguageDefinitionId": "Azure.Core.Foundations.CustomPage.clientRequestId",
-     "discriminator": false,
-     "flatten": false
+     "correspondingMethodParams": []
     }
    ]
   }
