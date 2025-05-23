@@ -325,7 +325,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
 
         protected override StorageResourceCheckpointDetails GetSourceCheckpointDetails()
         {
-            return new ShareFileSourceCheckpointDetails();
+            return new ShareFileSourceCheckpointDetails(shareProtocol: _options?.ShareProtocol ?? ShareProtocol.Smb);
         }
 
         protected override StorageResourceCheckpointDetails GetDestinationCheckpointDetails()
@@ -353,7 +353,8 @@ namespace Azure.Storage.DataMovement.Files.Shares
                 isFileMetadataSet: _options?._isFileMetadataSet ?? false,
                 fileMetadata: _options?.FileMetadata,
                 isDirectoryMetadataSet: _options?._isDirectoryMetadataSet ?? false,
-                directoryMetadata: _options?.DirectoryMetadata);
+                directoryMetadata: _options?.DirectoryMetadata,
+                shareProtocol: _options?.ShareProtocol ?? ShareProtocol.Smb);
         }
 
         protected override async Task<bool> ShouldItemTransferAsync(CancellationToken cancellationToken = default)

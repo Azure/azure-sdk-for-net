@@ -96,7 +96,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
 
         protected override StorageResourceCheckpointDetails GetSourceCheckpointDetails()
         {
-            return new ShareFileSourceCheckpointDetails();
+            return new ShareFileSourceCheckpointDetails(shareProtocol: ResourceOptions?.ShareProtocol ?? ShareProtocol.Smb);
         }
 
         protected override StorageResourceCheckpointDetails GetDestinationCheckpointDetails()
@@ -124,7 +124,8 @@ namespace Azure.Storage.DataMovement.Files.Shares
                 isFileMetadataSet: ResourceOptions?._isFileMetadataSet ?? false,
                 fileMetadata: ResourceOptions?.FileMetadata,
                 isDirectoryMetadataSet: ResourceOptions?._isDirectoryMetadataSet ?? false,
-                directoryMetadata: ResourceOptions?.DirectoryMetadata)
+                directoryMetadata: ResourceOptions?.DirectoryMetadata,
+                shareProtocol: ResourceOptions?.ShareProtocol ?? ShareProtocol.Smb)
             {
             };
         }
