@@ -127,11 +127,10 @@ namespace Azure.ResourceManager.HDInsight.Samples
             // invoke the operation
             HDInsightClusterPatch patch = new HDInsightClusterPatch
             {
-                Tags =
-{
-["key1"] = "val1",
-["key2"] = "val2"
-},
+                Tags = {
+                    ["key1"] = "val1",
+                    ["key2"] = "val2"
+                },
             };
             HDInsightClusterResource result = await hdInsightCluster.UpdateAsync(patch);
 
@@ -165,11 +164,10 @@ namespace Azure.ResourceManager.HDInsight.Samples
             // invoke the operation
             HDInsightClusterPatch patch = new HDInsightClusterPatch
             {
-                Tags =
-{
-["key1"] = "val1",
-["key2"] = "val2"
-},
+                Tags = {
+                        ["key1"] = "val1",
+                        ["key2"] = "val2"
+                    },
                 Identity = new ManagedServiceIdentity("SystemAssigned"),
             };
             HDInsightClusterResource result = await hdInsightCluster.UpdateAsync(patch);
@@ -307,16 +305,18 @@ namespace Azure.ResourceManager.HDInsight.Samples
                     Recurrence = new HDInsightAutoScaleRecurrence
                     {
                         TimeZone = "China Standard Time",
-                        Schedule = {new HDInsightAutoScaleSchedule
-{
-Days = {HDInsightDayOfWeek.Thursday},
-TimeAndCapacity = new HDInsightAutoScaleTimeAndCapacity
-{
-Time = "16:00",
-MinInstanceCount = 4,
-MaxInstanceCount = 4,
-},
-}},
+                        Schedule = {
+                                new HDInsightAutoScaleSchedule {
+                                    Days = {
+                                            HDInsightDayOfWeek.Thursday
+                                        },
+                                        TimeAndCapacity = new HDInsightAutoScaleTimeAndCapacity {
+                                            Time = "16:00",
+                                                MinInstanceCount = 4,
+                                                MaxInstanceCount = 4,
+                                        },
+                                }
+                            },
                     },
                 },
             };
@@ -439,12 +439,13 @@ MaxInstanceCount = 4,
             HDInsightClusterUpdateGatewaySettingsContent content = new HDInsightClusterUpdateGatewaySettingsContent
             {
                 IsCredentialEnabled = false,
-                RestAuthEntraUsers = {new EntraUserInfo
-{
-ObjectId = "00000000-0000-0000-0000-000000000000",
-DisplayName = "displayName",
-Upn = "user@microsoft.com",
-}},
+                RestAuthEntraUsers = {
+                        new EntraUserInfo {
+                            ObjectId = "00000000-0000-0000-0000-000000000000",
+                                DisplayName = "displayName",
+                                Upn = "user@microsoft.com",
+                        }
+                    },
             };
             await hdInsightCluster.UpdateGatewaySettingsAsync(WaitUntil.Completed, content);
 
@@ -533,10 +534,14 @@ Upn = "user@microsoft.com",
             // invoke the operation
             ExecuteScriptActionContent content = new ExecuteScriptActionContent(false)
             {
-                ScriptActions = {new RuntimeScriptAction("Test", new Uri("http://testurl.com/install.ssh"), new string[]{"headnode", "workernode"})
-{
-Parameters = "",
-}},
+                ScriptActions = {
+                    new RuntimeScriptAction("Test", new Uri("http://testurl.com/install.ssh"), new string[] {
+                        "headnode",
+                        "workernode"
+                    }) {
+                        Parameters = "",
+                    }
+                },
             };
             await hdInsightCluster.ExecuteScriptActionsAsync(WaitUntil.Completed, content);
 
@@ -1240,7 +1245,10 @@ Parameters = "",
             HDInsightClusterResource hdInsightCluster = client.GetHDInsightClusterResource(hdInsightClusterResourceId);
 
             // invoke the operation
-            IEnumerable<string> content = new string[] { "gateway1", "gateway3" };
+            IEnumerable<string> content = new string[] {
+                "gateway1",
+                "gateway3"
+            };
             await hdInsightCluster.RestartVirtualMachineHostsAsync(WaitUntil.Completed, content);
 
             Console.WriteLine("Succeeded");

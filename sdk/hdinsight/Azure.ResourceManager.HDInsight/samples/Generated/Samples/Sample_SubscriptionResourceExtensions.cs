@@ -193,10 +193,9 @@ namespace Azure.ResourceManager.HDInsight.Samples
                     ClusterDefinition = new HDInsightClusterDefinition
                     {
                         Kind = "spark",
-                        ComponentVersion =
-{
-["Spark"] = "2.4"
-},
+                        ComponentVersion = {
+                                        ["Spark"] = "2.4"
+                                    },
                         Configurations = BinaryData.FromObjectAsJson(new
                         {
                             gateway = new Dictionary<string, object>
@@ -207,60 +206,65 @@ namespace Azure.ResourceManager.HDInsight.Samples
                             },
                         }),
                     },
-                    ComputeRoles = {new HDInsightClusterRole
-{
-Name = "headnode",
-MinInstanceCount = 1,
-TargetInstanceCount = 2,
-AutoScaleConfiguration = default,
-HardwareVmSize = "Standard_E8_V3",
-OSLinuxProfile = new HDInsightLinuxOSProfile
-{
-Username = "sshuser",
-Password = "********",
-},
-VirtualNetworkProfile = default,
-DataDisksGroups = {},
-ScriptActions = {},
-}, new HDInsightClusterRole
-{
-Name = "workernode",
-TargetInstanceCount = 4,
-AutoScaleConfiguration = default,
-HardwareVmSize = "Standard_E8_V3",
-OSLinuxProfile = new HDInsightLinuxOSProfile
-{
-Username = "sshuser",
-Password = "********",
-},
-VirtualNetworkProfile = default,
-DataDisksGroups = {},
-ScriptActions = {},
-}, new HDInsightClusterRole
-{
-Name = "zookeepernode",
-MinInstanceCount = 1,
-TargetInstanceCount = 3,
-AutoScaleConfiguration = default,
-HardwareVmSize = "Standard_D13_V2",
-OSLinuxProfile = new HDInsightLinuxOSProfile
-{
-Username = "sshuser",
-Password = "**********",
-},
-VirtualNetworkProfile = default,
-DataDisksGroups = {},
-ScriptActions = {},
-}},
-                    StorageAccounts = {new HDInsightStorageAccountInfo
-{
-Name = "storagename.blob.core.windows.net",
-IsDefault = true,
-Container = "contianername",
-Key = "*******",
-ResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Storage/storageAccounts/storagename"),
-EnableSecureChannel = true,
-}},
+                    ComputeRoles = {
+                                new HDInsightClusterRole {
+                                    Name = "headnode",
+                                        MinInstanceCount = 1,
+                                        TargetInstanceCount = 2,
+                                        AutoScaleConfiguration =
+                                        default,
+                                        HardwareVmSize = "Standard_E8_V3",
+                                        OSLinuxProfile = new HDInsightLinuxOSProfile {
+                                            Username = "sshuser",
+                                                Password = "********",
+                                        },
+                                        VirtualNetworkProfile =
+                                        default,
+                                        DataDisksGroups = {},
+                                        ScriptActions = {},
+                                },
+                                new HDInsightClusterRole {
+                                    Name = "workernode",
+                                        TargetInstanceCount = 4,
+                                        AutoScaleConfiguration =
+                                        default,
+                                        HardwareVmSize = "Standard_E8_V3",
+                                        OSLinuxProfile = new HDInsightLinuxOSProfile {
+                                            Username = "sshuser",
+                                                Password = "********",
+                                        },
+                                        VirtualNetworkProfile =
+                                        default,
+                                        DataDisksGroups = {},
+                                        ScriptActions = {},
+                                },
+                                new HDInsightClusterRole {
+                                    Name = "zookeepernode",
+                                        MinInstanceCount = 1,
+                                        TargetInstanceCount = 3,
+                                        AutoScaleConfiguration =
+                                        default,
+                                        HardwareVmSize = "Standard_D13_V2",
+                                        OSLinuxProfile = new HDInsightLinuxOSProfile {
+                                            Username = "sshuser",
+                                                Password = "**********",
+                                        },
+                                        VirtualNetworkProfile =
+                                        default,
+                                        DataDisksGroups = {},
+                                        ScriptActions = {},
+                                }
+                            },
+                    StorageAccounts = {
+                                new HDInsightStorageAccountInfo {
+                                    Name = "storagename.blob.core.windows.net",
+                                        IsDefault = true,
+                                        Container = "contianername",
+                                        Key = "*******",
+                                        ResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Storage/storageAccounts/storagename"),
+                                        EnableSecureChannel = true,
+                                }
+                            },
                     MinSupportedTlsVersion = "1.2",
                 },
             };
