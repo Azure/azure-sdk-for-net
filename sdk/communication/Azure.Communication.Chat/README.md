@@ -65,14 +65,7 @@ Once you initialized a `ChatClient` class, you can do the following chat operati
 
 ### Create a thread
 ```C# Snippet:Azure_Communication_Chat_Tests_Samples_CreateThread_KeyConcepts
-CreateChatThreadOptions createChatThreadOptions = new CreateChatThreadOptions("Hello world!");
-
-createChatThreadOptions.Metadata.Add("MetadataKey1", "MetadataValue1");
-createChatThreadOptions.Metadata.Add("MetadataKey2", "MetadataValue2");
-
-createChatThreadOptions.RetentionPolicy = new ThreadCreationDateRetentionPolicy(40);
-
-CreateChatThreadResult createChatThreadResult = await chatClient.CreateChatThreadAsync(createChatThreadOptions);
+CreateChatThreadResult createChatThreadResult = await chatClient.CreateChatThreadAsync(topic: "Hello world!", participants: new ChatParticipant[] { });
 ChatThreadProperties chatThread = createChatThreadResult.ChatThread;
 ```
 ### Get a thread
@@ -92,11 +85,7 @@ Once you initialized a `ChatThreadClient` class, you can do the following chat o
 
 ### Update a thread
 ```C# Snippet:Azure_Communication_Chat_Tests_Samples_UpdateThread_KeyConcepts
-UpdateChatThreadPropertiesOptions updateChatThreadPropertiesOptions = new UpdateChatThreadPropertiesOptions();
-updateChatThreadPropertiesOptions.Topic = "Launch meeting";
-updateChatThreadPropertiesOptions.Metadata.Add("UpdateMetadataKey", "UpdateMetadataValue");
-updateChatThreadPropertiesOptions.RetentionPolicy = new NoneRetentionPolicy();
-await chatThreadClient.UpdatePropertiesAsync(updateChatThreadPropertiesOptions);
+chatThreadClient.UpdateTopic(topic: "Launch meeting");
 ```
 ### Send a message
 ```C# Snippet:Azure_Communication_Chat_Tests_Samples_SendMessage_KeyConcepts
@@ -189,20 +178,7 @@ var chatParticipant = new ChatParticipant(identifier: kimberly)
 {
     DisplayName = "Kim"
 };
-
-chatParticipant.Metadata.Add("MetadataKey1", "MetadataValue1");
-chatParticipant.Metadata.Add("MetadataKey2", "MetadataValue2");
-
-CreateChatThreadOptions createChatThreadOptions = new CreateChatThreadOptions("Hello world!");
-
-createChatThreadOptions.Participants.Add(chatParticipant);
-
-createChatThreadOptions.Metadata.Add("MetadataKey1", "MetadataValue1");
-createChatThreadOptions.Metadata.Add("MetadataKey2", "MetadataValue2");
-
-createChatThreadOptions.RetentionPolicy = new ThreadCreationDateRetentionPolicy(60);
-
-CreateChatThreadResult createChatThreadResult = await chatClient.CreateChatThreadAsync(createChatThreadOptions);
+CreateChatThreadResult createChatThreadResult = await chatClient.CreateChatThreadAsync(topic: "Hello world!", participants: new[] { chatParticipant });
 string threadId = createChatThreadResult.ChatThread.Id;
 ChatThreadClient chatThreadClient = chatClient.GetChatThreadClient(threadId);
 ```
@@ -240,11 +216,7 @@ await chatClient.DeleteChatThreadAsync(threadId);
 
 Use `UpdatePropertiesAsync` to update the chat thread topic or metadata.
 ```C# Snippet:Azure_Communication_Chat_Tests_Samples_UpdateThread
-UpdateChatThreadPropertiesOptions updateChatThreadPropertiesOptions = new UpdateChatThreadPropertiesOptions();
-updateChatThreadPropertiesOptions.Topic = "new topic !";
-updateChatThreadPropertiesOptions.Metadata.Add("UpdateMetadataKey", "UpdateMetadataValue");
-updateChatThreadPropertiesOptions.RetentionPolicy = new ThreadCreationDateRetentionPolicy(60);
-await chatThreadClient.UpdatePropertiesAsync(updateChatThreadPropertiesOptions);
+await chatThreadClient.UpdateTopicAsync(topic: "new topic !");
 ```
 
 ## Message Operations
