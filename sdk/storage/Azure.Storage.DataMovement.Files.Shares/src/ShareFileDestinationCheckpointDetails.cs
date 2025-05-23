@@ -200,6 +200,9 @@ namespace Azure.Storage.DataMovement.Files.Shares
             writer.WritePreservablePropertyOffset(IsFileMetadataSet, _fileMetadataBytes.Length, ref currentVariableLengthIndex);
             writer.WritePreservablePropertyOffset(IsDirectoryMetadataSet, _directoryMetadataBytes.Length, ref currentVariableLengthIndex);
 
+            // ShareProtocol
+            writer.Write((byte)ShareProtocol);
+
             // Variable length info
             if (IsFileAttributesSet)
             {
@@ -252,9 +255,6 @@ namespace Azure.Storage.DataMovement.Files.Shares
             {
                 writer.Write(_directoryMetadataBytes);
             }
-
-            // ShareProtocol
-            writer.Write((byte)ShareProtocol);
         }
 
         internal static ShareFileDestinationCheckpointDetails Deserialize(Stream stream)
@@ -288,6 +288,14 @@ namespace Azure.Storage.DataMovement.Files.Shares
             // Metadata
             (bool isFileMetadataSet, int fileMetadataOffset, int fileMetadataLength) = reader.ReadVariableLengthFieldInfo();
             (bool isDirectoryMetadataSet, int directoryMetadataOffset, int directoryMetadataLength) = reader.ReadVariableLengthFieldInfo();
+
+            // ShareProtocol
+            ShareProtocol shareProtocol = ShareProtocol.Smb;
+            bool shareProtocolSupport = version >= DataMovementShareConstants.DestinationCheckpointDetails.SchemaVersion_4;
+            if (shareProtocolSupport)
+            {
+                shareProtocol = (ShareProtocol)(reader.ReadByte());
+            }
 
             // NtfsFileAttributes
             NtfsFileAttributes? ntfsFileAttributes = null;
@@ -378,14 +386,6 @@ namespace Azure.Storage.DataMovement.Files.Shares
                 directoryMetadataString = Encoding.UTF8.GetString(reader.ReadBytes(directoryMetadataLength));
             }
 
-            // ShareProtocol
-            ShareProtocol shareProtocol = ShareProtocol.Smb;
-            bool shareProtocolSupport = version >= DataMovementShareConstants.DestinationCheckpointDetails.SchemaVersion_4;
-            if (shareProtocolSupport)
-            {
-                shareProtocol = (ShareProtocol)reader.ReadByte();
-            }
-
             // When deserializing, the version of the new CheckpointDetails is always the latest version.
             return new(
                 isContentTypeSet: isContentTypeSet,
@@ -462,8 +462,6 @@ namespace Azure.Storage.DataMovement.Files.Shares
             {
                 length += _directoryMetadataBytes.Length;
             }
-            // ShareProtocol
-            length += sizeof(byte);
             return length;
         }
     }

@@ -298,6 +298,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             writer.WritePreservablePropertyOffset(true, cacheControl.Length, ref currentVariableLengthIndex);
             writer.WritePreservablePropertyOffset(true, fileMetadata.Length, ref currentVariableLengthIndex);
             writer.WritePreservablePropertyOffset(true, directoryMetadata.Length, ref currentVariableLengthIndex);
+            writer.Write((byte)ShareProtocol.Nfs);
             writer.Write((int)DefaultFileAttributes);
             writer.Write(fileCreatedOn);
             writer.Write(fileLastWrittenOn);
@@ -309,7 +310,6 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             writer.Write(cacheControl);
             writer.Write(fileMetadata);
             writer.Write(directoryMetadata);
-            writer.Write((byte)ShareProtocol.Nfs);
 
             return stream.ToArray();
         }
@@ -345,6 +345,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             writer.WritePreservablePropertyOffset(true, cacheControl.Length, ref currentVariableLengthIndex);
             writer.WritePreservablePropertyOffset(true, fileMetadata.Length, ref currentVariableLengthIndex);
             writer.WritePreservablePropertyOffset(true, directoryMetadata.Length, ref currentVariableLengthIndex);
+            writer.Write((byte)ShareProtocol.Nfs);
             writer.Write((int)DefaultFileAttributes);
             writer.Write(fileCreatedOn);
             writer.Write(fileLastWrittenOn);
@@ -356,7 +357,6 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             writer.Write(cacheControl);
             writer.Write(fileMetadata);
             writer.Write(directoryMetadata);
-            writer.Write((byte)ShareProtocol.Nfs);
 
             return stream.ToArray();
         }

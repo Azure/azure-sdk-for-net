@@ -18,7 +18,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
         /// </summary>
         public ShareProtocol ShareProtocol;
 
-        public override int Length => CalculateLength();
+        public override int Length => DataMovementShareConstants.SourceCheckpointDetails.DataSize;
 
         public ShareFileSourceCheckpointDetails(
             ShareProtocol shareProtocol)
@@ -58,16 +58,6 @@ namespace Azure.Storage.DataMovement.Files.Shares
 
             // When deserializing, the version of the new CheckpointDetails is always the latest version.
             return new(shareProtocol: shareProtocol);
-        }
-
-        private int CalculateLength()
-        {
-            int length = 0;
-
-            length += sizeof(int); // Version
-            length += sizeof(byte); // ShareProtocol
-
-            return length;
         }
     }
 }

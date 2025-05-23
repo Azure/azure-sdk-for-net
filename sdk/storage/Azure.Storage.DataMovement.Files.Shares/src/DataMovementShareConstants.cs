@@ -17,6 +17,13 @@ namespace Azure.Storage.DataMovement.Files.Shares
             // Prior to Source Files Schema Version 1, the SourceCheckpointDetails was empty and Version was not present.
             internal const int SchemaVersion_1 = 1;
             internal const int SchemaVersion = SchemaVersion_1;
+
+            internal const int VersionEncodedSize = IntSizeInBytes;
+            internal const int ShareProtocolEncodedSize = OneByte;
+
+            internal const int VersionIndex = 0;
+            internal const int ShareProtocolIndex = VersionIndex + VersionEncodedSize;
+            internal const int DataSize = ShareProtocolIndex + ShareProtocolEncodedSize;
         }
 
         internal class DestinationCheckpointDetails
@@ -32,6 +39,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
             internal const int VersionEncodedSize = IntSizeInBytes;
             internal const int PreserveEncodedSize = OneByte;
             internal const int OffsetLengthEncodedSize = IntSizeInBytes;
+            internal const int ShareProtocolEncodedSize = OneByte;
 
             internal const int VersionIndex = 0;
 
@@ -81,7 +89,9 @@ namespace Azure.Storage.DataMovement.Files.Shares
             internal const int DirectoryMetadataOffsetIndex = PreserveDirectoryMetadataIndex + PreserveEncodedSize;
             internal const int DirectoryMetadataLengthIndex = DirectoryMetadataOffsetIndex + OffsetLengthEncodedSize;
 
-            internal const int VariableLengthStartIndex = DirectoryMetadataLengthIndex + OffsetLengthEncodedSize;
+            internal const int ShareProtocolIndex = DirectoryMetadataLengthIndex + OffsetLengthEncodedSize;
+
+            internal const int VariableLengthStartIndex = ShareProtocolIndex + ShareProtocolEncodedSize;
         }
     }
 }
