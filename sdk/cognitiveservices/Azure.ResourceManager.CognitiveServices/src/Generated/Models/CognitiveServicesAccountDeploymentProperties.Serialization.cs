@@ -107,6 +107,11 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 writer.WritePropertyName("parentDeploymentName"u8);
                 writer.WriteStringValue(ParentDeploymentName);
             }
+            if (Optional.IsDefined(SpilloverDeploymentName))
+            {
+                writer.WritePropertyName("spilloverDeploymentName"u8);
+                writer.WriteStringValue(SpilloverDeploymentName);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -156,6 +161,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             int? currentCapacity = default;
             DeploymentCapacitySettings capacitySettings = default;
             string parentDeploymentName = default;
+            string spilloverDeploymentName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -270,6 +276,11 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     parentDeploymentName = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("spilloverDeploymentName"u8))
+                {
+                    spilloverDeploymentName = property.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -289,6 +300,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 currentCapacity,
                 capacitySettings,
                 parentDeploymentName,
+                spilloverDeploymentName,
                 serializedAdditionalRawData);
         }
 
@@ -526,6 +538,29 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     else
                     {
                         builder.AppendLine($"'{ParentDeploymentName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SpilloverDeploymentName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  spilloverDeploymentName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SpilloverDeploymentName))
+                {
+                    builder.Append("  spilloverDeploymentName: ");
+                    if (SpilloverDeploymentName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{SpilloverDeploymentName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{SpilloverDeploymentName}'");
                     }
                 }
             }
