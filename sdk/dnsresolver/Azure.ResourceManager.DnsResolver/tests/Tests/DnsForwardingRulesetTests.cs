@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.DnsResolver.Tests
         //private string _vnetId ;
         //private string _subnetId;
 
-        public DnsForwardingRulesetTests(bool async) : base(async)//, RecordedTestMode.Record)
+        public DnsForwardingRulesetTests(bool async) : base(async) // RecordedTestMode.Record)
         {
         }
 

@@ -63,7 +63,5 @@ namespace Azure.ResourceManager.DnsResolver.Models
 
         /// <summary> The type of action to take. </summary>
         public DnsSecurityRuleActionType? ActionType { get; set; }
-        /// <summary> The response code for block actions. </summary>
-        public BlockResponseCode? BlockResponseCode { get; set; }
     }
 }

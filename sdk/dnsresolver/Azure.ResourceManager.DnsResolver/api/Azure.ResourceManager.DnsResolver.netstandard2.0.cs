@@ -683,6 +683,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
         public static Azure.ResourceManager.DnsResolver.DnsSecurityRuleData DnsSecurityRuleData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ETag? etag = default(Azure.ETag?), int priority = 0, Azure.ResourceManager.DnsResolver.Models.DnsSecurityRuleAction action = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> dnsResolverDomainLists = null, Azure.ResourceManager.DnsResolver.Models.DnsSecurityRuleState? dnsSecurityRuleState = default(Azure.ResourceManager.DnsResolver.Models.DnsSecurityRuleState?), Azure.ResourceManager.DnsResolver.Models.DnsResolverProvisioningState? provisioningState = default(Azure.ResourceManager.DnsResolver.Models.DnsResolverProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.DnsResolver.Models.VirtualNetworkDnsForwardingRuleset VirtualNetworkDnsForwardingRuleset(Azure.Core.ResourceIdentifier id = null, Azure.Core.ResourceIdentifier virtualNetworkLinkId = null) { throw null; }
     }
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct BlockResponseCode : System.IEquatable<Azure.ResourceManager.DnsResolver.Models.BlockResponseCode>
     {
@@ -865,6 +866,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
     {
         public DnsSecurityRuleAction() { }
         public Azure.ResourceManager.DnsResolver.Models.DnsSecurityRuleActionType? ActionType { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public Azure.ResourceManager.DnsResolver.Models.BlockResponseCode? BlockResponseCode { get { throw null; } set { } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DnsResolver.Models.DnsSecurityRuleAction System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DnsResolver.Models.DnsSecurityRuleAction>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
