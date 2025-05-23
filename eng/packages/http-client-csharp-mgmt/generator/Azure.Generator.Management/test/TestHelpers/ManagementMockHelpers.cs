@@ -78,7 +78,7 @@ namespace Azure.Generator.Management.Tests.TestHelpers
                 mockPluginInstance.SetupGet(p => p.TypeFactory).Returns(mockTypeFactory.Object);
             }
 
-            var sourceInputModel = new Mock<SourceInputModel>(() => new SourceInputModel(null)) { CallBase = true };
+            var sourceInputModel = new Mock<SourceInputModel>(() => new SourceInputModel(null, null)) { CallBase = true };
             mockPluginInstance.Setup(p => p.SourceInputModel).Returns(sourceInputModel.Object);
             var configureMethod = typeof(CodeModelGenerator).GetMethod(
                 "Configure",

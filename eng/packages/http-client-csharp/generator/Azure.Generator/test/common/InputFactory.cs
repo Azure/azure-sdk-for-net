@@ -1,9 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Collections.Generic;
-using System.Linq;
 using Microsoft.TypeSpec.Generator.Input;
+using Microsoft.TypeSpec.Generator.Input.Extensions;
 
 namespace Azure.Generator.Tests.Common
 {
@@ -40,11 +39,10 @@ namespace Azure.Generator.Tests.Common
             /// </summary>
             /// <param name="name"></param>
             /// <param name="value"></param>
-            /// <param name="enumType"></param>
             /// <returns></returns>
-            public static InputEnumTypeValue Int32(string name, int value, InputEnumType enumType)
+            public static InputEnumTypeValue Int32(string name, int value)
             {
-                return new InputEnumTypeValue(name, value, InputPrimitiveType.Int32, enumType, "", $"{name} description");
+                return new InputEnumTypeValue(name, value, InputPrimitiveType.Int32, "", $"{name} description");
             }
 
             /// <summary>
@@ -52,11 +50,10 @@ namespace Azure.Generator.Tests.Common
             /// </summary>
             /// <param name="name"></param>
             /// <param name="value"></param>
-            /// <param name="enumType"></param>
             /// <returns></returns>
-            public static InputEnumTypeValue Float32(string name, float value, InputEnumType enumType)
+            public static InputEnumTypeValue Float32(string name, float value)
             {
-                return new InputEnumTypeValue(name, value, InputPrimitiveType.Float32, enumType, "", $"{name} description");
+                return new InputEnumTypeValue(name, value, InputPrimitiveType.Float32, "", $"{name} description");
             }
 
             /// <summary>
@@ -64,11 +61,10 @@ namespace Azure.Generator.Tests.Common
             /// </summary>
             /// <param name="name"></param>
             /// <param name="value"></param>
-            /// <param name="enumType"></param>
             /// <returns></returns>
-            public static InputEnumTypeValue String(string name, string value, InputEnumType enumType)
+            public static InputEnumTypeValue String(string name, string value)
             {
-                return new InputEnumTypeValue(name, value, InputPrimitiveType.String, enumType, "", $"{name} description");
+                return new InputEnumTypeValue(name, value, InputPrimitiveType.String, "", $"{name} description");
             }
         }
 
@@ -197,9 +193,8 @@ namespace Azure.Generator.Tests.Common
         /// <param name="isDiscriminator"></param>
         /// <param name="wireName"></param>
         /// <param name="summary"></param>
-        /// <param name="description"></param>
         /// <param name="serializedName"></param>
-        /// <param name="kind"></param>
+        /// <param name="doc"></param>
         /// <returns></returns>
         public static InputModelProperty Property(
             string name,
@@ -209,20 +204,19 @@ namespace Azure.Generator.Tests.Common
             bool isDiscriminator = false,
             string? wireName = null,
             string? summary = null,
-            string? description = null,
             string? serializedName = null,
-            InputModelPropertyKind kind = InputModelPropertyKind.Property)
+            string? doc = null)
         {
             return new InputModelProperty(
                 name,
-                kind,
                 summary,
-                description ?? $"Description for {name}",
+                doc ?? $"Description for {name}",
                 type,
                 isRequired,
                 isReadOnly,
+                access: null,
                 isDiscriminator,
-                serializedName,
+                serializedName ?? wireName ?? name.ToVariableName(),
                 new(json: new(wireName ?? name)));
         }
 
@@ -379,6 +373,55 @@ namespace Azure.Generator.Tests.Common
         }
 
         /// <summary>
+        /// Construct paging service method
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="operation"></param>
+        /// <param name="access"></param>
+        /// <param name="parameters"></param>
+        /// <param name="response"></param>
+        /// <param name="exception"></param>
+        /// <param name="longRunningServiceMetadata"></param>
+        /// <returns></returns>
+        public static InputLongRunningServiceMethod LongRunningServiceMethod(
+            string name,
+            InputOperation operation,
+            string access = "public",
+            IReadOnlyList<InputParameter>? parameters = null,
+            InputServiceMethodResponse? response = null,
+            InputServiceMethodResponse? exception = null,
+            InputLongRunningServiceMetadata? longRunningServiceMetadata = null)
+        {
+            return new InputLongRunningServiceMethod(
+                name,
+                access,
+                [],
+                null,
+                null,
+                operation,
+                parameters ?? [],
+                response ?? ServiceMethodResponse(null, null),
+                exception,
+                false,
+                true,
+                true,
+                string.Empty,
+                longRunningServiceMetadata ?? LongRunningServiceMetadata(1, OperationResponse(), null));
+        }
+
+        /// <summary>
+        /// Construct paging metadata
+        /// </summary>
+        /// <param name="finalState"></param>
+        /// <param name="finalResponse"></param>
+        /// <param name="resultPath"></param>
+        /// <returns></returns>
+        public static InputLongRunningServiceMetadata LongRunningServiceMetadata(int finalState, InputOperationResponse finalResponse, string? resultPath)
+        {
+            return new InputLongRunningServiceMetadata(finalState, finalResponse, resultPath);
+        }
+
+        /// <summary>
         /// Construct input operation
         /// </summary>
         /// <param name="name"></param>
@@ -483,6 +526,27 @@ namespace Azure.Generator.Tests.Common
                 setDecoratorMethod!.Invoke(client, [decorators]);
             }
             return client;
+        }
+
+        public static InputPagingServiceMetadata ContinuationTokenPagingMetadata(InputParameter parameter, string itemPropertyName, string continuationTokenName, InputResponseLocation continuationTokenLocation)
+        {
+            return new InputPagingServiceMetadata(
+                [itemPropertyName],
+                null,
+                continuationToken: new InputContinuationToken(parameter, [continuationTokenName], continuationTokenLocation));
+        }
+
+        public static InputType Array(InputType elementType)
+        {
+            return new InputArrayType("list", "list", elementType);
+        }
+
+        public static InputPagingServiceMetadata NextLinkPagingMetadata(string itemPropertyName, string nextLinkName, InputResponseLocation nextLinkLocation)
+        {
+            return PagingMetadata(
+                [itemPropertyName],
+                new InputNextLink(null, [nextLinkName], nextLinkLocation),
+                null);
         }
     }
 }

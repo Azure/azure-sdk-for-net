@@ -9,6 +9,6 @@ namespace TypeSpec.Http.Streams
 {
     public partial class JsonlStreamInfo
     {
-        public JsonlStreamInfoContentType ContentType => throw null;
+        public string ContentType => throw null;
     }
 }

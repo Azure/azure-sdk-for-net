@@ -35,7 +35,7 @@ namespace Azure.Messaging.ServiceBus
     public class ServiceBusReceiver : IAsyncDisposable
     {
         /// <summary>The maximum number of messages to delete in a single batch.  This cap is established and enforced by the service.</summary>
-        internal const int MaxDeleteMessageCount = 4000;
+        internal const int MaxDeleteMessageCount = 500;
 
         /// <summary>The set of default options to use for initialization when no explicit options were provided.</summary>
         private static ServiceBusReceiverOptions s_defaultOptions;
