@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.MongoDBAtlas
 {
     public partial class MongoDBAtlasOrganizationResource : IJsonModel<MongoDBAtlasOrganizationData>
     {
+        private static MongoDBAtlasOrganizationData s_dataDeserializationInstance;
+        private static MongoDBAtlasOrganizationData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<MongoDBAtlasOrganizationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<MongoDBAtlasOrganizationData>)Data).Write(writer, options);
 
-        MongoDBAtlasOrganizationData IJsonModel<MongoDBAtlasOrganizationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MongoDBAtlasOrganizationData>)Data).Create(ref reader, options);
+        MongoDBAtlasOrganizationData IJsonModel<MongoDBAtlasOrganizationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MongoDBAtlasOrganizationData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<MongoDBAtlasOrganizationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<MongoDBAtlasOrganizationData>(Data, options, AzureResourceManagerMongoDBAtlasContext.Default);
 
         MongoDBAtlasOrganizationData IPersistableModel<MongoDBAtlasOrganizationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MongoDBAtlasOrganizationData>(data, options, AzureResourceManagerMongoDBAtlasContext.Default);
 
-        string IPersistableModel<MongoDBAtlasOrganizationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MongoDBAtlasOrganizationData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<MongoDBAtlasOrganizationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MongoDBAtlasOrganizationData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }
