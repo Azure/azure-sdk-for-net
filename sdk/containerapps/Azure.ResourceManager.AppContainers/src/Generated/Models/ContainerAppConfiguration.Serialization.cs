@@ -51,6 +51,11 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WritePropertyName("activeRevisionsMode"u8);
                 writer.WriteStringValue(ActiveRevisionsMode.Value.ToString());
             }
+            if (Optional.IsDefined(TargetLabel))
+            {
+                writer.WritePropertyName("targetLabel"u8);
+                writer.WriteStringValue(TargetLabel);
+            }
             if (Optional.IsDefined(Ingress))
             {
                 writer.WritePropertyName("ingress"u8);
@@ -80,6 +85,11 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 writer.WritePropertyName("maxInactiveRevisions"u8);
                 writer.WriteNumberValue(MaxInactiveRevisions.Value);
+            }
+            if (Optional.IsDefined(RevisionTransitionThreshold))
+            {
+                writer.WritePropertyName("revisionTransitionThreshold"u8);
+                writer.WriteNumberValue(RevisionTransitionThreshold.Value);
             }
             if (Optional.IsDefined(Service))
             {
@@ -135,11 +145,13 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
             IList<ContainerAppWritableSecret> secrets = default;
             ContainerAppActiveRevisionsMode? activeRevisionsMode = default;
+            string targetLabel = default;
             ContainerAppIngressConfiguration ingress = default;
             IList<ContainerAppRegistryCredentials> registries = default;
             ContainerAppDaprConfiguration dapr = default;
             Runtime runtime = default;
             int? maxInactiveRevisions = default;
+            int? revisionTransitionThreshold = default;
             Service service = default;
             IList<ContainerAppIdentitySettings> identitySettings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -167,6 +179,11 @@ namespace Azure.ResourceManager.AppContainers.Models
                         continue;
                     }
                     activeRevisionsMode = new ContainerAppActiveRevisionsMode(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("targetLabel"u8))
+                {
+                    targetLabel = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("ingress"u8))
@@ -219,6 +236,15 @@ namespace Azure.ResourceManager.AppContainers.Models
                     maxInactiveRevisions = property.Value.GetInt32();
                     continue;
                 }
+                if (property.NameEquals("revisionTransitionThreshold"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    revisionTransitionThreshold = property.Value.GetInt32();
+                    continue;
+                }
                 if (property.NameEquals("service"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -251,11 +277,13 @@ namespace Azure.ResourceManager.AppContainers.Models
             return new ContainerAppConfiguration(
                 secrets ?? new ChangeTrackingList<ContainerAppWritableSecret>(),
                 activeRevisionsMode,
+                targetLabel,
                 ingress,
                 registries ?? new ChangeTrackingList<ContainerAppRegistryCredentials>(),
                 dapr,
                 runtime,
                 maxInactiveRevisions,
+                revisionTransitionThreshold,
                 service,
                 identitySettings ?? new ChangeTrackingList<ContainerAppIdentitySettings>(),
                 serializedAdditionalRawData);
@@ -307,6 +335,29 @@ namespace Azure.ResourceManager.AppContainers.Models
                 {
                     builder.Append("  activeRevisionsMode: ");
                     builder.AppendLine($"'{ActiveRevisionsMode.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TargetLabel), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  targetLabel: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(TargetLabel))
+                {
+                    builder.Append("  targetLabel: ");
+                    if (TargetLabel.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{TargetLabel}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{TargetLabel}'");
+                    }
                 }
             }
 
@@ -363,16 +414,11 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("EnableMetrics", out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Runtime), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("  runtime: ");
-                builder.AppendLine("{");
-                builder.AppendLine("    java: {");
-                builder.Append("      enableMetrics: ");
                 builder.AppendLine(propertyOverride);
-                builder.AppendLine("    }");
-                builder.AppendLine("  }");
             }
             else
             {
@@ -395,6 +441,21 @@ namespace Azure.ResourceManager.AppContainers.Models
                 {
                     builder.Append("  maxInactiveRevisions: ");
                     builder.AppendLine($"{MaxInactiveRevisions.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RevisionTransitionThreshold), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  revisionTransitionThreshold: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RevisionTransitionThreshold))
+                {
+                    builder.Append("  revisionTransitionThreshold: ");
+                    builder.AppendLine($"{RevisionTransitionThreshold.Value}");
                 }
             }
 

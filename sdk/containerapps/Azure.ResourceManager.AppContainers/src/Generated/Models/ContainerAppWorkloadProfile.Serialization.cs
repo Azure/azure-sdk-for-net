@@ -37,6 +37,11 @@ namespace Azure.ResourceManager.AppContainers.Models
 
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
+            if (Optional.IsDefined(EnableFips))
+            {
+                writer.WritePropertyName("enableFips"u8);
+                writer.WriteBooleanValue(EnableFips.Value);
+            }
             writer.WritePropertyName("workloadProfileType"u8);
             writer.WriteStringValue(WorkloadProfileType);
             if (Optional.IsDefined(MinimumNodeCount))
@@ -87,6 +92,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 return null;
             }
             string name = default;
+            bool? enableFips = default;
             string workloadProfileType = default;
             int? minimumCount = default;
             int? maximumCount = default;
@@ -97,6 +103,15 @@ namespace Azure.ResourceManager.AppContainers.Models
                 if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("enableFips"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    enableFips = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("workloadProfileType"u8))
@@ -128,7 +143,13 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ContainerAppWorkloadProfile(name, workloadProfileType, minimumCount, maximumCount, serializedAdditionalRawData);
+            return new ContainerAppWorkloadProfile(
+                name,
+                enableFips,
+                workloadProfileType,
+                minimumCount,
+                maximumCount,
+                serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -162,6 +183,22 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         builder.AppendLine($"'{Name}'");
                     }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EnableFips), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  enableFips: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(EnableFips))
+                {
+                    builder.Append("  enableFips: ");
+                    var boolValue = EnableFips.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
                 }
             }
 

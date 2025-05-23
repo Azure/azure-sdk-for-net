@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// </param>
         /// <param name="metadata"> Metadata properties to describe the scale rule. </param>
         /// <param name="auth"> Authentication secrets for the scale rule. </param>
-        /// <param name="identity"> The resource ID of a user-assigned managed identity that is assigned to the Container App, or 'system' for system-assigned identity. </param>
+        /// <param name="identity"> The resource ID of a user-assigned managed identity that is assigned to the job, or 'system' for system-assigned identity. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ContainerAppJobScaleRule(string name, string jobScaleRuleType, BinaryData metadata, IList<ContainerAppScaleRuleAuth> auth, string identity, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <summary> Authentication secrets for the scale rule. </summary>
         [WirePath("auth")]
         public IList<ContainerAppScaleRuleAuth> Auth { get; }
-        /// <summary> The resource ID of a user-assigned managed identity that is assigned to the Container App, or 'system' for system-assigned identity. </summary>
+        /// <summary> The resource ID of a user-assigned managed identity that is assigned to the job, or 'system' for system-assigned identity. </summary>
         [WirePath("identity")]
         public string Identity { get; set; }
     }

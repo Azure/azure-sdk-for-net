@@ -14,7 +14,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    internal partial class ConnectedEnvironmentStorageProperties : IUtf8JsonSerializable, IJsonModel<ConnectedEnvironmentStorageProperties>
+    public partial class ConnectedEnvironmentStorageProperties : IUtf8JsonSerializable, IJsonModel<ConnectedEnvironmentStorageProperties>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConnectedEnvironmentStorageProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
@@ -35,10 +35,25 @@ namespace Azure.ResourceManager.AppContainers.Models
                 throw new FormatException($"The model {nameof(ConnectedEnvironmentStorageProperties)} does not support writing '{format}' format.");
             }
 
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(DeploymentErrors))
+            {
+                writer.WritePropertyName("deploymentErrors"u8);
+                writer.WriteStringValue(DeploymentErrors);
+            }
             if (Optional.IsDefined(AzureFile))
             {
                 writer.WritePropertyName("azureFile"u8);
                 writer.WriteObjectValue(AzureFile, options);
+            }
+            if (Optional.IsDefined(Smb))
+            {
+                writer.WritePropertyName("smb"u8);
+                writer.WriteObjectValue(Smb, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -77,11 +92,28 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
+            ConnectedEnvironmentStorageProvisioningState? provisioningState = default;
+            string deploymentErrors = default;
             ContainerAppAzureFileProperties azureFile = default;
+            SmbStorage smb = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("provisioningState"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    provisioningState = new ConnectedEnvironmentStorageProvisioningState(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("deploymentErrors"u8))
+                {
+                    deploymentErrors = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("azureFile"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -91,13 +123,22 @@ namespace Azure.ResourceManager.AppContainers.Models
                     azureFile = ContainerAppAzureFileProperties.DeserializeContainerAppAzureFileProperties(property.Value, options);
                     continue;
                 }
+                if (property.NameEquals("smb"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    smb = SmbStorage.DeserializeSmbStorage(property.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ConnectedEnvironmentStorageProperties(azureFile, serializedAdditionalRawData);
+            return new ConnectedEnvironmentStorageProperties(provisioningState, deploymentErrors, azureFile, smb, serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -111,6 +152,44 @@ namespace Azure.ResourceManager.AppContainers.Models
 
             builder.AppendLine("{");
 
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProvisioningState), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  provisioningState: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ProvisioningState))
+                {
+                    builder.Append("  provisioningState: ");
+                    builder.AppendLine($"'{ProvisioningState.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DeploymentErrors), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  deploymentErrors: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DeploymentErrors))
+                {
+                    builder.Append("  deploymentErrors: ");
+                    if (DeploymentErrors.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{DeploymentErrors}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{DeploymentErrors}'");
+                    }
+                }
+            }
+
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AzureFile), out propertyOverride);
             if (hasPropertyOverride)
             {
@@ -123,6 +202,21 @@ namespace Azure.ResourceManager.AppContainers.Models
                 {
                     builder.Append("  azureFile: ");
                     BicepSerializationHelpers.AppendChildObject(builder, AzureFile, options, 2, false, "  azureFile: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Smb), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  smb: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Smb))
+                {
+                    builder.Append("  smb: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Smb, options, 2, false, "  smb: ");
                 }
             }
 

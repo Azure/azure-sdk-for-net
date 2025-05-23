@@ -60,13 +60,15 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         /// <summary> Initializes a new instance of <see cref="ContainerAppWorkloadProfile"/>. </summary>
         /// <param name="name"> Workload profile type for the workloads to run on. </param>
+        /// <param name="enableFips"> Whether to use a FIPS-enabled OS. Supported only for dedicated workload profiles. </param>
         /// <param name="workloadProfileType"> Workload profile type for the workloads to run on. </param>
         /// <param name="minimumNodeCount"> The minimum capacity. </param>
         /// <param name="maximumNodeCount"> The maximum capacity. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerAppWorkloadProfile(string name, string workloadProfileType, int? minimumNodeCount, int? maximumNodeCount, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ContainerAppWorkloadProfile(string name, bool? enableFips, string workloadProfileType, int? minimumNodeCount, int? maximumNodeCount, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
+            EnableFips = enableFips;
             WorkloadProfileType = workloadProfileType;
             MinimumNodeCount = minimumNodeCount;
             MaximumNodeCount = maximumNodeCount;
@@ -81,6 +83,9 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <summary> Workload profile type for the workloads to run on. </summary>
         [WirePath("name")]
         public string Name { get; set; }
+        /// <summary> Whether to use a FIPS-enabled OS. Supported only for dedicated workload profiles. </summary>
+        [WirePath("enableFips")]
+        public bool? EnableFips { get; set; }
         /// <summary> Workload profile type for the workloads to run on. </summary>
         [WirePath("workloadProfileType")]
         public string WorkloadProfileType { get; set; }

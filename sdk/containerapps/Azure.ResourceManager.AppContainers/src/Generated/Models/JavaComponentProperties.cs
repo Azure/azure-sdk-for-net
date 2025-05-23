@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.AppContainers.Models
     /// <summary>
     /// Java Component common properties.
     /// Please note <see cref="JavaComponentProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="SpringBootAdminComponent"/>, <see cref="SpringCloudConfigComponent"/> and <see cref="SpringCloudEurekaComponent"/>.
+    /// The available derived classes include <see cref="NacosComponent"/>, <see cref="SpringBootAdminComponent"/>, <see cref="SpringCloudConfigComponent"/>, <see cref="SpringCloudEurekaComponent"/> and <see cref="SpringCloudGatewayComponent"/>.
     /// </summary>
     public abstract partial class JavaComponentProperties
     {

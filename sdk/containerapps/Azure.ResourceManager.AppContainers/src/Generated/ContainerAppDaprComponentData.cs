@@ -57,6 +57,7 @@ namespace Azure.ResourceManager.AppContainers
             Secrets = new ChangeTrackingList<ContainerAppWritableSecret>();
             Metadata = new ChangeTrackingList<ContainerAppDaprMetadata>();
             Scopes = new ChangeTrackingList<string>();
+            ServiceComponentBind = new ChangeTrackingList<DaprComponentServiceBinding>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerAppDaprComponentData"/>. </summary>
@@ -72,8 +73,9 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="secretStoreComponent"> Name of a Dapr component to retrieve component secrets from. </param>
         /// <param name="metadata"> Component metadata. </param>
         /// <param name="scopes"> Names of container apps that can use this Dapr component. </param>
+        /// <param name="serviceComponentBind"> List of container app services that are bound to the Dapr component. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerAppDaprComponentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string componentType, string version, bool? ignoreErrors, string initTimeout, IList<ContainerAppWritableSecret> secrets, string secretStoreComponent, IList<ContainerAppDaprMetadata> metadata, IList<string> scopes, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ContainerAppDaprComponentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string componentType, string version, bool? ignoreErrors, string initTimeout, IList<ContainerAppWritableSecret> secrets, string secretStoreComponent, IList<ContainerAppDaprMetadata> metadata, IList<string> scopes, IList<DaprComponentServiceBinding> serviceComponentBind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ComponentType = componentType;
             Version = version;
@@ -83,6 +85,7 @@ namespace Azure.ResourceManager.AppContainers
             SecretStoreComponent = secretStoreComponent;
             Metadata = metadata;
             Scopes = scopes;
+            ServiceComponentBind = serviceComponentBind;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -110,5 +113,8 @@ namespace Azure.ResourceManager.AppContainers
         /// <summary> Names of container apps that can use this Dapr component. </summary>
         [WirePath("properties.scopes")]
         public IList<string> Scopes { get; }
+        /// <summary> List of container app services that are bound to the Dapr component. </summary>
+        [WirePath("properties.serviceComponentBind")]
+        public IList<DaprComponentServiceBinding> ServiceComponentBind { get; }
     }
 }

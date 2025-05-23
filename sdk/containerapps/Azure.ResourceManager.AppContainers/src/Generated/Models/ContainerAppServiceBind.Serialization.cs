@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
@@ -44,6 +45,22 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
+            }
+            if (Optional.IsDefined(ClientType))
+            {
+                writer.WritePropertyName("clientType"u8);
+                writer.WriteStringValue(ClientType);
+            }
+            if (Optional.IsCollectionDefined(CustomizedKeys))
+            {
+                writer.WritePropertyName("customizedKeys"u8);
+                writer.WriteStartObject();
+                foreach (var item in CustomizedKeys)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -84,6 +101,8 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
             ResourceIdentifier serviceId = default;
             string name = default;
+            string clientType = default;
+            IDictionary<string, string> customizedKeys = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -102,13 +121,32 @@ namespace Azure.ResourceManager.AppContainers.Models
                     name = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("clientType"u8))
+                {
+                    clientType = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("customizedKeys"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, property0.Value.GetString());
+                    }
+                    customizedKeys = dictionary;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ContainerAppServiceBind(serviceId, name, serializedAdditionalRawData);
+            return new ContainerAppServiceBind(serviceId, name, clientType, customizedKeys ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -156,6 +194,66 @@ namespace Azure.ResourceManager.AppContainers.Models
                     else
                     {
                         builder.AppendLine($"'{Name}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ClientType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  clientType: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ClientType))
+                {
+                    builder.Append("  clientType: ");
+                    if (ClientType.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ClientType}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ClientType}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CustomizedKeys), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  customizedKeys: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(CustomizedKeys))
+                {
+                    if (CustomizedKeys.Any())
+                    {
+                        builder.Append("  customizedKeys: ");
+                        builder.AppendLine("{");
+                        foreach (var item in CustomizedKeys)
+                        {
+                            builder.Append($"    '{item.Key}': ");
+                            if (item.Value == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Value.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("'''");
+                                builder.AppendLine($"{item.Value}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"'{item.Value}'");
+                            }
+                        }
+                        builder.AppendLine("  }");
                     }
                 }
             }

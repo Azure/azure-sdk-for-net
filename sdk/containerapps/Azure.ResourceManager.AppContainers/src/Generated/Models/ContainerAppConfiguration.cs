@@ -57,25 +57,29 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="secrets"> Collection of secrets used by a Container app. </param>
         /// <param name="activeRevisionsMode">
         /// ActiveRevisionsMode controls how active revisions are handled for the Container app:
-        /// &lt;list&gt;&lt;item&gt;Multiple: multiple revisions can be active.&lt;/item&gt;&lt;item&gt;Single: Only one revision can be active at a time. Revision weights can not be used in this mode. If no value if provided, this is the default.&lt;/item&gt;&lt;/list&gt;
+        /// &lt;list&gt;&lt;item&gt;Single: Only one revision can be active at a time. Traffic weights cannot be used. This is the default.&lt;/item&gt;&lt;item&gt;Multiple: Multiple revisions can be active, including optional traffic weights and labels.&lt;/item&gt;&lt;item&gt;Labels: Only revisions with labels are active. Traffic weights can be applied to labels.&lt;/item&gt;&lt;/list&gt;
         /// </param>
+        /// <param name="targetLabel"> Required in labels revisions mode. Label to apply to newly created revision. </param>
         /// <param name="ingress"> Ingress configurations. </param>
         /// <param name="registries"> Collection of private container registry credentials for containers used by the Container app. </param>
         /// <param name="dapr"> Dapr configuration for the Container App. </param>
         /// <param name="runtime"> App runtime configuration for the Container App. </param>
         /// <param name="maxInactiveRevisions"> Optional. Max inactive revisions a Container App can have. </param>
+        /// <param name="revisionTransitionThreshold"> Optional. The percent of the total number of replicas that must be brought up before revision transition occurs. Defaults to 100 when none is given. Value must be greater than 0 and less than or equal to 100. </param>
         /// <param name="service"> Container App to be a dev Container App Service. </param>
         /// <param name="identitySettings"> Optional settings for Managed Identities that are assigned to the Container App. If a Managed Identity is not specified here, default settings will be used. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerAppConfiguration(IList<ContainerAppWritableSecret> secrets, ContainerAppActiveRevisionsMode? activeRevisionsMode, ContainerAppIngressConfiguration ingress, IList<ContainerAppRegistryCredentials> registries, ContainerAppDaprConfiguration dapr, Runtime runtime, int? maxInactiveRevisions, Service service, IList<ContainerAppIdentitySettings> identitySettings, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ContainerAppConfiguration(IList<ContainerAppWritableSecret> secrets, ContainerAppActiveRevisionsMode? activeRevisionsMode, string targetLabel, ContainerAppIngressConfiguration ingress, IList<ContainerAppRegistryCredentials> registries, ContainerAppDaprConfiguration dapr, Runtime runtime, int? maxInactiveRevisions, int? revisionTransitionThreshold, Service service, IList<ContainerAppIdentitySettings> identitySettings, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Secrets = secrets;
             ActiveRevisionsMode = activeRevisionsMode;
+            TargetLabel = targetLabel;
             Ingress = ingress;
             Registries = registries;
             Dapr = dapr;
             Runtime = runtime;
             MaxInactiveRevisions = maxInactiveRevisions;
+            RevisionTransitionThreshold = revisionTransitionThreshold;
             Service = service;
             IdentitySettings = identitySettings;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -86,10 +90,13 @@ namespace Azure.ResourceManager.AppContainers.Models
         public IList<ContainerAppWritableSecret> Secrets { get; }
         /// <summary>
         /// ActiveRevisionsMode controls how active revisions are handled for the Container app:
-        /// &lt;list&gt;&lt;item&gt;Multiple: multiple revisions can be active.&lt;/item&gt;&lt;item&gt;Single: Only one revision can be active at a time. Revision weights can not be used in this mode. If no value if provided, this is the default.&lt;/item&gt;&lt;/list&gt;
+        /// &lt;list&gt;&lt;item&gt;Single: Only one revision can be active at a time. Traffic weights cannot be used. This is the default.&lt;/item&gt;&lt;item&gt;Multiple: Multiple revisions can be active, including optional traffic weights and labels.&lt;/item&gt;&lt;item&gt;Labels: Only revisions with labels are active. Traffic weights can be applied to labels.&lt;/item&gt;&lt;/list&gt;
         /// </summary>
         [WirePath("activeRevisionsMode")]
         public ContainerAppActiveRevisionsMode? ActiveRevisionsMode { get; set; }
+        /// <summary> Required in labels revisions mode. Label to apply to newly created revision. </summary>
+        [WirePath("targetLabel")]
+        public string TargetLabel { get; set; }
         /// <summary> Ingress configurations. </summary>
         [WirePath("ingress")]
         public ContainerAppIngressConfiguration Ingress { get; set; }
@@ -100,23 +107,14 @@ namespace Azure.ResourceManager.AppContainers.Models
         [WirePath("dapr")]
         public ContainerAppDaprConfiguration Dapr { get; set; }
         /// <summary> App runtime configuration for the Container App. </summary>
-        internal Runtime Runtime { get; set; }
-        /// <summary> Enable jmx core metrics for the java app. </summary>
-        [WirePath("runtime.java.enableMetrics")]
-        public bool? EnableMetrics
-        {
-            get => Runtime is null ? default : Runtime.EnableMetrics;
-            set
-            {
-                if (Runtime is null)
-                    Runtime = new Runtime();
-                Runtime.EnableMetrics = value;
-            }
-        }
-
+        [WirePath("runtime")]
+        public Runtime Runtime { get; set; }
         /// <summary> Optional. Max inactive revisions a Container App can have. </summary>
         [WirePath("maxInactiveRevisions")]
         public int? MaxInactiveRevisions { get; set; }
+        /// <summary> Optional. The percent of the total number of replicas that must be brought up before revision transition occurs. Defaults to 100 when none is given. Value must be greater than 0 and less than or equal to 100. </summary>
+        [WirePath("revisionTransitionThreshold")]
+        public int? RevisionTransitionThreshold { get; set; }
         /// <summary> Container App to be a dev Container App Service. </summary>
         internal Service Service { get; set; }
         /// <summary> Dev ContainerApp service type. </summary>

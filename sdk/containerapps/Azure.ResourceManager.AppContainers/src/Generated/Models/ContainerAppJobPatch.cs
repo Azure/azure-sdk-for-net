@@ -53,18 +53,23 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerAppJobPatch"/>. </summary>
+        /// <param name="extendedLocation"> The complex type of the extended location. </param>
         /// <param name="identity"> Managed identities needed by a container app job to interact with other Azure services to not maintain any secrets or credentials in code. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerAppJobPatch(ManagedServiceIdentity identity, IDictionary<string, string> tags, ContainerAppJobPatchProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ContainerAppJobPatch(ContainerAppExtendedLocation extendedLocation, ManagedServiceIdentity identity, IDictionary<string, string> tags, ContainerAppJobPatchProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
+            ExtendedLocation = extendedLocation;
             Identity = identity;
             Tags = tags;
             Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> The complex type of the extended location. </summary>
+        [WirePath("extendedLocation")]
+        public ContainerAppExtendedLocation ExtendedLocation { get; set; }
         /// <summary> Managed identities needed by a container app job to interact with other Azure services to not maintain any secrets or credentials in code. </summary>
         [WirePath("identity")]
         public ManagedServiceIdentity Identity { get; set; }

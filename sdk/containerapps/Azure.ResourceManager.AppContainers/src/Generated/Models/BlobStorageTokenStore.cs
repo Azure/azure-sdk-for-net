@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.AppContainers.Models
 {
     /// <summary> The configuration settings of the storage of the tokens if blob storage is used. </summary>
-    internal partial class BlobStorageTokenStore
+    public partial class BlobStorageTokenStore
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,31 +46,36 @@ namespace Azure.ResourceManager.AppContainers.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="BlobStorageTokenStore"/>. </summary>
-        /// <param name="sasUrlSettingName"> The name of the app secrets containing the SAS URL of the blob storage containing the tokens. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sasUrlSettingName"/> is null. </exception>
-        public BlobStorageTokenStore(string sasUrlSettingName)
+        public BlobStorageTokenStore()
         {
-            Argument.AssertNotNull(sasUrlSettingName, nameof(sasUrlSettingName));
-
-            SasUrlSettingName = sasUrlSettingName;
         }
 
         /// <summary> Initializes a new instance of <see cref="BlobStorageTokenStore"/>. </summary>
-        /// <param name="sasUrlSettingName"> The name of the app secrets containing the SAS URL of the blob storage containing the tokens. </param>
+        /// <param name="sasUrlSettingName"> The name of the app secrets containing the SAS URL of the blob storage containing the tokens. Should not be used along with blobContainerUri. </param>
+        /// <param name="blobContainerUri"> The URI of the blob storage containing the tokens. Should not be used along with sasUrlSettingName. </param>
+        /// <param name="clientId"> The Client ID of a User-Assigned Managed Identity. Should not be used along with managedIdentityResourceId. </param>
+        /// <param name="managedIdentityResourceId"> The Resource ID of a User-Assigned Managed Identity. Should not be used along with clientId. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BlobStorageTokenStore(string sasUrlSettingName, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal BlobStorageTokenStore(string sasUrlSettingName, Uri blobContainerUri, string clientId, string managedIdentityResourceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SasUrlSettingName = sasUrlSettingName;
+            BlobContainerUri = blobContainerUri;
+            ClientId = clientId;
+            ManagedIdentityResourceId = managedIdentityResourceId;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="BlobStorageTokenStore"/> for deserialization. </summary>
-        internal BlobStorageTokenStore()
-        {
-        }
-
-        /// <summary> The name of the app secrets containing the SAS URL of the blob storage containing the tokens. </summary>
+        /// <summary> The name of the app secrets containing the SAS URL of the blob storage containing the tokens. Should not be used along with blobContainerUri. </summary>
         [WirePath("sasUrlSettingName")]
         public string SasUrlSettingName { get; set; }
+        /// <summary> The URI of the blob storage containing the tokens. Should not be used along with sasUrlSettingName. </summary>
+        [WirePath("blobContainerUri")]
+        public Uri BlobContainerUri { get; set; }
+        /// <summary> The Client ID of a User-Assigned Managed Identity. Should not be used along with managedIdentityResourceId. </summary>
+        [WirePath("clientId")]
+        public string ClientId { get; set; }
+        /// <summary> The Resource ID of a User-Assigned Managed Identity. Should not be used along with clientId. </summary>
+        [WirePath("managedIdentityResourceId")]
+        public string ManagedIdentityResourceId { get; set; }
     }
 }
