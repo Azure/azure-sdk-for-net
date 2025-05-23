@@ -8,7 +8,7 @@
 
 ### Bugs Fixed
 
-- fix the issue of data type mismatch in the AsyncPageable return values. Issue at 'https://github.com/Azure/azure-sdk-for-net/issues/47267.
+- Fixed the issue of data type mismatch in the AsyncPageable return values. Issue at 'https://github.com/Azure/azure-sdk-for-net/issues/47267.
 
 ### Other Changes
 
