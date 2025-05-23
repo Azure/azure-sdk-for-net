@@ -45,12 +45,12 @@ namespace Azure.Generator.Management.Providers
         protected override MethodProvider[] BuildMethods()
         {
             var jsonModelInterface = new CSharpType(typeof(IJsonModel<>), _resourceDataType);
-            var options = new ParameterProvider("options", $"", typeof(ModelReaderWriterOptions));
+            var options = new ParameterProvider("options", $"The client options for reading and writing models.", typeof(ModelReaderWriterOptions));
             var iModelTInterface = new CSharpType(typeof(IPersistableModel<>), _resourceDataType);
-            var data = new ParameterProvider("data", $"", typeof(BinaryData));
+            var data = new ParameterProvider("data", $"The binary data to be processed.", typeof(BinaryData));
 
             // void IJsonModel<T>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-            var writer = new ParameterProvider("writer", $"", typeof(Utf8JsonWriter));
+            var writer = new ParameterProvider("writer", $"The writer to serialize the model to.", typeof(Utf8JsonWriter));
             var jsonModelWriteMethod = new MethodProvider(
                 new MethodSignature(nameof(IJsonModel<object>.Write), null, MethodSignatureModifiers.None, null, null, [writer, options], ExplicitInterface: jsonModelInterface),
                 // => ((IJsonModel<T>)Data).Write(writer, options);
@@ -58,7 +58,7 @@ namespace Azure.Generator.Management.Providers
                 this);
 
             // T IJsonModel<T>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
-            var reader = new ParameterProvider("reader", $"", typeof(Utf8JsonReader), isRef: true);
+            var reader = new ParameterProvider("reader", $"The reader for deserializing the model.", typeof(Utf8JsonReader), isRef: true);
             var jsonModelCreatemethod = new MethodProvider(
                 new MethodSignature(nameof(IJsonModel<object>.Create), null, MethodSignatureModifiers.None, _resourceDataType, null, [reader, options], ExplicitInterface: jsonModelInterface),
                 // => ((IJsonModel<T>)DataDeserializationInstance).Create(reader, options);

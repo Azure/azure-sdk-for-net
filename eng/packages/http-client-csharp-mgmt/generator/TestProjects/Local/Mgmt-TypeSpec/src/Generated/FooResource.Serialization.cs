@@ -19,22 +19,22 @@ namespace MgmtTypeSpec
 
         private static FooData DataDeserializationInstance => s_dataDeserializationInstance = new FooData();
 
-        /// <param name="writer"></param>
-        /// <param name="options"></param>
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<FooData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<FooData>)Data).Write(writer, options);
 
-        /// <param name="reader"></param>
-        /// <param name="options"></param>
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         FooData IJsonModel<FooData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<FooData>)DataDeserializationInstance).Create(ref reader, options);
 
-        /// <param name="options"></param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<FooData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<FooData>(Data, options, MgmtTypeSpecContext.Default);
 
-        /// <param name="data"></param>
-        /// <param name="options"></param>
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         FooData IPersistableModel<FooData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<FooData>(data, options, MgmtTypeSpecContext.Default);
 
-        /// <param name="options"></param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<FooData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<FooData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }
