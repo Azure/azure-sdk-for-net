@@ -12,7 +12,7 @@ tag: package-2024-06-preview
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
-  output-folder: $(this-folder)/../samples/Generated
+  output-folder: $(this-folder)/../tests/Generated
   clear-output-folder: true
   skipped-operations:
     # Not support generate samples from customized operations
@@ -48,7 +48,7 @@ rename-mapping:
   ActiveConfigurationParameter: ActiveConfigurationContent
   ActiveConnectivityConfiguration.commitTime: CommittedOn
   ActiveConnectivityConfiguration.region: -|azure-location
-  AddressSpace: VirtualNetworkAddressSpace 
+  AddressSpace: VirtualNetworkAddressSpace
   AdminRule: NetworkAdminRule
   AdminRuleCollection: AdminRuleGroup
   AdminRuleCollectionListResult: AdminRuleGroupListResult
@@ -655,7 +655,7 @@ directive:
   #     {
   #         delete $[param];
   #     }
-  
+
   # Remove the format of id which break current type replacement logic, issue https://github.com/Azure/azure-sdk-for-net/issues/47589 opened to track this requirement.
   - from: network.json
     where: $.definitions
