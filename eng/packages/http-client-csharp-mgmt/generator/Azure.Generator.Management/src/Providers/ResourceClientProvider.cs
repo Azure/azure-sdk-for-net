@@ -281,22 +281,22 @@ namespace Azure.Generator.Management.Providers
             return result;
         }
 
-        private TryStatement BuildOperationMethodTryStatement(InputServiceMethod method, MethodProvider convenienceMethod, MethodSignature signature, bool isAsync)
+        private TryExpression  BuildOperationMethodTryStatement(InputServiceMethod method, MethodProvider convenienceMethod, MethodSignature signature, bool isAsync)
         {
             var cancellationTokenParameter = convenienceMethod.Signature.Parameters.Single(p => p.Type.Equals(typeof(CancellationToken)));
 
-            var tryStatement = new TryStatement();
+            var tryStatements = new List<MethodBodyStatement>();
 
             var requestContextStmt = BuildRequestContextInitialization(cancellationTokenParameter, out var contextVariable);
-            tryStatement.Add(requestContextStmt);
+            tryStatements.Add(requestContextStmt);
 
             var httpMessageStmt = BuildHttpMessageInitialization(method, convenienceMethod, contextVariable, out var messageVariable);
-            tryStatement.Add(httpMessageStmt);
+            tryStatements.Add(httpMessageStmt);
 
             var responseProcessingStmts = BuildClientPipelineProcessing(convenienceMethod, isAsync, messageVariable, contextVariable, out var responseVariable);
             foreach (var stmt in responseProcessingStmts)
             {
-                tryStatement.Add(stmt);
+                tryStatements.Add(stmt);
             }
 
             if (method.IsLongRunningOperation())
@@ -304,7 +304,7 @@ namespace Azure.Generator.Management.Providers
                 var lroStmts = BuildLroHandling(method, isAsync, messageVariable, responseVariable, cancellationTokenParameter, This.Property("Client"), Source.Type, ResourceClientCSharpType);
                 foreach (var stmt in lroStmts)
                 {
-                    tryStatement.Add(stmt);
+                    tryStatements.Add(stmt);
                 }
             }
             else
@@ -312,7 +312,7 @@ namespace Azure.Generator.Management.Providers
                 var returnStmts = BuildReturnStatements(responseVariable, signature);
                 foreach (var stmt in returnStmts)
                 {
-                    tryStatement.Add(stmt);
+                    tryStatements.Add(stmt);
                 }
             }
 
