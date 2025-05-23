@@ -113,6 +113,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             return true;
         }
 
+        internal static bool IsSamplingError(TelemetryErrorDetails error)
+        {
+            return error.Message != null && error.Message.Equals("Telemetry sampled out.", StringComparison.OrdinalIgnoreCase);
+        }
+
         /// <summary>
         /// Parse a PartialSuccess response from ingestion.
         /// </summary>
@@ -142,6 +147,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                             continue;
                         }
 
+                        // Don't consider "Telemetry sampled out" as an error that needs retrying
+                        if (IsSamplingError(error))
+                        {
+                            // Sampling is a normal part of operation with Application Insights, don't retry or log as error
+                            continue;
+                        }
+                        
                         if (error.StatusCode == ResponseStatusCodes.RequestTimeout
                             || error.StatusCode == ResponseStatusCodes.ServiceUnavailable
                             || error.StatusCode == ResponseStatusCodes.InternalServerError
@@ -172,7 +184,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
         internal static ExportResult IsSuccess(HttpMessage httpMessage)
         {
-            if (httpMessage.HasResponse && httpMessage.Response.Status == ResponseStatusCodes.Success)
+            if (httpMessage.HasResponse && 
+                (httpMessage.Response.Status == ResponseStatusCodes.Success || 
+                 httpMessage.Response.Status == ResponseStatusCodes.PartialSuccess))
             {
                 return ExportResult.Success;
             }

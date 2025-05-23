@@ -387,7 +387,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
         [NonEvent]
         public void PartialContentResponseUnhandled(TelemetryErrorDetails error)
         {
-            if (IsEnabled(EventLevel.Warning))
+            if (IsEnabled(EventLevel.Warning) && 
+                !HttpPipelineHelper.IsSamplingError(error))
             {
                 PartialContentResponseUnhandled(error.StatusCode?.ToString() ?? "N/A", error.Message);
             }
