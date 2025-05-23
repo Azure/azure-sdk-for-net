@@ -7,8 +7,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.HDIns
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.HDInsight.Containers.Tests", "tests\Azure.ResourceManager.HDInsight.Containers.Tests.csproj", "{B7D2C045-BB36-4F9F-8690-30281BBA053C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.HDInsight.Containers.Samples", "samples\Azure.ResourceManager.HDInsight.Containers.Samples.csproj", "{B39400C4-2035-4031-8749-DBA35C21C092}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -43,18 +41,6 @@ Global
 		{B7D2C045-BB36-4F9F-8690-30281BBA053C}.Release|x64.Build.0 = Release|Any CPU
 		{B7D2C045-BB36-4F9F-8690-30281BBA053C}.Release|x86.ActiveCfg = Release|Any CPU
 		{B7D2C045-BB36-4F9F-8690-30281BBA053C}.Release|x86.Build.0 = Release|Any CPU
-		{B39400C4-2035-4031-8749-DBA35C21C092}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B39400C4-2035-4031-8749-DBA35C21C092}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B39400C4-2035-4031-8749-DBA35C21C092}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{B39400C4-2035-4031-8749-DBA35C21C092}.Debug|x64.Build.0 = Debug|Any CPU
-		{B39400C4-2035-4031-8749-DBA35C21C092}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{B39400C4-2035-4031-8749-DBA35C21C092}.Debug|x86.Build.0 = Debug|Any CPU
-		{B39400C4-2035-4031-8749-DBA35C21C092}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B39400C4-2035-4031-8749-DBA35C21C092}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B39400C4-2035-4031-8749-DBA35C21C092}.Release|x64.ActiveCfg = Release|Any CPU
-		{B39400C4-2035-4031-8749-DBA35C21C092}.Release|x64.Build.0 = Release|Any CPU
-		{B39400C4-2035-4031-8749-DBA35C21C092}.Release|x86.ActiveCfg = Release|Any CPU
-		{B39400C4-2035-4031-8749-DBA35C21C092}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

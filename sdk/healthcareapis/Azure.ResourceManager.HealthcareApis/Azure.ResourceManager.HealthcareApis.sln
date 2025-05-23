@@ -7,8 +7,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.Healt
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.HealthcareApis.Tests", "tests\Azure.ResourceManager.HealthcareApis.Tests.csproj", "{82C11082-A9F4-4A44-AB6A-7A7021104704}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.HealthcareApis.Samples", "samples\Azure.ResourceManager.HealthcareApis.Samples.csproj", "{50439BF2-7177-4335-A90D-E74FF9051C6F}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -43,18 +41,6 @@ Global
 		{82C11082-A9F4-4A44-AB6A-7A7021104704}.Release|x64.Build.0 = Release|Any CPU
 		{82C11082-A9F4-4A44-AB6A-7A7021104704}.Release|x86.ActiveCfg = Release|Any CPU
 		{82C11082-A9F4-4A44-AB6A-7A7021104704}.Release|x86.Build.0 = Release|Any CPU
-		{50439BF2-7177-4335-A90D-E74FF9051C6F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{50439BF2-7177-4335-A90D-E74FF9051C6F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{50439BF2-7177-4335-A90D-E74FF9051C6F}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{50439BF2-7177-4335-A90D-E74FF9051C6F}.Debug|x64.Build.0 = Debug|Any CPU
-		{50439BF2-7177-4335-A90D-E74FF9051C6F}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{50439BF2-7177-4335-A90D-E74FF9051C6F}.Debug|x86.Build.0 = Debug|Any CPU
-		{50439BF2-7177-4335-A90D-E74FF9051C6F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{50439BF2-7177-4335-A90D-E74FF9051C6F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{50439BF2-7177-4335-A90D-E74FF9051C6F}.Release|x64.ActiveCfg = Release|Any CPU
-		{50439BF2-7177-4335-A90D-E74FF9051C6F}.Release|x64.Build.0 = Release|Any CPU
-		{50439BF2-7177-4335-A90D-E74FF9051C6F}.Release|x86.ActiveCfg = Release|Any CPU
-		{50439BF2-7177-4335-A90D-E74FF9051C6F}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
