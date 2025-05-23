@@ -34,7 +34,7 @@ jobs:
   - job: UpdateDocsMsBuildConfig
     pool:
       name: $(LINUXPOOL)
-      demands: ImageOverride -equals $(LINUXVMIMAGE)
+      demands: $(LinuxImageDemand)
 
     variables:
       DocRepoLocation: $(Pipeline.Workspace)/docs
