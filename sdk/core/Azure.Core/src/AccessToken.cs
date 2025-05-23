@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel.Primitives;
 
 namespace Azure.Core
 {
@@ -86,6 +87,15 @@ namespace Azure.Core
         public override int GetHashCode()
         {
             return HashCodeBuilder.Combine(Token, ExpiresOn, TokenType);
+        }
+
+        /// <summary>
+        /// Converts this <see cref="AccessToken"/> to an <see cref="AuthenticationToken"/>.
+        /// </summary>
+        /// <returns></returns>
+        internal AuthenticationToken ToAuthenticationToken()
+        {
+            return new AuthenticationToken(Token, TokenType, ExpiresOn, RefreshOn);
         }
     }
 }

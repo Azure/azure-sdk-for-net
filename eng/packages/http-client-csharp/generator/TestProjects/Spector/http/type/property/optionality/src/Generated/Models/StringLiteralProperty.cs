@@ -11,7 +11,7 @@ namespace _Type.Property.Optional
     {
         public StringLiteralProperty() => throw null;
 
-        public StringLiteralPropertyProperty? Property
+        public string Property
         {
             get => throw null;
             set => throw null;

@@ -865,12 +865,13 @@ namespace BasicTypeSpec
         /// <param name="optionalLiteralBool"> optional literal bool. </param>
         /// <param name="optionalNullableList"> optional nullable collection. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="requiredUnion"/> or <paramref name="requiredBadDescription"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="requiredUnion"/>, <paramref name="requiredLiteralString"/> or <paramref name="requiredBadDescription"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<ThingModel> AnonymousBody(string name, BinaryData requiredUnion, ThingModelRequiredLiteralString requiredLiteralString, ThingModelRequiredLiteralInt requiredLiteralInt, ThingModelRequiredLiteralFloat requiredLiteralFloat, bool requiredLiteralBool, string requiredBadDescription, IEnumerable<int> requiredNullableList, ThingModelOptionalLiteralString? optionalLiteralString = default, ThingModelOptionalLiteralInt? optionalLiteralInt = default, ThingModelOptionalLiteralFloat? optionalLiteralFloat = default, bool? optionalLiteralBool = default, IEnumerable<int> optionalNullableList = default, CancellationToken cancellationToken = default)
+        public virtual Response<ThingModel> AnonymousBody(string name, BinaryData requiredUnion, string requiredLiteralString, int requiredLiteralInt, float requiredLiteralFloat, bool requiredLiteralBool, string requiredBadDescription, IEnumerable<int> requiredNullableList, string optionalLiteralString = default, int? optionalLiteralInt = default, float? optionalLiteralFloat = default, bool? optionalLiteralBool = default, IEnumerable<int> optionalNullableList = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(name, nameof(name));
             Argument.AssertNotNull(requiredUnion, nameof(requiredUnion));
+            Argument.AssertNotNull(requiredLiteralString, nameof(requiredLiteralString));
             Argument.AssertNotNull(requiredBadDescription, nameof(requiredBadDescription));
 
             ThingModel spreadModel = new ThingModel(
@@ -907,12 +908,13 @@ namespace BasicTypeSpec
         /// <param name="optionalLiteralBool"> optional literal bool. </param>
         /// <param name="optionalNullableList"> optional nullable collection. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="requiredUnion"/> or <paramref name="requiredBadDescription"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="requiredUnion"/>, <paramref name="requiredLiteralString"/> or <paramref name="requiredBadDescription"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<ThingModel>> AnonymousBodyAsync(string name, BinaryData requiredUnion, ThingModelRequiredLiteralString requiredLiteralString, ThingModelRequiredLiteralInt requiredLiteralInt, ThingModelRequiredLiteralFloat requiredLiteralFloat, bool requiredLiteralBool, string requiredBadDescription, IEnumerable<int> requiredNullableList, ThingModelOptionalLiteralString? optionalLiteralString = default, ThingModelOptionalLiteralInt? optionalLiteralInt = default, ThingModelOptionalLiteralFloat? optionalLiteralFloat = default, bool? optionalLiteralBool = default, IEnumerable<int> optionalNullableList = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ThingModel>> AnonymousBodyAsync(string name, BinaryData requiredUnion, string requiredLiteralString, int requiredLiteralInt, float requiredLiteralFloat, bool requiredLiteralBool, string requiredBadDescription, IEnumerable<int> requiredNullableList, string optionalLiteralString = default, int? optionalLiteralInt = default, float? optionalLiteralFloat = default, bool? optionalLiteralBool = default, IEnumerable<int> optionalNullableList = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(name, nameof(name));
             Argument.AssertNotNull(requiredUnion, nameof(requiredUnion));
+            Argument.AssertNotNull(requiredLiteralString, nameof(requiredLiteralString));
             Argument.AssertNotNull(requiredBadDescription, nameof(requiredBadDescription));
 
             ThingModel spreadModel = new ThingModel(
@@ -1323,12 +1325,12 @@ namespace BasicTypeSpec
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="accept"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<GetUnknownValueResponse6> GetUnknownValue(string accept, CancellationToken cancellationToken = default)
+        public virtual Response<string> GetUnknownValue(string accept, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(accept, nameof(accept));
 
             Response result = GetUnknownValue(accept, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
-            return Response.FromValue(new GetUnknownValueResponse6(result.Content.ToObjectFromJson<string>()), result);
+            return Response.FromValue(result.Content.ToString(), result);
         }
 
         /// <summary> get extensible enum. </summary>
@@ -1336,12 +1338,12 @@ namespace BasicTypeSpec
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="accept"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<GetUnknownValueResponse6>> GetUnknownValueAsync(string accept, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<string>> GetUnknownValueAsync(string accept, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(accept, nameof(accept));
 
             Response result = await GetUnknownValueAsync(accept, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
-            return Response.FromValue(new GetUnknownValueResponse6(result.Content.ToObjectFromJson<string>()), result);
+            return Response.FromValue(result.Content.ToString(), result);
         }
 
         /// <summary>
@@ -1586,6 +1588,286 @@ namespace BasicTypeSpec
             Argument.AssertNotNull(id, nameof(id));
 
             return await HeadAsBooleanAsync(id, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// [Protocol Method] List things with nextlink
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Pageable<BinaryData> ListWithNextLink(RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.ListWithNextLink");
+            scope.Start();
+            try
+            {
+                return new BasicTypeSpecClientListWithNextLinkCollectionResult(this, null, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] List things with nextlink
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual AsyncPageable<BinaryData> ListWithNextLinkAsync(RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.ListWithNextLink");
+            scope.Start();
+            try
+            {
+                return new BasicTypeSpecClientListWithNextLinkAsyncCollectionResult(this, null, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> List things with nextlink. </summary>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Pageable<ThingModel> ListWithNextLink(CancellationToken cancellationToken = default)
+        {
+            return new BasicTypeSpecClientListWithNextLinkCollectionResultOfT(this, null, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+        }
+
+        /// <summary> List things with nextlink. </summary>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual AsyncPageable<ThingModel> ListWithNextLinkAsync(CancellationToken cancellationToken = default)
+        {
+            return new BasicTypeSpecClientListWithNextLinkAsyncCollectionResultOfT(this, null, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+        }
+
+        /// <summary>
+        /// [Protocol Method] List things with continuation token
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="token"></param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Pageable<BinaryData> ListWithContinuationToken(string token, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.ListWithContinuationToken");
+            scope.Start();
+            try
+            {
+                return new BasicTypeSpecClientListWithContinuationTokenCollectionResult(this, token, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] List things with continuation token
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="token"></param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual AsyncPageable<BinaryData> ListWithContinuationTokenAsync(string token, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.ListWithContinuationToken");
+            scope.Start();
+            try
+            {
+                return new BasicTypeSpecClientListWithContinuationTokenAsyncCollectionResult(this, token, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> List things with continuation token. </summary>
+        /// <param name="token"></param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Pageable<ThingModel> ListWithContinuationToken(string token = default, CancellationToken cancellationToken = default)
+        {
+            return new BasicTypeSpecClientListWithContinuationTokenCollectionResultOfT(this, token, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+        }
+
+        /// <summary> List things with continuation token. </summary>
+        /// <param name="token"></param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual AsyncPageable<ThingModel> ListWithContinuationTokenAsync(string token = default, CancellationToken cancellationToken = default)
+        {
+            return new BasicTypeSpecClientListWithContinuationTokenAsyncCollectionResultOfT(this, token, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+        }
+
+        /// <summary>
+        /// [Protocol Method] List things with continuation token header response
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="token"></param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Pageable<BinaryData> ListWithContinuationTokenHeaderResponse(string token, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.ListWithContinuationTokenHeaderResponse");
+            scope.Start();
+            try
+            {
+                return new BasicTypeSpecClientListWithContinuationTokenHeaderResponseCollectionResult(this, token, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] List things with continuation token header response
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="token"></param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual AsyncPageable<BinaryData> ListWithContinuationTokenHeaderResponseAsync(string token, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.ListWithContinuationTokenHeaderResponse");
+            scope.Start();
+            try
+            {
+                return new BasicTypeSpecClientListWithContinuationTokenHeaderResponseAsyncCollectionResult(this, token, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> List things with continuation token header response. </summary>
+        /// <param name="token"></param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Pageable<ThingModel> ListWithContinuationTokenHeaderResponse(string token = default, CancellationToken cancellationToken = default)
+        {
+            return new BasicTypeSpecClientListWithContinuationTokenHeaderResponseCollectionResultOfT(this, token, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+        }
+
+        /// <summary> List things with continuation token header response. </summary>
+        /// <param name="token"></param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual AsyncPageable<ThingModel> ListWithContinuationTokenHeaderResponseAsync(string token = default, CancellationToken cancellationToken = default)
+        {
+            return new BasicTypeSpecClientListWithContinuationTokenHeaderResponseAsyncCollectionResultOfT(this, token, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+        }
+
+        /// <summary>
+        /// [Protocol Method] List things with paging
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Pageable<BinaryData> ListWithPaging(RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.ListWithPaging");
+            scope.Start();
+            try
+            {
+                return new BasicTypeSpecClientListWithPagingCollectionResult(this, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] List things with paging
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual AsyncPageable<BinaryData> ListWithPagingAsync(RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.ListWithPaging");
+            scope.Start();
+            try
+            {
+                return new BasicTypeSpecClientListWithPagingAsyncCollectionResult(this, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> List things with paging. </summary>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Pageable<ThingModel> ListWithPaging(CancellationToken cancellationToken = default)
+        {
+            return new BasicTypeSpecClientListWithPagingCollectionResultOfT(this, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+        }
+
+        /// <summary> List things with paging. </summary>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual AsyncPageable<ThingModel> ListWithPagingAsync(CancellationToken cancellationToken = default)
+        {
+            return new BasicTypeSpecClientListWithPagingAsyncCollectionResultOfT(this, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
         }
     }
 }

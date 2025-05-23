@@ -85,6 +85,7 @@ trigger:
     - sdk/durabletask/Azure.ResourceManager.DurableTask
     - sdk/dynatrace/Azure.ResourceManager.Dynatrace
     - sdk/edgeorder/Azure.ResourceManager.EdgeOrder
+    - sdk/secretsstoreextension/Azure.ResourceManager.SecretsStoreExtension
     - sdk/edgezones/Azure.ResourceManager.EdgeZones
     - sdk/elastic/Azure.ResourceManager.Elastic
     - sdk/elasticsan/Azure.ResourceManager.ElasticSan
@@ -163,6 +164,7 @@ trigger:
     - sdk/powerbidedicated/Azure.ResourceManager.PowerBIDedicated
     - sdk/privatedns/Azure.ResourceManager.PrivateDns
     - sdk/providerhub/Azure.ResourceManager.ProviderHub
+    - sdk/purestorageblock/Azure.ResourceManager.PureStorageBlock
     - sdk/purview/Azure.ResourceManager.Purview
     - sdk/quantum/Azure.ResourceManager.Quantum
     - sdk/qumulo/Azure.ResourceManager.Qumulo
@@ -303,6 +305,7 @@ pr:
     - sdk/durabletask/Azure.ResourceManager.DurableTask
     - sdk/dynatrace/Azure.ResourceManager.Dynatrace
     - sdk/edgeorder/Azure.ResourceManager.EdgeOrder
+    - sdk/secretsstoreextension/Azure.ResourceManager.SecretsStoreExtension
     - sdk/edgezones/Azure.ResourceManager.EdgeZones
     - sdk/elastic/Azure.ResourceManager.Elastic
     - sdk/elasticsan/Azure.ResourceManager.ElasticSan
@@ -381,6 +384,7 @@ pr:
     - sdk/powerbidedicated/Azure.ResourceManager.PowerBIDedicated
     - sdk/privatedns/Azure.ResourceManager.PrivateDns
     - sdk/providerhub/Azure.ResourceManager.ProviderHub
+    - sdk/purestorageblock/Azure.ResourceManager.PureStorageBlock
     - sdk/purview/Azure.ResourceManager.Purview
     - sdk/quantum/Azure.ResourceManager.Quantum
     - sdk/qumulo/Azure.ResourceManager.Qumulo
