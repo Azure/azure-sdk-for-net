@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.SiteManager
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="siteName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="siteName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SiteData>> GetAsync(string subscriptionId, string siteName, CancellationToken cancellationToken = default)
+        public async Task<Response<EdgeSiteData>> GetAsync(string subscriptionId, string siteName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(siteName, nameof(siteName));
@@ -161,9 +161,9 @@ namespace Azure.ResourceManager.SiteManager
             {
                 case 200:
                     {
-                        SiteData value = default;
+                        EdgeSiteData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = SiteData.DeserializeSiteData(document.RootElement);
+                        value = EdgeSiteData.DeserializeEdgeSiteData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.SiteManager
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="siteName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="siteName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SiteData> Get(string subscriptionId, string siteName, CancellationToken cancellationToken = default)
+        public Response<EdgeSiteData> Get(string subscriptionId, string siteName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(siteName, nameof(siteName));
@@ -188,9 +188,9 @@ namespace Azure.ResourceManager.SiteManager
             {
                 case 200:
                     {
-                        SiteData value = default;
+                        EdgeSiteData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = SiteData.DeserializeSiteData(document.RootElement);
+                        value = EdgeSiteData.DeserializeEdgeSiteData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.SiteManager
             }
         }
 
-        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string siteName, SiteData data)
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string siteName, EdgeSiteData data)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.SiteManager
             return uri;
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string siteName, SiteData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string siteName, EdgeSiteData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.SiteManager
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="siteName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="siteName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string siteName, SiteData data, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string siteName, EdgeSiteData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(siteName, nameof(siteName));
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.SiteManager
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="siteName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="siteName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateOrUpdate(string subscriptionId, string siteName, SiteData data, CancellationToken cancellationToken = default)
+        public Response CreateOrUpdate(string subscriptionId, string siteName, EdgeSiteData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(siteName, nameof(siteName));
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.SiteManager
             }
         }
 
-        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string siteName, SiteUpdate properties)
+        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string siteName, EdgeSitePatch patch)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.SiteManager
             return uri;
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string siteName, SiteUpdate properties)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string siteName, EdgeSitePatch patch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.SiteManager
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(properties, ModelSerializationExtensions.WireOptions);
+            content.JsonWriter.WriteObjectValue(patch, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -319,25 +319,25 @@ namespace Azure.ResourceManager.SiteManager
         /// <summary> Update a Site. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="siteName"> Name of Site resource. </param>
-        /// <param name="properties"> The resource properties to be updated. </param>
+        /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="siteName"/> or <paramref name="properties"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="siteName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="siteName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SiteData>> UpdateAsync(string subscriptionId, string siteName, SiteUpdate properties, CancellationToken cancellationToken = default)
+        public async Task<Response<EdgeSiteData>> UpdateAsync(string subscriptionId, string siteName, EdgeSitePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(siteName, nameof(siteName));
-            Argument.AssertNotNull(properties, nameof(properties));
+            Argument.AssertNotNull(patch, nameof(patch));
 
-            using var message = CreateUpdateRequest(subscriptionId, siteName, properties);
+            using var message = CreateUpdateRequest(subscriptionId, siteName, patch);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        SiteData value = default;
+                        EdgeSiteData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = SiteData.DeserializeSiteData(document.RootElement);
+                        value = EdgeSiteData.DeserializeEdgeSiteData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -348,25 +348,25 @@ namespace Azure.ResourceManager.SiteManager
         /// <summary> Update a Site. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="siteName"> Name of Site resource. </param>
-        /// <param name="properties"> The resource properties to be updated. </param>
+        /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="siteName"/> or <paramref name="properties"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="siteName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="siteName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SiteData> Update(string subscriptionId, string siteName, SiteUpdate properties, CancellationToken cancellationToken = default)
+        public Response<EdgeSiteData> Update(string subscriptionId, string siteName, EdgeSitePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(siteName, nameof(siteName));
-            Argument.AssertNotNull(properties, nameof(properties));
+            Argument.AssertNotNull(patch, nameof(patch));
 
-            using var message = CreateUpdateRequest(subscriptionId, siteName, properties);
+            using var message = CreateUpdateRequest(subscriptionId, siteName, patch);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        SiteData value = default;
+                        EdgeSiteData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = SiteData.DeserializeSiteData(document.RootElement);
+                        value = EdgeSiteData.DeserializeEdgeSiteData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

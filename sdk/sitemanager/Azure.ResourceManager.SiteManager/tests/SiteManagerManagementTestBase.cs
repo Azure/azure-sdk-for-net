@@ -49,29 +49,29 @@ namespace Azure.ResourceManager.SiteManager.Tests
             return lro.Value;
         }
 
-        protected async Task<SiteResource> CreateSiteAsync(ResourceGroupResource resourceGroup, string siteName)
+        protected async Task<EdgeSiteResource> CreateSiteAsync(ResourceGroupResource resourceGroup, string siteName)
         {
             string displayName, description;
             System.Collections.Generic.Dictionary<string, string> labels;
             SiteAddressProperties siteAddress;
             InitializeSiteDetails(out displayName, out description, out labels, out siteAddress);
 
-            var siteProperties = ArmSiteManagerModelFactory.SiteProperties(displayName, description, siteAddress, labels);
-            var siteData = ArmSiteManagerModelFactory.SiteData(resourceGroup.Id, siteName, default, null, siteProperties);
+            var siteProperties = ArmSiteManagerModelFactory.EdgeSiteProperties(displayName, description, siteAddress, labels);
+            var siteData = ArmSiteManagerModelFactory.EdgeSiteData(resourceGroup.Id, siteName, default, null, siteProperties);
 
-            var lro = await resourceGroup.GetSites().CreateOrUpdateAsync(WaitUntil.Completed, siteName, siteData);
+            var lro = await resourceGroup.GetEdgeSites().CreateOrUpdateAsync(WaitUntil.Completed, siteName, siteData);
             return lro.Value;
         }
 
-        protected async Task<SiteResource> CreateServiceGroupSiteAsync(TenantResource tenantResource, string siteName, string serviceGroupName)
+        protected async Task<EdgeSiteResource> CreateServiceGroupSiteAsync(TenantResource tenantResource, string siteName, string serviceGroupName)
         {
             string displayName, description;
             System.Collections.Generic.Dictionary<string, string> labels;
             SiteAddressProperties siteAddress;
             InitializeSiteDetails(out displayName, out description, out labels, out siteAddress);
 
-            var siteProperties = ArmSiteManagerModelFactory.SiteProperties(displayName, description, siteAddress, labels);
-            var siteData = ArmSiteManagerModelFactory.SiteData(tenantResource.Id, siteName, default, null, siteProperties);
+            var siteProperties = ArmSiteManagerModelFactory.EdgeSiteProperties(displayName, description, siteAddress, labels);
+            var siteData = ArmSiteManagerModelFactory.EdgeSiteData(tenantResource.Id, siteName, default, null, siteProperties);
 
             var lro = await tenantResource.CreateOrUpdateSitesByServiceGroupAsync(WaitUntil.Completed, serviceGroupName, siteName, siteData);
             return lro.Value;
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.SiteManager.Tests
             };
         }
 
-        protected async Task<SiteResource> UpdateSiteAsync(ResourceGroupResource resourceGroup, string siteName)
+        protected async Task<EdgeSiteResource> UpdateSiteAsync(ResourceGroupResource resourceGroup, string siteName)
         {
             var displayName = "New York Site";
             var description = "New York Site Description";
@@ -113,14 +113,14 @@ namespace Azure.ResourceManager.SiteManager.Tests
                 Country = "USA",
             };
 
-            var siteProperties = ArmSiteManagerModelFactory.SiteProperties(displayName, description, siteAddress, labels);
-            var siteData = ArmSiteManagerModelFactory.SiteData(resourceGroup.Id, siteName, default, null, siteProperties);
+            var siteProperties = ArmSiteManagerModelFactory.EdgeSiteProperties(displayName, description, siteAddress, labels);
+            var siteData = ArmSiteManagerModelFactory.EdgeSiteData(resourceGroup.Id, siteName, default, null, siteProperties);
 
-            var lro = await resourceGroup.GetSites().CreateOrUpdateAsync(WaitUntil.Completed, siteName, siteData);
+            var lro = await resourceGroup.GetEdgeSites().CreateOrUpdateAsync(WaitUntil.Completed, siteName, siteData);
             return lro.Value;
         }
 
-        protected async Task<SiteResource> UpdateServiceGroupSiteAsync(TenantResource tenantResource, string siteName, string serviceGroupName)
+        protected async Task<EdgeSiteResource> UpdateServiceGroupSiteAsync(TenantResource tenantResource, string siteName, string serviceGroupName)
         {
             var displayName = "New York Site";
             var description = "New York Site Description";
@@ -136,8 +136,8 @@ namespace Azure.ResourceManager.SiteManager.Tests
                 Country = "USA",
             };
 
-            var siteProperties = ArmSiteManagerModelFactory.SiteProperties(displayName, description, siteAddress, labels);
-            var siteData = ArmSiteManagerModelFactory.SiteData(tenantResource.Id, siteName, default, null, siteProperties);
+            var siteProperties = ArmSiteManagerModelFactory.EdgeSiteProperties(displayName, description, siteAddress, labels);
+            var siteData = ArmSiteManagerModelFactory.EdgeSiteData(tenantResource.Id, siteName, default, null, siteProperties);
 
             var lro = await tenantResource.CreateOrUpdateSitesByServiceGroupAsync(WaitUntil.Completed, serviceGroupName, siteName, siteData);
             return lro.Value;

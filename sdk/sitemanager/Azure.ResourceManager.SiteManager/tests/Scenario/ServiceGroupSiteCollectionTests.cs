@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.SiteManager.Tests
             Assert.AreEqual(siteData.Properties.SiteAddress.Country, "USA");
 
             // Get
-            SiteResource siteResourceFromGet = await DefaultTenant.GetSitesByServiceGroupAsync("BasavarajSG", siteName);
+            EdgeSiteResource siteResourceFromGet = await DefaultTenant.GetSitesByServiceGroupAsync("BasavarajSG", siteName);
             siteData = siteResourceFromGet.Data;
             Assert.AreEqual(siteData.Name, siteName);
             Assert.AreEqual(siteData.Properties.DisplayName, "Seattle Site");

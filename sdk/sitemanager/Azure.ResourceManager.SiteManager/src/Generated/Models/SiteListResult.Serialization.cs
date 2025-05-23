@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.SiteManager.Models
             {
                 return null;
             }
-            IReadOnlyList<SiteData> value = default;
+            IReadOnlyList<EdgeSiteData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -91,10 +91,10 @@ namespace Azure.ResourceManager.SiteManager.Models
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<SiteData> array = new List<SiteData>();
+                    List<EdgeSiteData> array = new List<EdgeSiteData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SiteData.DeserializeSiteData(item, options));
+                        array.Add(EdgeSiteData.DeserializeEdgeSiteData(item, options));
                     }
                     value = array;
                     continue;

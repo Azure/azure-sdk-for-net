@@ -63,14 +63,14 @@ namespace Azure.ResourceManager.SiteManager.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="servicegroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="servicegroupName"/> is null. </exception>
-        /// <returns> An async collection of <see cref="SiteResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SiteResource> GetSitesAsync(string servicegroupName, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="EdgeSiteResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<EdgeSiteResource> GetEdgeSitesAsync(string servicegroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(servicegroupName, nameof(servicegroupName));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => SitesByServiceGroupRestClient.CreateListByServiceGroupRequest(servicegroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SitesByServiceGroupRestClient.CreateListByServiceGroupNextPageRequest(nextLink, servicegroupName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SiteResource(Client, SiteData.DeserializeSiteData(e)), SitesByServiceGroupClientDiagnostics, Pipeline, "MockableSiteManagerTenantResource.GetSites", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new EdgeSiteResource(Client, EdgeSiteData.DeserializeEdgeSiteData(e)), SitesByServiceGroupClientDiagnostics, Pipeline, "MockableSiteManagerTenantResource.GetEdgeSites", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -94,14 +94,14 @@ namespace Azure.ResourceManager.SiteManager.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="servicegroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="servicegroupName"/> is null. </exception>
-        /// <returns> A collection of <see cref="SiteResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SiteResource> GetSites(string servicegroupName, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="EdgeSiteResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<EdgeSiteResource> GetEdgeSites(string servicegroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(servicegroupName, nameof(servicegroupName));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => SitesByServiceGroupRestClient.CreateListByServiceGroupRequest(servicegroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SitesByServiceGroupRestClient.CreateListByServiceGroupNextPageRequest(nextLink, servicegroupName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SiteResource(Client, SiteData.DeserializeSiteData(e)), SitesByServiceGroupClientDiagnostics, Pipeline, "MockableSiteManagerTenantResource.GetSites", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new EdgeSiteResource(Client, EdgeSiteData.DeserializeEdgeSiteData(e)), SitesByServiceGroupClientDiagnostics, Pipeline, "MockableSiteManagerTenantResource.GetEdgeSites", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.SiteManager.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="servicegroupName"/> or <paramref name="siteName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="servicegroupName"/> or <paramref name="siteName"/> is null. </exception>
-        public virtual async Task<Response<SiteResource>> GetSitesByServiceGroupAsync(string servicegroupName, string siteName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<EdgeSiteResource>> GetSitesByServiceGroupAsync(string servicegroupName, string siteName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(servicegroupName, nameof(servicegroupName));
             Argument.AssertNotNullOrEmpty(siteName, nameof(siteName));
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.SiteManager.Mocking
             try
             {
                 var response = await SitesByServiceGroupRestClient.GetAsync(servicegroupName, siteName, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new SiteResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new EdgeSiteResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.SiteManager.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="servicegroupName"/> or <paramref name="siteName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="servicegroupName"/> or <paramref name="siteName"/> is null. </exception>
-        public virtual Response<SiteResource> GetSitesByServiceGroup(string servicegroupName, string siteName, CancellationToken cancellationToken = default)
+        public virtual Response<EdgeSiteResource> GetSitesByServiceGroup(string servicegroupName, string siteName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(servicegroupName, nameof(servicegroupName));
             Argument.AssertNotNullOrEmpty(siteName, nameof(siteName));
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.SiteManager.Mocking
             try
             {
                 var response = SitesByServiceGroupRestClient.Get(servicegroupName, siteName, cancellationToken);
-                return Response.FromValue(new SiteResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new EdgeSiteResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.SiteManager.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="servicegroupName"/> or <paramref name="siteName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="servicegroupName"/>, <paramref name="siteName"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<SiteResource>> CreateOrUpdateSitesByServiceGroupAsync(WaitUntil waitUntil, string servicegroupName, string siteName, SiteData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<EdgeSiteResource>> CreateOrUpdateSitesByServiceGroupAsync(WaitUntil waitUntil, string servicegroupName, string siteName, EdgeSiteData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(servicegroupName, nameof(servicegroupName));
             Argument.AssertNotNullOrEmpty(siteName, nameof(siteName));
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.SiteManager.Mocking
             try
             {
                 var response = await SitesByServiceGroupRestClient.CreateOrUpdateAsync(servicegroupName, siteName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SiteManagerArmOperation<SiteResource>(new SiteOperationSource(Client), SitesByServiceGroupClientDiagnostics, Pipeline, SitesByServiceGroupRestClient.CreateCreateOrUpdateRequest(servicegroupName, siteName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new SiteManagerArmOperation<EdgeSiteResource>(new EdgeSiteOperationSource(Client), SitesByServiceGroupClientDiagnostics, Pipeline, SitesByServiceGroupRestClient.CreateCreateOrUpdateRequest(servicegroupName, siteName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.SiteManager.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="servicegroupName"/> or <paramref name="siteName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="servicegroupName"/>, <paramref name="siteName"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<SiteResource> CreateOrUpdateSitesByServiceGroup(WaitUntil waitUntil, string servicegroupName, string siteName, SiteData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<EdgeSiteResource> CreateOrUpdateSitesByServiceGroup(WaitUntil waitUntil, string servicegroupName, string siteName, EdgeSiteData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(servicegroupName, nameof(servicegroupName));
             Argument.AssertNotNullOrEmpty(siteName, nameof(siteName));
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.SiteManager.Mocking
             try
             {
                 var response = SitesByServiceGroupRestClient.CreateOrUpdate(servicegroupName, siteName, data, cancellationToken);
-                var operation = new SiteManagerArmOperation<SiteResource>(new SiteOperationSource(Client), SitesByServiceGroupClientDiagnostics, Pipeline, SitesByServiceGroupRestClient.CreateCreateOrUpdateRequest(servicegroupName, siteName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new SiteManagerArmOperation<EdgeSiteResource>(new EdgeSiteOperationSource(Client), SitesByServiceGroupClientDiagnostics, Pipeline, SitesByServiceGroupRestClient.CreateCreateOrUpdateRequest(servicegroupName, siteName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -299,22 +299,22 @@ namespace Azure.ResourceManager.SiteManager.Mocking
         /// </summary>
         /// <param name="servicegroupName"> The name of the service group. </param>
         /// <param name="siteName"> The name of the site. </param>
-        /// <param name="properties"> The properties of the site. </param>
+        /// <param name="patch"> The properties of the site. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="servicegroupName"/> or <paramref name="siteName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="servicegroupName"/>, <paramref name="siteName"/> or <paramref name="properties"/> is null. </exception>
-        public virtual async Task<Response<SiteResource>> UpdateSitesByServiceGroupAsync(string servicegroupName, string siteName, SiteUpdate properties, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="servicegroupName"/>, <paramref name="siteName"/> or <paramref name="patch"/> is null. </exception>
+        public virtual async Task<Response<EdgeSiteResource>> UpdateSitesByServiceGroupAsync(string servicegroupName, string siteName, EdgeSitePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(servicegroupName, nameof(servicegroupName));
             Argument.AssertNotNullOrEmpty(siteName, nameof(siteName));
-            Argument.AssertNotNull(properties, nameof(properties));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = SitesByServiceGroupClientDiagnostics.CreateScope("MockableSiteManagerTenantResource.UpdateSitesByServiceGroup");
             scope.Start();
             try
             {
-                var response = await SitesByServiceGroupRestClient.UpdateAsync(servicegroupName, siteName, properties, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new SiteResource(Client, response.Value), response.GetRawResponse());
+                var response = await SitesByServiceGroupRestClient.UpdateAsync(servicegroupName, siteName, patch, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new EdgeSiteResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -342,22 +342,22 @@ namespace Azure.ResourceManager.SiteManager.Mocking
         /// </summary>
         /// <param name="servicegroupName"> The name of the service group. </param>
         /// <param name="siteName"> The name of the site. </param>
-        /// <param name="properties"> The properties of the site. </param>
+        /// <param name="patch"> The properties of the site. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="servicegroupName"/> or <paramref name="siteName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="servicegroupName"/>, <paramref name="siteName"/> or <paramref name="properties"/> is null. </exception>
-        public virtual Response<SiteResource> UpdateSitesByServiceGroup(string servicegroupName, string siteName, SiteUpdate properties, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="servicegroupName"/>, <paramref name="siteName"/> or <paramref name="patch"/> is null. </exception>
+        public virtual Response<EdgeSiteResource> UpdateSitesByServiceGroup(string servicegroupName, string siteName, EdgeSitePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(servicegroupName, nameof(servicegroupName));
             Argument.AssertNotNullOrEmpty(siteName, nameof(siteName));
-            Argument.AssertNotNull(properties, nameof(properties));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = SitesByServiceGroupClientDiagnostics.CreateScope("MockableSiteManagerTenantResource.UpdateSitesByServiceGroup");
             scope.Start();
             try
             {
-                var response = SitesByServiceGroupRestClient.Update(servicegroupName, siteName, properties, cancellationToken);
-                return Response.FromValue(new SiteResource(Client, response.Value), response.GetRawResponse());
+                var response = SitesByServiceGroupRestClient.Update(servicegroupName, siteName, patch, cancellationToken);
+                return Response.FromValue(new EdgeSiteResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

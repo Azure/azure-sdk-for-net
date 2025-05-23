@@ -14,10 +14,10 @@ using Azure.ResourceManager.SiteManager.Models;
 namespace Azure.ResourceManager.SiteManager
 {
     /// <summary>
-    /// A class representing the Site data model.
+    /// A class representing the EdgeSite data model.
     /// Site as ARM Resource
     /// </summary>
-    public partial class SiteData : ResourceData
+    public partial class EdgeSiteData : ResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -51,25 +51,25 @@ namespace Azure.ResourceManager.SiteManager
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="SiteData"/>. </summary>
-        public SiteData()
+        /// <summary> Initializes a new instance of <see cref="EdgeSiteData"/>. </summary>
+        public EdgeSiteData()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="SiteData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdgeSiteData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SiteData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SiteProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal EdgeSiteData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, EdgeSiteProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The resource-specific properties for this resource. </summary>
-        public SiteProperties Properties { get; set; }
+        public EdgeSiteProperties Properties { get; set; }
     }
 }

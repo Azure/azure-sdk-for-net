@@ -33,11 +33,11 @@ namespace Azure.ResourceManager.SiteManager.Mocking
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of SiteResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of SiteResources and their operations over a SiteResource. </returns>
-        public virtual SiteCollection GetSites()
+        /// <summary> Gets a collection of EdgeSiteResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of EdgeSiteResources and their operations over a EdgeSiteResource. </returns>
+        public virtual EdgeSiteCollection GetEdgeSites()
         {
-            return GetCachedClient(client => new SiteCollection(client, Id));
+            return GetCachedClient(client => new EdgeSiteCollection(client, Id));
         }
 
         /// <summary>
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.SiteManager.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="SiteResource"/></description>
+        /// <description><see cref="EdgeSiteResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -66,9 +66,9 @@ namespace Azure.ResourceManager.SiteManager.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="siteName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="siteName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<SiteResource>> GetSiteAsync(string siteName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<EdgeSiteResource>> GetEdgeSiteAsync(string siteName, CancellationToken cancellationToken = default)
         {
-            return await GetSites().GetAsync(siteName, cancellationToken).ConfigureAwait(false);
+            return await GetEdgeSites().GetAsync(siteName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.SiteManager.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="SiteResource"/></description>
+        /// <description><see cref="EdgeSiteResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -97,9 +97,9 @@ namespace Azure.ResourceManager.SiteManager.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="siteName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="siteName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<SiteResource> GetSite(string siteName, CancellationToken cancellationToken = default)
+        public virtual Response<EdgeSiteResource> GetEdgeSite(string siteName, CancellationToken cancellationToken = default)
         {
-            return GetSites().Get(siteName, cancellationToken);
+            return GetEdgeSites().Get(siteName, cancellationToken);
         }
     }
 }

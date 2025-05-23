@@ -16,16 +16,16 @@ namespace Azure.ResourceManager.SiteManager.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmSiteManagerModelFactory
     {
-        /// <summary> Initializes a new instance of <see cref="SiteManager.SiteData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteManager.EdgeSiteData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="SiteManager.SiteData"/> instance for mocking. </returns>
-        public static SiteData SiteData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, SiteProperties properties = null)
+        /// <returns> A new <see cref="SiteManager.EdgeSiteData"/> instance for mocking. </returns>
+        public static EdgeSiteData EdgeSiteData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, EdgeSiteProperties properties = null)
         {
-            return new SiteData(
+            return new EdgeSiteData(
                 id,
                 name,
                 resourceType,
@@ -34,18 +34,18 @@ namespace Azure.ResourceManager.SiteManager.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.SiteProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.EdgeSiteProperties"/>. </summary>
         /// <param name="displayName"> displayName of Site resource. </param>
         /// <param name="description"> Description of Site resource. </param>
         /// <param name="siteAddress"> Physical address of the site. </param>
         /// <param name="labels"> Key-value pairs for labeling the site resource. </param>
         /// <param name="provisioningState"> Provisioning state of last operation. </param>
-        /// <returns> A new <see cref="Models.SiteProperties"/> instance for mocking. </returns>
-        public static SiteProperties SiteProperties(string displayName = null, string description = null, SiteAddressProperties siteAddress = null, IDictionary<string, string> labels = null, ResourceProvisioningState? provisioningState = null)
+        /// <returns> A new <see cref="Models.EdgeSiteProperties"/> instance for mocking. </returns>
+        public static EdgeSiteProperties EdgeSiteProperties(string displayName = null, string description = null, SiteAddressProperties siteAddress = null, IDictionary<string, string> labels = null, EdgeSiteProvisioningState? provisioningState = null)
         {
             labels ??= new Dictionary<string, string>();
 
-            return new SiteProperties(
+            return new EdgeSiteProperties(
                 displayName,
                 description,
                 siteAddress,

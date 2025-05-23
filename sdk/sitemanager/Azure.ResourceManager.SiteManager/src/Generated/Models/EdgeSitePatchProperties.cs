@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SiteManager.Models
 {
-    /// <summary> Site properties. </summary>
-    public partial class SiteProperties
+    /// <summary> The updatable properties of the Site. </summary>
+    public partial class EdgeSitePatchProperties
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,26 +45,24 @@ namespace Azure.ResourceManager.SiteManager.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="SiteProperties"/>. </summary>
-        public SiteProperties()
+        /// <summary> Initializes a new instance of <see cref="EdgeSitePatchProperties"/>. </summary>
+        public EdgeSitePatchProperties()
         {
             Labels = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="SiteProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdgeSitePatchProperties"/>. </summary>
         /// <param name="displayName"> displayName of Site resource. </param>
         /// <param name="description"> Description of Site resource. </param>
         /// <param name="siteAddress"> Physical address of the site. </param>
         /// <param name="labels"> Key-value pairs for labeling the site resource. </param>
-        /// <param name="provisioningState"> Provisioning state of last operation. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SiteProperties(string displayName, string description, SiteAddressProperties siteAddress, IDictionary<string, string> labels, ResourceProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal EdgeSitePatchProperties(string displayName, string description, SiteAddressProperties siteAddress, IDictionary<string, string> labels, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DisplayName = displayName;
             Description = description;
             SiteAddress = siteAddress;
             Labels = labels;
-            ProvisioningState = provisioningState;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -76,7 +74,5 @@ namespace Azure.ResourceManager.SiteManager.Models
         public SiteAddressProperties SiteAddress { get; set; }
         /// <summary> Key-value pairs for labeling the site resource. </summary>
         public IDictionary<string, string> Labels { get; }
-        /// <summary> Provisioning state of last operation. </summary>
-        public ResourceProvisioningState? ProvisioningState { get; }
     }
 }

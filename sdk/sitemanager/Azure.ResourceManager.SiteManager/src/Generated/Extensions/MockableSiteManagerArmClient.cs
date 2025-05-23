@@ -35,15 +35,15 @@ namespace Azure.ResourceManager.SiteManager.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SiteResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SiteResource.CreateResourceIdentifier" /> to create a <see cref="SiteResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing an <see cref="EdgeSiteResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="EdgeSiteResource.CreateResourceIdentifier" /> to create an <see cref="EdgeSiteResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SiteResource"/> object. </returns>
-        public virtual SiteResource GetSiteResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="EdgeSiteResource"/> object. </returns>
+        public virtual EdgeSiteResource GetEdgeSiteResource(ResourceIdentifier id)
         {
-            SiteResource.ValidateResourceId(id);
-            return new SiteResource(Client, id);
+            EdgeSiteResource.ValidateResourceId(id);
+            return new EdgeSiteResource(Client, id);
         }
     }
 }

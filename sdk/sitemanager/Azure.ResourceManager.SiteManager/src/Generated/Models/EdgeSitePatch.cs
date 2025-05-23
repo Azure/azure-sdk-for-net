@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SiteManager.Models
 {
-    /// <summary> The updatable properties of the Site. </summary>
-    public partial class SiteUpdateProperties
+    /// <summary> The type used for update operations of the Site. </summary>
+    public partial class EdgeSitePatch
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,34 +45,21 @@ namespace Azure.ResourceManager.SiteManager.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="SiteUpdateProperties"/>. </summary>
-        public SiteUpdateProperties()
+        /// <summary> Initializes a new instance of <see cref="EdgeSitePatch"/>. </summary>
+        public EdgeSitePatch()
         {
-            Labels = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="SiteUpdateProperties"/>. </summary>
-        /// <param name="displayName"> displayName of Site resource. </param>
-        /// <param name="description"> Description of Site resource. </param>
-        /// <param name="siteAddress"> Physical address of the site. </param>
-        /// <param name="labels"> Key-value pairs for labeling the site resource. </param>
+        /// <summary> Initializes a new instance of <see cref="EdgeSitePatch"/>. </summary>
+        /// <param name="properties"> The updatable properties of the Site. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SiteUpdateProperties(string displayName, string description, SiteAddressProperties siteAddress, IDictionary<string, string> labels, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal EdgeSitePatch(EdgeSitePatchProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            DisplayName = displayName;
-            Description = description;
-            SiteAddress = siteAddress;
-            Labels = labels;
+            Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> displayName of Site resource. </summary>
-        public string DisplayName { get; set; }
-        /// <summary> Description of Site resource. </summary>
-        public string Description { get; set; }
-        /// <summary> Physical address of the site. </summary>
-        public SiteAddressProperties SiteAddress { get; set; }
-        /// <summary> Key-value pairs for labeling the site resource. </summary>
-        public IDictionary<string, string> Labels { get; }
+        /// <summary> The updatable properties of the Site. </summary>
+        public EdgeSitePatchProperties Properties { get; set; }
     }
 }

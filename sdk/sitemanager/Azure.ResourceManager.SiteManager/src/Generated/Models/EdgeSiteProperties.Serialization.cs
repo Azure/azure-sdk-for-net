@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SiteManager.Models
 {
-    public partial class SiteUpdateProperties : IUtf8JsonSerializable, IJsonModel<SiteUpdateProperties>
+    public partial class EdgeSiteProperties : IUtf8JsonSerializable, IJsonModel<EdgeSiteProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SiteUpdateProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EdgeSiteProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<SiteUpdateProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<EdgeSiteProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.SiteManager.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SiteUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<EdgeSiteProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SiteUpdateProperties)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(EdgeSiteProperties)} does not support writing '{format}' format.");
             }
 
             if (Optional.IsDefined(DisplayName))
@@ -60,6 +60,11 @@ namespace Azure.ResourceManager.SiteManager.Models
                 }
                 writer.WriteEndObject();
             }
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -77,19 +82,19 @@ namespace Azure.ResourceManager.SiteManager.Models
             }
         }
 
-        SiteUpdateProperties IJsonModel<SiteUpdateProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        EdgeSiteProperties IJsonModel<EdgeSiteProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SiteUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<EdgeSiteProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SiteUpdateProperties)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(EdgeSiteProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeSiteUpdateProperties(document.RootElement, options);
+            return DeserializeEdgeSiteProperties(document.RootElement, options);
         }
 
-        internal static SiteUpdateProperties DeserializeSiteUpdateProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static EdgeSiteProperties DeserializeEdgeSiteProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -101,6 +106,7 @@ namespace Azure.ResourceManager.SiteManager.Models
             string description = default;
             SiteAddressProperties siteAddress = default;
             IDictionary<string, string> labels = default;
+            EdgeSiteProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -138,44 +144,59 @@ namespace Azure.ResourceManager.SiteManager.Models
                     labels = dictionary;
                     continue;
                 }
+                if (property.NameEquals("provisioningState"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    provisioningState = new EdgeSiteProvisioningState(property.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new SiteUpdateProperties(displayName, description, siteAddress, labels ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
+            return new EdgeSiteProperties(
+                displayName,
+                description,
+                siteAddress,
+                labels ?? new ChangeTrackingDictionary<string, string>(),
+                provisioningState,
+                serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<SiteUpdateProperties>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<EdgeSiteProperties>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SiteUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<EdgeSiteProperties>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerSiteManagerContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(SiteUpdateProperties)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EdgeSiteProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
-        SiteUpdateProperties IPersistableModel<SiteUpdateProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        EdgeSiteProperties IPersistableModel<EdgeSiteProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SiteUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<EdgeSiteProperties>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeSiteUpdateProperties(document.RootElement, options);
+                        return DeserializeEdgeSiteProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SiteUpdateProperties)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EdgeSiteProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<SiteUpdateProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<EdgeSiteProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
