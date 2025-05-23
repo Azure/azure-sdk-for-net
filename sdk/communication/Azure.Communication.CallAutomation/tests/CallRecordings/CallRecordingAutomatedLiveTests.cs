@@ -439,7 +439,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallRecordings
                     Assert.IsNotEmpty(response.CallConnectionProperties.CallConnectionId);
 
                     // wait for incomingcall context
-                    string? incomingCallContext = await WaitForIncomingCallContext(uniqueId, TimeSpan.FromSeconds(14));
+                    string? incomingCallContext = await WaitForIncomingCallContext(uniqueId, TimeSpan.FromSeconds(12));
                     Assert.IsNotNull(incomingCallContext);
 
                     // answer the call
@@ -448,7 +448,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallRecordings
                     Assert.AreEqual(answerResponse.GetRawResponse().Status, StatusCodes.Status200OK);
 
                     // wait for callConnected
-                    var connectedEvent = await WaitForEvent<CallConnected>(callConnectionId, TimeSpan.FromSeconds(14));
+                    var connectedEvent = await WaitForEvent<CallConnected>(callConnectionId, TimeSpan.FromSeconds(12));
                     Assert.IsNotNull(connectedEvent);
                     Assert.IsTrue(connectedEvent is CallConnected);
                     Assert.IsTrue(((CallConnected)connectedEvent!).CallConnectionId == callConnectionId);
