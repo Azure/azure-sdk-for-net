@@ -14,21 +14,18 @@ namespace Azure.Communication.CallAutomation
     public partial class TranscriptionOptions
     {
         /// <summary> Initializes a new instance of <see cref="TranscriptionOptions"/>. </summary>
-        /// <param name="transportUri"> Transport URL for live transcription. </param>
+        /// <param name="streamingTransport"> Transport URL for live transcription. </param>
         /// <param name="locale"> Defines the locale for the data e.g en-CA, en-AU. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="transportUri"/> or <paramref name="locale"/> is null. </exception>
-        public TranscriptionOptions(Uri transportUri, string locale)
+        /// <exception cref="ArgumentNullException"> <paramref name="locale"/> is null. </exception>
+        public TranscriptionOptions(string locale, StreamingTransport streamingTransport = default)
         {
-            Argument.AssertNotNull(transportUri, nameof(transportUri));
             Argument.AssertNotNull(locale, nameof(locale));
-
-            TransportUri = transportUri;
-            TranscriptionTransport = StreamingTransport.Websocket;
+            TranscriptionTransport = streamingTransport == default ? StreamingTransport.Websocket : streamingTransport;
             Locale = locale;
         }
 
         /// <summary> Transport URL for live transcription. </summary>
-        public Uri TransportUri { get; }
+        public Uri TransportUri { get; set; }
         /// <summary> The type of transport to be used for live transcription, eg. Websocket. </summary>
         public StreamingTransport TranscriptionTransport { get; set; }
         /// <summary> Defines the locale for the data e.g en-CA, en-AU. </summary>

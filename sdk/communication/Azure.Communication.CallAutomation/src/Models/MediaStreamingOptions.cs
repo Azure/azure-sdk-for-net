@@ -8,19 +8,18 @@ namespace Azure.Communication.CallAutomation
     /// <summary> The MediaStreamingOptions. </summary>
     public class MediaStreamingOptions
     {
-        /// <summary> Initializes a new instance of <see cref="WebSocketMediaStreamingOptionsInternal"/>. </summary>
-        /// <param name="transportUri">Transport URL for media streaming</param>
+        /// <summary> Initializes a new instance of <see cref="MediaStreamingOptions"/>. </summary>
         /// <param name="audioChannelType"> The audio channel type to stream, e.g., unmixed audio, mixed audio. </param>
-        public MediaStreamingOptions(Uri transportUri, MediaStreamingAudioChannel audioChannelType)
+        /// <param name="streamingTransport">Media streaming transport.</param>
+        public MediaStreamingOptions(MediaStreamingAudioChannel audioChannelType, StreamingTransport streamingTransport = default)
         {
-            MediaStreamingAudioChannel = audioChannelType ;
-            TransportUri = transportUri ?? throw new ArgumentNullException(nameof(transportUri));
-            MediaStreamingTransport = StreamingTransport.Websocket;
+            MediaStreamingAudioChannel = audioChannelType;
+            MediaStreamingTransport = streamingTransport == default ? StreamingTransport.Websocket : streamingTransport;
             MediaStreamingContent = MediaStreamingContent.Audio;
         }
 
         /// <summary> Transport URL for media streaming. </summary>
-        public Uri TransportUri { get; }
+        public Uri TransportUri { get; set; }
         /// <summary> The type of tranport to be used for media streaming, eg. Websocket. </summary>
         public StreamingTransport MediaStreamingTransport { get; }
         /// <summary> Content type to stream, eg. audio, audio/video. </summary>
@@ -33,7 +32,6 @@ namespace Azure.Communication.CallAutomation
         public bool? EnableBidirectional { get; set; }
         /// <summary> Specifies the audio format used for encoding, including sample rate and channel type. </summary>
         public AudioFormat? AudioFormat { get; set; }
-
         /// <summary> A value that indicates whether to stream the DTMF tones. </summary>
         public bool? EnableDtmfTones { get; set; }
     }
