@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.OnlineExperimentation.Models
         /// <param name="encryption"> The encryption configuration for the online experimentation workspace resource. </param>
         /// <param name="endpoint"> The data plane endpoint for the online experimentation workspace resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal OnlineExperimentationWorkspaceProperties(string workspaceId, ResourceProvisioningState? provisioningState, ResourceIdentifier logAnalyticsWorkspaceResourceId, ResourceIdentifier logsExporterStorageAccountResourceId, ResourceIdentifier appConfigurationResourceId, ResourceEncryptionConfiguration encryption, Uri endpoint, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal OnlineExperimentationWorkspaceProperties(Guid? workspaceId, OnlineExperimentationProvisioningState? provisioningState, ResourceIdentifier logAnalyticsWorkspaceResourceId, ResourceIdentifier logsExporterStorageAccountResourceId, ResourceIdentifier appConfigurationResourceId, ResourceEncryptionConfiguration encryption, Uri endpoint, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             WorkspaceId = workspaceId;
             ProvisioningState = provisioningState;
@@ -89,9 +89,9 @@ namespace Azure.ResourceManager.OnlineExperimentation.Models
         }
 
         /// <summary> The Id of the workspace. </summary>
-        public string WorkspaceId { get; }
+        public Guid? WorkspaceId { get; }
         /// <summary> The provisioning state for the resource. </summary>
-        public ResourceProvisioningState? ProvisioningState { get; }
+        public OnlineExperimentationProvisioningState? ProvisioningState { get; }
         /// <summary> The resource identifier of the Log Analytics workspace which online experimentation workspace uses for generating experiment analysis results. </summary>
         public ResourceIdentifier LogAnalyticsWorkspaceResourceId { get; set; }
         /// <summary> The resource identifier of storage account where logs are exported from Log Analytics workspace. online experimentation workspace uses it generating experiment analysis results. </summary>

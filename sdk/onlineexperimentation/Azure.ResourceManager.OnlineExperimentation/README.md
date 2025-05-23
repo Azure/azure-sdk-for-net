@@ -1,6 +1,6 @@
-# Microsoft Azure OnlineExperimentation management client library for .NET
+# Microsoft Azure Online Experimentation management client library for .NET
 
-**[Describe the service briefly first.]**
+The Online Experimentation service makes it easy to get started with A/B experimentation with out-of-the-box model monitoring metrics and custom metrics. By seamlessly integrating with GitHub we align these capabilities with your development workflows to streamline and automate the user experience.
 
 This library follows the [new Azure SDK guidelines](https://azure.github.io/azure-sdk/general_introduction.html), and provides many core capabilities:
 
@@ -14,7 +14,7 @@ This library follows the [new Azure SDK guidelines](https://azure.github.io/azur
 
 ### Install the package
 
-Install the Microsoft Azure OnlineExperimentation management library for .NET with [NuGet](https://www.nuget.org/):
+Install the Microsoft Azure Online Experimentation management library for .NET with [NuGet](https://www.nuget.org/):
 
 ```dotnetcli
 dotnet add package Azure.ResourceManager.OnlineExperimentation --prerelease

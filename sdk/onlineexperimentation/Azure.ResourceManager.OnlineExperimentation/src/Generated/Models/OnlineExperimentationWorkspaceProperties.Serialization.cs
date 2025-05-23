@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.OnlineExperimentation.Models
             if (options.Format != "W" && Optional.IsDefined(WorkspaceId))
             {
                 writer.WritePropertyName("workspaceId"u8);
-                writer.WriteStringValue(WorkspaceId);
+                writer.WriteStringValue(WorkspaceId.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -97,8 +97,8 @@ namespace Azure.ResourceManager.OnlineExperimentation.Models
             {
                 return null;
             }
-            string workspaceId = default;
-            ResourceProvisioningState? provisioningState = default;
+            Guid? workspaceId = default;
+            OnlineExperimentationProvisioningState? provisioningState = default;
             ResourceIdentifier logAnalyticsWorkspaceResourceId = default;
             ResourceIdentifier logsExporterStorageAccountResourceId = default;
             ResourceIdentifier appConfigurationResourceId = default;
@@ -110,7 +110,11 @@ namespace Azure.ResourceManager.OnlineExperimentation.Models
             {
                 if (property.NameEquals("workspaceId"u8))
                 {
-                    workspaceId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    workspaceId = property.Value.GetGuid();
                     continue;
                 }
                 if (property.NameEquals("provisioningState"u8))
@@ -119,7 +123,7 @@ namespace Azure.ResourceManager.OnlineExperimentation.Models
                     {
                         continue;
                     }
-                    provisioningState = new ResourceProvisioningState(property.Value.GetString());
+                    provisioningState = new OnlineExperimentationProvisioningState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("logAnalyticsWorkspaceResourceId"u8))

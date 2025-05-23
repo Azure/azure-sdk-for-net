@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.OnlineExperimentation.Models
     public static partial class ArmOnlineExperimentationModelFactory
     {
         public static Azure.ResourceManager.OnlineExperimentation.OnlineExperimentationWorkspaceData OnlineExperimentationWorkspaceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.OnlineExperimentation.Models.OnlineExperimentationWorkspaceProperties properties = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, Azure.ResourceManager.OnlineExperimentation.Models.OnlineExperimentationWorkspaceSku sku = null) { throw null; }
-        public static Azure.ResourceManager.OnlineExperimentation.Models.OnlineExperimentationWorkspaceProperties OnlineExperimentationWorkspaceProperties(string workspaceId = null, Azure.ResourceManager.OnlineExperimentation.Models.ResourceProvisioningState? provisioningState = default(Azure.ResourceManager.OnlineExperimentation.Models.ResourceProvisioningState?), Azure.Core.ResourceIdentifier logAnalyticsWorkspaceResourceId = null, Azure.Core.ResourceIdentifier logsExporterStorageAccountResourceId = null, Azure.Core.ResourceIdentifier appConfigurationResourceId = null, Azure.ResourceManager.OnlineExperimentation.Models.CustomerManagedKeyEncryption customerManagedKeyEncryption = null, System.Uri endpoint = null) { throw null; }
+        public static Azure.ResourceManager.OnlineExperimentation.Models.OnlineExperimentationWorkspaceProperties OnlineExperimentationWorkspaceProperties(System.Guid? workspaceId = default(System.Guid?), Azure.ResourceManager.OnlineExperimentation.Models.OnlineExperimentationProvisioningState? provisioningState = default(Azure.ResourceManager.OnlineExperimentation.Models.OnlineExperimentationProvisioningState?), Azure.Core.ResourceIdentifier logAnalyticsWorkspaceResourceId = null, Azure.Core.ResourceIdentifier logsExporterStorageAccountResourceId = null, Azure.Core.ResourceIdentifier appConfigurationResourceId = null, Azure.ResourceManager.OnlineExperimentation.Models.CustomerManagedKeyEncryption customerManagedKeyEncryption = null, System.Uri endpoint = null) { throw null; }
         public static Azure.ResourceManager.OnlineExperimentation.Models.OnlineExperimentationWorkspaceSku OnlineExperimentationWorkspaceSku(Azure.ResourceManager.OnlineExperimentation.Models.OnlineExperimentationWorkspaceSkuName name = default(Azure.ResourceManager.OnlineExperimentation.Models.OnlineExperimentationWorkspaceSkuName), Azure.ResourceManager.OnlineExperimentation.Models.OnlineExperimentationWorkspaceSkuTier? tier = default(Azure.ResourceManager.OnlineExperimentation.Models.OnlineExperimentationWorkspaceSkuTier?)) { throw null; }
     }
     public partial class CustomerManagedKeyEncryption : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OnlineExperimentation.Models.CustomerManagedKeyEncryption>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OnlineExperimentation.Models.CustomerManagedKeyEncryption>
@@ -143,6 +143,25 @@ namespace Azure.ResourceManager.OnlineExperimentation.Models
         public static bool operator !=(Azure.ResourceManager.OnlineExperimentation.Models.KeyEncryptionKeyIdentityType left, Azure.ResourceManager.OnlineExperimentation.Models.KeyEncryptionKeyIdentityType right) { throw null; }
         public override string ToString() { throw null; }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct OnlineExperimentationProvisioningState : System.IEquatable<Azure.ResourceManager.OnlineExperimentation.Models.OnlineExperimentationProvisioningState>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public OnlineExperimentationProvisioningState(string value) { throw null; }
+        public static Azure.ResourceManager.OnlineExperimentation.Models.OnlineExperimentationProvisioningState Canceled { get { throw null; } }
+        public static Azure.ResourceManager.OnlineExperimentation.Models.OnlineExperimentationProvisioningState Failed { get { throw null; } }
+        public static Azure.ResourceManager.OnlineExperimentation.Models.OnlineExperimentationProvisioningState Succeeded { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.OnlineExperimentation.Models.OnlineExperimentationProvisioningState other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.OnlineExperimentation.Models.OnlineExperimentationProvisioningState left, Azure.ResourceManager.OnlineExperimentation.Models.OnlineExperimentationProvisioningState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.OnlineExperimentation.Models.OnlineExperimentationProvisioningState (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.OnlineExperimentation.Models.OnlineExperimentationProvisioningState left, Azure.ResourceManager.OnlineExperimentation.Models.OnlineExperimentationProvisioningState right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class OnlineExperimentationWorkspacePatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OnlineExperimentation.Models.OnlineExperimentationWorkspacePatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OnlineExperimentation.Models.OnlineExperimentationWorkspacePatch>
     {
         public OnlineExperimentationWorkspacePatch() { }
@@ -178,8 +197,8 @@ namespace Azure.ResourceManager.OnlineExperimentation.Models
         public System.Uri Endpoint { get { throw null; } }
         public Azure.Core.ResourceIdentifier LogAnalyticsWorkspaceResourceId { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier LogsExporterStorageAccountResourceId { get { throw null; } set { } }
-        public Azure.ResourceManager.OnlineExperimentation.Models.ResourceProvisioningState? ProvisioningState { get { throw null; } }
-        public string WorkspaceId { get { throw null; } }
+        public Azure.ResourceManager.OnlineExperimentation.Models.OnlineExperimentationProvisioningState? ProvisioningState { get { throw null; } }
+        public System.Guid? WorkspaceId { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.OnlineExperimentation.Models.OnlineExperimentationWorkspaceProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OnlineExperimentation.Models.OnlineExperimentationWorkspaceProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OnlineExperimentation.Models.OnlineExperimentationWorkspaceProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -237,25 +256,6 @@ namespace Azure.ResourceManager.OnlineExperimentation.Models
         public static bool operator ==(Azure.ResourceManager.OnlineExperimentation.Models.OnlineExperimentationWorkspaceSkuTier left, Azure.ResourceManager.OnlineExperimentation.Models.OnlineExperimentationWorkspaceSkuTier right) { throw null; }
         public static implicit operator Azure.ResourceManager.OnlineExperimentation.Models.OnlineExperimentationWorkspaceSkuTier (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.OnlineExperimentation.Models.OnlineExperimentationWorkspaceSkuTier left, Azure.ResourceManager.OnlineExperimentation.Models.OnlineExperimentationWorkspaceSkuTier right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ResourceProvisioningState : System.IEquatable<Azure.ResourceManager.OnlineExperimentation.Models.ResourceProvisioningState>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ResourceProvisioningState(string value) { throw null; }
-        public static Azure.ResourceManager.OnlineExperimentation.Models.ResourceProvisioningState Canceled { get { throw null; } }
-        public static Azure.ResourceManager.OnlineExperimentation.Models.ResourceProvisioningState Failed { get { throw null; } }
-        public static Azure.ResourceManager.OnlineExperimentation.Models.ResourceProvisioningState Succeeded { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.OnlineExperimentation.Models.ResourceProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.OnlineExperimentation.Models.ResourceProvisioningState left, Azure.ResourceManager.OnlineExperimentation.Models.ResourceProvisioningState right) { throw null; }
-        public static implicit operator Azure.ResourceManager.OnlineExperimentation.Models.ResourceProvisioningState (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.OnlineExperimentation.Models.ResourceProvisioningState left, Azure.ResourceManager.OnlineExperimentation.Models.ResourceProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
 }

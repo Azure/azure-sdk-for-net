@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.OnlineExperimentation.Models
         /// <param name="customerManagedKeyEncryption"> The encryption configuration for the online experimentation workspace resource. </param>
         /// <param name="endpoint"> The data plane endpoint for the online experimentation workspace resource. </param>
         /// <returns> A new <see cref="Models.OnlineExperimentationWorkspaceProperties"/> instance for mocking. </returns>
-        public static OnlineExperimentationWorkspaceProperties OnlineExperimentationWorkspaceProperties(string workspaceId = null, ResourceProvisioningState? provisioningState = null, ResourceIdentifier logAnalyticsWorkspaceResourceId = null, ResourceIdentifier logsExporterStorageAccountResourceId = null, ResourceIdentifier appConfigurationResourceId = null, CustomerManagedKeyEncryption customerManagedKeyEncryption = null, Uri endpoint = null)
+        public static OnlineExperimentationWorkspaceProperties OnlineExperimentationWorkspaceProperties(Guid? workspaceId = null, OnlineExperimentationProvisioningState? provisioningState = null, ResourceIdentifier logAnalyticsWorkspaceResourceId = null, ResourceIdentifier logsExporterStorageAccountResourceId = null, ResourceIdentifier appConfigurationResourceId = null, CustomerManagedKeyEncryption customerManagedKeyEncryption = null, Uri endpoint = null)
         {
             return new OnlineExperimentationWorkspaceProperties(
                 workspaceId,
