@@ -14,11 +14,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class ResourceNameAvailability : IUtf8JsonSerializable, IJsonModel<ResourceNameAvailability>
+    public partial class AppServiceNameAvailabilityResult : IUtf8JsonSerializable, IJsonModel<AppServiceNameAvailabilityResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ResourceNameAvailability>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppServiceNameAvailabilityResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<ResourceNameAvailability>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<AppServiceNameAvailabilityResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -29,10 +29,10 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ResourceNameAvailability>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AppServiceNameAvailabilityResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResourceNameAvailability)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(AppServiceNameAvailabilityResult)} does not support writing '{format}' format.");
             }
 
             if (Optional.IsDefined(IsNameAvailable))
@@ -67,19 +67,19 @@ namespace Azure.ResourceManager.AppService.Models
             }
         }
 
-        ResourceNameAvailability IJsonModel<ResourceNameAvailability>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        AppServiceNameAvailabilityResult IJsonModel<AppServiceNameAvailabilityResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ResourceNameAvailability>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AppServiceNameAvailabilityResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResourceNameAvailability)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(AppServiceNameAvailabilityResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeResourceNameAvailability(document.RootElement, options);
+            return DeserializeAppServiceNameAvailabilityResult(document.RootElement, options);
         }
 
-        internal static ResourceNameAvailability DeserializeResourceNameAvailability(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static AppServiceNameAvailabilityResult DeserializeAppServiceNameAvailabilityResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.AppService.Models
                 return null;
             }
             bool? nameAvailable = default;
-            InAvailabilityReasonType? reason = default;
+            AppServiceNameUnavailableReason? reason = default;
             string message = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    reason = new InAvailabilityReasonType(property.Value.GetString());
+                    reason = new AppServiceNameUnavailableReason(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("message"u8))
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ResourceNameAvailability(nameAvailable, reason, message, serializedAdditionalRawData);
+            return new AppServiceNameAvailabilityResult(nameAvailable, reason, message, serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -195,9 +195,9 @@ namespace Azure.ResourceManager.AppService.Models
             return BinaryData.FromString(builder.ToString());
         }
 
-        BinaryData IPersistableModel<ResourceNameAvailability>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<AppServiceNameAvailabilityResult>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ResourceNameAvailability>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AppServiceNameAvailabilityResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
@@ -206,26 +206,26 @@ namespace Azure.ResourceManager.AppService.Models
                 case "bicep":
                     return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(ResourceNameAvailability)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppServiceNameAvailabilityResult)} does not support writing '{options.Format}' format.");
             }
         }
 
-        ResourceNameAvailability IPersistableModel<ResourceNameAvailability>.Create(BinaryData data, ModelReaderWriterOptions options)
+        AppServiceNameAvailabilityResult IPersistableModel<AppServiceNameAvailabilityResult>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ResourceNameAvailability>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AppServiceNameAvailabilityResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeResourceNameAvailability(document.RootElement, options);
+                        return DeserializeAppServiceNameAvailabilityResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ResourceNameAvailability)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppServiceNameAvailabilityResult)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<ResourceNameAvailability>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<AppServiceNameAvailabilityResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
