@@ -5,6 +5,7 @@ using System.Linq;
 using Azure.Core.Pipeline;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 using Microsoft.TypeSpec.Generator.Input;
+using Microsoft.TypeSpec.Generator.Input.Extensions;
 using Microsoft.TypeSpec.Generator.Providers;
 
 namespace Azure.Generator
@@ -14,6 +15,8 @@ namespace Azure.Generator
         public static ClientProvider GetClient(this ScmMethodProvider method) => (ClientProvider)method.EnclosingType;
 
         public static string GetScopeName(this ScmMethodProvider method) => $"{method.EnclosingType.Name}.{method.Signature.Name}";
+
+        public static string GetScopeName(this ClientProvider client, InputOperation operation) => $"{client.Name}.{operation.Name.ToIdentifierName()}";
 
         public static bool IsLroMethod(this ScmMethodProvider method) =>
             method is { ServiceMethod: InputLongRunningServiceMethod, EnclosingType: ClientProvider };
