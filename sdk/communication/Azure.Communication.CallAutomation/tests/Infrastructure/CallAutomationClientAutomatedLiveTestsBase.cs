@@ -60,7 +60,6 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
             BodyKeySanitizers.Add(new BodyKeySanitizer("..recordingStateCallbackUri") { Value = @"https://sanitized.skype.com/api/servicebuscallback/events" });
             BodyKeySanitizers.Add(new BodyKeySanitizer("..transportUrl") { Value = @"wss://sanitized.skype.com" });
             BodyKeySanitizers.Add(new BodyKeySanitizer("..cognitiveServicesEndpoint") { Value = @"https://sanitized.skype.com" });
-            BodyKeySanitizers.Add(new BodyKeySanitizer("$..operationContext") { Value = "Sanitized" });
             BodyKeySanitizers.Add(new BodyKeySanitizer("$..file.uri") { Value = @"https://sanitized.skype.com/prompt.wav" });
                 BodyRegexSanitizers.Add(new BodyRegexSanitizer(TestDispatcherRegEx) { Value = "https://sanitized.skype.com" });
                 UriRegexSanitizers.Add(new UriRegexSanitizer(URIDomainRegEx) { Value = "https://sanitized.skype.com" });
