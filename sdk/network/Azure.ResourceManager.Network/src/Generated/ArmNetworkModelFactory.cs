@@ -19,311 +19,6 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmNetworkModelFactory
     {
-        /// <summary> Initializes a new instance of <see cref="Network.NetworkSecurityPerimeterData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="provisioningState"> The provisioning state of the scope assignment resource. </param>
-        /// <param name="perimeterGuid"> perimeter guid of the network security perimeter. </param>
-        /// <returns> A new <see cref="Network.NetworkSecurityPerimeterData"/> instance for mocking. </returns>
-        public static NetworkSecurityPerimeterData NetworkSecurityPerimeterData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, NetworkSecurityPerimeterProvisioningState? provisioningState = null, Guid? perimeterGuid = null)
-        {
-            tags ??= new Dictionary<string, string>();
-
-            return new NetworkSecurityPerimeterData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags,
-                location,
-                provisioningState,
-                perimeterGuid,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.NetworkTrackedResourceData"/>. </summary>
-        /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="location"> Resource location. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <returns> A new <see cref="Models.NetworkTrackedResourceData"/> instance for mocking. </returns>
-        public static NetworkTrackedResourceData NetworkTrackedResourceData(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, AzureLocation? location = null, IDictionary<string, string> tags = null)
-        {
-            tags ??= new Dictionary<string, string>();
-
-            return new NetworkTrackedResourceData(
-                id,
-                name,
-                resourceType,
-                location,
-                tags,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.NetworkSecurityPerimeterPatch"/>. </summary>
-        /// <param name="id"> Network security perimeter identifier. </param>
-        /// <param name="tags"> List of tags for Network Security Perimeter. </param>
-        /// <returns> A new <see cref="Models.NetworkSecurityPerimeterPatch"/> instance for mocking. </returns>
-        public static NetworkSecurityPerimeterPatch NetworkSecurityPerimeterPatch(string id = null, IDictionary<string, string> tags = null)
-        {
-            tags ??= new Dictionary<string, string>();
-
-            return new NetworkSecurityPerimeterPatch(id, tags, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Network.NetworkSecurityPerimeterProfileData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="accessRulesVersion"> Version number that increases with every update to access rules within the profile. </param>
-        /// <param name="diagnosticSettingsVersion"> Version number that increases with every update to diagnostic settings within the profile. </param>
-        /// <returns> A new <see cref="Network.NetworkSecurityPerimeterProfileData"/> instance for mocking. </returns>
-        public static NetworkSecurityPerimeterProfileData NetworkSecurityPerimeterProfileData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string accessRulesVersion = null, string diagnosticSettingsVersion = null)
-        {
-            tags ??= new Dictionary<string, string>();
-
-            return new NetworkSecurityPerimeterProfileData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags,
-                location,
-                accessRulesVersion,
-                diagnosticSettingsVersion,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Network.NetworkSecurityPerimeterAccessRuleData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="provisioningState"> The provisioning state of the scope assignment resource. </param>
-        /// <param name="direction"> Direction that specifies whether the access rules is inbound/outbound. </param>
-        /// <param name="addressPrefixes"> Inbound address prefixes (IPv4/IPv6). </param>
-        /// <param name="fullyQualifiedDomainNames"> Outbound rules fully qualified domain name format. </param>
-        /// <param name="subscriptions"> List of subscription ids. </param>
-        /// <param name="networkSecurityPerimeters"> Rule specified by the perimeter id. </param>
-        /// <param name="emailAddresses"> Outbound rules email address format. </param>
-        /// <param name="phoneNumbers"> Outbound rules phone number format. </param>
-        /// <param name="serviceTags"> Inbound rules service tag names. </param>
-        /// <returns> A new <see cref="Network.NetworkSecurityPerimeterAccessRuleData"/> instance for mocking. </returns>
-        public static NetworkSecurityPerimeterAccessRuleData NetworkSecurityPerimeterAccessRuleData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, NetworkSecurityPerimeterProvisioningState? provisioningState = null, NetworkSecurityPerimeterAccessRuleDirection? direction = null, IEnumerable<string> addressPrefixes = null, IEnumerable<string> fullyQualifiedDomainNames = null, IEnumerable<WritableSubResource> subscriptions = null, IEnumerable<NetworkSecurityPerimeterBasedAccessRule> networkSecurityPerimeters = null, IEnumerable<string> emailAddresses = null, IEnumerable<string> phoneNumbers = null, IEnumerable<string> serviceTags = null)
-        {
-            tags ??= new Dictionary<string, string>();
-            addressPrefixes ??= new List<string>();
-            fullyQualifiedDomainNames ??= new List<string>();
-            subscriptions ??= new List<WritableSubResource>();
-            networkSecurityPerimeters ??= new List<NetworkSecurityPerimeterBasedAccessRule>();
-            emailAddresses ??= new List<string>();
-            phoneNumbers ??= new List<string>();
-            serviceTags ??= new List<string>();
-
-            return new NetworkSecurityPerimeterAccessRuleData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags,
-                location,
-                provisioningState,
-                direction,
-                addressPrefixes?.ToList(),
-                fullyQualifiedDomainNames?.ToList(),
-                subscriptions?.ToList(),
-                networkSecurityPerimeters?.ToList(),
-                emailAddresses?.ToList(),
-                phoneNumbers?.ToList(),
-                serviceTags?.ToList(),
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.NetworkSecurityPerimeterBasedAccessRule"/>. </summary>
-        /// <param name="id"> NSP id in the ARM id format. </param>
-        /// <param name="perimeterGuid"> Resource guid of the NSP supplied. </param>
-        /// <param name="location"> Location of the NSP supplied. </param>
-        /// <returns> A new <see cref="Models.NetworkSecurityPerimeterBasedAccessRule"/> instance for mocking. </returns>
-        public static NetworkSecurityPerimeterBasedAccessRule NetworkSecurityPerimeterBasedAccessRule(string id = null, Guid? perimeterGuid = null, AzureLocation? location = null)
-        {
-            return new NetworkSecurityPerimeterBasedAccessRule(id, perimeterGuid, location, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Network.NetworkSecurityPerimeterAssociationData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="provisioningState"> The provisioning state of the resource  association resource. </param>
-        /// <param name="privateLinkResourceId"> The PaaS resource to be associated. </param>
-        /// <param name="profileId"> Profile id to which the PaaS resource is associated. </param>
-        /// <param name="accessMode"> Access mode on the association. </param>
-        /// <param name="hasProvisioningIssues"> Specifies if there are provisioning issues. </param>
-        /// <returns> A new <see cref="Network.NetworkSecurityPerimeterAssociationData"/> instance for mocking. </returns>
-        public static NetworkSecurityPerimeterAssociationData NetworkSecurityPerimeterAssociationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, NetworkSecurityPerimeterProvisioningState? provisioningState = null, ResourceIdentifier privateLinkResourceId = null, ResourceIdentifier profileId = null, NetworkSecurityPerimeterAssociationAccessMode? accessMode = null, string hasProvisioningIssues = null)
-        {
-            tags ??= new Dictionary<string, string>();
-
-            return new NetworkSecurityPerimeterAssociationData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags,
-                location,
-                provisioningState,
-                privateLinkResourceId != null ? ResourceManagerModelFactory.WritableSubResource(privateLinkResourceId) : null,
-                profileId != null ? ResourceManagerModelFactory.WritableSubResource(profileId) : null,
-                accessMode,
-                hasProvisioningIssues,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.NetworkSecurityPerimeterAssociableResourceType"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="displayName"> A friendly name for the properties of perimeter associable resources. </param>
-        /// <param name="publicDnsZones"> Public DNS zone names of the resources. </param>
-        /// <returns> A new <see cref="Models.NetworkSecurityPerimeterAssociableResourceType"/> instance for mocking. </returns>
-        public static NetworkSecurityPerimeterAssociableResourceType NetworkSecurityPerimeterAssociableResourceType(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string displayName = null, IEnumerable<string> publicDnsZones = null)
-        {
-            tags ??= new Dictionary<string, string>();
-            publicDnsZones ??= new List<string>();
-
-            return new NetworkSecurityPerimeterAssociableResourceType(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags,
-                location,
-                displayName,
-                publicDnsZones?.ToList(),
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Network.NetworkSecurityPerimeterLinkData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="provisioningState"> The provisioning state of the NSP Link resource. </param>
-        /// <param name="autoApprovedRemotePerimeterResourceId"> Perimeter ARM Id for the remote NSP with which the link gets created in Auto-approval mode. It should be used when the NSP admin have Microsoft.Network/networkSecurityPerimeters/linkPerimeter/action permission on the remote NSP resource. </param>
-        /// <param name="remotePerimeterGuid"> Remote NSP Guid with which the link gets created. </param>
-        /// <param name="remotePerimeterLocation"> Remote NSP location with which the link gets created. </param>
-        /// <param name="localInboundProfiles"> Local Inbound profile names to which Inbound is allowed. Use ['*'] to allow inbound to all profiles. </param>
-        /// <param name="localOutboundProfiles"> Local Outbound profile names from which Outbound is allowed. In current version, it is readonly property and it's value is set to ['*'] to allow outbound from all profiles. In later version, user will be able to modify it. </param>
-        /// <param name="remoteInboundProfiles"> Remote Inbound profile names to which Inbound is allowed. Use ['*'] to allow inbound to all profiles. This property can only be updated in auto-approval mode. </param>
-        /// <param name="remoteOutboundProfiles"> Remote Outbound profile names from which Outbound is allowed. In current version, it is readonly property and it's value is set to ['*'] to allow outbound from all profiles. In later version, user will be able to modify it. </param>
-        /// <param name="description"> A message passed to the owner of the remote NSP link resource with this connection request. In case of Auto-approved flow, it is default to 'Auto Approved'. Restricted to 140 chars. </param>
-        /// <param name="status"> The NSP link state. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <returns> A new <see cref="Network.NetworkSecurityPerimeterLinkData"/> instance for mocking. </returns>
-        public static NetworkSecurityPerimeterLinkData NetworkSecurityPerimeterLinkData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, NetworkSecurityPerimeterLinkProvisioningState? provisioningState = null, string autoApprovedRemotePerimeterResourceId = null, Guid? remotePerimeterGuid = null, string remotePerimeterLocation = null, IEnumerable<string> localInboundProfiles = null, IEnumerable<string> localOutboundProfiles = null, IEnumerable<string> remoteInboundProfiles = null, IEnumerable<string> remoteOutboundProfiles = null, string description = null, NetworkSecurityPerimeterLinkStatus? status = null, ETag? etag = null)
-        {
-            localInboundProfiles ??= new List<string>();
-            localOutboundProfiles ??= new List<string>();
-            remoteInboundProfiles ??= new List<string>();
-            remoteOutboundProfiles ??= new List<string>();
-
-            return new NetworkSecurityPerimeterLinkData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                provisioningState,
-                autoApprovedRemotePerimeterResourceId,
-                remotePerimeterGuid,
-                remotePerimeterLocation,
-                localInboundProfiles?.ToList(),
-                localOutboundProfiles?.ToList(),
-                remoteInboundProfiles?.ToList(),
-                remoteOutboundProfiles?.ToList(),
-                description,
-                status,
-                etag,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Network.NetworkSecurityPerimeterLinkReferenceData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="provisioningState"> The provisioning state of the NSP LinkReference resource. </param>
-        /// <param name="remotePerimeterResourceId"> Perimeter ARM Id for the remote NSP with which the link is created. </param>
-        /// <param name="remotePerimeterGuid"> Remote NSP Guid with which the link is created. </param>
-        /// <param name="remotePerimeterLocation"> Remote NSP location with which the link gets created. </param>
-        /// <param name="localInboundProfiles"> Local Inbound profile names to which Inbound is allowed. Use ['*'] to allow inbound to all profiles. </param>
-        /// <param name="localOutboundProfiles"> Local Outbound profile names from which Outbound is allowed. In current version, it is readonly property and it's value is set to ['*'] to allow outbound from all profiles. In later version, user will be able to modify it. </param>
-        /// <param name="remoteInboundProfiles"> Remote Inbound profile names to which Inbound is allowed. ['*'] value implies inbound is allowed to all profiles at remote perimeter. This property can only be updated from corresponding link resource present in remote perimeter. </param>
-        /// <param name="remoteOutboundProfiles"> Remote Outbound profile names from which Outbound is allowed. ['*'] value implies outbound is allowed from all profiles at remote perimeter. This property can only be updated from corresponding link resource present in remote perimeter. </param>
-        /// <param name="description"> A message sent by the remote NSP link admin for connection request. In case of Auto-approved flow, it is default to 'Auto Approved'. </param>
-        /// <param name="status"> The NSP linkReference state. It cannot be changed if link is created in auto-approval mode. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <returns> A new <see cref="Network.NetworkSecurityPerimeterLinkReferenceData"/> instance for mocking. </returns>
-        public static NetworkSecurityPerimeterLinkReferenceData NetworkSecurityPerimeterLinkReferenceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, NetworkSecurityPerimeterLinkProvisioningState? provisioningState = null, string remotePerimeterResourceId = null, Guid? remotePerimeterGuid = null, string remotePerimeterLocation = null, IEnumerable<string> localInboundProfiles = null, IEnumerable<string> localOutboundProfiles = null, IEnumerable<string> remoteInboundProfiles = null, IEnumerable<string> remoteOutboundProfiles = null, string description = null, NetworkSecurityPerimeterLinkStatus? status = null, ETag? etag = null)
-        {
-            localInboundProfiles ??= new List<string>();
-            localOutboundProfiles ??= new List<string>();
-            remoteInboundProfiles ??= new List<string>();
-            remoteOutboundProfiles ??= new List<string>();
-
-            return new NetworkSecurityPerimeterLinkReferenceData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                provisioningState,
-                remotePerimeterResourceId,
-                remotePerimeterGuid,
-                remotePerimeterLocation,
-                localInboundProfiles?.ToList(),
-                localOutboundProfiles?.ToList(),
-                remoteInboundProfiles?.ToList(),
-                remoteOutboundProfiles?.ToList(),
-                description,
-                status,
-                etag,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Network.NetworkSecurityPerimeterLoggingConfigurationData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> Properties of the NSP logging configuration. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <returns> A new <see cref="Network.NetworkSecurityPerimeterLoggingConfigurationData"/> instance for mocking. </returns>
-        public static NetworkSecurityPerimeterLoggingConfigurationData NetworkSecurityPerimeterLoggingConfigurationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, NetworkSecurityPerimeterLoggingConfigurationProperties properties = null, ETag? etag = null)
-        {
-            return new NetworkSecurityPerimeterLoggingConfigurationData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                etag,
-                serializedAdditionalRawData: null);
-        }
-
         /// <summary> Initializes a new instance of <see cref="Network.ApplicationGatewayData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
@@ -1005,6 +700,26 @@ namespace Azure.ResourceManager.Network.Models
                 provisioningState);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Models.NetworkTrackedResourceData"/>. </summary>
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="resourceType"> Resource type. </param>
+        /// <param name="location"> Resource location. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <returns> A new <see cref="Models.NetworkTrackedResourceData"/> instance for mocking. </returns>
+        public static NetworkTrackedResourceData NetworkTrackedResourceData(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, AzureLocation? location = null, IDictionary<string, string> tags = null)
+        {
+            tags ??= new Dictionary<string, string>();
+
+            return new NetworkTrackedResourceData(
+                id,
+                name,
+                resourceType,
+                location,
+                tags,
+                serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Network.NetworkInterfaceData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
@@ -1580,18 +1295,23 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="zones"> A list of availability zones denoting the zone in which Nat Gateway should be deployed. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="idleTimeoutInMinutes"> The idle timeout of the nat gateway. </param>
-        /// <param name="publicIPAddresses"> An array of public ip addresses associated with the nat gateway resource. </param>
-        /// <param name="publicIPPrefixes"> An array of public ip prefixes associated with the nat gateway resource. </param>
+        /// <param name="publicIPAddresses"> An array of public ip addresses V4 associated with the nat gateway resource. </param>
+        /// <param name="publicIPAddressesV6"> An array of public ip addresses V6 associated with the nat gateway resource. </param>
+        /// <param name="publicIPPrefixes"> An array of public ip prefixes V4 associated with the nat gateway resource. </param>
+        /// <param name="publicIPPrefixesV6"> An array of public ip prefixes V6 associated with the nat gateway resource. </param>
         /// <param name="subnets"> An array of references to the subnets using this nat gateway resource. </param>
+        /// <param name="sourceVirtualNetworkId"> A reference to the source virtual network using this nat gateway resource. </param>
         /// <param name="resourceGuid"> The resource GUID property of the NAT gateway resource. </param>
         /// <param name="provisioningState"> The provisioning state of the NAT gateway resource. </param>
         /// <returns> A new <see cref="Network.NatGatewayData"/> instance for mocking. </returns>
-        public static NatGatewayData NatGatewayData(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, AzureLocation? location = null, IDictionary<string, string> tags = null, NatGatewaySkuName? skuName = null, IEnumerable<string> zones = null, ETag? etag = null, int? idleTimeoutInMinutes = null, IEnumerable<WritableSubResource> publicIPAddresses = null, IEnumerable<WritableSubResource> publicIPPrefixes = null, IEnumerable<WritableSubResource> subnets = null, Guid? resourceGuid = null, NetworkProvisioningState? provisioningState = null)
+        public static NatGatewayData NatGatewayData(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, AzureLocation? location = null, IDictionary<string, string> tags = null, NatGatewaySkuName? skuName = null, IEnumerable<string> zones = null, ETag? etag = null, int? idleTimeoutInMinutes = null, IEnumerable<WritableSubResource> publicIPAddresses = null, IEnumerable<WritableSubResource> publicIPAddressesV6 = null, IEnumerable<WritableSubResource> publicIPPrefixes = null, IEnumerable<WritableSubResource> publicIPPrefixesV6 = null, IEnumerable<WritableSubResource> subnets = null, ResourceIdentifier sourceVirtualNetworkId = null, Guid? resourceGuid = null, NetworkProvisioningState? provisioningState = null)
         {
             tags ??= new Dictionary<string, string>();
             zones ??= new List<string>();
             publicIPAddresses ??= new List<WritableSubResource>();
+            publicIPAddressesV6 ??= new List<WritableSubResource>();
             publicIPPrefixes ??= new List<WritableSubResource>();
+            publicIPPrefixesV6 ??= new List<WritableSubResource>();
             subnets ??= new List<WritableSubResource>();
 
             return new NatGatewayData(
@@ -1606,8 +1326,11 @@ namespace Azure.ResourceManager.Network.Models
                 etag,
                 idleTimeoutInMinutes,
                 publicIPAddresses?.ToList(),
+                publicIPAddressesV6?.ToList(),
                 publicIPPrefixes?.ToList(),
+                publicIPPrefixesV6?.ToList(),
                 subnets?.ToList(),
+                sourceVirtualNetworkId != null ? ResourceManagerModelFactory.WritableSubResource(sourceVirtualNetworkId) : null,
                 resourceGuid,
                 provisioningState);
         }
@@ -3185,11 +2908,13 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="legacyMode"> The legacy mode of the peering. </param>
         /// <param name="customerASN"> The CustomerASN of the peering. </param>
         /// <param name="routingRegistryName"> The RoutingRegistryName of the configuration. </param>
+        /// <param name="advertisedPublicPrefixInfo"> List of Prefix information required to perform validation. </param>
         /// <returns> A new <see cref="Models.ExpressRouteCircuitPeeringConfig"/> instance for mocking. </returns>
-        public static ExpressRouteCircuitPeeringConfig ExpressRouteCircuitPeeringConfig(IEnumerable<string> advertisedPublicPrefixes = null, IEnumerable<string> advertisedCommunities = null, ExpressRouteCircuitPeeringAdvertisedPublicPrefixState? advertisedPublicPrefixesState = null, int? legacyMode = null, int? customerASN = null, string routingRegistryName = null)
+        public static ExpressRouteCircuitPeeringConfig ExpressRouteCircuitPeeringConfig(IEnumerable<string> advertisedPublicPrefixes = null, IEnumerable<string> advertisedCommunities = null, ExpressRouteCircuitPeeringAdvertisedPublicPrefixState? advertisedPublicPrefixesState = null, int? legacyMode = null, int? customerASN = null, string routingRegistryName = null, IEnumerable<AdvertisedPublicPrefixProperties> advertisedPublicPrefixInfo = null)
         {
             advertisedPublicPrefixes ??= new List<string>();
             advertisedCommunities ??= new List<string>();
+            advertisedPublicPrefixInfo ??= new List<AdvertisedPublicPrefixProperties>();
 
             return new ExpressRouteCircuitPeeringConfig(
                 advertisedPublicPrefixes?.ToList(),
@@ -3198,7 +2923,19 @@ namespace Azure.ResourceManager.Network.Models
                 legacyMode,
                 customerASN,
                 routingRegistryName,
+                advertisedPublicPrefixInfo?.ToList(),
                 serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.AdvertisedPublicPrefixProperties"/>. </summary>
+        /// <param name="prefix"> Advertised Public Prefix. </param>
+        /// <param name="validationId"> Validation string that contains circuit peering info. </param>
+        /// <param name="signature"> Signed string generated by encrypting validationId with a private key. </param>
+        /// <param name="validationState"> Advertised Public Prefix State that denotes if the prefix is validated or not. </param>
+        /// <returns> A new <see cref="Models.AdvertisedPublicPrefixProperties"/> instance for mocking. </returns>
+        public static AdvertisedPublicPrefixProperties AdvertisedPublicPrefixProperties(string prefix = null, string validationId = null, string signature = null, AdvertisedPublicPrefixPropertiesValidationState? validationState = null)
+        {
+            return new AdvertisedPublicPrefixProperties(prefix, validationId, signature, validationState, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Network.ExpressRouteCircuitConnectionData"/>. </summary>
@@ -3958,8 +3695,9 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="properties"> Properties of IpamPool resource properties which are specific to the Pool resource. </param>
+        /// <param name="etag"> String representing unique etag for the resource document. </param>
         /// <returns> A new <see cref="Network.IpamPoolData"/> instance for mocking. </returns>
-        public static IpamPoolData IpamPoolData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, IpamPoolProperties properties = null)
+        public static IpamPoolData IpamPoolData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, IpamPoolProperties properties = null, ETag? etag = null)
         {
             tags ??= new Dictionary<string, string>();
 
@@ -3971,6 +3709,7 @@ namespace Azure.ResourceManager.Network.Models
                 tags,
                 location,
                 properties,
+                etag,
                 serializedAdditionalRawData: null);
         }
 
@@ -4261,10 +4000,11 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="enableFloatingIP"> Configures a virtual machine's endpoint for the floating IP capability required to configure a SQL AlwaysOn Availability Group. This setting is required when using the SQL AlwaysOn Availability Groups in SQL server. This setting can't be changed after you create the endpoint. </param>
         /// <param name="enableTcpReset"> Receive bidirectional TCP Reset on TCP flow idle timeout or unexpected connection termination. This element is only used when the protocol is set to TCP. </param>
         /// <param name="disableOutboundSnat"> Configures SNAT for the VMs in the backend pool to use the publicIP address specified in the frontend of the load balancing rule. </param>
+        /// <param name="enableConnectionTracking"> Defines whether connections between 2 communicating endpoints can be tracked and associated to the same backend VM over its lifetime when using UDP protocol. </param>
         /// <param name="provisioningState"> The provisioning state of the load balancing rule resource. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <returns> A new <see cref="Models.LoadBalancingRuleProperties"/> instance for mocking. </returns>
-        public static LoadBalancingRuleProperties LoadBalancingRuleProperties(ResourceIdentifier frontendIPConfigurationId = null, ResourceIdentifier backendAddressPoolId = null, IEnumerable<WritableSubResource> backendAddressPools = null, ResourceIdentifier probeId = null, LoadBalancingTransportProtocol protocol = default, LoadDistribution? loadDistribution = null, int frontendPort = default, int? backendPort = null, int? idleTimeoutInMinutes = null, bool? enableFloatingIP = null, bool? enableTcpReset = null, bool? disableOutboundSnat = null, NetworkProvisioningState? provisioningState = null, IDictionary<string, BinaryData> additionalProperties = null)
+        public static LoadBalancingRuleProperties LoadBalancingRuleProperties(ResourceIdentifier frontendIPConfigurationId = null, ResourceIdentifier backendAddressPoolId = null, IEnumerable<WritableSubResource> backendAddressPools = null, ResourceIdentifier probeId = null, LoadBalancingTransportProtocol protocol = default, LoadDistribution? loadDistribution = null, int frontendPort = default, int? backendPort = null, int? idleTimeoutInMinutes = null, bool? enableFloatingIP = null, bool? enableTcpReset = null, bool? disableOutboundSnat = null, bool? enableConnectionTracking = null, NetworkProvisioningState? provisioningState = null, IDictionary<string, BinaryData> additionalProperties = null)
         {
             backendAddressPools ??= new List<WritableSubResource>();
             additionalProperties ??= new Dictionary<string, BinaryData>();
@@ -4282,6 +4022,7 @@ namespace Azure.ResourceManager.Network.Models
                 enableFloatingIP,
                 enableTcpReset,
                 disableOutboundSnat,
+                enableConnectionTracking,
                 provisioningState,
                 additionalProperties);
         }
@@ -4436,13 +4177,13 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Initializes a new instance of <see cref="Models.LoadBalancerHealthPerRulePerBackendAddress"/>. </summary>
         /// <param name="ipAddress"> The IP address belonging to the backend address. </param>
-        /// <param name="networkInterfaceIPConfigurationId"> The id of the network interface ip configuration belonging to the backend address. </param>
+        /// <param name="networkInterfaceIPConfigurationResourceId"> Resource ID of the Network Interface IP Configuration. </param>
         /// <param name="state"> The current health of the backend instances that is associated to the LB rule. </param>
         /// <param name="reason"> The explanation of the State. </param>
         /// <returns> A new <see cref="Models.LoadBalancerHealthPerRulePerBackendAddress"/> instance for mocking. </returns>
-        public static LoadBalancerHealthPerRulePerBackendAddress LoadBalancerHealthPerRulePerBackendAddress(string ipAddress = null, NetworkInterfaceIPConfigurationData networkInterfaceIPConfigurationId = null, string state = null, string reason = null)
+        public static LoadBalancerHealthPerRulePerBackendAddress LoadBalancerHealthPerRulePerBackendAddress(string ipAddress = null, ResourceIdentifier networkInterfaceIPConfigurationResourceId = null, string state = null, string reason = null)
         {
-            return new LoadBalancerHealthPerRulePerBackendAddress(ipAddress, networkInterfaceIPConfigurationId, state, reason, serializedAdditionalRawData: null);
+            return new LoadBalancerHealthPerRulePerBackendAddress(ipAddress, networkInterfaceIPConfigurationResourceId, state, reason, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MigrateLoadBalancerToIPBasedResult"/>. </summary>
@@ -4676,6 +4417,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="connectivityTopology"> Connectivity topology type. </param>
         /// <param name="hubs"> List of hubItems. </param>
         /// <param name="isGlobal"> Flag if global mesh is supported. </param>
+        /// <param name="connectivityCapabilities"> Collection of additional settings to enhance specific topology behaviors of the connectivity configuration resource. </param>
         /// <param name="appliesToGroups"> Groups for configuration. </param>
         /// <param name="provisioningState"> The provisioning state of the connectivity configuration resource. </param>
         /// <param name="deleteExistingPeering"> Flag if need to remove current existing peerings. </param>
@@ -4683,7 +4425,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="committedOn"> Deployment time string. </param>
         /// <param name="region"> Deployment region. </param>
         /// <returns> A new <see cref="Models.ActiveConnectivityConfiguration"/> instance for mocking. </returns>
-        public static ActiveConnectivityConfiguration ActiveConnectivityConfiguration(string id = null, IEnumerable<NetworkConfigurationGroup> configurationGroups = null, string description = null, ConnectivityTopology? connectivityTopology = null, IEnumerable<ConnectivityHub> hubs = null, GlobalMeshSupportFlag? isGlobal = null, IEnumerable<ConnectivityGroupItem> appliesToGroups = null, NetworkProvisioningState? provisioningState = null, DeleteExistingPeering? deleteExistingPeering = null, Guid? resourceGuid = null, DateTimeOffset? committedOn = null, AzureLocation? region = null)
+        public static ActiveConnectivityConfiguration ActiveConnectivityConfiguration(string id = null, IEnumerable<NetworkConfigurationGroup> configurationGroups = null, string description = null, ConnectivityTopology? connectivityTopology = null, IEnumerable<ConnectivityHub> hubs = null, GlobalMeshSupportFlag? isGlobal = null, ConnectivityConfigurationPropertiesConnectivityCapabilities connectivityCapabilities = null, IEnumerable<ConnectivityGroupItem> appliesToGroups = null, NetworkProvisioningState? provisioningState = null, DeleteExistingPeering? deleteExistingPeering = null, Guid? resourceGuid = null, DateTimeOffset? committedOn = null, AzureLocation? region = null)
         {
             configurationGroups ??= new List<NetworkConfigurationGroup>();
             hubs ??= new List<ConnectivityHub>();
@@ -4696,6 +4438,7 @@ namespace Azure.ResourceManager.Network.Models
                 connectivityTopology,
                 hubs?.ToList(),
                 isGlobal,
+                connectivityCapabilities,
                 appliesToGroups?.ToList(),
                 provisioningState,
                 deleteExistingPeering,
@@ -4712,12 +4455,13 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="connectivityTopology"> Connectivity topology type. </param>
         /// <param name="hubs"> List of hubItems. </param>
         /// <param name="isGlobal"> Flag if global mesh is supported. </param>
+        /// <param name="connectivityCapabilities"> Collection of additional settings to enhance specific topology behaviors of the connectivity configuration resource. </param>
         /// <param name="appliesToGroups"> Groups for configuration. </param>
         /// <param name="provisioningState"> The provisioning state of the connectivity configuration resource. </param>
         /// <param name="deleteExistingPeering"> Flag if need to remove current existing peerings. </param>
         /// <param name="resourceGuid"> Unique identifier for this resource. </param>
         /// <returns> A new <see cref="Models.EffectiveConnectivityConfiguration"/> instance for mocking. </returns>
-        public static EffectiveConnectivityConfiguration EffectiveConnectivityConfiguration(string id = null, IEnumerable<NetworkConfigurationGroup> configurationGroups = null, string description = null, ConnectivityTopology? connectivityTopology = null, IEnumerable<ConnectivityHub> hubs = null, GlobalMeshSupportFlag? isGlobal = null, IEnumerable<ConnectivityGroupItem> appliesToGroups = null, NetworkProvisioningState? provisioningState = null, DeleteExistingPeering? deleteExistingPeering = null, Guid? resourceGuid = null)
+        public static EffectiveConnectivityConfiguration EffectiveConnectivityConfiguration(string id = null, IEnumerable<NetworkConfigurationGroup> configurationGroups = null, string description = null, ConnectivityTopology? connectivityTopology = null, IEnumerable<ConnectivityHub> hubs = null, GlobalMeshSupportFlag? isGlobal = null, ConnectivityConfigurationPropertiesConnectivityCapabilities connectivityCapabilities = null, IEnumerable<ConnectivityGroupItem> appliesToGroups = null, NetworkProvisioningState? provisioningState = null, DeleteExistingPeering? deleteExistingPeering = null, Guid? resourceGuid = null)
         {
             configurationGroups ??= new List<NetworkConfigurationGroup>();
             hubs ??= new List<ConnectivityHub>();
@@ -4730,6 +4474,7 @@ namespace Azure.ResourceManager.Network.Models
                 connectivityTopology,
                 hubs?.ToList(),
                 isGlobal,
+                connectivityCapabilities,
                 appliesToGroups?.ToList(),
                 provisioningState,
                 deleteExistingPeering,
@@ -4815,13 +4560,14 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="connectivityTopology"> Connectivity topology type. </param>
         /// <param name="hubs"> List of hubItems. </param>
         /// <param name="isGlobal"> Flag if global mesh is supported. </param>
+        /// <param name="connectivityCapabilities"> Collection of additional settings to enhance specific topology behaviors of the connectivity configuration resource. </param>
         /// <param name="appliesToGroups"> Groups for configuration. </param>
         /// <param name="provisioningState"> The provisioning state of the connectivity configuration resource. </param>
         /// <param name="deleteExistingPeering"> Flag if need to remove current existing peerings. </param>
         /// <param name="resourceGuid"> Unique identifier for this resource. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <returns> A new <see cref="Network.ConnectivityConfigurationData"/> instance for mocking. </returns>
-        public static ConnectivityConfigurationData ConnectivityConfigurationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string description = null, ConnectivityTopology? connectivityTopology = null, IEnumerable<ConnectivityHub> hubs = null, GlobalMeshSupportFlag? isGlobal = null, IEnumerable<ConnectivityGroupItem> appliesToGroups = null, NetworkProvisioningState? provisioningState = null, DeleteExistingPeering? deleteExistingPeering = null, Guid? resourceGuid = null, ETag? etag = null)
+        public static ConnectivityConfigurationData ConnectivityConfigurationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string description = null, ConnectivityTopology? connectivityTopology = null, IEnumerable<ConnectivityHub> hubs = null, GlobalMeshSupportFlag? isGlobal = null, ConnectivityConfigurationPropertiesConnectivityCapabilities connectivityCapabilities = null, IEnumerable<ConnectivityGroupItem> appliesToGroups = null, NetworkProvisioningState? provisioningState = null, DeleteExistingPeering? deleteExistingPeering = null, Guid? resourceGuid = null, ETag? etag = null)
         {
             hubs ??= new List<ConnectivityHub>();
             appliesToGroups ??= new List<ConnectivityGroupItem>();
@@ -4835,6 +4581,7 @@ namespace Azure.ResourceManager.Network.Models
                 connectivityTopology,
                 hubs?.ToList(),
                 isGlobal,
+                connectivityCapabilities,
                 appliesToGroups?.ToList(),
                 provisioningState,
                 deleteExistingPeering,
@@ -5289,6 +5036,267 @@ namespace Azure.ResourceManager.Network.Models
             return new ContainerNetworkInterfaceIPConfiguration(name, containerNetworkInterfaceIPConfigurationType, etag, provisioningState, serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Network.NetworkSecurityPerimeterData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="provisioningState"> The provisioning state of the scope assignment resource. </param>
+        /// <param name="perimeterGuid"> perimeter guid of the network security perimeter. </param>
+        /// <returns> A new <see cref="Network.NetworkSecurityPerimeterData"/> instance for mocking. </returns>
+        public static NetworkSecurityPerimeterData NetworkSecurityPerimeterData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, NetworkSecurityPerimeterProvisioningState? provisioningState = null, Guid? perimeterGuid = null)
+        {
+            tags ??= new Dictionary<string, string>();
+
+            return new NetworkSecurityPerimeterData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                provisioningState,
+                perimeterGuid,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.NetworkSecurityPerimeterPatch"/>. </summary>
+        /// <param name="id"> Network security perimeter identifier. </param>
+        /// <param name="tags"> List of tags for Network Security Perimeter. </param>
+        /// <returns> A new <see cref="Models.NetworkSecurityPerimeterPatch"/> instance for mocking. </returns>
+        public static NetworkSecurityPerimeterPatch NetworkSecurityPerimeterPatch(ResourceIdentifier id = null, IDictionary<string, string> tags = null)
+        {
+            tags ??= new Dictionary<string, string>();
+
+            return new NetworkSecurityPerimeterPatch(id, tags, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Network.NetworkSecurityPerimeterProfileData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="accessRulesVersion"> Version number that increases with every update to access rules within the profile. </param>
+        /// <param name="diagnosticSettingsVersion"> Version number that increases with every update to diagnostic settings within the profile. </param>
+        /// <returns> A new <see cref="Network.NetworkSecurityPerimeterProfileData"/> instance for mocking. </returns>
+        public static NetworkSecurityPerimeterProfileData NetworkSecurityPerimeterProfileData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string accessRulesVersion = null, string diagnosticSettingsVersion = null)
+        {
+            return new NetworkSecurityPerimeterProfileData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                accessRulesVersion,
+                diagnosticSettingsVersion,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Network.NetworkSecurityPerimeterAccessRuleData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="provisioningState"> The provisioning state of the scope assignment resource. </param>
+        /// <param name="direction"> Direction that specifies whether the access rules is inbound/outbound. </param>
+        /// <param name="addressPrefixes"> Inbound address prefixes (IPv4/IPv6). </param>
+        /// <param name="fullyQualifiedDomainNames"> Outbound rules in fully qualified domain name format. </param>
+        /// <param name="subscriptions"> List of subscription ids. </param>
+        /// <param name="networkSecurityPerimeters"> Rule specified by the perimeter id. </param>
+        /// <param name="emailAddresses"> Outbound rules in email address format. This access rule type is currently unavailable for use. </param>
+        /// <param name="phoneNumbers"> Outbound rules in phone number format. This access rule type is currently unavailable for use. </param>
+        /// <param name="serviceTags"> Inbound rules of type service tag. This access rule type is currently unavailable for use. </param>
+        /// <returns> A new <see cref="Network.NetworkSecurityPerimeterAccessRuleData"/> instance for mocking. </returns>
+        public static NetworkSecurityPerimeterAccessRuleData NetworkSecurityPerimeterAccessRuleData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, NetworkSecurityPerimeterProvisioningState? provisioningState = null, NetworkSecurityPerimeterAccessRuleDirection? direction = null, IEnumerable<string> addressPrefixes = null, IEnumerable<string> fullyQualifiedDomainNames = null, IEnumerable<WritableSubResource> subscriptions = null, IEnumerable<NetworkSecurityPerimeterBasedAccessRule> networkSecurityPerimeters = null, IEnumerable<string> emailAddresses = null, IEnumerable<string> phoneNumbers = null, IEnumerable<string> serviceTags = null)
+        {
+            addressPrefixes ??= new List<string>();
+            fullyQualifiedDomainNames ??= new List<string>();
+            subscriptions ??= new List<WritableSubResource>();
+            networkSecurityPerimeters ??= new List<NetworkSecurityPerimeterBasedAccessRule>();
+            emailAddresses ??= new List<string>();
+            phoneNumbers ??= new List<string>();
+            serviceTags ??= new List<string>();
+
+            return new NetworkSecurityPerimeterAccessRuleData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                provisioningState,
+                direction,
+                addressPrefixes?.ToList(),
+                fullyQualifiedDomainNames?.ToList(),
+                subscriptions?.ToList(),
+                networkSecurityPerimeters?.ToList(),
+                emailAddresses?.ToList(),
+                phoneNumbers?.ToList(),
+                serviceTags?.ToList(),
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.NetworkSecurityPerimeterBasedAccessRule"/>. </summary>
+        /// <param name="id"> NSP id in the ARM id format. </param>
+        /// <param name="perimeterGuid"> Resource guid of the NSP supplied. </param>
+        /// <param name="location"> Location of the NSP supplied. </param>
+        /// <returns> A new <see cref="Models.NetworkSecurityPerimeterBasedAccessRule"/> instance for mocking. </returns>
+        public static NetworkSecurityPerimeterBasedAccessRule NetworkSecurityPerimeterBasedAccessRule(ResourceIdentifier id = null, Guid? perimeterGuid = null, AzureLocation? location = null)
+        {
+            return new NetworkSecurityPerimeterBasedAccessRule(id, perimeterGuid, location, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Network.NetworkSecurityPerimeterAssociationData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="provisioningState"> The provisioning state of the resource  association resource. </param>
+        /// <param name="privateLinkResourceId"> The PaaS resource to be associated. </param>
+        /// <param name="profileId"> Profile id to which the PaaS resource is associated. </param>
+        /// <param name="accessMode"> Access mode on the association. </param>
+        /// <param name="hasProvisioningIssues"> Specifies if there are provisioning issues. </param>
+        /// <returns> A new <see cref="Network.NetworkSecurityPerimeterAssociationData"/> instance for mocking. </returns>
+        public static NetworkSecurityPerimeterAssociationData NetworkSecurityPerimeterAssociationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, NetworkSecurityPerimeterProvisioningState? provisioningState = null, ResourceIdentifier privateLinkResourceId = null, ResourceIdentifier profileId = null, NetworkSecurityPerimeterAssociationAccessMode? accessMode = null, string hasProvisioningIssues = null)
+        {
+            return new NetworkSecurityPerimeterAssociationData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                provisioningState,
+                privateLinkResourceId != null ? ResourceManagerModelFactory.WritableSubResource(privateLinkResourceId) : null,
+                profileId != null ? ResourceManagerModelFactory.WritableSubResource(profileId) : null,
+                accessMode,
+                hasProvisioningIssues,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.NetworkSecurityPerimeterAssociableResourceType"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="displayName"> A friendly name for the properties of perimeter associable resources. </param>
+        /// <param name="publicDnsZones"> Public DNS zone names of the resources. </param>
+        /// <returns> A new <see cref="Models.NetworkSecurityPerimeterAssociableResourceType"/> instance for mocking. </returns>
+        public static NetworkSecurityPerimeterAssociableResourceType NetworkSecurityPerimeterAssociableResourceType(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string displayName = null, IEnumerable<string> publicDnsZones = null)
+        {
+            publicDnsZones ??= new List<string>();
+
+            return new NetworkSecurityPerimeterAssociableResourceType(
+                id,
+                name,
+                resourceType,
+                systemData,
+                displayName,
+                publicDnsZones?.ToList(),
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Network.NetworkSecurityPerimeterLinkData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="provisioningState"> The provisioning state of the NSP Link resource. </param>
+        /// <param name="autoApprovedRemotePerimeterResourceId"> Perimeter ARM Id for the remote NSP with which the link gets created in Auto-approval mode. It should be used when the NSP admin have Microsoft.Network/networkSecurityPerimeters/linkPerimeter/action permission on the remote NSP resource. </param>
+        /// <param name="remotePerimeterGuid"> Remote NSP Guid with which the link gets created. </param>
+        /// <param name="remotePerimeterLocation"> Remote NSP location with which the link gets created. </param>
+        /// <param name="localInboundProfiles"> Local Inbound profile names to which Inbound is allowed. Use ['*'] to allow inbound to all profiles. </param>
+        /// <param name="localOutboundProfiles"> Local Outbound profile names from which Outbound is allowed. In current version, it is readonly property and it's value is set to ['*'] to allow outbound from all profiles. In later version, user will be able to modify it. </param>
+        /// <param name="remoteInboundProfiles"> Remote Inbound profile names to which Inbound is allowed. Use ['*'] to allow inbound to all profiles. This property can only be updated in auto-approval mode. </param>
+        /// <param name="remoteOutboundProfiles"> Remote Outbound profile names from which Outbound is allowed. In current version, it is readonly property and it's value is set to ['*'] to allow outbound from all profiles. In later version, user will be able to modify it. </param>
+        /// <param name="description"> A message passed to the owner of the remote NSP link resource with this connection request. In case of Auto-approved flow, it is default to 'Auto Approved'. Restricted to 140 chars. </param>
+        /// <param name="status"> The NSP link state. </param>
+        /// <returns> A new <see cref="Network.NetworkSecurityPerimeterLinkData"/> instance for mocking. </returns>
+        public static NetworkSecurityPerimeterLinkData NetworkSecurityPerimeterLinkData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, NetworkSecurityPerimeterLinkProvisioningState? provisioningState = null, ResourceIdentifier autoApprovedRemotePerimeterResourceId = null, Guid? remotePerimeterGuid = null, string remotePerimeterLocation = null, IEnumerable<string> localInboundProfiles = null, IEnumerable<string> localOutboundProfiles = null, IEnumerable<string> remoteInboundProfiles = null, IEnumerable<string> remoteOutboundProfiles = null, string description = null, NetworkSecurityPerimeterLinkStatus? status = null)
+        {
+            localInboundProfiles ??= new List<string>();
+            localOutboundProfiles ??= new List<string>();
+            remoteInboundProfiles ??= new List<string>();
+            remoteOutboundProfiles ??= new List<string>();
+
+            return new NetworkSecurityPerimeterLinkData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                provisioningState,
+                autoApprovedRemotePerimeterResourceId,
+                remotePerimeterGuid,
+                remotePerimeterLocation,
+                localInboundProfiles?.ToList(),
+                localOutboundProfiles?.ToList(),
+                remoteInboundProfiles?.ToList(),
+                remoteOutboundProfiles?.ToList(),
+                description,
+                status,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Network.NetworkSecurityPerimeterLinkReferenceData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="provisioningState"> The provisioning state of the NSP LinkReference resource. </param>
+        /// <param name="remotePerimeterResourceId"> Perimeter ARM Id for the remote NSP with which the link is created. </param>
+        /// <param name="remotePerimeterGuid"> Remote NSP Guid with which the link is created. </param>
+        /// <param name="remotePerimeterLocation"> Remote NSP location with which the link gets created. </param>
+        /// <param name="localInboundProfiles"> Local Inbound profile names to which Inbound is allowed. Use ['*'] to allow inbound to all profiles. </param>
+        /// <param name="localOutboundProfiles"> Local Outbound profile names from which Outbound is allowed. In current version, it is readonly property and it's value is set to ['*'] to allow outbound from all profiles. In later version, user will be able to modify it. </param>
+        /// <param name="remoteInboundProfiles"> Remote Inbound profile names to which Inbound is allowed. ['*'] value implies inbound is allowed to all profiles at remote perimeter. This property can only be updated from corresponding link resource present in remote perimeter. </param>
+        /// <param name="remoteOutboundProfiles"> Remote Outbound profile names from which Outbound is allowed. ['*'] value implies outbound is allowed from all profiles at remote perimeter. This property can only be updated from corresponding link resource present in remote perimeter. </param>
+        /// <param name="description"> A message sent by the remote NSP link admin for connection request. In case of Auto-approved flow, it is default to 'Auto Approved'. </param>
+        /// <param name="status"> The NSP linkReference state. It cannot be changed if link is created in auto-approval mode. </param>
+        /// <returns> A new <see cref="Network.NetworkSecurityPerimeterLinkReferenceData"/> instance for mocking. </returns>
+        public static NetworkSecurityPerimeterLinkReferenceData NetworkSecurityPerimeterLinkReferenceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, NetworkSecurityPerimeterLinkProvisioningState? provisioningState = null, ResourceIdentifier remotePerimeterResourceId = null, Guid? remotePerimeterGuid = null, string remotePerimeterLocation = null, IEnumerable<string> localInboundProfiles = null, IEnumerable<string> localOutboundProfiles = null, IEnumerable<string> remoteInboundProfiles = null, IEnumerable<string> remoteOutboundProfiles = null, string description = null, NetworkSecurityPerimeterLinkStatus? status = null)
+        {
+            localInboundProfiles ??= new List<string>();
+            localOutboundProfiles ??= new List<string>();
+            remoteInboundProfiles ??= new List<string>();
+            remoteOutboundProfiles ??= new List<string>();
+
+            return new NetworkSecurityPerimeterLinkReferenceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                provisioningState,
+                remotePerimeterResourceId,
+                remotePerimeterGuid,
+                remotePerimeterLocation,
+                localInboundProfiles?.ToList(),
+                localOutboundProfiles?.ToList(),
+                remoteInboundProfiles?.ToList(),
+                remoteOutboundProfiles?.ToList(),
+                description,
+                status,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Network.NetworkSecurityPerimeterLoggingConfigurationData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="enabledLogCategories"> The log categories to enable in the NSP logging configuration. </param>
+        /// <param name="version"> The version of the NSP logging configuration. </param>
+        /// <returns> A new <see cref="Network.NetworkSecurityPerimeterLoggingConfigurationData"/> instance for mocking. </returns>
+        public static NetworkSecurityPerimeterLoggingConfigurationData NetworkSecurityPerimeterLoggingConfigurationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IEnumerable<string> enabledLogCategories = null, string version = null)
+        {
+            enabledLogCategories ??= new List<string>();
+
+            return new NetworkSecurityPerimeterLoggingConfigurationData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                enabledLogCategories?.ToList(),
+                version,
+                serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Network.ReachabilityAnalysisIntentData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -5364,8 +5372,9 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="properties"> Properties of Verifier Workspace resource. </param>
+        /// <param name="etag"> String representing unique etag for the resource document. </param>
         /// <returns> A new <see cref="Network.NetworkVerifierWorkspaceData"/> instance for mocking. </returns>
-        public static NetworkVerifierWorkspaceData NetworkVerifierWorkspaceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, NetworkVerifierWorkspaceProperties properties = null)
+        public static NetworkVerifierWorkspaceData NetworkVerifierWorkspaceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, NetworkVerifierWorkspaceProperties properties = null, ETag? etag = null)
         {
             tags ??= new Dictionary<string, string>();
 
@@ -5377,6 +5386,7 @@ namespace Azure.ResourceManager.Network.Models
                 tags,
                 location,
                 properties,
+                etag,
                 serializedAdditionalRawData: null);
         }
 
@@ -5486,6 +5496,14 @@ namespace Azure.ResourceManager.Network.Models
         public static PartnerManagedResourceProperties PartnerManagedResourceProperties(ResourceIdentifier id = null, ResourceIdentifier internalLoadBalancerId = null, ResourceIdentifier standardLoadBalancerId = null)
         {
             return new PartnerManagedResourceProperties(id, internalLoadBalancerId, standardLoadBalancerId, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.NetworkVirtualApplianceInstanceId"/>. </summary>
+        /// <param name="instanceId"> The network virtual appliance instance id for which boot diagnostic logs is being requested. </param>
+        /// <returns> A new <see cref="Models.NetworkVirtualApplianceInstanceId"/> instance for mocking. </returns>
+        public static NetworkVirtualApplianceInstanceId NetworkVirtualApplianceInstanceId(int? instanceId = null)
+        {
+            return new NetworkVirtualApplianceInstanceId(instanceId, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Network.VirtualApplianceSiteData"/>. </summary>
@@ -6242,47 +6260,6 @@ namespace Azure.ResourceManager.Network.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ConnectionMonitorQueryResult"/>. </summary>
-        /// <param name="sourceStatus"> Status of connection monitor source. </param>
-        /// <param name="states"> Information about connection states. </param>
-        /// <returns> A new <see cref="Models.ConnectionMonitorQueryResult"/> instance for mocking. </returns>
-        public static ConnectionMonitorQueryResult ConnectionMonitorQueryResult(ConnectionMonitorSourceStatus? sourceStatus = null, IEnumerable<ConnectionStateSnapshot> states = null)
-        {
-            states ??= new List<ConnectionStateSnapshot>();
-
-            return new ConnectionMonitorQueryResult(sourceStatus, states?.ToList(), serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ConnectionStateSnapshot"/>. </summary>
-        /// <param name="networkConnectionState"> The connection state. </param>
-        /// <param name="startOn"> The start time of the connection snapshot. </param>
-        /// <param name="endOn"> The end time of the connection snapshot. </param>
-        /// <param name="evaluationState"> Connectivity analysis evaluation state. </param>
-        /// <param name="avgLatencyInMs"> Average latency in ms. </param>
-        /// <param name="minLatencyInMs"> Minimum latency in ms. </param>
-        /// <param name="maxLatencyInMs"> Maximum latency in ms. </param>
-        /// <param name="probesSent"> The number of sent probes. </param>
-        /// <param name="probesFailed"> The number of failed probes. </param>
-        /// <param name="hops"> List of hops between the source and the destination. </param>
-        /// <returns> A new <see cref="Models.ConnectionStateSnapshot"/> instance for mocking. </returns>
-        public static ConnectionStateSnapshot ConnectionStateSnapshot(NetworkConnectionState? networkConnectionState = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, EvaluationState? evaluationState = null, long? avgLatencyInMs = null, long? minLatencyInMs = null, long? maxLatencyInMs = null, long? probesSent = null, long? probesFailed = null, IEnumerable<ConnectivityHopInfo> hops = null)
-        {
-            hops ??= new List<ConnectivityHopInfo>();
-
-            return new ConnectionStateSnapshot(
-                networkConnectionState,
-                startOn,
-                endOn,
-                evaluationState,
-                avgLatencyInMs,
-                minLatencyInMs,
-                maxLatencyInMs,
-                probesSent,
-                probesFailed,
-                hops?.ToList(),
-                serializedAdditionalRawData: null);
-        }
-
         /// <summary> Initializes a new instance of <see cref="Models.AvailablePrivateEndpointType"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -6660,8 +6637,9 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="ipAllocations"> Array of IpAllocation which reference this VNET. </param>
         /// <param name="flowLogs"> A collection of references to flow log resources. </param>
         /// <param name="privateEndpointVnetPolicy"> Private Endpoint VNet Policies. </param>
+        /// <param name="defaultPublicNatGatewayId"> A reference to the default public nat gateway being used by this virtual network resource. </param>
         /// <returns> A new <see cref="Network.VirtualNetworkData"/> instance for mocking. </returns>
-        public static VirtualNetworkData VirtualNetworkData(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, AzureLocation? location = null, IDictionary<string, string> tags = null, ExtendedLocation extendedLocation = null, ETag? etag = null, VirtualNetworkAddressSpace addressSpace = null, IEnumerable<string> dhcpOptionsDnsServers = null, int? flowTimeoutInMinutes = null, IEnumerable<SubnetData> subnets = null, IEnumerable<VirtualNetworkPeeringData> virtualNetworkPeerings = null, Guid? resourceGuid = null, NetworkProvisioningState? provisioningState = null, bool? enableDdosProtection = null, bool? enableVmProtection = null, ResourceIdentifier ddosProtectionPlanId = null, VirtualNetworkBgpCommunities bgpCommunities = null, VirtualNetworkEncryption encryption = null, IEnumerable<WritableSubResource> ipAllocations = null, IEnumerable<FlowLogData> flowLogs = null, PrivateEndpointVnetPolicy? privateEndpointVnetPolicy = null)
+        public static VirtualNetworkData VirtualNetworkData(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, AzureLocation? location = null, IDictionary<string, string> tags = null, ExtendedLocation extendedLocation = null, ETag? etag = null, VirtualNetworkAddressSpace addressSpace = null, IEnumerable<string> dhcpOptionsDnsServers = null, int? flowTimeoutInMinutes = null, IEnumerable<SubnetData> subnets = null, IEnumerable<VirtualNetworkPeeringData> virtualNetworkPeerings = null, Guid? resourceGuid = null, NetworkProvisioningState? provisioningState = null, bool? enableDdosProtection = null, bool? enableVmProtection = null, ResourceIdentifier ddosProtectionPlanId = null, VirtualNetworkBgpCommunities bgpCommunities = null, VirtualNetworkEncryption encryption = null, IEnumerable<WritableSubResource> ipAllocations = null, IEnumerable<FlowLogData> flowLogs = null, PrivateEndpointVnetPolicy? privateEndpointVnetPolicy = null, ResourceIdentifier defaultPublicNatGatewayId = null)
         {
             tags ??= new Dictionary<string, string>();
             dhcpOptionsDnsServers ??= new List<string>();
@@ -6693,7 +6671,8 @@ namespace Azure.ResourceManager.Network.Models
                 encryption,
                 ipAllocations?.ToList(),
                 flowLogs?.ToList(),
-                privateEndpointVnetPolicy);
+                privateEndpointVnetPolicy,
+                defaultPublicNatGatewayId != null ? ResourceManagerModelFactory.WritableSubResource(defaultPublicNatGatewayId) : null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Network.VirtualNetworkPeeringData"/>. </summary>
@@ -6841,7 +6820,9 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="vpnGatewayGeneration"> The generation for this VirtualNetworkGateway. Must be None if gatewayType is not VPN. </param>
         /// <param name="enableBgp"> Whether BGP is enabled for this virtual network gateway or not. </param>
         /// <param name="enablePrivateIPAddress"> Whether private IP needs to be enabled on this gateway for connections or not. </param>
+        /// <param name="virtualNetworkGatewayMigrationStatus"> The reference to the VirtualNetworkGatewayMigrationStatus which represents the status of migration. </param>
         /// <param name="active"> ActiveActive flag. </param>
+        /// <param name="enableHighBandwidthVpnGateway"> To enable Advanced Connectivity feature for VPN gateway. </param>
         /// <param name="disableIPSecReplayProtection"> disableIPSecReplayProtection flag. </param>
         /// <param name="gatewayDefaultSiteId"> The reference to the LocalNetworkGateway resource which represents local network site having default routes. Assign Null value in case of removing existing default site setting. </param>
         /// <param name="sku"> The reference to the VirtualNetworkGatewaySku resource which represents the SKU selected for Virtual network gateway. </param>
@@ -6861,7 +6842,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="adminState"> Property to indicate if the Express Route Gateway serves traffic when there are multiple Express Route Gateways in the vnet. </param>
         /// <param name="resiliencyModel"> Property to indicate if the Express Route Gateway has resiliency model of MultiHomed or SingleHomed. </param>
         /// <returns> A new <see cref="Network.VirtualNetworkGatewayData"/> instance for mocking. </returns>
-        public static VirtualNetworkGatewayData VirtualNetworkGatewayData(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, AzureLocation? location = null, IDictionary<string, string> tags = null, ExtendedLocation extendedLocation = null, ETag? etag = null, ManagedServiceIdentity identity = null, VirtualNetworkGatewayAutoScaleBounds autoScaleBounds = null, IEnumerable<VirtualNetworkGatewayIPConfiguration> ipConfigurations = null, VirtualNetworkGatewayType? gatewayType = null, VpnType? vpnType = null, VpnGatewayGeneration? vpnGatewayGeneration = null, bool? enableBgp = null, bool? enablePrivateIPAddress = null, bool? active = null, bool? disableIPSecReplayProtection = null, ResourceIdentifier gatewayDefaultSiteId = null, VirtualNetworkGatewaySku sku = null, VpnClientConfiguration vpnClientConfiguration = null, IEnumerable<VirtualNetworkGatewayPolicyGroup> virtualNetworkGatewayPolicyGroups = null, BgpSettings bgpSettings = null, VirtualNetworkAddressSpace customRoutes = null, Guid? resourceGuid = null, NetworkProvisioningState? provisioningState = null, bool? enableDnsForwarding = null, string inboundDnsForwardingEndpoint = null, ResourceIdentifier vNetExtendedLocationResourceId = null, IEnumerable<VirtualNetworkGatewayNatRuleData> natRules = null, bool? enableBgpRouteTranslationForNat = null, bool? allowVirtualWanTraffic = null, bool? allowRemoteVnetTraffic = null, ExpressRouteGatewayAdminState? adminState = null, ExpressRouteGatewayResiliencyModel? resiliencyModel = null)
+        public static VirtualNetworkGatewayData VirtualNetworkGatewayData(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, AzureLocation? location = null, IDictionary<string, string> tags = null, ExtendedLocation extendedLocation = null, ETag? etag = null, ManagedServiceIdentity identity = null, VirtualNetworkGatewayAutoScaleBounds autoScaleBounds = null, IEnumerable<VirtualNetworkGatewayIPConfiguration> ipConfigurations = null, VirtualNetworkGatewayType? gatewayType = null, VpnType? vpnType = null, VpnGatewayGeneration? vpnGatewayGeneration = null, bool? enableBgp = null, bool? enablePrivateIPAddress = null, VirtualNetworkGatewayMigrationStatus virtualNetworkGatewayMigrationStatus = null, bool? active = null, bool? enableHighBandwidthVpnGateway = null, bool? disableIPSecReplayProtection = null, ResourceIdentifier gatewayDefaultSiteId = null, VirtualNetworkGatewaySku sku = null, VpnClientConfiguration vpnClientConfiguration = null, IEnumerable<VirtualNetworkGatewayPolicyGroup> virtualNetworkGatewayPolicyGroups = null, BgpSettings bgpSettings = null, VirtualNetworkAddressSpace customRoutes = null, Guid? resourceGuid = null, NetworkProvisioningState? provisioningState = null, bool? enableDnsForwarding = null, string inboundDnsForwardingEndpoint = null, ResourceIdentifier vNetExtendedLocationResourceId = null, IEnumerable<VirtualNetworkGatewayNatRuleData> natRules = null, bool? enableBgpRouteTranslationForNat = null, bool? allowVirtualWanTraffic = null, bool? allowRemoteVnetTraffic = null, ExpressRouteGatewayAdminState? adminState = null, ExpressRouteGatewayResiliencyModel? resiliencyModel = null)
         {
             tags ??= new Dictionary<string, string>();
             ipConfigurations ??= new List<VirtualNetworkGatewayIPConfiguration>();
@@ -6885,7 +6866,9 @@ namespace Azure.ResourceManager.Network.Models
                 vpnGatewayGeneration,
                 enableBgp,
                 enablePrivateIPAddress,
+                virtualNetworkGatewayMigrationStatus,
                 active,
+                enableHighBandwidthVpnGateway,
                 disableIPSecReplayProtection,
                 gatewayDefaultSiteId != null ? ResourceManagerModelFactory.WritableSubResource(gatewayDefaultSiteId) : null,
                 sku,
@@ -7237,6 +7220,117 @@ namespace Azure.ResourceManager.Network.Models
                 serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Models.GatewayResiliencyInformation"/>. </summary>
+        /// <param name="overallScore"> Current Resiliency Score for the gateway. </param>
+        /// <param name="scoreChange"> Update in the Resiliency Score for the gateway from the last computed score. </param>
+        /// <param name="minScoreFromRecommendations"> Minimum increase expected in the score if the at least one of the recommendations is applied for the gateway. </param>
+        /// <param name="maxScoreFromRecommendations"> Maximum increase expected in the score if all of the recommendations are applied for the gateway. </param>
+        /// <param name="lastComputedOn"> Timestamp denoting the last time when the resiliency score was computed for the gateway. </param>
+        /// <param name="nextEligibleComputeOn"> Timestamp denoting the next eligible time to re-compute the resiliency score for the gateway. </param>
+        /// <param name="components"> List of Resiliency based Recommendation Components for the gateway. </param>
+        /// <returns> A new <see cref="Models.GatewayResiliencyInformation"/> instance for mocking. </returns>
+        public static GatewayResiliencyInformation GatewayResiliencyInformation(string overallScore = null, string scoreChange = null, string minScoreFromRecommendations = null, string maxScoreFromRecommendations = null, DateTimeOffset? lastComputedOn = null, DateTimeOffset? nextEligibleComputeOn = null, IEnumerable<ResiliencyRecommendationComponents> components = null)
+        {
+            components ??= new List<ResiliencyRecommendationComponents>();
+
+            return new GatewayResiliencyInformation(
+                overallScore,
+                scoreChange,
+                minScoreFromRecommendations,
+                maxScoreFromRecommendations,
+                lastComputedOn,
+                nextEligibleComputeOn,
+                components?.ToList(),
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ResiliencyRecommendationComponents"/>. </summary>
+        /// <param name="name"> Name of the Resiliency based Recommendation Component. </param>
+        /// <param name="currentScore"> Current Score of the gateway. </param>
+        /// <param name="maxScore"> Max score that the gateway can achieve if the specified recommendation is applied. </param>
+        /// <param name="recommendations"> List of Gateway Resiliency based Recommendations. </param>
+        /// <returns> A new <see cref="Models.ResiliencyRecommendationComponents"/> instance for mocking. </returns>
+        public static ResiliencyRecommendationComponents ResiliencyRecommendationComponents(string name = null, string currentScore = null, string maxScore = null, IEnumerable<GatewayResiliencyRecommendation> recommendations = null)
+        {
+            recommendations ??= new List<GatewayResiliencyRecommendation>();
+
+            return new ResiliencyRecommendationComponents(name, currentScore, maxScore, recommendations?.ToList(), serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.GatewayResiliencyRecommendation"/>. </summary>
+        /// <param name="recommendationTitle"> Recommendation Title. </param>
+        /// <param name="recommendationId"> Recommendation Id. </param>
+        /// <param name="severity"> Impact associated with the recommendation. </param>
+        /// <param name="recommendationText"> Recommendation details. </param>
+        /// <param name="callToActionText"> Acton items to apply the recommendation. </param>
+        /// <param name="callToActionLink"> Link to the public documentation for the associated recommendation. </param>
+        /// <returns> A new <see cref="Models.GatewayResiliencyRecommendation"/> instance for mocking. </returns>
+        public static GatewayResiliencyRecommendation GatewayResiliencyRecommendation(string recommendationTitle = null, string recommendationId = null, string severity = null, string recommendationText = null, string callToActionText = null, string callToActionLink = null)
+        {
+            return new GatewayResiliencyRecommendation(
+                recommendationTitle,
+                recommendationId,
+                severity,
+                recommendationText,
+                callToActionText,
+                callToActionLink,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.GatewayRouteSetsInformation"/>. </summary>
+        /// <param name="lastComputedOn"> Timestamp denoting the last time when the route sets were computed for the gateway. </param>
+        /// <param name="nextEligibleComputeOn"> Timestamp denoting the next eligible time to re-compute the route sets for the gateway. </param>
+        /// <param name="routeSetVersion"> Version for the route set. </param>
+        /// <param name="routeSets"> List of Gateway Route Sets. </param>
+        /// <param name="circuitsMetadataMap"> Dictionary containing map of the circuit id and circuit details. </param>
+        /// <returns> A new <see cref="Models.GatewayRouteSetsInformation"/> instance for mocking. </returns>
+        public static GatewayRouteSetsInformation GatewayRouteSetsInformation(DateTimeOffset? lastComputedOn = null, DateTimeOffset? nextEligibleComputeOn = null, string routeSetVersion = null, IEnumerable<GatewayRouteSet> routeSets = null, IReadOnlyDictionary<string, CircuitMetadataMap> circuitsMetadataMap = null)
+        {
+            routeSets ??= new List<GatewayRouteSet>();
+            circuitsMetadataMap ??= new Dictionary<string, CircuitMetadataMap>();
+
+            return new GatewayRouteSetsInformation(
+                lastComputedOn,
+                nextEligibleComputeOn,
+                routeSetVersion,
+                routeSets?.ToList(),
+                circuitsMetadataMap,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.GatewayRouteSet"/>. </summary>
+        /// <param name="name"> Route Set name. </param>
+        /// <param name="locations"> List of different locations from where the routes are learned. </param>
+        /// <param name="details"> List of different Route Sources. </param>
+        /// <returns> A new <see cref="Models.GatewayRouteSet"/> instance for mocking. </returns>
+        public static GatewayRouteSet GatewayRouteSet(string name = null, IEnumerable<AzureLocation> locations = null, IReadOnlyDictionary<string, IList<RouteSourceDetails>> details = null)
+        {
+            locations ??= new List<AzureLocation>();
+            details ??= new Dictionary<string, IList<RouteSourceDetails>>();
+
+            return new GatewayRouteSet(name, locations?.ToList(), details, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.RouteSourceDetails"/>. </summary>
+        /// <param name="circuit"> Express Route Circuit identifier. </param>
+        /// <param name="pri"> Flag to indicate if the route learned from the primary device is active or passive. </param>
+        /// <param name="sec"> Flag to indicate if the route learned from the secondary device is active or passive. </param>
+        /// <returns> A new <see cref="Models.RouteSourceDetails"/> instance for mocking. </returns>
+        public static RouteSourceDetails RouteSourceDetails(string circuit = null, string pri = null, string sec = null)
+        {
+            return new RouteSourceDetails(circuit, pri, sec, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.CircuitMetadataMap"/>. </summary>
+        /// <param name="name"> Express Route Circuit Name. </param>
+        /// <param name="link"> Link to the Express Route circuit. </param>
+        /// <param name="location"> Peering location of the Express Route Circuit. </param>
+        /// <returns> A new <see cref="Models.CircuitMetadataMap"/> instance for mocking. </returns>
+        public static CircuitMetadataMap CircuitMetadataMap(string name = null, string link = null, AzureLocation? location = null)
+        {
+            return new CircuitMetadataMap(name, link, location, serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Models.ExpressRouteFailoverTestDetails"/>. </summary>
         /// <param name="peeringLocation"> Peering location of the test. </param>
         /// <param name="circuits"> All circuits in the peering location. </param>
@@ -7346,6 +7440,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="routingWeight"> The routing weight. </param>
         /// <param name="dpdTimeoutSeconds"> The dead peer detection timeout of this connection in seconds. </param>
         /// <param name="connectionMode"> The connection mode for this connection. </param>
+        /// <param name="tunnelProperties"> Tunnel properties for virtual network gateway connection. </param>
         /// <param name="sharedKey"> The IPSec shared key. </param>
         /// <param name="connectionStatus"> Virtual Network Gateway connection status. </param>
         /// <param name="tunnelConnectionStatus"> Collection of all tunnels' connection health status. </param>
@@ -7363,11 +7458,12 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="expressRouteGatewayBypass"> Bypass ExpressRoute Gateway for data forwarding. </param>
         /// <param name="enablePrivateLinkFastPath"> Bypass the ExpressRoute gateway when accessing private-links. ExpressRoute FastPath (expressRouteGatewayBypass) must be enabled. </param>
         /// <returns> A new <see cref="Network.VirtualNetworkGatewayConnectionData"/> instance for mocking. </returns>
-        public static VirtualNetworkGatewayConnectionData VirtualNetworkGatewayConnectionData(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, AzureLocation? location = null, IDictionary<string, string> tags = null, ETag? etag = null, string authorizationKey = null, VirtualNetworkGatewayData virtualNetworkGateway1 = null, VirtualNetworkGatewayData virtualNetworkGateway2 = null, LocalNetworkGatewayData localNetworkGateway2 = null, IEnumerable<WritableSubResource> ingressNatRules = null, IEnumerable<WritableSubResource> egressNatRules = null, VirtualNetworkGatewayConnectionType connectionType = default, VirtualNetworkGatewayConnectionProtocol? connectionProtocol = null, int? routingWeight = null, int? dpdTimeoutSeconds = null, VirtualNetworkGatewayConnectionMode? connectionMode = null, string sharedKey = null, VirtualNetworkGatewayConnectionStatus? connectionStatus = null, IEnumerable<TunnelConnectionHealth> tunnelConnectionStatus = null, long? egressBytesTransferred = null, long? ingressBytesTransferred = null, ResourceIdentifier peerId = null, bool? enableBgp = null, IEnumerable<GatewayCustomBgpIPAddressIPConfiguration> gatewayCustomBgpIPAddresses = null, bool? useLocalAzureIPAddress = null, bool? usePolicyBasedTrafficSelectors = null, IEnumerable<IPsecPolicy> ipsecPolicies = null, IEnumerable<TrafficSelectorPolicy> trafficSelectorPolicies = null, Guid? resourceGuid = null, NetworkProvisioningState? provisioningState = null, bool? expressRouteGatewayBypass = null, bool? enablePrivateLinkFastPath = null)
+        public static VirtualNetworkGatewayConnectionData VirtualNetworkGatewayConnectionData(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, AzureLocation? location = null, IDictionary<string, string> tags = null, ETag? etag = null, string authorizationKey = null, VirtualNetworkGatewayData virtualNetworkGateway1 = null, VirtualNetworkGatewayData virtualNetworkGateway2 = null, LocalNetworkGatewayData localNetworkGateway2 = null, IEnumerable<WritableSubResource> ingressNatRules = null, IEnumerable<WritableSubResource> egressNatRules = null, VirtualNetworkGatewayConnectionType connectionType = default, VirtualNetworkGatewayConnectionProtocol? connectionProtocol = null, int? routingWeight = null, int? dpdTimeoutSeconds = null, VirtualNetworkGatewayConnectionMode? connectionMode = null, IEnumerable<VirtualNetworkGatewayConnectionTunnelProperties> tunnelProperties = null, string sharedKey = null, VirtualNetworkGatewayConnectionStatus? connectionStatus = null, IEnumerable<TunnelConnectionHealth> tunnelConnectionStatus = null, long? egressBytesTransferred = null, long? ingressBytesTransferred = null, ResourceIdentifier peerId = null, bool? enableBgp = null, IEnumerable<GatewayCustomBgpIPAddressIPConfiguration> gatewayCustomBgpIPAddresses = null, bool? useLocalAzureIPAddress = null, bool? usePolicyBasedTrafficSelectors = null, IEnumerable<IPsecPolicy> ipsecPolicies = null, IEnumerable<TrafficSelectorPolicy> trafficSelectorPolicies = null, Guid? resourceGuid = null, NetworkProvisioningState? provisioningState = null, bool? expressRouteGatewayBypass = null, bool? enablePrivateLinkFastPath = null)
         {
             tags ??= new Dictionary<string, string>();
             ingressNatRules ??= new List<WritableSubResource>();
             egressNatRules ??= new List<WritableSubResource>();
+            tunnelProperties ??= new List<VirtualNetworkGatewayConnectionTunnelProperties>();
             tunnelConnectionStatus ??= new List<TunnelConnectionHealth>();
             gatewayCustomBgpIPAddresses ??= new List<GatewayCustomBgpIPAddressIPConfiguration>();
             ipsecPolicies ??= new List<IPsecPolicy>();
@@ -7392,6 +7488,7 @@ namespace Azure.ResourceManager.Network.Models
                 routingWeight,
                 dpdTimeoutSeconds,
                 connectionMode,
+                tunnelProperties?.ToList(),
                 sharedKey,
                 connectionStatus,
                 tunnelConnectionStatus?.ToList(),
@@ -7484,6 +7581,15 @@ namespace Azure.ResourceManager.Network.Models
                 ingressBytesTransferred,
                 maxPacketsPerSecond,
                 serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.VirtualNetworkGatewayMigrationContent"/>. </summary>
+        /// <param name="migrationType"> MigrationType for the virtual network gateway. </param>
+        /// <param name="resourceUri"> Resource url that needs to be passed in to migration. </param>
+        /// <returns> A new <see cref="Models.VirtualNetworkGatewayMigrationContent"/> instance for mocking. </returns>
+        public static VirtualNetworkGatewayMigrationContent VirtualNetworkGatewayMigrationContent(VirtualNetworkGatewayMigrationType migrationType = default, Uri resourceUri = null)
+        {
+            return new VirtualNetworkGatewayMigrationContent(migrationType, resourceUri, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Network.VirtualRouterData"/>. </summary>
@@ -7792,13 +7898,13 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="vpnClientAddressPool"> The reference to the address space resource which represents Address space for P2S VpnClient. </param>
         /// <param name="routingConfiguration"> The Routing Configuration indicating the associated and propagated route tables on this connection. </param>
         /// <param name="enableInternetSecurity"> Flag indicating whether the enable internet security flag is turned on for the P2S Connections or not. </param>
-        /// <param name="configurationPolicyGroupAssociations"> List of Configuration Policy Groups that this P2SConnectionConfiguration is attached to. </param>
+        /// <param name="configurationPolicyGroups"> List of Configuration Policy Groups that this P2SConnectionConfiguration is attached to. </param>
         /// <param name="previousConfigurationPolicyGroupAssociations"> List of previous Configuration Policy Groups that this P2SConnectionConfiguration was attached to. </param>
         /// <param name="provisioningState"> The provisioning state of the P2SConnectionConfiguration resource. </param>
         /// <returns> A new <see cref="Models.P2SConnectionConfiguration"/> instance for mocking. </returns>
-        public static P2SConnectionConfiguration P2SConnectionConfiguration(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, ETag? etag = null, VirtualNetworkAddressSpace vpnClientAddressPool = null, RoutingConfiguration routingConfiguration = null, bool? enableInternetSecurity = null, IEnumerable<WritableSubResource> configurationPolicyGroupAssociations = null, IEnumerable<VpnServerConfigurationPolicyGroupData> previousConfigurationPolicyGroupAssociations = null, NetworkProvisioningState? provisioningState = null)
+        public static P2SConnectionConfiguration P2SConnectionConfiguration(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, ETag? etag = null, VirtualNetworkAddressSpace vpnClientAddressPool = null, RoutingConfiguration routingConfiguration = null, bool? enableInternetSecurity = null, IEnumerable<WritableSubResource> configurationPolicyGroups = null, IEnumerable<VpnServerConfigurationPolicyGroupData> previousConfigurationPolicyGroupAssociations = null, NetworkProvisioningState? provisioningState = null)
         {
-            configurationPolicyGroupAssociations ??= new List<WritableSubResource>();
+            configurationPolicyGroups ??= new List<WritableSubResource>();
             previousConfigurationPolicyGroupAssociations ??= new List<VpnServerConfigurationPolicyGroupData>();
 
             return new P2SConnectionConfiguration(
@@ -7810,7 +7916,7 @@ namespace Azure.ResourceManager.Network.Models
                 vpnClientAddressPool,
                 routingConfiguration,
                 enableInternetSecurity,
-                configurationPolicyGroupAssociations?.ToList(),
+                configurationPolicyGroups?.ToList(),
                 previousConfigurationPolicyGroupAssociations?.ToList(),
                 provisioningState);
         }
@@ -8637,6 +8743,31 @@ namespace Azure.ResourceManager.Network.Models
                 serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Models.ManagedRuleSet"/>. </summary>
+        /// <param name="ruleSetType"> Defines the rule set type to use. </param>
+        /// <param name="ruleSetVersion"> Defines the version of the rule set to use. </param>
+        /// <param name="ruleGroupOverrides"> Defines the rule group overrides to apply to the rule set. </param>
+        /// <param name="computedDisabledRules"> Stores the final list of disabled rule groups. </param>
+        /// <returns> A new <see cref="Models.ManagedRuleSet"/> instance for mocking. </returns>
+        public static ManagedRuleSet ManagedRuleSet(string ruleSetType = null, string ruleSetVersion = null, IEnumerable<ManagedRuleGroupOverride> ruleGroupOverrides = null, IEnumerable<ManagedRuleSetRuleGroup> computedDisabledRules = null)
+        {
+            ruleGroupOverrides ??= new List<ManagedRuleGroupOverride>();
+            computedDisabledRules ??= new List<ManagedRuleSetRuleGroup>();
+
+            return new ManagedRuleSet(ruleSetType, ruleSetVersion, ruleGroupOverrides?.ToList(), computedDisabledRules?.ToList(), serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ManagedRuleSetRuleGroup"/>. </summary>
+        /// <param name="ruleGroupName"> Name of the rule group. </param>
+        /// <param name="rules"> List of rules within the rule group. </param>
+        /// <returns> A new <see cref="Models.ManagedRuleSetRuleGroup"/> instance for mocking. </returns>
+        public static ManagedRuleSetRuleGroup ManagedRuleSetRuleGroup(string ruleGroupName = null, IEnumerable<string> rules = null)
+        {
+            rules ??= new List<string>();
+
+            return new ManagedRuleSetRuleGroup(ruleGroupName, rules?.ToList(), serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Models.ActiveSecurityAdminRule"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="commitOn"> Deployment time string. </param>
@@ -8935,6 +9066,47 @@ namespace Azure.ResourceManager.Network.Models
                 resourceGuid);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Models.ConnectionStateSnapshot"/>. </summary>
+        /// <param name="networkConnectionState"> The connection state. </param>
+        /// <param name="startOn"> The start time of the connection snapshot. </param>
+        /// <param name="endOn"> The end time of the connection snapshot. </param>
+        /// <param name="evaluationState"> Connectivity analysis evaluation state. </param>
+        /// <param name="avgLatencyInMs"> Average latency in ms. </param>
+        /// <param name="minLatencyInMs"> Minimum latency in ms. </param>
+        /// <param name="maxLatencyInMs"> Maximum latency in ms. </param>
+        /// <param name="probesSent"> The number of sent probes. </param>
+        /// <param name="probesFailed"> The number of failed probes. </param>
+        /// <param name="hops"> List of hops between the source and the destination. </param>
+        /// <returns> A new <see cref="Models.ConnectionStateSnapshot"/> instance for mocking. </returns>
+        public static ConnectionStateSnapshot ConnectionStateSnapshot(NetworkConnectionState? networkConnectionState = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, EvaluationState? evaluationState = null, long? avgLatencyInMs = null, long? minLatencyInMs = null, long? maxLatencyInMs = null, long? probesSent = null, long? probesFailed = null, IEnumerable<ConnectivityHopInfo> hops = null)
+        {
+            hops ??= new List<ConnectivityHopInfo>();
+
+            return new ConnectionStateSnapshot(
+                networkConnectionState,
+                startOn,
+                endOn,
+                evaluationState,
+                avgLatencyInMs,
+                minLatencyInMs,
+                maxLatencyInMs,
+                probesSent,
+                probesFailed,
+                hops?.ToList(),
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ConnectionMonitorQueryResult"/>. </summary>
+        /// <param name="sourceStatus"> Status of connection monitor source. </param>
+        /// <param name="states"> Information about connection states. </param>
+        /// <returns> A new <see cref="Models.ConnectionMonitorQueryResult"/> instance for mocking. </returns>
+        public static ConnectionMonitorQueryResult ConnectionMonitorQueryResult(ConnectionMonitorSourceStatus? sourceStatus = null, IEnumerable<ConnectionStateSnapshot> states = null)
+        {
+            states ??= new List<ConnectionStateSnapshot>();
+
+            return new ConnectionMonitorQueryResult(sourceStatus, states?.ToList(), serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of BackendAddressPoolData. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
@@ -9137,6 +9309,266 @@ namespace Azure.ResourceManager.Network.Models
         public static NetworkVirtualApplianceData NetworkVirtualApplianceData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ManagedServiceIdentity identity, ETag? etag, VirtualApplianceSkuProperties nvaSku, string addressPrefix, IEnumerable<string> bootStrapConfigurationBlobs, ResourceIdentifier virtualHubId, IEnumerable<string> cloudInitConfigurationBlobs, string cloudInitConfiguration, long? virtualApplianceAsn, string sshPublicKey, IEnumerable<VirtualApplianceNicProperties> virtualApplianceNics, IEnumerable<VirtualApplianceAdditionalNicProperties> additionalNics, IEnumerable<WritableSubResource> virtualApplianceSites, IEnumerable<WritableSubResource> virtualApplianceConnections, IEnumerable<WritableSubResource> inboundSecurityRules, NetworkProvisioningState? provisioningState, string deploymentType, VirtualApplianceDelegationProperties delegation, PartnerManagedResourceProperties partnerManagedResource)
         {
             return NetworkVirtualApplianceData(id: id, name: name, resourceType: resourceType, location: location, tags: tags, identity: identity, etag: etag, nvaSku: nvaSku, addressPrefix: addressPrefix, bootStrapConfigurationBlobs: bootStrapConfigurationBlobs, virtualHubId: virtualHubId, cloudInitConfigurationBlobs: cloudInitConfigurationBlobs, cloudInitConfiguration: cloudInitConfiguration, virtualApplianceAsn: virtualApplianceAsn, sshPublicKey: sshPublicKey, virtualApplianceNics: virtualApplianceNics, networkInterfaceConfigurations: default, additionalNics: additionalNics, internetIngressPublicIPs: default, virtualApplianceSites: virtualApplianceSites, virtualApplianceConnections: virtualApplianceConnections, inboundSecurityRules: inboundSecurityRules, provisioningState: provisioningState, deploymentType: deploymentType, delegation: delegation, partnerManagedResource: partnerManagedResource);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Network.NatGatewayData" />. </summary>
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="resourceType"> Resource type. </param>
+        /// <param name="location"> Resource location. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="skuName"> The nat gateway SKU. </param>
+        /// <param name="zones"> A list of availability zones denoting the zone in which Nat Gateway should be deployed. </param>
+        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="idleTimeoutInMinutes"> The idle timeout of the nat gateway. </param>
+        /// <param name="publicIPAddresses"> An array of public ip addresses associated with the nat gateway resource. </param>
+        /// <param name="publicIPPrefixes"> An array of public ip prefixes associated with the nat gateway resource. </param>
+        /// <param name="subnets"> An array of references to the subnets using this nat gateway resource. </param>
+        /// <param name="resourceGuid"> The resource GUID property of the NAT gateway resource. </param>
+        /// <param name="provisioningState"> The provisioning state of the NAT gateway resource. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.Network.NatGatewayData" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NatGatewayData NatGatewayData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, NatGatewaySkuName? skuName, IEnumerable<string> zones, ETag? etag, int? idleTimeoutInMinutes, IEnumerable<WritableSubResource> publicIPAddresses, IEnumerable<WritableSubResource> publicIPPrefixes, IEnumerable<WritableSubResource> subnets, Guid? resourceGuid, NetworkProvisioningState? provisioningState)
+        {
+            return NatGatewayData(id: id, name: name, resourceType: resourceType, location: location, tags: tags, skuName: skuName, zones: zones, etag: etag, idleTimeoutInMinutes: idleTimeoutInMinutes, publicIPAddresses: publicIPAddresses, publicIPAddressesV6: default, publicIPPrefixes: publicIPPrefixes, publicIPPrefixesV6: default, subnets: subnets, sourceVirtualNetworkId: default, resourceGuid: resourceGuid, provisioningState: provisioningState);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Network.Models.ExpressRouteCircuitPeeringConfig" />. </summary>
+        /// <param name="advertisedPublicPrefixes"> The reference to AdvertisedPublicPrefixes. </param>
+        /// <param name="advertisedCommunities"> The communities of bgp peering. Specified for microsoft peering. </param>
+        /// <param name="advertisedPublicPrefixesState"> The advertised public prefix state of the Peering resource. </param>
+        /// <param name="legacyMode"> The legacy mode of the peering. </param>
+        /// <param name="customerASN"> The CustomerASN of the peering. </param>
+        /// <param name="routingRegistryName"> The RoutingRegistryName of the configuration. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.Network.Models.ExpressRouteCircuitPeeringConfig" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ExpressRouteCircuitPeeringConfig ExpressRouteCircuitPeeringConfig(IEnumerable<string> advertisedPublicPrefixes, IEnumerable<string> advertisedCommunities, ExpressRouteCircuitPeeringAdvertisedPublicPrefixState? advertisedPublicPrefixesState, int? legacyMode, int? customerASN, string routingRegistryName)
+        {
+            return ExpressRouteCircuitPeeringConfig(advertisedPublicPrefixes: advertisedPublicPrefixes, advertisedCommunities: advertisedCommunities, advertisedPublicPrefixesState: advertisedPublicPrefixesState, legacyMode: legacyMode, customerASN: customerASN, routingRegistryName: routingRegistryName, advertisedPublicPrefixInfo: default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Network.IpamPoolData" />. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="properties"> Properties of IpamPool resource properties which are specific to the Pool resource. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.Network.IpamPoolData" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static IpamPoolData IpamPoolData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IpamPoolProperties properties)
+        {
+            return IpamPoolData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, properties: properties, etag: default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Network.Models.LoadBalancingRuleProperties" />. </summary>
+        /// <param name="frontendIPConfigurationId"> A reference to frontend IP addresses. </param>
+        /// <param name="backendAddressPoolId"> A reference to a pool of DIPs. Inbound traffic is randomly load balanced across IPs in the backend IPs. </param>
+        /// <param name="backendAddressPools"> An array of references to pool of DIPs. </param>
+        /// <param name="probeId"> The reference to the load balancer probe used by the load balancing rule. </param>
+        /// <param name="protocol"> The reference to the transport protocol used by the load balancing rule. </param>
+        /// <param name="loadDistribution"> The load distribution policy for this rule. </param>
+        /// <param name="frontendPort"> The port for the external endpoint. Port numbers for each rule must be unique within the Load Balancer. Acceptable values are between 0 and 65534. Note that value 0 enables "Any Port". </param>
+        /// <param name="backendPort"> The port used for internal connections on the endpoint. Acceptable values are between 0 and 65535. Note that value 0 enables "Any Port". </param>
+        /// <param name="idleTimeoutInMinutes"> The timeout for the TCP idle connection. The value can be set between 4 and 30 minutes. The default value is 4 minutes. This element is only used when the protocol is set to TCP. </param>
+        /// <param name="enableFloatingIP"> Configures a virtual machine's endpoint for the floating IP capability required to configure a SQL AlwaysOn Availability Group. This setting is required when using the SQL AlwaysOn Availability Groups in SQL server. This setting can't be changed after you create the endpoint. </param>
+        /// <param name="enableTcpReset"> Receive bidirectional TCP Reset on TCP flow idle timeout or unexpected connection termination. This element is only used when the protocol is set to TCP. </param>
+        /// <param name="disableOutboundSnat"> Configures SNAT for the VMs in the backend pool to use the publicIP address specified in the frontend of the load balancing rule. </param>
+        /// <param name="provisioningState"> The provisioning state of the load balancing rule resource. </param>
+        /// <param name="additionalProperties"> Additional Properties. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.Network.Models.LoadBalancingRuleProperties" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static LoadBalancingRuleProperties LoadBalancingRuleProperties(ResourceIdentifier frontendIPConfigurationId, ResourceIdentifier backendAddressPoolId, IEnumerable<WritableSubResource> backendAddressPools, ResourceIdentifier probeId, LoadBalancingTransportProtocol protocol, LoadDistribution? loadDistribution, int frontendPort, int? backendPort, int? idleTimeoutInMinutes, bool? enableFloatingIP, bool? enableTcpReset, bool? disableOutboundSnat, NetworkProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalProperties)
+        {
+            return LoadBalancingRuleProperties(frontendIPConfigurationId: frontendIPConfigurationId, backendAddressPoolId: backendAddressPoolId, backendAddressPools: backendAddressPools, probeId: probeId, protocol: protocol, loadDistribution: loadDistribution, frontendPort: frontendPort, backendPort: backendPort, idleTimeoutInMinutes: idleTimeoutInMinutes, enableFloatingIP: enableFloatingIP, enableTcpReset: enableTcpReset, disableOutboundSnat: disableOutboundSnat, enableConnectionTracking: default, provisioningState: provisioningState, additionalProperties: additionalProperties);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Network.Models.ActiveConnectivityConfiguration" />. </summary>
+        /// <param name="id"> Connectivity configuration ID. </param>
+        /// <param name="configurationGroups"> Effective configuration groups. </param>
+        /// <param name="description"> A description of the connectivity configuration. </param>
+        /// <param name="connectivityTopology"> Connectivity topology type. </param>
+        /// <param name="hubs"> List of hubItems. </param>
+        /// <param name="isGlobal"> Flag if global mesh is supported. </param>
+        /// <param name="appliesToGroups"> Groups for configuration. </param>
+        /// <param name="provisioningState"> The provisioning state of the connectivity configuration resource. </param>
+        /// <param name="deleteExistingPeering"> Flag if need to remove current existing peerings. </param>
+        /// <param name="resourceGuid"> Unique identifier for this resource. </param>
+        /// <param name="committedOn"> Deployment time string. </param>
+        /// <param name="region"> Deployment region. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.Network.Models.ActiveConnectivityConfiguration" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ActiveConnectivityConfiguration ActiveConnectivityConfiguration(string id, IEnumerable<NetworkConfigurationGroup> configurationGroups, string description, ConnectivityTopology? connectivityTopology, IEnumerable<ConnectivityHub> hubs, GlobalMeshSupportFlag? isGlobal, IEnumerable<ConnectivityGroupItem> appliesToGroups, NetworkProvisioningState? provisioningState, DeleteExistingPeering? deleteExistingPeering, Guid? resourceGuid, DateTimeOffset? committedOn, AzureLocation? region)
+        {
+            return ActiveConnectivityConfiguration(id: id, configurationGroups: configurationGroups, description: description, connectivityTopology: connectivityTopology, hubs: hubs, isGlobal: isGlobal, connectivityCapabilities: default, appliesToGroups: appliesToGroups, provisioningState: provisioningState, deleteExistingPeering: deleteExistingPeering, resourceGuid: resourceGuid, committedOn: committedOn, region: region);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Network.Models.EffectiveConnectivityConfiguration" />. </summary>
+        /// <param name="id"> Connectivity configuration ID. </param>
+        /// <param name="configurationGroups"> Effective configuration groups. </param>
+        /// <param name="description"> A description of the connectivity configuration. </param>
+        /// <param name="connectivityTopology"> Connectivity topology type. </param>
+        /// <param name="hubs"> List of hubItems. </param>
+        /// <param name="isGlobal"> Flag if global mesh is supported. </param>
+        /// <param name="appliesToGroups"> Groups for configuration. </param>
+        /// <param name="provisioningState"> The provisioning state of the connectivity configuration resource. </param>
+        /// <param name="deleteExistingPeering"> Flag if need to remove current existing peerings. </param>
+        /// <param name="resourceGuid"> Unique identifier for this resource. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.Network.Models.EffectiveConnectivityConfiguration" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static EffectiveConnectivityConfiguration EffectiveConnectivityConfiguration(string id, IEnumerable<NetworkConfigurationGroup> configurationGroups, string description, ConnectivityTopology? connectivityTopology, IEnumerable<ConnectivityHub> hubs, GlobalMeshSupportFlag? isGlobal, IEnumerable<ConnectivityGroupItem> appliesToGroups, NetworkProvisioningState? provisioningState, DeleteExistingPeering? deleteExistingPeering, Guid? resourceGuid)
+        {
+            return EffectiveConnectivityConfiguration(id: id, configurationGroups: configurationGroups, description: description, connectivityTopology: connectivityTopology, hubs: hubs, isGlobal: isGlobal, connectivityCapabilities: default, appliesToGroups: appliesToGroups, provisioningState: provisioningState, deleteExistingPeering: deleteExistingPeering, resourceGuid: resourceGuid);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Network.ConnectivityConfigurationData" />. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="description"> A description of the connectivity configuration. </param>
+        /// <param name="connectivityTopology"> Connectivity topology type. </param>
+        /// <param name="hubs"> List of hubItems. </param>
+        /// <param name="isGlobal"> Flag if global mesh is supported. </param>
+        /// <param name="appliesToGroups"> Groups for configuration. </param>
+        /// <param name="provisioningState"> The provisioning state of the connectivity configuration resource. </param>
+        /// <param name="deleteExistingPeering"> Flag if need to remove current existing peerings. </param>
+        /// <param name="resourceGuid"> Unique identifier for this resource. </param>
+        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.Network.ConnectivityConfigurationData" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ConnectivityConfigurationData ConnectivityConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, ConnectivityTopology? connectivityTopology, IEnumerable<ConnectivityHub> hubs, GlobalMeshSupportFlag? isGlobal, IEnumerable<ConnectivityGroupItem> appliesToGroups, NetworkProvisioningState? provisioningState, DeleteExistingPeering? deleteExistingPeering, Guid? resourceGuid, ETag? etag)
+        {
+            return ConnectivityConfigurationData(id: id, name: name, resourceType: resourceType, systemData: systemData, description: description, connectivityTopology: connectivityTopology, hubs: hubs, isGlobal: isGlobal, connectivityCapabilities: default, appliesToGroups: appliesToGroups, provisioningState: provisioningState, deleteExistingPeering: deleteExistingPeering, resourceGuid: resourceGuid, etag: etag);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Network.NetworkVerifierWorkspaceData" />. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="properties"> Properties of Verifier Workspace resource. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.Network.NetworkVerifierWorkspaceData" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetworkVerifierWorkspaceData NetworkVerifierWorkspaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, NetworkVerifierWorkspaceProperties properties)
+        {
+            return NetworkVerifierWorkspaceData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, properties: properties, etag: default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Network.VirtualNetworkData" />. </summary>
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="resourceType"> Resource type. </param>
+        /// <param name="location"> Resource location. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="extendedLocation"> The extended location of the virtual network. </param>
+        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="addressSpace"> The AddressSpace that contains an array of IP address ranges that can be used by subnets. </param>
+        /// <param name="dhcpOptionsDnsServers"> The dhcpOptions that contains an array of DNS servers available to VMs deployed in the virtual network. </param>
+        /// <param name="flowTimeoutInMinutes"> The FlowTimeout value (in minutes) for the Virtual Network. </param>
+        /// <param name="subnets"> A list of subnets in a Virtual Network. </param>
+        /// <param name="virtualNetworkPeerings"> A list of peerings in a Virtual Network. </param>
+        /// <param name="resourceGuid"> The resourceGuid property of the Virtual Network resource. </param>
+        /// <param name="provisioningState"> The provisioning state of the virtual network resource. </param>
+        /// <param name="enableDdosProtection"> Indicates if DDoS protection is enabled for all the protected resources in the virtual network. It requires a DDoS protection plan associated with the resource. </param>
+        /// <param name="enableVmProtection"> Indicates if VM protection is enabled for all the subnets in the virtual network. </param>
+        /// <param name="ddosProtectionPlanId"> The DDoS protection plan associated with the virtual network. </param>
+        /// <param name="bgpCommunities"> Bgp Communities sent over ExpressRoute with each route corresponding to a prefix in this VNET. </param>
+        /// <param name="encryption"> Indicates if encryption is enabled on virtual network and if VM without encryption is allowed in encrypted VNet. </param>
+        /// <param name="ipAllocations"> Array of IpAllocation which reference this VNET. </param>
+        /// <param name="flowLogs"> A collection of references to flow log resources. </param>
+        /// <param name="privateEndpointVnetPolicy"> Private Endpoint VNet Policies. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.Network.VirtualNetworkData" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static VirtualNetworkData VirtualNetworkData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ExtendedLocation extendedLocation, ETag? etag, VirtualNetworkAddressSpace addressSpace, IEnumerable<string> dhcpOptionsDnsServers, int? flowTimeoutInMinutes, IEnumerable<SubnetData> subnets, IEnumerable<VirtualNetworkPeeringData> virtualNetworkPeerings, Guid? resourceGuid, NetworkProvisioningState? provisioningState, bool? enableDdosProtection, bool? enableVmProtection, ResourceIdentifier ddosProtectionPlanId, VirtualNetworkBgpCommunities bgpCommunities, VirtualNetworkEncryption encryption, IEnumerable<WritableSubResource> ipAllocations, IEnumerable<FlowLogData> flowLogs, PrivateEndpointVnetPolicy? privateEndpointVnetPolicy)
+        {
+            return VirtualNetworkData(id: id, name: name, resourceType: resourceType, location: location, tags: tags, extendedLocation: extendedLocation, etag: etag, addressSpace: addressSpace, dhcpOptionsDnsServers: dhcpOptionsDnsServers, flowTimeoutInMinutes: flowTimeoutInMinutes, subnets: subnets, virtualNetworkPeerings: virtualNetworkPeerings, resourceGuid: resourceGuid, provisioningState: provisioningState, enableDdosProtection: enableDdosProtection, enableVmProtection: enableVmProtection, ddosProtectionPlanId: ddosProtectionPlanId, bgpCommunities: bgpCommunities, encryption: encryption, ipAllocations: ipAllocations, flowLogs: flowLogs, privateEndpointVnetPolicy: privateEndpointVnetPolicy, defaultPublicNatGatewayId: default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Network.VirtualNetworkGatewayData" />. </summary>
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="resourceType"> Resource type. </param>
+        /// <param name="location"> Resource location. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="extendedLocation"> The extended location of type local virtual network gateway. </param>
+        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="identity"> The identity of the virtual network gateway, if configured. </param>
+        /// <param name="autoScaleBounds"> Autoscale configuration for virutal network gateway. </param>
+        /// <param name="ipConfigurations"> IP configurations for virtual network gateway. </param>
+        /// <param name="gatewayType"> The type of this virtual network gateway. </param>
+        /// <param name="vpnType"> The type of this virtual network gateway. </param>
+        /// <param name="vpnGatewayGeneration"> The generation for this VirtualNetworkGateway. Must be None if gatewayType is not VPN. </param>
+        /// <param name="enableBgp"> Whether BGP is enabled for this virtual network gateway or not. </param>
+        /// <param name="enablePrivateIPAddress"> Whether private IP needs to be enabled on this gateway for connections or not. </param>
+        /// <param name="active"> ActiveActive flag. </param>
+        /// <param name="disableIPSecReplayProtection"> disableIPSecReplayProtection flag. </param>
+        /// <param name="gatewayDefaultSiteId"> The reference to the LocalNetworkGateway resource which represents local network site having default routes. Assign Null value in case of removing existing default site setting. </param>
+        /// <param name="sku"> The reference to the VirtualNetworkGatewaySku resource which represents the SKU selected for Virtual network gateway. </param>
+        /// <param name="vpnClientConfiguration"> The reference to the VpnClientConfiguration resource which represents the P2S VpnClient configurations. </param>
+        /// <param name="virtualNetworkGatewayPolicyGroups"> The reference to the VirtualNetworkGatewayPolicyGroup resource which represents the available VirtualNetworkGatewayPolicyGroup for the gateway. </param>
+        /// <param name="bgpSettings"> Virtual network gateway's BGP speaker settings. </param>
+        /// <param name="customRoutes"> The reference to the address space resource which represents the custom routes address space specified by the customer for virtual network gateway and VpnClient. </param>
+        /// <param name="resourceGuid"> The resource GUID property of the virtual network gateway resource. </param>
+        /// <param name="provisioningState"> The provisioning state of the virtual network gateway resource. </param>
+        /// <param name="enableDnsForwarding"> Whether dns forwarding is enabled or not. </param>
+        /// <param name="inboundDnsForwardingEndpoint"> The IP address allocated by the gateway to which dns requests can be sent. </param>
+        /// <param name="vNetExtendedLocationResourceId"> Customer vnet resource id. VirtualNetworkGateway of type local gateway is associated with the customer vnet. </param>
+        /// <param name="natRules"> NatRules for virtual network gateway. </param>
+        /// <param name="enableBgpRouteTranslationForNat"> EnableBgpRouteTranslationForNat flag. </param>
+        /// <param name="allowVirtualWanTraffic"> Configures this gateway to accept traffic from remote Virtual WAN networks. </param>
+        /// <param name="allowRemoteVnetTraffic"> Configure this gateway to accept traffic from other Azure Virtual Networks. This configuration does not support connectivity to Azure Virtual WAN. </param>
+        /// <param name="adminState"> Property to indicate if the Express Route Gateway serves traffic when there are multiple Express Route Gateways in the vnet. </param>
+        /// <param name="resiliencyModel"> Property to indicate if the Express Route Gateway has resiliency model of MultiHomed or SingleHomed. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.Network.VirtualNetworkGatewayData" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static VirtualNetworkGatewayData VirtualNetworkGatewayData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ExtendedLocation extendedLocation, ETag? etag, ManagedServiceIdentity identity, VirtualNetworkGatewayAutoScaleBounds autoScaleBounds, IEnumerable<VirtualNetworkGatewayIPConfiguration> ipConfigurations, VirtualNetworkGatewayType? gatewayType, VpnType? vpnType, VpnGatewayGeneration? vpnGatewayGeneration, bool? enableBgp, bool? enablePrivateIPAddress, bool? active, bool? disableIPSecReplayProtection, ResourceIdentifier gatewayDefaultSiteId, VirtualNetworkGatewaySku sku, VpnClientConfiguration vpnClientConfiguration, IEnumerable<VirtualNetworkGatewayPolicyGroup> virtualNetworkGatewayPolicyGroups, BgpSettings bgpSettings, VirtualNetworkAddressSpace customRoutes, Guid? resourceGuid, NetworkProvisioningState? provisioningState, bool? enableDnsForwarding, string inboundDnsForwardingEndpoint, ResourceIdentifier vNetExtendedLocationResourceId, IEnumerable<VirtualNetworkGatewayNatRuleData> natRules, bool? enableBgpRouteTranslationForNat, bool? allowVirtualWanTraffic, bool? allowRemoteVnetTraffic, ExpressRouteGatewayAdminState? adminState, ExpressRouteGatewayResiliencyModel? resiliencyModel)
+        {
+            return VirtualNetworkGatewayData(id: id, name: name, resourceType: resourceType, location: location, tags: tags, extendedLocation: extendedLocation, etag: etag, identity: identity, autoScaleBounds: autoScaleBounds, ipConfigurations: ipConfigurations, gatewayType: gatewayType, vpnType: vpnType, vpnGatewayGeneration: vpnGatewayGeneration, enableBgp: enableBgp, enablePrivateIPAddress: enablePrivateIPAddress, virtualNetworkGatewayMigrationStatus: default, active: active, enableHighBandwidthVpnGateway: default, disableIPSecReplayProtection: disableIPSecReplayProtection, gatewayDefaultSiteId: gatewayDefaultSiteId, sku: sku, vpnClientConfiguration: vpnClientConfiguration, virtualNetworkGatewayPolicyGroups: virtualNetworkGatewayPolicyGroups, bgpSettings: bgpSettings, customRoutes: customRoutes, resourceGuid: resourceGuid, provisioningState: provisioningState, enableDnsForwarding: enableDnsForwarding, inboundDnsForwardingEndpoint: inboundDnsForwardingEndpoint, vNetExtendedLocationResourceId: vNetExtendedLocationResourceId, natRules: natRules, enableBgpRouteTranslationForNat: enableBgpRouteTranslationForNat, allowVirtualWanTraffic: allowVirtualWanTraffic, allowRemoteVnetTraffic: allowRemoteVnetTraffic, adminState: adminState, resiliencyModel: resiliencyModel);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Network.VirtualNetworkGatewayConnectionData" />. </summary>
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="resourceType"> Resource type. </param>
+        /// <param name="location"> Resource location. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="authorizationKey"> The authorizationKey. </param>
+        /// <param name="virtualNetworkGateway1"> The reference to virtual network gateway resource. </param>
+        /// <param name="virtualNetworkGateway2"> The reference to virtual network gateway resource. </param>
+        /// <param name="localNetworkGateway2"> The reference to local network gateway resource. </param>
+        /// <param name="ingressNatRules"> List of ingress NatRules. </param>
+        /// <param name="egressNatRules"> List of egress NatRules. </param>
+        /// <param name="connectionType"> Gateway connection type. </param>
+        /// <param name="connectionProtocol"> Connection protocol used for this connection. </param>
+        /// <param name="routingWeight"> The routing weight. </param>
+        /// <param name="dpdTimeoutSeconds"> The dead peer detection timeout of this connection in seconds. </param>
+        /// <param name="connectionMode"> The connection mode for this connection. </param>
+        /// <param name="sharedKey"> The IPSec shared key. </param>
+        /// <param name="connectionStatus"> Virtual Network Gateway connection status. </param>
+        /// <param name="tunnelConnectionStatus"> Collection of all tunnels' connection health status. </param>
+        /// <param name="egressBytesTransferred"> The egress bytes transferred in this connection. </param>
+        /// <param name="ingressBytesTransferred"> The ingress bytes transferred in this connection. </param>
+        /// <param name="peerId"> The reference to peerings resource. </param>
+        /// <param name="enableBgp"> EnableBgp flag. </param>
+        /// <param name="gatewayCustomBgpIPAddresses"> GatewayCustomBgpIpAddresses to be used for virtual network gateway Connection. </param>
+        /// <param name="useLocalAzureIPAddress"> Use private local Azure IP for the connection. </param>
+        /// <param name="usePolicyBasedTrafficSelectors"> Enable policy-based traffic selectors. </param>
+        /// <param name="ipsecPolicies"> The IPSec Policies to be considered by this connection. </param>
+        /// <param name="trafficSelectorPolicies"> The Traffic Selector Policies to be considered by this connection. </param>
+        /// <param name="resourceGuid"> The resource GUID property of the virtual network gateway connection resource. </param>
+        /// <param name="provisioningState"> The provisioning state of the virtual network gateway connection resource. </param>
+        /// <param name="expressRouteGatewayBypass"> Bypass ExpressRoute Gateway for data forwarding. </param>
+        /// <param name="enablePrivateLinkFastPath"> Bypass the ExpressRoute gateway when accessing private-links. ExpressRoute FastPath (expressRouteGatewayBypass) must be enabled. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.Network.VirtualNetworkGatewayConnectionData" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static VirtualNetworkGatewayConnectionData VirtualNetworkGatewayConnectionData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ETag? etag, string authorizationKey, VirtualNetworkGatewayData virtualNetworkGateway1, VirtualNetworkGatewayData virtualNetworkGateway2, LocalNetworkGatewayData localNetworkGateway2, IEnumerable<WritableSubResource> ingressNatRules, IEnumerable<WritableSubResource> egressNatRules, VirtualNetworkGatewayConnectionType connectionType, VirtualNetworkGatewayConnectionProtocol? connectionProtocol, int? routingWeight, int? dpdTimeoutSeconds, VirtualNetworkGatewayConnectionMode? connectionMode, string sharedKey, VirtualNetworkGatewayConnectionStatus? connectionStatus, IEnumerable<TunnelConnectionHealth> tunnelConnectionStatus, long? egressBytesTransferred, long? ingressBytesTransferred, ResourceIdentifier peerId, bool? enableBgp, IEnumerable<GatewayCustomBgpIPAddressIPConfiguration> gatewayCustomBgpIPAddresses, bool? useLocalAzureIPAddress, bool? usePolicyBasedTrafficSelectors, IEnumerable<IPsecPolicy> ipsecPolicies, IEnumerable<TrafficSelectorPolicy> trafficSelectorPolicies, Guid? resourceGuid, NetworkProvisioningState? provisioningState, bool? expressRouteGatewayBypass, bool? enablePrivateLinkFastPath)
+        {
+            return VirtualNetworkGatewayConnectionData(id: id, name: name, resourceType: resourceType, location: location, tags: tags, etag: etag, authorizationKey: authorizationKey, virtualNetworkGateway1: virtualNetworkGateway1, virtualNetworkGateway2: virtualNetworkGateway2, localNetworkGateway2: localNetworkGateway2, ingressNatRules: ingressNatRules, egressNatRules: egressNatRules, connectionType: connectionType, connectionProtocol: connectionProtocol, routingWeight: routingWeight, dpdTimeoutSeconds: dpdTimeoutSeconds, connectionMode: connectionMode, tunnelProperties: default, sharedKey: sharedKey, connectionStatus: connectionStatus, tunnelConnectionStatus: tunnelConnectionStatus, egressBytesTransferred: egressBytesTransferred, ingressBytesTransferred: ingressBytesTransferred, peerId: peerId, enableBgp: enableBgp, gatewayCustomBgpIPAddresses: gatewayCustomBgpIPAddresses, useLocalAzureIPAddress: useLocalAzureIPAddress, usePolicyBasedTrafficSelectors: usePolicyBasedTrafficSelectors, ipsecPolicies: ipsecPolicies, trafficSelectorPolicies: trafficSelectorPolicies, resourceGuid: resourceGuid, provisioningState: provisioningState, expressRouteGatewayBypass: expressRouteGatewayBypass, enablePrivateLinkFastPath: enablePrivateLinkFastPath);
         }
 
         /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Network.SubnetData" />. </summary>
