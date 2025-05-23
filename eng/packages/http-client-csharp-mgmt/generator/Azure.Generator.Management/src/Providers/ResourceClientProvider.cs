@@ -370,10 +370,9 @@ namespace Azure.Generator.Management.Providers
             var statements = new List<MethodBodyStatement>();
 
             var finalStateVia = method.GetOperationFinalStateVia();
-            var responseBodyInputType = method.GetResponseBodyInputType();
-            var isNullBody = responseBodyInputType == null;
+            var isGeneric = method.GetResponseBodyType == null;
 
-            var armOperationType = isNullBody
+            var armOperationType = isGeneric
                 ? ManagementClientGenerator.Instance.OutputLibrary.ArmOperation.Type
                 : ManagementClientGenerator.Instance.OutputLibrary.GenericArmOperation.Type.MakeGenericType([resourceClientType]);
 
@@ -381,11 +380,11 @@ namespace Azure.Generator.Management.Providers
                 _clientDiagnosticsField,
                 This.Property("Pipeline"),
                 messageVariable.Property("Request"),
-                isNullBody ? responseVariable : responseVariable.Invoke("GetRawResponse"),
+                isGeneric ? responseVariable : responseVariable.Invoke("GetRawResponse"),
                 Static(typeof(OperationFinalStateVia)).Property(finalStateVia.ToString())
             ];
 
-            var operationInstanceArguments = isNullBody
+            var operationInstanceArguments = isGeneric
                 ? armOperationArguments
                 : [New.Instance(operationSourceType, armClientProperty), .. armOperationArguments];
 
@@ -395,8 +394,8 @@ namespace Azure.Generator.Management.Providers
             var waitIfCompletedStatement = new IfStatement(KnownAzureParameters.WaitUntil.Equal(Static(typeof(WaitUntil)).Property(nameof(WaitUntil.Completed))))
             {
                 isAsync
-                ? operationVariable.Invoke(isNullBody ? "WaitForCompletionResponseAsync" : "WaitForCompletionAsync", [cancellationTokenParameter], null, isAsync).Terminate()
-                : operationVariable.Invoke(isNullBody ? "WaitForCompletionResponse" : "WaitForCompletion", cancellationTokenParameter).Terminate()
+                ? operationVariable.Invoke(isGeneric ? "WaitForCompletionResponseAsync" : "WaitForCompletionAsync", [cancellationTokenParameter], null, isAsync).Terminate()
+                : operationVariable.Invoke(isGeneric ? "WaitForCompletionResponse" : "WaitForCompletion", cancellationTokenParameter).Terminate()
             };
             statements.Add(waitIfCompletedStatement);
 
