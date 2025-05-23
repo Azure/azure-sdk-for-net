@@ -177,13 +177,22 @@ namespace Azure.ResourceManager.Resources.Models
 
         string IPersistableModel<ExtendedLocation>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        internal partial class ExtendedLocationConverter : JsonConverter<ExtendedLocation>
+        /// <summary>
+        /// Json converter for ExtendedLocation.
+        /// </summary>
+        public partial class ExtendedLocationConverter : JsonConverter<ExtendedLocation>
         {
+            /// <summary>
+            /// Converter write method.
+            /// </summary>
             public override void Write(Utf8JsonWriter writer, ExtendedLocation model, JsonSerializerOptions options)
             {
                 writer.WriteObjectValue(model, ModelSerializationExtensions.WireOptions);
             }
 
+            /// <summary>
+            /// Converter for ExtendedLocation type.
+            /// </summary>
             public override ExtendedLocation Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

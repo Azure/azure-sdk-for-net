@@ -13,13 +13,23 @@ namespace Azure.ResourceManager.Models
     [JsonConverter(typeof(ManagedServiceIdentityTypeConverter))]
     public readonly partial struct ManagedServiceIdentityType : IEquatable<ManagedServiceIdentityType>
     {
-        internal partial class ManagedServiceIdentityTypeConverter : JsonConverter<ManagedServiceIdentityType>
+        /// <summary>
+        /// Converter for ManagedServiceIdentityType type.
+        /// </summary>
+        public partial class ManagedServiceIdentityTypeConverter : JsonConverter<ManagedServiceIdentityType>
         {
+            /// <summary>
+            /// Converter for ManagedServiceIdentityType type.
+            /// </summary>
             public override void Write(Utf8JsonWriter writer, ManagedServiceIdentityType model, JsonSerializerOptions options)
             {
                 writer.WritePropertyName("type");
                 writer.WriteStringValue(model.ToString());
             }
+
+            /// <summary>
+            /// Converter for ManagedServiceIdentityType type.
+            /// </summary>
             public override ManagedServiceIdentityType Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

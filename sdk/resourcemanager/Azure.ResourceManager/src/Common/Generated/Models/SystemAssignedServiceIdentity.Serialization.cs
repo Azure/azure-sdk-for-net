@@ -193,13 +193,21 @@ namespace Azure.ResourceManager.Models
 
         string IPersistableModel<SystemAssignedServiceIdentity>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        internal partial class SystemAssignedServiceIdentityConverter : JsonConverter<SystemAssignedServiceIdentity>
+        /// <summary>
+        /// Converter for SystemAssignedServiceIdentity type.
+        /// </summary>
+        public partial class SystemAssignedServiceIdentityConverter : JsonConverter<SystemAssignedServiceIdentity>
         {
+            /// <summary>
+            /// Converter for SystemAssignedServiceIdentity type.
+            /// </summary>
             public override void Write(Utf8JsonWriter writer, SystemAssignedServiceIdentity model, JsonSerializerOptions options)
             {
                 writer.WriteObjectValue(model, ModelSerializationExtensions.WireOptions);
             }
-
+            /// <summary>
+            /// Converter for SystemAssignedServiceIdentity type.
+            /// </summary>
             public override SystemAssignedServiceIdentity Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

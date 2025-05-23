@@ -246,12 +246,21 @@ namespace Azure.ResourceManager.Models
 
         string IPersistableModel<ManagedServiceIdentity>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        internal partial class ManagedServiceIdentityConverter : JsonConverter<ManagedServiceIdentity>
+        /// <summary>
+        /// Converter for ManagedServiceIdentity type.
+        /// </summary>
+        public partial class ManagedServiceIdentityConverter : JsonConverter<ManagedServiceIdentity>
         {
+            /// <summary>
+            /// Converter for ManagedServiceIdentity type.
+            /// </summary>
             public override void Write(Utf8JsonWriter writer, ManagedServiceIdentity model, JsonSerializerOptions options)
             {
                 model.Write(writer, new ModelReaderWriterOptions("W"), options);
             }
+            /// <summary>
+            /// Converter for ManagedServiceIdentity type.
+            /// </summary>
             public override ManagedServiceIdentity Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

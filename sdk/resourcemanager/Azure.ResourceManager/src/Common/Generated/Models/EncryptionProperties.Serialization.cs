@@ -173,13 +173,21 @@ namespace Azure.ResourceManager.Models
 
         string IPersistableModel<EncryptionProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        internal partial class EncryptionPropertiesConverter : JsonConverter<EncryptionProperties>
+        /// <summary>
+        /// Converter for EncryptionProperties type.
+        /// </summary>
+        public partial class EncryptionPropertiesConverter : JsonConverter<EncryptionProperties>
         {
+            /// <summary>
+            /// Converter for EncryptionProperties type.
+            /// </summary>
             public override void Write(Utf8JsonWriter writer, EncryptionProperties model, JsonSerializerOptions options)
             {
                 writer.WriteObjectValue(model, ModelSerializationExtensions.WireOptions);
             }
-
+            /// <summary>
+            /// Converter for EncryptionProperties type.
+            /// </summary>
             public override EncryptionProperties Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

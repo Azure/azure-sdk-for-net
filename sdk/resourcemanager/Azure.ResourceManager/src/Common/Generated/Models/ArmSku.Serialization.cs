@@ -272,13 +272,21 @@ namespace Azure.ResourceManager.Models
 
         string IPersistableModel<ArmSku>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        internal partial class ArmSkuConverter : JsonConverter<ArmSku>
+        /// <summary>
+        /// Converter for ArmSku type.
+        /// </summary>
+        public partial class ArmSkuConverter : JsonConverter<ArmSku>
         {
+            /// <summary>
+            /// Converter for ArmSku type.
+            /// </summary>
             public override void Write(Utf8JsonWriter writer, ArmSku model, JsonSerializerOptions options)
             {
                 writer.WriteObjectValue(model, ModelSerializationExtensions.WireOptions);
             }
-
+            /// <summary>
+            /// Converter for ArmSku type.
+            /// </summary>
             public override ArmSku Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);
