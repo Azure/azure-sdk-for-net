@@ -7,8 +7,6 @@ Project("{E4457495-ADDE-4FD9-B097-E5898DF50E33}") = "Azure.ResourceManager.NewRe
 EndProject
 Project("{E4457495-ADDE-4FD9-B097-E5898DF50E33}") = "Azure.ResourceManager.NewRelicObservability.Tests", "tests\Azure.ResourceManager.NewRelicObservability.Tests.csproj", "{F1A52267-476B-402D-B886-D59814019F5D}"
 EndProject
-Project("{E4457495-ADDE-4FD9-B097-E5898DF50E33}") = "Azure.ResourceManager.NewRelicObservability.Samples", "samples\Azure.ResourceManager.NewRelicObservability.Samples.csproj", "{2C489936-3F81-4107-8BE2-2D8BEEDEF766}"
-EndProject
 Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -49,17 +47,5 @@ Global
 		{F1A52267-476B-402D-B886-D59814019F5D}.Release|x64.Build.0 = Release|Any CPU
 		{F1A52267-476B-402D-B886-D59814019F5D}.Release|x86.ActiveCfg = Release|Any CPU
 		{F1A52267-476B-402D-B886-D59814019F5D}.Release|x86.Build.0 = Release|Any CPU
-		{2C489936-3F81-4107-8BE2-2D8BEEDEF766}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2C489936-3F81-4107-8BE2-2D8BEEDEF766}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2C489936-3F81-4107-8BE2-2D8BEEDEF766}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{2C489936-3F81-4107-8BE2-2D8BEEDEF766}.Debug|x64.Build.0 = Debug|Any CPU
-		{2C489936-3F81-4107-8BE2-2D8BEEDEF766}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{2C489936-3F81-4107-8BE2-2D8BEEDEF766}.Debug|x86.Build.0 = Debug|Any CPU
-		{2C489936-3F81-4107-8BE2-2D8BEEDEF766}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2C489936-3F81-4107-8BE2-2D8BEEDEF766}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2C489936-3F81-4107-8BE2-2D8BEEDEF766}.Release|x64.ActiveCfg = Release|Any CPU
-		{2C489936-3F81-4107-8BE2-2D8BEEDEF766}.Release|x64.Build.0 = Release|Any CPU
-		{2C489936-3F81-4107-8BE2-2D8BEEDEF766}.Release|x86.ActiveCfg = Release|Any CPU
-		{2C489936-3F81-4107-8BE2-2D8BEEDEF766}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
