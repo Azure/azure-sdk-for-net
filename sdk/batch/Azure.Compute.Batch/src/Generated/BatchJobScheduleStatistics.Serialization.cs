@@ -35,7 +35,7 @@ namespace Azure.Compute.Batch
             }
 
             writer.WritePropertyName("url"u8);
-            writer.WriteStringValue(Url);
+            writer.WriteStringValue(Uri.AbsoluteUri);
             writer.WritePropertyName("startTime"u8);
             writer.WriteStringValue(StartTime, "O");
             writer.WritePropertyName("lastUpdateTime"u8);
@@ -47,19 +47,19 @@ namespace Azure.Compute.Batch
             writer.WritePropertyName("wallClockTime"u8);
             writer.WriteStringValue(WallClockTime, "P");
             writer.WritePropertyName("readIOps"u8);
-            writer.WriteStringValue(ReadIOps.ToString());
+            writer.WriteStringValue(ReadIops.ToString());
             writer.WritePropertyName("writeIOps"u8);
-            writer.WriteStringValue(WriteIOps.ToString());
+            writer.WriteStringValue(WriteIops.ToString());
             writer.WritePropertyName("readIOGiB"u8);
-            writer.WriteNumberValue(ReadIOGiB);
+            writer.WriteNumberValue(ReadIoGiB);
             writer.WritePropertyName("writeIOGiB"u8);
-            writer.WriteNumberValue(WriteIOGiB);
+            writer.WriteNumberValue(WriteIoGiB);
             writer.WritePropertyName("numSucceededTasks"u8);
-            writer.WriteStringValue(NumSucceededTasks.ToString());
+            writer.WriteStringValue(SucceededTasksCount.ToString());
             writer.WritePropertyName("numFailedTasks"u8);
-            writer.WriteStringValue(NumFailedTasks.ToString());
+            writer.WriteStringValue(FailedTasksCount.ToString());
             writer.WritePropertyName("numTaskRetries"u8);
-            writer.WriteStringValue(NumTaskRetries.ToString());
+            writer.WriteStringValue(TaskRetriesCount.ToString());
             writer.WritePropertyName("waitTime"u8);
             writer.WriteStringValue(WaitTime, "P");
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -99,7 +99,7 @@ namespace Azure.Compute.Batch
             {
                 return null;
             }
-            string url = default;
+            Uri url = default;
             DateTimeOffset startTime = default;
             DateTimeOffset lastUpdateTime = default;
             TimeSpan userCPUTime = default;
@@ -119,7 +119,7 @@ namespace Azure.Compute.Batch
             {
                 if (property.NameEquals("url"u8))
                 {
-                    url = property.Value.GetString();
+                    url = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("startTime"u8))

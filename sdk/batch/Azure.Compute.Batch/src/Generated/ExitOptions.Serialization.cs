@@ -81,7 +81,7 @@ namespace Azure.Compute.Batch
             {
                 return null;
             }
-            BatchJobAction? jobAction = default;
+            BatchJobActionKind? jobAction = default;
             DependencyAction? dependencyAction = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -93,7 +93,7 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    jobAction = new BatchJobAction(property.Value.GetString());
+                    jobAction = new BatchJobActionKind(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("dependencyAction"u8))
