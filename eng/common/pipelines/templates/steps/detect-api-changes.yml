@@ -24,5 +24,5 @@ steps:
         -ArtifactName ${{ parameters.ArtifactName }}
         -DevopsProject $(System.TeamProject)
       pwsh: true
-    displayName: Detect API changes
+    displayName: Create APIView if API has changes
     condition: and(${{ parameters.Condition }}, succeededOrFailed(), eq(variables['Build.Reason'],'PullRequest'))

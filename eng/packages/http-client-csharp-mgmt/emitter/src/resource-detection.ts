@@ -8,15 +8,19 @@ import {
 } from "@typespec/http-client-csharp";
 import {
   calculateResourceTypeFromPath,
-  ResourceMetadata
+  ResourceMetadata,
+  ResourceScope
 } from "./resource-metadata.js";
 import { DecoratorInfo } from "@azure-tools/typespec-client-generator-core";
 import {
   armResourceCreateOrUpdate,
   armResourceOperations,
   armResourceRead,
+  resourceGroupResource,
   resourceMetadata,
-  singleton
+  singleton,
+  subscriptionResource,
+  tenantResource
 } from "./sdk-context-options.js";
 
 export function updateClients(codeModel: CodeModel) {
@@ -43,7 +47,7 @@ export function updateClients(codeModel: CodeModel) {
   }
 }
 
-function getAllClients(codeModel: CodeModel): InputClient[] {
+export function getAllClients(codeModel: CodeModel): InputClient[] {
   const clients: InputClient[] = [];
   for (const client of codeModel.clients) {
     traverseClient(client);
@@ -112,14 +116,28 @@ function gatherResourceMetadata(
     }
 
     if (resourceModel && resourceType) {
-      const metadata = {
+      // find the scope on its model
+      const metadata: ResourceMetadata = {
         resourceModel: resourceModel,
         resourceClient: client,
         resourceType: resourceType,
-        isSingleton: isSingleton
+        isSingleton: isSingleton,
+        resourceScope: getResourceScope(resourceModel)
       };
       metadataMap.set(client, metadata);
     }
+  }
+
+  function getResourceScope(model: InputModelType): ResourceScope {
+    const decorators = model.decorators;
+    if (decorators?.some((d) => d.name == tenantResource)) {
+      return ResourceScope.Tenant;
+    } else if (decorators?.some((d) => d.name == subscriptionResource)) {
+      return ResourceScope.Subscription;
+    } else if (decorators?.some((d) => d.name == resourceGroupResource)) {
+      return ResourceScope.ResourceGroup;
+    }
+    return ResourceScope.ResourceGroup; // all the templates work as if there is a resource group decorator when there is no such decorator
   }
 }
 
@@ -128,8 +146,10 @@ function addResourceMetadata(client: InputClient, metadata: ResourceMetadata) {
     name: resourceMetadata,
     arguments: {
       resourceModel: metadata.resourceModel.crossLanguageDefinitionId,
+      resourceClient: metadata.resourceClient.crossLanguageDefinitionId,
       isSingleton: metadata.isSingleton,
-      resourceType: metadata.resourceType
+      resourceType: metadata.resourceType,
+      resourceScope: metadata.resourceScope
     }
   };
 

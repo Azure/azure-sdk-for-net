@@ -205,8 +205,7 @@ namespace Azure.Generator.Tests.Common
             string? wireName = null,
             string? summary = null,
             string? serializedName = null,
-            string? doc = null
-            )
+            string? doc = null)
         {
             return new InputModelProperty(
                 name,
