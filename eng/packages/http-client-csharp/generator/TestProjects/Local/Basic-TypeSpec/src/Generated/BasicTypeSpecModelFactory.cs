@@ -125,7 +125,6 @@ namespace BasicTypeSpec
         /// <returns> A new <see cref="BasicTypeSpec.ModelWithRequiredNullableProperties"/> instance for mocking. </returns>
         public static ModelWithRequiredNullableProperties ModelWithRequiredNullableProperties(int? requiredNullablePrimitive = default, StringExtensibleEnum? requiredExtensibleEnum = default, StringFixedEnum? requiredFixedEnum = default)
         {
-
             return new ModelWithRequiredNullableProperties(requiredNullablePrimitive, requiredExtensibleEnum, requiredFixedEnum, additionalBinaryDataProperties: null);
         }
 
@@ -134,7 +133,6 @@ namespace BasicTypeSpec
         /// <returns> A new <see cref="BasicTypeSpec.FriendModel"/> instance for mocking. </returns>
         public static FriendModel FriendModel(string name = default)
         {
-
             return new FriendModel(name, additionalBinaryDataProperties: null);
         }
 
@@ -143,7 +141,6 @@ namespace BasicTypeSpec
         /// <returns> A new <see cref="BasicTypeSpec.RenamedModel"/> instance for mocking. </returns>
         public static RenamedModel RenamedModel(string name = default)
         {
-
             return new RenamedModel(name, additionalBinaryDataProperties: null);
         }
 
@@ -151,7 +148,6 @@ namespace BasicTypeSpec
         /// <returns> A new <see cref="BasicTypeSpec.ReturnsAnonymousModelResponse"/> instance for mocking. </returns>
         public static ReturnsAnonymousModelResponse ReturnsAnonymousModelResponse()
         {
-
             return new ReturnsAnonymousModelResponse(additionalBinaryDataProperties: null);
         }
     }
