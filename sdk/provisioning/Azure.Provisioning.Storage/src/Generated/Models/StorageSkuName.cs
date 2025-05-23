@@ -60,4 +60,40 @@ public enum StorageSkuName
     /// </summary>
     [DataMember(Name = "Standard_RAGZRS")]
     StandardRagzrs,
+
+    /// <summary>
+    /// StandardV2_LRS.
+    /// </summary>
+    [DataMember(Name = "StandardV2_LRS")]
+    StandardV2Lrs,
+
+    /// <summary>
+    /// StandardV2_GRS.
+    /// </summary>
+    [DataMember(Name = "StandardV2_GRS")]
+    StandardV2Grs,
+
+    /// <summary>
+    /// StandardV2_ZRS.
+    /// </summary>
+    [DataMember(Name = "StandardV2_ZRS")]
+    StandardV2Zrs,
+
+    /// <summary>
+    /// StandardV2_GZRS.
+    /// </summary>
+    [DataMember(Name = "StandardV2_GZRS")]
+    StandardV2Gzrs,
+
+    /// <summary>
+    /// PremiumV2_LRS.
+    /// </summary>
+    [DataMember(Name = "PremiumV2_LRS")]
+    PremiumV2Lrs,
+
+    /// <summary>
+    /// PremiumV2_ZRS.
+    /// </summary>
+    [DataMember(Name = "PremiumV2_ZRS")]
+    PremiumV2Zrs,
 }

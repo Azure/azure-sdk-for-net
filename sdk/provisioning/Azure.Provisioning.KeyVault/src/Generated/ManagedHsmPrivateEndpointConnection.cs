@@ -52,6 +52,17 @@ public partial class ManagedHsmPrivateEndpointConnection : ProvisionableResource
     private BicepValue<ETag>? _eTag;
 
     /// <summary>
+    /// Managed service identity (system assigned and/or user assigned
+    /// identities).
+    /// </summary>
+    public ManagedServiceIdentity Identity 
+    {
+        get { Initialize(); return _identity!; }
+        set { Initialize(); AssignOrReplace(ref _identity, value); }
+    }
+    private ManagedServiceIdentity? _identity;
+
+    /// <summary>
     /// Approval state of the private link connection.
     /// </summary>
     public ManagedHsmPrivateLinkServiceConnectionState PrivateLinkServiceConnectionState 
@@ -138,7 +149,7 @@ public partial class ManagedHsmPrivateEndpointConnection : ProvisionableResource
     /// </param>
     /// <param name="resourceVersion">Version of the ManagedHsmPrivateEndpointConnection.</param>
     public ManagedHsmPrivateEndpointConnection(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.KeyVault/managedHSMs/privateEndpointConnections", resourceVersion ?? "2023-07-01")
+        : base(bicepIdentifier, "Microsoft.KeyVault/managedHSMs/privateEndpointConnections", resourceVersion ?? "2024-11-01")
     {
     }
 
@@ -151,6 +162,7 @@ public partial class ManagedHsmPrivateEndpointConnection : ProvisionableResource
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
         _location = DefineProperty<AzureLocation>("Location", ["location"], isRequired: true);
         _eTag = DefineProperty<ETag>("ETag", ["etag"]);
+        _identity = DefineModelProperty<ManagedServiceIdentity>("Identity", ["identity"]);
         _privateLinkServiceConnectionState = DefineModelProperty<ManagedHsmPrivateLinkServiceConnectionState>("PrivateLinkServiceConnectionState", ["properties", "privateLinkServiceConnectionState"]);
         _sku = DefineModelProperty<ManagedHsmSku>("Sku", ["sku"]);
         _tags = DefineDictionaryProperty<string>("Tags", ["tags"]);
@@ -166,6 +178,11 @@ public partial class ManagedHsmPrivateEndpointConnection : ProvisionableResource
     /// </summary>
     public static class ResourceVersions
     {
+        /// <summary>
+        /// 2024-11-01.
+        /// </summary>
+        public static readonly string V2024_11_01 = "2024-11-01";
+
         /// <summary>
         /// 2023-08-01-PREVIEW.
         /// </summary>

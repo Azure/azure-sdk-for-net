@@ -13,7 +13,7 @@ namespace Azure.Provisioning.PostgreSql;
 /// <summary>
 /// Sku information related properties of a server.
 /// </summary>
-public partial class ServerSku : ProvisionableConstruct
+public partial class PostgreSqlFlexibleServersServerSku : ProvisionableConstruct
 {
     /// <summary>
     /// The name of the sku, typically, tier + family + cores, e.g.
@@ -35,14 +35,15 @@ public partial class ServerSku : ProvisionableConstruct
     private BicepValue<PostgreSqlFlexibleServerSkuTier>? _tier;
 
     /// <summary>
-    /// Creates a new ServerSku.
+    /// Creates a new PostgreSqlFlexibleServersServerSku.
     /// </summary>
-    public ServerSku()
+    public PostgreSqlFlexibleServersServerSku()
     {
     }
 
     /// <summary>
-    /// Define all the provisionable properties of ServerSku.
+    /// Define all the provisionable properties of
+    /// PostgreSqlFlexibleServersServerSku.
     /// </summary>
     protected override void DefineProvisionableProperties()
     {

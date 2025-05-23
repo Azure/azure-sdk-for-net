@@ -13,7 +13,7 @@ namespace Azure.Provisioning.CosmosDB;
 /// <summary>
 /// Error Response.
 /// </summary>
-public partial class ErrorResponse : ProvisionableConstruct
+public partial class CosmosDBErrorResult : ProvisionableConstruct
 {
     /// <summary>
     /// Error code.
@@ -34,14 +34,14 @@ public partial class ErrorResponse : ProvisionableConstruct
     private BicepValue<string>? _message;
 
     /// <summary>
-    /// Creates a new ErrorResponse.
+    /// Creates a new CosmosDBErrorResult.
     /// </summary>
-    public ErrorResponse()
+    public CosmosDBErrorResult()
     {
     }
 
     /// <summary>
-    /// Define all the provisionable properties of ErrorResponse.
+    /// Define all the provisionable properties of CosmosDBErrorResult.
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
