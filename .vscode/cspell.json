@@ -1201,6 +1201,14 @@
       ]
     },
     {
+      "filename": "**/sdk/provisioning/**/*.cs",
+      "words": [
+        "Awsec",
+        "Freemium",
+        "Mibps"
+      ]
+    },
+    {
       "filename": "**/sdk/qumulo/**/*",
       "words": [
         "qumulo"
