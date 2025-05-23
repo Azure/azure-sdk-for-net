@@ -418,8 +418,6 @@ namespace Azure.Communication.CallAutomation.Tests.CallRecordings
              * 8. once call is hung up, verify disconnected event
             */
 
-            BodyKeySanitizers.RemoveAll(s => s.JsonPath.Equals("$..operationContext", StringComparison.Ordinal));
-
             // create caller and receiver
             CommunicationUserIdentifier target = await CreateIdentityUserAsync().ConfigureAwait(false);
             CommunicationUserIdentifier user = await CreateIdentityUserAsync().ConfigureAwait(false);
