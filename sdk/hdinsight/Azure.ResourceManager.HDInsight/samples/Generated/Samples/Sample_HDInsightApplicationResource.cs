@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.HDInsight.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetApplicationOnHDInsightClusterCreationInProgress()
         {
-            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/preview/2024-08-01-preview/examples/GetApplicationInProgress.json
+            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/preview/2025-01-15-preview/examples/GetApplicationInProgress.json
             // this example is just showing the usage of "Applications_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.HDInsight.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetApplicationOnHDInsightClusterSuccessfullyCreated()
         {
-            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/preview/2024-08-01-preview/examples/GetApplicationCreated.json
+            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/preview/2025-01-15-preview/examples/GetApplicationCreated.json
             // this example is just showing the usage of "Applications_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.HDInsight.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteApplicationFromHDInsightCluster()
         {
-            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/preview/2024-08-01-preview/examples/DeleteApplication.json
+            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/preview/2025-01-15-preview/examples/DeleteApplication.json
             // this example is just showing the usage of "Applications_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.HDInsight.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_CreateApplication()
         {
-            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/preview/2024-08-01-preview/examples/CreateApplication.json
+            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/preview/2025-01-15-preview/examples/CreateApplication.json
             // this example is just showing the usage of "Applications_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -166,7 +166,7 @@ SubDomainSuffix = "dss",
         [Ignore("Only validating compilation of examples")]
         public async Task GetAzureAsyncOperationStatus_GetTheAzureAsyncOperationStatus()
         {
-            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/preview/2024-08-01-preview/examples/GetApplicationCreationAsyncOperationStatus.json
+            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/preview/2025-01-15-preview/examples/GetApplicationCreationAsyncOperationStatus.json
             // this example is just showing the usage of "Applications_GetAzureAsyncOperationStatus" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
