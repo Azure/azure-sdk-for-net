@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Logic.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Inputs);
 #else
-                using (JsonDocument document = JsonDocument.Parse(Inputs))
+                using (JsonDocument document = JsonDocument.Parse(Inputs, ModelSerializationExtensions.JsonDocumentOptions))
                 {
                     JsonSerializer.Serialize(writer, document.RootElement);
                 }
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Logic.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Outputs);
 #else
-                using (JsonDocument document = JsonDocument.Parse(Outputs))
+                using (JsonDocument document = JsonDocument.Parse(Outputs, ModelSerializationExtensions.JsonDocumentOptions))
                 {
                     JsonSerializer.Serialize(writer, document.RootElement);
                 }
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Logic.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Error);
 #else
-                using (JsonDocument document = JsonDocument.Parse(Error))
+                using (JsonDocument document = JsonDocument.Parse(Error, ModelSerializationExtensions.JsonDocumentOptions))
                 {
                     JsonSerializer.Serialize(writer, document.RootElement);
                 }
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Logic.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(TrackedProperties);
 #else
-                using (JsonDocument document = JsonDocument.Parse(TrackedProperties))
+                using (JsonDocument document = JsonDocument.Parse(TrackedProperties, ModelSerializationExtensions.JsonDocumentOptions))
                 {
                     JsonSerializer.Serialize(writer, document.RootElement);
                 }
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Logic.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -336,7 +336,7 @@ namespace Azure.ResourceManager.Logic.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerLogicContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(LogicWorkflowRunTrigger)} does not support writing '{options.Format}' format.");
             }
@@ -350,7 +350,7 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeLogicWorkflowRunTrigger(document.RootElement, options);
                     }
                 default:

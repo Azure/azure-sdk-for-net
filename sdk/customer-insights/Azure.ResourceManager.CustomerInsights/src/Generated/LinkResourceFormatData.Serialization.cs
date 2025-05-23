@@ -365,7 +365,7 @@ namespace Azure.ResourceManager.CustomerInsights
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCustomerInsightsContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(LinkResourceFormatData)} does not support writing '{options.Format}' format.");
             }
@@ -379,7 +379,7 @@ namespace Azure.ResourceManager.CustomerInsights
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeLinkResourceFormatData(document.RootElement, options);
                     }
                 default:

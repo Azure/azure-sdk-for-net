@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +23,14 @@ namespace Azure.ResourceManager.SqlVirtualMachine
 
         AvailabilityGroupListenerResource IOperationSource<AvailabilityGroupListenerResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = AvailabilityGroupListenerData.DeserializeAvailabilityGroupListenerData(document.RootElement);
+            var data = ModelReaderWriter.Read<AvailabilityGroupListenerData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSqlVirtualMachineContext.Default);
             return new AvailabilityGroupListenerResource(_client, data);
         }
 
         async ValueTask<AvailabilityGroupListenerResource> IOperationSource<AvailabilityGroupListenerResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = AvailabilityGroupListenerData.DeserializeAvailabilityGroupListenerData(document.RootElement);
-            return new AvailabilityGroupListenerResource(_client, data);
+            var data = ModelReaderWriter.Read<AvailabilityGroupListenerData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSqlVirtualMachineContext.Default);
+            return await Task.FromResult(new AvailabilityGroupListenerResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

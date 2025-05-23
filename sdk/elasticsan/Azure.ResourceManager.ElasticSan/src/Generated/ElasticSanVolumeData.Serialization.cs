@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.ElasticSan
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerElasticSanContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ElasticSanVolumeData)} does not support writing '{options.Format}' format.");
             }
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.ElasticSan
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeElasticSanVolumeData(document.RootElement, options);
                     }
                 default:

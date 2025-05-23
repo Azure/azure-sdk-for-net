@@ -3,8 +3,11 @@
 
 using System;
 using System.Net;
+using System.Net.Security;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Identity;
 using NUnit.Framework;
 
 namespace Azure.Messaging.ServiceBus.Tests.Samples
@@ -51,6 +54,42 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                     MaxRetries = 3,
                     Delay = TimeSpan.FromSeconds(.8)
                 }
+            });
+            #endregion
+        }
+
+        [Test]
+        public void ConfigureRemoteCertificateValidationCallback()
+        {
+            #region Snippet:ServiceBusConfigureRemoteCertificateValidationCallback
+#if SNIPPET
+            string fullyQualifiedNamespace = "<fully_qualified_namespace>";
+            DefaultAzureCredential credential = new();
+#else
+            string fullyQualifiedNamespace = TestEnvironment.FullyQualifiedNamespace;
+            var credential = TestEnvironment.Credential;
+#endif
+
+            static bool ValidateServerCertificate(
+                  object sender,
+                  X509Certificate certificate,
+                  X509Chain chain,
+                  SslPolicyErrors sslPolicyErrors)
+            {
+                if ((sslPolicyErrors == SslPolicyErrors.None)
+                    || (certificate.Issuer == "My Company CA"))
+                {
+                    return true;
+                }
+
+                // Do not allow communication with unauthorized servers.
+
+                return false;
+            }
+
+            ServiceBusClient client = new(fullyQualifiedNamespace, credential, new ServiceBusClientOptions
+            {
+                CertificateValidationCallback = ValidateServerCertificate
             });
             #endregion
         }

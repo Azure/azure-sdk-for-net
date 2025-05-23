@@ -7,6 +7,8 @@ namespace Azure.Storage.DataMovement.Blobs
 {
     internal class DataMovementBlobConstants
     {
+        internal const string FolderMetadataKey = "hdi_isfolder";
+
         internal class ResourceId
         {
             internal const string BlockBlob = "BlockBlob";
@@ -14,17 +16,18 @@ namespace Azure.Storage.DataMovement.Blobs
             internal const string AppendBlob = "AppendBlob";
         }
 
-        internal class SourceCheckpointData
+        internal class SourceCheckpointDetails
         {
-            internal const int SchemaVersion = 2;
-
-            internal const int VersionIndex = 0;
-            internal const int DataSize = VersionIndex + IntSizeInBytes;
+            internal const int DataSize = 0;
         }
 
-        internal class DestinationCheckpointData
+        internal class DestinationCheckpointDetails
         {
-            internal const int SchemaVersion = 2;
+            // Blob Schema Versions 1 and 2 were the beta version of the schema and do not need to be serialized and deserialized backwards compatible.
+            // Only Blob Schema Versions 3 and beyond need to be backwards compatible.
+            internal const int SchemaVersion_3 = 3;
+            internal const int SchemaVersion_4 = 4;
+            internal const int SchemaVersion = SchemaVersion_4;
 
             internal const int VersionIndex = 0;
             internal const int PreserveBlobTypeIndex = VersionIndex + IntSizeInBytes;
@@ -49,7 +52,8 @@ namespace Azure.Storage.DataMovement.Blobs
             internal const int CacheControlOffsetIndex = PreserveCacheControlIndex + OneByte;
             internal const int CacheControlLengthIndex = CacheControlOffsetIndex + IntSizeInBytes;
 
-            internal const int AccessTierValueIndex = CacheControlLengthIndex + IntSizeInBytes;
+            internal const int PreserveAccessTierIndex = CacheControlLengthIndex + IntSizeInBytes;
+            internal const int AccessTierValueIndex = PreserveAccessTierIndex + OneByte;
 
             internal const int PreserveMetadataIndex = AccessTierValueIndex + OneByte;
             internal const int MetadataOffsetIndex = PreserveMetadataIndex + OneByte;

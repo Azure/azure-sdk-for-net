@@ -13,8 +13,29 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Specifies VM Size Property settings on the virtual machine. </summary>
     public partial class VirtualMachineSizeProperties
     {
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineSizeProperties"/>. </summary>
+        public VirtualMachineSizeProperties()
+        {
+            AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineSizeProperties"/>. </summary>
+        /// <param name="vCpusAvailable"> Specifies the number of vCPUs available for the VM. When this property is not specified in the request body the default behavior is to set it to the value of vCPUs available for that VM size exposed in api response of [List all available virtual machine sizes in a region](https://docs.microsoft.com/en-us/rest/api/compute/resource-skus/list). </param>
+        /// <param name="vCpusPerCore"> Specifies the vCPU to physical core ratio. When this property is not specified in the request body the default behavior is set to the value of vCPUsPerCore for the VM Size exposed in api response of [List all available virtual machine sizes in a region](https://docs.microsoft.com/en-us/rest/api/compute/resource-skus/list). **Setting this property to 1 also means that hyper-threading is disabled.**. </param>
+        /// <param name="additionalProperties"> Additional Properties. </param>
+        internal VirtualMachineSizeProperties(int? vCpusAvailable, int? vCpusPerCore, IDictionary<string, BinaryData> additionalProperties)
+        {
+            VCpusAvailable = vCpusAvailable;
+            VCpusPerCore = vCpusPerCore;
+            AdditionalProperties = additionalProperties;
+        }
+
+        /// <summary> Specifies the number of vCPUs available for the VM. When this property is not specified in the request body the default behavior is to set it to the value of vCPUs available for that VM size exposed in api response of [List all available virtual machine sizes in a region](https://docs.microsoft.com/en-us/rest/api/compute/resource-skus/list). </summary>
+        public int? VCpusAvailable { get; set; }
+        /// <summary> Specifies the vCPU to physical core ratio. When this property is not specified in the request body the default behavior is set to the value of vCPUsPerCore for the VM Size exposed in api response of [List all available virtual machine sizes in a region](https://docs.microsoft.com/en-us/rest/api/compute/resource-skus/list). **Setting this property to 1 also means that hyper-threading is disabled.**. </summary>
+        public int? VCpusPerCore { get; set; }
         /// <summary>
-        /// Keeps track of any properties unknown to the library.
+        /// Additional Properties
         /// <para>
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -43,27 +64,6 @@ namespace Azure.ResourceManager.Compute.Models
         /// </list>
         /// </para>
         /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
-
-        /// <summary> Initializes a new instance of <see cref="VirtualMachineSizeProperties"/>. </summary>
-        public VirtualMachineSizeProperties()
-        {
-        }
-
-        /// <summary> Initializes a new instance of <see cref="VirtualMachineSizeProperties"/>. </summary>
-        /// <param name="vCpusAvailable"> Specifies the number of vCPUs available for the VM. When this property is not specified in the request body the default behavior is to set it to the value of vCPUs available for that VM size exposed in api response of [List all available virtual machine sizes in a region](https://docs.microsoft.com/en-us/rest/api/compute/resource-skus/list). </param>
-        /// <param name="vCpusPerCore"> Specifies the vCPU to physical core ratio. When this property is not specified in the request body the default behavior is set to the value of vCPUsPerCore for the VM Size exposed in api response of [List all available virtual machine sizes in a region](https://docs.microsoft.com/en-us/rest/api/compute/resource-skus/list). **Setting this property to 1 also means that hyper-threading is disabled.**. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachineSizeProperties(int? vCpusAvailable, int? vCpusPerCore, IDictionary<string, BinaryData> serializedAdditionalRawData)
-        {
-            VCpusAvailable = vCpusAvailable;
-            VCpusPerCore = vCpusPerCore;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Specifies the number of vCPUs available for the VM. When this property is not specified in the request body the default behavior is to set it to the value of vCPUs available for that VM size exposed in api response of [List all available virtual machine sizes in a region](https://docs.microsoft.com/en-us/rest/api/compute/resource-skus/list). </summary>
-        public int? VCpusAvailable { get; set; }
-        /// <summary> Specifies the vCPU to physical core ratio. When this property is not specified in the request body the default behavior is set to the value of vCPUsPerCore for the VM Size exposed in api response of [List all available virtual machine sizes in a region](https://docs.microsoft.com/en-us/rest/api/compute/resource-skus/list). **Setting this property to 1 also means that hyper-threading is disabled.**. </summary>
-        public int? VCpusPerCore { get; set; }
+        public IDictionary<string, BinaryData> AdditionalProperties { get; }
     }
 }

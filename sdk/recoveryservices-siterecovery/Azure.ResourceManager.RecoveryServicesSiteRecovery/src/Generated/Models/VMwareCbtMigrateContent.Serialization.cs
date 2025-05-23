@@ -42,6 +42,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WritePropertyName("osUpgradeVersion"u8);
                 writer.WriteStringValue(OSUpgradeVersion);
             }
+            if (Optional.IsCollectionDefined(PostMigrationSteps))
+            {
+                writer.WritePropertyName("postMigrationSteps"u8);
+                writer.WriteStartArray();
+                foreach (var item in PostMigrationSteps)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
         }
 
         VMwareCbtMigrateContent IJsonModel<VMwareCbtMigrateContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -66,6 +76,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
             string performShutdown = default;
             string osUpgradeVersion = default;
+            IList<ManagedRunCommandScriptContent> postMigrationSteps = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -81,6 +92,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     osUpgradeVersion = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("postMigrationSteps"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<ManagedRunCommandScriptContent> array = new List<ManagedRunCommandScriptContent>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(ManagedRunCommandScriptContent.DeserializeManagedRunCommandScriptContent(item, options));
+                    }
+                    postMigrationSteps = array;
+                    continue;
+                }
                 if (property.NameEquals("instanceType"u8))
                 {
                     instanceType = property.Value.GetString();
@@ -92,7 +117,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new VMwareCbtMigrateContent(instanceType, serializedAdditionalRawData, performShutdown, osUpgradeVersion);
+            return new VMwareCbtMigrateContent(instanceType, serializedAdditionalRawData, performShutdown, osUpgradeVersion, postMigrationSteps ?? new ChangeTrackingList<ManagedRunCommandScriptContent>());
         }
 
         BinaryData IPersistableModel<VMwareCbtMigrateContent>.Write(ModelReaderWriterOptions options)
@@ -102,7 +127,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(VMwareCbtMigrateContent)} does not support writing '{options.Format}' format.");
             }
@@ -116,7 +141,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeVMwareCbtMigrateContent(document.RootElement, options);
                     }
                 default:

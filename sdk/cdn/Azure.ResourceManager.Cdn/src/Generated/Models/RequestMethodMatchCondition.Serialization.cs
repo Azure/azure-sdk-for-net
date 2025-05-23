@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<RequestMethodMatchCondition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -34,8 +34,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 throw new FormatException($"The model {nameof(RequestMethodMatchCondition)} does not support writing '{format}' format.");
             }
 
-            writer.WritePropertyName("typeName"u8);
-            writer.WriteStringValue(ConditionType.ToString());
+            base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("operator"u8);
             writer.WriteStringValue(RequestMethodOperator.ToString());
             if (Optional.IsDefined(NegateCondition))
@@ -63,21 +62,6 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
         }
 
         RequestMethodMatchCondition IJsonModel<RequestMethodMatchCondition>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -100,20 +84,15 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            RequestMethodMatchConditionType typeName = default;
             RequestMethodOperator @operator = default;
             bool? negateCondition = default;
             IList<PreTransformCategory> transforms = default;
             IList<RequestMethodMatchConditionMatchValue> matchValues = default;
+            DeliveryRuleConditionParametersType typeName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("typeName"u8))
-                {
-                    typeName = new RequestMethodMatchConditionType(property.Value.GetString());
-                    continue;
-                }
                 if (property.NameEquals("operator"u8))
                 {
                     @operator = new RequestMethodOperator(property.Value.GetString());
@@ -156,6 +135,11 @@ namespace Azure.ResourceManager.Cdn.Models
                     matchValues = array;
                     continue;
                 }
+                if (property.NameEquals("typeName"u8))
+                {
+                    typeName = new DeliveryRuleConditionParametersType(property.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -164,11 +148,11 @@ namespace Azure.ResourceManager.Cdn.Models
             serializedAdditionalRawData = rawDataDictionary;
             return new RequestMethodMatchCondition(
                 typeName,
+                serializedAdditionalRawData,
                 @operator,
                 negateCondition,
                 transforms ?? new ChangeTrackingList<PreTransformCategory>(),
-                matchValues ?? new ChangeTrackingList<RequestMethodMatchConditionMatchValue>(),
-                serializedAdditionalRawData);
+                matchValues ?? new ChangeTrackingList<RequestMethodMatchConditionMatchValue>());
         }
 
         BinaryData IPersistableModel<RequestMethodMatchCondition>.Write(ModelReaderWriterOptions options)
@@ -178,7 +162,7 @@ namespace Azure.ResourceManager.Cdn.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCdnContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(RequestMethodMatchCondition)} does not support writing '{options.Format}' format.");
             }
@@ -192,7 +176,7 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeRequestMethodMatchCondition(document.RootElement, options);
                     }
                 default:

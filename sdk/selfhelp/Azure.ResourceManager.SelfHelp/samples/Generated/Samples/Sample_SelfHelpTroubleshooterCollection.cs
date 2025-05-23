@@ -9,14 +9,14 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.SelfHelp.Samples
 {
     public partial class Sample_SelfHelpTroubleshooterCollection
     {
-        // Troubleshooters_Create
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_TroubleshootersCreate()
         {
             // Generated from example definition: specification/help/resource-manager/Microsoft.Help/preview/2024-03-01-preview/examples/Troubleshooter_Create.json
@@ -27,22 +27,18 @@ namespace Azure.ResourceManager.SelfHelp.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ArmResource created on azure
-            // for more information of creating ArmResource, please refer to the document of ArmResource
-
             // get the collection of this SelfHelpTroubleshooterResource
             string scope = "subscriptions/mySubscription/resourcegroups/myresourceGroup/providers/Microsoft.KeyVault/vaults/test-keyvault-rp";
-            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", scope));
-            SelfHelpTroubleshooterCollection collection = client.GetSelfHelpTroubleshooters(scopeId);
+            SelfHelpTroubleshooterCollection collection = client.GetSelfHelpTroubleshooters(new ResourceIdentifier(scope));
 
             // invoke the operation
             string troubleshooterName = "abf168ed-1b54-454a-86f6-e4b62253d3b1";
-            SelfHelpTroubleshooterData data = new SelfHelpTroubleshooterData()
+            SelfHelpTroubleshooterData data = new SelfHelpTroubleshooterData
             {
                 SolutionId = "SampleTroubleshooterSolutionId",
                 Parameters =
 {
-["ResourceURI"] = "subscriptions/mySubscription/resourcegroups/myresourceGroup/providers/Microsoft.KeyVault/vaults/test-keyvault-rp",
+["ResourceURI"] = "subscriptions/mySubscription/resourcegroups/myresourceGroup/providers/Microsoft.KeyVault/vaults/test-keyvault-rp"
 },
             };
             ArmOperation<SelfHelpTroubleshooterResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, troubleshooterName, data);
@@ -55,9 +51,8 @@ namespace Azure.ResourceManager.SelfHelp.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Troubleshooters_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_TroubleshootersGet()
         {
             // Generated from example definition: specification/help/resource-manager/Microsoft.Help/preview/2024-03-01-preview/examples/Troubleshooter_Get.json
@@ -68,13 +63,9 @@ namespace Azure.ResourceManager.SelfHelp.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ArmResource created on azure
-            // for more information of creating ArmResource, please refer to the document of ArmResource
-
             // get the collection of this SelfHelpTroubleshooterResource
             string scope = "subscriptions/mySubscription/resourcegroups/myresourceGroup/providers/Microsoft.KeyVault/vaults/test-keyvault-rp";
-            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", scope));
-            SelfHelpTroubleshooterCollection collection = client.GetSelfHelpTroubleshooters(scopeId);
+            SelfHelpTroubleshooterCollection collection = client.GetSelfHelpTroubleshooters(new ResourceIdentifier(scope));
 
             // invoke the operation
             string troubleshooterName = "abf168ed-1b54-454a-86f6-e4b62253d3b1";
@@ -87,9 +78,8 @@ namespace Azure.ResourceManager.SelfHelp.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Troubleshooters_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_TroubleshootersGet()
         {
             // Generated from example definition: specification/help/resource-manager/Microsoft.Help/preview/2024-03-01-preview/examples/Troubleshooter_Get.json
@@ -100,13 +90,9 @@ namespace Azure.ResourceManager.SelfHelp.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ArmResource created on azure
-            // for more information of creating ArmResource, please refer to the document of ArmResource
-
             // get the collection of this SelfHelpTroubleshooterResource
             string scope = "subscriptions/mySubscription/resourcegroups/myresourceGroup/providers/Microsoft.KeyVault/vaults/test-keyvault-rp";
-            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", scope));
-            SelfHelpTroubleshooterCollection collection = client.GetSelfHelpTroubleshooters(scopeId);
+            SelfHelpTroubleshooterCollection collection = client.GetSelfHelpTroubleshooters(new ResourceIdentifier(scope));
 
             // invoke the operation
             string troubleshooterName = "abf168ed-1b54-454a-86f6-e4b62253d3b1";
@@ -115,9 +101,8 @@ namespace Azure.ResourceManager.SelfHelp.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Troubleshooters_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_TroubleshootersGet()
         {
             // Generated from example definition: specification/help/resource-manager/Microsoft.Help/preview/2024-03-01-preview/examples/Troubleshooter_Get.json
@@ -128,13 +113,9 @@ namespace Azure.ResourceManager.SelfHelp.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ArmResource created on azure
-            // for more information of creating ArmResource, please refer to the document of ArmResource
-
             // get the collection of this SelfHelpTroubleshooterResource
             string scope = "subscriptions/mySubscription/resourcegroups/myresourceGroup/providers/Microsoft.KeyVault/vaults/test-keyvault-rp";
-            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", scope));
-            SelfHelpTroubleshooterCollection collection = client.GetSelfHelpTroubleshooters(scopeId);
+            SelfHelpTroubleshooterCollection collection = client.GetSelfHelpTroubleshooters(new ResourceIdentifier(scope));
 
             // invoke the operation
             string troubleshooterName = "abf168ed-1b54-454a-86f6-e4b62253d3b1";
@@ -143,7 +124,7 @@ namespace Azure.ResourceManager.SelfHelp.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {

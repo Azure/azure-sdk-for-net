@@ -39,15 +39,15 @@ namespace Azure.AI.DocumentIntelligence
                 writer.WritePropertyName("sourceKind"u8);
                 writer.WriteStringValue(SourceKind.Value.ToString());
             }
-            if (Optional.IsDefined(AzureBlobSource))
+            if (Optional.IsDefined(BlobSource))
             {
                 writer.WritePropertyName("azureBlobSource"u8);
-                writer.WriteObjectValue(AzureBlobSource, options);
+                writer.WriteObjectValue<BlobContentSource>(BlobSource, options);
             }
-            if (Optional.IsDefined(AzureBlobFileListSource))
+            if (Optional.IsDefined(BlobFileListSource))
             {
                 writer.WritePropertyName("azureBlobFileListSource"u8);
-                writer.WriteObjectValue(AzureBlobFileListSource, options);
+                writer.WriteObjectValue<BlobFileListContentSource>(BlobFileListSource, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -57,7 +57,7 @@ namespace Azure.AI.DocumentIntelligence
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -87,8 +87,8 @@ namespace Azure.AI.DocumentIntelligence
                 return null;
             }
             ContentSourceKind? sourceKind = default;
-            AzureBlobContentSource azureBlobSource = default;
-            AzureBlobFileListContentSource azureBlobFileListSource = default;
+            BlobContentSource azureBlobSource = default;
+            BlobFileListContentSource azureBlobFileListSource = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -108,7 +108,7 @@ namespace Azure.AI.DocumentIntelligence
                     {
                         continue;
                     }
-                    azureBlobSource = AzureBlobContentSource.DeserializeAzureBlobContentSource(property.Value, options);
+                    azureBlobSource = BlobContentSource.DeserializeBlobContentSource(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("azureBlobFileListSource"u8))
@@ -117,7 +117,7 @@ namespace Azure.AI.DocumentIntelligence
                     {
                         continue;
                     }
-                    azureBlobFileListSource = AzureBlobFileListContentSource.DeserializeAzureBlobFileListContentSource(property.Value, options);
+                    azureBlobFileListSource = BlobFileListContentSource.DeserializeBlobFileListContentSource(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -136,7 +136,7 @@ namespace Azure.AI.DocumentIntelligence
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureAIDocumentIntelligenceContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ClassifierDocumentTypeDetails)} does not support writing '{options.Format}' format.");
             }
@@ -150,7 +150,7 @@ namespace Azure.AI.DocumentIntelligence
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeClassifierDocumentTypeDetails(document.RootElement, options);
                     }
                 default:
@@ -164,7 +164,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static ClassifierDocumentTypeDetails FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeClassifierDocumentTypeDetails(document.RootElement);
         }
 

@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.PolicyInsights
                 case 200:
                     {
                         PolicyMetadataData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PolicyMetadataData.DeserializePolicyMetadataData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.PolicyInsights
                 case 200:
                     {
                         PolicyMetadataData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PolicyMetadataData.DeserializePolicyMetadataData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.PolicyInsights
                 case 200:
                     {
                         Models.PolicyMetadataCollection value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = Models.PolicyMetadataCollection.DeserializePolicyMetadataCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.PolicyInsights
                 case 200:
                     {
                         Models.PolicyMetadataCollection value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = Models.PolicyMetadataCollection.DeserializePolicyMetadataCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.PolicyInsights
                 case 200:
                     {
                         Models.PolicyMetadataCollection value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = Models.PolicyMetadataCollection.DeserializePolicyMetadataCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.PolicyInsights
                 case 200:
                     {
                         Models.PolicyMetadataCollection value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = Models.PolicyMetadataCollection.DeserializePolicyMetadataCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

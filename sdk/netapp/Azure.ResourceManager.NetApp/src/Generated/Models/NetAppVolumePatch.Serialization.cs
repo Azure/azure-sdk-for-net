@@ -115,6 +115,11 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WritePropertyName("coolAccessRetrievalPolicy"u8);
                 writer.WriteStringValue(CoolAccessRetrievalPolicy.Value.ToString());
             }
+            if (Optional.IsDefined(CoolAccessTieringPolicy))
+            {
+                writer.WritePropertyName("coolAccessTieringPolicy"u8);
+                writer.WriteStringValue(CoolAccessTieringPolicy.Value.ToString());
+            }
             if (Optional.IsDefined(IsSnapshotDirectoryVisible))
             {
                 writer.WritePropertyName("snapshotDirectoryVisible"u8);
@@ -179,6 +184,7 @@ namespace Azure.ResourceManager.NetApp.Models
             bool? coolAccess = default;
             int? coolnessPeriod = default;
             CoolAccessRetrievalPolicy? coolAccessRetrievalPolicy = default;
+            CoolAccessTieringPolicy? coolAccessTieringPolicy = default;
             bool? snapshotDirectoryVisible = default;
             SmbAccessBasedEnumeration? smbAccessBasedEnumeration = default;
             SmbNonBrowsable? smbNonBrowsable = default;
@@ -361,6 +367,15 @@ namespace Azure.ResourceManager.NetApp.Models
                             coolAccessRetrievalPolicy = new CoolAccessRetrievalPolicy(property0.Value.GetString());
                             continue;
                         }
+                        if (property0.NameEquals("coolAccessTieringPolicy"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            coolAccessTieringPolicy = new CoolAccessTieringPolicy(property0.Value.GetString());
+                            continue;
+                        }
                         if (property0.NameEquals("snapshotDirectoryVisible"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -418,6 +433,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 coolAccess,
                 coolnessPeriod,
                 coolAccessRetrievalPolicy,
+                coolAccessTieringPolicy,
                 snapshotDirectoryVisible,
                 smbAccessBasedEnumeration,
                 smbNonBrowsable,
@@ -431,7 +447,7 @@ namespace Azure.ResourceManager.NetApp.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetAppContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(NetAppVolumePatch)} does not support writing '{options.Format}' format.");
             }
@@ -445,7 +461,7 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeNetAppVolumePatch(document.RootElement, options);
                     }
                 default:

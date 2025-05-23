@@ -1,6 +1,6 @@
 # Create, Retrieve and Delete a Feature Flag
 
-The AppConfiguration service supports [Feature flags](https://docs.microsoft.com/azure/azure-app-configuration/concept-feature-management). 
+The AppConfiguration service supports [Feature flags](https://learn.microsoft.com/azure/azure-app-configuration/concept-feature-management). 
 Feature flags are settings that follow specific JSON schema for the `Value`, have key prefixed with the `.appconfig.featureflag/`, and the `application/vnd.microsoft.appconfig.ff+json;charset=utf-8` content type.
 The `Azure.Data.AppConfiguration` library provides a strongly-typed way of managing feature flags.
 This sample shows how to use the library to create, retrieve, and delete feature flags.

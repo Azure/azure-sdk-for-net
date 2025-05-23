@@ -35,10 +35,10 @@ namespace Azure.ResourceManager.Cdn.Models
                 throw new FormatException($"The model {nameof(MigrateResult)} does not support writing '{format}' format.");
             }
 
-            if (options.Format != "W" && Optional.IsDefined(Id))
+            if (options.Format != "W" && Optional.IsDefined(ResourceId))
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                writer.WriteStringValue(ResourceId);
             }
             if (options.Format != "W" && Optional.IsDefined(MigrateResultType))
             {
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Cdn.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            string id = default;
+            ResourceIdentifier id = default;
             string type = default;
             WritableSubResource migratedProfileResourceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -99,7 +99,11 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 if (property.NameEquals("id"u8))
                 {
-                    id = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("type"u8))
@@ -144,7 +148,7 @@ namespace Azure.ResourceManager.Cdn.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCdnContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(MigrateResult)} does not support writing '{options.Format}' format.");
             }
@@ -158,7 +162,7 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeMigrateResult(document.RootElement, options);
                     }
                 default:

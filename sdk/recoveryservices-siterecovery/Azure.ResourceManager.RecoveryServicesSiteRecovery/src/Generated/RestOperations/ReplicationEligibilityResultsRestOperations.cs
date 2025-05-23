@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2023-08-01";
+            _apiVersion = apiVersion ?? "2025-01-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 case 200:
                     {
                         ReplicationEligibilityResultListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ReplicationEligibilityResultListResult.DeserializeReplicationEligibilityResultListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 case 200:
                     {
                         ReplicationEligibilityResultListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ReplicationEligibilityResultListResult.DeserializeReplicationEligibilityResultListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 case 200:
                     {
                         ReplicationEligibilityResultData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ReplicationEligibilityResultData.DeserializeReplicationEligibilityResultData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 case 200:
                     {
                         ReplicationEligibilityResultData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ReplicationEligibilityResultData.DeserializeReplicationEligibilityResultData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

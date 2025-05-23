@@ -16,9 +16,8 @@ modelerfour:
   flatten-payloads: false
 use-model-reader-writer: true
 sample-gen:
-  output-folder: $(this-folder)/../samples/Generated
+  output-folder: $(this-folder)/../tests/Generated
   clear-output-folder: true
-use-write-core: true
 
 # mgmt-debug:
 #   show-serialized-names: true

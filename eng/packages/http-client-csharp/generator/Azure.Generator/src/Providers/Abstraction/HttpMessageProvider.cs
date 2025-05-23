@@ -2,11 +2,10 @@
 // Licensed under the MIT License.
 
 using Azure.Core;
-using Microsoft.Generator.CSharp.ClientModel.Providers;
-using Microsoft.Generator.CSharp.Expressions;
-using Microsoft.Generator.CSharp.Primitives;
-using Microsoft.Generator.CSharp.Statements;
-using static Microsoft.Generator.CSharp.Snippets.Snippet;
+using Microsoft.TypeSpec.Generator.ClientModel.Providers;
+using Microsoft.TypeSpec.Generator.Expressions;
+using Microsoft.TypeSpec.Generator.Primitives;
+using Microsoft.TypeSpec.Generator.Statements;
 
 namespace Azure.Generator.Providers
 {
@@ -21,14 +20,8 @@ namespace Azure.Generator.Providers
 
         public override CSharpType HttpMessageType => typeof(HttpMessage);
 
-        public override MethodBodyStatement Apply(ValueExpression options)
-            => MethodBodyStatement.Empty;
-
         public override ValueExpression BufferResponse()
             => Original.Property(nameof(HttpMessage.BufferResponse));
-
-        public override MethodBodyStatement[] ExtractResponse()
-            => [Original.Invoke(nameof(HttpMessage.ExtractResponseContent)).Terminate(), Return(Original.Property(nameof(HttpMessage.Response)))];
 
         public override HttpMessageApi FromExpression(ValueExpression original)
             => new HttpMessageProvider(original);
@@ -39,9 +32,12 @@ namespace Azure.Generator.Providers
         public override HttpResponseApi Response()
             => new AzureResponseProvider(Original.Property(nameof(HttpMessage.Response)));
 
-        public override ValueExpression ResponseClassifier()
-            => Original.Property(nameof(HttpMessage.ResponseClassifier));
-
         public override HttpMessageApi ToExpression() => this;
+
+        public override MethodBodyStatement ApplyResponseClassifier(StatusCodeClassifierApi statusCodeClassifier)
+            => MethodBodyStatement.Empty;
+
+        public override MethodBodyStatement ApplyRequestOptions(HttpRequestOptionsApi options)
+            => MethodBodyStatement.Empty;
     }
 }

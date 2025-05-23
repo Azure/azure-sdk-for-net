@@ -17,12 +17,22 @@ namespace Azure.Communication.CallAutomation
 
         /// <summary> Initializes a new instance of <see cref="StopTranscriptionRequestInternal"/>. </summary>
         /// <param name="operationContext"> The value to identify context of the operation. </param>
-        internal StopTranscriptionRequestInternal(string operationContext)
+        /// <param name="operationCallbackUri">
+        /// Set a callback URI that overrides the default callback URI set by CreateCall/AnswerCall for this operation.
+        /// This setup is per-action. If this is not set, the default callback URI set by CreateCall/AnswerCall will be used.
+        /// </param>
+        internal StopTranscriptionRequestInternal(string operationContext, string operationCallbackUri)
         {
             OperationContext = operationContext;
+            OperationCallbackUri = operationCallbackUri;
         }
 
         /// <summary> The value to identify context of the operation. </summary>
         public string OperationContext { get; set; }
+        /// <summary>
+        /// Set a callback URI that overrides the default callback URI set by CreateCall/AnswerCall for this operation.
+        /// This setup is per-action. If this is not set, the default callback URI set by CreateCall/AnswerCall will be used.
+        /// </summary>
+        public string OperationCallbackUri { get; set; }
     }
 }

@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Media
                 case 200:
                     {
                         ContentKeyPolicyListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ContentKeyPolicyListResult.DeserializeContentKeyPolicyListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Media
                 case 200:
                     {
                         ContentKeyPolicyListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ContentKeyPolicyListResult.DeserializeContentKeyPolicyListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.Media
                 case 200:
                     {
                         ContentKeyPolicyData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ContentKeyPolicyData.DeserializeContentKeyPolicyData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.Media
                 case 200:
                     {
                         ContentKeyPolicyData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ContentKeyPolicyData.DeserializeContentKeyPolicyData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -331,7 +331,7 @@ namespace Azure.ResourceManager.Media
                 case 201:
                     {
                         ContentKeyPolicyData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ContentKeyPolicyData.DeserializeContentKeyPolicyData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -365,7 +365,7 @@ namespace Azure.ResourceManager.Media
                 case 201:
                     {
                         ContentKeyPolicyData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ContentKeyPolicyData.DeserializeContentKeyPolicyData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -532,7 +532,7 @@ namespace Azure.ResourceManager.Media
                 case 200:
                     {
                         ContentKeyPolicyData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ContentKeyPolicyData.DeserializeContentKeyPolicyData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -565,7 +565,7 @@ namespace Azure.ResourceManager.Media
                 case 200:
                     {
                         ContentKeyPolicyData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ContentKeyPolicyData.DeserializeContentKeyPolicyData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -636,7 +636,7 @@ namespace Azure.ResourceManager.Media
                 case 200:
                     {
                         ContentKeyPolicyProperties value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ContentKeyPolicyProperties.DeserializeContentKeyPolicyProperties(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -667,7 +667,7 @@ namespace Azure.ResourceManager.Media
                 case 200:
                     {
                         ContentKeyPolicyProperties value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ContentKeyPolicyProperties.DeserializeContentKeyPolicyProperties(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -723,7 +723,7 @@ namespace Azure.ResourceManager.Media
                 case 200:
                     {
                         ContentKeyPolicyListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ContentKeyPolicyListResult.DeserializeContentKeyPolicyListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -757,7 +757,7 @@ namespace Azure.ResourceManager.Media
                 case 200:
                     {
                         ContentKeyPolicyListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ContentKeyPolicyListResult.DeserializeContentKeyPolicyListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

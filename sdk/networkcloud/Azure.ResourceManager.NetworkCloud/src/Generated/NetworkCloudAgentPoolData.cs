@@ -76,6 +76,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
+        /// <param name="etag"> Resource ETag. </param>
         /// <param name="extendedLocation"> The extended location of the cluster associated with the resource. </param>
         /// <param name="administratorConfiguration"> The administrator credentials to be used for the nodes in this agent pool. </param>
         /// <param name="agentOptions"> The configurations that will be applied to each agent in this agent pool. </param>
@@ -92,8 +93,9 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="upgradeSettings"> The configuration of the agent pool. </param>
         /// <param name="vmSkuName"> The name of the VM SKU that determines the size of resources allocated for node VMs. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkCloudAgentPoolData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedLocation extendedLocation, AdministratorConfiguration administratorConfiguration, NetworkCloudAgentConfiguration agentOptions, AttachedNetworkConfiguration attachedNetworkConfiguration, IList<string> availabilityZones, long count, AgentPoolDetailedStatus? detailedStatus, string detailedStatusMessage, string kubernetesVersion, IList<KubernetesLabel> labels, NetworkCloudAgentPoolMode mode, AgentPoolProvisioningState? provisioningState, IList<KubernetesLabel> taints, AgentPoolUpgradeSettings upgradeSettings, string vmSkuName, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal NetworkCloudAgentPoolData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, ExtendedLocation extendedLocation, AdministratorConfiguration administratorConfiguration, NetworkCloudAgentConfiguration agentOptions, AttachedNetworkConfiguration attachedNetworkConfiguration, IList<string> availabilityZones, long count, AgentPoolDetailedStatus? detailedStatus, string detailedStatusMessage, string kubernetesVersion, IList<KubernetesLabel> labels, NetworkCloudAgentPoolMode mode, AgentPoolProvisioningState? provisioningState, IList<KubernetesLabel> taints, AgentPoolUpgradeSettings upgradeSettings, string vmSkuName, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
+            ETag = etag;
             ExtendedLocation = extendedLocation;
             AdministratorConfiguration = administratorConfiguration;
             AgentOptions = agentOptions;
@@ -117,6 +119,8 @@ namespace Azure.ResourceManager.NetworkCloud
         {
         }
 
+        /// <summary> Resource ETag. </summary>
+        public ETag? ETag { get; }
         /// <summary> The extended location of the cluster associated with the resource. </summary>
         public ExtendedLocation ExtendedLocation { get; set; }
         /// <summary> The administrator credentials to be used for the nodes in this agent pool. </summary>
@@ -144,19 +148,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <summary> The taints applied to the nodes in this agent pool. </summary>
         public IList<KubernetesLabel> Taints { get; }
         /// <summary> The configuration of the agent pool. </summary>
-        internal AgentPoolUpgradeSettings UpgradeSettings { get; set; }
-        /// <summary> The maximum number or percentage of nodes that are surged during upgrade. This can either be set to an integer (e.g. '5') or a percentage (e.g. '50%'). If a percentage is specified, it is the percentage of the total agent pool size at the time of the upgrade. For percentages, fractional nodes are rounded up. If not specified, the default is 1. </summary>
-        public string UpgradeMaxSurge
-        {
-            get => UpgradeSettings is null ? default : UpgradeSettings.MaxSurge;
-            set
-            {
-                if (UpgradeSettings is null)
-                    UpgradeSettings = new AgentPoolUpgradeSettings();
-                UpgradeSettings.MaxSurge = value;
-            }
-        }
-
+        public AgentPoolUpgradeSettings UpgradeSettings { get; set; }
         /// <summary> The name of the VM SKU that determines the size of resources allocated for node VMs. </summary>
         public string VmSkuName { get; set; }
     }

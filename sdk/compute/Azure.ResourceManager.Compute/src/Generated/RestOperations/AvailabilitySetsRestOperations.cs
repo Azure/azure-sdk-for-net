@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Compute
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2024-07-01";
+            _apiVersion = apiVersion ?? "2024-11-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Compute
                 case 200:
                     {
                         AvailabilitySetData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AvailabilitySetData.DeserializeAvailabilitySetData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Compute
                 case 200:
                     {
                         AvailabilitySetData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AvailabilitySetData.DeserializeAvailabilitySetData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.Compute
                 case 200:
                     {
                         AvailabilitySetData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AvailabilitySetData.DeserializeAvailabilitySetData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Compute
                 case 200:
                     {
                         AvailabilitySetData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AvailabilitySetData.DeserializeAvailabilitySetData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -374,7 +374,7 @@ namespace Azure.ResourceManager.Compute
                 case 200:
                     {
                         AvailabilitySetData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AvailabilitySetData.DeserializeAvailabilitySetData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -405,7 +405,7 @@ namespace Azure.ResourceManager.Compute
                 case 200:
                     {
                         AvailabilitySetData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AvailabilitySetData.DeserializeAvailabilitySetData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -454,7 +454,7 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> Lists all availability sets in a subscription. </summary>
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="expand"> The expand expression to apply to the operation. Allowed values are 'instanceView'. </param>
+        /// <param name="expand"> The expand expression to apply to the operation. Allowed values are 'virtualMachines/$ref'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -469,7 +469,7 @@ namespace Azure.ResourceManager.Compute
                 case 200:
                     {
                         AvailabilitySetListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AvailabilitySetListResult.DeserializeAvailabilitySetListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -480,7 +480,7 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> Lists all availability sets in a subscription. </summary>
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="expand"> The expand expression to apply to the operation. Allowed values are 'instanceView'. </param>
+        /// <param name="expand"> The expand expression to apply to the operation. Allowed values are 'virtualMachines/$ref'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -495,7 +495,7 @@ namespace Azure.ResourceManager.Compute
                 case 200:
                     {
                         AvailabilitySetListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AvailabilitySetListResult.DeserializeAvailabilitySetListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -554,7 +554,7 @@ namespace Azure.ResourceManager.Compute
                 case 200:
                     {
                         AvailabilitySetListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AvailabilitySetListResult.DeserializeAvailabilitySetListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -581,7 +581,7 @@ namespace Azure.ResourceManager.Compute
                 case 200:
                     {
                         AvailabilitySetListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AvailabilitySetListResult.DeserializeAvailabilitySetListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -646,7 +646,7 @@ namespace Azure.ResourceManager.Compute
                 case 200:
                     {
                         VirtualMachineSizeListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = VirtualMachineSizeListResult.DeserializeVirtualMachineSizeListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -675,10 +675,371 @@ namespace Azure.ResourceManager.Compute
                 case 200:
                     {
                         VirtualMachineSizeListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = VirtualMachineSizeListResult.DeserializeVirtualMachineSizeListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal RequestUriBuilder CreateStartMigrationToVirtualMachineScaleSetRequestUri(string subscriptionId, string resourceGroupName, string availabilitySetName, MigrateToVirtualMachineScaleSetInput input)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Compute/availabilitySets/", false);
+            uri.AppendPath(availabilitySetName, true);
+            uri.AppendPath("/startMigrationToVirtualMachineScaleSet", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateStartMigrationToVirtualMachineScaleSetRequest(string subscriptionId, string resourceGroupName, string availabilitySetName, MigrateToVirtualMachineScaleSetInput input)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Compute/availabilitySets/", false);
+            uri.AppendPath(availabilitySetName, true);
+            uri.AppendPath("/startMigrationToVirtualMachineScaleSet", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(input, ModelSerializationExtensions.WireOptions);
+            request.Content = content;
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Start migration operation on an Availability Set to move its Virtual Machines to a Virtual Machine Scale Set. This should be followed by a migrate operation on each Virtual Machine that triggers a downtime on the Virtual Machine. </summary>
+        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="availabilitySetName"> The name of the availability set. </param>
+        /// <param name="input"> Parameters supplied to the migrate operation on the availability set. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="availabilitySetName"/> or <paramref name="input"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="availabilitySetName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> StartMigrationToVirtualMachineScaleSetAsync(string subscriptionId, string resourceGroupName, string availabilitySetName, MigrateToVirtualMachineScaleSetInput input, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(availabilitySetName, nameof(availabilitySetName));
+            Argument.AssertNotNull(input, nameof(input));
+
+            using var message = CreateStartMigrationToVirtualMachineScaleSetRequest(subscriptionId, resourceGroupName, availabilitySetName, input);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 204:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Start migration operation on an Availability Set to move its Virtual Machines to a Virtual Machine Scale Set. This should be followed by a migrate operation on each Virtual Machine that triggers a downtime on the Virtual Machine. </summary>
+        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="availabilitySetName"> The name of the availability set. </param>
+        /// <param name="input"> Parameters supplied to the migrate operation on the availability set. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="availabilitySetName"/> or <paramref name="input"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="availabilitySetName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response StartMigrationToVirtualMachineScaleSet(string subscriptionId, string resourceGroupName, string availabilitySetName, MigrateToVirtualMachineScaleSetInput input, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(availabilitySetName, nameof(availabilitySetName));
+            Argument.AssertNotNull(input, nameof(input));
+
+            using var message = CreateStartMigrationToVirtualMachineScaleSetRequest(subscriptionId, resourceGroupName, availabilitySetName, input);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 204:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal RequestUriBuilder CreateCancelMigrationToVirtualMachineScaleSetRequestUri(string subscriptionId, string resourceGroupName, string availabilitySetName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Compute/availabilitySets/", false);
+            uri.AppendPath(availabilitySetName, true);
+            uri.AppendPath("/cancelMigrationToVirtualMachineScaleSet", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateCancelMigrationToVirtualMachineScaleSetRequest(string subscriptionId, string resourceGroupName, string availabilitySetName)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Compute/availabilitySets/", false);
+            uri.AppendPath(availabilitySetName, true);
+            uri.AppendPath("/cancelMigrationToVirtualMachineScaleSet", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Cancel the migration operation on an Availability Set. </summary>
+        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="availabilitySetName"> The name of the availability set. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="availabilitySetName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="availabilitySetName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> CancelMigrationToVirtualMachineScaleSetAsync(string subscriptionId, string resourceGroupName, string availabilitySetName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(availabilitySetName, nameof(availabilitySetName));
+
+            using var message = CreateCancelMigrationToVirtualMachineScaleSetRequest(subscriptionId, resourceGroupName, availabilitySetName);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 204:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Cancel the migration operation on an Availability Set. </summary>
+        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="availabilitySetName"> The name of the availability set. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="availabilitySetName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="availabilitySetName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response CancelMigrationToVirtualMachineScaleSet(string subscriptionId, string resourceGroupName, string availabilitySetName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(availabilitySetName, nameof(availabilitySetName));
+
+            using var message = CreateCancelMigrationToVirtualMachineScaleSetRequest(subscriptionId, resourceGroupName, availabilitySetName);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 204:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal RequestUriBuilder CreateValidateMigrationToVirtualMachineScaleSetRequestUri(string subscriptionId, string resourceGroupName, string availabilitySetName, MigrateToVirtualMachineScaleSetInput input)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Compute/availabilitySets/", false);
+            uri.AppendPath(availabilitySetName, true);
+            uri.AppendPath("/validateMigrationToVirtualMachineScaleSet", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateValidateMigrationToVirtualMachineScaleSetRequest(string subscriptionId, string resourceGroupName, string availabilitySetName, MigrateToVirtualMachineScaleSetInput input)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Compute/availabilitySets/", false);
+            uri.AppendPath(availabilitySetName, true);
+            uri.AppendPath("/validateMigrationToVirtualMachineScaleSet", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(input, ModelSerializationExtensions.WireOptions);
+            request.Content = content;
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Validates that the Virtual Machines in the Availability Set can be migrated to the provided Virtual Machine Scale Set. </summary>
+        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="availabilitySetName"> The name of the availability set. </param>
+        /// <param name="input"> Parameters supplied to the migrate operation on the availability set. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="availabilitySetName"/> or <paramref name="input"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="availabilitySetName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> ValidateMigrationToVirtualMachineScaleSetAsync(string subscriptionId, string resourceGroupName, string availabilitySetName, MigrateToVirtualMachineScaleSetInput input, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(availabilitySetName, nameof(availabilitySetName));
+            Argument.AssertNotNull(input, nameof(input));
+
+            using var message = CreateValidateMigrationToVirtualMachineScaleSetRequest(subscriptionId, resourceGroupName, availabilitySetName, input);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 204:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Validates that the Virtual Machines in the Availability Set can be migrated to the provided Virtual Machine Scale Set. </summary>
+        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="availabilitySetName"> The name of the availability set. </param>
+        /// <param name="input"> Parameters supplied to the migrate operation on the availability set. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="availabilitySetName"/> or <paramref name="input"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="availabilitySetName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response ValidateMigrationToVirtualMachineScaleSet(string subscriptionId, string resourceGroupName, string availabilitySetName, MigrateToVirtualMachineScaleSetInput input, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(availabilitySetName, nameof(availabilitySetName));
+            Argument.AssertNotNull(input, nameof(input));
+
+            using var message = CreateValidateMigrationToVirtualMachineScaleSetRequest(subscriptionId, resourceGroupName, availabilitySetName, input);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 204:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal RequestUriBuilder CreateConvertToVirtualMachineScaleSetRequestUri(string subscriptionId, string resourceGroupName, string availabilitySetName, ConvertToVirtualMachineScaleSetContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Compute/availabilitySets/", false);
+            uri.AppendPath(availabilitySetName, true);
+            uri.AppendPath("/convertToVirtualMachineScaleSet", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateConvertToVirtualMachineScaleSetRequest(string subscriptionId, string resourceGroupName, string availabilitySetName, ConvertToVirtualMachineScaleSetContent content)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Compute/availabilitySets/", false);
+            uri.AppendPath(availabilitySetName, true);
+            uri.AppendPath("/convertToVirtualMachineScaleSet", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            if (content != null)
+            {
+                request.Headers.Add("Content-Type", "application/json");
+                var content0 = new Utf8JsonRequestContent();
+                content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
+                request.Content = content0;
+            }
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Create a new Flexible Virtual Machine Scale Set and migrate all the Virtual Machines in the Availability Set. This does not trigger a downtime on the Virtual Machines. </summary>
+        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="availabilitySetName"> The name of the availability set. </param>
+        /// <param name="content"> Parameters supplied to the migrate operation on the availability set. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="availabilitySetName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="availabilitySetName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> ConvertToVirtualMachineScaleSetAsync(string subscriptionId, string resourceGroupName, string availabilitySetName, ConvertToVirtualMachineScaleSetContent content = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(availabilitySetName, nameof(availabilitySetName));
+
+            using var message = CreateConvertToVirtualMachineScaleSetRequest(subscriptionId, resourceGroupName, availabilitySetName, content);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 202:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Create a new Flexible Virtual Machine Scale Set and migrate all the Virtual Machines in the Availability Set. This does not trigger a downtime on the Virtual Machines. </summary>
+        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="availabilitySetName"> The name of the availability set. </param>
+        /// <param name="content"> Parameters supplied to the migrate operation on the availability set. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="availabilitySetName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="availabilitySetName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response ConvertToVirtualMachineScaleSet(string subscriptionId, string resourceGroupName, string availabilitySetName, ConvertToVirtualMachineScaleSetContent content = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(availabilitySetName, nameof(availabilitySetName));
+
+            using var message = CreateConvertToVirtualMachineScaleSetRequest(subscriptionId, resourceGroupName, availabilitySetName, content);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 202:
+                    return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -709,7 +1070,7 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Lists all availability sets in a subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="expand"> The expand expression to apply to the operation. Allowed values are 'instanceView'. </param>
+        /// <param name="expand"> The expand expression to apply to the operation. Allowed values are 'virtualMachines/$ref'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -725,7 +1086,7 @@ namespace Azure.ResourceManager.Compute
                 case 200:
                     {
                         AvailabilitySetListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AvailabilitySetListResult.DeserializeAvailabilitySetListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -737,7 +1098,7 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Lists all availability sets in a subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="expand"> The expand expression to apply to the operation. Allowed values are 'instanceView'. </param>
+        /// <param name="expand"> The expand expression to apply to the operation. Allowed values are 'virtualMachines/$ref'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -753,7 +1114,7 @@ namespace Azure.ResourceManager.Compute
                 case 200:
                     {
                         AvailabilitySetListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AvailabilitySetListResult.DeserializeAvailabilitySetListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -804,7 +1165,7 @@ namespace Azure.ResourceManager.Compute
                 case 200:
                     {
                         AvailabilitySetListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AvailabilitySetListResult.DeserializeAvailabilitySetListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -833,7 +1194,7 @@ namespace Azure.ResourceManager.Compute
                 case 200:
                     {
                         AvailabilitySetListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AvailabilitySetListResult.DeserializeAvailabilitySetListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

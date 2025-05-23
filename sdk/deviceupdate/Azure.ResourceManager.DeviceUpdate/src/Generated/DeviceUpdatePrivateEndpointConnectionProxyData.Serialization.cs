@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.DeviceUpdate
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDeviceUpdateContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(DeviceUpdatePrivateEndpointConnectionProxyData)} does not support writing '{options.Format}' format.");
             }
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.DeviceUpdate
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeDeviceUpdatePrivateEndpointConnectionProxyData(document.RootElement, options);
                     }
                 default:

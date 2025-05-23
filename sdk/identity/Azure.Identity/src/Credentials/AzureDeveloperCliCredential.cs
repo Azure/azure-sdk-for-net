@@ -108,7 +108,7 @@ namespace Azure.Identity
             }
             catch (Exception e)
             {
-                throw scope.FailWrapAndThrow(e);
+                throw scope.FailWrapAndThrow(e, isCredentialUnavailable: _isChainedCredential);
             }
         }
 

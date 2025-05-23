@@ -1,8 +1,99 @@
 # Release History
 
+## 2.2.0-beta.4 (2025-03-18)
+
+This update brings compatibility with the `2025-03-01-preview` service API version, including support for the new `/responses` API via `OpenAIResponseClient`.
+
+### Features Added
+
+- To use the new `/responses` endpoint, call `GetOpenAIResponseClient()` on an `AzureOpenAIClient` instance, following the same pattern as other operations. Using the overload without a deployment name will not be able to create new responses, only retrieve and list existing response data.
+
+In addition to the new features transitive via the `OpenAI` library:
+
+- Azure OpenAI file upload for batch (`FileUploadPurpose.Batch`) now supports the specification of a custom expiration policy in supported regions. To use this capability, call one of the supplied extension method overloads of `UploadFile()` that accepts an `AzureFileExpirationOptions` parameter.
+
+### Breaking Changes
+
+- Transitive from the OpenAI package, several types in the `[Experimental]` attributed `Assistants`, `VectorStores`, and `RealtimeConversation` namespaces have removed use of the `required` keyword, standardizing their constructor-based required input patterns with the rest of the library. To address these build breaks, use one of the new constructor signatures that accepts required parameters previously provided via property `init`.
+
+## 2.2.0-beta.2 (2025-02-18)
+
+### Bugs fixed
+
+- Addressed a problem calling the `SetNewMaxCompletionTokensPropertyEnabled()` method, needed for o1/o3 model support, on `ChatCompletionOptions` instances prior to use in a method call. Related issue: [azure-sdk-for-net#46545](https://github.com/Azure/azure-sdk-for-net/issues/46545) with thanks to the PR  [azure-sdk-for-net#48218](https://github.com/Azure/azure-sdk-for-net/pull/48218).
+
+## 2.2.0-beta.1 (2025-02-07)
+
+This preview release aligns with the corresponding `2.2.0` beta of `OpenAI` and the `2025-01-01-Preview` Azure OpenAI Service API version.
+
+New features include since 2.1.0-beta.2 include:
+
+- Audio input for Chat Completions using `gpt-4o-audio-preview` or other compatible models: provide input audio via `ChatMessageContentPart.CreateInputAudioPart()`, set `AudioOptions` and `ResponseModalities` on `ChatCompletionOptions`, retrieve response audio via `OutputAudio` on `ChatCompletion`, and reference audio history from the assistant by using the `AssistantChatMessage(ChatCompletion)` constructor or using `ChatMessageContentPart.CreateAudioPart(string)`. For more information, refer to the examples in [the OpenAI README](https://github.com/openai/openai-dotnet/blob/main/README.md). 
+- Predicted outputs in Chat Completions: `ChatCompletionOptions` accepts an `OutputPrediction` property that can be used via `ChatOutputPrediction.CreateStaticContentPrediction()` with text content to optimize operation efficiency for scenarios like code completion. For more information, see [OpenAI's predicted outputs announcement](https://community.openai.com/t/introducing-predicted-outputs/1004502).
+- Chat Completions `o`-series model feature support: the new `developer` message role via `DeveloperChatMessage` (used just like `SystemChatMessage`), `ReasoningEffortLevel` on Chat Completion options
+- [AOAI exclusive] `UserSecurityContext` integration with [Defender for Cloud](https://learn.microsoft.com/azure/defender-for-cloud/gain-end-user-context-ai); add a `UserSecurityContext` instance to `ChatCompletionOptions` with `SetUserSecurityContext()`
+
+### Breaking Changes
+
+- **Batch**: files uploaded for batch operations (`UploadFile` with `FileUploadPurpose.Batch`) will now report a `status` of `processed`, matching expected behavior against OpenAI's `/v1` endpoint. This is a change from past behavior where such files would initially report `pending` and a later `processed`, `error`, or other status depending on operation progress. Batch input validation is instead consistently performed from the batch client.
+
+## 2.1.0 (2024-12-05)
+
+This GA library release aligns functionality with the latest `2024-10-21` stable service API label.
+
+> [!NOTE]
+> For consistency and reliability, GA releases of the `Azure.AI.OpenAI` library will always map to stable Azure OpenAI service API versions. Because stable service API versions omit volatile surfaces such as beta features, GA library releases will also not contain the full set of preview functionality. To use beta and preview features, please use the latest prerelease version of the library.
+
+### Features Added
+
+**Chat**
+
+- [GA] The `2024-10-21` API version brings GA AOAI support for streaming token usage in chat completions; `Usage` is now automatically populated in `StreamingChatCompletionUpdate` instances.
+  - Note 1: this feature is not yet compatible when using On Your Data features (after invoking the `.AddDataSource()` extension method on `ChatCompletionOptions`)
+  - Note 2: this feature is not yet compatible when using image input (a `ChatMessageContentPart` of `Kind` `Image`)
+- [GA] The `AllowParallelToolCalls` property on `ChatCompletionOptions`, which can be set to `false` to disable the invocation of multiple tools on a single chat completion response, is now supported.
+- [GA] Structured outputs, via the use of `ChatResponseFormat.CreateJsonSchemaFormat()`, is now supported.
+- When using `o1-preview` and `o1-mini` models, `max_completion_tokens` may now be configured by calling the `[Experimental] SetNewMaxCompletionTokensPropertyEnabled()` extension method on `ChatCompletionOptions`.
+  - This extension method will be removed in a future service API version, when it becomes unnecessary once all models support the `max_completion_tokens` property
+
+**Batch**
+
+The `2024-10-21` service API label introduces stable support for batch chat completions to Azure OpenAI. This library release exposes low-level support for batch:
+
+- `AzureOpenAIClient`'s `GetOpenAIFileClient()` will now return a valid, configured instance of `FileClient` that supports uploading files with `FileUploadPurpose.Batch`. This can be used to upload the contents of a valid `.jsonl` file for batch processing.
+- `AzureOpenAIClient`'s `GetBatchClient()` will now return a valid, configured instance of `BatchClient` that can produce a `CreateBatchOperation` given an uploaded file ID using protocol methods.
+- Strongly typed convenience surfaces for `BatchClient` will arrive in a future update.
+
+### Breaking Changes
+
+> [!NOTE]
+> GA library releases only permit breaking changes to items marked with an `[Experimental]` attribute and these changes will be minimized whenever possible.
+
+- `[Experimental]` `GetBatchClient(string deploymentName)` on `AzureOpenAIClient` is removed, as the Azure OpenAI batch API now aligns with OpenAI's in not using a deployment-based request URI path. Please use `GetBatchClient()`, instead.
+- `[Experimental]` the `Uri` property of type `System.Uri` in `ChatCitation` and `ChatRetrievedDocument` has been replaced by a `Url` property of type `string`. This contains the same information but properly handles document paths that don't conform to a valid RFC 3986 identifier.
+
+## 2.1.0-beta.2 (2024-11-04)
+
+This update brings compatibility with the Azure OpenAI `2024-10-01-preview` service API version as well as the `2.1.0-beta.2` release of the `OpenAI` library.
+
+### Features Added
+
+- The included update via `2024-09-01-preview` brings AOAI support for streaming token usage in chat completions; `Usage` is now automatically populated in `StreamingChatCompletionUpdate` instances.
+  - Note 1: this feature is not yet compatible when using On Your Data features (after invoking the `.AddDataSource()` extension method on `ChatCompletionOptions`)
+  - Note 2: this feature is not yet compatible when using image input (a `ChatMessageContentPart` of `Kind` `Image`)
+- `2024-10-01-preview` further adds support for ungrounded content detection in chat completion content filter results via the `UngroundedMaterial` property on `ResponseContentFilterResult`, as retrieved from a chat completion via the `GetResponseContentFilterResult()` extension method.
+
+## Breaking Changes
+
+- `[Experimental]` `ChatCitation` and `ChatRetrievedDocument` have each replaced the `Uri` property of type `System.Uri` with a `string` property named `Url`. This aligns with the REST specification and accounts for the wire value of `url` not always providing a valid RFC 3986 identifier [[azure-sdk-for-net \#46793](https://github.com/Azure/azure-sdk-for-net/issues/46793)]
+
+## Bugs Fixed
+
+- Addressed an issue that caused `ChatCitation` and `ChatRetrievedDocument` to sometimes throw on deserialization, specifically when a returned value in the `url` JSON field was not populated with an RFC 3986 compliant identifier for `System.Uri` [[azure-sdk-for-net \#46793](https://github.com/Azure/azure-sdk-for-net/issues/46793)]
+
 ## 2.1.0-beta.1 (2024-10-01)
 
-Relative to the prior GA release, this update restores preview surfaces, retargeting to the latest `2024-08-01-preview` service `api-version` label. It also brings early support for the newly-announced `/realtime` capabilities with `gpt-4o-realtime-preview`. You can read more about Azure OpenAI support for `/realtime` in the annoucement post here: https://azure.microsoft.com/blog/announcing-new-products-and-features-for-azure-openai-service-including-gpt-4o-realtime-preview-with-audio-and-speech-capabilities/
+Relative to the prior GA release, this update restores preview surfaces, re-targeting to the latest `2024-08-01-preview` service `api-version` label. It also brings early support for the newly-announced `/realtime` capabilities with `gpt-4o-realtime-preview`. You can read more about Azure OpenAI support for `/realtime` in the announcement post here: https://azure.microsoft.com/blog/announcing-new-products-and-features-for-azure-openai-service-including-gpt-4o-realtime-preview-with-audio-and-speech-capabilities/
 
 ### Features Added
 
@@ -10,7 +101,7 @@ Relative to the prior GA release, this update restores preview surfaces, retarge
   - This maps to the new `/realtime` beta endpoint and is thus marked with a new `[Experimental("OPENAI002")]` diagnostic tag. 
   - This is a very early version of the convenience surface and thus subject to significant change
   - Documentation and samples will arrive soon; in the interim, see the scenario test files (in `/tests`) for basic usage
-  - You can also find an external sample employing this client, together with Azure OpenAI support, at https://github.com/Azure-Samples/aoai-realtime-audio-sdk/tree/main/dotnet/samples/console
+  - You can also find an external sample employing this client, together with Azure OpenAI support, at https://github.com/Azure-Samples/aoai-realtime-audio-sdk/tree/main/dotnet/samples
 
 ## 2.0.0 (2024-09-30)
 
@@ -248,7 +339,7 @@ Given the nature of this update, breaking changes are extensive. Please see the 
   - If not otherwise specified, `Verbose` format will default to using segment-level timestamp information
   - Corresponding word-level information is found on the `.Words` collection of `AudioTranscription`, peer to the
     existing `.Segments` collection
-  - Note that word-level timing information incurs a small amount of additional processingly latency; segment-level
+  - Note that word-level timing information incurs a small amount of additional processing latency; segment-level
     timestamps do not encounter this behavior
 - `GenerateSpeechFromText()` can now use `Wav` and `Pcm` values from `SpeechGenerationResponseFormat`, these new
   options providing alternative uncompressed formats to `Flac`
@@ -569,7 +660,7 @@ management, and align with the Azure SDK guidelines.
   - In contrast to other capabilities, DALL-E image generation does not require explicit creation or specification of a deployment or model. Its surface as such does not include this concept.
 - Functions for chat completions are now supported: see [OpenAI's blog post on the topic](https://openai.com/blog/function-calling-and-other-api-updates) for much more detail.
   - A list of `FunctionDefinition` objects may be populated on `ChatCompletionsOptions` via its `Functions` property. These definitions include a name and description together with a serialized JSON Schema representation of its parameters; these parameters can be generated easily via `BinaryData.FromObjectAsJson` with dynamic objects -- see the README for example usage.
-  - **NOTE**: Chat Functions requires a minimum of the `-0613` model versions for `gpt-4` and `gpt-3.5-turbo`/`gpt-35-turbo`. Please ensure you're using these later model versions, as Functions are not supported with older model revisions. For Azure OpenAI, you can update a deployment's model version or create a new model deployment with an updated version via the Azure AI Studio interface, also accessible through Azure Portal.
+  - **NOTE**: Chat Functions requires a minimum of the `-0613` model versions for `gpt-4` and `gpt-3.5-turbo`/`gpt-35-turbo`. Please ensure you're using these later model versions, as Functions are not supported with older model revisions. For Azure OpenAI, you can update a deployment's model version or create a new model deployment with an updated version via the Azure AI Foundry interface, also accessible through Azure Portal.
 - (Azure OpenAI specific) Completions and Chat Completions responses now include embedded content filter annotations for prompts and responses
 - A new `Azure.AI.OpenAI.AzureOpenAIModelFactory` is now present for mocking.
 
@@ -611,7 +702,7 @@ A number of Completions request properties have been renamed and further documen
 - ASP.NET integration via `Microsoft.Extensions.Azure`'s `IAzureClientBuilder` interfaces is available. `OpenAIClient` is now a supported client type for these extension methods.
 
 ### Breaking Changes
-- `CompletionsLogProbability.TokenLogProbability`, available on `Choice` elements of a `Completions` response value's `.Choices` collection when a non-zero `LogProbability` value is provided via `CompletionsOptions`, is now an `IReadOnlyList<float?>` vs. its previous type of `IReadOnlyList<float>`. This nullability addition accomodates circumstances where some tokens produce expected null values in log probability arrays.
+- `CompletionsLogProbability.TokenLogProbability`, available on `Choice` elements of a `Completions` response value's `.Choices` collection when a non-zero `LogProbability` value is provided via `CompletionsOptions`, is now an `IReadOnlyList<float?>` vs. its previous type of `IReadOnlyList<float>`. This nullability addition accommodates circumstances where some tokens produce expected null values in log probability arrays.
 
 ### Bugs Fixed
 - Setting `CompletionsOptions.Echo` to true while also setting a non-zero `CompletionsOptions.LogProbability` no longer results in a deserialization error during response processing.

@@ -119,7 +119,7 @@ namespace Azure.Messaging.ServiceBus
                 Argument.AssertNotNullOrWhiteSpace(entityPath, nameof(entityPath));
                 connection.ThrowIfClosed();
 
-                var identifier = string.IsNullOrEmpty(options?.Identifier) ? DiagnosticUtilities.GenerateIdentifier(EntityPath) : options.Identifier;
+                var identifier = string.IsNullOrEmpty(options?.Identifier) ? DiagnosticUtilities.GenerateIdentifier(entityPath) : options.Identifier;
 
                 EntityPath = entityPath;
                 Identifier = identifier;

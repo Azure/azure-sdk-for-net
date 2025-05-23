@@ -130,4 +130,4 @@ await deployment.DeleteAsync(WaitUntil.Completed);
 
 
 ## Learn more
-Take a look at the [ARM template documentation](https://docs.microsoft.com/azure/azure-resource-manager/templates/).
+Take a look at the [ARM template documentation](https://learn.microsoft.com/azure/azure-resource-manager/templates/).

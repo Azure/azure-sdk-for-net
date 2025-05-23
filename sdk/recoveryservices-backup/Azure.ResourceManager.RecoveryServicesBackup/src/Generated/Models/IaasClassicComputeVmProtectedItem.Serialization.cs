@@ -69,6 +69,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             string protectedItemDataId = default;
             IaasVmProtectedItemExtendedInfo extendedInfo = default;
             IaasVmBackupExtendedProperties extendedProperties = default;
+            string policyType = default;
             string protectedItemType = default;
             BackupManagementType? backupManagementType = default;
             BackupDataSourceType? workloadType = default;
@@ -192,6 +193,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         continue;
                     }
                     extendedProperties = IaasVmBackupExtendedProperties.DeserializeIaasVmBackupExtendedProperties(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("policyType"u8))
+                {
+                    policyType = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("protectedItemType"u8))
@@ -384,7 +390,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 lastBackupTime,
                 protectedItemDataId,
                 extendedInfo,
-                extendedProperties);
+                extendedProperties,
+                policyType);
         }
 
         BinaryData IPersistableModel<IaasClassicComputeVmProtectedItem>.Write(ModelReaderWriterOptions options)
@@ -394,7 +401,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesBackupContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(IaasClassicComputeVmProtectedItem)} does not support writing '{options.Format}' format.");
             }
@@ -408,7 +415,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeIaasClassicComputeVmProtectedItem(document.RootElement, options);
                     }
                 default:

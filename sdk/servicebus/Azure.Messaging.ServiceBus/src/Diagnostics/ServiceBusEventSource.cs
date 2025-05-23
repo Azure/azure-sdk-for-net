@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Tracing;
 using System.Linq;
 using System.Reflection;
@@ -207,6 +208,12 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         internal const int ReceiverAcceptSessionTimeoutEvent = 122;
         internal const int ReceiverAcceptSessionCanceledEvent = 123;
 
+        internal const int DrainLinkStartEvent = 124;
+        internal const int DrainLinkCompleteEvent = 125;
+        internal const int DrainLinkExceptionEvent = 126;
+        internal const int CloseLinkStartEvent = 127;
+        internal const int CloseLinkCompleteEvent = 128;
+
         #endregion
         // add new event numbers here incrementing from previous
 
@@ -385,6 +392,7 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
 
         [NonEvent]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026", Justification = EventSourceSuppressMessage)]
         private unsafe void PeekMessageStartCore(int eventId, string identifier, long? sequenceNumber, int messageCount)
         {
             fixed (char* identifierPtr = identifier)
@@ -1094,6 +1102,7 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
 
         [NonEvent]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026", Justification = EventSourceSuppressMessage)]
         private unsafe void ProcessorMessageHandlerExceptionCore(int eventId, string identifier, long sequenceNumber, string exception, string lockToken)
         {
             fixed (char* identifierPtr = identifier)
@@ -1254,6 +1263,7 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
 
         [NonEvent]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026", Justification = EventSourceSuppressMessage)]
         private unsafe void LinkStateLostCore(int eventId, string identifier, string receiveLinkName, string receiveLinkState, bool isSessionReceiver, string exception)
         {
             fixed (char* identifierPtr = identifier)
@@ -1538,6 +1548,51 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
                 WriteEvent(RequestAuthorizationExceptionEvent, identifier, endpoint, exception);
             }
         }
+
+        [Event(DrainLinkStartEvent, Level = EventLevel.Verbose, Message = "{0}: Starting drain operation.")]
+        public void DrainLinkStart(string identifier)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(DrainLinkStartEvent, identifier ?? string.Empty);
+            }
+        }
+
+        [Event(DrainLinkCompleteEvent, Level = EventLevel.Verbose, Message = "{0}: Drain operation completed.")]
+        public void DrainLinkComplete(string identifier)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(DrainLinkCompleteEvent, identifier ?? string.Empty);
+            }
+        }
+
+        [Event(DrainLinkExceptionEvent, Level = EventLevel.Error, Message = "{0}: Drain operation failed with exception: {1}")]
+        public void DrainLinkException(string identifier, string exception)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(DrainLinkExceptionEvent, identifier ?? string.Empty, exception);
+            }
+        }
+
+        [Event(CloseLinkStartEvent, Level = EventLevel.Verbose, Message = "{0}: Starting closure of AMQP link.")]
+        public void CloseLinkStart(string identifier)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(CloseLinkStartEvent, identifier ?? string.Empty);
+            }
+        }
+
+        [Event(CloseLinkCompleteEvent, Level = EventLevel.Verbose, Message = "{0}: Closing AMQP link completed.")]
+        public void CloseLinkComplete(string identifier)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(CloseLinkCompleteEvent, identifier ?? string.Empty);
+            }
+        }
         #endregion
 
         #region Retries
@@ -1807,6 +1862,7 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
 
         [NonEvent]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026", Justification = EventSourceSuppressMessage)]
         private unsafe void TransactionDischargedCore(int eventId, string transactionId, string amqpTransactionId, bool rollback)
         {
             fixed (char* transactionIdPtr = transactionId)
@@ -1909,6 +1965,7 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         /// <param name="arg3">The third argument.</param>
         [NonEvent]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026", Justification = EventSourceSuppressMessage)]
         private unsafe void WriteEvent(int eventId, string arg1, int arg2, string arg3)
         {
             fixed (char* arg1Ptr = arg1)
@@ -1940,6 +1997,7 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         /// <param name="arg3">The third argument.</param>
         [NonEvent]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026", Justification = EventSourceSuppressMessage)]
         private unsafe void WriteEvent(int eventId, string arg1, long arg2, string arg3)
         {
             fixed (char* arg1Ptr = arg1)
@@ -1971,6 +2029,7 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         /// <param name="arg4">The fourth argument.</param>
         [NonEvent]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026", Justification = EventSourceSuppressMessage)]
         private unsafe void WriteEvent(int eventId, string arg1, string arg2, string arg3, string arg4)
         {
             fixed (char* arg1Ptr = arg1)

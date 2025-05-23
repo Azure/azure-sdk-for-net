@@ -4,13 +4,17 @@
 
 ### Features Added
 
-- Exposed `JsonModelWriteCore` for model serialization procedure.
-
 ### Breaking Changes
 
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.2.1 (2025-03-11)
+
+### Features Added
+
+- Exposed `JsonModelWriteCore` for model serialization procedure.
 
 ## 1.2.0 (2024-06-28)
 
@@ -80,7 +84,7 @@ This is the first stable release of StorageMover client library.
 
 New design of track 2 initial commit.
 - Corrected the format of all `uuid` type properties / parameters.
-- Corrected all acronyms that don't follow [Microsoft .NET Naming Guidelines](https://docs.microsoft.com/dotnet/standard/design-guidelines/naming-guidelines).
+- Corrected all acronyms that don't follow [Microsoft .NET Naming Guidelines](https://learn.microsoft.com/dotnet/standard/design-guidelines/naming-guidelines).
 - Prepended `StorageMover` prefix to all single / simple model names
 - Optimized the name of some models and functions.
 
@@ -96,4 +100,4 @@ This package follows the [new Azure SDK guidelines](https://azure.github.io/azur
 
 This package is a Public Preview version, so expect incompatible changes in subsequent releases as we improve the product. To provide feedback, submit an issue in our [Azure SDK for .NET GitHub repo](https://github.com/Azure/azure-sdk-for-net/issues).
 
-> NOTE: For more information about unified authentication, please refer to [Microsoft Azure Identity documentation for .NET](https://docs.microsoft.com//dotnet/api/overview/azure/identity-readme?view=azure-dotnet).
+> NOTE: For more information about unified authentication, please refer to [Microsoft Azure Identity documentation for .NET](https://learn.microsoft.com/dotnet/api/overview/azure/identity-readme?view=azure-dotnet).

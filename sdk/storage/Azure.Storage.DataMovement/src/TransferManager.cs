@@ -3,6 +3,7 @@
 
 using System;
 using System.Buffers;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -28,7 +29,7 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// Ongoing transfers indexed at the transfer id.
         /// </summary>
-        internal readonly Dictionary<string, DataTransfer> _dataTransfers = new();
+        internal readonly ConcurrentDictionary<string, TransferOperation> _transfers = new();
 
         /// <summary>
         /// Designated checkpointer for the respective transfer manager.
@@ -59,14 +60,18 @@ namespace Azure.Storage.DataMovement
         /// <param name="options">Options that will apply to all transfers started by this TransferManager.</param>
         public TransferManager(TransferManagerOptions options = default)
             : this(
-            ChannelProcessing.NewProcessor<TransferJobInternal>(parallelism: 1),
-            ChannelProcessing.NewProcessor<JobPartInternal>(DataMovementConstants.MaxJobPartReaders),
-            ChannelProcessing.NewProcessor<Func<Task>>(options?.MaximumConcurrency ?? DataMovementConstants.MaxJobChunkTasks),
+            ChannelProcessing.NewProcessor<TransferJobInternal>(readers: 1),
+            ChannelProcessing.NewProcessor<JobPartInternal>(
+                readers: DataMovementConstants.Channels.MaxJobPartReaders,
+                capacity: DataMovementConstants.Channels.JobPartCapacity),
+            ChannelProcessing.NewProcessor<Func<Task>>(
+                readers: options?.MaximumConcurrency ?? DataMovementConstants.Channels.MaxJobChunkReaders,
+                capacity: DataMovementConstants.Channels.JobChunkCapacity),
             new(ArrayPool<byte>.Shared,
-                options?.ErrorHandling ?? DataTransferErrorMode.StopOnAnyFailure,
+                options?.ErrorMode ?? TransferErrorMode.StopOnAnyFailure,
                 new ClientDiagnostics(options?.ClientOptions ?? ClientOptions.Default)),
-                CheckpointerExtensions.BuildCheckpointer(options?.CheckpointerOptions),
-                options?.ResumeProviders != null ? new List<StorageResourceProvider>(options.ResumeProviders) : new(),
+                CheckpointerExtensions.BuildCheckpointer(options?.CheckpointStoreOptions),
+                options?.ProvidersForResuming != null ? new List<StorageResourceProvider>(options.ProvidersForResuming) : new(),
                 default)
         {}
 
@@ -87,6 +92,7 @@ namespace Azure.Storage.DataMovement
             _chunksProcessor = chunksProcessor;
             _jobBuilder = jobBuilder;
             _resumeProviders = new(resumeProviders ?? new List<StorageResourceProvider>());
+            _resumeProviders.Add(new LocalFilesStorageResourceProvider());
             _checkpointer = checkpointer;
             _generateTransferId = generateTransferId ?? (() => Guid.NewGuid().ToString());
 
@@ -104,7 +110,7 @@ namespace Azure.Storage.DataMovement
         {
             await foreach (JobPartInternal partItem in job.ProcessJobToJobPartAsync().ConfigureAwait(false))
             {
-                job.IncrementJobParts();
+                await job.IncrementJobParts().ConfigureAwait(false);
                 await _partsProcessor.QueueAsync(partItem, cancellationToken).ConfigureAwait(false);
             }
         }
@@ -127,13 +133,13 @@ namespace Azure.Storage.DataMovement
         /// Return true once the transfer has been successfully paused or false if the transfer
         /// was already completed.
         /// </returns>
-        public virtual async Task PauseTransferIfRunningAsync(string transferId, CancellationToken cancellationToken = default)
+        public virtual async Task PauseTransferAsync(string transferId, CancellationToken cancellationToken = default)
         {
             cancellationToken = LinkCancellation(cancellationToken);
             Argument.AssertNotNullOrEmpty(transferId, nameof(transferId));
-            if (!_dataTransfers.TryGetValue(transferId, out DataTransfer transfer))
+            if (!_transfers.TryGetValue(transferId, out TransferOperation transfer))
             {
-                throw Errors.InvalidTransferId(nameof(PauseTransferIfRunningAsync), transferId);
+                throw Errors.InvalidTransferId(nameof(PauseTransferAsync), transferId);
             }
             await transfer.PauseAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
         }
@@ -145,7 +151,7 @@ namespace Azure.Storage.DataMovement
         /// If specified, the returned list of transfers will have only have the transfers
         /// of which match the status specified.
         ///
-        /// If not specified or specified to <see cref="DataTransferState.None"/>,
+        /// If not specified or specified to <see cref="TransferState.None"/>,
         /// all transfers will be returned regardless of status.
         /// </param>
         /// <param name="cancellationToken">
@@ -153,24 +159,24 @@ namespace Azure.Storage.DataMovement
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns></returns>
-        public virtual async IAsyncEnumerable<DataTransfer> GetTransfersAsync(
-            ICollection<DataTransferStatus> filterByStatus = default,
+        public virtual async IAsyncEnumerable<TransferOperation> GetTransfersAsync(
+            ICollection<TransferStatus> filterByStatus = default,
             [EnumeratorCancellation] CancellationToken cancellationToken = default)
         {
             cancellationToken = LinkCancellation(cancellationToken);
-            await SetDataTransfers(cancellationToken).ConfigureAwait(false);
-            IEnumerable<DataTransfer> totalTransfers;
+            await PopulateTransfersAsync(cancellationToken).ConfigureAwait(false);
+            IEnumerable<TransferOperation> totalTransfers;
             if (filterByStatus == default || filterByStatus.Count == 0)
             {
-                totalTransfers = _dataTransfers.Select(d => d.Value);
+                totalTransfers = _transfers.Select(d => d.Value);
             }
             else
             {
-                totalTransfers = _dataTransfers
+                totalTransfers = _transfers
                     .Select(d => d.Value)
-                    .Where(x => filterByStatus.Contains(x.TransferStatus)).ToList();
+                    .Where(x => filterByStatus.Contains(x.Status)).ToList();
             }
-            foreach (DataTransfer transfer in totalTransfers)
+            foreach (TransferOperation transfer in totalTransfers)
             {
                 yield return transfer;
             }
@@ -184,10 +190,10 @@ namespace Azure.Storage.DataMovement
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// List of <see cref="DataTransferProperties"/> objects that can be used to rebuild resources
+        /// List of <see cref="TransferProperties"/> objects that can be used to rebuild resources
         /// to resume with.
         /// </returns>
-        public virtual async IAsyncEnumerable<DataTransferProperties> GetResumableTransfersAsync(
+        public virtual async IAsyncEnumerable<TransferProperties> GetResumableTransfersAsync(
             [EnumeratorCancellation] CancellationToken cancellationToken = default)
         {
             cancellationToken = LinkCancellation(cancellationToken);
@@ -199,7 +205,7 @@ namespace Azure.Storage.DataMovement
                     continue;
                 }
 
-                DataTransferProperties properties = await _checkpointer.GetDataTransferPropertiesAsync(
+                TransferProperties properties = await _checkpointer.GetTransferPropertiesAsync(
                     transferId, cancellationToken).ConfigureAwait(false);
                 yield return properties;
             }
@@ -216,8 +222,8 @@ namespace Azure.Storage.DataMovement
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns></returns>
-        public virtual async Task<List<DataTransfer>> ResumeAllTransfersAsync(
-            DataTransferOptions transferOptions = default,
+        public virtual async Task<List<TransferOperation>> ResumeAllTransfersAsync(
+            TransferOptions transferOptions = default,
             CancellationToken cancellationToken = default)
         {
             cancellationToken = LinkCancellation(cancellationToken);
@@ -226,8 +232,8 @@ namespace Azure.Storage.DataMovement
                 throw Errors.CheckpointerDisabled("ResumeAllTransfersAsync");
             }
 
-            List<DataTransfer> transfers = new();
-            await foreach (DataTransferProperties properties in GetResumableTransfersAsync(cancellationToken).ConfigureAwait(false))
+            List<TransferOperation> transfers = new();
+            await foreach (TransferProperties properties in GetResumableTransfersAsync(cancellationToken).ConfigureAwait(false))
             {
                 transfers.Add(await ResumeTransferAsync(properties, transferOptions, cancellationToken).ConfigureAwait(false));
             }
@@ -243,10 +249,10 @@ namespace Azure.Storage.DataMovement
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
         /// </param>
-        /// <returns>Returns a <see cref="DataTransfer"/> for tracking this transfer.</returns>
-        public virtual async Task<DataTransfer> ResumeTransferAsync(
+        /// <returns>Returns a <see cref="TransferOperation"/> for tracking this transfer.</returns>
+        public virtual async Task<TransferOperation> ResumeTransferAsync(
             string transferId,
-            DataTransferOptions transferOptions = default,
+            TransferOptions transferOptions = default,
             CancellationToken cancellationToken = default)
         {
             cancellationToken = LinkCancellation(cancellationToken);
@@ -262,19 +268,19 @@ namespace Azure.Storage.DataMovement
                 return null;
             }
 
-            DataTransferProperties properties = await _checkpointer.GetDataTransferPropertiesAsync(
+            TransferProperties properties = await _checkpointer.GetTransferPropertiesAsync(
                     transferId, cancellationToken).ConfigureAwait(false);
 
             return await ResumeTransferAsync(properties, transferOptions, cancellationToken).ConfigureAwait(false);
         }
 
-        private async Task<DataTransfer> ResumeTransferAsync(
-            DataTransferProperties dataTransferProperties,
-            DataTransferOptions transferOptions,
+        private async Task<TransferOperation> ResumeTransferAsync(
+            TransferProperties transferProperties,
+            TransferOptions transferOptions,
             CancellationToken cancellationToken)
         {
             cancellationToken = LinkCancellation(cancellationToken);
-            bool TryGetStorageResourceProvider(DataTransferProperties properties, bool getSource, out StorageResourceProvider resourceProvider)
+            bool TryGetStorageResourceProvider(TransferProperties properties, bool getSource, out StorageResourceProvider resourceProvider)
             {
                 foreach (StorageResourceProvider provider in _resumeProviders)
                 {
@@ -288,33 +294,35 @@ namespace Azure.Storage.DataMovement
                 return false;
             }
 
-            transferOptions ??= new DataTransferOptions();
+            transferOptions ??= new TransferOptions();
 
-            if (_dataTransfers.ContainsKey(dataTransferProperties.TransferId))
+            // Remove the stale TransferOperation so we can pass a new TransferOperation object
+            // to the user and also track the transfer from the TransferOperation object
+            // No need to check if we were able to remove the transfer or not.
+            // If there's no stale TransferOperation to remove, move on.
+            _transfers.TryRemove(transferProperties.TransferId, out TransferOperation transfer);
+
+            if (!TryGetStorageResourceProvider(transferProperties, getSource: true, out StorageResourceProvider sourceProvider))
             {
-                // Remove the stale DataTransfer so we can pass a new DataTransfer object
-                // to the user and also track the transfer from the DataTransfer object
-                _dataTransfers.Remove(dataTransferProperties.TransferId);
+                throw Errors.NoResourceProviderFound(true, transferProperties.SourceProviderId);
+            }
+            if (!TryGetStorageResourceProvider(transferProperties, getSource: false, out StorageResourceProvider destinationProvider))
+            {
+                throw Errors.NoResourceProviderFound(false, transferProperties.DestinationProviderId);
             }
 
-            if (!TryGetStorageResourceProvider(dataTransferProperties, getSource: true, out StorageResourceProvider sourceProvider))
-            {
-                throw Errors.NoResourceProviderFound(true, dataTransferProperties.SourceProviderId);
-            }
-            if (!TryGetStorageResourceProvider(dataTransferProperties, getSource: false, out StorageResourceProvider destinationProvider))
-            {
-                throw Errors.NoResourceProviderFound(false, dataTransferProperties.DestinationProviderId);
-            }
-
-            DataTransfer dataTransfer = await BuildAndAddTransferJobAsync(
-                await sourceProvider.FromSourceAsync(dataTransferProperties, cancellationToken).ConfigureAwait(false),
-                await destinationProvider.FromDestinationAsync(dataTransferProperties, cancellationToken).ConfigureAwait(false),
+            StorageResource source = await sourceProvider.FromSourceAsync(transferProperties, cancellationToken).ConfigureAwait(false);
+            StorageResource destination = await destinationProvider.FromDestinationAsync(transferProperties, cancellationToken).ConfigureAwait(false);
+            TransferOperation transferOperation = await BuildAndAddTransferJobAsync(
+                source,
+                destination,
                 transferOptions,
-                dataTransferProperties.TransferId,
+                transferProperties.TransferId,
                 true,
                 cancellationToken).ConfigureAwait(false);
 
-            return dataTransfer;
+            DataMovementEventSource.Singleton.ResumeTransfer(transferOperation.Id, source, destination);
+            return transferOperation;
         }
 
         /// <summary>
@@ -325,7 +333,7 @@ namespace Azure.Storage.DataMovement
         internal virtual async Task PauseAllRunningTransfersAsync(CancellationToken cancellationToken = default)
         {
             cancellationToken = LinkCancellation(cancellationToken);
-            await Task.WhenAll(_dataTransfers.Values
+            await Task.WhenAll(_transfers.Values
                 .Where(transfer => transfer.CanPause())
                 .Select(transfer => transfer.PauseAsync(cancellationToken)))
                 .ConfigureAwait(false);
@@ -346,6 +354,7 @@ namespace Azure.Storage.DataMovement
         #region Start Transfer
         /// <summary>
         /// Starts a transfer from the given source resource to the given destination resource.
+        /// Ensure <see cref="StorageResource"/> instances are built with <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/storage/Azure.Storage.DataMovement/README.md#permissions">appropriate permissions</see>.
         /// </summary>
         /// <param name="sourceResource">A <see cref="StorageResource"/> representing the source.</param>
         /// <param name="destinationResource">A <see cref="StorageResource"/> representing the destination.</param>
@@ -354,11 +363,11 @@ namespace Azure.Storage.DataMovement
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
         /// </param>
-        /// <returns>Returns a <see cref="DataTransfer"/> for tracking this transfer.</returns>
-        public virtual async Task<DataTransfer> StartTransferAsync(
+        /// <returns>Returns a <see cref="TransferOperation"/> for tracking this transfer.</returns>
+        public virtual async Task<TransferOperation> StartTransferAsync(
             StorageResource sourceResource,
             StorageResource destinationResource,
-            DataTransferOptions transferOptions = default,
+            TransferOptions transferOptions = default,
             CancellationToken cancellationToken = default)
         {
             cancellationToken = LinkCancellation(cancellationToken);
@@ -366,39 +375,57 @@ namespace Azure.Storage.DataMovement
             Argument.AssertNotNull(sourceResource, nameof(sourceResource));
             Argument.AssertNotNull(destinationResource, nameof(destinationResource));
 
-            transferOptions ??= new DataTransferOptions();
-
             string transferId = _generateTransferId();
-            await _checkpointer.AddNewJobAsync(
-                transferId,
-                sourceResource,
-                destinationResource,
-                cancellationToken).ConfigureAwait(false);
+            await destinationResource.ValidateTransferAsync(transferId, sourceResource, cancellationToken).ConfigureAwait(false);
 
-            // TODO: if the below fails for any reason, this job will still be in the checkpointer.
-            // That seems not desirable.
+            transferOptions ??= new TransferOptions();
+            try
+            {
+                await _checkpointer.AddNewJobAsync(
+                    transferId,
+                    sourceResource,
+                    destinationResource,
+                    cancellationToken).ConfigureAwait(false);
 
-            DataTransfer dataTransfer = await BuildAndAddTransferJobAsync(
-                sourceResource,
-                destinationResource,
-                transferOptions,
-                transferId,
-                false,
-                cancellationToken).ConfigureAwait(false);
+                TransferOperation transferOperation = await BuildAndAddTransferJobAsync(
+                    sourceResource,
+                    destinationResource,
+                    transferOptions,
+                    transferId,
+                    false,
+                    cancellationToken).ConfigureAwait(false);
 
-            return dataTransfer;
+                DataMovementEventSource.Singleton.TransferQueued(transferId, sourceResource, destinationResource);
+                return transferOperation;
+            }
+            catch (Exception ex)
+            {
+                // cleanup any state for a job that didn't even start
+                try
+                {
+                    // No need to check if we were able to remove the transfer or not.
+                    // If there's no stale TransferOperation to remove, move on, because this is a cleanup
+                    _transfers.TryRemove(transferId, out TransferOperation transfer);
+                    await _checkpointer.TryRemoveStoredTransferAsync(transferId, cancellationToken).ConfigureAwait(false);
+                }
+                catch (Exception cleanupEx)
+                {
+                    throw new AggregateException(ex, cleanupEx);
+                }
+                throw;
+            }
         }
 
-        private async Task<DataTransfer> BuildAndAddTransferJobAsync(
+        private async Task<TransferOperation> BuildAndAddTransferJobAsync(
             StorageResource sourceResource,
             StorageResource destinationResource,
-            DataTransferOptions transferOptions,
+            TransferOptions transferOptions,
             string transferId,
             bool resumeJob,
             CancellationToken cancellationToken)
         {
             cancellationToken = LinkCancellation(cancellationToken);
-            (DataTransfer transfer, TransferJobInternal transferJobInternal) = await _jobBuilder.BuildJobAsync(
+            (TransferOperation transfer, TransferJobInternal transferJobInternal) = await _jobBuilder.BuildJobAsync(
                 sourceResource,
                 destinationResource,
                 transferOptions,
@@ -409,27 +436,35 @@ namespace Azure.Storage.DataMovement
                 .ConfigureAwait(false);
 
             transfer.TransferManager = this;
-            _dataTransfers.Add(transfer.Id, transfer);
+            if (!_transfers.TryAdd(transfer.Id, transfer))
+            {
+                throw Errors.CollisionTransferId(transfer.Id);
+            }
             await _jobsProcessor.QueueAsync(transferJobInternal, cancellationToken).ConfigureAwait(false);
 
             return transfer;
         }
         #endregion
 
-        private async Task SetDataTransfers(CancellationToken cancellationToken = default)
+        private async Task PopulateTransfersAsync(CancellationToken cancellationToken = default)
         {
-            _dataTransfers.Clear();
+            _transfers.Clear();
 
             List<string> storedTransfers = await _checkpointer.GetStoredTransfersAsync(cancellationToken).ConfigureAwait(false);
             foreach (string transferId in storedTransfers)
             {
-                DataTransferStatus jobStatus = await _checkpointer.GetJobStatusAsync(transferId, cancellationToken).ConfigureAwait(false);
-                _dataTransfers.Add(transferId, new DataTransfer(
+                TransferStatus jobStatus = await _checkpointer.GetJobStatusAsync(transferId, cancellationToken).ConfigureAwait(false);
+                // If TryAdd fails here, we need to check if in other places where we are
+                // adding that every transferId is unique.
+                if (!_transfers.TryAdd(transferId, new TransferOperation(
                     id: transferId,
                     status: jobStatus)
                 {
                     TransferManager = this,
-                });
+                }))
+                {
+                    throw Errors.CollisionTransferId(transferId);
+                }
             }
         }
 
@@ -440,17 +475,25 @@ namespace Azure.Storage.DataMovement
         /// Disposes.
         /// </summary>
         /// <returns>A <see cref="ValueTask"/> of disposing the <see cref="TransferManager"/>.</returns>
-        ValueTask IAsyncDisposable.DisposeAsync()
+        async ValueTask IAsyncDisposable.DisposeAsync()
         {
             if (!_cancellationTokenSource.IsCancellationRequested)
             {
                 _cancellationTokenSource.Cancel();
             }
-            _jobsProcessor?.Dispose();
-            _partsProcessor?.Dispose();
-            _chunksProcessor?.Dispose();
+            if (_jobsProcessor != default)
+            {
+                await _jobsProcessor.DisposeAsync().ConfigureAwait(false);
+            }
+            if (_partsProcessor != default)
+            {
+                await _partsProcessor.DisposeAsync().ConfigureAwait(false);
+            }
+            if (_chunksProcessor != default)
+            {
+                await _chunksProcessor.DisposeAsync().ConfigureAwait(false);
+            }
             GC.SuppressFinalize(this);
-            return default;
         }
     }
 }

@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.BillingBenefits
                 case 200:
                     {
                         SavingsPlanValidateResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SavingsPlanValidateResponse.DeserializeSavingsPlanValidateResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.BillingBenefits
                 case 200:
                     {
                         SavingsPlanValidateResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SavingsPlanValidateResponse.DeserializeSavingsPlanValidateResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.BillingBenefits
                 case 200:
                     {
                         SavingsPlanValidateResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SavingsPlanValidateResponse.DeserializeSavingsPlanValidateResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.BillingBenefits
                 case 200:
                     {
                         SavingsPlanValidateResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SavingsPlanValidateResponse.DeserializeSavingsPlanValidateResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

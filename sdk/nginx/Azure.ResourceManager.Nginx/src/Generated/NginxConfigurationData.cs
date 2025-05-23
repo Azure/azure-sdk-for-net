@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Nginx
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="NginxConfigurationData"/>. </summary>
-        public NginxConfigurationData()
+        internal NginxConfigurationData()
         {
         }
 
@@ -59,18 +59,14 @@ namespace Azure.ResourceManager.Nginx
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"></param>
-        /// <param name="location"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NginxConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, NginxConfigurationProperties properties, AzureLocation? location, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal NginxConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, NginxConfigurationProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
-            Location = location;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets or sets the properties. </summary>
-        public NginxConfigurationProperties Properties { get; set; }
-        /// <summary> Gets or sets the location. </summary>
-        public AzureLocation? Location { get; set; }
+        /// <summary> Gets the properties. </summary>
+        public NginxConfigurationProperties Properties { get; }
     }
 }

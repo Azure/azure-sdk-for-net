@@ -128,6 +128,11 @@ namespace Azure.ResourceManager.ContainerRegistry
                 writer.WritePropertyName("zoneRedundancy"u8);
                 writer.WriteStringValue(ZoneRedundancy.Value.ToString());
             }
+            if (Optional.IsDefined(IsAnonymousPullEnabled))
+            {
+                writer.WritePropertyName("anonymousPullEnabled"u8);
+                writer.WriteBooleanValue(IsAnonymousPullEnabled.Value);
+            }
             writer.WriteEndObject();
         }
 
@@ -173,6 +178,7 @@ namespace Azure.ResourceManager.ContainerRegistry
             ContainerRegistryPublicNetworkAccess? publicNetworkAccess = default;
             ContainerRegistryNetworkRuleBypassOption? networkRuleBypassOptions = default;
             ContainerRegistryZoneRedundancy? zoneRedundancy = default;
+            bool? anonymousPullEnabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -375,6 +381,15 @@ namespace Azure.ResourceManager.ContainerRegistry
                             zoneRedundancy = new ContainerRegistryZoneRedundancy(property0.Value.GetString());
                             continue;
                         }
+                        if (property0.NameEquals("anonymousPullEnabled"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            anonymousPullEnabled = property0.Value.GetBoolean();
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -407,6 +422,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                 publicNetworkAccess,
                 networkRuleBypassOptions,
                 zoneRedundancy,
+                anonymousPullEnabled,
                 serializedAdditionalRawData);
         }
 
@@ -805,6 +821,22 @@ namespace Azure.ResourceManager.ContainerRegistry
                 }
             }
 
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsAnonymousPullEnabled), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    anonymousPullEnabled: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsAnonymousPullEnabled))
+                {
+                    builder.Append("    anonymousPullEnabled: ");
+                    var boolValue = IsAnonymousPullEnabled.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
             builder.AppendLine("  }");
             builder.AppendLine("}");
             return BinaryData.FromString(builder.ToString());
@@ -817,7 +849,7 @@ namespace Azure.ResourceManager.ContainerRegistry
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerContainerRegistryContext.Default);
                 case "bicep":
                     return SerializeBicep(options);
                 default:
@@ -833,7 +865,7 @@ namespace Azure.ResourceManager.ContainerRegistry
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeContainerRegistryData(document.RootElement, options);
                     }
                 default:

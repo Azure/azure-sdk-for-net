@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.MySql
                 case 200:
                     {
                         MySqlServerKeyListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MySqlServerKeyListResult.DeserializeMySqlServerKeyListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.MySql
                 case 200:
                     {
                         MySqlServerKeyListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MySqlServerKeyListResult.DeserializeMySqlServerKeyListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.MySql
                 case 200:
                     {
                         MySqlServerKeyData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MySqlServerKeyData.DeserializeMySqlServerKeyData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.MySql
                 case 200:
                     {
                         MySqlServerKeyData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MySqlServerKeyData.DeserializeMySqlServerKeyData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -472,7 +472,7 @@ namespace Azure.ResourceManager.MySql
                 case 200:
                     {
                         MySqlServerKeyListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MySqlServerKeyListResult.DeserializeMySqlServerKeyListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -503,7 +503,7 @@ namespace Azure.ResourceManager.MySql
                 case 200:
                     {
                         MySqlServerKeyListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MySqlServerKeyListResult.DeserializeMySqlServerKeyListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

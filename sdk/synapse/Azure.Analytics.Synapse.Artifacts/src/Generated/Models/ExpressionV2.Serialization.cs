@@ -29,10 +29,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
             }
-            if (Optional.IsDefined(Operator))
+            if (Optional.IsCollectionDefined(Operators))
             {
-                writer.WritePropertyName("operator"u8);
-                writer.WriteStringValue(Operator);
+                writer.WritePropertyName("operators"u8);
+                writer.WriteStartArray();
+                foreach (var item in Operators)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
             }
             if (Optional.IsCollectionDefined(Operands))
             {
@@ -55,7 +60,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             ExpressionV2Type? type = default;
             string value = default;
-            string @operator = default;
+            IList<string> operators = default;
             IList<ExpressionV2> operands = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -73,9 +78,18 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     value = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("operator"u8))
+                if (property.NameEquals("operators"u8))
                 {
-                    @operator = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    operators = array;
                     continue;
                 }
                 if (property.NameEquals("operands"u8))
@@ -93,14 +107,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new ExpressionV2(type, value, @operator, operands ?? new ChangeTrackingList<ExpressionV2>());
+            return new ExpressionV2(type, value, operators ?? new ChangeTrackingList<string>(), operands ?? new ChangeTrackingList<ExpressionV2>());
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static ExpressionV2 FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeExpressionV2(document.RootElement);
         }
 

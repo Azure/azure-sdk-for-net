@@ -12,7 +12,7 @@ tag: package-2024-04
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
-  output-folder: $(this-folder)/../samples/Generated
+  output-folder: $(this-folder)/../tests/Generated
   clear-output-folder: true
   skipped-operations:
   - Datastores_List
@@ -21,7 +21,6 @@ modelerfour:
   flatten-payloads: false
 deserialize-null-collection-as-null-value: true
 use-model-reader-writer: true
-use-write-core: true
 enable-bicep-serialization: true
 
 #mgmt-debug:

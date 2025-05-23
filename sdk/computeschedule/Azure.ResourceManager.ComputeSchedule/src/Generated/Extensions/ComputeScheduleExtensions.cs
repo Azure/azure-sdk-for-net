@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.ComputeSchedule
         }
 
         /// <summary>
-        /// virtualMachinesSubmitDeallocate: submitDeallocate for a virtual machine
+        /// VirtualMachinesSubmitDeallocate: Schedule deallocate operation for a batch of virtual machines at datetime in future.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.ComputeSchedule
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-08-15-preview</description>
+        /// <description>2024-10-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ComputeSchedule
         }
 
         /// <summary>
-        /// virtualMachinesSubmitDeallocate: submitDeallocate for a virtual machine
+        /// VirtualMachinesSubmitDeallocate: Schedule deallocate operation for a batch of virtual machines at datetime in future.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ComputeSchedule
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-08-15-preview</description>
+        /// <description>2024-10-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.ComputeSchedule
         }
 
         /// <summary>
-        /// virtualMachinesSubmitHibernate: submitHibernate for a virtual machine
+        /// VirtualMachinesSubmitHibernate: Schedule hibernate operation for a batch of virtual machines at datetime in future.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.ComputeSchedule
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-08-15-preview</description>
+        /// <description>2024-10-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.ComputeSchedule
         }
 
         /// <summary>
-        /// virtualMachinesSubmitHibernate: submitHibernate for a virtual machine
+        /// VirtualMachinesSubmitHibernate: Schedule hibernate operation for a batch of virtual machines at datetime in future.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.ComputeSchedule
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-08-15-preview</description>
+        /// <description>2024-10-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.ComputeSchedule
         }
 
         /// <summary>
-        /// virtualMachinesSubmitStart: submitStart for a virtual machine
+        /// VirtualMachinesSubmitStart: Schedule start operation for a batch of virtual machines at datetime in future.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.ComputeSchedule
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-08-15-preview</description>
+        /// <description>2024-10-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.ComputeSchedule
         }
 
         /// <summary>
-        /// virtualMachinesSubmitStart: submitStart for a virtual machine
+        /// VirtualMachinesSubmitStart: Schedule start operation for a batch of virtual machines at datetime in future.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.ComputeSchedule
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-08-15-preview</description>
+        /// <description>2024-10-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.ComputeSchedule
         }
 
         /// <summary>
-        /// virtualMachinesExecuteDeallocate: executeDeallocate for a virtual machine
+        /// VirtualMachinesExecuteDeallocate: Execute deallocate operation for a batch of virtual machines, this operation is triggered as soon as Computeschedule receives it.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.ComputeSchedule
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-08-15-preview</description>
+        /// <description>2024-10-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.ComputeSchedule
         }
 
         /// <summary>
-        /// virtualMachinesExecuteDeallocate: executeDeallocate for a virtual machine
+        /// VirtualMachinesExecuteDeallocate: Execute deallocate operation for a batch of virtual machines, this operation is triggered as soon as Computeschedule receives it.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.ComputeSchedule
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-08-15-preview</description>
+        /// <description>2024-10-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.ComputeSchedule
         }
 
         /// <summary>
-        /// virtualMachinesExecuteHibernate: executeHibernate for a virtual machine
+        /// VirtualMachinesExecuteHibernate: Execute hibernate operation for a batch of virtual machines, this operation is triggered as soon as Computeschedule receives it.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -307,7 +307,7 @@ namespace Azure.ResourceManager.ComputeSchedule
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-08-15-preview</description>
+        /// <description>2024-10-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -329,7 +329,7 @@ namespace Azure.ResourceManager.ComputeSchedule
         }
 
         /// <summary>
-        /// virtualMachinesExecuteHibernate: executeHibernate for a virtual machine
+        /// VirtualMachinesExecuteHibernate: Execute hibernate operation for a batch of virtual machines, this operation is triggered as soon as Computeschedule receives it.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -341,7 +341,7 @@ namespace Azure.ResourceManager.ComputeSchedule
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-08-15-preview</description>
+        /// <description>2024-10-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -363,7 +363,7 @@ namespace Azure.ResourceManager.ComputeSchedule
         }
 
         /// <summary>
-        /// virtualMachinesExecuteStart: executeStart for a virtual machine
+        /// VirtualMachinesExecuteStart: Execute start operation for a batch of virtual machines, this operation is triggered as soon as Computeschedule receives it.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -375,7 +375,7 @@ namespace Azure.ResourceManager.ComputeSchedule
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-08-15-preview</description>
+        /// <description>2024-10-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -397,7 +397,7 @@ namespace Azure.ResourceManager.ComputeSchedule
         }
 
         /// <summary>
-        /// virtualMachinesExecuteStart: executeStart for a virtual machine
+        /// VirtualMachinesExecuteStart: Execute start operation for a batch of virtual machines, this operation is triggered as soon as Computeschedule receives it.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -409,7 +409,7 @@ namespace Azure.ResourceManager.ComputeSchedule
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-08-15-preview</description>
+        /// <description>2024-10-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -431,7 +431,7 @@ namespace Azure.ResourceManager.ComputeSchedule
         }
 
         /// <summary>
-        /// virtualMachinesGetOperationStatus: getOperationStatus for a virtual machine
+        /// VirtualMachinesGetOperationStatus: Polling endpoint to read status of operations performed on virtual machines
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -443,7 +443,7 @@ namespace Azure.ResourceManager.ComputeSchedule
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-08-15-preview</description>
+        /// <description>2024-10-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -465,7 +465,7 @@ namespace Azure.ResourceManager.ComputeSchedule
         }
 
         /// <summary>
-        /// virtualMachinesGetOperationStatus: getOperationStatus for a virtual machine
+        /// VirtualMachinesGetOperationStatus: Polling endpoint to read status of operations performed on virtual machines
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -477,7 +477,7 @@ namespace Azure.ResourceManager.ComputeSchedule
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-08-15-preview</description>
+        /// <description>2024-10-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -499,7 +499,7 @@ namespace Azure.ResourceManager.ComputeSchedule
         }
 
         /// <summary>
-        /// virtualMachinesCancelOperations: cancelOperations for a virtual machine
+        /// VirtualMachinesCancelOperations: Cancel a previously submitted (start/deallocate/hibernate) request
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -511,7 +511,7 @@ namespace Azure.ResourceManager.ComputeSchedule
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-08-15-preview</description>
+        /// <description>2024-10-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -533,7 +533,7 @@ namespace Azure.ResourceManager.ComputeSchedule
         }
 
         /// <summary>
-        /// virtualMachinesCancelOperations: cancelOperations for a virtual machine
+        /// VirtualMachinesCancelOperations: Cancel a previously submitted (start/deallocate/hibernate) request
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -545,7 +545,7 @@ namespace Azure.ResourceManager.ComputeSchedule
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-08-15-preview</description>
+        /// <description>2024-10-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -567,7 +567,7 @@ namespace Azure.ResourceManager.ComputeSchedule
         }
 
         /// <summary>
-        /// virtualMachinesGetOperationErrors: getOperationErrors associated with an operation on a virtual machine
+        /// VirtualMachinesGetOperationErrors: Get error details on operation errors (like transient errors encountered, additional logs) if they exist.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -579,7 +579,7 @@ namespace Azure.ResourceManager.ComputeSchedule
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-08-15-preview</description>
+        /// <description>2024-10-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -601,7 +601,7 @@ namespace Azure.ResourceManager.ComputeSchedule
         }
 
         /// <summary>
-        /// virtualMachinesGetOperationErrors: getOperationErrors associated with an operation on a virtual machine
+        /// VirtualMachinesGetOperationErrors: Get error details on operation errors (like transient errors encountered, additional logs) if they exist.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -613,7 +613,7 @@ namespace Azure.ResourceManager.ComputeSchedule
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-08-15-preview</description>
+        /// <description>2024-10-01</description>
         /// </item>
         /// </list>
         /// <item>

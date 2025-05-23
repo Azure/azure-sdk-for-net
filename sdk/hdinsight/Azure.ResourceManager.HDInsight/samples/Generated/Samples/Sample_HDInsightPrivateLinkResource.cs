@@ -9,14 +9,14 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.HDInsight.Samples
 {
     public partial class Sample_HDInsightPrivateLinkResource
     {
-        // Get specific private link resource in a specific HDInsight cluster.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetSpecificPrivateLinkResourceInASpecificHDInsightCluster()
         {
             // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/preview/2024-08-01-preview/examples/GetPrivateLinkResource.json

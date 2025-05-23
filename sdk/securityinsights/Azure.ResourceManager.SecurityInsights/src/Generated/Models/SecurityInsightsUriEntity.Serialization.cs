@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -68,10 +68,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
-            if (options.Format != "W" && Optional.IsDefined(Uri))
+            if (options.Format != "W" && Optional.IsDefined(UriString))
             {
                 writer.WritePropertyName("url"u8);
-                writer.WriteStringValue(Uri.AbsoluteUri);
+                writer.WriteStringValue(UriString);
             }
             writer.WriteEndObject();
         }
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             SystemData systemData = default;
             IReadOnlyDictionary<string, BinaryData> additionalData = default;
             string friendlyName = default;
-            Uri url = default;
+            string url = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -174,11 +174,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                         }
                         if (property0.NameEquals("url"u8))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            url = new Uri(property0.Value.GetString());
+                            url = property0.Value.GetString();
                             continue;
                         }
                     }
@@ -332,7 +328,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Uri), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(UriString), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("    url: ");
@@ -340,10 +336,18 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
             else
             {
-                if (Optional.IsDefined(Uri))
+                if (Optional.IsDefined(UriString))
                 {
                     builder.Append("    url: ");
-                    builder.AppendLine($"'{Uri.AbsoluteUri}'");
+                    if (UriString.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{UriString}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{UriString}'");
+                    }
                 }
             }
 
@@ -359,7 +363,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSecurityInsightsContext.Default);
                 case "bicep":
                     return SerializeBicep(options);
                 default:
@@ -375,7 +379,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeSecurityInsightsUriEntity(document.RootElement, options);
                     }
                 default:

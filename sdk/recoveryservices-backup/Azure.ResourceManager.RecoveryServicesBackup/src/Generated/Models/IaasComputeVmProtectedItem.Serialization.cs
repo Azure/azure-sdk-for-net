@@ -69,6 +69,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             string protectedItemDataId = default;
             IaasVmProtectedItemExtendedInfo extendedInfo = default;
             IaasVmBackupExtendedProperties extendedProperties = default;
+            string policyType = default;
             string protectedItemType = default;
             BackupManagementType? backupManagementType = default;
             BackupDataSourceType? workloadType = default;
@@ -99,7 +100,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 if (property.NameEquals("virtualMachineId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null || property.Value.ValueKind == JsonValueKind.String && property.Value.GetString().Length == 0)
                     {
                         continue;
                     }
@@ -164,7 +165,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 if (property.NameEquals("lastBackupTime"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null || property.Value.ValueKind == JsonValueKind.String && property.Value.GetString().Length == 0)
                     {
                         continue;
                     }
@@ -192,6 +193,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         continue;
                     }
                     extendedProperties = IaasVmBackupExtendedProperties.DeserializeIaasVmBackupExtendedProperties(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("policyType"u8))
+                {
+                    policyType = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("protectedItemType"u8))
@@ -224,7 +230,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 if (property.NameEquals("sourceResourceId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null || property.Value.ValueKind == JsonValueKind.String && property.Value.GetString().Length == 0)
                     {
                         continue;
                     }
@@ -233,7 +239,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 if (property.NameEquals("policyId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null || property.Value.ValueKind == JsonValueKind.String && property.Value.GetString().Length == 0)
                     {
                         continue;
                     }
@@ -242,7 +248,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 if (property.NameEquals("lastRecoveryPoint"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null || property.Value.ValueKind == JsonValueKind.String && property.Value.GetString().Length == 0)
                     {
                         continue;
                     }
@@ -265,7 +271,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 if (property.NameEquals("deferredDeleteTimeInUTC"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null || property.Value.ValueKind == JsonValueKind.String && property.Value.GetString().Length == 0)
                     {
                         continue;
                     }
@@ -384,7 +390,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 lastBackupTime,
                 protectedItemDataId,
                 extendedInfo,
-                extendedProperties);
+                extendedProperties,
+                policyType);
         }
 
         BinaryData IPersistableModel<IaasComputeVmProtectedItem>.Write(ModelReaderWriterOptions options)
@@ -394,7 +401,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesBackupContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(IaasComputeVmProtectedItem)} does not support writing '{options.Format}' format.");
             }
@@ -408,7 +415,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeIaasComputeVmProtectedItem(document.RootElement, options);
                     }
                 default:

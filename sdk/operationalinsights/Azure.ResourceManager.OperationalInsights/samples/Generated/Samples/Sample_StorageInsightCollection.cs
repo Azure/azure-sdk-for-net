@@ -10,17 +10,17 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.OperationalInsights.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.OperationalInsights.Samples
 {
     public partial class Sample_StorageInsightCollection
     {
-        // StorageInsightsCreate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_StorageInsightsCreate()
         {
-            // Generated from example definition: specification/operationalinsights/resource-manager/Microsoft.OperationalInsights/stable/2020-08-01/examples/StorageInsightsCreateOrUpdate.json
+            // Generated from example definition: specification/operationalinsights/resource-manager/Microsoft.OperationalInsights/stable/2025-02-01/examples/StorageInsightsCreateOrUpdate.json
             // this example is just showing the usage of "StorageInsightConfigs_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -41,16 +41,10 @@ namespace Azure.ResourceManager.OperationalInsights.Samples
 
             // invoke the operation
             string storageInsightName = "AzTestSI1110";
-            StorageInsightData data = new StorageInsightData()
+            StorageInsightData data = new StorageInsightData
             {
-                Containers =
-{
-"wad-iis-logfiles"
-},
-                Tables =
-{
-"WADWindowsEventLogsTable","LinuxSyslogVer2v0"
-},
+                Containers = { "wad-iis-logfiles" },
+                Tables = { "WADWindowsEventLogsTable", "LinuxSyslogVer2v0" },
                 StorageAccount = new OperationalInsightsStorageAccount(new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000005/resourcegroups/OIAutoRest6987/providers/microsoft.storage/storageaccounts/AzTestFakeSA9945"), "1234"),
             };
             ArmOperation<StorageInsightResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, storageInsightName, data);
@@ -63,12 +57,11 @@ namespace Azure.ResourceManager.OperationalInsights.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // StorageInsightsGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_StorageInsightsGet()
         {
-            // Generated from example definition: specification/operationalinsights/resource-manager/Microsoft.OperationalInsights/stable/2020-08-01/examples/StorageInsightsGet.json
+            // Generated from example definition: specification/operationalinsights/resource-manager/Microsoft.OperationalInsights/stable/2025-02-01/examples/StorageInsightsGet.json
             // this example is just showing the usage of "StorageInsightConfigs_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -98,86 +91,11 @@ namespace Azure.ResourceManager.OperationalInsights.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // StorageInsightsGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Exists_StorageInsightsGet()
-        {
-            // Generated from example definition: specification/operationalinsights/resource-manager/Microsoft.OperationalInsights/stable/2020-08-01/examples/StorageInsightsGet.json
-            // this example is just showing the usage of "StorageInsightConfigs_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this OperationalInsightsWorkspaceResource created on azure
-            // for more information of creating OperationalInsightsWorkspaceResource, please refer to the document of OperationalInsightsWorkspaceResource
-            string subscriptionId = "00000000-0000-0000-0000-00000000000";
-            string resourceGroupName = "OIAutoRest5123";
-            string workspaceName = "aztest5048";
-            ResourceIdentifier operationalInsightsWorkspaceResourceId = OperationalInsightsWorkspaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName);
-            OperationalInsightsWorkspaceResource operationalInsightsWorkspace = client.GetOperationalInsightsWorkspaceResource(operationalInsightsWorkspaceResourceId);
-
-            // get the collection of this StorageInsightResource
-            StorageInsightCollection collection = operationalInsightsWorkspace.GetStorageInsights();
-
-            // invoke the operation
-            string storageInsightName = "AzTestSI1110";
-            bool result = await collection.ExistsAsync(storageInsightName);
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        // StorageInsightsGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetIfExists_StorageInsightsGet()
-        {
-            // Generated from example definition: specification/operationalinsights/resource-manager/Microsoft.OperationalInsights/stable/2020-08-01/examples/StorageInsightsGet.json
-            // this example is just showing the usage of "StorageInsightConfigs_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this OperationalInsightsWorkspaceResource created on azure
-            // for more information of creating OperationalInsightsWorkspaceResource, please refer to the document of OperationalInsightsWorkspaceResource
-            string subscriptionId = "00000000-0000-0000-0000-00000000000";
-            string resourceGroupName = "OIAutoRest5123";
-            string workspaceName = "aztest5048";
-            ResourceIdentifier operationalInsightsWorkspaceResourceId = OperationalInsightsWorkspaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName);
-            OperationalInsightsWorkspaceResource operationalInsightsWorkspace = client.GetOperationalInsightsWorkspaceResource(operationalInsightsWorkspaceResourceId);
-
-            // get the collection of this StorageInsightResource
-            StorageInsightCollection collection = operationalInsightsWorkspace.GetStorageInsights();
-
-            // invoke the operation
-            string storageInsightName = "AzTestSI1110";
-            NullableResponse<StorageInsightResource> response = await collection.GetIfExistsAsync(storageInsightName);
-            StorageInsightResource result = response.HasValue ? response.Value : null;
-
-            if (result == null)
-            {
-                Console.WriteLine($"Succeeded with null as result");
-            }
-            else
-            {
-                // the variable result is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                StorageInsightData resourceData = result.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-        }
-
-        // StorageInsightsList
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_StorageInsightsList()
         {
-            // Generated from example definition: specification/operationalinsights/resource-manager/Microsoft.OperationalInsights/stable/2020-08-01/examples/StorageInsightsListByWorkspace.json
+            // Generated from example definition: specification/operationalinsights/resource-manager/Microsoft.OperationalInsights/stable/2025-02-01/examples/StorageInsightsListByWorkspace.json
             // this example is just showing the usage of "StorageInsightConfigs_ListByWorkspace" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -206,7 +124,79 @@ namespace Azure.ResourceManager.OperationalInsights.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Exists_StorageInsightsGet()
+        {
+            // Generated from example definition: specification/operationalinsights/resource-manager/Microsoft.OperationalInsights/stable/2025-02-01/examples/StorageInsightsGet.json
+            // this example is just showing the usage of "StorageInsightConfigs_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this OperationalInsightsWorkspaceResource created on azure
+            // for more information of creating OperationalInsightsWorkspaceResource, please refer to the document of OperationalInsightsWorkspaceResource
+            string subscriptionId = "00000000-0000-0000-0000-00000000000";
+            string resourceGroupName = "OIAutoRest5123";
+            string workspaceName = "aztest5048";
+            ResourceIdentifier operationalInsightsWorkspaceResourceId = OperationalInsightsWorkspaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName);
+            OperationalInsightsWorkspaceResource operationalInsightsWorkspace = client.GetOperationalInsightsWorkspaceResource(operationalInsightsWorkspaceResourceId);
+
+            // get the collection of this StorageInsightResource
+            StorageInsightCollection collection = operationalInsightsWorkspace.GetStorageInsights();
+
+            // invoke the operation
+            string storageInsightName = "AzTestSI1110";
+            bool result = await collection.ExistsAsync(storageInsightName);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetIfExists_StorageInsightsGet()
+        {
+            // Generated from example definition: specification/operationalinsights/resource-manager/Microsoft.OperationalInsights/stable/2025-02-01/examples/StorageInsightsGet.json
+            // this example is just showing the usage of "StorageInsightConfigs_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this OperationalInsightsWorkspaceResource created on azure
+            // for more information of creating OperationalInsightsWorkspaceResource, please refer to the document of OperationalInsightsWorkspaceResource
+            string subscriptionId = "00000000-0000-0000-0000-00000000000";
+            string resourceGroupName = "OIAutoRest5123";
+            string workspaceName = "aztest5048";
+            ResourceIdentifier operationalInsightsWorkspaceResourceId = OperationalInsightsWorkspaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName);
+            OperationalInsightsWorkspaceResource operationalInsightsWorkspace = client.GetOperationalInsightsWorkspaceResource(operationalInsightsWorkspaceResourceId);
+
+            // get the collection of this StorageInsightResource
+            StorageInsightCollection collection = operationalInsightsWorkspace.GetStorageInsights();
+
+            // invoke the operation
+            string storageInsightName = "AzTestSI1110";
+            NullableResponse<StorageInsightResource> response = await collection.GetIfExistsAsync(storageInsightName);
+            StorageInsightResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine("Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                StorageInsightData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
         }
     }
 }

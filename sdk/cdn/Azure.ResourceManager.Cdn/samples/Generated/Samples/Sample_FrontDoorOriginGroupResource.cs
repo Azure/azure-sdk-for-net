@@ -10,17 +10,17 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Cdn.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Cdn.Samples
 {
     public partial class Sample_FrontDoorOriginGroupResource
     {
-        // AFDOriginGroups_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_AFDOriginGroupsGet()
         {
-            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2024-02-01/examples/AFDOriginGroups_Get.json
+            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2025-04-15/examples/AFDOriginGroups_Get.json
             // this example is just showing the usage of "FrontDoorOriginGroups_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -47,62 +47,11 @@ namespace Azure.ResourceManager.Cdn.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // AFDOriginGroups_Update
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Update_AFDOriginGroupsUpdate()
-        {
-            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2024-02-01/examples/AFDOriginGroups_Update.json
-            // this example is just showing the usage of "FrontDoorOriginGroups_Update" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this FrontDoorOriginGroupResource created on azure
-            // for more information of creating FrontDoorOriginGroupResource, please refer to the document of FrontDoorOriginGroupResource
-            string subscriptionId = "subid";
-            string resourceGroupName = "RG";
-            string profileName = "profile1";
-            string originGroupName = "origingroup1";
-            ResourceIdentifier frontDoorOriginGroupResourceId = FrontDoorOriginGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, profileName, originGroupName);
-            FrontDoorOriginGroupResource frontDoorOriginGroup = client.GetFrontDoorOriginGroupResource(frontDoorOriginGroupResourceId);
-
-            // invoke the operation
-            FrontDoorOriginGroupPatch patch = new FrontDoorOriginGroupPatch()
-            {
-                LoadBalancingSettings = new LoadBalancingSettings()
-                {
-                    SampleSize = 3,
-                    SuccessfulSamplesRequired = 3,
-                    AdditionalLatencyInMilliseconds = 1000,
-                },
-                HealthProbeSettings = new HealthProbeSettings()
-                {
-                    ProbePath = "/path2",
-                    ProbeRequestType = HealthProbeRequestType.NotSet,
-                    ProbeProtocol = HealthProbeProtocol.NotSet,
-                    ProbeIntervalInSeconds = 10,
-                },
-                TrafficRestorationTimeInMinutes = 5,
-            };
-            ArmOperation<FrontDoorOriginGroupResource> lro = await frontDoorOriginGroup.UpdateAsync(WaitUntil.Completed, patch);
-            FrontDoorOriginGroupResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            FrontDoorOriginGroupData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // AFDOriginGroups_Delete
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_AFDOriginGroupsDelete()
         {
-            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2024-02-01/examples/AFDOriginGroups_Delete.json
+            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2025-04-15/examples/AFDOriginGroups_Delete.json
             // this example is just showing the usage of "FrontDoorOriginGroups_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -122,15 +71,63 @@ namespace Azure.ResourceManager.Cdn.Samples
             // invoke the operation
             await frontDoorOriginGroup.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // AFDOriginGroups_ListResourceUsage
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Update_AFDOriginGroupsUpdate()
+        {
+            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2025-04-15/examples/AFDOriginGroups_Update.json
+            // this example is just showing the usage of "FrontDoorOriginGroups_Update" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this FrontDoorOriginGroupResource created on azure
+            // for more information of creating FrontDoorOriginGroupResource, please refer to the document of FrontDoorOriginGroupResource
+            string subscriptionId = "subid";
+            string resourceGroupName = "RG";
+            string profileName = "profile1";
+            string originGroupName = "origingroup1";
+            ResourceIdentifier frontDoorOriginGroupResourceId = FrontDoorOriginGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, profileName, originGroupName);
+            FrontDoorOriginGroupResource frontDoorOriginGroup = client.GetFrontDoorOriginGroupResource(frontDoorOriginGroupResourceId);
+
+            // invoke the operation
+            FrontDoorOriginGroupPatch patch = new FrontDoorOriginGroupPatch
+            {
+                LoadBalancingSettings = new LoadBalancingSettings
+                {
+                    SampleSize = 3,
+                    SuccessfulSamplesRequired = 3,
+                    AdditionalLatencyInMilliseconds = 1000,
+                },
+                HealthProbeSettings = new HealthProbeSettings
+                {
+                    ProbePath = "/path2",
+                    ProbeRequestType = HealthProbeRequestType.NotSet,
+                    ProbeProtocol = HealthProbeProtocol.NotSet,
+                    ProbeIntervalInSeconds = 10,
+                },
+                TrafficRestorationTimeInMinutes = 5,
+            };
+            ArmOperation<FrontDoorOriginGroupResource> lro = await frontDoorOriginGroup.UpdateAsync(WaitUntil.Completed, patch);
+            FrontDoorOriginGroupResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            FrontDoorOriginGroupData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetResourceUsages_AFDOriginGroupsListResourceUsage()
         {
-            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2024-02-01/examples/AFDOriginGroups_ListResourceUsage.json
+            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2025-04-15/examples/AFDOriginGroups_ListResourceUsage.json
             // this example is just showing the usage of "FrontDoorOriginGroups_ListResourceUsage" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -153,7 +150,7 @@ namespace Azure.ResourceManager.Cdn.Samples
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

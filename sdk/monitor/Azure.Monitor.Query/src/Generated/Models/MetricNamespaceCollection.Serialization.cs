@@ -39,7 +39,7 @@ namespace Azure.Monitor.Query.Models
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static MetricNamespaceCollection FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeMetricNamespaceCollection(document.RootElement);
         }
     }

@@ -174,6 +174,11 @@ namespace Azure.Search.Documents
                 writer.WritePropertyName("captions"u8);
                 writer.WriteStringValue(QueryCaptionRaw);
             }
+            if (Optional.IsDefined(QueryRewritesRaw))
+            {
+                writer.WritePropertyName("queryRewrites"u8);
+                writer.WriteStringValue(QueryRewritesRaw);
+            }
             if (Optional.IsDefined(SemanticFieldsRaw))
             {
                 writer.WritePropertyName("semanticFields"u8);
@@ -236,6 +241,7 @@ namespace Azure.Search.Documents
             string semanticQuery = default;
             string answers = default;
             string captions = default;
+            string queryRewrites = default;
             string semanticFields = default;
             IList<VectorQuery> vectorQueries = default;
             VectorFilterMode? vectorFilterMode = default;
@@ -449,6 +455,11 @@ namespace Azure.Search.Documents
                     captions = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("queryRewrites"u8))
+                {
+                    queryRewrites = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("semanticFields"u8))
                 {
                     semanticFields = property.Value.GetString();
@@ -516,6 +527,7 @@ namespace Azure.Search.Documents
                 semanticQuery,
                 answers,
                 captions,
+                queryRewrites,
                 semanticFields,
                 vectorQueries ?? new ChangeTrackingList<VectorQuery>(),
                 vectorFilterMode,
@@ -526,7 +538,7 @@ namespace Azure.Search.Documents
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static SearchOptions FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeSearchOptions(document.RootElement);
         }
 

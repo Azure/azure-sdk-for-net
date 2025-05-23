@@ -1,6 +1,6 @@
 # Release History
 
-## 5.12.0-beta.2 (Unreleased)
+## 5.13.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -8,9 +8,99 @@
 
 ### Bugs Fixed
 
+- Fixed a bug where the data types of broker-owned properties were being adjusted when an event was read by the client, causing the underlying AMQP data to be mutated.  This resulted in binary changes when the AMQP message was serialized and unintentionally altered the service contract.  Going forward, the original data types will be preserved on the AMQP representation of the message and type normalization only applied to the .NET `EventData` projection.
+
+### Other Changes
+
+- Updated the `Microsoft.Azure.Amqp` dependency to 2.6.11, which contains several bug fixes. _(see: [commits](https://github.com/Azure/azure-amqp/commits/hotfix/))_
+
+## 5.12.1 (2025-04-09)
+
+### Bugs Fixed
+
+- Fixed a bug which caused the placeholder value used to represent missing offsets in v5.11.3 - v5.11.6 to not be properly detected and incorrectly used as a valid offset when reading from a partition.
+
+## 5.12.0 (2025-04-08)
+
+### Acknowledgments
+
+Thank you to our developer community members who helped to make the Event Hubs client libraries better with their contributions to this release:
+
+- tovyhnal _([GitHub](https://github.com/tovyhnal))_
+
+### Features Added
+
+- Support for the Event Hubs geographic data replication feature has been enabled. Checking for whether or not this feature is enabled for your namespace can be done by querying for Event Hub properties using `EventHubProducerClient` or `EventHubConsumerClient` and referencing the the `IsGeoReplicationEnabled` property of the result.
+
+  As part of this feature, the type of offset-related data has been changed from `long` to `string` to align with changes to the Event Hubs service API. To preserve backwards compatibility, the existing offset-related members have not been changed, and new members with names similar to `OffsetString` and string-based parameters for method overloads have been introduced.   
+  
+  The long-based offset members will continue to work for Event Hubs namespaces that do not have GeoDR replication enabled, but are discouraged for use and have been marked as obsolete.
+  
+  Obsoleted properties:
+  - `EventData.Offset`
+  - `LastEnqueuedEventProperties.Offset`
+  - `PartitionProperties.LastEnqueuedOffset`
+
+  Obsoleted method overloads:
+  - `EventPosition.FromOffset`
+  - `EventHubsModelFactory.EventData`
+  - `BlobCheckpointStore.UpdateCheckpointAsync`
+  - `EventProcessorClient.UpdateCheckpointAsync`
+
+### Bugs Fixed
+
+- Fixed behavior in the `UpdateCheckpointAsync` method of `EventProcessorClient` to properly await the call to the checkpoint store.  Previously, this was not awaited, causing the OTel span to open and close almost immediately and skip reporting any errors observed.
+
+### Other Changes
+
+- Enhanced retry logic to consider additional cases for web socket-based failures.  In many cases, a `WebSocketException` is triggered which wraps a `SocketException` with the details for the specific network conditions.  Retry decisions are now based on the internal exception, if present, to ensure retries are correctly applied.
+
+- Added annotations to make the package compatible with trimming and native AOT compilation.
+
+- Added Event Hub name to processor load balancing logs for additional context.  _(A community contribution, courtesy of [tovyhnal](https://github.com/tovyhnal))_
+
+- Updated the `Microsoft.Azure.Amqp` dependency to 2.6.9, which contains several bug fixes. _(see: [commits](https://github.com/Azure/azure-amqp/commits/hotfix/))_
+
+## 5.12.0-beta.2 (2025-02-11)
+
+### Acknowledgments
+
+Thank you to our developer community members who helped to make the Event Hubs client libraries better with their contributions to this release:
+
+- tovyhnal _([GitHub](https://github.com/tovyhnal))_
+
+### Features Added
+
+- Support for the Event Hubs geographic data replication feature has been enabled. Checking for whether or not this feature is enabled for your namespace can be done by querying for Event Hub properties using `EventHubProducerClient` or `EventHubConsumerClient` and referencing the the `IsGeoReplicationEnabled` property of the result.
+
+  As part of this feature, the type of offset-related data has been changed from `long` to `string` to align with changes to the Event Hubs service API. To preserve backwards compatibility, the existing offset-related members have not been changed, and new members with names similar to `OffsetString` and string-based parameters for method overloads have been introduced.   
+  
+  The long-based offset members will continue to work for Event Hubs namespaces that do not have GeoDR replication enabled, but are discouraged for use and have been marked as obsolete.
+  
+  Obsoleted properties:
+  - `EventData.Offset`
+  - `LastEnqueuedEventProperties.Offset`
+  - `PartitionProperties.LastEnqueuedOffset`
+
+  Obsoleted method overloads:
+  - EventPosition.FromOffset
+  - EventHubsModelFactory.EventData
+  - BlobCheckpointStore.UpdateCheckpointAsync
+  - EventProcessorClient.UpdateCheckpointAsync
+  
 ### Other Changes
 
 - Added annotations to make the package compatible with trimming and native AOT compilation.
+
+- Added Event Hub name to processor load balancing logs for additional context.  _(A community contribution, courtesy of [tovyhnal](https://github.com/tovyhnal))_
+
+- Updated the `Microsoft.Azure.Amqp` dependency to 2.6.9, which contains several bug fixes. _(see: [commits](https://github.com/Azure/azure-amqp/commits/hotfix/))_
+
+## 5.11.6 (2025-02-11)
+
+### Other Changes
+
+- Bump `Azure.Messaging.EventHubs` dependency to 5.11.6, which includes bumps to several transitive dependencies.
 
 ## 5.11.5 (2024-08-14)
 
@@ -560,9 +650,9 @@ Thank you to our developer community members who helped to make the Event Hubs c
 
 - Load balancing will now detect when it has reached a balanced state more accurately; this will allow it to operate more efficiently when `LoadBalancingStrategy.Greedy` is in use.
 
-- The `EventProcessorClient` now supports a configurable strategy for load balancing, allowing control over whether it claims ownership of partitions in a balanced manner _(default)_ or more aggressively.  The strategy may be set in the `EventProcessorClientOptions` when creating the processor.  More details about strategies can be found in the associated [documentation](https://docs.microsoft.com/dotnet/api/azure.messaging.eventhubs.processor.loadbalancingstrategy?view=azure-dotnet).
+- The `EventProcessorClient` now supports a configurable strategy for load balancing, allowing control over whether it claims ownership of partitions in a balanced manner _(default)_ or more aggressively.  The strategy may be set in the `EventProcessorClientOptions` when creating the processor.  More details about strategies can be found in the associated [documentation](https://learn.microsoft.com/dotnet/api/azure.messaging.eventhubs.processor.loadbalancingstrategy?view=azure-dotnet).
 
-- The `EventProcessorClientOptions` now support setting a `PrefetchCount` and `CacheEventCount` for performance tuning.  More details about each can be found in the associated [documentation](https://docs.microsoft.com/dotnet/api/azure.messaging.eventhubs.eventprocessorclientoptions?view=azure-dotnet).
+- The `EventProcessorClientOptions` now support setting a `PrefetchCount` and `CacheEventCount` for performance tuning.  More details about each can be found in the associated [documentation](https://learn.microsoft.com/dotnet/api/azure.messaging.eventhubs.eventprocessorclientoptions?view=azure-dotnet).
 
 - Connection strings for each of the clients now supports a `SharedAccessSignature` token, allowing a pre-generated SAS to be used for authorization.
 
@@ -611,9 +701,9 @@ Thank you to our developer community members who helped to make the Event Hubs c
 
 #### Processing events
 
-- The `EventProcessorClient` now supports a configurable strategy for load balancing, allowing control over whether it claims ownership of partitions in a balanced manner _(default)_ or more aggressively.  The strategy may be set in the `EventProcessorClientOptions` when creating the processor.  More details about strategies can be found in the associated [documentation](https://docs.microsoft.com/dotnet/api/azure.messaging.eventhubs.processor.loadbalancingstrategy?view=azure-dotnet).
+- The `EventProcessorClient` now supports a configurable strategy for load balancing, allowing control over whether it claims ownership of partitions in a balanced manner _(default)_ or more aggressively.  The strategy may be set in the `EventProcessorClientOptions` when creating the processor.  More details about strategies can be found in the associated [documentation](https://learn.microsoft.com/dotnet/api/azure.messaging.eventhubs.processor.loadbalancingstrategy?view=azure-dotnet).
 
-- The `EventProcessorClientOptions` now support setting a `PrefetchCount` and `CacheEventCount` for performance tuning.  More details about each can be found in the associated [documentation](https://docs.microsoft.com/dotnet/api/azure.messaging.eventhubs.eventprocessorclientoptions?view=azure-dotnet).
+- The `EventProcessorClientOptions` now support setting a `PrefetchCount` and `CacheEventCount` for performance tuning.  More details about each can be found in the associated [documentation](https://learn.microsoft.com/dotnet/api/azure.messaging.eventhubs.eventprocessorclientoptions?view=azure-dotnet).
 
 #### Bug fixes and foundation
 

@@ -9,14 +9,14 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
 {
     public partial class Sample_PostgreSqlFlexibleServerConfigurationResource
     {
-        // ConfigurationGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_ConfigurationGet()
         {
             // Generated from example definition: specification/postgresql/resource-manager/Microsoft.DBforPostgreSQL/stable/2024-08-01/examples/ConfigurationGet.json
@@ -46,9 +46,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Update a user configuration
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateAUserConfiguration()
         {
             // Generated from example definition: specification/postgresql/resource-manager/Microsoft.DBforPostgreSQL/stable/2024-08-01/examples/ConfigurationUpdate.json
@@ -69,7 +68,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             PostgreSqlFlexibleServerConfigurationResource postgreSqlFlexibleServerConfiguration = client.GetPostgreSqlFlexibleServerConfigurationResource(postgreSqlFlexibleServerConfigurationResourceId);
 
             // invoke the operation
-            PostgreSqlFlexibleServerConfigurationData data = new PostgreSqlFlexibleServerConfigurationData()
+            PostgreSqlFlexibleServerConfigurationData data = new PostgreSqlFlexibleServerConfigurationData
             {
                 Value = "on",
                 Source = "user-override",

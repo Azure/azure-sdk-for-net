@@ -10,17 +10,17 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Sql.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Sql.Samples
 {
     public partial class Sample_LogicalDatabaseTransparentDataEncryptionResource
     {
-        // Get a database's transparent data encryption
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetADatabaseSTransparentDataEncryption()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2022-08-01-preview/examples/TransparentDataEncryptionGet.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-05-01-preview/examples/TransparentDataEncryptionGet.json
             // this example is just showing the usage of "TransparentDataEncryptions_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -48,12 +48,11 @@ namespace Azure.ResourceManager.Sql.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Update a database's Transparent Data Encryption state with minimal parameters
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateADatabaseSTransparentDataEncryptionStateWithMinimalParameters()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2022-08-01-preview/examples/TransparentDataEncryptionUpdate.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-05-01-preview/examples/TransparentDataEncryptionUpdate.json
             // this example is just showing the usage of "TransparentDataEncryptions_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -72,7 +71,7 @@ namespace Azure.ResourceManager.Sql.Samples
             LogicalDatabaseTransparentDataEncryptionResource logicalDatabaseTransparentDataEncryption = client.GetLogicalDatabaseTransparentDataEncryptionResource(logicalDatabaseTransparentDataEncryptionResourceId);
 
             // invoke the operation
-            LogicalDatabaseTransparentDataEncryptionData data = new LogicalDatabaseTransparentDataEncryptionData()
+            LogicalDatabaseTransparentDataEncryptionData data = new LogicalDatabaseTransparentDataEncryptionData
             {
                 State = TransparentDataEncryptionState.Enabled,
             };

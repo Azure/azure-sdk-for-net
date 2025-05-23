@@ -59,10 +59,10 @@ namespace Azure.AI.Language.Text
                 writer.WritePropertyName("summaryLength"u8);
                 writer.WriteStringValue(SummaryLength.Value.ToString());
             }
-            if (Optional.IsDefined(Query))
+            if (Optional.IsDefined(Instruction))
             {
-                writer.WritePropertyName("query"u8);
-                writer.WriteStringValue(Query);
+                writer.WritePropertyName("instruction"u8);
+                writer.WriteStringValue(Instruction);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -72,7 +72,7 @@ namespace Azure.AI.Language.Text
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -106,7 +106,7 @@ namespace Azure.AI.Language.Text
             int? sentenceCount = default;
             StringIndexType? stringIndexType = default;
             SummaryLengthBucket? summaryLength = default;
-            string query = default;
+            string instruction = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -152,9 +152,9 @@ namespace Azure.AI.Language.Text
                     summaryLength = new SummaryLengthBucket(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("query"u8))
+                if (property.NameEquals("instruction"u8))
                 {
-                    query = property.Value.GetString();
+                    instruction = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -169,7 +169,7 @@ namespace Azure.AI.Language.Text
                 sentenceCount,
                 stringIndexType,
                 summaryLength,
-                query,
+                instruction,
                 serializedAdditionalRawData);
         }
 
@@ -180,7 +180,7 @@ namespace Azure.AI.Language.Text
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureAILanguageTextContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(AbstractiveSummarizationActionContent)} does not support writing '{options.Format}' format.");
             }
@@ -194,7 +194,7 @@ namespace Azure.AI.Language.Text
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeAbstractiveSummarizationActionContent(document.RootElement, options);
                     }
                 default:
@@ -208,7 +208,7 @@ namespace Azure.AI.Language.Text
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static AbstractiveSummarizationActionContent FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeAbstractiveSummarizationActionContent(document.RootElement);
         }
 

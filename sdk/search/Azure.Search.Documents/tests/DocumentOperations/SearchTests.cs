@@ -53,14 +53,14 @@ namespace Azure.Search.Documents.Tests
         }
 
         public FacetResult MakeRangeFacet(int count, object from, object to) =>
-            new FacetResult(count, new Dictionary<string, object>()
+            new FacetResult(count, null, null, new Dictionary<string, object>()
             {
                 ["from"] = from,
                 ["to"] = to
             });
 
         public FacetResult MakeValueFacet(int count, object value) =>
-            new FacetResult(count, new Dictionary<string, object>()
+            new FacetResult(count, null, null, new Dictionary<string, object>()
             {
                 ["value"] = value
             });
@@ -1018,8 +1018,9 @@ namespace Azure.Search.Documents.Tests
             source.SemanticSearch = new SemanticSearchOptions()
             {
                 SemanticConfigurationName = "my-config",
-                QueryAnswer = new QueryAnswer(QueryAnswerType.Extractive) { Count = 5, Threshold = 0.9 },
-                QueryCaption = new QueryCaption(QueryCaptionType.Extractive) { HighlightEnabled = true },
+                QueryAnswer = new QueryAnswer(QueryAnswerType.Extractive) { Count = 5, Threshold = 0.9, MaxCharLength = 300 },
+                QueryCaption = new QueryCaption(QueryCaptionType.Extractive) { HighlightEnabled = true, MaxCharLength = 300 },
+                QueryRewrites = new QueryRewrites(QueryRewritesType.Generative) { Count = 3},
                 ErrorMode = SemanticErrorMode.Partial,
                 MaxWait = TimeSpan.FromMilliseconds(1000),
             };
@@ -1047,8 +1048,12 @@ namespace Azure.Search.Documents.Tests
             Assert.AreEqual(source.SemanticSearch.QueryAnswer.AnswerType, clonedSearchOptions.SemanticSearch.QueryAnswer.AnswerType);
             Assert.AreEqual(source.SemanticSearch.QueryAnswer.Count, clonedSearchOptions.SemanticSearch.QueryAnswer.Count);
             Assert.AreEqual(source.SemanticSearch.QueryAnswer.Threshold, clonedSearchOptions.SemanticSearch.QueryAnswer.Threshold);
+            Assert.AreEqual(source.SemanticSearch.QueryAnswer.MaxCharLength, clonedSearchOptions.SemanticSearch.QueryAnswer.MaxCharLength);
             Assert.AreEqual(source.SemanticSearch.QueryCaption.CaptionType, clonedSearchOptions.SemanticSearch.QueryCaption.CaptionType);
             Assert.AreEqual(source.SemanticSearch.QueryCaption.HighlightEnabled, clonedSearchOptions.SemanticSearch.QueryCaption.HighlightEnabled);
+            Assert.AreEqual(source.SemanticSearch.QueryCaption.MaxCharLength, clonedSearchOptions.SemanticSearch.QueryCaption.MaxCharLength);
+            Assert.AreEqual(source.SemanticSearch.QueryRewrites.RewritesType, clonedSearchOptions.SemanticSearch.QueryRewrites.RewritesType);
+            Assert.AreEqual(source.SemanticSearch.QueryRewrites.Count, clonedSearchOptions.SemanticSearch.QueryRewrites.Count);
             Assert.AreEqual(source.SemanticSearch.ErrorMode, clonedSearchOptions.SemanticSearch.ErrorMode);
             Assert.AreEqual(source.SemanticSearch.MaxWait, clonedSearchOptions.SemanticSearch.MaxWait);
             Assert.AreEqual(source.VectorSearch.Queries, clonedSearchOptions.VectorSearch.Queries);

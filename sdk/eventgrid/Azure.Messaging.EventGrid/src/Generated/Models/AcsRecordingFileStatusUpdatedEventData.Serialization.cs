@@ -31,10 +31,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 if (property.NameEquals("recordingStorageInfo"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     recordingStorageInfo = AcsRecordingStorageInfoProperties.DeserializeAcsRecordingStorageInfoProperties(property.Value);
                     continue;
                 }
@@ -103,7 +99,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static AcsRecordingFileStatusUpdatedEventData FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeAcsRecordingFileStatusUpdatedEventData(document.RootElement);
         }
 

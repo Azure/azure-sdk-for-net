@@ -24,7 +24,6 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 use-model-reader-writer: true
-use-write-core: true
 enable-bicep-serialization: true
 
 #mgmt-debug:
@@ -399,6 +398,7 @@ rename-mapping:
   TriggerOperator: SecurityInsightsAlertRuleTriggerOperator
   Ueba: UebaSettings
   UrlEntity: SecurityInsightsUriEntity
+  UrlEntity.properties.url: UriString
   UserInfo: SecurityInsightsUserInfo
   ValidationError: SecurityInsightsFileValidationError
   Version: SourceControlVersion
@@ -512,7 +512,7 @@ directive:
     where: $.definitions
     transform: >
       $.Query['x-ms-client-name'] = 'ThreatIntelligenceQuery';
-      $.UserInfo['x-ms-client-name'] = 'ThreatIntelligenceUserInfo';   
+      $.UserInfo['x-ms-client-name'] = 'ThreatIntelligenceUserInfo';
   - from: ThreatIntelligenceCount.json
     where: $.definitions
     transform: >

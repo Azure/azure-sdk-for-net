@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.IotHub
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerIotHubContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(IotHubPrivateEndpointConnectionData)} does not support writing '{options.Format}' format.");
             }
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.IotHub
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeIotHubPrivateEndpointConnectionData(document.RootElement, options);
                     }
                 default:

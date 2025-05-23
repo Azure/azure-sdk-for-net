@@ -90,7 +90,7 @@ namespace Azure.IoT.Hub.Service.Models
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static CloudToDeviceMethodRequest FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeCloudToDeviceMethodRequest(document.RootElement);
         }
 

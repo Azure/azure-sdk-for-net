@@ -83,7 +83,7 @@ namespace Azure.AI.OpenAI.Assistants
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureAIOpenAIAssistantsContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(MessageContent)} does not support writing '{options.Format}' format.");
             }
@@ -97,7 +97,7 @@ namespace Azure.AI.OpenAI.Assistants
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeMessageContent(document.RootElement, options);
                     }
                 default:
@@ -111,7 +111,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static new UnknownMessageContent FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeUnknownMessageContent(document.RootElement);
         }
 

@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerServiceFabricManagedClustersContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(UniformInt64RangePartitionScheme)} does not support writing '{options.Format}' format.");
             }
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeUniformInt64RangePartitionScheme(document.RootElement, options);
                     }
                 default:

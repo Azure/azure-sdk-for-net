@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.HealthcareApis
                 case 200:
                     {
                         IotConnectorCollection value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = IotConnectorCollection.DeserializeIotConnectorCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.HealthcareApis
                 case 200:
                     {
                         IotConnectorCollection value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = IotConnectorCollection.DeserializeIotConnectorCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.HealthcareApis
                 case 200:
                     {
                         HealthcareApisIotConnectorData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = HealthcareApisIotConnectorData.DeserializeHealthcareApisIotConnectorData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.HealthcareApis
                 case 200:
                     {
                         HealthcareApisIotConnectorData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = HealthcareApisIotConnectorData.DeserializeHealthcareApisIotConnectorData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -574,7 +574,7 @@ namespace Azure.ResourceManager.HealthcareApis
                 case 200:
                     {
                         IotConnectorCollection value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = IotConnectorCollection.DeserializeIotConnectorCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -605,7 +605,7 @@ namespace Azure.ResourceManager.HealthcareApis
                 case 200:
                     {
                         IotConnectorCollection value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = IotConnectorCollection.DeserializeIotConnectorCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

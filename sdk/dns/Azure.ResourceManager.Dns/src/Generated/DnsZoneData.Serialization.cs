@@ -343,7 +343,7 @@ namespace Azure.ResourceManager.Dns
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDnsContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(DnsZoneData)} does not support writing '{options.Format}' format.");
             }
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.Dns
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeDnsZoneData(document.RootElement, options);
                     }
                 default:

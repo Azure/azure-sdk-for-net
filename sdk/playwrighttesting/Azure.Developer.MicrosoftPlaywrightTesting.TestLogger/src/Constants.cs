@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Utility;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
@@ -101,11 +100,6 @@ internal class AzureTokenCredentialType
     public static readonly string VisualStudioCredential = "VisualStudioCredential";
 
     /// <summary>
-    /// Visual Studio Code Credential.
-    /// </summary>
-    public static readonly string VisualStudioCodeCredential = "VisualStudioCodeCredential";
-
-    /// <summary>
     /// Azure CLI Credential.
     /// </summary>
     public static readonly string AzureCliCredential = "AzureCliCredential";
@@ -180,6 +174,16 @@ public class RunSettingKey
     /// Enable Result publish.
     /// </summary>
     public static readonly string EnableResultPublish = "EnableResultPublish";
+
+    /// <summary>
+    /// Number of NUnit test workers.
+    /// </summary>
+    public static readonly string NumberOfTestWorkers = "NumberOfTestWorkers";
+
+    /// <summary>
+    /// The run name setting key.
+    /// </summary>
+    public static readonly string RunName = "RunName";
 }
 
 internal class Constants
@@ -206,10 +210,22 @@ internal class Constants
     internal static readonly string s_invalid_os_error = "Invalid operating system, supported values are 'linux' and 'windows'.";
     internal static readonly string s_workspace_mismatch_error = "The provided access token does not match the specified workspace URL. Please verify that both values are correct.";
     internal static readonly string s_invalid_service_endpoint_error_message = "The service endpoint provided is invalid. Please verify the endpoint URL and try again.";
+    internal static readonly string s_playwright_service_runId_length_exceeded_error_message = "Error: The Run Id you provided exceeds 200 characters. Please provide a shorter Run ID.";
+    internal static readonly string s_token_expiry_warning_template =
+    "Warning: The access token used for this test run will expire in {0} days on {1}. " +
+    "Generate a new token from the portal to avoid failures. " +
+    "For a simpler, more secure solution, switch to Microsoft Entra ID and eliminate token management. " +
+    "https://learn.microsoft.com/en-us/entra/identity/";
 
-    internal static readonly string s_playwright_service_disable_scalable_execution_environment_variable = "PLAYWRIGHT_SERVICE_DISABLE_SCALABLE_EXECUTION";
-    internal static readonly string s_playwright_service_reporting_url_environment_variable = "PLAYWRIGHT_SERVICE_REPORTING_URL";
-    internal static readonly string s_playwright_service_workspace_id_environment_variable = "PLAYWRIGHT_SERVICE_WORKSPACE_ID";
+    internal static readonly string s_playwright_service_disable_scalable_execution_environment_variable = "_MPT_DISABLE_SCALABLE_EXECUTION";
+    internal static readonly string s_playwright_service_reporting_url_environment_variable = "_MPT_REPORTING_URL";
+    internal static readonly string s_playwright_service_workspace_id_environment_variable = "_MPT_WORKSPACE_ID";
+    internal static readonly string s_playwright_service_auth_type_environment_variable = "_MPT_AUTH_TYPE";
+    internal static readonly string s_playwright_service_one_time_operation_flag_environment_variable = "_MPT_ONE_TIME_OPERATION_FLAG";
+
+    internal static readonly string s_playwright_service_runName_truncated_warning = "WARNING: Run name exceeds the maximum limit of 200 characters and will be truncated.";
+    internal static readonly int s_sevenDaysInMs = 7 * 24 * 60 * 60 * 1000;
+    internal static readonly int s_oneDayInMs = 24 * 60 * 60 * 1000;
 }
 
 internal class OSConstants
@@ -229,13 +245,18 @@ internal class ReporterConstants
     internal static readonly string s_reportingRoute = "/runs/";
     internal static readonly string s_reportingAPIVersion_2024_04_30_preview = "2024-04-30-preview";
     internal static readonly string s_reportingAPIVersion_2024_05_20_preview = "2024-05-20-preview";
-    internal static readonly string s_pLAYWRIGHT_SERVICE_REPORTING_URL = "PLAYWRIGHT_SERVICE_REPORTING_URL";
-    internal static readonly string s_pLAYWRIGHT_SERVICE_WORKSPACE_ID = "PLAYWRIGHT_SERVICE_WORKSPACE_ID";
+    internal static readonly string s_pLAYWRIGHT_SERVICE_REPORTING_URL = "_MPT_REPORTING_URL";
+    internal static readonly string s_pLAYWRIGHT_SERVICE_WORKSPACE_ID = "_MPT_WORKSPACE_ID";
     internal static readonly string s_aPPLICATION_JSON = "application/json";
     internal static readonly string s_cONFLICT_409_ERROR_MESSAGE = "Test run with id {runId} already exists. Provide a unique run id.";
     internal static readonly string s_cONFLICT_409_ERROR_MESSAGE_KEY = "DuplicateRunId";
 
-    internal static readonly string s_fORBIDDEN_403_ERROR_MESSAGE = "Reporting is not enabled for your workspace {workspaceId}. Enable the Reporting feature under Feature management settings using the Playwright portal: https://playwright.microsoft.com/workspaces/{workspaceId}/settings/general";
+    internal static readonly string s_fORBIDDEN_403_ERROR_MESSAGE = @"You do not have the required permissions to upload test results. This could be because
+
+    a. Reporting is not enabled for your workspace {workspaceId}. Enable the Reporting feature under Feature management settings using the Playwright portal: https://playwright.microsoft.com/workspaces/{workspaceId}/settings/general
+    b. You do not have the required roles on the workspace. Only Owner and Contributor roles can upload test results. Contact the service administrator.
+    c. The workspace you are trying to run the tests on is in a different Azure tenant than what you are signed into. Check the tenant id from Azure portal (https://aka.ms/mpt/find-tenant-id) and login using the command 'az login --tenant <TENANT_ID>.
+    ";
     internal static readonly string s_fORBIDDEN_403_ERROR_MESSAGE_KEY = "ReportingNotEnabled";
     internal static readonly string s_uNKNOWN_ERROR_MESSAGE = "Unknown error occured.";
 }

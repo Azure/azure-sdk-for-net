@@ -12,14 +12,14 @@ using Azure.Identity;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.StorageActions.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.StorageActions.Samples
 {
     public partial class Sample_StorageTaskCollection
     {
-        // PutStorageTask
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_PutStorageTask()
         {
             // Generated from example definition: specification/storageactions/resource-manager/Microsoft.StorageActions/stable/2023-01-01/examples/storageTasksCrud/PutStorageTask.json
@@ -48,21 +48,18 @@ new StorageTaskOperationInfo(StorageTaskOperationName.SetBlobTier)
 {
 Parameters =
 {
-["tier"] = "Hot",
+["tier"] = "Hot"
 },
 OnSuccess = OnSuccessAction.Continue,
 OnFailure = OnFailureAction.Break,
 }
             }))
             {
-                ElseOperations =
-{
-new StorageTaskOperationInfo(StorageTaskOperationName.DeleteBlob)
+                ElseOperations = {new StorageTaskOperationInfo(StorageTaskOperationName.DeleteBlob)
 {
 OnSuccess = OnSuccessAction.Continue,
 OnFailure = OnFailureAction.Break,
-}
-},
+}},
             }));
             ArmOperation<StorageTaskResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, storageTaskName, data);
             StorageTaskResource result = lro.Value;
@@ -74,9 +71,8 @@ OnFailure = OnFailureAction.Break,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // GetStorageTask
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetStorageTask()
         {
             // Generated from example definition: specification/storageactions/resource-manager/Microsoft.StorageActions/stable/2023-01-01/examples/storageTasksCrud/GetStorageTask.json
@@ -108,81 +104,8 @@ OnFailure = OnFailureAction.Break,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // GetStorageTask
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Exists_GetStorageTask()
-        {
-            // Generated from example definition: specification/storageactions/resource-manager/Microsoft.StorageActions/stable/2023-01-01/examples/storageTasksCrud/GetStorageTask.json
-            // this example is just showing the usage of "StorageTasks_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ResourceGroupResource created on azure
-            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "1f31ba14-ce16-4281-b9b4-3e78da6e1616";
-            string resourceGroupName = "res4228";
-            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
-            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
-
-            // get the collection of this StorageTaskResource
-            StorageTaskCollection collection = resourceGroupResource.GetStorageTasks();
-
-            // invoke the operation
-            string storageTaskName = "mytask1";
-            bool result = await collection.ExistsAsync(storageTaskName);
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        // GetStorageTask
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetIfExists_GetStorageTask()
-        {
-            // Generated from example definition: specification/storageactions/resource-manager/Microsoft.StorageActions/stable/2023-01-01/examples/storageTasksCrud/GetStorageTask.json
-            // this example is just showing the usage of "StorageTasks_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ResourceGroupResource created on azure
-            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "1f31ba14-ce16-4281-b9b4-3e78da6e1616";
-            string resourceGroupName = "res4228";
-            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
-            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
-
-            // get the collection of this StorageTaskResource
-            StorageTaskCollection collection = resourceGroupResource.GetStorageTasks();
-
-            // invoke the operation
-            string storageTaskName = "mytask1";
-            NullableResponse<StorageTaskResource> response = await collection.GetIfExistsAsync(storageTaskName);
-            StorageTaskResource result = response.HasValue ? response.Value : null;
-
-            if (result == null)
-            {
-                Console.WriteLine($"Succeeded with null as result");
-            }
-            else
-            {
-                // the variable result is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                StorageTaskData resourceData = result.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-        }
-
-        // ListStorageTasksByResourceGroup
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListStorageTasksByResourceGroup()
         {
             // Generated from example definition: specification/storageactions/resource-manager/Microsoft.StorageActions/stable/2023-01-01/examples/storageTasksList/ListStorageTasksByResourceGroup.json
@@ -213,7 +136,77 @@ OnFailure = OnFailureAction.Break,
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Exists_GetStorageTask()
+        {
+            // Generated from example definition: specification/storageactions/resource-manager/Microsoft.StorageActions/stable/2023-01-01/examples/storageTasksCrud/GetStorageTask.json
+            // this example is just showing the usage of "StorageTasks_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "1f31ba14-ce16-4281-b9b4-3e78da6e1616";
+            string resourceGroupName = "res4228";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // get the collection of this StorageTaskResource
+            StorageTaskCollection collection = resourceGroupResource.GetStorageTasks();
+
+            // invoke the operation
+            string storageTaskName = "mytask1";
+            bool result = await collection.ExistsAsync(storageTaskName);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetIfExists_GetStorageTask()
+        {
+            // Generated from example definition: specification/storageactions/resource-manager/Microsoft.StorageActions/stable/2023-01-01/examples/storageTasksCrud/GetStorageTask.json
+            // this example is just showing the usage of "StorageTasks_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "1f31ba14-ce16-4281-b9b4-3e78da6e1616";
+            string resourceGroupName = "res4228";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // get the collection of this StorageTaskResource
+            StorageTaskCollection collection = resourceGroupResource.GetStorageTasks();
+
+            // invoke the operation
+            string storageTaskName = "mytask1";
+            NullableResponse<StorageTaskResource> response = await collection.GetIfExistsAsync(storageTaskName);
+            StorageTaskResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine("Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                StorageTaskData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
         }
     }
 }

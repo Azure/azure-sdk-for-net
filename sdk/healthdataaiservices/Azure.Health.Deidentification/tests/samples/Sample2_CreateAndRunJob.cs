@@ -4,12 +4,9 @@
 #nullable disable
 
 using System;
-using System.Text.Json;
-using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Health.Deidentification.Tests;
-using Azure.Identity;
 using NUnit.Framework;
 
 namespace Azure.Health.Deidentification.Samples
@@ -34,12 +31,11 @@ namespace Azure.Health.Deidentification.Samples
             DeidentificationJob job = new()
             {
                 SourceLocation = new SourceStorageLocation(new Uri(storageAccountUrl), "folder1/"),
-                TargetLocation = new TargetStorageLocation(new Uri(storageAccountUrl), "output_path"),
-                DataType = DocumentDataType.Plaintext,
-                Operation = OperationType.Surrogate
+                TargetLocation = new TargetStorageLocation(new Uri(storageAccountUrl), "output_folder1/"),
+                OperationType = DeidentificationOperationType.Redact,
             };
 
-            job = client.CreateJob(WaitUntil.Started, "my-job-1", job).Value;
+            job = client.DeidentifyDocuments(WaitUntil.Started, "my-job-1", job).Value;
             Console.WriteLine($"Job status: {job.Status}"); // Job status: NotStarted
             #endregion
         }

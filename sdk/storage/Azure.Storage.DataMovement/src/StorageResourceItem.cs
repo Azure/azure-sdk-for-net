@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.ComponentModel;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
@@ -20,21 +21,38 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// The identifier for the type of storage resource.
         /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         protected internal abstract string ResourceId { get; }
 
         /// <summary>
         /// Defines the transfer type of the storage resource.
         /// </summary>
-        protected internal abstract DataTransferOrder TransferType { get; }
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        protected internal abstract TransferOrder TransferType { get; }
+
+        /// <summary>
+        /// Defines the maximum supported size for the storage resource to be created
+        /// in a single API call.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        protected internal abstract long MaxSupportedSingleTransferSize { get; }
 
         /// <summary>
         /// Defines the maximum supported chunk size for the storage resource.
         /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         protected internal abstract long MaxSupportedChunkSize { get; }
+
+        /// <summary>
+        /// Defines the maximum supported chunk count for the storage resource.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        protected internal virtual int MaxSupportedChunkCount { get; } = int.MaxValue;
 
         /// <summary>
         /// Storage Resource is a container.
         /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         protected internal override bool IsContainer => false;
 
         /// <summary>
@@ -42,11 +60,13 @@ namespace Azure.Storage.DataMovement
         ///
         /// Will return default if the length was not set by a GetStorageResources API call.
         /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         protected internal abstract long? Length { get; }
 
         /// <summary>
         /// Properties of the Storage Resource Item.
         /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         protected internal StorageResourceItemProperties ResourceProperties { get; set; }
 
         /// <summary>
@@ -63,6 +83,7 @@ namespace Azure.Storage.DataMovement
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns></returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         protected internal abstract Task<StorageResourceReadStreamResult> ReadStreamAsync(
             long position = 0,
             long? length = default,
@@ -87,6 +108,7 @@ namespace Azure.Storage.DataMovement
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns></returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         protected internal abstract Task CopyFromStreamAsync(
             Stream stream,
             long streamLength,
@@ -111,6 +133,7 @@ namespace Azure.Storage.DataMovement
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns></returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         protected internal abstract Task CopyFromUriAsync(
             StorageResourceItem sourceResource,
             bool overwrite,
@@ -135,6 +158,7 @@ namespace Azure.Storage.DataMovement
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns></returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         protected internal abstract Task CopyBlockFromUriAsync(
             StorageResourceItem sourceResource,
             HttpRange range,
@@ -149,12 +173,14 @@ namespace Azure.Storage.DataMovement
         /// See <see cref="StorageResourceItemProperties"/>.
         /// </summary>
         /// <returns>Returns the properties of the Storage Resource. See <see cref="StorageResourceItemProperties"/></returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         protected internal abstract Task<StorageResourceItemProperties> GetPropertiesAsync(CancellationToken token = default);
 
         /// <summary>
         /// Gets the Permissions of a storage resource.
         /// </summary>
         /// <returns></returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         protected internal abstract Task<string> GetPermissionsAsync(
             StorageResourceItemProperties properties = default, CancellationToken cancellationToken = default);
 
@@ -162,6 +188,7 @@ namespace Azure.Storage.DataMovement
         /// Sets the permissions of the storage resource.
         /// </summary>
         /// <returns></returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         protected internal abstract Task SetPermissionsAsync(
             StorageResourceItem sourceResource,
             StorageResourceItemProperties sourceProperties,
@@ -178,6 +205,7 @@ namespace Azure.Storage.DataMovement
         /// Gets the HTTP Authorization header for the storage resource if available. If not available
         /// will return default.
         /// </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         protected internal abstract Task<HttpAuthorization> GetCopyAuthorizationHeaderAsync(CancellationToken cancellationToken = default);
 
         /// <summary>
@@ -194,6 +222,7 @@ namespace Azure.Storage.DataMovement
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>The Task which Commits the list of ids</returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         protected internal abstract Task CompleteTransferAsync(
             bool overwrite,
             StorageResourceCompleteTransferOptions completeTransferOptions = default,
@@ -210,6 +239,21 @@ namespace Azure.Storage.DataMovement
         /// If the storage resource exists and is deleted, true will be returned.
         /// Otherwise if the storage resource does not exist, false will be returned.
         /// </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         protected internal abstract Task<bool> DeleteIfExistsAsync(CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Determines whether to perform the item transfer. This should be called on the source resource item.
+        /// </summary>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// Whether the item transfer should be performed.
+        /// </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        protected internal virtual Task<bool> ShouldItemTransferAsync(CancellationToken cancellationToken = default)
+            => Task.FromResult(true);
     }
 }

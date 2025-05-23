@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -358,7 +358,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -396,7 +396,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -427,7 +427,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -458,7 +458,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -498,7 +498,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -538,7 +538,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -580,7 +580,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -622,7 +622,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -668,7 +668,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -714,7 +714,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -756,7 +756,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -786,6 +786,262 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary>
+        /// Transitions all volumes in a VNet to a different encryption key source (Microsoft-managed key or Azure Key Vault). Operation fails if targeted volumes share encryption sibling set with volumes from another account.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}/transitiontocmk</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Accounts_TransitionToCmk</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetAppAccountResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> The required parameters to perform encryption transition. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<ArmOperation> TransitionToCmkAsync(WaitUntil waitUntil, NetAppEncryptionTransitionContent content = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _netAppAccountAccountsClientDiagnostics.CreateScope("NetAppAccountResource.TransitionToCmk");
+            scope.Start();
+            try
+            {
+                var response = await _netAppAccountAccountsRestClient.TransitionToCmkAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                var operation = new NetAppArmOperation(_netAppAccountAccountsClientDiagnostics, Pipeline, _netAppAccountAccountsRestClient.CreateTransitionToCmkRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Transitions all volumes in a VNet to a different encryption key source (Microsoft-managed key or Azure Key Vault). Operation fails if targeted volumes share encryption sibling set with volumes from another account.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}/transitiontocmk</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Accounts_TransitionToCmk</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetAppAccountResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> The required parameters to perform encryption transition. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual ArmOperation TransitionToCmk(WaitUntil waitUntil, NetAppEncryptionTransitionContent content = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _netAppAccountAccountsClientDiagnostics.CreateScope("NetAppAccountResource.TransitionToCmk");
+            scope.Start();
+            try
+            {
+                var response = _netAppAccountAccountsRestClient.TransitionToCmk(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
+                var operation = new NetAppArmOperation(_netAppAccountAccountsClientDiagnostics, Pipeline, _netAppAccountAccountsRestClient.CreateTransitionToCmkRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletionResponse(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Contains data from encryption.keyVaultProperties as well as information about which private endpoint is used by each encryption sibling set. Response from this endpoint can be modified and used as request body for POST request.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}/getKeyVaultStatus</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Accounts_GetChangeKeyVaultInformation</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetAppAccountResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<ArmOperation<NetAppKeyVaultStatusResult>> GetChangeKeyVaultInformationAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using var scope = _netAppAccountAccountsClientDiagnostics.CreateScope("NetAppAccountResource.GetChangeKeyVaultInformation");
+            scope.Start();
+            try
+            {
+                var response = await _netAppAccountAccountsRestClient.GetChangeKeyVaultInformationAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new NetAppArmOperation<NetAppKeyVaultStatusResult>(new NetAppKeyVaultStatusResultOperationSource(), _netAppAccountAccountsClientDiagnostics, Pipeline, _netAppAccountAccountsRestClient.CreateGetChangeKeyVaultInformationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Contains data from encryption.keyVaultProperties as well as information about which private endpoint is used by each encryption sibling set. Response from this endpoint can be modified and used as request body for POST request.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}/getKeyVaultStatus</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Accounts_GetChangeKeyVaultInformation</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetAppAccountResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual ArmOperation<NetAppKeyVaultStatusResult> GetChangeKeyVaultInformation(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using var scope = _netAppAccountAccountsClientDiagnostics.CreateScope("NetAppAccountResource.GetChangeKeyVaultInformation");
+            scope.Start();
+            try
+            {
+                var response = _netAppAccountAccountsRestClient.GetChangeKeyVaultInformation(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var operation = new NetAppArmOperation<NetAppKeyVaultStatusResult>(new NetAppKeyVaultStatusResultOperationSource(), _netAppAccountAccountsClientDiagnostics, Pipeline, _netAppAccountAccountsRestClient.CreateGetChangeKeyVaultInformationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Affects existing volumes that are encrypted with Key Vault/Managed HSM, and new volumes. Supports HSM to Key Vault, Key Vault to HSM, HSM to HSM and Key Vault to Key Vault.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}/changeKeyVault</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Accounts_ChangeKeyVault</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetAppAccountResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="body"> The required parameters to perform encryption migration. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<ArmOperation> ChangeKeyVaultAsync(WaitUntil waitUntil, NetAppChangeKeyVault body = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _netAppAccountAccountsClientDiagnostics.CreateScope("NetAppAccountResource.ChangeKeyVault");
+            scope.Start();
+            try
+            {
+                var response = await _netAppAccountAccountsRestClient.ChangeKeyVaultAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body, cancellationToken).ConfigureAwait(false);
+                var operation = new NetAppArmOperation(_netAppAccountAccountsClientDiagnostics, Pipeline, _netAppAccountAccountsRestClient.CreateChangeKeyVaultRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Affects existing volumes that are encrypted with Key Vault/Managed HSM, and new volumes. Supports HSM to Key Vault, Key Vault to HSM, HSM to HSM and Key Vault to Key Vault.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}/changeKeyVault</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Accounts_ChangeKeyVault</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetAppAccountResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="body"> The required parameters to perform encryption migration. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual ArmOperation ChangeKeyVault(WaitUntil waitUntil, NetAppChangeKeyVault body = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _netAppAccountAccountsClientDiagnostics.CreateScope("NetAppAccountResource.ChangeKeyVault");
+            scope.Start();
+            try
+            {
+                var response = _netAppAccountAccountsRestClient.ChangeKeyVault(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body, cancellationToken);
+                var operation = new NetAppArmOperation(_netAppAccountAccountsClientDiagnostics, Pipeline, _netAppAccountAccountsRestClient.CreateChangeKeyVaultRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, body).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletionResponse(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
         /// List all volume groups for given account
         /// <list type="bullet">
         /// <item>
@@ -798,7 +1054,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -827,7 +1083,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -856,7 +1112,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -898,7 +1154,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -940,7 +1196,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1002,7 +1258,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1064,7 +1320,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1121,7 +1377,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1178,7 +1434,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1238,7 +1494,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

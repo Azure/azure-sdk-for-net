@@ -9,14 +9,14 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.SpringAppDiscovery.Samples
 {
     public partial class Sample_SpringBootSiteSummaryResource
     {
-        // Summaries_Get_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_SummariesGetMaximumSetGen()
         {
             // Generated from example definition: specification/offazurespringboot/resource-manager/Microsoft.OffAzureSpringBoot/preview/2023-01-01-preview/examples/Summaries_Get_MaximumSet_Gen.json
@@ -46,9 +46,8 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Summaries_Get_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_SummariesGetMinimumSetGen()
         {
             // Generated from example definition: specification/offazurespringboot/resource-manager/Microsoft.OffAzureSpringBoot/preview/2023-01-01-preview/examples/Summaries_Get_MinimumSet_Gen.json

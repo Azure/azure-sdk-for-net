@@ -9,14 +9,14 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.OracleDatabase.Samples
 {
     public partial class Sample_OracleGIVersionResource
     {
-        // Get a GiVersion by name
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAGiVersionByName()
         {
             // Generated from example definition: specification/oracle/resource-manager/Oracle.Database/stable/2023-09-01/examples/giVersions_get.json

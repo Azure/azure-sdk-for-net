@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 case 200:
                     {
                         AddonList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AddonList.DeserializeAddonList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 case 200:
                     {
                         AddonList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AddonList.DeserializeAddonList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 case 200:
                     {
                         DataBoxEdgeRoleAddonData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DataBoxEdgeRoleAddonData.DeserializeDataBoxEdgeRoleAddonData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 case 200:
                     {
                         DataBoxEdgeRoleAddonData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DataBoxEdgeRoleAddonData.DeserializeDataBoxEdgeRoleAddonData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -506,7 +506,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 case 200:
                     {
                         AddonList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AddonList.DeserializeAddonList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -539,7 +539,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 case 200:
                     {
                         AddonList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AddonList.DeserializeAddonList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

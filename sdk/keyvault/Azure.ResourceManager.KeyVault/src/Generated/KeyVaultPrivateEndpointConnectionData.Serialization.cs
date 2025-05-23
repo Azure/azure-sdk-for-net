@@ -425,7 +425,7 @@ namespace Azure.ResourceManager.KeyVault
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerKeyVaultContext.Default);
                 case "bicep":
                     return SerializeBicep(options);
                 default:
@@ -441,7 +441,7 @@ namespace Azure.ResourceManager.KeyVault
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeKeyVaultPrivateEndpointConnectionData(document.RootElement, options);
                     }
                 default:

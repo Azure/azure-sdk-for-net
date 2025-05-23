@@ -30,14 +30,14 @@ namespace Microsoft.Extensions.Azure
         {
             List<object> arguments = new List<object>();
             // Handle single values as connection strings
-            if (configuration is IConfigurationSection section && section.Value != null)
+            if (configuration is IConfigurationSection section && (!string.IsNullOrEmpty(section.Value)))
             {
                 var connectionString = section.Value;
                 configuration = new ConfigurationBuilder()
-                    .AddInMemoryCollection(new[]
-                    {
+                    .AddInMemoryCollection(
+                    [
                         new KeyValuePair<string, string>(ConnectionStringParameterName, connectionString)
-                    })
+                    ])
                     .Build();
             }
             foreach (var constructor in clientType.GetConstructors().OrderByDescending(c => c.GetParameters().Length))
@@ -96,11 +96,14 @@ namespace Microsoft.Extensions.Azure
             var credentialType = configuration["credential"];
             var clientId = configuration["clientId"];
             var tenantId = configuration["tenantId"];
+            var serviceConnectionId = configuration["serviceConnectionId"];
             var resourceId = configuration["managedIdentityResourceId"];
+            var objectId = configuration["managedIdentityObjectId"];
             var clientSecret = configuration["clientSecret"];
             var certificate = configuration["clientCertificate"];
             var certificateStoreName = configuration["clientCertificateStoreName"];
             var certificateStoreLocation = configuration["clientCertificateStoreLocation"];
+            var systemAccessToken = configuration["systemAccessToken"];
             var additionallyAllowedTenants = configuration["additionallyAllowedTenants"];
             var tokenFilePath = configuration["tokenFilePath"];
             IEnumerable<string> additionallyAllowedTenantsList = null;
@@ -114,14 +117,24 @@ namespace Microsoft.Extensions.Azure
 
             if (string.Equals(credentialType, "managedidentity", StringComparison.OrdinalIgnoreCase))
             {
-                if (!string.IsNullOrWhiteSpace(clientId) && !string.IsNullOrWhiteSpace(resourceId))
+                int idCount = 0;
+                idCount += string.IsNullOrWhiteSpace(clientId) ? 0 : 1;
+                idCount += string.IsNullOrWhiteSpace(resourceId) ? 0 : 1;
+                idCount += string.IsNullOrWhiteSpace(objectId) ? 0 : 1;
+
+                if (idCount > 1)
                 {
-                    throw new ArgumentException("Cannot specify both 'clientId' and 'managedIdentityResourceId'");
+                    throw new ArgumentException("Only one of either 'clientId', 'managedIdentityResourceId', or 'managedIdentityObjectId' can be specified for managed identity.");
                 }
 
                 if (!string.IsNullOrWhiteSpace(resourceId))
                 {
                     return new ManagedIdentityCredential(new ResourceIdentifier(resourceId));
+                }
+
+                if (!string.IsNullOrWhiteSpace(objectId))
+                {
+                    return new ManagedIdentityCredential(ManagedIdentityId.FromUserAssignedObjectId(objectId));
                 }
 
                 return new ManagedIdentityCredential(clientId);
@@ -147,6 +160,14 @@ namespace Microsoft.Extensions.Azure
                     workloadIdentityOptions.TokenFilePath = tokenFilePath;
                 }
 
+                if (additionallyAllowedTenantsList != null)
+                {
+                    foreach (string tenant in additionallyAllowedTenantsList)
+                    {
+                        workloadIdentityOptions.AdditionallyAllowedTenants.Add(tenant);
+                    }
+                }
+
                 if (!string.IsNullOrWhiteSpace(workloadIdentityOptions.TenantId) &&
                     !string.IsNullOrWhiteSpace(workloadIdentityOptions.ClientId) &&
                     !string.IsNullOrWhiteSpace(workloadIdentityOptions.TokenFilePath))
@@ -157,11 +178,35 @@ namespace Microsoft.Extensions.Azure
                 throw new ArgumentException("For workload identity, 'tenantId', 'clientId', and 'tokenFilePath' must be specified via environment variables or the configuration.");
             }
 
+            if (string.Equals(credentialType, "azurepipelines", StringComparison.OrdinalIgnoreCase))
+            {
+                if (string.IsNullOrWhiteSpace(tenantId) ||
+                    string.IsNullOrWhiteSpace(clientId) ||
+                    string.IsNullOrWhiteSpace(serviceConnectionId) ||
+                    string.IsNullOrWhiteSpace(systemAccessToken))
+                {
+                    throw new ArgumentException("For Azure Pipelines, 'tenantId', 'clientId', 'serviceConnectionId', and 'systemAccessToken' must be specified via the configuration.");
+                }
+
+                var options = new AzurePipelinesCredentialOptions();
+
+                if (additionallyAllowedTenantsList != null)
+                {
+                    foreach (string tenant in additionallyAllowedTenantsList)
+                    {
+                        options.AdditionallyAllowedTenants.Add(tenant);
+                    }
+                }
+
+                return new AzurePipelinesCredential(tenantId, clientId, serviceConnectionId, systemAccessToken, options);
+            }
+
             if (!string.IsNullOrWhiteSpace(tenantId) &&
                 !string.IsNullOrWhiteSpace(clientId) &&
                 !string.IsNullOrWhiteSpace(clientSecret))
             {
                 var options = new ClientSecretCredentialOptions();
+
                 if (additionallyAllowedTenantsList != null)
                 {
                     foreach (string tenant in additionallyAllowedTenantsList)
@@ -215,12 +260,18 @@ namespace Microsoft.Extensions.Azure
 
             // TODO: More logging
 
+            if (!string.IsNullOrWhiteSpace(objectId))
+            {
+                throw new ArgumentException("'managedIdentityObjectId' is only supported when the credential type is 'managedidentity'.");
+            }
+
             if (additionallyAllowedTenantsList != null
                 || !string.IsNullOrWhiteSpace(tenantId)
                 || !string.IsNullOrWhiteSpace(clientId)
                 || !string.IsNullOrWhiteSpace(resourceId))
             {
                 var options = new DefaultAzureCredentialOptions();
+
                 if (additionallyAllowedTenantsList != null)
                 {
                     foreach (string tenant in additionallyAllowedTenantsList)

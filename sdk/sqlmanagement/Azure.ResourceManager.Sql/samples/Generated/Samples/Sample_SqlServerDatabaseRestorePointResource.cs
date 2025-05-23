@@ -9,17 +9,17 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Sql.Samples
 {
     public partial class Sample_SqlServerDatabaseRestorePointResource
     {
-        // Gets a database restore point.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetsADatabaseRestorePoint()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2020-11-01-preview/examples/DatabaseRestorePointsGet.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-05-01-preview/examples/DatabaseRestorePointsGet.json
             // this example is just showing the usage of "RestorePoints_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -47,12 +47,11 @@ namespace Azure.ResourceManager.Sql.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Gets a datawarehouse database restore point.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetsADatawarehouseDatabaseRestorePoint()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2020-11-01-preview/examples/DataWarehouseRestorePointsGet.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-05-01-preview/examples/DataWarehouseRestorePointsGet.json
             // this example is just showing the usage of "RestorePoints_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -80,12 +79,11 @@ namespace Azure.ResourceManager.Sql.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Deletes a restore point.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeletesARestorePoint()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2020-11-01-preview/examples/DatabaseRestorePointsDelete.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-05-01-preview/examples/DatabaseRestorePointsDelete.json
             // this example is just showing the usage of "RestorePoints_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -106,7 +104,7 @@ namespace Azure.ResourceManager.Sql.Samples
             // invoke the operation
             await sqlServerDatabaseRestorePoint.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

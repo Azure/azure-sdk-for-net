@@ -36,6 +36,12 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
             RegisterHub(hub.GetType().Name, hub);
         }
 
+        public void RegisterHub<THub>(string hubName) where THub : WebPubSubHub
+        {
+            var hub = Create<THub>();
+            RegisterHub(hubName, hub);
+        }
+
         // For test only
         internal void RegisterHub(string hubName, WebPubSubHub hub)
         {
@@ -98,7 +104,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
                         {
                             if (preflightRequest.IsValid)
                             {
-                                context.Response.Headers.Add(Constants.Headers.WebHookAllowedOrigin, Constants.AllowedAllOrigins);
+                                context.Response.Headers.Append(Constants.Headers.WebHookAllowedOrigin, Constants.AllowedAllOrigins);
                                 break;
                             }
                             context.Response.StatusCode = StatusCodes.Status400BadRequest;
@@ -225,7 +231,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
             var updatedStates = connectionContext.UpdateStates(newStates);
             if (updatedStates != null)
             {
-                context.Response.Headers.Add(Constants.Headers.CloudEvents.State, updatedStates.EncodeConnectionStates());
+                context.Response.Headers.Append(Constants.Headers.CloudEvents.State, updatedStates.EncodeConnectionStates());
             }
         }
 

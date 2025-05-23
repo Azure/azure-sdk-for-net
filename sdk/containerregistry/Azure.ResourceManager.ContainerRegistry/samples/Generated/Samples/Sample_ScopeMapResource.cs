@@ -10,17 +10,17 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.ContainerRegistry.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.ContainerRegistry.Samples
 {
     public partial class Sample_ScopeMapResource
     {
-        // ScopeMapGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_ScopeMapGet()
         {
-            // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/stable/2022-12-01/examples/ScopeMapGet.json
+            // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/stable/2025-04-01/examples/ScopeMapGet.json
             // this example is just showing the usage of "ScopeMaps_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -47,12 +47,11 @@ namespace Azure.ResourceManager.ContainerRegistry.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ScopeMapDelete
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_ScopeMapDelete()
         {
-            // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/stable/2022-12-01/examples/ScopeMapDelete.json
+            // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/stable/2025-04-01/examples/ScopeMapDelete.json
             // this example is just showing the usage of "ScopeMaps_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -72,15 +71,14 @@ namespace Azure.ResourceManager.ContainerRegistry.Samples
             // invoke the operation
             await scopeMap.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // ScopeMapUpdate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_ScopeMapUpdate()
         {
-            // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/stable/2022-12-01/examples/ScopeMapUpdate.json
+            // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/stable/2025-04-01/examples/ScopeMapUpdate.json
             // this example is just showing the usage of "ScopeMaps_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -98,13 +96,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Samples
             ScopeMapResource scopeMap = client.GetScopeMapResource(scopeMapResourceId);
 
             // invoke the operation
-            ScopeMapPatch patch = new ScopeMapPatch()
+            ScopeMapPatch patch = new ScopeMapPatch
             {
                 Description = "Developer Scopes",
-                Actions =
-{
-"repositories/myrepository/contentWrite","repositories/myrepository/contentRead"
-},
+                Actions = { "repositories/myrepository/contentWrite", "repositories/myrepository/contentRead" },
             };
             ArmOperation<ScopeMapResource> lro = await scopeMap.UpdateAsync(WaitUntil.Completed, patch);
             ScopeMapResource result = lro.Value;

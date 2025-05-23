@@ -39,7 +39,7 @@ namespace Azure.Analytics.Purview.DataMap
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(global::System.BinaryData.FromStream(File));
 #else
-            using (JsonDocument document = JsonDocument.Parse(BinaryData.FromStream(File)))
+            using (JsonDocument document = JsonDocument.Parse(BinaryData.FromStream(File), ModelSerializationExtensions.JsonDocumentOptions))
             {
                 JsonSerializer.Serialize(writer, document.RootElement);
             }
@@ -52,7 +52,7 @@ namespace Azure.Analytics.Purview.DataMap
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -129,7 +129,7 @@ namespace Azure.Analytics.Purview.DataMap
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureAnalyticsPurviewDataMapContext.Default);
                 case "MFD":
                     return SerializeMultipart(options);
                 default:
@@ -145,7 +145,7 @@ namespace Azure.Analytics.Purview.DataMap
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeBusinessMetadataOptions(document.RootElement, options);
                     }
                 default:
@@ -159,7 +159,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static BusinessMetadataOptions FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeBusinessMetadataOptions(document.RootElement);
         }
     }

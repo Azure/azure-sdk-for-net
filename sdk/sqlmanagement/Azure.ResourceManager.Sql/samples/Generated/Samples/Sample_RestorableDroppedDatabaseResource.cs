@@ -9,17 +9,17 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Sql.Samples
 {
     public partial class Sample_RestorableDroppedDatabaseResource
     {
-        // Gets a restorable dropped database with expand equals keys.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetsARestorableDroppedDatabaseWithExpandEqualsKeys()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2022-08-01-preview/examples/GetRestorableDroppedDatabaseWithExpandEqualsKeys.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-05-01-preview/examples/GetRestorableDroppedDatabaseWithExpandEqualsKeys.json
             // this example is just showing the usage of "RestorableDroppedDatabases_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -47,12 +47,11 @@ namespace Azure.ResourceManager.Sql.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Gets a restorable dropped database.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetsARestorableDroppedDatabase()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2022-08-01-preview/examples/GetRestorableDroppedDatabase.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-05-01-preview/examples/GetRestorableDroppedDatabase.json
             // this example is just showing the usage of "RestorableDroppedDatabases_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

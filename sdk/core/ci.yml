@@ -14,6 +14,7 @@ trigger:
     - eng/mgmt/
     - eng/common/
     - eng/packages/
+    - eng/scripts/typespec/
 
 pr:
   branches:
@@ -32,6 +33,7 @@ pr:
     - eng/mgmt/
     - eng/common/
     - eng/packages/
+    - eng/scripts/typespec/
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
@@ -42,6 +44,14 @@ extends:
     Artifacts:
     - name: Azure.Core
       safeName: AzureCore
+      triggeringPaths:
+      - /sdk/resourcemanager/
+      - /eng/Versioning.targets
+      - /eng/Packages.Data.props
+      - /eng/Directory.Build.Common.props
+      - /eng/Directory.Build.Common.targets
+      - /eng/service.proj
+
     - name: Azure.Core.Experimental
       safeName: AzureCoreExperimental
     - name: Azure.Core.Expressions.DataFactory

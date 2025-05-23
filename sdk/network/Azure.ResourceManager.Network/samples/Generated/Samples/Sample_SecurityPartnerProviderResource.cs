@@ -10,45 +10,17 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Network.Models;
-using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Network.Samples
 {
     public partial class Sample_SecurityPartnerProviderResource
     {
-        // Delete Security Partner Provider
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Delete_DeleteSecurityPartnerProvider()
-        {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/SecurityPartnerProviderDelete.json
-            // this example is just showing the usage of "SecurityPartnerProviders_Delete" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SecurityPartnerProviderResource created on azure
-            // for more information of creating SecurityPartnerProviderResource, please refer to the document of SecurityPartnerProviderResource
-            string subscriptionId = "subid";
-            string resourceGroupName = "rg1";
-            string securityPartnerProviderName = "securityPartnerProvider";
-            ResourceIdentifier securityPartnerProviderResourceId = SecurityPartnerProviderResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, securityPartnerProviderName);
-            SecurityPartnerProviderResource securityPartnerProvider = client.GetSecurityPartnerProviderResource(securityPartnerProviderResourceId);
-
-            // invoke the operation
-            await securityPartnerProvider.DeleteAsync(WaitUntil.Completed);
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // Get Security Partner Provider
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetSecurityPartnerProvider()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/SecurityPartnerProviderGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-05-01/examples/SecurityPartnerProviderGet.json
             // this example is just showing the usage of "SecurityPartnerProviders_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -74,12 +46,37 @@ namespace Azure.ResourceManager.Network.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Update Security Partner Provider Tags
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Delete_DeleteSecurityPartnerProvider()
+        {
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-05-01/examples/SecurityPartnerProviderDelete.json
+            // this example is just showing the usage of "SecurityPartnerProviders_Delete" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this SecurityPartnerProviderResource created on azure
+            // for more information of creating SecurityPartnerProviderResource, please refer to the document of SecurityPartnerProviderResource
+            string subscriptionId = "subid";
+            string resourceGroupName = "rg1";
+            string securityPartnerProviderName = "securityPartnerProvider";
+            ResourceIdentifier securityPartnerProviderResourceId = SecurityPartnerProviderResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, securityPartnerProviderName);
+            SecurityPartnerProviderResource securityPartnerProvider = client.GetSecurityPartnerProviderResource(securityPartnerProviderResourceId);
+
+            // invoke the operation
+            await securityPartnerProvider.DeleteAsync(WaitUntil.Completed);
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateSecurityPartnerProviderTags()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/SecurityPartnerProviderUpdateTags.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-05-01/examples/SecurityPartnerProviderUpdateTags.json
             // this example is just showing the usage of "SecurityPartnerProviders_UpdateTags" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -96,12 +93,12 @@ namespace Azure.ResourceManager.Network.Samples
             SecurityPartnerProviderResource securityPartnerProvider = client.GetSecurityPartnerProviderResource(securityPartnerProviderResourceId);
 
             // invoke the operation
-            NetworkTagsObject networkTagsObject = new NetworkTagsObject()
+            NetworkTagsObject networkTagsObject = new NetworkTagsObject
             {
                 Tags =
 {
 ["tag1"] = "value1",
-["tag2"] = "value2",
+["tag2"] = "value2"
 },
             };
             SecurityPartnerProviderResource result = await securityPartnerProvider.UpdateAsync(networkTagsObject);
@@ -111,38 +108,6 @@ namespace Azure.ResourceManager.Network.Samples
             SecurityPartnerProviderData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // List all Security Partner Providers for a given subscription
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetSecurityPartnerProviders_ListAllSecurityPartnerProvidersForAGivenSubscription()
-        {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/SecurityPartnerProviderListBySubscription.json
-            // this example is just showing the usage of "SecurityPartnerProviders_List" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "subid";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
-
-            // invoke the operation and iterate over the result
-            await foreach (SecurityPartnerProviderResource item in subscriptionResource.GetSecurityPartnerProvidersAsync())
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                SecurityPartnerProviderData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-
-            Console.WriteLine($"Succeeded");
         }
     }
 }

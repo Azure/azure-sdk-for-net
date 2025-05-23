@@ -40,6 +40,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 {
                     case "AvroWriteSettings": return AvroWriteSettings.DeserializeAvroWriteSettings(element);
                     case "DelimitedTextWriteSettings": return DelimitedTextWriteSettings.DeserializeDelimitedTextWriteSettings(element);
+                    case "IcebergWriteSettings": return IcebergWriteSettings.DeserializeIcebergWriteSettings(element);
                     case "JsonWriteSettings": return JsonWriteSettings.DeserializeJsonWriteSettings(element);
                     case "OrcWriteSettings": return OrcWriteSettings.DeserializeOrcWriteSettings(element);
                     case "ParquetWriteSettings": return ParquetWriteSettings.DeserializeParquetWriteSettings(element);
@@ -52,7 +53,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static FormatWriteSettings FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeFormatWriteSettings(document.RootElement);
         }
 

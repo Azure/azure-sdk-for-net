@@ -240,6 +240,10 @@ namespace Azure.AI.Translation.Document
             return OperationState<AsyncPageable<DocumentStatusResult>>.Pending(rawResponse);
         }
 
+        // This method is never invoked since we don't override Operation<T>.GetRehydrationToken.
+        RehydrationToken IOperation<AsyncPageable<DocumentStatusResult>>.GetRehydrationToken() =>
+            throw new NotSupportedException($"{nameof(GetRehydrationToken)} is not supported.");
+
         private AsyncPageable<DocumentStatusResult> CreateOperationValueAsync(CancellationToken cancellationToken = default)
         {
             return GetDocumentStatusesAsync(cancellationToken: cancellationToken);
@@ -302,7 +306,7 @@ namespace Azure.AI.Translation.Document
 
             return _serviceClient.GetDocumentsStatus(
                 new Guid(Id),
-                ids: idList,
+                documentIds: idList,
                 statuses: statusList,
                 createdDateTimeUtcStart: options?.CreatedAfter,
                 createdDateTimeUtcEnd: options?.CreatedBefore,
@@ -323,7 +327,7 @@ namespace Azure.AI.Translation.Document
 
             return _serviceClient.GetDocumentsStatusAsync(
                 new Guid(Id),
-                ids: idList,
+                documentIds: idList,
                 statuses: statusList,
                 createdDateTimeUtcStart: options?.CreatedAfter,
                 createdDateTimeUtcEnd: options?.CreatedBefore,

@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
 
             writer.WritePropertyName("attachedNetworkId"u8);
-            writer.WriteStringValue(AttachedNetworkId);
+            writer.WriteStringValue(AttachedNetworkArmId);
             if (Optional.IsDefined(DefaultGateway))
             {
                 writer.WritePropertyName("defaultGateway"u8);
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 return null;
             }
-            string attachedNetworkId = default;
+            ResourceIdentifier attachedNetworkId = default;
             DefaultGateway? defaultGateway = default;
             VirtualMachineIPAllocationMethod ipAllocationMethod = default;
             string ipv4Address = default;
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 if (property.NameEquals("attachedNetworkId"u8))
                 {
-                    attachedNetworkId = property.Value.GetString();
+                    attachedNetworkId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("defaultGateway"u8))
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkCloudContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(NetworkAttachment)} does not support writing '{options.Format}' format.");
             }
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeNetworkAttachment(document.RootElement, options);
                     }
                 default:

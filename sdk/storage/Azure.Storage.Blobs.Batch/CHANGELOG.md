@@ -1,6 +1,6 @@
 # Release History
 
-## 12.20.0-beta.3 (Unreleased)
+## 12.22.0-beta.2 (Unreleased)
 
 ### Features Added
 
@@ -10,12 +10,35 @@
 
 ### Other Changes
 
-## 12.19.1 (2024-10-10)
+## 12.22.0-beta.1 (2025-05-06)
+
+### Features Added
+- Added support for service version 2025-07-05.
+
+## 12.21.0 (2025-03-11)
+
+### Features Added
+- Includes all features from 12.21.0-beta.1
+
+### Bugs Fixed
+- Fixed an issue where batch subrequests would not authenticate properly if using `TokenCredential` authentication when the `BlobBatchClient` was created from `BlobContianerClient.GetBlobBatchClient`.
+
+## 12.21.0-beta.1 (2025-02-11)
+
+### Features Added
+- Added support for service version 2025-05-05.
+
+## 12.20.0 (2024-11-12)
+
+### Features Added
+- Includes all features from 12.20.0-beta.1 and 12.20.0-beta.2.
+
+## 12.20.0-beta.2 (2024-10-10)
 
 ### Other Changes
 - Upgraded `System.Text.Json` package dependency to 6.0.10 for security fix.
 
-## 12.20.0-beta.2 (2024-10-10)
+## 12.19.1 (2024-10-10)
 
 ### Other Changes
 - Upgraded `System.Text.Json` package dependency to 6.0.10 for security fix.

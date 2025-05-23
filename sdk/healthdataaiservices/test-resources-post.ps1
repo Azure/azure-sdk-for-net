@@ -21,7 +21,7 @@ $storageAccountName = $DeploymentOutputs['HEALTHDATAAISERVICES_STORAGE_ACCOUNT_N
 $containerName = $DeploymentOutputs['HEALTHDATAAISERVICES_STORAGE_CONTAINER_NAME']
 
 # Set the local folder path to upload
-$localFolderPath = "Azure.Health.Deidentification\tests\data\example_patient_1"
+$localFolderPath = "$PSScriptRoot\Azure.Health.Deidentification\tests\data\example_patient_1"
 
 # Check if the connection string is present
 if ([string]::IsNullOrWhiteSpace($storageAccountName)) {
@@ -36,6 +36,7 @@ Import-Module Az.Storage
 $storageContext = New-AzStorageContext -StorageAccountName $storageAccountName -UseConnectedAccount
 
 # FIXME Remove once vpn team fixes the network acl issue
+# TODO: disable local storage account auth
 $networkRuleSet = New-Object -TypeName Microsoft.Azure.Commands.Management.Storage.Models.PSNetworkRuleSet
 $networkRuleSet.DefaultAction = "Allow"
 Set-AzStorageAccount -ResourceGroupName $resourceGroup -Name $storageAccountName -NetworkRuleSet $networkRuleSet

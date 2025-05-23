@@ -142,6 +142,67 @@ public partial class ChatTests : AoaiTestBase<ChatClient>
         Assert.That(sourcesFromOptions[1], Is.InstanceOf<CosmosChatDataSource>());
     }
 
+    [Test]
+    [Category("Smoke")]
+    public async Task MaxTokensSerializationConfigurationWorks()
+    {
+        using MockHttpMessageHandler pipeline = new(MockHttpMessageHandler.ReturnEmptyJson);
+
+        Uri endpoint = new Uri("https://www.bing.com/");
+        string apiKey = "not-a-real-one";
+        string model = "ignore";
+
+        AzureOpenAIClient topLevel = new(
+            endpoint,
+            new ApiKeyCredential(apiKey),
+            new AzureOpenAIClientOptions()
+            {
+                Transport = pipeline.Transport
+            });
+
+        ChatClient client = topLevel.GetChatClient(model);
+
+        ChatCompletionOptions options = new();
+        bool GetSerializedOptionsContains(string value)
+        {
+            BinaryData serialized = ModelReaderWriter.Write(options);
+            return serialized.ToString().Contains(value);
+        }
+        async Task AssertExpectedSerializationAsync(bool hasOldMaxTokens, bool hasNewMaxCompletionTokens)
+        {
+            _ = await client.CompleteChatAsync(["Just mocking, no call here"], options);
+            Assert.That(GetSerializedOptionsContains("max_tokens"), Is.EqualTo(hasOldMaxTokens));
+            Assert.That(GetSerializedOptionsContains("max_completion_tokens"), Is.EqualTo(hasNewMaxCompletionTokens));
+        }
+
+        await AssertExpectedSerializationAsync(false, false);
+        await AssertExpectedSerializationAsync(false, false);
+
+        options.MaxOutputTokenCount = 42;
+        await AssertExpectedSerializationAsync(true, false);
+        await AssertExpectedSerializationAsync(true, false);
+        options.MaxOutputTokenCount = null;
+        await AssertExpectedSerializationAsync(false, false);
+        options.MaxOutputTokenCount = 42;
+        await AssertExpectedSerializationAsync(true, false);
+
+        options.SetNewMaxCompletionTokensPropertyEnabled();
+        await AssertExpectedSerializationAsync(false, true);
+        await AssertExpectedSerializationAsync(false, true);
+        options.MaxOutputTokenCount = null;
+        await AssertExpectedSerializationAsync(false, false);
+        options.MaxOutputTokenCount = 42;
+        await AssertExpectedSerializationAsync(false, true);
+
+        options.SetNewMaxCompletionTokensPropertyEnabled(false);
+        await AssertExpectedSerializationAsync(true, false);
+        await AssertExpectedSerializationAsync(true, false);
+        options.MaxOutputTokenCount = null;
+        await AssertExpectedSerializationAsync(false, false);
+        options.MaxOutputTokenCount = 42;
+        await AssertExpectedSerializationAsync(true, false);
+    }
+
     [RecordedTest]
     public async Task ChatCompletionBadKeyGivesHelpfulError()
     {
@@ -162,7 +223,6 @@ public partial class ChatTests : AoaiTestBase<ChatClient>
     }
 
     [RecordedTest]
-    [Category("Smoke")]
     public async Task DefaultAzureCredentialWorks()
     {
         ChatClient chatClient = GetTestClient(tokenCredential: this.TestEnvironment.Credential);
@@ -174,6 +234,7 @@ public partial class ChatTests : AoaiTestBase<ChatClient>
 
     [RecordedTest]
     [Ignore("Delay behavior not emulated by recordings, and needs to be run manually with some time in between iterations due to service throttling behavior")]
+    [Category("Live")]
     [TestCase("x-ms-retry-after-ms", "1000", 1000)]
     [TestCase("retry-after-ms", "1400", 1400)]
     [TestCase("Retry-After", "1", 1000)]
@@ -456,6 +517,68 @@ public partial class ChatTests : AoaiTestBase<ChatClient>
         Assert.IsTrue(stepsProperty.ValueKind == JsonValueKind.Array);
     }
 
+    [RecordedTest]
+    public async Task UserSecurityContextWorks()
+    {
+        ChatClient client = GetTestClient();
+
+        string userId = Guid.NewGuid().ToString();
+        string sourceIP = "123.456.78.9";
+        UserSecurityContext userSecurityContext = new()
+        {
+            EndUserId = userId,
+            SourceIP = sourceIP,
+        };
+
+        ChatCompletionOptions options = new();
+        options.SetUserSecurityContext(userSecurityContext);
+
+        UserSecurityContext retrievedUserSecurityContext = options.GetUserSecurityContext();
+        Assert.That(retrievedUserSecurityContext, Is.Not.Null);
+        Assert.That(retrievedUserSecurityContext.EndUserId, Is.EqualTo(userId));
+        Assert.That(retrievedUserSecurityContext.SourceIP, Is.EqualTo(sourceIP));
+
+        ChatCompletion completion = await client.CompleteChatAsync([ChatMessage.CreateUserMessage("Hello, world!")]);
+        Assert.That(completion, Is.Not.Null);
+    }
+
+    [RecordedTest]
+    [TestCase("chat", false)]
+    [TestCase("chat_o1", true)]
+    [TestCase("chat_o3-mini", true)]
+    public async Task MaxOutputTokensWorksAcrossModels(string testConfigName, bool useNewProperty)
+    {
+        IConfiguration testConfig = TestConfig.GetConfig(testConfigName)!;
+        ChatClient client = GetTestClient(testConfig);
+
+        ChatCompletionOptions options = new()
+        {
+            MaxOutputTokenCount = 16,
+        };
+
+        if (useNewProperty)
+        {
+            options.SetNewMaxCompletionTokensPropertyEnabled();
+        }
+
+        ChatCompletion completion = await client.CompleteChatAsync(
+            ["Hello, world! Please write a funny haiku to greet me."],
+            options);
+        Assert.That(completion.FinishReason, Is.EqualTo(ChatFinishReason.Length));
+
+        string serializedOptionsAfterUse = ModelReaderWriter.Write(options).ToString();
+
+        if (useNewProperty)
+        {
+            Assert.That(serializedOptionsAfterUse, Does.Contain("max_completion_tokens"));
+            Assert.That(serializedOptionsAfterUse, Does.Not.Contain("max_tokens"));
+        }
+        else
+        {
+            Assert.That(serializedOptionsAfterUse, Does.Not.Contain("max_completion_tokens"));
+            Assert.That(serializedOptionsAfterUse, Does.Contain("max_tokens"));
+        }
+    }
     #endregion
 
     #region Streaming chat completion tests
@@ -492,6 +615,7 @@ public partial class ChatTests : AoaiTestBase<ChatClient>
         StringBuilder builder = new();
         bool foundPromptFilter = false;
         bool foundResponseFilter = false;
+        ChatTokenUsage? usage = null;
 
         ChatClient chatClient = GetTestClient();
 
@@ -512,11 +636,13 @@ public partial class ChatTests : AoaiTestBase<ChatClient>
 
         await foreach (StreamingChatCompletionUpdate update in streamingResults)
         {
-            ValidateUpdate(update, builder, ref foundPromptFilter, ref foundResponseFilter);
+            ValidateUpdate(update, builder, ref foundPromptFilter, ref foundResponseFilter, ref usage);
         }
 
         string allText = builder.ToString();
         Assert.That(allText, Is.Not.Null.Or.Empty);
+
+        Assert.That(usage, Is.Not.Null);
 
         Assert.That(foundPromptFilter, Is.True);
         Assert.That(foundResponseFilter, Is.True);
@@ -528,6 +654,7 @@ public partial class ChatTests : AoaiTestBase<ChatClient>
         StringBuilder builder = new();
         bool foundPromptFilter = false;
         bool foundResponseFilter = false;
+        ChatTokenUsage? usage = null;
         List<ChatMessageContext> contexts = new();
 
         var searchConfig = TestConfig.GetConfig("search")!;
@@ -555,7 +682,7 @@ public partial class ChatTests : AoaiTestBase<ChatClient>
 
         await foreach (StreamingChatCompletionUpdate update in chatUpdates)
         {
-            ValidateUpdate(update, builder, ref foundPromptFilter, ref foundResponseFilter);
+            ValidateUpdate(update, builder, ref foundPromptFilter, ref foundResponseFilter, ref usage);
 
             ChatMessageContext context = update.GetMessageContext();
             if (context != null)
@@ -566,6 +693,8 @@ public partial class ChatTests : AoaiTestBase<ChatClient>
 
         string allText = builder.ToString();
         Assert.That(allText, Is.Not.Null.Or.Empty);
+
+        // Assert.That(usage, Is.Not.Null);
 
         // TODO FIXME: When using data sources, the service does not appear to return request nor response filtering information
         //Assert.That(foundPromptFilter, Is.True);
@@ -581,12 +710,22 @@ public partial class ChatTests : AoaiTestBase<ChatClient>
     }
 
     [RecordedTest]
-    public async Task AsyncContentFilterWorksStreaming()
+#if !AZURE_OPENAI_GA
+    [TestCase(AzureOpenAIClientOptions.ServiceVersion.V2024_10_01_Preview)]
+    [TestCase(AzureOpenAIClientOptions.ServiceVersion.V2024_12_01_Preview)]
+    [TestCase(AzureOpenAIClientOptions.ServiceVersion.V2025_01_01_Preview)]
+#else
+    [TestCase(AzureOpenAIClientOptions.ServiceVersion.V2024_10_21)]
+#endif
+    [TestCase(null)]
+    public async Task AsyncContentFilterWorksStreaming(AzureOpenAIClientOptions.ServiceVersion? version)
     {
         // Precondition: the target deployment is configured with an async content filter that includes a
         // custom blocklist that will filter variations of the word 'banana.'
 
-        ChatClient client = GetTestClient(TestConfig.GetConfig("chat_with_async_filter"));
+        ChatClient client = GetTestClient(
+            TestConfig.GetConfig("chat_with_async_filter"),
+            GetTestClientOptions(version));
 
         StringBuilder contentBuilder = new();
 
@@ -631,12 +770,81 @@ public partial class ChatTests : AoaiTestBase<ChatClient>
 
     #endregion
 
-    #region Tests for interim o1 model support regarding new max_completion_tokens
+    [RecordedTest]
+    public async Task ChatWithO1Works()
+    {
+        IConfiguration testConfig = TestConfig.GetConfig("chat_o1")!;
 
-    #endregion
+        ChatClient client = GetTestClient(testConfig);
+
+        ChatCompletion completion = await client.CompleteChatAsync([ChatMessage.CreateUserMessage("Hello, world!")]);
+        Assert.That(completion, Is.Not.Null);
+    }
+
+#if NET
+    [RecordedTest]
+    public async Task PredictedOutputsWork()
+    {
+        ChatClient client = GetTestClient();
+
+        foreach (ChatOutputPrediction predictionVariant in new List<ChatOutputPrediction>(
+            [
+                // Plain string
+                ChatOutputPrediction.CreateStaticContentPrediction("""
+                    {
+                      "feature_name": "test_feature",
+                      "enabled": true
+                    }
+                    """.ReplaceLineEndings("\n")),
+                // One content part
+                ChatOutputPrediction.CreateStaticContentPrediction(
+                [
+                    ChatMessageContentPart.CreateTextPart("""
+                    {
+                      "feature_name": "test_feature",
+                      "enabled": true
+                    }
+                    """.ReplaceLineEndings("\n")),
+                ]),
+                // Several content parts
+                ChatOutputPrediction.CreateStaticContentPrediction(
+                    [
+                        "{\n",
+                        "  \"feature_name\": \"test_feature\",\n",
+                        "  \"enabled\": true\n",
+                        "}",
+                    ]),
+            ]))
+        {
+            ChatCompletionOptions options = new()
+            {
+                OutputPrediction = predictionVariant,
+            };
+
+            ChatMessage message = ChatMessage.CreateUserMessage("""
+            Modify the following input to enable the feature. Only respond with the JSON and include no other text. Do not enclose in markdown backticks or any other additional annotations.
+
+            {
+              "feature_name": "test_feature",
+              "enabled": false
+            }
+            """.ReplaceLineEndings("\n"));
+
+            ChatCompletion completion = await client.CompleteChatAsync([message], options);
+
+            Assert.That(completion.Usage.OutputTokenDetails.AcceptedPredictionTokenCount, Is.GreaterThan(0));
+        }
+    }
+#endif
+
     #region Helper methods
 
-    private void ValidateUpdate(StreamingChatCompletionUpdate update, StringBuilder builder, ref bool foundPromptFilter, ref bool foundResponseFilter)
+    private TestClientOptions GetTestClientOptions(AzureOpenAIClientOptions.ServiceVersion? version)
+    {
+        return version is null ? new TestClientOptions() : new TestClientOptions(version.Value);
+    }
+
+    private void ValidateUpdate(StreamingChatCompletionUpdate update, StringBuilder builder, ref bool foundPromptFilter, ref bool foundResponseFilter, ref ChatTokenUsage? usage)
     {
         if (update.CreatedAt == UNIX_EPOCH)
         {
@@ -656,6 +864,8 @@ public partial class ChatTests : AoaiTestBase<ChatClient>
             Assert.That(update.FinishReason, Is.Null.Or.EqualTo(ChatFinishReason.Stop));
             if (update.Usage != null)
             {
+                Assert.That(usage, Is.Null);
+                usage = update.Usage;
                 Assert.That(update.Usage.InputTokenCount, Is.GreaterThanOrEqualTo(0));
                 Assert.That(update.Usage.OutputTokenCount, Is.GreaterThanOrEqualTo(0));
                 Assert.That(update.Usage.TotalTokenCount, Is.GreaterThanOrEqualTo(0));

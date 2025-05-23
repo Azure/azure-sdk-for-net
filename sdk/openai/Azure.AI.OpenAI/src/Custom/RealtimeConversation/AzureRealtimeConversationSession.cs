@@ -1,13 +1,14 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+#if !AZURE_OPENAI_GA
+
 using System.ClientModel;
 using System.ClientModel.Primitives;
-using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Net;
+using System.Net.WebSockets;
 using Azure.Core;
-using OpenAI.RealtimeConversation;
 
 namespace Azure.AI.OpenAI.RealtimeConversation;
 
@@ -18,8 +19,7 @@ internal partial class AzureRealtimeConversationSession : RealtimeConversationSe
     private readonly ApiKeyCredential _keyCredential;
     private readonly TokenCredential _tokenCredential;
     private readonly IEnumerable<string> _tokenAuthorizationScopes;
-    private readonly TokenRequestContext _tokenRequestContext;
-    private readonly string _clientRequestId;
+    private readonly string _userAgent;
 
     protected internal AzureRealtimeConversationSession(
         AzureRealtimeConversationClient parentClient,
@@ -41,33 +41,14 @@ internal partial class AzureRealtimeConversationSession : RealtimeConversationSe
     {
         _tokenCredential = credential;
         _tokenAuthorizationScopes = tokenAuthorizationScopes;
-        _tokenRequestContext = new(_tokenAuthorizationScopes.ToArray(), parentRequestId: _clientRequestId);
     }
 
     private AzureRealtimeConversationSession(AzureRealtimeConversationClient parentClient, Uri endpoint, string userAgent)
         : base(parentClient, endpoint, credential: new("placeholder"))
     {
-        _clientRequestId = Guid.NewGuid().ToString();
-
         _endpoint = endpoint;
-        _clientWebSocket.Options.AddSubProtocol("realtime");
-        _clientWebSocket.Options.SetRequestHeader("User-Agent", userAgent);
-        _clientWebSocket.Options.SetRequestHeader("x-ms-client-request-id", _clientRequestId);
-    }
-
-    internal override async Task SendCommandAsync(InternalRealtimeRequestCommand command, CancellationToken cancellationToken = default)
-    {
-        BinaryData requestData = ModelReaderWriter.Write(command);
-
-        // Temporary backcompat quirk
-        if (command is InternalRealtimeRequestSessionUpdateCommand sessionUpdateCommand
-            && sessionUpdateCommand.Session?.TurnDetectionOptions is InternalRealtimeNoTurnDetection)
-        {
-            requestData = BinaryData.FromString(requestData.ToString()
-                .Replace(@"""turn_detection"":null", @"""turn_detection"":{""type"":""none""}"));
-        }
-
-        RequestOptions cancellationOptions = cancellationToken.ToRequestOptions();
-        await SendCommandAsync(requestData, cancellationOptions).ConfigureAwait(false);
+        _userAgent = userAgent;
     }
 }
+
+#endif

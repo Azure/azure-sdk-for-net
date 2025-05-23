@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.PlaywrightTesting
 {
     /// <summary>
     /// A class representing the PlaywrightTestingQuota data model.
-    /// A quota resource
+    /// A subscription quota resource.
     /// </summary>
     public partial class PlaywrightTestingQuotaData : ResourceData
     {
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.PlaywrightTesting
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="PlaywrightTestingQuotaData"/>. </summary>
-        public PlaywrightTestingQuotaData()
+        internal PlaywrightTestingQuotaData()
         {
         }
 
@@ -61,19 +61,15 @@ namespace Azure.ResourceManager.PlaywrightTesting
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="freeTrial"> The free-trial quota. </param>
-        /// <param name="provisioningState"> The status of the last operation. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PlaywrightTestingQuotaData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, FreeTrialProperties freeTrial, PlaywrightTestingProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal PlaywrightTestingQuotaData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, PlaywrightTestingQuotaProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
-            FreeTrial = freeTrial;
-            ProvisioningState = provisioningState;
+            Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The free-trial quota. </summary>
-        public FreeTrialProperties FreeTrial { get; set; }
-        /// <summary> The status of the last operation. </summary>
-        public PlaywrightTestingProvisioningState? ProvisioningState { get; }
+        /// <summary> The resource-specific properties for this resource. </summary>
+        public PlaywrightTestingQuotaProperties Properties { get; }
     }
 }

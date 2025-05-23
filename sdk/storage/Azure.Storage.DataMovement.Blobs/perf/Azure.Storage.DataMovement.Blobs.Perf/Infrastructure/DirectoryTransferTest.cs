@@ -14,7 +14,6 @@ namespace Azure.Storage.DataMovement.Blobs.Perf
     public abstract class DirectoryTransferTest<TOptions> : PerfTest<TOptions> where TOptions : DirectoryTransferOptions
     {
         protected BlobServiceClient BlobServiceClient { get; }
-        protected LocalFilesStorageResourceProvider LocalFileResourceProvider { get; }
         protected BlobsStorageResourceProvider BlobResourceProvider { get; }
 
         private TransferManager _transferManager;
@@ -23,14 +22,13 @@ namespace Azure.Storage.DataMovement.Blobs.Perf
         public DirectoryTransferTest(TOptions options) : base(options)
         {
             BlobServiceClient = new BlobServiceClient(PerfTestEnvironment.Instance.StorageEndpoint, PerfTestEnvironment.Instance.Credential);
-            LocalFileResourceProvider = new LocalFilesStorageResourceProvider();
             BlobResourceProvider = new BlobsStorageResourceProvider(PerfTestEnvironment.Instance.Credential);
-            _transferTimeout = TimeSpan.FromSeconds(10 + (Options.Count * Options.Size) / (1 * 1024 * 1024));
+            _transferTimeout = TimeSpan.FromSeconds(Options.Duration);
 
             TransferManagerOptions managerOptions = new()
             {
-                ErrorHandling = DataTransferErrorMode.StopOnAnyFailure,
-                CheckpointerOptions = Options.DisableCheckpointer ? TransferCheckpointStoreOptions.Disabled() : default,
+                ErrorMode = TransferErrorMode.StopOnAnyFailure,
+                CheckpointStoreOptions = Options.DisableCheckpointer ? TransferCheckpointStoreOptions.DisableCheckpoint() : default,
                 MaximumConcurrency = Options.Concurrency
             };
             _transferManager = new TransferManager(managerOptions);
@@ -83,14 +81,14 @@ namespace Azure.Storage.DataMovement.Blobs.Perf
             StorageResource destination,
             CancellationToken cancellationToken)
         {
-            DataTransferOptions options = new()
+            TransferOptions options = new()
             {
-                CreationPreference = StorageResourceCreationPreference.OverwriteIfExists,
+                CreationMode = StorageResourceCreationMode.OverwriteIfExists,
                 InitialTransferSize = Options.InitialTransferSize,
                 MaximumTransferChunkSize = Options.ChunkSize,
             };
             options.ItemTransferFailed += HandleFailure;
-            DataTransfer transfer = await _transferManager.StartTransferAsync(
+            TransferOperation transfer = await _transferManager.StartTransferAsync(
                 source, destination, options, cancellationToken);
 
             // The test runs for a specified duration and then cancels the token.
@@ -109,8 +107,8 @@ namespace Azure.Storage.DataMovement.Blobs.Perf
             CancellationTokenSource ctx = new(_transferTimeout);
             await transfer.WaitForCompletionAsync(ctx.Token);
 
-            if (!transfer.TransferStatus.HasCompletedSuccessfully &&
-                transfer.TransferStatus.State != DataTransferState.Paused)
+            if (!transfer.Status.HasCompletedSuccessfully &&
+                transfer.Status.State != TransferState.Paused)
             {
                 throw new Exception("A failure occurred during the transfer.");
             }
@@ -118,7 +116,7 @@ namespace Azure.Storage.DataMovement.Blobs.Perf
 
         private Task HandleFailure(TransferItemFailedEventArgs args)
         {
-            Console.WriteLine(args.Exception);
+            Console.WriteLine($"Transfer failure event - {args.Exception}");
             return Task.CompletedTask;
         }
     }

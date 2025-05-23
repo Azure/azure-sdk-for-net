@@ -1,16 +1,28 @@
 # Release History
 
-## 2.0.0-beta.2 (Unreleased)
+## 2.0.0-beta.3 (Unreleased)
 
 ### Features Added
-
-- Exposed `JsonModelWriteCore` for model serialization procedure.
 
 ### Breaking Changes
 
 ### Bugs Fixed
 
 ### Other Changes
+
+## 2.0.0-beta.2 (2025-02-03)
+
+### Features Added
+
+- Added three differenct type of Redaction Policy `CharacterMaskPolicyType`, `EntityMaskTypePolicyType` and `NoMaskPolicyType` for the function `AnalyzeConversations`  
+- Added support for analyze-conversation API Versions
+  - 2024-11-01
+  - 2024-11-15-preview
+
+### Other Changes
+
+- Changed property `CreditCardNumberValue` to `CreditCardValue` and `PhoneNumberValue` to `PhoneValue` for class `ConversationPiiCategoryExclusions`
+- Added a new `Instruction` property to class `ConversationSummarizationActionContent`
 
 ## 2.0.0-beta.1 (2024-08-01)
 

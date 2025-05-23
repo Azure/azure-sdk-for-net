@@ -44,10 +44,20 @@ namespace Azure.ResourceManager.StandbyPool.Models
                 }
                 writer.WriteEndArray();
             }
+            if (options.Format != "W" && Optional.IsDefined(Status))
+            {
+                writer.WritePropertyName("status"u8);
+                writer.WriteObjectValue(Status, options);
+            }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(Prediction))
+            {
+                writer.WritePropertyName("prediction"u8);
+                writer.WriteObjectValue(Prediction, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -57,7 +67,7 @@ namespace Azure.ResourceManager.StandbyPool.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -87,7 +97,9 @@ namespace Azure.ResourceManager.StandbyPool.Models
                 return null;
             }
             IReadOnlyList<ContainerGroupInstanceCountSummary> instanceCountSummary = default;
+            StandbyPoolStatus status = default;
             StandbyProvisioningState? provisioningState = default;
+            StandbyContainerGroupPoolPrediction prediction = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -102,6 +114,15 @@ namespace Azure.ResourceManager.StandbyPool.Models
                     instanceCountSummary = array;
                     continue;
                 }
+                if (property.NameEquals("status"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    status = StandbyPoolStatus.DeserializeStandbyPoolStatus(property.Value, options);
+                    continue;
+                }
                 if (property.NameEquals("provisioningState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -111,13 +132,22 @@ namespace Azure.ResourceManager.StandbyPool.Models
                     provisioningState = new StandbyProvisioningState(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("prediction"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    prediction = StandbyContainerGroupPoolPrediction.DeserializeStandbyContainerGroupPoolPrediction(property.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new StandbyContainerGroupPoolRuntimeViewProperties(instanceCountSummary, provisioningState, serializedAdditionalRawData);
+            return new StandbyContainerGroupPoolRuntimeViewProperties(instanceCountSummary, status, provisioningState, prediction, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StandbyContainerGroupPoolRuntimeViewProperties>.Write(ModelReaderWriterOptions options)
@@ -127,7 +157,7 @@ namespace Azure.ResourceManager.StandbyPool.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerStandbyPoolContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(StandbyContainerGroupPoolRuntimeViewProperties)} does not support writing '{options.Format}' format.");
             }
@@ -141,7 +171,7 @@ namespace Azure.ResourceManager.StandbyPool.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeStandbyContainerGroupPoolRuntimeViewProperties(document.RootElement, options);
                     }
                 default:

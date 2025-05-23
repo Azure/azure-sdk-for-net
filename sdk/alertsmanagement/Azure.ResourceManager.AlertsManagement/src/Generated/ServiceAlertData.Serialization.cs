@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.AlertsManagement
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAlertsManagementContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ServiceAlertData)} does not support writing '{options.Format}' format.");
             }
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.AlertsManagement
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeServiceAlertData(document.RootElement, options);
                     }
                 default:

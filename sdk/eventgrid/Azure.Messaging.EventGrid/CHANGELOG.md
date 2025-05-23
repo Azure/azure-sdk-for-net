@@ -1,6 +1,6 @@
 # Release History
 
-## 4.28.0-beta.1 (Unreleased)
+## 4.32.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,36 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 4.31.0 (2025-05-19)
+
+### Features Added
+
+- Added new communication events.
+- Added new API management events.
+- Add `EdgeSolutionVersionPublishedEventData` Edge event.
+
+## 4.30.0 (2025-02-14)
+
+### Features Added
+
+- Added `MessageId`, `MessageType`, and `Reaction` properties to the `AcsMessageReceivedEventData` event.
+- Added the `Animated` property to `AcsMessageMediaContent` event.
+
+## 4.29.0 (2025-01-21)
+
+### Features Added
+
+- Added `RecipientMailServerHostName` property to `AcsEmailDeliveryReportStatusDetails`.
+- Added `InternetMessageId` property to `AcsEmailDeliveryReportReceivedEventData` event.
+- Added `SegmentCount` property to `AcsSmsReceivedEventData` event.
+
+## 4.28.0 (2024-11-18)
+
+### Features Added
+
+- Added `ResourceNotificationsContainerServiceEventResourcesScheduledEventData` event.
+- Added `PolicyRunSummary` property to `StorageLifecyclePolicyCompletedEventData` event.
 
 ## 4.27.0 (2024-10-14)
 

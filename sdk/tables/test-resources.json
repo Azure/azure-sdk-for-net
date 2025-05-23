@@ -1,5 +1,5 @@
 {
-    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
         "baseName": {
@@ -12,18 +12,18 @@
             }
         },
         "cosmosEndpointSuffix": {
-          "type": "string",
-          "defaultValue": "cosmos.azure.com",
-          "metadata": {
-              "description": "The url suffix to use when accessing the cosmos data plane."
-          }
+            "type": "string",
+            "defaultValue": "cosmos.azure.com",
+            "metadata": {
+                "description": "The url suffix to use when accessing the cosmos data plane."
+            }
         },
         "storageEndpointSuffix": {
-          "type": "string",
-          "defaultValue": "core.windows.net",
-          "metadata": {
-              "description": "The url suffix to use when accessing the storage data plane."
-          }
+            "type": "string",
+            "defaultValue": "core.windows.net",
+            "metadata": {
+                "description": "The url suffix to use when accessing the storage data plane."
+            }
         }
     },
     "variables": {
@@ -48,7 +48,16 @@
             "virtualNetworkRules": [],
             "ipRules": [],
             "defaultAction": "Allow"
-        }
+        },
+        "customCosmosRoleName": "Azure Cosmos DB SDK role for Table Data Plane",
+        "customCosmosRoleDescription": "Azure Cosmos DB SDK role for Table Data Plane",
+        "customCosmosRoleActions": [
+            "Microsoft.DocumentDB/databaseAccounts/readMetadata",
+            "Microsoft.DocumentDB/databaseAccounts/tables/*",
+            "Microsoft.DocumentDB/databaseAccounts/tables/containers/*",
+            "Microsoft.DocumentDB/databaseAccounts/tables/containers/entities/*",
+            "Microsoft.DocumentDB/databaseAccounts/throughputSettings/read"
+        ]
     },
     "resources": [
         {
@@ -118,6 +127,39 @@
                 ],
                 "ipRules": []
             }
+        },
+        {
+          "dependsOn": [
+            "[resourceId('Microsoft.DocumentDB/databaseAccounts', variables('primaryAccountName'))]"
+          ],
+          "type": "Microsoft.DocumentDB/databaseAccounts/tableRoleDefinitions",
+          "apiVersion": "2024-08-15",
+          "name": "[concat(variables('primaryAccountName'), '/', guid(variables('customCosmosRoleName')))]",
+          "properties": {
+            "roleName": "[variables('customCosmosRoleName')]",
+            "description": "[variables('customCosmosRoleDescription')]",
+            "permissions": [
+              {
+                "dataActions": "[variables('customCosmosRoleActions')]"
+              }
+            ],
+            "assignableScopes": [
+              "[concat('/subscriptions/', subscription().subscriptionId, '/resourceGroups/', resourceGroup().name, '/providers/Microsoft.DocumentDB/databaseAccounts/', variables('primaryAccountName'))]"
+            ]
+          }
+        },
+        {
+          "dependsOn": [
+            "[resourceId('Microsoft.DocumentDB/databaseAccounts/tableRoleDefinitions', variables('primaryAccountName'), guid(variables('customCosmosRoleName')))]"
+          ],
+          "type": "Microsoft.DocumentDB/databaseAccounts/tableRoleAssignments",
+          "apiVersion": "2024-08-15",
+          "name": "[concat(variables('primaryAccountName'), '/', guid(variables('customCosmosRoleName')))]",
+          "properties": {
+            "scope": "[concat('/subscriptions/', subscription().subscriptionId, '/resourceGroups/', resourceGroup().name, '/providers/Microsoft.DocumentDB/databaseAccounts/', variables('primaryAccountName'))]",
+            "roleDefinitionId": "[resourceId('Microsoft.DocumentDB/databaseAccounts/tableRoleDefinitions', variables('primaryAccountName'), guid(variables('customCosmosRoleName')))]",
+            "principalId": "[parameters('testApplicationOid')]"
+          }
         }
     ],
     "outputs": {

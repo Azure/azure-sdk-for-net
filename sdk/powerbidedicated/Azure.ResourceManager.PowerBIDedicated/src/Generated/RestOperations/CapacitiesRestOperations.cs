@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
                 case 200:
                     {
                         DedicatedCapacityData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DedicatedCapacityData.DeserializeDedicatedCapacityData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
                 case 200:
                     {
                         DedicatedCapacityData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DedicatedCapacityData.DeserializeDedicatedCapacityData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -624,7 +624,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
                 case 200:
                     {
                         DedicatedCapacities value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DedicatedCapacities.DeserializeDedicatedCapacities(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -651,7 +651,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
                 case 200:
                     {
                         DedicatedCapacities value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DedicatedCapacities.DeserializeDedicatedCapacities(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -704,7 +704,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
                 case 200:
                     {
                         DedicatedCapacities value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DedicatedCapacities.DeserializeDedicatedCapacities(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -729,7 +729,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
                 case 200:
                     {
                         DedicatedCapacities value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DedicatedCapacities.DeserializeDedicatedCapacities(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -782,7 +782,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
                 case 200:
                     {
                         SkuEnumerationForNewResourceResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SkuEnumerationForNewResourceResult.DeserializeSkuEnumerationForNewResourceResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -807,7 +807,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
                 case 200:
                     {
                         SkuEnumerationForNewResourceResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SkuEnumerationForNewResourceResult.DeserializeSkuEnumerationForNewResourceResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -872,7 +872,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
                 case 200:
                     {
                         SkuEnumerationForExistingResourceResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SkuEnumerationForExistingResourceResult.DeserializeSkuEnumerationForExistingResourceResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -901,7 +901,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
                 case 200:
                     {
                         SkuEnumerationForExistingResourceResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SkuEnumerationForExistingResourceResult.DeserializeSkuEnumerationForExistingResourceResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -965,7 +965,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
                 case 200:
                     {
                         CheckCapacityNameAvailabilityResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CheckCapacityNameAvailabilityResult.DeserializeCheckCapacityNameAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -993,7 +993,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
                 case 200:
                     {
                         CheckCapacityNameAvailabilityResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CheckCapacityNameAvailabilityResult.DeserializeCheckCapacityNameAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

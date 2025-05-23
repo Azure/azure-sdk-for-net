@@ -10,18 +10,18 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Sql.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Sql.Samples
 {
     public partial class Sample_ManagedInstanceDtcCollection
     {
-        // Gets a list of managed instance DTC settings.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetAll_GetsAListOfManagedInstanceDTCSettings()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task CreateOrUpdate_UpdatesManagedInstanceDTCSettingsByEnablingDTC()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2022-05-01-preview/examples/ManagedInstanceDtcList.json
-            // this example is just showing the usage of "ManagedInstanceDtcs_ListByManagedInstance" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-05-01-preview/examples/ManagedInstanceDtcUpdateEnableDtc.json
+            // this example is just showing the usage of "ManagedInstanceDtcs_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -39,25 +39,80 @@ namespace Azure.ResourceManager.Sql.Samples
             // get the collection of this ManagedInstanceDtcResource
             ManagedInstanceDtcCollection collection = managedInstance.GetManagedInstanceDtcs();
 
-            // invoke the operation and iterate over the result
-            await foreach (ManagedInstanceDtcResource item in collection.GetAllAsync())
+            // invoke the operation
+            DtcName dtcName = DtcName.Current;
+            ManagedInstanceDtcData data = new ManagedInstanceDtcData
             {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                ManagedInstanceDtcData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
+                DtcEnabled = true,
+            };
+            ArmOperation<ManagedInstanceDtcResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, dtcName, data);
+            ManagedInstanceDtcResource result = lro.Value;
 
-            Console.WriteLine($"Succeeded");
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            ManagedInstanceDtcData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Gets managed instance DTC settings.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task CreateOrUpdate_UpdatesManagedInstanceDTCSettingsWithAllOptionalParametersSpecified()
+        {
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-05-01-preview/examples/ManagedInstanceDtcUpdateMax.json
+            // this example is just showing the usage of "ManagedInstanceDtcs_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ManagedInstanceResource created on azure
+            // for more information of creating ManagedInstanceResource, please refer to the document of ManagedInstanceResource
+            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string resourceGroupName = "testrg";
+            string managedInstanceName = "testinstance";
+            ResourceIdentifier managedInstanceResourceId = ManagedInstanceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, managedInstanceName);
+            ManagedInstanceResource managedInstance = client.GetManagedInstanceResource(managedInstanceResourceId);
+
+            // get the collection of this ManagedInstanceDtcResource
+            ManagedInstanceDtcCollection collection = managedInstance.GetManagedInstanceDtcs();
+
+            // invoke the operation
+            DtcName dtcName = DtcName.Current;
+            ManagedInstanceDtcData data = new ManagedInstanceDtcData
+            {
+                DtcEnabled = true,
+                SecuritySettings = new ManagedInstanceDtcSecuritySettings
+                {
+                    TransactionManagerCommunicationSettings = new ManagedInstanceDtcTransactionManagerCommunicationSettings
+                    {
+                        AllowInboundEnabled = false,
+                        AllowOutboundEnabled = true,
+                        Authentication = "NoAuth",
+                    },
+                    IsXATransactionsEnabled = false,
+                    SnaLu6Point2TransactionsEnabled = false,
+                    XATransactionsDefaultTimeoutInSeconds = 1000,
+                    XATransactionsMaximumTimeoutInSeconds = 3000,
+                },
+                ExternalDnsSuffixSearchList = { "dns.example1.com", "dns.example2.com" },
+            };
+            ArmOperation<ManagedInstanceDtcResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, dtcName, data);
+            ManagedInstanceDtcResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            ManagedInstanceDtcData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetsManagedInstanceDTCSettings()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2022-05-01-preview/examples/ManagedInstanceDtcGet.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-05-01-preview/examples/ManagedInstanceDtcGet.json
             // this example is just showing the usage of "ManagedInstanceDtcs_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -87,12 +142,47 @@ namespace Azure.ResourceManager.Sql.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Gets managed instance DTC settings.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetAll_GetsAListOfManagedInstanceDTCSettings()
+        {
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-05-01-preview/examples/ManagedInstanceDtcList.json
+            // this example is just showing the usage of "ManagedInstanceDtcs_ListByManagedInstance" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ManagedInstanceResource created on azure
+            // for more information of creating ManagedInstanceResource, please refer to the document of ManagedInstanceResource
+            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string resourceGroupName = "testrg";
+            string managedInstanceName = "testinstance";
+            ResourceIdentifier managedInstanceResourceId = ManagedInstanceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, managedInstanceName);
+            ManagedInstanceResource managedInstance = client.GetManagedInstanceResource(managedInstanceResourceId);
+
+            // get the collection of this ManagedInstanceDtcResource
+            ManagedInstanceDtcCollection collection = managedInstance.GetManagedInstanceDtcs();
+
+            // invoke the operation and iterate over the result
+            await foreach (ManagedInstanceDtcResource item in collection.GetAllAsync())
+            {
+                // the variable item is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                ManagedInstanceDtcData resourceData = item.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetsManagedInstanceDTCSettings()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2022-05-01-preview/examples/ManagedInstanceDtcGet.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-05-01-preview/examples/ManagedInstanceDtcGet.json
             // this example is just showing the usage of "ManagedInstanceDtcs_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -118,12 +208,11 @@ namespace Azure.ResourceManager.Sql.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Gets managed instance DTC settings.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetsManagedInstanceDTCSettings()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2022-05-01-preview/examples/ManagedInstanceDtcGet.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-05-01-preview/examples/ManagedInstanceDtcGet.json
             // this example is just showing the usage of "ManagedInstanceDtcs_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -149,7 +238,7 @@ namespace Azure.ResourceManager.Sql.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -159,103 +248,6 @@ namespace Azure.ResourceManager.Sql.Samples
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
-        }
-
-        // Updates managed instance DTC settings by enabling DTC.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task CreateOrUpdate_UpdatesManagedInstanceDTCSettingsByEnablingDTC()
-        {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2022-05-01-preview/examples/ManagedInstanceDtcUpdateEnableDtc.json
-            // this example is just showing the usage of "ManagedInstanceDtcs_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ManagedInstanceResource created on azure
-            // for more information of creating ManagedInstanceResource, please refer to the document of ManagedInstanceResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
-            string resourceGroupName = "testrg";
-            string managedInstanceName = "testinstance";
-            ResourceIdentifier managedInstanceResourceId = ManagedInstanceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, managedInstanceName);
-            ManagedInstanceResource managedInstance = client.GetManagedInstanceResource(managedInstanceResourceId);
-
-            // get the collection of this ManagedInstanceDtcResource
-            ManagedInstanceDtcCollection collection = managedInstance.GetManagedInstanceDtcs();
-
-            // invoke the operation
-            DtcName dtcName = DtcName.Current;
-            ManagedInstanceDtcData data = new ManagedInstanceDtcData()
-            {
-                DtcEnabled = true,
-            };
-            ArmOperation<ManagedInstanceDtcResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, dtcName, data);
-            ManagedInstanceDtcResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            ManagedInstanceDtcData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // Updates managed instance DTC settings with all optional parameters specified.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task CreateOrUpdate_UpdatesManagedInstanceDTCSettingsWithAllOptionalParametersSpecified()
-        {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2022-05-01-preview/examples/ManagedInstanceDtcUpdateMax.json
-            // this example is just showing the usage of "ManagedInstanceDtcs_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ManagedInstanceResource created on azure
-            // for more information of creating ManagedInstanceResource, please refer to the document of ManagedInstanceResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
-            string resourceGroupName = "testrg";
-            string managedInstanceName = "testinstance";
-            ResourceIdentifier managedInstanceResourceId = ManagedInstanceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, managedInstanceName);
-            ManagedInstanceResource managedInstance = client.GetManagedInstanceResource(managedInstanceResourceId);
-
-            // get the collection of this ManagedInstanceDtcResource
-            ManagedInstanceDtcCollection collection = managedInstance.GetManagedInstanceDtcs();
-
-            // invoke the operation
-            DtcName dtcName = DtcName.Current;
-            ManagedInstanceDtcData data = new ManagedInstanceDtcData()
-            {
-                DtcEnabled = true,
-                SecuritySettings = new ManagedInstanceDtcSecuritySettings()
-                {
-                    TransactionManagerCommunicationSettings = new ManagedInstanceDtcTransactionManagerCommunicationSettings()
-                    {
-                        AllowInboundEnabled = false,
-                        AllowOutboundEnabled = true,
-                        Authentication = "NoAuth",
-                    },
-                    IsXATransactionsEnabled = false,
-                    SnaLu6Point2TransactionsEnabled = false,
-                    XATransactionsDefaultTimeoutInSeconds = 1000,
-                    XATransactionsMaximumTimeoutInSeconds = 3000,
-                },
-                ExternalDnsSuffixSearchList =
-{
-"dns.example1.com","dns.example2.com"
-},
-            };
-            ArmOperation<ManagedInstanceDtcResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, dtcName, data);
-            ManagedInstanceDtcResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            ManagedInstanceDtcData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
     }
 }

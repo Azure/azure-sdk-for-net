@@ -71,6 +71,7 @@ namespace Azure.ResourceManager.Resources.Models
             DebugSetting debugSetting = default;
             ErrorDeployment onErrorDeployment = default;
             ExpressionEvaluationOptions expressionEvaluationOptions = default;
+            ValidationLevel? validationLevel = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -152,6 +153,15 @@ namespace Azure.ResourceManager.Resources.Models
                     expressionEvaluationOptions = ExpressionEvaluationOptions.DeserializeExpressionEvaluationOptions(property.Value, options);
                     continue;
                 }
+                if (property.NameEquals("validationLevel"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    validationLevel = new ValidationLevel(property.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -167,6 +177,7 @@ namespace Azure.ResourceManager.Resources.Models
                 debugSetting,
                 onErrorDeployment,
                 expressionEvaluationOptions,
+                validationLevel,
                 serializedAdditionalRawData,
                 whatIfSettings);
         }
@@ -178,7 +189,7 @@ namespace Azure.ResourceManager.Resources.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerResourcesContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ArmDeploymentWhatIfProperties)} does not support writing '{options.Format}' format.");
             }
@@ -192,7 +203,7 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeArmDeploymentWhatIfProperties(document.RootElement, options);
                     }
                 default:

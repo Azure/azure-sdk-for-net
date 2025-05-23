@@ -10,17 +10,17 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Sql.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Sql.Samples
 {
     public partial class Sample_SqlServerConnectionPolicyResource
     {
-        // Gets a server connection policy
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetsAServerConnectionPolicy()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2021-05-01-preview/examples/ServerConnectionPoliciesGet.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-05-01-preview/examples/ServerConnectionPoliciesGet.json
             // this example is just showing the usage of "ServerConnectionPolicies_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -47,12 +47,11 @@ namespace Azure.ResourceManager.Sql.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Updates a server connection policy
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdatesAServerConnectionPolicy()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2021-05-01-preview/examples/ServerConnectionPoliciesUpdate.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-05-01-preview/examples/ServerConnectionPoliciesUpdate.json
             // this example is just showing the usage of "ServerConnectionPolicies_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -70,7 +69,7 @@ namespace Azure.ResourceManager.Sql.Samples
             SqlServerConnectionPolicyResource sqlServerConnectionPolicy = client.GetSqlServerConnectionPolicyResource(sqlServerConnectionPolicyResourceId);
 
             // invoke the operation
-            SqlServerConnectionPolicyData data = new SqlServerConnectionPolicyData()
+            SqlServerConnectionPolicyData data = new SqlServerConnectionPolicyData
             {
                 ConnectionType = ServerConnectionType.Redirect,
             };

@@ -16,7 +16,7 @@ namespace Azure.AI.Language.Text
         /// <summary> Initializes a new instance of <see cref="AnalyzeTextEntitiesResult"/>. </summary>
         /// <param name="results"> Results for entity recognition. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="results"/> is null. </exception>
-        internal AnalyzeTextEntitiesResult(EntitiesResult results)
+        internal AnalyzeTextEntitiesResult(EntitiesWithMetadataAutoResult results)
         {
             Argument.AssertNotNull(results, nameof(results));
 
@@ -28,7 +28,7 @@ namespace Azure.AI.Language.Text
         /// <param name="kind"> The kind of task result. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="results"> Results for entity recognition. </param>
-        internal AnalyzeTextEntitiesResult(AnalyzeTextResultsKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, EntitiesResult results) : base(kind, serializedAdditionalRawData)
+        internal AnalyzeTextEntitiesResult(AnalyzeTextResultsKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, EntitiesWithMetadataAutoResult results) : base(kind, serializedAdditionalRawData)
         {
             Results = results;
         }
@@ -39,6 +39,6 @@ namespace Azure.AI.Language.Text
         }
 
         /// <summary> Results for entity recognition. </summary>
-        public EntitiesResult Results { get; }
+        public EntitiesWithMetadataAutoResult Results { get; }
     }
 }

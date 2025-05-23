@@ -62,7 +62,7 @@ namespace Azure.Analytics.Defender.Easm
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -147,7 +147,7 @@ namespace Azure.Analytics.Defender.Easm
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureAnalyticsDefenderEasmContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ScanMetadata)} does not support writing '{options.Format}' format.");
             }
@@ -161,7 +161,7 @@ namespace Azure.Analytics.Defender.Easm
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeScanMetadata(document.RootElement, options);
                     }
                 default:
@@ -175,7 +175,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static ScanMetadata FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeScanMetadata(document.RootElement);
         }
 

@@ -46,12 +46,25 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningServicesDatasetDriftDetectedEventData"/>. </summary>
-        /// <param name="startTime"> The start time of the target dataset time series that resulted in drift detection. </param>
-        /// <param name="endTime"> The end time of the target dataset time series that resulted in drift detection. </param>
-        internal MachineLearningServicesDatasetDriftDetectedEventData(DateTimeOffset startTime, DateTimeOffset endTime)
+        /// <param name="dataDriftId"> The ID of the data drift monitor that triggered the event. </param>
+        /// <param name="dataDriftName"> The name of the data drift monitor that triggered the event. </param>
+        /// <param name="runId"> The ID of the Run that detected data drift. </param>
+        /// <param name="baseDatasetId"> The ID of the base Dataset used to detect drift. </param>
+        /// <param name="targetDatasetId"> The ID of the target Dataset used to detect drift. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="dataDriftId"/>, <paramref name="dataDriftName"/>, <paramref name="runId"/>, <paramref name="baseDatasetId"/> or <paramref name="targetDatasetId"/> is null. </exception>
+        internal MachineLearningServicesDatasetDriftDetectedEventData(string dataDriftId, string dataDriftName, string runId, string baseDatasetId, string targetDatasetId)
         {
-            StartTime = startTime;
-            EndTime = endTime;
+            Argument.AssertNotNull(dataDriftId, nameof(dataDriftId));
+            Argument.AssertNotNull(dataDriftName, nameof(dataDriftName));
+            Argument.AssertNotNull(runId, nameof(runId));
+            Argument.AssertNotNull(baseDatasetId, nameof(baseDatasetId));
+            Argument.AssertNotNull(targetDatasetId, nameof(targetDatasetId));
+
+            DataDriftId = dataDriftId;
+            DataDriftName = dataDriftName;
+            RunId = runId;
+            BaseDatasetId = baseDatasetId;
+            TargetDatasetId = targetDatasetId;
         }
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningServicesDatasetDriftDetectedEventData"/>. </summary>
@@ -64,7 +77,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="startTime"> The start time of the target dataset time series that resulted in drift detection. </param>
         /// <param name="endTime"> The end time of the target dataset time series that resulted in drift detection. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MachineLearningServicesDatasetDriftDetectedEventData(string dataDriftId, string dataDriftName, string runId, string baseDatasetId, string targetDatasetId, double? driftCoefficient, DateTimeOffset startTime, DateTimeOffset endTime, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MachineLearningServicesDatasetDriftDetectedEventData(string dataDriftId, string dataDriftName, string runId, string baseDatasetId, string targetDatasetId, double? driftCoefficient, DateTimeOffset? startTime, DateTimeOffset? endTime, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DataDriftId = dataDriftId;
             DataDriftName = dataDriftName;
@@ -95,8 +108,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <summary> The coefficient result that triggered the event. </summary>
         public double? DriftCoefficient { get; }
         /// <summary> The start time of the target dataset time series that resulted in drift detection. </summary>
-        public DateTimeOffset StartTime { get; }
+        public DateTimeOffset? StartTime { get; }
         /// <summary> The end time of the target dataset time series that resulted in drift detection. </summary>
-        public DateTimeOffset EndTime { get; }
+        public DateTimeOffset? EndTime { get; }
     }
 }

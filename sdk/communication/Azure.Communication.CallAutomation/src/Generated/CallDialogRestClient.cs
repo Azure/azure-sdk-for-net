@@ -29,7 +29,7 @@ namespace Azure.Communication.CallAutomation
         /// <param name="endpoint"> The endpoint of the Azure Communication resource. </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/>, <paramref name="endpoint"/> or <paramref name="apiVersion"/> is null. </exception>
-        public CallDialogRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion = "2023-10-03-preview")
+        public CallDialogRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion = "2024-09-01-preview")
         {
             ClientDiagnostics = clientDiagnostics ?? throw new ArgumentNullException(nameof(clientDiagnostics));
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
@@ -87,7 +87,7 @@ namespace Azure.Communication.CallAutomation
                 case 201:
                     {
                         DialogStateResponseInternal value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DialogStateResponseInternal.DeserializeDialogStateResponseInternal(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -125,7 +125,7 @@ namespace Azure.Communication.CallAutomation
                 case 201:
                     {
                         DialogStateResponseInternal value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DialogStateResponseInternal.DeserializeDialogStateResponseInternal(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -155,10 +155,9 @@ namespace Azure.Communication.CallAutomation
             return message;
         }
 
-        /// <summary> Stop a dialog. </summary>
-        /// <param name="callConnectionId"> The call connection id. </param>
-        /// <param name="dialogId"> The dialog id. </param>
-        /// <param name="operationCallbackUri"> Operation callback URI. </param>
+        /// <param name="callConnectionId"> The <see cref="string"/> to use. </param>
+        /// <param name="dialogId"> The <see cref="string"/> to use. </param>
+        /// <param name="operationCallbackUri"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="dialogId"/> is null. </exception>
         public async Task<Response> StopDialogAsync(string callConnectionId, string dialogId, string operationCallbackUri = null, CancellationToken cancellationToken = default)
@@ -183,10 +182,9 @@ namespace Azure.Communication.CallAutomation
             }
         }
 
-        /// <summary> Stop a dialog. </summary>
-        /// <param name="callConnectionId"> The call connection id. </param>
-        /// <param name="dialogId"> The dialog id. </param>
-        /// <param name="operationCallbackUri"> Operation callback URI. </param>
+        /// <param name="callConnectionId"> The <see cref="string"/> to use. </param>
+        /// <param name="dialogId"> The <see cref="string"/> to use. </param>
+        /// <param name="operationCallbackUri"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="dialogId"/> is null. </exception>
         public Response StopDialog(string callConnectionId, string dialogId, string operationCallbackUri = null, CancellationToken cancellationToken = default)

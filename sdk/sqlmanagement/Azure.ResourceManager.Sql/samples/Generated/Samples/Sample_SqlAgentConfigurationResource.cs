@@ -10,17 +10,17 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Sql.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Sql.Samples
 {
     public partial class Sample_SqlAgentConfigurationResource
     {
-        // Gets current instance sql agent configuration.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetsCurrentInstanceSqlAgentConfiguration()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2020-11-01-preview/examples/SqlAgentConfigurationGet.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-05-01-preview/examples/SqlAgentConfigurationGet.json
             // this example is just showing the usage of "SqlAgent_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -46,12 +46,11 @@ namespace Azure.ResourceManager.Sql.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Puts new sql agent configuration to instance.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_PutsNewSqlAgentConfigurationToInstance()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2020-11-01-preview/examples/SqlAgentConfigurationPut.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-05-01-preview/examples/SqlAgentConfigurationPut.json
             // this example is just showing the usage of "SqlAgent_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -68,7 +67,7 @@ namespace Azure.ResourceManager.Sql.Samples
             SqlAgentConfigurationResource sqlAgentConfiguration = client.GetSqlAgentConfigurationResource(sqlAgentConfigurationResourceId);
 
             // invoke the operation
-            SqlAgentConfigurationData data = new SqlAgentConfigurationData()
+            SqlAgentConfigurationData data = new SqlAgentConfigurationData
             {
                 State = SqlAgentConfigurationPropertiesState.Enabled,
             };

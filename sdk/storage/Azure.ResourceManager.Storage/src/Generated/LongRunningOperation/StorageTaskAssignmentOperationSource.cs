@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +23,14 @@ namespace Azure.ResourceManager.Storage
 
         StorageTaskAssignmentResource IOperationSource<StorageTaskAssignmentResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = StorageTaskAssignmentData.DeserializeStorageTaskAssignmentData(document.RootElement);
+            var data = ModelReaderWriter.Read<StorageTaskAssignmentData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerStorageContext.Default);
             return new StorageTaskAssignmentResource(_client, data);
         }
 
         async ValueTask<StorageTaskAssignmentResource> IOperationSource<StorageTaskAssignmentResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = StorageTaskAssignmentData.DeserializeStorageTaskAssignmentData(document.RootElement);
-            return new StorageTaskAssignmentResource(_client, data);
+            var data = ModelReaderWriter.Read<StorageTaskAssignmentData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerStorageContext.Default);
+            return await Task.FromResult(new StorageTaskAssignmentResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Azure.AI.Language.Text
 {
@@ -52,23 +51,18 @@ namespace Azure.AI.Language.Text
         /// <param name="offset"> Start position for the entity text. Use of different 'stringIndexType' values can affect the offset returned. </param>
         /// <param name="length"> Length for the entity text. Use of different 'stringIndexType' values can affect the length returned. </param>
         /// <param name="confidenceScore"> Confidence score between 0 and 1 of the extracted entity. </param>
-        /// <param name="type"> An entity type is the lowest (or finest) granularity at which the entity has been detected. The type maps to the specific metadata attributes associated with the entity detected. </param>
-        /// <param name="tags"> List of entity tags. Tags are to express some similarities/affinity between entities. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="text"/>, <paramref name="category"/>, <paramref name="type"/> or <paramref name="tags"/> is null. </exception>
-        internal NamedEntityWithMetadata(string text, string category, int offset, int length, double confidenceScore, string type, IEnumerable<EntityTag> tags)
+        /// <exception cref="ArgumentNullException"> <paramref name="text"/> or <paramref name="category"/> is null. </exception>
+        internal NamedEntityWithMetadata(string text, string category, int offset, int length, double confidenceScore)
         {
             Argument.AssertNotNull(text, nameof(text));
             Argument.AssertNotNull(category, nameof(category));
-            Argument.AssertNotNull(type, nameof(type));
-            Argument.AssertNotNull(tags, nameof(tags));
 
             Text = text;
             Category = category;
             Offset = offset;
             Length = length;
             ConfidenceScore = confidenceScore;
-            Type = type;
-            Tags = tags.ToList();
+            Tags = new ChangeTrackingList<EntityTag>();
         }
 
         /// <summary> Initializes a new instance of <see cref="NamedEntityWithMetadata"/>. </summary>

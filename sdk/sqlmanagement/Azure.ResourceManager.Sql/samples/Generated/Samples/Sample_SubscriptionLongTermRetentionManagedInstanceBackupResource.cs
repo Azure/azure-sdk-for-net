@@ -9,17 +9,17 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Sql.Samples
 {
     public partial class Sample_SubscriptionLongTermRetentionManagedInstanceBackupResource
     {
-        // Get the long term retention backup of a managed database.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetTheLongTermRetentionBackupOfAManagedDatabase()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2021-05-01-preview/examples/ManagedInstanceLongTermRetentionBackupGet.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-05-01-preview/examples/ManagedInstanceLongTermRetentionBackupGet.json
             // this example is just showing the usage of "LongTermRetentionManagedInstanceBackups_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Sql.Samples
             AzureLocation locationName = new AzureLocation("japaneast");
             string managedInstanceName = "testInstance";
             string databaseName = "testDatabase";
-            string backupName = "55555555-6666-7777-8888-999999999999;131637960820000000";
+            string backupName = "55555555-6666-7777-8888-999999999999;131637960820000000;Archive";
             ResourceIdentifier subscriptionLongTermRetentionManagedInstanceBackupResourceId = SubscriptionLongTermRetentionManagedInstanceBackupResource.CreateResourceIdentifier(subscriptionId, locationName, managedInstanceName, databaseName, backupName);
             SubscriptionLongTermRetentionManagedInstanceBackupResource subscriptionLongTermRetentionManagedInstanceBackup = client.GetSubscriptionLongTermRetentionManagedInstanceBackupResource(subscriptionLongTermRetentionManagedInstanceBackupResourceId);
 
@@ -47,12 +47,11 @@ namespace Azure.ResourceManager.Sql.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Delete the long term retention backup.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteTheLongTermRetentionBackup()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2021-05-01-preview/examples/ManagedInstanceLongTermRetentionBackupDelete.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-05-01-preview/examples/ManagedInstanceLongTermRetentionBackupDelete.json
             // this example is just showing the usage of "LongTermRetentionManagedInstanceBackups_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -66,14 +65,14 @@ namespace Azure.ResourceManager.Sql.Samples
             AzureLocation locationName = new AzureLocation("japaneast");
             string managedInstanceName = "testInstance";
             string databaseName = "testDatabase";
-            string backupName = "55555555-6666-7777-8888-999999999999;131637960820000000";
+            string backupName = "55555555-6666-7777-8888-999999999999;131637960820000000;Hot";
             ResourceIdentifier subscriptionLongTermRetentionManagedInstanceBackupResourceId = SubscriptionLongTermRetentionManagedInstanceBackupResource.CreateResourceIdentifier(subscriptionId, locationName, managedInstanceName, databaseName, backupName);
             SubscriptionLongTermRetentionManagedInstanceBackupResource subscriptionLongTermRetentionManagedInstanceBackup = client.GetSubscriptionLongTermRetentionManagedInstanceBackupResource(subscriptionLongTermRetentionManagedInstanceBackupResourceId);
 
             // invoke the operation
             await subscriptionLongTermRetentionManagedInstanceBackup.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

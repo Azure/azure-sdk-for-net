@@ -19,13 +19,21 @@ namespace Azure.AI.Vision.Face
 
         void IJsonModel<FaceRectangle>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<FaceRectangle>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(FaceRectangle)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("top"u8);
             writer.WriteNumberValue(Top);
             writer.WritePropertyName("left"u8);
@@ -42,14 +50,13 @@ namespace Azure.AI.Vision.Face
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         FaceRectangle IJsonModel<FaceRectangle>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -116,7 +123,7 @@ namespace Azure.AI.Vision.Face
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureAIVisionFaceContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(FaceRectangle)} does not support writing '{options.Format}' format.");
             }
@@ -130,7 +137,7 @@ namespace Azure.AI.Vision.Face
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeFaceRectangle(document.RootElement, options);
                     }
                 default:
@@ -144,7 +151,7 @@ namespace Azure.AI.Vision.Face
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static FaceRectangle FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeFaceRectangle(document.RootElement);
         }
 

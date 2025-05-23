@@ -291,7 +291,7 @@ This version of the Batch .NET client library targets version 2018-08-01.7.0 of 
 ### Features
 
 - Added the ability to see what version of the Azure Batch Node Agent is running on each of the VMs in a pool, via the new `NodeAgentInformation` property on `ComputeNode`.
-- Added the ability to specify a `Filter` on the `Result` of a task. See [here](https://docs.microsoft.com/rest/api/batchservice/odata-filters-in-batch) for more details.
+- Added the ability to specify a `Filter` on the `Result` of a task. See [here](https://learn.microsoft.com/rest/api/batchservice/odata-filters-in-batch) for more details.
   - This enables the often requested scenario of performing a server-side query to find all tasks which failed.
 - **[Breaking]** Added a default retry policy to `BatchClient`.
   - Note that this policy may not be sufficient for every case. If the old behavior (a `BatchClient` that doesn't perform any retries) is desired, the default policy can be removed from a `BatchClient` with `client.CustomBehaviors = client.CustomBehaviors.Where(behavior => !(behavior is RetryPolicyProvider)).ToList()`.

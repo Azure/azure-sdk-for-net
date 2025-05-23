@@ -200,6 +200,11 @@ namespace Azure.ResourceManager.AppService
                 writer.WritePropertyName("zoneRedundant"u8);
                 writer.WriteBooleanValue(IsZoneRedundant.Value);
             }
+            if (Optional.IsDefined(IsAsyncScalingEnabled))
+            {
+                writer.WritePropertyName("asyncScalingEnabled"u8);
+                writer.WriteBooleanValue(IsAsyncScalingEnabled.Value);
+            }
             writer.WriteEndObject();
         }
 
@@ -255,6 +260,7 @@ namespace Azure.ResourceManager.AppService
             ProvisioningState? provisioningState = default;
             KubeEnvironmentProfile kubeEnvironmentProfile = default;
             bool? zoneRedundant = default;
+            bool? asyncScalingEnabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -529,6 +535,15 @@ namespace Azure.ResourceManager.AppService
                             zoneRedundant = property0.Value.GetBoolean();
                             continue;
                         }
+                        if (property0.NameEquals("asyncScalingEnabled"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            asyncScalingEnabled = property0.Value.GetBoolean();
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -570,6 +585,7 @@ namespace Azure.ResourceManager.AppService
                 provisioningState,
                 kubeEnvironmentProfile,
                 zoneRedundant,
+                asyncScalingEnabled,
                 kind,
                 serializedAdditionalRawData);
         }
@@ -1128,6 +1144,22 @@ namespace Azure.ResourceManager.AppService
                 }
             }
 
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsAsyncScalingEnabled), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    asyncScalingEnabled: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsAsyncScalingEnabled))
+                {
+                    builder.Append("    asyncScalingEnabled: ");
+                    var boolValue = IsAsyncScalingEnabled.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
             builder.AppendLine("  }");
             builder.AppendLine("}");
             return BinaryData.FromString(builder.ToString());
@@ -1140,7 +1172,7 @@ namespace Azure.ResourceManager.AppService
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAppServiceContext.Default);
                 case "bicep":
                     return SerializeBicep(options);
                 default:
@@ -1156,7 +1188,7 @@ namespace Azure.ResourceManager.AppService
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeAppServicePlanData(document.RootElement, options);
                     }
                 default:

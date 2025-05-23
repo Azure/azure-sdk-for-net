@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.HybridCompute
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2024-07-10";
+            _apiVersion = apiVersion ?? "2024-07-31-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.HybridCompute
                 case 200:
                     {
                         HybridComputeNetworkProfile value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = HybridComputeNetworkProfile.DeserializeHybridComputeNetworkProfile(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.HybridCompute
                 case 200:
                     {
                         HybridComputeNetworkProfile value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = HybridComputeNetworkProfile.DeserializeHybridComputeNetworkProfile(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

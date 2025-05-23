@@ -1,8 +1,10 @@
 # Release History
 
-## 1.2.0-beta.2 (Unreleased)
+## 1.3.0-beta.3 (Unreleased)
 
 ### Features Added
+
+- Support broker on Linux.
 
 ### Breaking Changes
 
@@ -10,7 +12,25 @@
 
 ### Other Changes
 
+- Updated `Microsoft.Identity.Client.Broker` dependency to version 4.70.2
+
+## 1.3.0-beta.2 (2025-04-08)
+
+### Other Changes
+
+- Support for dynamic addition of the broker authentication to `DefaultAzureCredential` has been added. This allows the broker authentication to be used as part of the default credential chain by only adding a reference to this package to your application.
+
+## 1.3.0-beta.1 (2025-03-11)
+
+### Other Changes
+- Updated Microsoft.Identity.Client.Broker dependency to version 4.69.1.
+
+## 1.2.0 (2024-11-18)
+
+### Other Changes
+
 - Support for Proof of Possession (PoP) tokens for `InteractiveBrowserCredential` has migrated out of Azure.Core.Experimental to Azure.Core. This feature is enabled via the `IsProofOfPossessionEnabled` property on `TokenRequestContext`.
+- Updating package dependencies.
 
 ## 1.2.0-beta.1 (2024-04-24)
 

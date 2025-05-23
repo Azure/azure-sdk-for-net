@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.ComputeFleet
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeFleetContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ComputeFleetData)} does not support writing '{options.Format}' format.");
             }
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.ComputeFleet
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeComputeFleetData(document.RootElement, options);
                     }
                 default:

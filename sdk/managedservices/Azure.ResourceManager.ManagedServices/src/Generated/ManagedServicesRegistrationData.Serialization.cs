@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.ManagedServices
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerManagedServicesContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ManagedServicesRegistrationData)} does not support writing '{options.Format}' format.");
             }
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.ManagedServices
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeManagedServicesRegistrationData(document.RootElement, options);
                     }
                 default:

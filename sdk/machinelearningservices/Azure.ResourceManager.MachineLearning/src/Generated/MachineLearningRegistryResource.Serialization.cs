@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.MachineLearning
 {
     public partial class MachineLearningRegistryResource : IJsonModel<MachineLearningRegistryData>
     {
+        private static MachineLearningRegistryData s_dataDeserializationInstance;
+        private static MachineLearningRegistryData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<MachineLearningRegistryData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<MachineLearningRegistryData>)Data).Write(writer, options);
 
-        MachineLearningRegistryData IJsonModel<MachineLearningRegistryData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MachineLearningRegistryData>)Data).Create(ref reader, options);
+        MachineLearningRegistryData IJsonModel<MachineLearningRegistryData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MachineLearningRegistryData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<MachineLearningRegistryData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<MachineLearningRegistryData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<MachineLearningRegistryData>(Data, options, AzureResourceManagerMachineLearningContext.Default);
 
-        MachineLearningRegistryData IPersistableModel<MachineLearningRegistryData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MachineLearningRegistryData>(data, options);
+        MachineLearningRegistryData IPersistableModel<MachineLearningRegistryData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MachineLearningRegistryData>(data, options, AzureResourceManagerMachineLearningContext.Default);
 
-        string IPersistableModel<MachineLearningRegistryData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MachineLearningRegistryData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<MachineLearningRegistryData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MachineLearningRegistryData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

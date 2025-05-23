@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.ProviderHub
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerProviderHubContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(CustomRolloutData)} does not support writing '{options.Format}' format.");
             }
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.ProviderHub
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeCustomRolloutData(document.RootElement, options);
                     }
                 default:

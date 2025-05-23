@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Purview
                 case 200:
                     {
                         PrivateEndpointConnectionList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PrivateEndpointConnectionList.DeserializePrivateEndpointConnectionList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Purview
                 case 200:
                     {
                         PrivateEndpointConnectionList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PrivateEndpointConnectionList.DeserializePrivateEndpointConnectionList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.Purview
                 case 200:
                     {
                         PrivateEndpointConnectionStatusUpdateResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PrivateEndpointConnectionStatusUpdateResult.DeserializePrivateEndpointConnectionStatusUpdateResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Purview
                 case 200:
                     {
                         PrivateEndpointConnectionStatusUpdateResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PrivateEndpointConnectionStatusUpdateResult.DeserializePrivateEndpointConnectionStatusUpdateResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.Purview
                 case 200:
                     {
                         PrivateEndpointConnectionList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PrivateEndpointConnectionList.DeserializePrivateEndpointConnectionList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -307,7 +307,7 @@ namespace Azure.ResourceManager.Purview
                 case 200:
                     {
                         PrivateEndpointConnectionList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PrivateEndpointConnectionList.DeserializePrivateEndpointConnectionList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

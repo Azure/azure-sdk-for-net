@@ -3,11 +3,11 @@
 
 using System.Threading.Tasks;
 using System.Threading;
-using System.IO;
 using System.Buffers;
 using Azure.Core.Pipeline;
 using System;
 using Azure.Storage.DataMovement.JobPlan;
+using Azure.Storage.Common;
 
 namespace Azure.Storage.DataMovement;
 
@@ -17,11 +17,11 @@ internal class JobBuilder
 
     /// <summary>
     /// Defines the error handling method to follow when an error is seen. Defaults to
-    /// <see cref="DataTransferErrorMode.StopOnAnyFailure"/>.
+    /// <see cref="TransferErrorMode.StopOnAnyFailure"/>.
     ///
-    /// See <see cref="DataTransferErrorMode"/>.
+    /// See <see cref="TransferErrorMode"/>.
     /// </summary>
-    private readonly DataTransferErrorMode _errorHandling;
+    private readonly TransferErrorMode _errorHandling;
 
     private ClientDiagnostics ClientDiagnostics { get; }
 
@@ -33,7 +33,7 @@ internal class JobBuilder
 
     internal JobBuilder(
         ArrayPool<byte> arrayPool,
-        DataTransferErrorMode errorHandling,
+        TransferErrorMode errorHandling,
         ClientDiagnostics clientDiagnostics)
     {
         _arrayPool = arrayPool;
@@ -41,33 +41,29 @@ internal class JobBuilder
         ClientDiagnostics = clientDiagnostics;
     }
 
-    public virtual async Task<(DataTransfer Transfer, TransferJobInternal TransferInternal)> BuildJobAsync(
+    public virtual async Task<(TransferOperation Transfer, TransferJobInternal TransferInternal)> BuildJobAsync(
         StorageResource sourceResource,
         StorageResource destinationResource,
-        DataTransferOptions transferOptions,
+        TransferOptions transferOptions,
         ITransferCheckpointer checkpointer,
         string transferId,
         bool resumeJob,
         CancellationToken cancellationToken)
     {
-        DataTransfer dataTransfer = new(id: transferId);
+        ValidateTransferOptions(transferOptions);
+
+        TransferOperation transferOperation = new(id: transferId);
         TransferJobInternal transferJobInternal;
 
-        // Single transfer
+        // For single item transfers, wrap in single item container
         if (sourceResource is StorageResourceItem sourceItem &&
             destinationResource is StorageResourceItem destationItem)
         {
-            transferJobInternal = await BuildSingleTransferJob(
-                sourceItem,
-                destationItem,
-                transferOptions,
-                checkpointer,
-                dataTransfer,
-                resumeJob,
-                cancellationToken).ConfigureAwait(false);
+            sourceResource = new SingleItemStorageResourceContainer(sourceItem);
+            destinationResource = new SingleItemStorageResourceContainer(destationItem);
         }
-        // Container transfer
-        else if (sourceResource is StorageResourceContainer sourceContainer &&
+
+        if (sourceResource is StorageResourceContainer sourceContainer &&
             destinationResource is StorageResourceContainer destinationContainer)
         {
             transferJobInternal = await BuildContainerTransferJob(
@@ -75,7 +71,7 @@ internal class JobBuilder
                 destinationContainer,
                 transferOptions,
                 checkpointer,
-                dataTransfer,
+                transferOperation,
                 resumeJob,
                 cancellationToken).ConfigureAwait(false);
         }
@@ -85,97 +81,33 @@ internal class JobBuilder
             throw Errors.InvalidTransferResourceTypes();
         }
 
-        return (dataTransfer, transferJobInternal);
-    }
-
-    private async Task<TransferJobInternal> BuildSingleTransferJob(
-        StorageResourceItem sourceResource,
-        StorageResourceItem destinationResource,
-        DataTransferOptions transferOptions,
-        ITransferCheckpointer checkpointer,
-        DataTransfer dataTransfer,
-        bool resumeJob,
-        CancellationToken cancellationToken)
-    {
-        TransferJobInternal.CreateJobPartSingleAsync single;
-        TransferJobInternal.CreateJobPartMultiAsync multi;
-        Func<TransferJobInternal, JobPartPlanHeader, StorageResourceItem, StorageResourceItem, JobPartInternal> rehydrate;
-        if (sourceResource.IsLocalResource() && !destinationResource.IsLocalResource())
-        {
-            single = StreamToUriJobPart.CreateJobPartAsync;
-            multi = StreamToUriJobPart.CreateJobPartAsync;
-            rehydrate = DataMovementExtensions.ToStreamToUriJobPartAsync;
-        }
-        else if (!sourceResource.IsLocalResource() && destinationResource.IsLocalResource())
-        {
-            single = UriToStreamJobPart.CreateJobPartAsync;
-            multi = UriToStreamJobPart.CreateJobPartAsync;
-            rehydrate = DataMovementExtensions.ToUriToStreamJobPartAsync;
-        }
-        else if (!sourceResource.IsLocalResource() && !destinationResource.IsLocalResource())
-        {
-            single = ServiceToServiceJobPart.CreateJobPartAsync;
-            multi = ServiceToServiceJobPart.CreateJobPartAsync;
-            rehydrate = DataMovementExtensions.ToServiceToServiceJobPartAsync;
-        }
-        else
-        {
-            throw Errors.InvalidSourceDestinationParams();
-        }
-
-        TransferJobInternal job = new(
-            dataTransfer: dataTransfer,
-            sourceResource: sourceResource,
-            destinationResource: destinationResource,
-            single,
-            multi,
-            transferOptions: transferOptions,
-            checkpointer: checkpointer,
-            errorHandling: _errorHandling,
-            arrayPool: _arrayPool,
-            clientDiagnostics: ClientDiagnostics);
-
-        if (resumeJob)
-        {
-            JobPartPlanHeader part = await checkpointer.GetJobPartAsync(dataTransfer.Id, partNumber: 0).ConfigureAwait(false);
-            job.AppendJobPart(
-                rehydrate(
-                    job,
-                    part,
-                    sourceResource,
-                    destinationResource));
-        }
-        return job;
+        return (transferOperation, transferJobInternal);
     }
 
     private async Task<TransferJobInternal> BuildContainerTransferJob(
         StorageResourceContainer sourceResource,
         StorageResourceContainer destinationResource,
-        DataTransferOptions transferOptions,
+        TransferOptions transferOptions,
         ITransferCheckpointer checkpointer,
-        DataTransfer dataTransfer,
+        TransferOperation transferOperation,
         bool resumeJob,
         CancellationToken cancellationToken)
     {
-        TransferJobInternal.CreateJobPartSingleAsync single;
-        TransferJobInternal.CreateJobPartMultiAsync multi;
+        TransferJobInternal.CreateJobPartAsync createPart;
         Func<TransferJobInternal, JobPartPlanHeader, StorageResourceContainer, StorageResourceContainer, JobPartInternal> rehydrate;
         if (sourceResource.IsLocalResource() && !destinationResource.IsLocalResource())
         {
-            single = StreamToUriJobPart.CreateJobPartAsync;
-            multi = StreamToUriJobPart.CreateJobPartAsync;
+            createPart = StreamToUriJobPart.CreateJobPartAsync;
             rehydrate = DataMovementExtensions.ToStreamToUriJobPartAsync;
         }
         else if (!sourceResource.IsLocalResource() && destinationResource.IsLocalResource())
         {
-            single = UriToStreamJobPart.CreateJobPartAsync;
-            multi = UriToStreamJobPart.CreateJobPartAsync;
+            createPart = UriToStreamJobPart.CreateJobPartAsync;
             rehydrate = DataMovementExtensions.ToUriToStreamJobPartAsync;
         }
         else if (!sourceResource.IsLocalResource() && !destinationResource.IsLocalResource())
         {
-            single = ServiceToServiceJobPart.CreateJobPartAsync;
-            multi = ServiceToServiceJobPart.CreateJobPartAsync;
+            createPart = ServiceToServiceJobPart.CreateJobPartAsync;
             rehydrate = DataMovementExtensions.ToServiceToServiceJobPartAsync;
         }
         else
@@ -184,11 +116,10 @@ internal class JobBuilder
         }
 
         TransferJobInternal job = new(
-            dataTransfer: dataTransfer,
+            transferOperation: transferOperation,
             sourceResource: sourceResource,
             destinationResource: destinationResource,
-            single,
-            multi,
+            createPart,
             transferOptions: transferOptions,
             checkpointer: checkpointer,
             errorHandling: _errorHandling,
@@ -199,11 +130,11 @@ internal class JobBuilder
         {
             // Iterate through all job parts and append to the job
             int jobPartCount = await checkpointer.GetCurrentJobPartCountAsync(
-                transferId: dataTransfer.Id,
+                transferId: transferOperation.Id,
                 cancellationToken: cancellationToken).ConfigureAwait(false);
             for (var currentJobPart = 0; currentJobPart < jobPartCount; currentJobPart++)
             {
-                JobPartPlanHeader part = await checkpointer.GetJobPartAsync(dataTransfer.Id, currentJobPart).ConfigureAwait(false);
+                JobPartPlanHeader part = await checkpointer.GetJobPartAsync(transferOperation.Id, currentJobPart).ConfigureAwait(false);
                 job.AppendJobPart(
                     rehydrate(
                         job,
@@ -213,5 +144,17 @@ internal class JobBuilder
             }
         }
         return job;
+    }
+
+    private static void ValidateTransferOptions(TransferOptions transferOptions)
+    {
+        if (transferOptions?.InitialTransferSize != default)
+        {
+            Argument.AssertInRange(transferOptions.InitialTransferSize.Value, 1, long.MaxValue, nameof(transferOptions.InitialTransferSize));
+        }
+        if (transferOptions?.MaximumTransferChunkSize != default)
+        {
+            Argument.AssertInRange(transferOptions.MaximumTransferChunkSize.Value, 1, long.MaxValue, nameof(transferOptions.MaximumTransferChunkSize));
+        }
     }
 }

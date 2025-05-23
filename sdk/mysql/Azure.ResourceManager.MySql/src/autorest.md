@@ -11,7 +11,6 @@ library-name: MySql
 #mgmt-debug:
 #  show-serialized-names: true
 use-model-reader-writer: true
-use-write-core: true
 
 batch:
   - tag: package-2020-01-01
@@ -23,7 +22,7 @@ namespace: Azure.ResourceManager.MySql
 require: https://github.com/Azure/azure-rest-api-specs/blob/c45a7f47c1901149828eb8a33c74898c554659c0/specification/mysql/resource-manager/readme.md
 output-folder: $(this-folder)/MySql/Generated
 sample-gen:
-  output-folder: $(this-folder)/../samples/Generated
+  output-folder: $(this-folder)/../tests/Generated
   clear-output-folder: true
 modelerfour:
   flatten-payloads: false

@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Elastic
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2024-06-15-preview";
+            _apiVersion = apiVersion ?? "2024-03-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Elastic
                 case 200:
                     {
                         ElasticMonitorResourceListResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ElasticMonitorResourceListResponse.DeserializeElasticMonitorResourceListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Elastic
                 case 200:
                     {
                         ElasticMonitorResourceListResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ElasticMonitorResourceListResponse.DeserializeElasticMonitorResourceListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Elastic
                 case 200:
                     {
                         ElasticMonitorResourceListResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ElasticMonitorResourceListResponse.DeserializeElasticMonitorResourceListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.Elastic
                 case 200:
                     {
                         ElasticMonitorResourceListResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ElasticMonitorResourceListResponse.DeserializeElasticMonitorResourceListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.Elastic
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="monitorName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ElasticMonitorResourceData>> GetAsync(string subscriptionId, string resourceGroupName, string monitorName, CancellationToken cancellationToken = default)
+        public async Task<Response<ElasticMonitorData>> GetAsync(string subscriptionId, string resourceGroupName, string monitorName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -253,13 +253,13 @@ namespace Azure.ResourceManager.Elastic
             {
                 case 200:
                     {
-                        ElasticMonitorResourceData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ElasticMonitorResourceData.DeserializeElasticMonitorResourceData(document.RootElement);
+                        ElasticMonitorData value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
+                        value = ElasticMonitorData.DeserializeElasticMonitorData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ElasticMonitorResourceData)null, message.Response);
+                    return Response.FromValue((ElasticMonitorData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.Elastic
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="monitorName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ElasticMonitorResourceData> Get(string subscriptionId, string resourceGroupName, string monitorName, CancellationToken cancellationToken = default)
+        public Response<ElasticMonitorData> Get(string subscriptionId, string resourceGroupName, string monitorName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -284,19 +284,19 @@ namespace Azure.ResourceManager.Elastic
             {
                 case 200:
                     {
-                        ElasticMonitorResourceData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ElasticMonitorResourceData.DeserializeElasticMonitorResourceData(document.RootElement);
+                        ElasticMonitorData value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
+                        value = ElasticMonitorData.DeserializeElasticMonitorData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ElasticMonitorResourceData)null, message.Response);
+                    return Response.FromValue((ElasticMonitorData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal RequestUriBuilder CreateCreateRequestUri(string subscriptionId, string resourceGroupName, string monitorName, ElasticMonitorResourceData data)
+        internal RequestUriBuilder CreateCreateRequestUri(string subscriptionId, string resourceGroupName, string monitorName, ElasticMonitorData data)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.Elastic
             return uri;
         }
 
-        internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string monitorName, ElasticMonitorResourceData data)
+        internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string monitorName, ElasticMonitorData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -342,7 +342,7 @@ namespace Azure.ResourceManager.Elastic
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="monitorName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateAsync(string subscriptionId, string resourceGroupName, string monitorName, ElasticMonitorResourceData data, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateAsync(string subscriptionId, string resourceGroupName, string monitorName, ElasticMonitorData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.Elastic
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="monitorName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Create(string subscriptionId, string resourceGroupName, string monitorName, ElasticMonitorResourceData data, CancellationToken cancellationToken = default)
+        public Response Create(string subscriptionId, string resourceGroupName, string monitorName, ElasticMonitorData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -388,7 +388,7 @@ namespace Azure.ResourceManager.Elastic
             }
         }
 
-        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string monitorName, ElasticMonitorResourcePatch patch)
+        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string monitorName, ElasticMonitorPatch patch)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -402,7 +402,7 @@ namespace Azure.ResourceManager.Elastic
             return uri;
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string monitorName, ElasticMonitorResourcePatch patch)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string monitorName, ElasticMonitorPatch patch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -434,7 +434,7 @@ namespace Azure.ResourceManager.Elastic
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="monitorName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string monitorName, ElasticMonitorResourcePatch patch, CancellationToken cancellationToken = default)
+        public async Task<Response<ElasticMonitorData>> UpdateAsync(string subscriptionId, string resourceGroupName, string monitorName, ElasticMonitorPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -446,8 +446,12 @@ namespace Azure.ResourceManager.Elastic
             switch (message.Response.Status)
             {
                 case 200:
-                case 202:
-                    return message.Response;
+                    {
+                        ElasticMonitorData value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
+                        value = ElasticMonitorData.DeserializeElasticMonitorData(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -461,7 +465,7 @@ namespace Azure.ResourceManager.Elastic
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="monitorName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Update(string subscriptionId, string resourceGroupName, string monitorName, ElasticMonitorResourcePatch patch, CancellationToken cancellationToken = default)
+        public Response<ElasticMonitorData> Update(string subscriptionId, string resourceGroupName, string monitorName, ElasticMonitorPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -473,8 +477,12 @@ namespace Azure.ResourceManager.Elastic
             switch (message.Response.Status)
             {
                 case 200:
-                case 202:
-                    return message.Response;
+                    {
+                        ElasticMonitorData value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
+                        value = ElasticMonitorData.DeserializeElasticMonitorData(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -606,7 +614,7 @@ namespace Azure.ResourceManager.Elastic
                 case 200:
                     {
                         ElasticMonitorResourceListResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ElasticMonitorResourceListResponse.DeserializeElasticMonitorResourceListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -633,7 +641,7 @@ namespace Azure.ResourceManager.Elastic
                 case 200:
                     {
                         ElasticMonitorResourceListResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ElasticMonitorResourceListResponse.DeserializeElasticMonitorResourceListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -684,7 +692,7 @@ namespace Azure.ResourceManager.Elastic
                 case 200:
                     {
                         ElasticMonitorResourceListResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ElasticMonitorResourceListResponse.DeserializeElasticMonitorResourceListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -713,7 +721,7 @@ namespace Azure.ResourceManager.Elastic
                 case 200:
                     {
                         ElasticMonitorResourceListResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ElasticMonitorResourceListResponse.DeserializeElasticMonitorResourceListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

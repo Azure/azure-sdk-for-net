@@ -357,6 +357,16 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 writer.WritePropertyName("computerNamePrefix"u8);
                 writer.WriteStringValue(ComputerNamePrefix);
             }
+            if (Optional.IsCollectionDefined(VmApplications))
+            {
+                writer.WritePropertyName("vmApplications"u8);
+                writer.WriteStartArray();
+                foreach (var item in VmApplications)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
             writer.WriteEndObject();
         }
 
@@ -435,6 +445,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             ResourceIdentifier dscpConfigurationId = default;
             IList<AdditionalNetworkInterfaceConfiguration> additionalNetworkInterfaceConfigurations = default;
             string computerNamePrefix = default;
+            IList<ServiceFabricManagedVmApplication> vmApplications = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -955,6 +966,20 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                             computerNamePrefix = property0.Value.GetString();
                             continue;
                         }
+                        if (property0.NameEquals("vmApplications"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<ServiceFabricManagedVmApplication> array = new List<ServiceFabricManagedVmApplication>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(ServiceFabricManagedVmApplication.DeserializeServiceFabricManagedVmApplication(item, options));
+                            }
+                            vmApplications = array;
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -1019,6 +1044,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 dscpConfigurationId,
                 additionalNetworkInterfaceConfigurations ?? new ChangeTrackingList<AdditionalNetworkInterfaceConfiguration>(),
                 computerNamePrefix,
+                vmApplications ?? new ChangeTrackingList<ServiceFabricManagedVmApplication>(),
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 serializedAdditionalRawData);
         }
@@ -1030,7 +1056,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerServiceFabricManagedClustersContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ServiceFabricManagedNodeTypeData)} does not support writing '{options.Format}' format.");
             }
@@ -1044,7 +1070,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeServiceFabricManagedNodeTypeData(document.RootElement, options);
                     }
                 default:

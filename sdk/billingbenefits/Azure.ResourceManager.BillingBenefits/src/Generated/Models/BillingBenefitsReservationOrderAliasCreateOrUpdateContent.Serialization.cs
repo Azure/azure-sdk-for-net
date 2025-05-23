@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerBillingBenefitsContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(BillingBenefitsReservationOrderAliasCreateOrUpdateContent)} does not support writing '{options.Format}' format.");
             }
@@ -337,7 +337,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeBillingBenefitsReservationOrderAliasCreateOrUpdateContent(document.RootElement, options);
                     }
                 default:

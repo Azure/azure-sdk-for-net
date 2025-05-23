@@ -10,228 +10,17 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.ContainerRegistry.Models;
-using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.ContainerRegistry.Samples
 {
     public partial class Sample_ContainerRegistryResource
     {
-        // ImportImageByManifestDigest
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task ImportImage_ImportImageByManifestDigest()
-        {
-            // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/stable/2022-12-01/examples/ImportImageByManifestDigest.json
-            // this example is just showing the usage of "Registries_ImportImage" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ContainerRegistryResource created on azure
-            // for more information of creating ContainerRegistryResource, please refer to the document of ContainerRegistryResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "myResourceGroup";
-            string registryName = "myRegistry";
-            ResourceIdentifier containerRegistryResourceId = ContainerRegistryResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, registryName);
-            ContainerRegistryResource containerRegistry = client.GetContainerRegistryResource(containerRegistryResourceId);
-
-            // invoke the operation
-            ContainerRegistryImportImageContent content = new ContainerRegistryImportImageContent(new ContainerRegistryImportSource("sourceRepository@sha256:0000000000000000000000000000000000000000000000000000000000000000")
-            {
-                ResourceId = new ResourceIdentifier("/subscriptions/10000000-0000-0000-0000-000000000000/resourceGroups/sourceResourceGroup/providers/Microsoft.ContainerRegistry/registries/sourceRegistry"),
-            })
-            {
-                TargetTags =
-{
-"targetRepository:targetTag"
-},
-                UntaggedTargetRepositories =
-{
-"targetRepository1"
-},
-                Mode = ContainerRegistryImportMode.Force,
-            };
-            await containerRegistry.ImportImageAsync(WaitUntil.Completed, content);
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // ImportImageByTag
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task ImportImage_ImportImageByTag()
-        {
-            // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/stable/2022-12-01/examples/ImportImageByTag.json
-            // this example is just showing the usage of "Registries_ImportImage" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ContainerRegistryResource created on azure
-            // for more information of creating ContainerRegistryResource, please refer to the document of ContainerRegistryResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "myResourceGroup";
-            string registryName = "myRegistry";
-            ResourceIdentifier containerRegistryResourceId = ContainerRegistryResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, registryName);
-            ContainerRegistryResource containerRegistry = client.GetContainerRegistryResource(containerRegistryResourceId);
-
-            // invoke the operation
-            ContainerRegistryImportImageContent content = new ContainerRegistryImportImageContent(new ContainerRegistryImportSource("sourceRepository:sourceTag")
-            {
-                ResourceId = new ResourceIdentifier("/subscriptions/10000000-0000-0000-0000-000000000000/resourceGroups/sourceResourceGroup/providers/Microsoft.ContainerRegistry/registries/sourceRegistry"),
-            })
-            {
-                TargetTags =
-{
-"targetRepository:targetTag"
-},
-                UntaggedTargetRepositories =
-{
-"targetRepository1"
-},
-                Mode = ContainerRegistryImportMode.Force,
-            };
-            await containerRegistry.ImportImageAsync(WaitUntil.Completed, content);
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // ImportImageFromPublicRegistry
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task ImportImage_ImportImageFromPublicRegistry()
-        {
-            // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/stable/2022-12-01/examples/ImportImageFromPublicRegistry.json
-            // this example is just showing the usage of "Registries_ImportImage" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ContainerRegistryResource created on azure
-            // for more information of creating ContainerRegistryResource, please refer to the document of ContainerRegistryResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "myResourceGroup";
-            string registryName = "myRegistry";
-            ResourceIdentifier containerRegistryResourceId = ContainerRegistryResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, registryName);
-            ContainerRegistryResource containerRegistry = client.GetContainerRegistryResource(containerRegistryResourceId);
-
-            // invoke the operation
-            ContainerRegistryImportImageContent content = new ContainerRegistryImportImageContent(new ContainerRegistryImportSource("library/hello-world")
-            {
-                RegistryAddress = "registry.hub.docker.com",
-            })
-            {
-                TargetTags =
-{
-"targetRepository:targetTag"
-},
-                UntaggedTargetRepositories =
-{
-"targetRepository1"
-},
-                Mode = ContainerRegistryImportMode.Force,
-            };
-            await containerRegistry.ImportImageAsync(WaitUntil.Completed, content);
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // RegistryCheckNameAvailable
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task CheckContainerRegistryNameAvailability_RegistryCheckNameAvailable()
-        {
-            // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/stable/2022-12-01/examples/RegistryCheckNameAvailable.json
-            // this example is just showing the usage of "Registries_CheckNameAvailability" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
-
-            // invoke the operation
-            ContainerRegistryNameAvailabilityContent content = new ContainerRegistryNameAvailabilityContent("myRegistry");
-            ContainerRegistryNameAvailableResult result = await subscriptionResource.CheckContainerRegistryNameAvailabilityAsync(content);
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        // RegistryCheckNameNotAvailable
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task CheckContainerRegistryNameAvailability_RegistryCheckNameNotAvailable()
-        {
-            // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/stable/2022-12-01/examples/RegistryCheckNameNotAvailable.json
-            // this example is just showing the usage of "Registries_CheckNameAvailability" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
-
-            // invoke the operation
-            ContainerRegistryNameAvailabilityContent content = new ContainerRegistryNameAvailabilityContent("myRegistry");
-            ContainerRegistryNameAvailableResult result = await subscriptionResource.CheckContainerRegistryNameAvailabilityAsync(content);
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        // RegistryList
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetContainerRegistries_RegistryList()
-        {
-            // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/stable/2022-12-01/examples/RegistryList.json
-            // this example is just showing the usage of "Registries_List" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
-
-            // invoke the operation and iterate over the result
-            await foreach (ContainerRegistryResource item in subscriptionResource.GetContainerRegistriesAsync())
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                ContainerRegistryData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // RegistryGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_RegistryGet()
         {
-            // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/stable/2022-12-01/examples/RegistryGet.json
+            // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/stable/2025-04-01/examples/RegistryGet.json
             // this example is just showing the usage of "Registries_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -257,12 +46,11 @@ namespace Azure.ResourceManager.ContainerRegistry.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // RegistryDelete
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_RegistryDelete()
         {
-            // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/stable/2022-12-01/examples/RegistryDelete.json
+            // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/stable/2025-04-01/examples/RegistryDelete.json
             // this example is just showing the usage of "Registries_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -281,15 +69,14 @@ namespace Azure.ResourceManager.ContainerRegistry.Samples
             // invoke the operation
             await containerRegistry.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // RegistryUpdate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_RegistryUpdate()
         {
-            // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/stable/2022-12-01/examples/RegistryUpdate.json
+            // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/stable/2025-04-01/examples/RegistryUpdate.json
             // this example is just showing the usage of "Registries_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -306,11 +93,11 @@ namespace Azure.ResourceManager.ContainerRegistry.Samples
             ContainerRegistryResource containerRegistry = client.GetContainerRegistryResource(containerRegistryResourceId);
 
             // invoke the operation
-            ContainerRegistryPatch patch = new ContainerRegistryPatch()
+            ContainerRegistryPatch patch = new ContainerRegistryPatch
             {
                 Tags =
 {
-["key"] = "value",
+["key"] = "value"
 },
                 Sku = new ContainerRegistrySku(ContainerRegistrySkuName.Standard),
                 IsAdminUserEnabled = true,
@@ -325,12 +112,116 @@ namespace Azure.ResourceManager.ContainerRegistry.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // RegistryListUsages
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task ImportImage_ImportImageByManifestDigest()
+        {
+            // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/stable/2025-04-01/examples/ImportImageByManifestDigest.json
+            // this example is just showing the usage of "Registries_ImportImage" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ContainerRegistryResource created on azure
+            // for more information of creating ContainerRegistryResource, please refer to the document of ContainerRegistryResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "myResourceGroup";
+            string registryName = "myRegistry";
+            ResourceIdentifier containerRegistryResourceId = ContainerRegistryResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, registryName);
+            ContainerRegistryResource containerRegistry = client.GetContainerRegistryResource(containerRegistryResourceId);
+
+            // invoke the operation
+            ContainerRegistryImportImageContent content = new ContainerRegistryImportImageContent(new ContainerRegistryImportSource("sourceRepository@sha256:0000000000000000000000000000000000000000000000000000000000000000")
+            {
+                ResourceId = new ResourceIdentifier("/subscriptions/10000000-0000-0000-0000-000000000000/resourceGroups/sourceResourceGroup/providers/Microsoft.ContainerRegistry/registries/sourceRegistry"),
+            })
+            {
+                TargetTags = { "targetRepository:targetTag" },
+                UntaggedTargetRepositories = { "targetRepository1" },
+                Mode = ContainerRegistryImportMode.Force,
+            };
+            await containerRegistry.ImportImageAsync(WaitUntil.Completed, content);
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task ImportImage_ImportImageByTag()
+        {
+            // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/stable/2025-04-01/examples/ImportImageByTag.json
+            // this example is just showing the usage of "Registries_ImportImage" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ContainerRegistryResource created on azure
+            // for more information of creating ContainerRegistryResource, please refer to the document of ContainerRegistryResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "myResourceGroup";
+            string registryName = "myRegistry";
+            ResourceIdentifier containerRegistryResourceId = ContainerRegistryResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, registryName);
+            ContainerRegistryResource containerRegistry = client.GetContainerRegistryResource(containerRegistryResourceId);
+
+            // invoke the operation
+            ContainerRegistryImportImageContent content = new ContainerRegistryImportImageContent(new ContainerRegistryImportSource("sourceRepository:sourceTag")
+            {
+                ResourceId = new ResourceIdentifier("/subscriptions/10000000-0000-0000-0000-000000000000/resourceGroups/sourceResourceGroup/providers/Microsoft.ContainerRegistry/registries/sourceRegistry"),
+            })
+            {
+                TargetTags = { "targetRepository:targetTag" },
+                UntaggedTargetRepositories = { "targetRepository1" },
+                Mode = ContainerRegistryImportMode.Force,
+            };
+            await containerRegistry.ImportImageAsync(WaitUntil.Completed, content);
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task ImportImage_ImportImageFromPublicRegistry()
+        {
+            // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/stable/2025-04-01/examples/ImportImageFromPublicRegistry.json
+            // this example is just showing the usage of "Registries_ImportImage" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ContainerRegistryResource created on azure
+            // for more information of creating ContainerRegistryResource, please refer to the document of ContainerRegistryResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "myResourceGroup";
+            string registryName = "myRegistry";
+            ResourceIdentifier containerRegistryResourceId = ContainerRegistryResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, registryName);
+            ContainerRegistryResource containerRegistry = client.GetContainerRegistryResource(containerRegistryResourceId);
+
+            // invoke the operation
+            ContainerRegistryImportImageContent content = new ContainerRegistryImportImageContent(new ContainerRegistryImportSource("library/hello-world")
+            {
+                RegistryAddress = "registry.hub.docker.com",
+            })
+            {
+                TargetTags = { "targetRepository:targetTag" },
+                UntaggedTargetRepositories = { "targetRepository1" },
+                Mode = ContainerRegistryImportMode.Force,
+            };
+            await containerRegistry.ImportImageAsync(WaitUntil.Completed, content);
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetUsages_RegistryListUsages()
         {
-            // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/stable/2022-12-01/examples/RegistryListUsages.json
+            // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/stable/2025-04-01/examples/RegistryListUsages.json
             // this example is just showing the usage of "Registries_ListUsages" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -352,15 +243,14 @@ namespace Azure.ResourceManager.ContainerRegistry.Samples
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // RegistryListCredentials
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetCredentials_RegistryListCredentials()
         {
-            // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/stable/2022-12-01/examples/RegistryListCredentials.json
+            // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/stable/2025-04-01/examples/RegistryListCredentials.json
             // this example is just showing the usage of "Registries_ListCredentials" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -382,12 +272,11 @@ namespace Azure.ResourceManager.ContainerRegistry.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // RegistryRegenerateCredential
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task RegenerateCredential_RegistryRegenerateCredential()
         {
-            // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/stable/2022-12-01/examples/RegistryRegenerateCredential.json
+            // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/stable/2025-04-01/examples/RegistryRegenerateCredential.json
             // this example is just showing the usage of "Registries_RegenerateCredential" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -410,12 +299,11 @@ namespace Azure.ResourceManager.ContainerRegistry.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // RegistryGenerateCredentials
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GenerateCredentials_RegistryGenerateCredentials()
         {
-            // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/stable/2022-12-01/examples/RegistryGenerateCredentials.json
+            // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/stable/2025-04-01/examples/RegistryGenerateCredentials.json
             // this example is just showing the usage of "Registries_GenerateCredentials" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -432,7 +320,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Samples
             ContainerRegistryResource containerRegistry = client.GetContainerRegistryResource(containerRegistryResourceId);
 
             // invoke the operation
-            ContainerRegistryGenerateCredentialsContent content = new ContainerRegistryGenerateCredentialsContent()
+            ContainerRegistryGenerateCredentialsContent content = new ContainerRegistryGenerateCredentialsContent
             {
                 TokenId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.ContainerRegistry/registries/myRegistry/tokens/myToken"),
                 ExpireOn = DateTimeOffset.Parse("2020-12-31T15:59:59.0707808Z"),
@@ -443,9 +331,8 @@ namespace Azure.ResourceManager.ContainerRegistry.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Registries_ScheduleRun
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task ScheduleRun_RegistriesScheduleRun()
         {
             // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/preview/2019-06-01-preview/examples/RegistriesScheduleRun.json
@@ -470,22 +357,16 @@ namespace Azure.ResourceManager.ContainerRegistry.Samples
                 Architecture = ContainerRegistryOSArchitecture.Amd64,
             })
             {
-                ImageNames =
-{
-"azurerest:testtag"
-},
+                ImageNames = { "azurerest:testtag" },
                 IsPushEnabled = true,
                 NoCache = true,
-                Arguments =
-{
-new ContainerRegistryRunArgument("mytestargument","mytestvalue")
+                Arguments = {new ContainerRegistryRunArgument("mytestargument", "mytestvalue")
 {
 IsSecret = false,
-},new ContainerRegistryRunArgument("mysecrettestargument","mysecrettestvalue")
+}, new ContainerRegistryRunArgument("mysecrettestargument", "mysecrettestvalue")
 {
 IsSecret = true,
-}
-},
+}},
                 AgentCpu = 2,
                 SourceLocation = "https://myaccount.blob.core.windows.net/sascontainer/source.zip?sv=2015-04-05&st=2015-04-29T22%3A18%3A26Z&se=2015-04-30T02%3A23%3A26Z&sr=b&sp=rw&sip=168.1.5.60-168.1.5.70&spr=https&sig=Z%2FRHIX5Xcg0Mq2rqI3OlWTjEg2tYkboXr1P9ZUXDtkk%3D",
                 IsArchiveEnabled = true,
@@ -500,9 +381,8 @@ IsSecret = true,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Registries_ScheduleRun_EncodedTaskRun
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task ScheduleRun_RegistriesScheduleRunEncodedTaskRun()
         {
             // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/preview/2019-06-01-preview/examples/RegistriesScheduleRun_EncodedTaskRun.json
@@ -525,16 +405,13 @@ IsSecret = true,
             ContainerRegistryRunContent content = new ContainerRegistryEncodedTaskRunContent("c3RlcHM6Cnt7IGlmIFZhbHVlcy5lbnZpcm9ubWVudCA9PSAncHJvZCcgfX0KICAtIHJ1bjogcHJvZCBzZXR1cAp7eyBlbHNlIGlmIFZhbHVlcy5lbnZpcm9ubWVudCA9PSAnc3RhZ2luZycgfX0KICAtIHJ1bjogc3RhZ2luZyBzZXR1cAp7eyBlbHNlIH19CiAgLSBydW46IGRlZmF1bHQgc2V0dXAKe3sgZW5kIH19CgogIC0gcnVuOiBidWlsZCAtdCBGYW5jeVRoaW5nOnt7LlZhbHVlcy5lbnZpcm9ubWVudH19LXt7LlZhbHVlcy52ZXJzaW9ufX0gLgoKcHVzaDogWydGYW5jeVRoaW5nOnt7LlZhbHVlcy5lbnZpcm9ubWVudH19LXt7LlZhbHVlcy52ZXJzaW9ufX0nXQ==", new ContainerRegistryPlatformProperties(ContainerRegistryOS.Linux))
             {
                 EncodedValuesContent = "ZW52aXJvbm1lbnQ6IHByb2QKdmVyc2lvbjogMQ==",
-                Values =
-{
-new ContainerRegistryTaskOverridableValue("mytestargument","mytestvalue")
+                Values = {new ContainerRegistryTaskOverridableValue("mytestargument", "mytestvalue")
 {
 IsSecret = false,
-},new ContainerRegistryTaskOverridableValue("mysecrettestargument","mysecrettestvalue")
+}, new ContainerRegistryTaskOverridableValue("mysecrettestargument", "mysecrettestvalue")
 {
 IsSecret = true,
-}
-},
+}},
                 AgentCpu = 2,
             };
             ArmOperation<ContainerRegistryRunResource> lro = await containerRegistry.ScheduleRunAsync(WaitUntil.Completed, content);
@@ -547,9 +424,8 @@ IsSecret = true,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Registries_ScheduleRun_FileTaskRun
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task ScheduleRun_RegistriesScheduleRunFileTaskRun()
         {
             // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/preview/2019-06-01-preview/examples/RegistriesScheduleRun_FileTaskRun.json
@@ -572,16 +448,13 @@ IsSecret = true,
             ContainerRegistryRunContent content = new ContainerRegistryFileTaskRunContent("acb.yaml", new ContainerRegistryPlatformProperties(ContainerRegistryOS.Linux))
             {
                 ValuesFilePath = "prod-values.yaml",
-                Values =
-{
-new ContainerRegistryTaskOverridableValue("mytestargument","mytestvalue")
+                Values = {new ContainerRegistryTaskOverridableValue("mytestargument", "mytestvalue")
 {
 IsSecret = false,
-},new ContainerRegistryTaskOverridableValue("mysecrettestargument","mysecrettestvalue")
+}, new ContainerRegistryTaskOverridableValue("mysecrettestargument", "mysecrettestvalue")
 {
 IsSecret = true,
-}
-},
+}},
                 AgentCpu = 2,
                 SourceLocation = "https://myaccount.blob.core.windows.net/sascontainer/source.zip?sv=2015-04-05&st=2015-04-29T22%3A18%3A26Z&se=2015-04-30T02%3A23%3A26Z&sr=b&sp=rw&sip=168.1.5.60-168.1.5.70&spr=https&sig=Z%2FRHIX5Xcg0Mq2rqI3OlWTjEg2tYkboXr1P9ZUXDtkk%3D",
             };
@@ -595,9 +468,8 @@ IsSecret = true,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Registries_ScheduleRun_Task
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task ScheduleRun_RegistriesScheduleRunTask()
         {
             // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/preview/2019-06-01-preview/examples/RegistriesScheduleRun_Task.json
@@ -619,30 +491,24 @@ IsSecret = true,
             // invoke the operation
             ContainerRegistryRunContent content = new ContainerRegistryTaskRunContent(new ResourceIdentifier("myTask"))
             {
-                OverrideTaskStepProperties = new ContainerRegistryOverrideTaskStepProperties()
+                OverrideTaskStepProperties = new ContainerRegistryOverrideTaskStepProperties
                 {
                     File = "overriddenDockerfile",
-                    Arguments =
-{
-new ContainerRegistryRunArgument("mytestargument","mytestvalue")
+                    Arguments = {new ContainerRegistryRunArgument("mytestargument", "mytestvalue")
 {
 IsSecret = false,
-},new ContainerRegistryRunArgument("mysecrettestargument","mysecrettestvalue")
+}, new ContainerRegistryRunArgument("mysecrettestargument", "mysecrettestvalue")
 {
 IsSecret = true,
-}
-},
+}},
                     Target = "build",
-                    Values =
-{
-new ContainerRegistryTaskOverridableValue("mytestname","mytestvalue")
+                    Values = {new ContainerRegistryTaskOverridableValue("mytestname", "mytestvalue")
 {
 IsSecret = false,
-},new ContainerRegistryTaskOverridableValue("mysecrettestname","mysecrettestvalue")
+}, new ContainerRegistryTaskOverridableValue("mysecrettestname", "mysecrettestvalue")
 {
 IsSecret = true,
-}
-},
+}},
                     UpdateTriggerToken = "aGVsbG8gd29ybGQ=",
                 },
             };
@@ -656,9 +522,8 @@ IsSecret = true,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Registries_ScheduleRun_Task_WithCustomCredentials
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task ScheduleRun_RegistriesScheduleRunTaskWithCustomCredentials()
         {
             // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/preview/2019-06-01-preview/examples/RegistriesScheduleRun_FileTask_WithCustomCredentials.json
@@ -680,34 +545,31 @@ IsSecret = true,
             // invoke the operation
             ContainerRegistryRunContent content = new ContainerRegistryFileTaskRunContent("acb.yaml", new ContainerRegistryPlatformProperties(ContainerRegistryOS.Linux))
             {
-                Values =
-{
-new ContainerRegistryTaskOverridableValue("mytestargument","mytestvalue")
+                Values = {new ContainerRegistryTaskOverridableValue("mytestargument", "mytestvalue")
 {
 IsSecret = false,
-},new ContainerRegistryTaskOverridableValue("mysecrettestargument","mysecrettestvalue")
+}, new ContainerRegistryTaskOverridableValue("mysecrettestargument", "mysecrettestvalue")
 {
 IsSecret = true,
-}
-},
-                Credentials = new ContainerRegistryCredentials()
+}},
+                Credentials = new ContainerRegistryCredentials
                 {
                     SourceRegistryLoginMode = SourceRegistryLoginMode.Default,
                     CustomRegistries =
 {
-["myregistry.azurecr.io"] = new CustomRegistryCredentials()
+["myregistry.azurecr.io"] = new CustomRegistryCredentials
 {
-UserName = new ContainerRegistrySecretObject()
+UserName = new ContainerRegistrySecretObject
 {
 Value = "reg1",
 ObjectType = ContainerRegistrySecretObjectType.Opaque,
 },
-Password = new ContainerRegistrySecretObject()
+Password = new ContainerRegistrySecretObject
 {
 Value = "***",
 ObjectType = ContainerRegistrySecretObjectType.Opaque,
 },
-},
+}
 },
                 },
             };
@@ -721,9 +583,8 @@ ObjectType = ContainerRegistrySecretObjectType.Opaque,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Registries_ScheduleRun_WithCustomCredentials
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task ScheduleRun_RegistriesScheduleRunWithCustomCredentials()
         {
             // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/preview/2019-06-01-preview/examples/RegistriesScheduleRun_WithCustomCredentials.json
@@ -748,56 +609,50 @@ ObjectType = ContainerRegistrySecretObjectType.Opaque,
                 Architecture = ContainerRegistryOSArchitecture.Amd64,
             })
             {
-                ImageNames =
-{
-"azurerest:testtag"
-},
+                ImageNames = { "azurerest:testtag" },
                 IsPushEnabled = true,
                 NoCache = true,
                 Target = "stage1",
-                Arguments =
-{
-new ContainerRegistryRunArgument("mytestargument","mytestvalue")
+                Arguments = {new ContainerRegistryRunArgument("mytestargument", "mytestvalue")
 {
 IsSecret = false,
-},new ContainerRegistryRunArgument("mysecrettestargument","mysecrettestvalue")
+}, new ContainerRegistryRunArgument("mysecrettestargument", "mysecrettestvalue")
 {
 IsSecret = true,
-}
-},
+}},
                 AgentCpu = 2,
                 SourceLocation = "https://myaccount.blob.core.windows.net/sascontainer/source.zip?sv=2015-04-05&st=2015-04-29T22%3A18%3A26Z&se=2015-04-30T02%3A23%3A26Z&sr=b&sp=rw&sip=168.1.5.60-168.1.5.70&spr=https&sig=Z%2FRHIX5Xcg0Mq2rqI3OlWTjEg2tYkboXr1P9ZUXDtkk%3D",
-                Credentials = new ContainerRegistryCredentials()
+                Credentials = new ContainerRegistryCredentials
                 {
                     SourceRegistryLoginMode = SourceRegistryLoginMode.Default,
                     CustomRegistries =
 {
-["myregistry.azurecr.io"] = new CustomRegistryCredentials()
+["myregistry.azurecr.io"] = new CustomRegistryCredentials
 {
-UserName = new ContainerRegistrySecretObject()
+UserName = new ContainerRegistrySecretObject
 {
 Value = "reg1",
 ObjectType = ContainerRegistrySecretObjectType.Opaque,
 },
-Password = new ContainerRegistrySecretObject()
+Password = new ContainerRegistrySecretObject
 {
 Value = "***",
 ObjectType = ContainerRegistrySecretObjectType.Opaque,
 },
 },
-["myregistry2.azurecr.io"] = new CustomRegistryCredentials()
+["myregistry2.azurecr.io"] = new CustomRegistryCredentials
 {
-UserName = new ContainerRegistrySecretObject()
+UserName = new ContainerRegistrySecretObject
 {
 Value = "reg2",
 ObjectType = ContainerRegistrySecretObjectType.Opaque,
 },
-Password = new ContainerRegistrySecretObject()
+Password = new ContainerRegistrySecretObject
 {
 Value = "***",
 ObjectType = ContainerRegistrySecretObjectType.Opaque,
 },
-},
+}
 },
                 },
                 IsArchiveEnabled = true,
@@ -812,9 +667,8 @@ ObjectType = ContainerRegistrySecretObjectType.Opaque,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Registries_ScheduleRun_WithLogTemplate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task ScheduleRun_RegistriesScheduleRunWithLogTemplate()
         {
             // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/preview/2019-06-01-preview/examples/RegistriesScheduleRun_WithLogTemplate.json
@@ -839,22 +693,16 @@ ObjectType = ContainerRegistrySecretObjectType.Opaque,
                 Architecture = ContainerRegistryOSArchitecture.Amd64,
             })
             {
-                ImageNames =
-{
-"azurerest:testtag"
-},
+                ImageNames = { "azurerest:testtag" },
                 IsPushEnabled = true,
                 NoCache = true,
-                Arguments =
-{
-new ContainerRegistryRunArgument("mytestargument","mytestvalue")
+                Arguments = {new ContainerRegistryRunArgument("mytestargument", "mytestvalue")
 {
 IsSecret = false,
-},new ContainerRegistryRunArgument("mysecrettestargument","mysecrettestvalue")
+}, new ContainerRegistryRunArgument("mysecrettestargument", "mysecrettestvalue")
 {
 IsSecret = true,
-}
-},
+}},
                 AgentCpu = 2,
                 SourceLocation = "https://myaccount.blob.core.windows.net/sascontainer/source.zip?sv=2015-04-05&st=2015-04-29T22%3A18%3A26Z&se=2015-04-30T02%3A23%3A26Z&sr=b&sp=rw&sip=168.1.5.60-168.1.5.70&spr=https&sig=Z%2FRHIX5Xcg0Mq2rqI3OlWTjEg2tYkboXr1P9ZUXDtkk%3D",
                 IsArchiveEnabled = true,
@@ -870,9 +718,8 @@ IsSecret = true,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Registries_GetBuildSourceUploadUrl
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetBuildSourceUploadUrl_RegistriesGetBuildSourceUploadUrl()
         {
             // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/preview/2019-06-01-preview/examples/RegistriesGetBuildSourceUploadUrl.json

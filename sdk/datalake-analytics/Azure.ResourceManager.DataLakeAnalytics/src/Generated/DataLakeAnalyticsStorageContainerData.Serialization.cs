@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataLakeAnalyticsContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(DataLakeAnalyticsStorageContainerData)} does not support writing '{options.Format}' format.");
             }
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeDataLakeAnalyticsStorageContainerData(document.RootElement, options);
                     }
                 default:

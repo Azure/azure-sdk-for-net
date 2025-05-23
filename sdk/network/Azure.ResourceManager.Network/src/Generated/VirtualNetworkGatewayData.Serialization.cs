@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.Network
             VpnClientConfiguration vpnClientConfiguration = default;
             IList<VirtualNetworkGatewayPolicyGroup> virtualNetworkGatewayPolicyGroups = default;
             BgpSettings bgpSettings = default;
-            AddressSpace customRoutes = default;
+            VirtualNetworkAddressSpace customRoutes = default;
             Guid? resourceGuid = default;
             NetworkProvisioningState? provisioningState = default;
             bool? enableDnsForwarding = default;
@@ -485,7 +485,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            customRoutes = AddressSpace.DeserializeAddressSpace(property0.Value, options);
+                            customRoutes = VirtualNetworkAddressSpace.DeserializeVirtualNetworkAddressSpace(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("resourceGuid"u8))
@@ -642,7 +642,7 @@ namespace Azure.ResourceManager.Network
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(VirtualNetworkGatewayData)} does not support writing '{options.Format}' format.");
             }
@@ -656,7 +656,7 @@ namespace Azure.ResourceManager.Network
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeVirtualNetworkGatewayData(document.RootElement, options);
                     }
                 default:

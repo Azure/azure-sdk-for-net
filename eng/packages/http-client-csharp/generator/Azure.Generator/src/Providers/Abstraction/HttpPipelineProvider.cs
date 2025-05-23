@@ -3,49 +3,92 @@
 
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Microsoft.Generator.CSharp.ClientModel.Providers;
-using Microsoft.Generator.CSharp.Expressions;
-using Microsoft.Generator.CSharp.Primitives;
-using static Microsoft.Generator.CSharp.Snippets.Snippet;
+using Microsoft.TypeSpec.Generator.ClientModel.Providers;
+using Microsoft.TypeSpec.Generator.Expressions;
+using Microsoft.TypeSpec.Generator.Primitives;
+using Microsoft.TypeSpec.Generator.Providers;
+using Microsoft.TypeSpec.Generator.Snippets;
+using Microsoft.TypeSpec.Generator.Statements;
+using System.Threading;
+using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 
 namespace Azure.Generator.Providers.Abstraction
 {
-    internal record HttpPipelineProvider : ClientPipelineApi
+    /// <inheritdoc/>
+    public record HttpPipelineProvider : ClientPipelineApi
     {
         private static ClientPipelineApi? _instance;
         internal static ClientPipelineApi Instance => _instance ??= new HttpPipelineProvider(Empty);
 
+        /// <inheritdoc/>
         public HttpPipelineProvider(ValueExpression original) : base(typeof(HttpPipeline), original)
         {
         }
 
+        /// <inheritdoc/>
         public override CSharpType ClientPipelineType => typeof(HttpPipeline);
 
+        /// <inheritdoc/>
         public override CSharpType ClientPipelineOptionsType => typeof(ClientOptions);
 
+        /// <inheritdoc/>
         public override CSharpType PipelinePolicyType => typeof(HttpPipelinePolicy);
 
+        /// <inheritdoc/>
+        public override CSharpType? KeyCredentialType => typeof(AzureKeyCredential);
+
+        /// <inheritdoc/>
+        public override CSharpType? TokenCredentialType => typeof(TokenCredential);
+
+        /// <inheritdoc/>
         public override ValueExpression Create(ValueExpression options, ValueExpression perRetryPolicies)
             => Static(typeof(HttpPipelineBuilder)).Invoke(nameof(HttpPipelineBuilder.Build), [options, perRetryPolicies]);
 
-        public override HttpMessageApi CreateMessage()
-            => new HttpMessageProvider(Original.Invoke(nameof(HttpPipeline.CreateMessage)));
-
+        /// <inheritdoc/>
         public override ValueExpression CreateMessage(HttpRequestOptionsApi requestOptions, ValueExpression responseClassifier)
             => Original.Invoke(nameof(HttpPipeline.CreateMessage), requestOptions, responseClassifier).As<HttpMessage>();
 
+        /// <inheritdoc/>
         public override ClientPipelineApi FromExpression(ValueExpression expression)
             => new HttpPipelineProvider(expression);
 
-        public override ValueExpression PerRetryPolicy(params ValueExpression[] arguments)
-            => Empty; // TODO: implement with default retry policy for Azure
+        /// <inheritdoc/>
+        public override ValueExpression KeyAuthorizationPolicy(ValueExpression credential, ValueExpression headerName, ValueExpression? keyPrefix = null)
+            => New.Instance(typeof(AzureKeyCredentialPolicy), keyPrefix != null ? [credential, headerName, keyPrefix] : [credential, headerName]);
 
-        public override InvokeMethodExpression Send(HttpMessageApi message)
-            => Original.Invoke(nameof(HttpPipeline.Send), [message, Default]);
+        /// <inheritdoc/>
+        public override ValueExpression TokenAuthorizationPolicy(ValueExpression credential, ValueExpression scopes)
+            => New.Instance(typeof(BearerTokenAuthenticationPolicy), credential, scopes);
 
-        public override InvokeMethodExpression SendAsync(HttpMessageApi message)
-            => Original.Invoke(nameof(HttpPipeline.SendAsync), [message, Default], true);
-
+        /// <inheritdoc/>
         public override ClientPipelineApi ToExpression() => this;
+
+        /// <inheritdoc/>
+        public override MethodBodyStatement[] ProcessMessage(HttpMessageApi message, HttpRequestOptionsApi options)
+            => BuildProcessMessage(message, options, false);
+
+        /// <inheritdoc/>
+        public override MethodBodyStatement[] ProcessMessageAsync(HttpMessageApi message, HttpRequestOptionsApi options)
+            => BuildProcessMessage(message, options, true);
+
+        private MethodBodyStatement[] BuildProcessMessage(HttpMessageApi message, HttpRequestOptionsApi options, bool isAsync)
+        {
+            var userCancellationToken = new ParameterProvider("userCancellationToken", $"", new CSharpType(typeof(CancellationToken)));
+            var statusOption = new ParameterProvider("statusOption", $"", new CSharpType(typeof(ErrorOptions)));
+            return
+            [
+                new VariableTupleExpression(false, userCancellationToken, statusOption).Assign(options.Invoke("Parse")).Terminate(),
+                Original.Invoke(isAsync ? nameof(HttpPipeline.SendAsync) : nameof(HttpPipeline.Send), [message, userCancellationToken], isAsync).Terminate(),
+                MethodBodyStatement.EmptyLine,
+                new IfStatement(message.Response().IsError().And(new BinaryOperatorExpression("&", options.NullConditional().Property("ErrorOptions"), options.NoThrow()).NotEqual(options.NoThrow())))
+                {
+                    isAsync
+                    ? Throw(AzureClientGenerator.Instance.TypeFactory.ClientResponseApi.ToExpression().CreateAsync(message.Response()))
+                    : Throw(New.Instance(AzureClientGenerator.Instance.TypeFactory.ClientResponseApi.ClientResponseExceptionType, message.Response()))
+                },
+                MethodBodyStatement.EmptyLine,
+                Return(message.Response())
+            ];
+        }
     }
 }

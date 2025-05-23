@@ -5,13 +5,11 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
-using System.Text;
 using System.Text.Json;
 using Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Implementation;
 using Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Interface;
 using Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Model;
 using Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Utility;
-using Azure.Storage.Blobs;
 using Microsoft.VisualStudio.TestPlatform.ObjectModel;
 using Microsoft.VisualStudio.TestPlatform.ObjectModel.Client;
 using Microsoft.VisualStudio.TestPlatform.ObjectModel.Logging;
@@ -26,8 +24,9 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Processor
         private readonly ICloudRunErrorParser _cloudRunErrorParser;
         private readonly IServiceClient _serviceClient;
         private readonly IConsoleWriter _consoleWriter;
-        private readonly CIInfo _cIInfo;
-        private readonly CloudRunMetadata _cloudRunMetadata;
+        internal readonly CIInfo _cIInfo;
+        internal readonly CloudRunMetadata _cloudRunMetadata;
+        private readonly IBlobService _blobService;
 
         // Test Metadata
         internal int TotalTestCount { get; set; } = 0;
@@ -42,7 +41,7 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Processor
         internal TestRunShardDto? _testRunShard;
         internal TestResultsUri? _testResultsSasUri;
 
-        public TestProcessor(CloudRunMetadata cloudRunMetadata, CIInfo cIInfo, ILogger? logger = null, IDataProcessor? dataProcessor = null, ICloudRunErrorParser? cloudRunErrorParser = null, IServiceClient? serviceClient = null, IConsoleWriter? consoleWriter = null)
+        public TestProcessor(CloudRunMetadata cloudRunMetadata, CIInfo cIInfo, ILogger? logger = null, IDataProcessor? dataProcessor = null, ICloudRunErrorParser? cloudRunErrorParser = null, IServiceClient? serviceClient = null, IConsoleWriter? consoleWriter = null, IBlobService? blobService = null)
         {
             _cloudRunMetadata = cloudRunMetadata;
             _cIInfo = cIInfo;
@@ -51,6 +50,7 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Processor
             _cloudRunErrorParser = cloudRunErrorParser ?? new CloudRunErrorParser(_logger);
             _serviceClient = serviceClient ?? new ServiceClient(_cloudRunMetadata, _cloudRunErrorParser);
             _consoleWriter = consoleWriter ?? new ConsoleWriter();
+            _blobService = blobService ?? new BlobService(_logger);
         }
 
         public void TestRunStartHandler(object? sender, TestRunStartEventArgs e)
@@ -171,7 +171,7 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Processor
                                 // Upload rawResult to blob storage using sasUri
                                 var rawTestResultJson = JsonSerializer.Serialize(rawResult);
                                 var filePath = $"{testResult.TestExecutionId}/rawTestResult.json";
-                                UploadBuffer(sasUri!.Uri!, rawTestResultJson, filePath);
+                                _blobService.UploadBuffer(sasUri!.Uri!, rawTestResultJson, filePath);
                             }
                             else
                             {
@@ -215,9 +215,9 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Processor
                         {
                             // get file size
                             var fileSize = new FileInfo(filePath).Length;
-                            var cloudFileName = ReporterUtils.GetCloudFileName(filePath, testExecutionId);
+                            var cloudFileName = _blobService.GetCloudFileName(filePath, testExecutionId);
                             if (cloudFileName != null) {
-                                UploadBlobFile(_testResultsSasUri!.Uri!, cloudFileName, filePath);
+                                _blobService.UploadBlobFile(_testResultsSasUri!.Uri!, cloudFileName, filePath);
                                 TotalArtifactCount++;
                                 TotalArtifactSizeInBytes = TotalArtifactSizeInBytes + (int)fileSize;
                             }
@@ -237,7 +237,7 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Processor
             }
         }
 
-        private TestResultsUri? CheckAndRenewSasUri()
+        internal TestResultsUri? CheckAndRenewSasUri()
         {
             var reporterUtils = new ReporterUtils();
             if (_testResultsSasUri == null || !reporterUtils.IsTimeGreaterThanCurrentPlus10Minutes(_testResultsSasUri.Uri))
@@ -270,31 +270,6 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Processor
             }
             _cloudRunErrorParser.DisplayMessages();
         }
-        private static string GetCloudFilePath(string uri, string fileRelativePath)
-        {
-            string[] parts = uri.Split(new string[] { ReporterConstants.s_sASUriSeparator }, StringSplitOptions.None);
-            string containerUri = parts[0];
-            string sasToken = parts.Length > 1 ? parts[1] : string.Empty;
-
-            return $"{containerUri}/{fileRelativePath}?{sasToken}";
-        }
-        private void UploadBuffer(string uri, string buffer, string fileRelativePath)
-        {
-            string cloudFilePath = GetCloudFilePath(uri, fileRelativePath);
-            BlobClient blobClient = new(new Uri(cloudFilePath));
-            byte[] bufferBytes = Encoding.UTF8.GetBytes(buffer);
-            blobClient.Upload(new BinaryData(bufferBytes), overwrite: true);
-            _logger.Info($"Uploaded buffer to {fileRelativePath}");
-        }
-
-        private void UploadBlobFile(string uri, string fileRelativePath, string filePath)
-        {
-            string cloudFilePath = GetCloudFilePath(uri, fileRelativePath);
-            BlobClient blobClient = new(new Uri(cloudFilePath));
-            // Upload filePath to Blob
-            blobClient.Upload(filePath, overwrite: true);
-            _logger.Info($"Uploaded file {filePath} to {fileRelativePath}");
-        }
 
         private TestRunShardDto GetTestRunEndShard(TestRunCompleteEventArgs e)
         {
@@ -303,11 +278,14 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Processor
 
             var result = FailedTestCount > 0 ? TestCaseResultStatus.s_fAILED : TestCaseResultStatus.s_pASSED;
 
+#pragma warning disable CS8073 // The result of the expression is always 'true' since a value of type 'TimeSpan' is never equal to 'null' of type 'TimeSpan?' (net8.0)
             if (e.ElapsedTimeInRunningTests != null)
             {
                 testRunEndedOn = _cloudRunMetadata.TestRunStartTime.Add(e.ElapsedTimeInRunningTests);
                 durationInMs = (long)e.ElapsedTimeInRunningTests.TotalMilliseconds;
             }
+#pragma warning restore CS8073 // The result of the expression is always 'true' since a value of type 'TimeSpan' is never equal to 'null' of type 'TimeSpan?' (net8.0)
+
             TestRunShardDto? testRunShard = _testRunShard;
             // Update Shard End
             if (testRunShard!.Summary == null)
@@ -335,13 +313,13 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Processor
 
 ![skipped](https://img.shields.io/badge/status-skipped-lightgrey) **Skipped:** {SkippedTestCount}
 
-#### For more details, visit the [service dashboard]({Uri.EscapeUriString(_cloudRunMetadata.PortalUrl!)}).
+#### For more details, visit the [service dashboard]({_cloudRunMetadata.PortalUrl}).
 ";
 
-                string filePath = Environment.GetEnvironmentVariable("GITHUB_STEP_SUMMARY");
+                string? filePath = Environment.GetEnvironmentVariable("GITHUB_STEP_SUMMARY");
                 try
                 {
-                    File.WriteAllText(filePath, markdownContent);
+                    File.WriteAllText(filePath ?? string.Empty, markdownContent);
                 }
                 catch (Exception ex)
                 {
@@ -349,6 +327,6 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Processor
                 }
             }
         }
-        #endregion
+#endregion
     }
 }

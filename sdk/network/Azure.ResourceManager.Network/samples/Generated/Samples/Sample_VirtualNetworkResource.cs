@@ -10,19 +10,18 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Network.Models;
-using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Network.Samples
 {
     public partial class Sample_VirtualNetworkResource
     {
-        // List effective connectivity configuration
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetNetworkManagerEffectiveConnectivityConfigurations_ListEffectiveConnectivityConfiguration()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Get_GetVirtualNetwork()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/NetworkManagerEffectiveConnectivityConfigurationsList.json
-            // this example is just showing the usage of "ListNetworkManagerEffectiveConnectivityConfigurations" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-05-01/examples/VirtualNetworkGet.json
+            // this example is just showing the usage of "VirtualNetworks_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -31,32 +30,28 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this VirtualNetworkResource created on azure
             // for more information of creating VirtualNetworkResource, please refer to the document of VirtualNetworkResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "myResourceGroup";
-            string virtualNetworkName = "testVirtualNetwork";
+            string subscriptionId = "subid";
+            string resourceGroupName = "rg1";
+            string virtualNetworkName = "test-vnet";
             ResourceIdentifier virtualNetworkResourceId = VirtualNetworkResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualNetworkName);
             VirtualNetworkResource virtualNetwork = client.GetVirtualNetworkResource(virtualNetworkResourceId);
 
-            // invoke the operation and iterate over the result
-            NetworkManagementQueryContent content = new NetworkManagementQueryContent()
-            {
-                SkipToken = "FakeSkipTokenCode",
-            };
-            await foreach (EffectiveConnectivityConfiguration item in virtualNetwork.GetNetworkManagerEffectiveConnectivityConfigurationsAsync(content))
-            {
-                Console.WriteLine($"Succeeded: {item}");
-            }
+            // invoke the operation
+            VirtualNetworkResource result = await virtualNetwork.GetAsync();
 
-            Console.WriteLine($"Succeeded");
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            VirtualNetworkData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // List effective security admin rules
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetNetworkManagerEffectiveSecurityAdminRules_ListEffectiveSecurityAdminRules()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Get_GetVirtualNetworkWithADelegatedSubnet()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/NetworkManagerEffectiveSecurityAdminRulesList.json
-            // this example is just showing the usage of "ListNetworkManagerEffectiveSecurityAdminRules" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-05-01/examples/VirtualNetworkGetWithSubnetDelegation.json
+            // this example is just showing the usage of "VirtualNetworks_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -65,31 +60,57 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this VirtualNetworkResource created on azure
             // for more information of creating VirtualNetworkResource, please refer to the document of VirtualNetworkResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "myResourceGroup";
-            string virtualNetworkName = "testVirtualNetwork";
+            string subscriptionId = "subId";
+            string resourceGroupName = "rg1";
+            string virtualNetworkName = "test-vnet";
             ResourceIdentifier virtualNetworkResourceId = VirtualNetworkResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualNetworkName);
             VirtualNetworkResource virtualNetwork = client.GetVirtualNetworkResource(virtualNetworkResourceId);
 
-            // invoke the operation and iterate over the result
-            NetworkManagementQueryContent content = new NetworkManagementQueryContent()
-            {
-                SkipToken = "FakeSkipTokenCode",
-            };
-            await foreach (EffectiveBaseSecurityAdminRule item in virtualNetwork.GetNetworkManagerEffectiveSecurityAdminRulesAsync(content))
-            {
-                Console.WriteLine($"Succeeded: {item}");
-            }
+            // invoke the operation
+            VirtualNetworkResource result = await virtualNetwork.GetAsync();
 
-            Console.WriteLine($"Succeeded");
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            VirtualNetworkData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Delete virtual network
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Get_GetVirtualNetworkWithServiceAssociationLinks()
+        {
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-05-01/examples/VirtualNetworkGetWithServiceAssociationLink.json
+            // this example is just showing the usage of "VirtualNetworks_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this VirtualNetworkResource created on azure
+            // for more information of creating VirtualNetworkResource, please refer to the document of VirtualNetworkResource
+            string subscriptionId = "subId";
+            string resourceGroupName = "rg1";
+            string virtualNetworkName = "test-vnet";
+            ResourceIdentifier virtualNetworkResourceId = VirtualNetworkResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualNetworkName);
+            VirtualNetworkResource virtualNetwork = client.GetVirtualNetworkResource(virtualNetworkResourceId);
+
+            // invoke the operation
+            VirtualNetworkResource result = await virtualNetwork.GetAsync();
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            VirtualNetworkData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteVirtualNetwork()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/VirtualNetworkDelete.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-05-01/examples/VirtualNetworkDelete.json
             // this example is just showing the usage of "VirtualNetworks_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -108,108 +129,14 @@ namespace Azure.ResourceManager.Network.Samples
             // invoke the operation
             await virtualNetwork.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Get virtual network
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Get_GetVirtualNetwork()
-        {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/VirtualNetworkGet.json
-            // this example is just showing the usage of "VirtualNetworks_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this VirtualNetworkResource created on azure
-            // for more information of creating VirtualNetworkResource, please refer to the document of VirtualNetworkResource
-            string subscriptionId = "subid";
-            string resourceGroupName = "rg1";
-            string virtualNetworkName = "test-vnet";
-            ResourceIdentifier virtualNetworkResourceId = VirtualNetworkResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualNetworkName);
-            VirtualNetworkResource virtualNetwork = client.GetVirtualNetworkResource(virtualNetworkResourceId);
-
-            // invoke the operation
-            VirtualNetworkResource result = await virtualNetwork.GetAsync();
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            VirtualNetworkData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // Get virtual network with a delegated subnet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Get_GetVirtualNetworkWithADelegatedSubnet()
-        {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/VirtualNetworkGetWithSubnetDelegation.json
-            // this example is just showing the usage of "VirtualNetworks_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this VirtualNetworkResource created on azure
-            // for more information of creating VirtualNetworkResource, please refer to the document of VirtualNetworkResource
-            string subscriptionId = "subId";
-            string resourceGroupName = "rg1";
-            string virtualNetworkName = "test-vnet";
-            ResourceIdentifier virtualNetworkResourceId = VirtualNetworkResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualNetworkName);
-            VirtualNetworkResource virtualNetwork = client.GetVirtualNetworkResource(virtualNetworkResourceId);
-
-            // invoke the operation
-            VirtualNetworkResource result = await virtualNetwork.GetAsync();
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            VirtualNetworkData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // Get virtual network with service association links
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Get_GetVirtualNetworkWithServiceAssociationLinks()
-        {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/VirtualNetworkGetWithServiceAssociationLink.json
-            // this example is just showing the usage of "VirtualNetworks_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this VirtualNetworkResource created on azure
-            // for more information of creating VirtualNetworkResource, please refer to the document of VirtualNetworkResource
-            string subscriptionId = "subId";
-            string resourceGroupName = "rg1";
-            string virtualNetworkName = "test-vnet";
-            ResourceIdentifier virtualNetworkResourceId = VirtualNetworkResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualNetworkName);
-            VirtualNetworkResource virtualNetwork = client.GetVirtualNetworkResource(virtualNetworkResourceId);
-
-            // invoke the operation
-            VirtualNetworkResource result = await virtualNetwork.GetAsync();
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            VirtualNetworkData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // Update virtual network tags
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateVirtualNetworkTags()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/VirtualNetworkUpdateTags.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-05-01/examples/VirtualNetworkUpdateTags.json
             // this example is just showing the usage of "VirtualNetworks_UpdateTags" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -226,12 +153,12 @@ namespace Azure.ResourceManager.Network.Samples
             VirtualNetworkResource virtualNetwork = client.GetVirtualNetworkResource(virtualNetworkResourceId);
 
             // invoke the operation
-            NetworkTagsObject networkTagsObject = new NetworkTagsObject()
+            NetworkTagsObject networkTagsObject = new NetworkTagsObject
             {
                 Tags =
 {
 ["tag1"] = "value1",
-["tag2"] = "value2",
+["tag2"] = "value2"
 },
             };
             VirtualNetworkResource result = await virtualNetwork.UpdateAsync(networkTagsObject);
@@ -243,44 +170,77 @@ namespace Azure.ResourceManager.Network.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // List all virtual networks
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetVirtualNetworks_ListAllVirtualNetworks()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetNetworkManagerEffectiveConnectivityConfigurations_ListEffectiveConnectivityConfiguration()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/VirtualNetworkListAll.json
-            // this example is just showing the usage of "VirtualNetworks_ListAll" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-05-01/examples/NetworkManagerEffectiveConnectivityConfigurationsList.json
+            // this example is just showing the usage of "ListNetworkManagerEffectiveConnectivityConfigurations" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "subid";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
+            // this example assumes you already have this VirtualNetworkResource created on azure
+            // for more information of creating VirtualNetworkResource, please refer to the document of VirtualNetworkResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "myResourceGroup";
+            string virtualNetworkName = "testVirtualNetwork";
+            ResourceIdentifier virtualNetworkResourceId = VirtualNetworkResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualNetworkName);
+            VirtualNetworkResource virtualNetwork = client.GetVirtualNetworkResource(virtualNetworkResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (VirtualNetworkResource item in subscriptionResource.GetVirtualNetworksAsync())
+            NetworkManagementQueryContent content = new NetworkManagementQueryContent
             {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                VirtualNetworkData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+                SkipToken = "FakeSkipTokenCode",
+            };
+            await foreach (EffectiveConnectivityConfiguration item in virtualNetwork.GetNetworkManagerEffectiveConnectivityConfigurationsAsync(content))
+            {
+                Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Check IP address availability
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetNetworkManagerEffectiveSecurityAdminRules_ListEffectiveSecurityAdminRules()
+        {
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-05-01/examples/NetworkManagerEffectiveSecurityAdminRulesList.json
+            // this example is just showing the usage of "ListNetworkManagerEffectiveSecurityAdminRules" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this VirtualNetworkResource created on azure
+            // for more information of creating VirtualNetworkResource, please refer to the document of VirtualNetworkResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "myResourceGroup";
+            string virtualNetworkName = "testVirtualNetwork";
+            ResourceIdentifier virtualNetworkResourceId = VirtualNetworkResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualNetworkName);
+            VirtualNetworkResource virtualNetwork = client.GetVirtualNetworkResource(virtualNetworkResourceId);
+
+            // invoke the operation and iterate over the result
+            NetworkManagementQueryContent content = new NetworkManagementQueryContent
+            {
+                SkipToken = "FakeSkipTokenCode",
+            };
+            await foreach (EffectiveBaseSecurityAdminRule item in virtualNetwork.GetNetworkManagerEffectiveSecurityAdminRulesAsync(content))
+            {
+                Console.WriteLine($"Succeeded: {item}");
+            }
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CheckIPAddressAvailability_CheckIPAddressAvailability()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/VirtualNetworkCheckIPAddressAvailability.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-05-01/examples/VirtualNetworkCheckIPAddressAvailability.json
             // this example is just showing the usage of "VirtualNetworks_CheckIPAddressAvailability" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -303,12 +263,11 @@ namespace Azure.ResourceManager.Network.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // VnetGetUsage
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetUsage_VnetGetUsage()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/VirtualNetworkListUsage.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-05-01/examples/VirtualNetworkListUsage.json
             // this example is just showing the usage of "VirtualNetworks_ListUsage" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -330,7 +289,7 @@ namespace Azure.ResourceManager.Network.Samples
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

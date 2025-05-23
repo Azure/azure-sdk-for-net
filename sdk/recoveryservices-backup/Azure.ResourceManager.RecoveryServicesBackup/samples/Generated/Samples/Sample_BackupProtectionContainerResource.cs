@@ -10,18 +10,17 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.RecoveryServicesBackup.Models;
-using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Samples
 {
     public partial class Sample_BackupProtectionContainerResource
     {
-        // Get Protection Container Details
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetProtectionContainerDetails()
         {
-            // Generated from example definition: specification/recoveryservicesbackup/resource-manager/Microsoft.RecoveryServices/stable/2023-06-01/examples/AzureWorkload/ProtectionContainers_Get.json
+            // Generated from example definition: specification/recoveryservicesbackup/resource-manager/Microsoft.RecoveryServices/stable/2025-02-01/examples/AzureWorkload/ProtectionContainers_Get.json
             // this example is just showing the usage of "ProtectionContainers_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -49,56 +48,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // RegisterAzure Storage ProtectionContainers
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Update_RegisterAzureStorageProtectionContainers()
-        {
-            // Generated from example definition: specification/recoveryservicesbackup/resource-manager/Microsoft.RecoveryServices/stable/2023-06-01/examples/AzureStorage/ProtectionContainers_Register.json
-            // this example is just showing the usage of "ProtectionContainers_Register" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this BackupProtectionContainerResource created on azure
-            // for more information of creating BackupProtectionContainerResource, please refer to the document of BackupProtectionContainerResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "SwaggerTestRg";
-            string vaultName = "swaggertestvault";
-            string fabricName = "Azure";
-            string containerName = "StorageContainer;Storage;SwaggerTestRg;swaggertestsa";
-            ResourceIdentifier backupProtectionContainerResourceId = BackupProtectionContainerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vaultName, fabricName, containerName);
-            BackupProtectionContainerResource backupProtectionContainer = client.GetBackupProtectionContainerResource(backupProtectionContainerResourceId);
-
-            // invoke the operation
-            BackupProtectionContainerData data = new BackupProtectionContainerData(new AzureLocation("placeholder"))
-            {
-                Properties = new StorageContainer()
-                {
-                    SourceResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/SwaggerTestRg/providers/Microsoft.Storage/storageAccounts/swaggertestsa"),
-                    AcquireStorageAccountLock = AcquireStorageAccountLock.Acquire,
-                    FriendlyName = "swaggertestsa",
-                    BackupManagementType = BackupManagementType.AzureStorage,
-                },
-            };
-            ArmOperation<BackupProtectionContainerResource> lro = await backupProtectionContainer.UpdateAsync(WaitUntil.Completed, data);
-            BackupProtectionContainerResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            BackupProtectionContainerData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // Unregister Protection Container
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_UnregisterProtectionContainer()
         {
-            // Generated from example definition: specification/recoveryservicesbackup/resource-manager/Microsoft.RecoveryServices/stable/2023-06-01/examples/AzureWorkload/ProtectionContainers_Unregister.json
+            // Generated from example definition: specification/recoveryservicesbackup/resource-manager/Microsoft.RecoveryServices/stable/2025-02-01/examples/AzureWorkload/ProtectionContainers_Unregister.json
             // this example is just showing the usage of "ProtectionContainers_Unregister" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -119,15 +73,57 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Samples
             // invoke the operation
             await backupProtectionContainer.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Inquire Azure Storage Protection Containers
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Update_RegisterAzureStorageProtectionContainers()
+        {
+            // Generated from example definition: specification/recoveryservicesbackup/resource-manager/Microsoft.RecoveryServices/stable/2025-02-01/examples/AzureStorage/ProtectionContainers_Register.json
+            // this example is just showing the usage of "ProtectionContainers_Register" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this BackupProtectionContainerResource created on azure
+            // for more information of creating BackupProtectionContainerResource, please refer to the document of BackupProtectionContainerResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "SwaggerTestRg";
+            string vaultName = "swaggertestvault";
+            string fabricName = "Azure";
+            string containerName = "StorageContainer;Storage;SwaggerTestRg;swaggertestsa";
+            ResourceIdentifier backupProtectionContainerResourceId = BackupProtectionContainerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vaultName, fabricName, containerName);
+            BackupProtectionContainerResource backupProtectionContainer = client.GetBackupProtectionContainerResource(backupProtectionContainerResourceId);
+
+            // invoke the operation
+            BackupProtectionContainerData data = new BackupProtectionContainerData(default)
+            {
+                Properties = new StorageContainer
+                {
+                    SourceResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/SwaggerTestRg/providers/Microsoft.Storage/storageAccounts/swaggertestsa"),
+                    AcquireStorageAccountLock = AcquireStorageAccountLock.Acquire,
+                    FriendlyName = "swaggertestsa",
+                    BackupManagementType = BackupManagementType.AzureStorage,
+                },
+            };
+            ArmOperation<BackupProtectionContainerResource> lro = await backupProtectionContainer.UpdateAsync(WaitUntil.Completed, data);
+            BackupProtectionContainerResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            BackupProtectionContainerData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Inquire_InquireAzureStorageProtectionContainers()
         {
-            // Generated from example definition: specification/recoveryservicesbackup/resource-manager/Microsoft.RecoveryServices/stable/2023-06-01/examples/AzureStorage/ProtectionContainers_Inquire.json
+            // Generated from example definition: specification/recoveryservicesbackup/resource-manager/Microsoft.RecoveryServices/stable/2025-02-01/examples/AzureStorage/ProtectionContainers_Inquire.json
             // this example is just showing the usage of "ProtectionContainers_Inquire" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -148,43 +144,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Samples
             // invoke the operation
             await backupProtectionContainer.InquireAsync();
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Trigger Azure Vm Discovery
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task RefreshProtectionContainer_TriggerAzureVmDiscovery()
-        {
-            // Generated from example definition: specification/recoveryservicesbackup/resource-manager/Microsoft.RecoveryServices/stable/2023-06-01/examples/Common/RefreshContainers.json
-            // this example is just showing the usage of "ProtectionContainers_Refresh" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ResourceGroupResource created on azure
-            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "SwaggerTestRg";
-            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
-            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
-
-            // invoke the operation
-            string vaultName = "NetSDKTestRsVault";
-            string fabricName = "Azure";
-            await resourceGroupResource.RefreshProtectionContainerAsync(vaultName, fabricName);
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // List Workload Items in Container
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetBackupWorkloadItems_ListWorkloadItemsInContainer()
         {
-            // Generated from example definition: specification/recoveryservicesbackup/resource-manager/Microsoft.RecoveryServices/stable/2023-06-01/examples/AzureWorkload/BackupWorkloadItems_List.json
+            // Generated from example definition: specification/recoveryservicesbackup/resource-manager/Microsoft.RecoveryServices/stable/2025-02-01/examples/AzureWorkload/BackupWorkloadItems_List.json
             // this example is just showing the usage of "BackupWorkloadItems_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -209,7 +176,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Samples
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

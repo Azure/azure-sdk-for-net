@@ -13,13 +13,12 @@ require: https://github.com/Azure/azure-rest-api-specs/blob/d85634405ec3b905f1b0
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
-  output-folder: $(this-folder)/../samples/Generated
+  output-folder: $(this-folder)/../tests/Generated
   clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
 use-model-reader-writer: true
-use-write-core: true
 deserialize-null-collection-as-null-value: true
 
 # mgmt-debug:

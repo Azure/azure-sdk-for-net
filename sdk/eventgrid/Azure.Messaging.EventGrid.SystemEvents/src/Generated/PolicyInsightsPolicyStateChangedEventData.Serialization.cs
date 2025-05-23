@@ -19,45 +19,38 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 
         void IJsonModel<PolicyInsightsPolicyStateChangedEventData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<PolicyInsightsPolicyStateChangedEventData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(PolicyInsightsPolicyStateChangedEventData)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
-            writer.WritePropertyName("timestamp"u8);
-            writer.WriteStringValue(Timestamp, "O");
-            if (Optional.IsDefined(PolicyAssignmentId))
+            if (Optional.IsDefined(Timestamp))
             {
-                writer.WritePropertyName("policyAssignmentId"u8);
-                writer.WriteStringValue(PolicyAssignmentId);
+                writer.WritePropertyName("timestamp"u8);
+                writer.WriteStringValue(Timestamp.Value, "O");
             }
-            if (Optional.IsDefined(PolicyDefinitionId))
-            {
-                writer.WritePropertyName("policyDefinitionId"u8);
-                writer.WriteStringValue(PolicyDefinitionId);
-            }
-            if (Optional.IsDefined(PolicyDefinitionReferenceId))
-            {
-                writer.WritePropertyName("policyDefinitionReferenceId"u8);
-                writer.WriteStringValue(PolicyDefinitionReferenceId);
-            }
-            if (Optional.IsDefined(ComplianceState))
-            {
-                writer.WritePropertyName("complianceState"u8);
-                writer.WriteStringValue(ComplianceState);
-            }
-            if (Optional.IsDefined(SubscriptionId))
-            {
-                writer.WritePropertyName("subscriptionId"u8);
-                writer.WriteStringValue(SubscriptionId);
-            }
-            if (Optional.IsDefined(ComplianceReasonCode))
-            {
-                writer.WritePropertyName("complianceReasonCode"u8);
-                writer.WriteStringValue(ComplianceReasonCode);
-            }
+            writer.WritePropertyName("policyAssignmentId"u8);
+            writer.WriteStringValue(PolicyAssignmentId);
+            writer.WritePropertyName("policyDefinitionId"u8);
+            writer.WriteStringValue(PolicyDefinitionId);
+            writer.WritePropertyName("policyDefinitionReferenceId"u8);
+            writer.WriteStringValue(PolicyDefinitionReferenceId);
+            writer.WritePropertyName("complianceState"u8);
+            writer.WriteStringValue(ComplianceState);
+            writer.WritePropertyName("subscriptionId"u8);
+            writer.WriteStringValue(SubscriptionId);
+            writer.WritePropertyName("complianceReasonCode"u8);
+            writer.WriteStringValue(ComplianceReasonCode);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -66,14 +59,13 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         PolicyInsightsPolicyStateChangedEventData IJsonModel<PolicyInsightsPolicyStateChangedEventData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -96,7 +88,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            DateTimeOffset timestamp = default;
+            DateTimeOffset? timestamp = default;
             string policyAssignmentId = default;
             string policyDefinitionId = default;
             string policyDefinitionReferenceId = default;
@@ -109,6 +101,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 if (property.NameEquals("timestamp"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     timestamp = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
@@ -166,7 +162,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureMessagingEventGridSystemEventsContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(PolicyInsightsPolicyStateChangedEventData)} does not support writing '{options.Format}' format.");
             }
@@ -180,7 +176,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializePolicyInsightsPolicyStateChangedEventData(document.RootElement, options);
                     }
                 default:
@@ -194,7 +190,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static PolicyInsightsPolicyStateChangedEventData FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializePolicyInsightsPolicyStateChangedEventData(document.RootElement);
         }
 

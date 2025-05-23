@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.DataShare.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataShareContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(AdlsGen1FolderDataSet)} does not support writing '{options.Format}' format.");
             }
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.DataShare.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeAdlsGen1FolderDataSet(document.RootElement, options);
                     }
                 default:

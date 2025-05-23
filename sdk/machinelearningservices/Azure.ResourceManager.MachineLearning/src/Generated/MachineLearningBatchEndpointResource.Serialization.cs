@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.MachineLearning
 {
     public partial class MachineLearningBatchEndpointResource : IJsonModel<MachineLearningBatchEndpointData>
     {
+        private static MachineLearningBatchEndpointData s_dataDeserializationInstance;
+        private static MachineLearningBatchEndpointData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<MachineLearningBatchEndpointData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<MachineLearningBatchEndpointData>)Data).Write(writer, options);
 
-        MachineLearningBatchEndpointData IJsonModel<MachineLearningBatchEndpointData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MachineLearningBatchEndpointData>)Data).Create(ref reader, options);
+        MachineLearningBatchEndpointData IJsonModel<MachineLearningBatchEndpointData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MachineLearningBatchEndpointData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<MachineLearningBatchEndpointData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<MachineLearningBatchEndpointData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<MachineLearningBatchEndpointData>(Data, options, AzureResourceManagerMachineLearningContext.Default);
 
-        MachineLearningBatchEndpointData IPersistableModel<MachineLearningBatchEndpointData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MachineLearningBatchEndpointData>(data, options);
+        MachineLearningBatchEndpointData IPersistableModel<MachineLearningBatchEndpointData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MachineLearningBatchEndpointData>(data, options, AzureResourceManagerMachineLearningContext.Default);
 
-        string IPersistableModel<MachineLearningBatchEndpointData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MachineLearningBatchEndpointData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<MachineLearningBatchEndpointData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MachineLearningBatchEndpointData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

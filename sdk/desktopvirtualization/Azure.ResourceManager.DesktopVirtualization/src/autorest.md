@@ -14,18 +14,20 @@ require: https://github.com/Azure/azure-rest-api-specs/blob/ec07fc78c6c25b68107f
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
-  output-folder: $(this-folder)/../samples/Generated
+  output-folder: $(this-folder)/../tests/Generated
   clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
 deserialize-null-collection-as-null-value: true
 use-model-reader-writer: true
-use-write-core: true
 enable-bicep-serialization: true
 
 #mgmt-debug:
 #  show-serialized-names: true
+
+models-to-treat-empty-string-as-null:
+  - SessionHostData
 
 format-by-name-rules:
   'tenantId': 'uuid'

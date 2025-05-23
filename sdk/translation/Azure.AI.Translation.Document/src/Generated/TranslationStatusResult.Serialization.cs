@@ -19,13 +19,21 @@ namespace Azure.AI.Translation.Document
 
         void IJsonModel<TranslationStatusResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<TranslationStatusResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(TranslationStatusResult)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
             writer.WritePropertyName("createdDateTimeUtc"u8);
@@ -40,7 +48,7 @@ namespace Azure.AI.Translation.Document
                 _error.WriteTo(writer);
             }
             writer.WritePropertyName("summary"u8);
-            writer.WriteObjectValue<StatusSummary>(Summary, options);
+            writer.WriteObjectValue<TranslationStatusSummary>(Summary, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -49,14 +57,13 @@ namespace Azure.AI.Translation.Document
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         TranslationStatusResult IJsonModel<TranslationStatusResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -84,7 +91,7 @@ namespace Azure.AI.Translation.Document
             DateTimeOffset lastActionDateTimeUtc = default;
             DocumentTranslationStatus status = default;
             JsonElement error = default;
-            StatusSummary summary = default;
+            TranslationStatusSummary summary = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -116,7 +123,7 @@ namespace Azure.AI.Translation.Document
                 }
                 if (property.NameEquals("summary"u8))
                 {
-                    summary = StatusSummary.DeserializeStatusSummary(property.Value, options);
+                    summary = TranslationStatusSummary.DeserializeTranslationStatusSummary(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -142,7 +149,7 @@ namespace Azure.AI.Translation.Document
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureAITranslationDocumentContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(TranslationStatusResult)} does not support writing '{options.Format}' format.");
             }
@@ -156,7 +163,7 @@ namespace Azure.AI.Translation.Document
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeTranslationStatusResult(document.RootElement, options);
                     }
                 default:
@@ -170,7 +177,7 @@ namespace Azure.AI.Translation.Document
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static TranslationStatusResult FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeTranslationStatusResult(document.RootElement);
         }
 

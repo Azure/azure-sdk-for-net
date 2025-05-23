@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(MainTemplate);
 #else
-                using (JsonDocument document = JsonDocument.Parse(MainTemplate))
+                using (JsonDocument document = JsonDocument.Parse(MainTemplate, ModelSerializationExtensions.JsonDocumentOptions))
                 {
                     JsonSerializer.Serialize(writer, document.RootElement);
                 }
@@ -1004,7 +1004,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSecurityInsightsContext.Default);
                 case "bicep":
                     return SerializeBicep(options);
                 default:
@@ -1020,7 +1020,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeTemplateProperties(document.RootElement, options);
                     }
                 default:

@@ -204,6 +204,16 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("defaultOutboundAccess"u8);
                 writer.WriteBooleanValue(DefaultOutboundAccess.Value);
             }
+            if (Optional.IsCollectionDefined(IpamPoolPrefixAllocations))
+            {
+                writer.WritePropertyName("ipamPoolPrefixAllocations"u8);
+                writer.WriteStartArray();
+                foreach (var item in IpamPoolPrefixAllocations)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
             writer.WriteEndObject();
         }
 
@@ -252,6 +262,7 @@ namespace Azure.ResourceManager.Network
             IList<ApplicationGatewayIPConfiguration> applicationGatewayIPConfigurations = default;
             SharingScope? sharingScope = default;
             bool? defaultOutboundAccess = default;
+            IList<IpamPoolPrefixAllocation> ipamPoolPrefixAllocations = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -533,6 +544,20 @@ namespace Azure.ResourceManager.Network
                             defaultOutboundAccess = property0.Value.GetBoolean();
                             continue;
                         }
+                        if (property0.NameEquals("ipamPoolPrefixAllocations"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<IpamPoolPrefixAllocation> array = new List<IpamPoolPrefixAllocation>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(IpamPoolPrefixAllocation.DeserializeIpamPoolPrefixAllocation(item, options));
+                            }
+                            ipamPoolPrefixAllocations = array;
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -568,7 +593,8 @@ namespace Azure.ResourceManager.Network
                 privateLinkServiceNetworkPolicies,
                 applicationGatewayIPConfigurations ?? new ChangeTrackingList<ApplicationGatewayIPConfiguration>(),
                 sharingScope,
-                defaultOutboundAccess);
+                defaultOutboundAccess,
+                ipamPoolPrefixAllocations ?? new ChangeTrackingList<IpamPoolPrefixAllocation>());
         }
 
         BinaryData IPersistableModel<SubnetData>.Write(ModelReaderWriterOptions options)
@@ -578,7 +604,7 @@ namespace Azure.ResourceManager.Network
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(SubnetData)} does not support writing '{options.Format}' format.");
             }
@@ -592,7 +618,7 @@ namespace Azure.ResourceManager.Network
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeSubnetData(document.RootElement, options);
                     }
                 default:

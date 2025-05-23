@@ -18,7 +18,6 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 use-model-reader-writer: true
-use-write-core: true
 
 list-exception:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EdgeOrder/locations/{location}/orders/{orderName}

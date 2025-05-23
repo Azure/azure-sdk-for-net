@@ -12,6 +12,7 @@ using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Cdn.Models;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Cdn
 {
@@ -108,15 +109,8 @@ namespace Azure.ResourceManager.Cdn
             }
             if (Optional.IsDefined(DefaultOriginGroup))
             {
-                if (DefaultOriginGroup != null)
-                {
-                    writer.WritePropertyName("defaultOriginGroup"u8);
-                    writer.WriteObjectValue(DefaultOriginGroup, options);
-                }
-                else
-                {
-                    writer.WriteNull("defaultOriginGroup");
-                }
+                writer.WritePropertyName("defaultOriginGroup"u8);
+                JsonSerializer.Serialize(writer, DefaultOriginGroup);
             }
             if (Optional.IsCollectionDefined(UriSigningKeys))
             {
@@ -243,7 +237,7 @@ namespace Azure.ResourceManager.Cdn
             OptimizationType? optimizationType = default;
             string probePath = default;
             IList<GeoFilter> geoFilters = default;
-            EndpointPropertiesUpdateParametersDefaultOriginGroup defaultOriginGroup = default;
+            WritableSubResource defaultOriginGroup = default;
             IList<UriSigningKey> uriSigningKeys = default;
             EndpointDeliveryPolicy deliveryPolicy = default;
             EndpointPropertiesUpdateParametersWebApplicationFirewallPolicyLink webApplicationFirewallPolicyLink = default;
@@ -402,10 +396,9 @@ namespace Azure.ResourceManager.Cdn
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                defaultOriginGroup = null;
                                 continue;
                             }
-                            defaultOriginGroup = EndpointPropertiesUpdateParametersDefaultOriginGroup.DeserializeEndpointPropertiesUpdateParametersDefaultOriginGroup(property0.Value, options);
+                            defaultOriginGroup = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("urlSigningKeys"u8))
@@ -554,7 +547,7 @@ namespace Azure.ResourceManager.Cdn
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCdnContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(CdnEndpointData)} does not support writing '{options.Format}' format.");
             }
@@ -568,7 +561,7 @@ namespace Azure.ResourceManager.Cdn
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeCdnEndpointData(document.RootElement, options);
                     }
                 default:

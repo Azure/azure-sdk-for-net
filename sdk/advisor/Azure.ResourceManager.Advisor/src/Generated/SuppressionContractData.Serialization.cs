@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.Advisor
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAdvisorContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(SuppressionContractData)} does not support writing '{options.Format}' format.");
             }
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.Advisor
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeSuppressionContractData(document.RootElement, options);
                     }
                 default:

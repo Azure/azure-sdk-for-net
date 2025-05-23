@@ -20,20 +20,28 @@ namespace Azure.AI.Vision.Face
 
         void IJsonModel<CreateLivenessWithVerifySessionMultipartContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<CreateLivenessWithVerifySessionMultipartContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(CreateLivenessWithVerifySessionMultipartContent)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("Parameters"u8);
             writer.WriteObjectValue(Parameters, options);
             writer.WritePropertyName("VerifyImage"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(global::System.BinaryData.FromStream(VerifyImage));
 #else
-            using (JsonDocument document = JsonDocument.Parse(BinaryData.FromStream(VerifyImage)))
+            using (JsonDocument document = JsonDocument.Parse(BinaryData.FromStream(VerifyImage), ModelSerializationExtensions.JsonDocumentOptions))
             {
                 JsonSerializer.Serialize(writer, document.RootElement);
             }
@@ -46,14 +54,13 @@ namespace Azure.AI.Vision.Face
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         CreateLivenessWithVerifySessionMultipartContent IJsonModel<CreateLivenessWithVerifySessionMultipartContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -119,7 +126,7 @@ namespace Azure.AI.Vision.Face
         internal virtual MultipartFormDataRequestContent ToMultipartRequestContent()
         {
             MultipartFormDataRequestContent content = new MultipartFormDataRequestContent();
-            content.Add(ModelReaderWriter.Write(Parameters, ModelSerializationExtensions.WireOptions), "Parameters");
+            content.Add(ModelReaderWriter.Write<CreateLivenessWithVerifySessionContent>(Parameters, ModelSerializationExtensions.WireOptions, AzureAIVisionFaceContext.Default), "Parameters");
             content.Add(VerifyImage, "VerifyImage", "VerifyImage", "application/octet-stream");
             return content;
         }
@@ -131,7 +138,7 @@ namespace Azure.AI.Vision.Face
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureAIVisionFaceContext.Default);
                 case "MFD":
                     return SerializeMultipart(options);
                 default:
@@ -147,7 +154,7 @@ namespace Azure.AI.Vision.Face
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeCreateLivenessWithVerifySessionMultipartContent(document.RootElement, options);
                     }
                 default:
@@ -161,7 +168,7 @@ namespace Azure.AI.Vision.Face
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static CreateLivenessWithVerifySessionMultipartContent FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeCreateLivenessWithVerifySessionMultipartContent(document.RootElement);
         }
 

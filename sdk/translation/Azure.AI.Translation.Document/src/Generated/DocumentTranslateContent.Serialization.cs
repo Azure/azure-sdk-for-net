@@ -17,6 +17,13 @@ namespace Azure.AI.Translation.Document
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DocumentTranslateContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
+        void IJsonModel<DocumentTranslateContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
         DocumentTranslateContent IJsonModel<DocumentTranslateContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DocumentTranslateContent>)this).GetFormatFromOptions(options) : options.Format;
@@ -51,7 +58,7 @@ namespace Azure.AI.Translation.Document
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureAITranslationDocumentContext.Default);
                 case "MFD":
                     return SerializeMultipart(options);
                 default:
@@ -67,7 +74,7 @@ namespace Azure.AI.Translation.Document
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeDocumentTranslateContent(document.RootElement, options);
                     }
                 default:
@@ -81,7 +88,7 @@ namespace Azure.AI.Translation.Document
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static DocumentTranslateContent FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeDocumentTranslateContent(document.RootElement);
         }
 

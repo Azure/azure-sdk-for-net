@@ -49,16 +49,21 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ResourceNotificationsResourceUpdatedDetails"/>. </summary>
-        /// <param name="tags"> the tags on the resource for which the event is being emitted. </param>
-        /// <param name="properties"> properties in the payload of the resource for which the event is being emitted. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tags"/> or <paramref name="properties"/> is null. </exception>
-        internal ResourceNotificationsResourceUpdatedDetails(IReadOnlyDictionary<string, string> tags, IReadOnlyDictionary<string, BinaryData> properties)
+        /// <param name="id"> id of the resource for which the event is being emitted. </param>
+        /// <param name="name"> name of the resource for which the event is being emitted. </param>
+        /// <param name="type"> the type of the resource for which the event is being emitted. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="name"/> or <paramref name="type"/> is null. </exception>
+        internal ResourceNotificationsResourceUpdatedDetails(string id, string name, string type)
         {
-            Argument.AssertNotNull(tags, nameof(tags));
-            Argument.AssertNotNull(properties, nameof(properties));
+            Argument.AssertNotNull(id, nameof(id));
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(type, nameof(type));
 
-            Tags = tags;
-            Properties = properties;
+            Id = id;
+            Name = name;
+            Type = type;
+            Tags = new ChangeTrackingDictionary<string, string>();
+            Properties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ResourceNotificationsResourceUpdatedDetails"/>. </summary>

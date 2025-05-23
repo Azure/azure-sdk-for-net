@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.Quantum
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerQuantumContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(QuantumWorkspaceData)} does not support writing '{options.Format}' format.");
             }
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.Quantum
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeQuantumWorkspaceData(document.RootElement, options);
                     }
                 default:

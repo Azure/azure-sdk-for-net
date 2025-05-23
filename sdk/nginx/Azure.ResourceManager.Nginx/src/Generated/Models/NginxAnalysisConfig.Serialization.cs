@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Nginx.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Nginx.Models
             }
             string rootFile = default;
             IList<NginxConfigurationFile> files = default;
-            IList<NginxConfigurationFile> protectedFiles = default;
+            IList<NginxConfigurationProtectedFileContent> protectedFiles = default;
             NginxConfigurationPackage package = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -134,10 +134,10 @@ namespace Azure.ResourceManager.Nginx.Models
                     {
                         continue;
                     }
-                    List<NginxConfigurationFile> array = new List<NginxConfigurationFile>();
+                    List<NginxConfigurationProtectedFileContent> array = new List<NginxConfigurationProtectedFileContent>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NginxConfigurationFile.DeserializeNginxConfigurationFile(item, options));
+                        array.Add(NginxConfigurationProtectedFileContent.DeserializeNginxConfigurationProtectedFileContent(item, options));
                     }
                     protectedFiles = array;
                     continue;
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Nginx.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new NginxAnalysisConfig(rootFile, files ?? new ChangeTrackingList<NginxConfigurationFile>(), protectedFiles ?? new ChangeTrackingList<NginxConfigurationFile>(), package, serializedAdditionalRawData);
+            return new NginxAnalysisConfig(rootFile, files ?? new ChangeTrackingList<NginxConfigurationFile>(), protectedFiles ?? new ChangeTrackingList<NginxConfigurationProtectedFileContent>(), package, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NginxAnalysisConfig>.Write(ModelReaderWriterOptions options)
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Nginx.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNginxContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(NginxAnalysisConfig)} does not support writing '{options.Format}' format.");
             }
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.Nginx.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeNginxAnalysisConfig(document.RootElement, options);
                     }
                 default:

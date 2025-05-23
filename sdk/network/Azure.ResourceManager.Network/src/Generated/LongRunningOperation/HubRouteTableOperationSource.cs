@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +23,14 @@ namespace Azure.ResourceManager.Network
 
         HubRouteTableResource IOperationSource<HubRouteTableResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = HubRouteTableData.DeserializeHubRouteTableData(document.RootElement);
+            var data = ModelReaderWriter.Read<HubRouteTableData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkContext.Default);
             return new HubRouteTableResource(_client, data);
         }
 
         async ValueTask<HubRouteTableResource> IOperationSource<HubRouteTableResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = HubRouteTableData.DeserializeHubRouteTableData(document.RootElement);
-            return new HubRouteTableResource(_client, data);
+            var data = ModelReaderWriter.Read<HubRouteTableData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkContext.Default);
+            return await Task.FromResult(new HubRouteTableResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

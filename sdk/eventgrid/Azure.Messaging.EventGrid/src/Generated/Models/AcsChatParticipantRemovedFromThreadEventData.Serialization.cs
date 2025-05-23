@@ -39,19 +39,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 if (property.NameEquals("removedByCommunicationIdentifier"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     removedByCommunicationIdentifier = CommunicationIdentifierModel.DeserializeCommunicationIdentifierModel(property.Value);
                     continue;
                 }
                 if (property.NameEquals("participantRemoved"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     participantRemoved = AcsChatThreadParticipantProperties.DeserializeAcsChatThreadParticipantProperties(property.Value);
                     continue;
                 }
@@ -88,7 +80,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static new AcsChatParticipantRemovedFromThreadEventData FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeAcsChatParticipantRemovedFromThreadEventData(document.RootElement);
         }
 

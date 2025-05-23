@@ -69,7 +69,10 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// <param name="vCpuCount"> The range of vCpuCount specified from Min to Max. Must be specified if VMAttributes are specified, either Min or Max is required if specified. </param>
         /// <param name="memoryInGiB"> The range of memory specified from Min to Max. Must be specified if VMAttributes are specified, either Min or Max is required if specified. </param>
         /// <param name="memoryInGiBPerVCpu"> The range of memory in GiB per vCPU specified from min to max. Optional parameter. Either Min or Max is required if specified. </param>
-        /// <param name="localStorageSupport"> Specifies whether the VMSize supporting local storage should be used to build Fleet or not. </param>
+        /// <param name="localStorageSupport">
+        /// Specifies whether the VMSize supporting local storage should be used to build Fleet or not.
+        /// Included - Default if not specified as most Azure VMs support local storage.
+        /// </param>
         /// <param name="localStorageInGiB">
         /// LocalStorageSupport should be set to "Included" or "Required" to use this VMAttribute.
         /// If localStorageSupport is "Excluded", this VMAttribute can not be used.
@@ -148,7 +151,10 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         public ComputeFleetVmAttributeMinMaxDouble MemoryInGiB { get; set; }
         /// <summary> The range of memory in GiB per vCPU specified from min to max. Optional parameter. Either Min or Max is required if specified. </summary>
         public ComputeFleetVmAttributeMinMaxDouble MemoryInGiBPerVCpu { get; set; }
-        /// <summary> Specifies whether the VMSize supporting local storage should be used to build Fleet or not. </summary>
+        /// <summary>
+        /// Specifies whether the VMSize supporting local storage should be used to build Fleet or not.
+        /// Included - Default if not specified as most Azure VMs support local storage.
+        /// </summary>
         public ComputeFleetVmAttributeSupport? LocalStorageSupport { get; set; }
         /// <summary>
         /// LocalStorageSupport should be set to "Included" or "Required" to use this VMAttribute.

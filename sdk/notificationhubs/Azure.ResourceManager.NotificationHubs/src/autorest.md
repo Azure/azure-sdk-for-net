@@ -8,7 +8,7 @@ azure-arm: true
 csharp: true
 library-name: NotificationHubs
 namespace: Azure.ResourceManager.NotificationHubs
-require: https://github.com/Azure/azure-rest-api-specs/blob/a03dfac64acc53a8b84501a10099f95885b1b496/specification/notificationhubs/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/87643ba491d34656ed9d08ddce7544d033c349eb/specification/notificationhubs/resource-manager/readme.md
 #package-preview-2023-10
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
@@ -19,7 +19,6 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 use-model-reader-writer: true
-use-write-core: true
 
 #mgmt-debug:
 #  show-serialized-names: true

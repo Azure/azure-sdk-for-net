@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerResourceHealthContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ResourceHealthAvailabilityStatus)} does not support writing '{options.Format}' format.");
             }
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeResourceHealthAvailabilityStatus(document.RootElement, options);
                     }
                 default:

@@ -48,10 +48,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 if (property.NameEquals("senderCommunicationIdentifier"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     senderCommunicationIdentifier = CommunicationIdentifierModel.DeserializeCommunicationIdentifierModel(property.Value);
                     continue;
                 }
@@ -120,7 +116,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static new AcsChatMessageDeletedEventData FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeAcsChatMessageDeletedEventData(document.RootElement);
         }
 

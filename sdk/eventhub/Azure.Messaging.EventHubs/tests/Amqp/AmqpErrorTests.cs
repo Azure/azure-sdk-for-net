@@ -36,6 +36,7 @@ namespace Azure.Messaging.EventHubs.Tests
             yield return new object[] { AmqpError.SequenceOutOfOrderError, typeof(EventHubsException), EventHubsException.FailureReason.InvalidClientState };
             yield return new object[] { AmqpError.ArgumentError, typeof(ArgumentException), null };
             yield return new object[] { AmqpError.ArgumentOutOfRangeError, typeof(ArgumentOutOfRangeException), null };
+            yield return new object[] { AmqpError.InvalidGeolocationOffset, typeof(FormatException), null } ;
 
             // Stock conditions.
 

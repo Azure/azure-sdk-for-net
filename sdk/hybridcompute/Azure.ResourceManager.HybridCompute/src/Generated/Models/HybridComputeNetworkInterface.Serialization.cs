@@ -36,6 +36,21 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 throw new FormatException($"The model {nameof(HybridComputeNetworkInterface)} does not support writing '{format}' format.");
             }
 
+            if (Optional.IsDefined(MacAddress))
+            {
+                writer.WritePropertyName("macAddress"u8);
+                writer.WriteStringValue(MacAddress);
+            }
+            if (Optional.IsDefined(Id))
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
             if (Optional.IsCollectionDefined(IPAddresses))
             {
                 writer.WritePropertyName("ipAddresses"u8);
@@ -54,7 +69,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -83,11 +98,33 @@ namespace Azure.ResourceManager.HybridCompute.Models
             {
                 return null;
             }
+            string macAddress = default;
+            ResourceIdentifier id = default;
+            string name = default;
             IReadOnlyList<HybridComputeIPAddress> ipAddresses = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("macAddress"u8))
+                {
+                    macAddress = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("id"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    id = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("name"u8))
+                {
+                    name = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("ipAddresses"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -108,7 +145,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new HybridComputeNetworkInterface(ipAddresses ?? new ChangeTrackingList<HybridComputeIPAddress>(), serializedAdditionalRawData);
+            return new HybridComputeNetworkInterface(macAddress, id, name, ipAddresses ?? new ChangeTrackingList<HybridComputeIPAddress>(), serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -121,6 +158,67 @@ namespace Azure.ResourceManager.HybridCompute.Models
             string propertyOverride = null;
 
             builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MacAddress), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  macAddress: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MacAddress))
+                {
+                    builder.Append("  macAddress: ");
+                    if (MacAddress.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{MacAddress}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{MacAddress}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  id: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Id))
+                {
+                    builder.Append("  id: ");
+                    builder.AppendLine($"'{Id.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  name: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Name))
+                {
+                    builder.Append("  name: ");
+                    if (Name.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Name}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Name}'");
+                    }
+                }
+            }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IPAddresses), out propertyOverride);
             if (hasPropertyOverride)
@@ -156,7 +254,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHybridComputeContext.Default);
                 case "bicep":
                     return SerializeBicep(options);
                 default:
@@ -172,7 +270,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeHybridComputeNetworkInterface(document.RootElement, options);
                     }
                 default:

@@ -10,18 +10,18 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.OperationalInsights.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.OperationalInsights.Samples
 {
     public partial class Sample_OperationalInsightsLinkedStorageAccountsResource
     {
-        // LinkedStorageAccountsCreate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Update_LinkedStorageAccountsCreate()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Get_LinkedStorageAccountsGet()
         {
-            // Generated from example definition: specification/operationalinsights/resource-manager/Microsoft.OperationalInsights/stable/2020-08-01/examples/LinkedStorageAccountsCreate.json
-            // this example is just showing the usage of "LinkedStorageAccounts_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/operationalinsights/resource-manager/Microsoft.OperationalInsights/stable/2025-02-01/examples/LinkedStorageAccountsGet.json
+            // this example is just showing the usage of "LinkedStorageAccounts_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -38,15 +38,7 @@ namespace Azure.ResourceManager.OperationalInsights.Samples
             OperationalInsightsLinkedStorageAccountsResource operationalInsightsLinkedStorageAccounts = client.GetOperationalInsightsLinkedStorageAccountsResource(operationalInsightsLinkedStorageAccountsResourceId);
 
             // invoke the operation
-            OperationalInsightsLinkedStorageAccountsData data = new OperationalInsightsLinkedStorageAccountsData()
-            {
-                StorageAccountIds =
-{
-new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-00000000000/resourceGroups/mms-eus/providers/Microsoft.Storage/storageAccounts/testStorageA"),new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-00000000000/resourceGroups/mms-eus/providers/Microsoft.Storage/storageAccounts/testStorageB")
-},
-            };
-            ArmOperation<OperationalInsightsLinkedStorageAccountsResource> lro = await operationalInsightsLinkedStorageAccounts.UpdateAsync(WaitUntil.Completed, data);
-            OperationalInsightsLinkedStorageAccountsResource result = lro.Value;
+            OperationalInsightsLinkedStorageAccountsResource result = await operationalInsightsLinkedStorageAccounts.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -55,12 +47,11 @@ new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-00000000000/resou
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // LinkedStorageAccountsDelete
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_LinkedStorageAccountsDelete()
         {
-            // Generated from example definition: specification/operationalinsights/resource-manager/Microsoft.OperationalInsights/stable/2020-08-01/examples/LinkedStorageAccountsDelete.json
+            // Generated from example definition: specification/operationalinsights/resource-manager/Microsoft.OperationalInsights/stable/2025-02-01/examples/LinkedStorageAccountsDelete.json
             // this example is just showing the usage of "LinkedStorageAccounts_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -80,16 +71,15 @@ new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-00000000000/resou
             // invoke the operation
             await operationalInsightsLinkedStorageAccounts.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // LinkedStorageAccountsGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Get_LinkedStorageAccountsGet()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Update_LinkedStorageAccountsCreate()
         {
-            // Generated from example definition: specification/operationalinsights/resource-manager/Microsoft.OperationalInsights/stable/2020-08-01/examples/LinkedStorageAccountsGet.json
-            // this example is just showing the usage of "LinkedStorageAccounts_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/operationalinsights/resource-manager/Microsoft.OperationalInsights/stable/2025-02-01/examples/LinkedStorageAccountsCreate.json
+            // this example is just showing the usage of "LinkedStorageAccounts_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -106,7 +96,12 @@ new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-00000000000/resou
             OperationalInsightsLinkedStorageAccountsResource operationalInsightsLinkedStorageAccounts = client.GetOperationalInsightsLinkedStorageAccountsResource(operationalInsightsLinkedStorageAccountsResourceId);
 
             // invoke the operation
-            OperationalInsightsLinkedStorageAccountsResource result = await operationalInsightsLinkedStorageAccounts.GetAsync();
+            OperationalInsightsLinkedStorageAccountsData data = new OperationalInsightsLinkedStorageAccountsData
+            {
+                StorageAccountIds = { new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-00000000000/resourceGroups/mms-eus/providers/Microsoft.Storage/storageAccounts/testStorageA"), new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-00000000000/resourceGroups/mms-eus/providers/Microsoft.Storage/storageAccounts/testStorageB") },
+            };
+            ArmOperation<OperationalInsightsLinkedStorageAccountsResource> lro = await operationalInsightsLinkedStorageAccounts.UpdateAsync(WaitUntil.Completed, data);
+            OperationalInsightsLinkedStorageAccountsResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance

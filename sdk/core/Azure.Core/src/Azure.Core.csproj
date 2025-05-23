@@ -2,17 +2,16 @@
   <PropertyGroup>
     <Description>This is the implementation of the Azure Client Pipeline</Description>
     <AssemblyTitle>Microsoft Azure Client Pipeline</AssemblyTitle>
-    <Version>1.45.0-beta.1</Version>
+    <Version>1.47.0-beta.1</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
-    <ApiCompatVersion>1.44.1</ApiCompatVersion>
+    <ApiCompatVersion>1.46.1</ApiCompatVersion>
     <PackageTags>Microsoft Azure Client Pipeline</PackageTags>
     <Nullable>enable</Nullable>
     <DefineConstants>$(DefineConstants);AZURE_NULLABLE;HAS_INTERNALS_VISIBLE_CORE</DefineConstants>
-    <TargetFrameworks>$(RequiredTargetFrameworks);net461;net472;net6.0</TargetFrameworks>
+    <TargetFrameworks>$(RequiredTargetFrameworks);net462;net472;net6.0</TargetFrameworks>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <EnableClientSdkAnalyzers>true</EnableClientSdkAnalyzers>
     <EnableBannedApiAnalyzers>false</EnableBannedApiAnalyzers>
-    <ApiCompatBaselineTargetFramework Condition="'$(TargetFramework)' == 'net472'">net461</ApiCompatBaselineTargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
@@ -21,21 +20,21 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" />
-    <PackageReference Include="System.ClientModel" />
+    <!-- <PackageReference Include="System.ClientModel" /> -->
+    <ProjectReference Include="..\..\System.ClientModel\src\System.ClientModel.csproj"/>
     <PackageReference Include="System.Numerics.Vectors" />
     <PackageReference Include="System.Diagnostics.DiagnosticSource" />
     <PackageReference Include="System.Threading.Tasks.Extensions" />
     <PackageReference Include="System.Text.Json" />
     <PackageReference Include="System.Text.Encodings.Web" />
     <PackageReference Include="System.Memory.Data" />
-
-    <ExcludeFromProjectReferenceToConversion Include="System.ClientModel" />
   </ItemGroup>
 
-  <ItemGroup Condition="'$(TargetFramework)' == 'net461'">
-    <PackageReference Include="System.Runtime.InteropServices.RuntimeInformation" />
-    <PackageReference Include="System.Net.Http" />
+<!-- Remove when the package reference is restored to System.ClientModel -->
+  <ItemGroup>
+    <ProjectReference Include="..\..\System.ClientModel\gen\System.ClientModel.SourceGeneration.csproj" ReferenceOutputAssembly="false" OutputItemType="Analyzer" />
   </ItemGroup>
+<!-- End remove -->
 
   <ItemGroup Condition="'$(TargetFramework)' == 'net472'">
     <Reference Include="System.Net.Http" />

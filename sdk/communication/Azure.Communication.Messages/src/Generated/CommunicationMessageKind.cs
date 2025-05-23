@@ -29,6 +29,9 @@ namespace Azure.Communication.Messages
         private const string VideoValue = "video";
         private const string AudioValue = "audio";
         private const string TemplateValue = "template";
+        private const string StickerValue = "sticker";
+        private const string ReactionValue = "reaction";
+        private const string InteractiveValue = "interactive";
 
         /// <summary> Text message type. </summary>
         public static CommunicationMessageKind Text { get; } = new CommunicationMessageKind(TextValue);
@@ -44,6 +47,12 @@ namespace Azure.Communication.Messages
         public static CommunicationMessageKind Audio { get; } = new CommunicationMessageKind(AudioValue);
         /// <summary> Template message type. </summary>
         public static CommunicationMessageKind Template { get; } = new CommunicationMessageKind(TemplateValue);
+        /// <summary> Sticker message type. </summary>
+        public static CommunicationMessageKind Sticker { get; } = new CommunicationMessageKind(StickerValue);
+        /// <summary> Reaction message type. </summary>
+        public static CommunicationMessageKind Reaction { get; } = new CommunicationMessageKind(ReactionValue);
+        /// <summary> Interactive Actionable message type. </summary>
+        public static CommunicationMessageKind Interactive { get; } = new CommunicationMessageKind(InteractiveValue);
         /// <summary> Determines if two <see cref="CommunicationMessageKind"/> values are the same. </summary>
         public static bool operator ==(CommunicationMessageKind left, CommunicationMessageKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CommunicationMessageKind"/> values are not the same. </summary>

@@ -36,6 +36,8 @@ namespace Azure.Compute.Batch
 
             writer.WritePropertyName("subnetId"u8);
             writer.WriteStringValue(SubnetId);
+            writer.WritePropertyName("skipWithdrawFromVNet"u8);
+            writer.WriteBooleanValue(SkipWithdrawFromVNet);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -44,7 +46,7 @@ namespace Azure.Compute.Batch
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -74,6 +76,7 @@ namespace Azure.Compute.Batch
                 return null;
             }
             string subnetId = default;
+            bool skipWithdrawFromVNet = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -83,13 +86,18 @@ namespace Azure.Compute.Batch
                     subnetId = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("skipWithdrawFromVNet"u8))
+                {
+                    skipWithdrawFromVNet = property.Value.GetBoolean();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new BatchJobNetworkConfiguration(subnetId, serializedAdditionalRawData);
+            return new BatchJobNetworkConfiguration(subnetId, skipWithdrawFromVNet, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BatchJobNetworkConfiguration>.Write(ModelReaderWriterOptions options)
@@ -99,7 +107,7 @@ namespace Azure.Compute.Batch
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureComputeBatchContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(BatchJobNetworkConfiguration)} does not support writing '{options.Format}' format.");
             }
@@ -113,7 +121,7 @@ namespace Azure.Compute.Batch
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeBatchJobNetworkConfiguration(document.RootElement, options);
                     }
                 default:
@@ -127,7 +135,7 @@ namespace Azure.Compute.Batch
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static BatchJobNetworkConfiguration FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeBatchJobNetworkConfiguration(document.RootElement);
         }
 

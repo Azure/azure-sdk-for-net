@@ -1,6 +1,6 @@
 # Release History
 
-## 1.8.0-beta.1 (Unreleased)
+## 1.12.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,38 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.11.0 (2025-03-15)
+
+### Features Added
+
+- Added support for [AzurePipelinesCredential](https://learn.microsoft.com/dotnet/api/azure.identity.azurepipelinescredential?view=azure-dotnet) in the client factory by specifying configuration item `credential` as "azurepipelines" and providing each credential parameter as a named configuration item.
+
+### Bugs Fixed
+
+- Fixed an issue when creating clients from configuration using the ASP.NET Core integration testing library, `Microsoft.AspNetCore.Mvc.Testing`.  Due to a difference in how an section value is represented, logic was interpreting a setting with a child object as an empty connection string value.  The child object is now properly parsed and applied for client construction.  ([#48368](https://github.com/Azure/azure-sdk-for-net/issues/48368))
+
+## 1.10.0 (2025-02-11)
+
+### Other Changes
+- Updated dependencies to ensure they are up-to-date with the latest targets and trimming from built-in dependencies.
+
+## 1.9.0 (2024-11-26)
+
+### Other Changes
+
+- Updated dependency `Microsoft.Extensions.DependencyInjection.Abstractions` to version `8.0.2`
+- Updated dependency `Microsoft.Bcl.AsyncInterfaces` to version `8.0.0`
+
+## 1.8.0 (2024-11-05)
+
+### Features Added
+
+- Added support for constructing a `ManagedIdentityCredential` from config by setting the `managedIdentityObjectId` key.
+
+### Other Changes
+
+- Updated dependency `Azure.Identity` to version `1.13.1`.
 
 ## 1.7.6 (2024-10-04)
 

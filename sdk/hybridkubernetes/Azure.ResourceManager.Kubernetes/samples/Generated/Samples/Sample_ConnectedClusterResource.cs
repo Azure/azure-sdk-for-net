@@ -10,54 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Kubernetes.Models;
-using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Kubernetes.Samples
 {
     public partial class Sample_ConnectedClusterResource
     {
-        // UpdateClusterExample
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Update_UpdateClusterExample()
-        {
-            // Generated from example definition: specification/hybridkubernetes/resource-manager/Microsoft.Kubernetes/preview/2022-05-01-preview/examples/UpdateClusterExample.json
-            // this example is just showing the usage of "ConnectedCluster_Update" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ConnectedClusterResource created on azure
-            // for more information of creating ConnectedClusterResource, please refer to the document of ConnectedClusterResource
-            string subscriptionId = "1bfbb5d0-917e-4346-9026-1d3b344417f5";
-            string resourceGroupName = "k8sc-rg";
-            string clusterName = "testCluster";
-            ResourceIdentifier connectedClusterResourceId = ConnectedClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName);
-            ConnectedClusterResource connectedCluster = client.GetConnectedClusterResource(connectedClusterResourceId);
-
-            // invoke the operation
-            ConnectedClusterPatch patch = new ConnectedClusterPatch()
-            {
-                Tags =
-{
-["tag1"] = "value1",
-["tag2"] = "value2",
-},
-            };
-            ConnectedClusterResource result = await connectedCluster.UpdateAsync(patch);
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            ConnectedClusterData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // GetClusterExample
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetClusterExample()
         {
             // Generated from example definition: specification/hybridkubernetes/resource-manager/Microsoft.Kubernetes/preview/2022-05-01-preview/examples/GetClusterExample.json
@@ -86,9 +46,8 @@ namespace Azure.ResourceManager.Kubernetes.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // DeleteClusterExample
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteClusterExample()
         {
             // Generated from example definition: specification/hybridkubernetes/resource-manager/Microsoft.Kubernetes/preview/2022-05-01-preview/examples/DeleteClusterExample.json
@@ -110,12 +69,49 @@ namespace Azure.ResourceManager.Kubernetes.Samples
             // invoke the operation
             await connectedCluster.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // ListClusterUserCredentialCSPExample
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Update_UpdateClusterExample()
+        {
+            // Generated from example definition: specification/hybridkubernetes/resource-manager/Microsoft.Kubernetes/preview/2022-05-01-preview/examples/UpdateClusterExample.json
+            // this example is just showing the usage of "ConnectedCluster_Update" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ConnectedClusterResource created on azure
+            // for more information of creating ConnectedClusterResource, please refer to the document of ConnectedClusterResource
+            string subscriptionId = "1bfbb5d0-917e-4346-9026-1d3b344417f5";
+            string resourceGroupName = "k8sc-rg";
+            string clusterName = "testCluster";
+            ResourceIdentifier connectedClusterResourceId = ConnectedClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName);
+            ConnectedClusterResource connectedCluster = client.GetConnectedClusterResource(connectedClusterResourceId);
+
+            // invoke the operation
+            ConnectedClusterPatch patch = new ConnectedClusterPatch
+            {
+                Tags =
+{
+["tag1"] = "value1",
+["tag2"] = "value2"
+},
+            };
+            ConnectedClusterResource result = await connectedCluster.UpdateAsync(patch);
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            ConnectedClusterData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetClusterUserCredential_ListClusterUserCredentialCSPExample()
         {
             // Generated from example definition: specification/hybridkubernetes/resource-manager/Microsoft.Kubernetes/preview/2022-05-01-preview/examples/ConnectedClustersListClusterCredentialResultHPAAD.json
@@ -141,9 +137,8 @@ namespace Azure.ResourceManager.Kubernetes.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // ListClusterUserCredentialExample
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetClusterUserCredential_ListClusterUserCredentialExample()
         {
             // Generated from example definition: specification/hybridkubernetes/resource-manager/Microsoft.Kubernetes/preview/2022-05-01-preview/examples/ConnectedClustersListClusterCredentialResultCSPAAD.json
@@ -169,9 +164,8 @@ namespace Azure.ResourceManager.Kubernetes.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // ListClusterUserCredentialNonAadCSPExample
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetClusterUserCredential_ListClusterUserCredentialNonAadCSPExample()
         {
             // Generated from example definition: specification/hybridkubernetes/resource-manager/Microsoft.Kubernetes/preview/2022-05-01-preview/examples/ConnectedClustersListClusterCredentialResultHPToken.json
@@ -197,9 +191,8 @@ namespace Azure.ResourceManager.Kubernetes.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // ListClusterUserCredentialNonAadExample
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetClusterUserCredential_ListClusterUserCredentialNonAadExample()
         {
             // Generated from example definition: specification/hybridkubernetes/resource-manager/Microsoft.Kubernetes/preview/2022-05-01-preview/examples/ConnectedClustersListClusterCredentialResultCSPToken.json
@@ -223,38 +216,6 @@ namespace Azure.ResourceManager.Kubernetes.Samples
             CredentialResults result = await connectedCluster.GetClusterUserCredentialAsync(properties);
 
             Console.WriteLine($"Succeeded: {result}");
-        }
-
-        // GetClustersExample
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetConnectedClusters_GetClustersExample()
-        {
-            // Generated from example definition: specification/hybridkubernetes/resource-manager/Microsoft.Kubernetes/preview/2022-05-01-preview/examples/GetClustersBySubscriptionExample.json
-            // this example is just showing the usage of "ConnectedCluster_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "1bfbb5d0-917e-4346-9026-1d3b344417f5";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
-
-            // invoke the operation and iterate over the result
-            await foreach (ConnectedClusterResource item in subscriptionResource.GetConnectedClustersAsync())
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                ConnectedClusterData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-
-            Console.WriteLine($"Succeeded");
         }
     }
 }

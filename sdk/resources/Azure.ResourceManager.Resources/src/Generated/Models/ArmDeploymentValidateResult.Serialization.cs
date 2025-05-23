@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -27,7 +28,7 @@ namespace Azure.ResourceManager.Resources.Models
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ArmDeploymentValidateResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -35,6 +36,7 @@ namespace Azure.ResourceManager.Resources.Models
                 throw new FormatException($"The model {nameof(ArmDeploymentValidateResult)} does not support writing '{format}' format.");
             }
 
+            base.JsonModelWriteCore(writer, options);
             if (options.Format != "W" && Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
@@ -44,21 +46,6 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties, options);
-            }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
             }
         }
 
@@ -84,6 +71,10 @@ namespace Azure.ResourceManager.Resources.Models
             }
             ResponseError error = default;
             ArmDeploymentPropertiesExtended properties = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType type = default;
+            SystemData systemData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -106,13 +97,44 @@ namespace Azure.ResourceManager.Resources.Models
                     properties = ArmDeploymentPropertiesExtended.DeserializeArmDeploymentPropertiesExtended(property.Value, options);
                     continue;
                 }
+                if (property.NameEquals("id"u8))
+                {
+                    id = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("name"u8))
+                {
+                    name = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("type"u8))
+                {
+                    type = new ResourceType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("systemData"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ArmDeploymentValidateResult(error, properties, serializedAdditionalRawData);
+            return new ArmDeploymentValidateResult(
+                id,
+                name,
+                type,
+                systemData,
+                error,
+                properties,
+                serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -125,6 +147,29 @@ namespace Azure.ResourceManager.Resources.Models
             string propertyOverride = null;
 
             builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  name: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Name))
+                {
+                    builder.Append("  name: ");
+                    if (Name.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Name}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Name}'");
+                    }
+                }
+            }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Error), out propertyOverride);
             if (hasPropertyOverride)
@@ -156,6 +201,36 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
 
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  id: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Id))
+                {
+                    builder.Append("  id: ");
+                    builder.AppendLine($"'{Id.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemData), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  systemData: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SystemData))
+                {
+                    builder.Append("  systemData: ");
+                    builder.AppendLine($"'{SystemData.ToString()}'");
+                }
+            }
+
             builder.AppendLine("}");
             return BinaryData.FromString(builder.ToString());
         }
@@ -167,7 +242,7 @@ namespace Azure.ResourceManager.Resources.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerResourcesContext.Default);
                 case "bicep":
                     return SerializeBicep(options);
                 default:
@@ -183,7 +258,7 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeArmDeploymentValidateResult(document.RootElement, options);
                     }
                 default:

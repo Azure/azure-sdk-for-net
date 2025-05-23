@@ -885,7 +885,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerOracleDatabaseContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(AutonomousDatabaseProperties)} does not support writing '{options.Format}' format.");
             }
@@ -899,7 +899,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeAutonomousDatabaseProperties(document.RootElement, options);
                     }
                 default:

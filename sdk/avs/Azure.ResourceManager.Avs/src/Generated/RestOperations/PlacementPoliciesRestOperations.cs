@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Avs
                 case 200:
                     {
                         PlacementPoliciesList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PlacementPoliciesList.DeserializePlacementPoliciesList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Avs
                 case 200:
                     {
                         PlacementPoliciesList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PlacementPoliciesList.DeserializePlacementPoliciesList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.Avs
                 case 200:
                     {
                         PlacementPolicyData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PlacementPolicyData.DeserializePlacementPolicyData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.Avs
                 case 200:
                     {
                         PlacementPolicyData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PlacementPolicyData.DeserializePlacementPolicyData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -614,7 +614,7 @@ namespace Azure.ResourceManager.Avs
                 case 200:
                     {
                         PlacementPoliciesList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PlacementPoliciesList.DeserializePlacementPoliciesList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -647,7 +647,7 @@ namespace Azure.ResourceManager.Avs
                 case 200:
                     {
                         PlacementPoliciesList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PlacementPoliciesList.DeserializePlacementPoliciesList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

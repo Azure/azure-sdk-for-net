@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerInformaticaDataManagementContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(InformaticaOrganizationData)} does not support writing '{options.Format}' format.");
             }
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeInformaticaOrganizationData(document.RootElement, options);
                     }
                 default:

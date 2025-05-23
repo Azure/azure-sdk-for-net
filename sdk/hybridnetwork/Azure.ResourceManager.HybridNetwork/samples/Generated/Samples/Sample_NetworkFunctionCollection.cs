@@ -11,14 +11,257 @@ using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.HybridNetwork.Models;
 using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.HybridNetwork.Samples
 {
     public partial class Sample_NetworkFunctionCollection
     {
-        // Get network function resource
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task CreateOrUpdate_CreateFirstPartyNetworkFunctionResource()
+        {
+            // Generated from example definition: specification/hybridnetwork/resource-manager/Microsoft.HybridNetwork/stable/2023-09-01/examples/NetworkFunctionFirstPartyCreate.json
+            // this example is just showing the usage of "NetworkFunctions_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "subid";
+            string resourceGroupName = "rg";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // get the collection of this NetworkFunctionResource
+            NetworkFunctionCollection collection = resourceGroupResource.GetNetworkFunctions();
+
+            // invoke the operation
+            string networkFunctionName = "testNf";
+            NetworkFunctionData data = new NetworkFunctionData(new AzureLocation("eastus"))
+            {
+                Properties = new NetworkFunctionValueWithoutSecrets
+                {
+                    DeploymentValues = "{\"releaseName\":\"testReleaseName\",\"namespace\":\"testNamespace\"}",
+                    NetworkFunctionDefinitionVersionResourceReference = new SecretDeploymentResourceReference
+                    {
+                        Id = new ResourceIdentifier("/subscriptions/subid/resourcegroups/rg/providers/Microsoft.HybridNetwork/publishers/testVendor/networkFunctionDefinitionGroups/testnetworkFunctionDefinitionGroupName/networkFunctionDefinitionVersions/1.0.1"),
+                    },
+                    NfviType = NfviType.AzureArcKubernetes,
+                    NfviId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/testResourceGroup/providers/Microsoft.ExtendedLocation/customLocations/testCustomLocation"),
+                    AllowSoftwareUpdate = false,
+                    RoleOverrideValues = { "{\"name\":\"testRoleOne\",\"deployParametersMappingRuleProfile\":{\"helmMappingRuleProfile\":{\"helmPackageVersion\":\"2.1.3\",\"values\":\"{\\\"roleOneParam\\\":\\\"roleOneOverrideValue\\\"}\"}}}", "{\"name\":\"testRoleTwo\",\"deployParametersMappingRuleProfile\":{\"helmMappingRuleProfile\":{\"releaseName\":\"overrideReleaseName\",\"releaseNamespace\":\"overrideNamespace\",\"values\":\"{\\\"roleTwoParam\\\":\\\"roleTwoOverrideValue\\\"}\"}}}" },
+                },
+            };
+            ArmOperation<NetworkFunctionResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, networkFunctionName, data);
+            NetworkFunctionResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            NetworkFunctionData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task CreateOrUpdate_CreateNetworkFunctionResource()
+        {
+            // Generated from example definition: specification/hybridnetwork/resource-manager/Microsoft.HybridNetwork/stable/2023-09-01/examples/NetworkFunctionCreate.json
+            // this example is just showing the usage of "NetworkFunctions_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "subid";
+            string resourceGroupName = "rg";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // get the collection of this NetworkFunctionResource
+            NetworkFunctionCollection collection = resourceGroupResource.GetNetworkFunctions();
+
+            // invoke the operation
+            string networkFunctionName = "testNf";
+            NetworkFunctionData data = new NetworkFunctionData(new AzureLocation("eastus"))
+            {
+                Properties = new NetworkFunctionValueWithoutSecrets
+                {
+                    DeploymentValues = "{\"releaseName\":\"testReleaseName\",\"namespace\":\"testNamespace\"}",
+                    NetworkFunctionDefinitionVersionResourceReference = new OpenDeploymentResourceReference
+                    {
+                        Id = new ResourceIdentifier("/subscriptions/subid/resourcegroups/rg/providers/Microsoft.HybridNetwork/publishers/testVendor/networkFunctionDefinitionGroups/testnetworkFunctionDefinitionGroupName/networkFunctionDefinitionVersions/1.0.1"),
+                    },
+                    NfviType = NfviType.AzureArcKubernetes,
+                    NfviId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/testResourceGroup/providers/Microsoft.ExtendedLocation/customLocations/testCustomLocation"),
+                    AllowSoftwareUpdate = false,
+                    RoleOverrideValues = { "{\"name\":\"testRoleOne\",\"deployParametersMappingRuleProfile\":{\"helmMappingRuleProfile\":{\"helmPackageVersion\":\"2.1.3\",\"values\":\"{\\\"roleOneParam\\\":\\\"roleOneOverrideValue\\\"}\"}}}", "{\"name\":\"testRoleTwo\",\"deployParametersMappingRuleProfile\":{\"helmMappingRuleProfile\":{\"releaseName\":\"overrideReleaseName\",\"releaseNamespace\":\"overrideNamespace\",\"values\":\"{\\\"roleTwoParam\\\":\\\"roleTwoOverrideValue\\\"}\"}}}" },
+                },
+            };
+            ArmOperation<NetworkFunctionResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, networkFunctionName, data);
+            NetworkFunctionResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            NetworkFunctionData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task CreateOrUpdate_CreateNetworkFunctionResourceWithSecrets()
+        {
+            // Generated from example definition: specification/hybridnetwork/resource-manager/Microsoft.HybridNetwork/stable/2023-09-01/examples/NetworkFunctionCreateSecret.json
+            // this example is just showing the usage of "NetworkFunctions_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "subid";
+            string resourceGroupName = "rg";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // get the collection of this NetworkFunctionResource
+            NetworkFunctionCollection collection = resourceGroupResource.GetNetworkFunctions();
+
+            // invoke the operation
+            string networkFunctionName = "testNf";
+            NetworkFunctionData data = new NetworkFunctionData(new AzureLocation("eastus"))
+            {
+                Properties = new NetworkFunctionValueWithSecrets
+                {
+                    SecretDeploymentValues = "{\"adminPassword\":\"password1\",\"userPassword\":\"password2\"}",
+                    NetworkFunctionDefinitionVersionResourceReference = new OpenDeploymentResourceReference
+                    {
+                        Id = new ResourceIdentifier("/subscriptions/subid/resourcegroups/rg/providers/Microsoft.HybridNetwork/publishers/testVendor/networkFunctionDefinitionGroups/testnetworkFunctionDefinitionGroupName/networkFunctionDefinitionVersions/1.0.1"),
+                    },
+                    NfviType = NfviType.AzureArcKubernetes,
+                    NfviId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/testResourceGroup/providers/Microsoft.ExtendedLocation/customLocations/testCustomLocation"),
+                    AllowSoftwareUpdate = false,
+                    RoleOverrideValues = { "{\"name\":\"testRoleOne\",\"deployParametersMappingRuleProfile\":{\"helmMappingRuleProfile\":{\"helmPackageVersion\":\"2.1.3\",\"values\":\"{\\\"roleOneParam\\\":\\\"roleOneOverrideValue\\\"}\"}}}", "{\"name\":\"testRoleTwo\",\"deployParametersMappingRuleProfile\":{\"helmMappingRuleProfile\":{\"releaseName\":\"overrideReleaseName\",\"releaseNamespace\":\"overrideNamespace\",\"values\":\"{\\\"roleTwoParam\\\":\\\"roleTwoOverrideValue\\\"}\"}}}" },
+                },
+            };
+            ArmOperation<NetworkFunctionResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, networkFunctionName, data);
+            NetworkFunctionResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            NetworkFunctionData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task CreateOrUpdate_CreateVirtualNetworkFunctionResourceOnAzureCore()
+        {
+            // Generated from example definition: specification/hybridnetwork/resource-manager/Microsoft.HybridNetwork/stable/2023-09-01/examples/AzureCore/VirtualNetworkFunctionCreate.json
+            // this example is just showing the usage of "NetworkFunctions_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "subid";
+            string resourceGroupName = "rg";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // get the collection of this NetworkFunctionResource
+            NetworkFunctionCollection collection = resourceGroupResource.GetNetworkFunctions();
+
+            // invoke the operation
+            string networkFunctionName = "testNf";
+            NetworkFunctionData data = new NetworkFunctionData(new AzureLocation("eastus"))
+            {
+                Properties = new NetworkFunctionValueWithoutSecrets
+                {
+                    DeploymentValues = "{\"virtualMachineName\":\"test-VM\",\"cpuCores\":4,\"memorySizeGB\":8,\"cloudServicesNetworkAttachment\":{\"attachedNetworkId\":\"test-csnet\",\"ipAllocationMethod\":\"Dynamic\",\"networkAttachmentName\":\"test-cs-vlan\"},\"networkAttachments\":[{\"attachedNetworkId\":\"test-l3vlan\",\"defaultGateway\":\"True\",\"ipAllocationMethod\":\"Dynamic\",\"networkAttachmentName\":\"test-vlan\"}],\"sshPublicKeys\":[{\"keyData\":\"ssh-rsa CMIIIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEA0TqlveKKlc2MFvEmuXJiLGBsY1t4ML4uiRADGSZlnc+7Ugv3h+MCjkkwOKiOdsNo8k4KSBIG5GcQfKYOOd17AJvqCL6cGQbaLuqv0a64jeDm8oO8/xN/IM0oKw7rMr/2oAJOgIsfeXPkRxWWic9AVIS++H5Qi2r7bUFX+cqFsyUCAwEBBQ==\"}],\"storageProfile\":{\"osDisk\":{\"createOption\":\"Ephemeral\",\"deleteOption\":\"Delete\",\"diskSizeGB\":10}},\"userData\":\"testUserData\",\"adminUsername\":\"testUser\",\"virtioInterface\":\"Transitional\",\"isolateEmulatorThread\":\"False\",\"bootMethod\":\"BIOS\",\"placementHints\":[]}",
+                    NetworkFunctionDefinitionVersionResourceReference = new OpenDeploymentResourceReference
+                    {
+                        Id = new ResourceIdentifier("/subscriptions/subid/resourcegroups/rg/providers/Microsoft.HybridNetwork/publishers/testVendor/networkFunctionDefinitionGroups/testnetworkFunctionDefinitionGroupName/networkFunctionDefinitionVersions/1.0.1"),
+                    },
+                    NfviType = NfviType.AzureCore,
+                    NfviId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/testResourceGroup"),
+                    AllowSoftwareUpdate = false,
+                },
+            };
+            ArmOperation<NetworkFunctionResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, networkFunctionName, data);
+            NetworkFunctionResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            NetworkFunctionData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task CreateOrUpdate_CreateVirtualNetworkFunctionResourceOnAzureOperatorNexus()
+        {
+            // Generated from example definition: specification/hybridnetwork/resource-manager/Microsoft.HybridNetwork/stable/2023-09-01/examples/AzureOperatorNexus/VirtualNetworkFunctionCreate.json
+            // this example is just showing the usage of "NetworkFunctions_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "subid";
+            string resourceGroupName = "rg";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // get the collection of this NetworkFunctionResource
+            NetworkFunctionCollection collection = resourceGroupResource.GetNetworkFunctions();
+
+            // invoke the operation
+            string networkFunctionName = "testNf";
+            NetworkFunctionData data = new NetworkFunctionData(new AzureLocation("eastus"))
+            {
+                Properties = new NetworkFunctionValueWithoutSecrets
+                {
+                    DeploymentValues = "{\"virtualMachineName\":\"test-VM\",\"extendedLocationName\":\"test-cluster\",\"cpuCores\":4,\"memorySizeGB\":8,\"cloudServicesNetworkAttachment\":{\"attachedNetworkId\":\"test-csnet\",\"ipAllocationMethod\":\"Dynamic\",\"networkAttachmentName\":\"test-cs-vlan\"},\"networkAttachments\":[{\"attachedNetworkId\":\"test-l3vlan\",\"defaultGateway\":\"True\",\"ipAllocationMethod\":\"Dynamic\",\"networkAttachmentName\":\"test-vlan\"}],\"sshPublicKeys\":[{\"keyData\":\"ssh-rsa CMIIIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEA0TqlveKKlc2MFvEmuXJiLGBsY1t4ML4uiRADGSZlnc+7Ugv3h+MCjkkwOKiOdsNo8k4KSBIG5GcQfKYOOd17AJvqCL6cGQbaLuqv0a64jeDm8oO8/xN/IM0oKw7rMr/2oAJOgIsfeXPkRxWWic9AVIS++H5Qi2r7bUFX+cqFsyUCAwEBBQ==\"}],\"storageProfile\":{\"osDisk\":{\"createOption\":\"Ephemeral\",\"deleteOption\":\"Delete\",\"diskSizeGB\":10}},\"userData\":\"testUserData\",\"adminUsername\":\"testUser\",\"virtioInterface\":\"Transitional\",\"isolateEmulatorThread\":\"False\",\"bootMethod\":\"BIOS\",\"placementHints\":[]}",
+                    NetworkFunctionDefinitionVersionResourceReference = new OpenDeploymentResourceReference
+                    {
+                        Id = new ResourceIdentifier("/subscriptions/subid/resourcegroups/rg/providers/Microsoft.HybridNetwork/publishers/testVendor/networkFunctionDefinitionGroups/testnetworkFunctionDefinitionGroupName/networkFunctionDefinitionVersions/1.0.1"),
+                    },
+                    NfviType = NfviType.AzureOperatorNexus,
+                    NfviId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/testResourceGroup/providers/Microsoft.ExtendedLocation/customLocations/testCustomLocation"),
+                    AllowSoftwareUpdate = false,
+                },
+            };
+            ArmOperation<NetworkFunctionResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, networkFunctionName, data);
+            NetworkFunctionResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            NetworkFunctionData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetNetworkFunctionResource()
         {
             // Generated from example definition: specification/hybridnetwork/resource-manager/Microsoft.HybridNetwork/stable/2023-09-01/examples/NetworkFunctionGet.json
@@ -50,81 +293,8 @@ namespace Azure.ResourceManager.HybridNetwork.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get network function resource
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Exists_GetNetworkFunctionResource()
-        {
-            // Generated from example definition: specification/hybridnetwork/resource-manager/Microsoft.HybridNetwork/stable/2023-09-01/examples/NetworkFunctionGet.json
-            // this example is just showing the usage of "NetworkFunctions_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ResourceGroupResource created on azure
-            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "subid";
-            string resourceGroupName = "rg";
-            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
-            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
-
-            // get the collection of this NetworkFunctionResource
-            NetworkFunctionCollection collection = resourceGroupResource.GetNetworkFunctions();
-
-            // invoke the operation
-            string networkFunctionName = "testNf";
-            bool result = await collection.ExistsAsync(networkFunctionName);
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        // Get network function resource
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetIfExists_GetNetworkFunctionResource()
-        {
-            // Generated from example definition: specification/hybridnetwork/resource-manager/Microsoft.HybridNetwork/stable/2023-09-01/examples/NetworkFunctionGet.json
-            // this example is just showing the usage of "NetworkFunctions_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ResourceGroupResource created on azure
-            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "subid";
-            string resourceGroupName = "rg";
-            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
-            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
-
-            // get the collection of this NetworkFunctionResource
-            NetworkFunctionCollection collection = resourceGroupResource.GetNetworkFunctions();
-
-            // invoke the operation
-            string networkFunctionName = "testNf";
-            NullableResponse<NetworkFunctionResource> response = await collection.GetIfExistsAsync(networkFunctionName);
-            NetworkFunctionResource result = response.HasValue ? response.Value : null;
-
-            if (result == null)
-            {
-                Console.WriteLine($"Succeeded with null as result");
-            }
-            else
-            {
-                // the variable result is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                NetworkFunctionData resourceData = result.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-        }
-
-        // Get virtual network function resource on AzureCore
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetVirtualNetworkFunctionResourceOnAzureCore()
         {
             // Generated from example definition: specification/hybridnetwork/resource-manager/Microsoft.HybridNetwork/stable/2023-09-01/examples/AzureCore/VirtualNetworkFunctionGet.json
@@ -156,81 +326,8 @@ namespace Azure.ResourceManager.HybridNetwork.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get virtual network function resource on AzureCore
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Exists_GetVirtualNetworkFunctionResourceOnAzureCore()
-        {
-            // Generated from example definition: specification/hybridnetwork/resource-manager/Microsoft.HybridNetwork/stable/2023-09-01/examples/AzureCore/VirtualNetworkFunctionGet.json
-            // this example is just showing the usage of "NetworkFunctions_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ResourceGroupResource created on azure
-            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "subid";
-            string resourceGroupName = "rg";
-            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
-            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
-
-            // get the collection of this NetworkFunctionResource
-            NetworkFunctionCollection collection = resourceGroupResource.GetNetworkFunctions();
-
-            // invoke the operation
-            string networkFunctionName = "testNf";
-            bool result = await collection.ExistsAsync(networkFunctionName);
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        // Get virtual network function resource on AzureCore
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetIfExists_GetVirtualNetworkFunctionResourceOnAzureCore()
-        {
-            // Generated from example definition: specification/hybridnetwork/resource-manager/Microsoft.HybridNetwork/stable/2023-09-01/examples/AzureCore/VirtualNetworkFunctionGet.json
-            // this example is just showing the usage of "NetworkFunctions_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ResourceGroupResource created on azure
-            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "subid";
-            string resourceGroupName = "rg";
-            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
-            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
-
-            // get the collection of this NetworkFunctionResource
-            NetworkFunctionCollection collection = resourceGroupResource.GetNetworkFunctions();
-
-            // invoke the operation
-            string networkFunctionName = "testNf";
-            NullableResponse<NetworkFunctionResource> response = await collection.GetIfExistsAsync(networkFunctionName);
-            NetworkFunctionResource result = response.HasValue ? response.Value : null;
-
-            if (result == null)
-            {
-                Console.WriteLine($"Succeeded with null as result");
-            }
-            else
-            {
-                // the variable result is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                NetworkFunctionData resourceData = result.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-        }
-
-        // Get virtual network function resource on AzureOperatorNexus
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetVirtualNetworkFunctionResourceOnAzureOperatorNexus()
         {
             // Generated from example definition: specification/hybridnetwork/resource-manager/Microsoft.HybridNetwork/stable/2023-09-01/examples/AzureOperatorNexus/VirtualNetworkFunctionGet.json
@@ -262,338 +359,8 @@ namespace Azure.ResourceManager.HybridNetwork.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get virtual network function resource on AzureOperatorNexus
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Exists_GetVirtualNetworkFunctionResourceOnAzureOperatorNexus()
-        {
-            // Generated from example definition: specification/hybridnetwork/resource-manager/Microsoft.HybridNetwork/stable/2023-09-01/examples/AzureOperatorNexus/VirtualNetworkFunctionGet.json
-            // this example is just showing the usage of "NetworkFunctions_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ResourceGroupResource created on azure
-            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "subid";
-            string resourceGroupName = "rg";
-            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
-            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
-
-            // get the collection of this NetworkFunctionResource
-            NetworkFunctionCollection collection = resourceGroupResource.GetNetworkFunctions();
-
-            // invoke the operation
-            string networkFunctionName = "testNf";
-            bool result = await collection.ExistsAsync(networkFunctionName);
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        // Get virtual network function resource on AzureOperatorNexus
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetIfExists_GetVirtualNetworkFunctionResourceOnAzureOperatorNexus()
-        {
-            // Generated from example definition: specification/hybridnetwork/resource-manager/Microsoft.HybridNetwork/stable/2023-09-01/examples/AzureOperatorNexus/VirtualNetworkFunctionGet.json
-            // this example is just showing the usage of "NetworkFunctions_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ResourceGroupResource created on azure
-            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "subid";
-            string resourceGroupName = "rg";
-            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
-            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
-
-            // get the collection of this NetworkFunctionResource
-            NetworkFunctionCollection collection = resourceGroupResource.GetNetworkFunctions();
-
-            // invoke the operation
-            string networkFunctionName = "testNf";
-            NullableResponse<NetworkFunctionResource> response = await collection.GetIfExistsAsync(networkFunctionName);
-            NetworkFunctionResource result = response.HasValue ? response.Value : null;
-
-            if (result == null)
-            {
-                Console.WriteLine($"Succeeded with null as result");
-            }
-            else
-            {
-                // the variable result is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                NetworkFunctionData resourceData = result.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-        }
-
-        // Create first party network function resource
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task CreateOrUpdate_CreateFirstPartyNetworkFunctionResource()
-        {
-            // Generated from example definition: specification/hybridnetwork/resource-manager/Microsoft.HybridNetwork/stable/2023-09-01/examples/NetworkFunctionFirstPartyCreate.json
-            // this example is just showing the usage of "NetworkFunctions_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ResourceGroupResource created on azure
-            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "subid";
-            string resourceGroupName = "rg";
-            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
-            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
-
-            // get the collection of this NetworkFunctionResource
-            NetworkFunctionCollection collection = resourceGroupResource.GetNetworkFunctions();
-
-            // invoke the operation
-            string networkFunctionName = "testNf";
-            NetworkFunctionData data = new NetworkFunctionData(new AzureLocation("eastus"))
-            {
-                Properties = new NetworkFunctionValueWithoutSecrets()
-                {
-                    DeploymentValues = "{\"releaseName\":\"testReleaseName\",\"namespace\":\"testNamespace\"}",
-                    NetworkFunctionDefinitionVersionResourceReference = new SecretDeploymentResourceReference()
-                    {
-                        Id = new ResourceIdentifier("/subscriptions/subid/resourcegroups/rg/providers/Microsoft.HybridNetwork/publishers/testVendor/networkFunctionDefinitionGroups/testnetworkFunctionDefinitionGroupName/networkFunctionDefinitionVersions/1.0.1"),
-                    },
-                    NfviType = NfviType.AzureArcKubernetes,
-                    NfviId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/testResourceGroup/providers/Microsoft.ExtendedLocation/customLocations/testCustomLocation"),
-                    AllowSoftwareUpdate = false,
-                    RoleOverrideValues =
-{
-"{\"name\":\"testRoleOne\",\"deployParametersMappingRuleProfile\":{\"helmMappingRuleProfile\":{\"helmPackageVersion\":\"2.1.3\",\"values\":\"{\\\"roleOneParam\\\":\\\"roleOneOverrideValue\\\"}\"}}}","{\"name\":\"testRoleTwo\",\"deployParametersMappingRuleProfile\":{\"helmMappingRuleProfile\":{\"releaseName\":\"overrideReleaseName\",\"releaseNamespace\":\"overrideNamespace\",\"values\":\"{\\\"roleTwoParam\\\":\\\"roleTwoOverrideValue\\\"}\"}}}"
-},
-                },
-            };
-            ArmOperation<NetworkFunctionResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, networkFunctionName, data);
-            NetworkFunctionResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            NetworkFunctionData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // Create network function resource
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task CreateOrUpdate_CreateNetworkFunctionResource()
-        {
-            // Generated from example definition: specification/hybridnetwork/resource-manager/Microsoft.HybridNetwork/stable/2023-09-01/examples/NetworkFunctionCreate.json
-            // this example is just showing the usage of "NetworkFunctions_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ResourceGroupResource created on azure
-            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "subid";
-            string resourceGroupName = "rg";
-            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
-            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
-
-            // get the collection of this NetworkFunctionResource
-            NetworkFunctionCollection collection = resourceGroupResource.GetNetworkFunctions();
-
-            // invoke the operation
-            string networkFunctionName = "testNf";
-            NetworkFunctionData data = new NetworkFunctionData(new AzureLocation("eastus"))
-            {
-                Properties = new NetworkFunctionValueWithoutSecrets()
-                {
-                    DeploymentValues = "{\"releaseName\":\"testReleaseName\",\"namespace\":\"testNamespace\"}",
-                    NetworkFunctionDefinitionVersionResourceReference = new OpenDeploymentResourceReference()
-                    {
-                        Id = new ResourceIdentifier("/subscriptions/subid/resourcegroups/rg/providers/Microsoft.HybridNetwork/publishers/testVendor/networkFunctionDefinitionGroups/testnetworkFunctionDefinitionGroupName/networkFunctionDefinitionVersions/1.0.1"),
-                    },
-                    NfviType = NfviType.AzureArcKubernetes,
-                    NfviId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/testResourceGroup/providers/Microsoft.ExtendedLocation/customLocations/testCustomLocation"),
-                    AllowSoftwareUpdate = false,
-                    RoleOverrideValues =
-{
-"{\"name\":\"testRoleOne\",\"deployParametersMappingRuleProfile\":{\"helmMappingRuleProfile\":{\"helmPackageVersion\":\"2.1.3\",\"values\":\"{\\\"roleOneParam\\\":\\\"roleOneOverrideValue\\\"}\"}}}","{\"name\":\"testRoleTwo\",\"deployParametersMappingRuleProfile\":{\"helmMappingRuleProfile\":{\"releaseName\":\"overrideReleaseName\",\"releaseNamespace\":\"overrideNamespace\",\"values\":\"{\\\"roleTwoParam\\\":\\\"roleTwoOverrideValue\\\"}\"}}}"
-},
-                },
-            };
-            ArmOperation<NetworkFunctionResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, networkFunctionName, data);
-            NetworkFunctionResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            NetworkFunctionData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // Create network function resource with secrets
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task CreateOrUpdate_CreateNetworkFunctionResourceWithSecrets()
-        {
-            // Generated from example definition: specification/hybridnetwork/resource-manager/Microsoft.HybridNetwork/stable/2023-09-01/examples/NetworkFunctionCreateSecret.json
-            // this example is just showing the usage of "NetworkFunctions_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ResourceGroupResource created on azure
-            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "subid";
-            string resourceGroupName = "rg";
-            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
-            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
-
-            // get the collection of this NetworkFunctionResource
-            NetworkFunctionCollection collection = resourceGroupResource.GetNetworkFunctions();
-
-            // invoke the operation
-            string networkFunctionName = "testNf";
-            NetworkFunctionData data = new NetworkFunctionData(new AzureLocation("eastus"))
-            {
-                Properties = new NetworkFunctionValueWithSecrets()
-                {
-                    SecretDeploymentValues = "{\"adminPassword\":\"password1\",\"userPassword\":\"password2\"}",
-                    NetworkFunctionDefinitionVersionResourceReference = new OpenDeploymentResourceReference()
-                    {
-                        Id = new ResourceIdentifier("/subscriptions/subid/resourcegroups/rg/providers/Microsoft.HybridNetwork/publishers/testVendor/networkFunctionDefinitionGroups/testnetworkFunctionDefinitionGroupName/networkFunctionDefinitionVersions/1.0.1"),
-                    },
-                    NfviType = NfviType.AzureArcKubernetes,
-                    NfviId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/testResourceGroup/providers/Microsoft.ExtendedLocation/customLocations/testCustomLocation"),
-                    AllowSoftwareUpdate = false,
-                    RoleOverrideValues =
-{
-"{\"name\":\"testRoleOne\",\"deployParametersMappingRuleProfile\":{\"helmMappingRuleProfile\":{\"helmPackageVersion\":\"2.1.3\",\"values\":\"{\\\"roleOneParam\\\":\\\"roleOneOverrideValue\\\"}\"}}}","{\"name\":\"testRoleTwo\",\"deployParametersMappingRuleProfile\":{\"helmMappingRuleProfile\":{\"releaseName\":\"overrideReleaseName\",\"releaseNamespace\":\"overrideNamespace\",\"values\":\"{\\\"roleTwoParam\\\":\\\"roleTwoOverrideValue\\\"}\"}}}"
-},
-                },
-            };
-            ArmOperation<NetworkFunctionResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, networkFunctionName, data);
-            NetworkFunctionResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            NetworkFunctionData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // Create virtual network function resource on AzureCore
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task CreateOrUpdate_CreateVirtualNetworkFunctionResourceOnAzureCore()
-        {
-            // Generated from example definition: specification/hybridnetwork/resource-manager/Microsoft.HybridNetwork/stable/2023-09-01/examples/AzureCore/VirtualNetworkFunctionCreate.json
-            // this example is just showing the usage of "NetworkFunctions_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ResourceGroupResource created on azure
-            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "subid";
-            string resourceGroupName = "rg";
-            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
-            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
-
-            // get the collection of this NetworkFunctionResource
-            NetworkFunctionCollection collection = resourceGroupResource.GetNetworkFunctions();
-
-            // invoke the operation
-            string networkFunctionName = "testNf";
-            NetworkFunctionData data = new NetworkFunctionData(new AzureLocation("eastus"))
-            {
-                Properties = new NetworkFunctionValueWithoutSecrets()
-                {
-                    DeploymentValues = "{\"virtualMachineName\":\"test-VM\",\"cpuCores\":4,\"memorySizeGB\":8,\"cloudServicesNetworkAttachment\":{\"attachedNetworkId\":\"test-csnet\",\"ipAllocationMethod\":\"Dynamic\",\"networkAttachmentName\":\"test-cs-vlan\"},\"networkAttachments\":[{\"attachedNetworkId\":\"test-l3vlan\",\"defaultGateway\":\"True\",\"ipAllocationMethod\":\"Dynamic\",\"networkAttachmentName\":\"test-vlan\"}],\"sshPublicKeys\":[{\"keyData\":\"ssh-rsa CMIIIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEA0TqlveKKlc2MFvEmuXJiLGBsY1t4ML4uiRADGSZlnc+7Ugv3h+MCjkkwOKiOdsNo8k4KSBIG5GcQfKYOOd17AJvqCL6cGQbaLuqv0a64jeDm8oO8/xN/IM0oKw7rMr/2oAJOgIsfeXPkRxWWic9AVIS++H5Qi2r7bUFX+cqFsyUCAwEBBQ==\"}],\"storageProfile\":{\"osDisk\":{\"createOption\":\"Ephemeral\",\"deleteOption\":\"Delete\",\"diskSizeGB\":10}},\"userData\":\"testUserData\",\"adminUsername\":\"testUser\",\"virtioInterface\":\"Transitional\",\"isolateEmulatorThread\":\"False\",\"bootMethod\":\"BIOS\",\"placementHints\":[]}",
-                    NetworkFunctionDefinitionVersionResourceReference = new OpenDeploymentResourceReference()
-                    {
-                        Id = new ResourceIdentifier("/subscriptions/subid/resourcegroups/rg/providers/Microsoft.HybridNetwork/publishers/testVendor/networkFunctionDefinitionGroups/testnetworkFunctionDefinitionGroupName/networkFunctionDefinitionVersions/1.0.1"),
-                    },
-                    NfviType = NfviType.AzureCore,
-                    NfviId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/testResourceGroup"),
-                    AllowSoftwareUpdate = false,
-                },
-            };
-            ArmOperation<NetworkFunctionResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, networkFunctionName, data);
-            NetworkFunctionResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            NetworkFunctionData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // Create virtual network function resource on AzureOperatorNexus
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task CreateOrUpdate_CreateVirtualNetworkFunctionResourceOnAzureOperatorNexus()
-        {
-            // Generated from example definition: specification/hybridnetwork/resource-manager/Microsoft.HybridNetwork/stable/2023-09-01/examples/AzureOperatorNexus/VirtualNetworkFunctionCreate.json
-            // this example is just showing the usage of "NetworkFunctions_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ResourceGroupResource created on azure
-            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "subid";
-            string resourceGroupName = "rg";
-            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
-            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
-
-            // get the collection of this NetworkFunctionResource
-            NetworkFunctionCollection collection = resourceGroupResource.GetNetworkFunctions();
-
-            // invoke the operation
-            string networkFunctionName = "testNf";
-            NetworkFunctionData data = new NetworkFunctionData(new AzureLocation("eastus"))
-            {
-                Properties = new NetworkFunctionValueWithoutSecrets()
-                {
-                    DeploymentValues = "{\"virtualMachineName\":\"test-VM\",\"extendedLocationName\":\"test-cluster\",\"cpuCores\":4,\"memorySizeGB\":8,\"cloudServicesNetworkAttachment\":{\"attachedNetworkId\":\"test-csnet\",\"ipAllocationMethod\":\"Dynamic\",\"networkAttachmentName\":\"test-cs-vlan\"},\"networkAttachments\":[{\"attachedNetworkId\":\"test-l3vlan\",\"defaultGateway\":\"True\",\"ipAllocationMethod\":\"Dynamic\",\"networkAttachmentName\":\"test-vlan\"}],\"sshPublicKeys\":[{\"keyData\":\"ssh-rsa CMIIIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEA0TqlveKKlc2MFvEmuXJiLGBsY1t4ML4uiRADGSZlnc+7Ugv3h+MCjkkwOKiOdsNo8k4KSBIG5GcQfKYOOd17AJvqCL6cGQbaLuqv0a64jeDm8oO8/xN/IM0oKw7rMr/2oAJOgIsfeXPkRxWWic9AVIS++H5Qi2r7bUFX+cqFsyUCAwEBBQ==\"}],\"storageProfile\":{\"osDisk\":{\"createOption\":\"Ephemeral\",\"deleteOption\":\"Delete\",\"diskSizeGB\":10}},\"userData\":\"testUserData\",\"adminUsername\":\"testUser\",\"virtioInterface\":\"Transitional\",\"isolateEmulatorThread\":\"False\",\"bootMethod\":\"BIOS\",\"placementHints\":[]}",
-                    NetworkFunctionDefinitionVersionResourceReference = new OpenDeploymentResourceReference()
-                    {
-                        Id = new ResourceIdentifier("/subscriptions/subid/resourcegroups/rg/providers/Microsoft.HybridNetwork/publishers/testVendor/networkFunctionDefinitionGroups/testnetworkFunctionDefinitionGroupName/networkFunctionDefinitionVersions/1.0.1"),
-                    },
-                    NfviType = NfviType.AzureOperatorNexus,
-                    NfviId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/testResourceGroup/providers/Microsoft.ExtendedLocation/customLocations/testCustomLocation"),
-                    AllowSoftwareUpdate = false,
-                },
-            };
-            ArmOperation<NetworkFunctionResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, networkFunctionName, data);
-            NetworkFunctionResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            NetworkFunctionData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // List network function in resource group
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListNetworkFunctionInResourceGroup()
         {
             // Generated from example definition: specification/hybridnetwork/resource-manager/Microsoft.HybridNetwork/stable/2023-09-01/examples/NetworkFunctionListByResourceGroup.json
@@ -624,7 +391,217 @@ namespace Azure.ResourceManager.HybridNetwork.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Exists_GetNetworkFunctionResource()
+        {
+            // Generated from example definition: specification/hybridnetwork/resource-manager/Microsoft.HybridNetwork/stable/2023-09-01/examples/NetworkFunctionGet.json
+            // this example is just showing the usage of "NetworkFunctions_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "subid";
+            string resourceGroupName = "rg";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // get the collection of this NetworkFunctionResource
+            NetworkFunctionCollection collection = resourceGroupResource.GetNetworkFunctions();
+
+            // invoke the operation
+            string networkFunctionName = "testNf";
+            bool result = await collection.ExistsAsync(networkFunctionName);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Exists_GetVirtualNetworkFunctionResourceOnAzureCore()
+        {
+            // Generated from example definition: specification/hybridnetwork/resource-manager/Microsoft.HybridNetwork/stable/2023-09-01/examples/AzureCore/VirtualNetworkFunctionGet.json
+            // this example is just showing the usage of "NetworkFunctions_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "subid";
+            string resourceGroupName = "rg";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // get the collection of this NetworkFunctionResource
+            NetworkFunctionCollection collection = resourceGroupResource.GetNetworkFunctions();
+
+            // invoke the operation
+            string networkFunctionName = "testNf";
+            bool result = await collection.ExistsAsync(networkFunctionName);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Exists_GetVirtualNetworkFunctionResourceOnAzureOperatorNexus()
+        {
+            // Generated from example definition: specification/hybridnetwork/resource-manager/Microsoft.HybridNetwork/stable/2023-09-01/examples/AzureOperatorNexus/VirtualNetworkFunctionGet.json
+            // this example is just showing the usage of "NetworkFunctions_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "subid";
+            string resourceGroupName = "rg";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // get the collection of this NetworkFunctionResource
+            NetworkFunctionCollection collection = resourceGroupResource.GetNetworkFunctions();
+
+            // invoke the operation
+            string networkFunctionName = "testNf";
+            bool result = await collection.ExistsAsync(networkFunctionName);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetIfExists_GetNetworkFunctionResource()
+        {
+            // Generated from example definition: specification/hybridnetwork/resource-manager/Microsoft.HybridNetwork/stable/2023-09-01/examples/NetworkFunctionGet.json
+            // this example is just showing the usage of "NetworkFunctions_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "subid";
+            string resourceGroupName = "rg";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // get the collection of this NetworkFunctionResource
+            NetworkFunctionCollection collection = resourceGroupResource.GetNetworkFunctions();
+
+            // invoke the operation
+            string networkFunctionName = "testNf";
+            NullableResponse<NetworkFunctionResource> response = await collection.GetIfExistsAsync(networkFunctionName);
+            NetworkFunctionResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine("Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                NetworkFunctionData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetIfExists_GetVirtualNetworkFunctionResourceOnAzureCore()
+        {
+            // Generated from example definition: specification/hybridnetwork/resource-manager/Microsoft.HybridNetwork/stable/2023-09-01/examples/AzureCore/VirtualNetworkFunctionGet.json
+            // this example is just showing the usage of "NetworkFunctions_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "subid";
+            string resourceGroupName = "rg";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // get the collection of this NetworkFunctionResource
+            NetworkFunctionCollection collection = resourceGroupResource.GetNetworkFunctions();
+
+            // invoke the operation
+            string networkFunctionName = "testNf";
+            NullableResponse<NetworkFunctionResource> response = await collection.GetIfExistsAsync(networkFunctionName);
+            NetworkFunctionResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine("Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                NetworkFunctionData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetIfExists_GetVirtualNetworkFunctionResourceOnAzureOperatorNexus()
+        {
+            // Generated from example definition: specification/hybridnetwork/resource-manager/Microsoft.HybridNetwork/stable/2023-09-01/examples/AzureOperatorNexus/VirtualNetworkFunctionGet.json
+            // this example is just showing the usage of "NetworkFunctions_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "subid";
+            string resourceGroupName = "rg";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // get the collection of this NetworkFunctionResource
+            NetworkFunctionCollection collection = resourceGroupResource.GetNetworkFunctions();
+
+            // invoke the operation
+            string networkFunctionName = "testNf";
+            NullableResponse<NetworkFunctionResource> response = await collection.GetIfExistsAsync(networkFunctionName);
+            NetworkFunctionResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine("Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                NetworkFunctionData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
         }
     }
 }

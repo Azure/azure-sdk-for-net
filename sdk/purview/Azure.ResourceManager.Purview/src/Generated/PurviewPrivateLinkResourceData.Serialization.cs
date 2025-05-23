@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Purview
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerPurviewContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(PurviewPrivateLinkResourceData)} does not support writing '{options.Format}' format.");
             }
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Purview
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializePurviewPrivateLinkResourceData(document.RootElement, options);
                     }
                 default:

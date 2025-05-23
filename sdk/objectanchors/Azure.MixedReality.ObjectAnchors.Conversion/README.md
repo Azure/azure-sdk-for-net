@@ -38,7 +38,7 @@ Add a package reference:
 ### Prerequisites
 
 - You must have an [Azure subscription](https://azure.microsoft.com/free/dotnet/).
-- You must have an [Azure Object Anchors](https://review.docs.microsoft.com/azure/object-anchors/) account.
+- You must have an [Azure Object Anchors](https://review.learn.microsoft.com/azure/object-anchors/) account.
 
 ### Authenticate the client
 
@@ -54,7 +54,7 @@ Mixed Reality services support a few different forms of authentication:
   - Otherwise, we recommend that you obtain Azure AD tokens from a web service that supports your app. We recommend this
     method for production applications because it allows you to avoid embedding the credentials for access to the Object Anchors asset conversion service in your client application.
 
-See [here](https://docs.microsoft.com/azure/spatial-anchors/concepts/authentication) for detailed instructions and information.
+See [here](https://learn.microsoft.com/azure/spatial-anchors/concepts/authentication) for detailed instructions and information.
 
 ## Key concepts
 
@@ -131,7 +131,7 @@ using (FileStream file = File.OpenWrite(localFileDownloadPath))
 
 ## Next steps
 
-- Read the [Product documentation](https://review.docs.microsoft.com/azure/object-anchors/)
+- Read the [Product documentation](https://review.learn.microsoft.com/azure/object-anchors/)
 
 ## Contributing
 

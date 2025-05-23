@@ -10,17 +10,17 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.RecoveryServicesBackup.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Samples
 {
     public partial class Sample_BackupResourceEncryptionConfigExtendedResource
     {
-        // Get Vault Encryption Configuration
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetVaultEncryptionConfiguration()
         {
-            // Generated from example definition: specification/recoveryservicesbackup/resource-manager/Microsoft.RecoveryServices/stable/2023-06-01/examples/BackupResourceEncryptionConfig_Get.json
+            // Generated from example definition: specification/recoveryservicesbackup/resource-manager/Microsoft.RecoveryServices/stable/2025-02-01/examples/BackupResourceEncryptionConfig_Get.json
             // this example is just showing the usage of "BackupResourceEncryptionConfigs_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -46,12 +46,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Update Vault Encryption Configuration
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateVaultEncryptionConfiguration()
         {
-            // Generated from example definition: specification/recoveryservicesbackup/resource-manager/Microsoft.RecoveryServices/stable/2023-06-01/examples/BackupResourceEncryptionConfig_Put.json
+            // Generated from example definition: specification/recoveryservicesbackup/resource-manager/Microsoft.RecoveryServices/stable/2025-02-01/examples/BackupResourceEncryptionConfig_Put.json
             // this example is just showing the usage of "BackupResourceEncryptionConfigs_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -68,9 +67,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Samples
             BackupResourceEncryptionConfigExtendedResource backupResourceEncryptionConfigExtended = client.GetBackupResourceEncryptionConfigExtendedResource(backupResourceEncryptionConfigExtendedResourceId);
 
             // invoke the operation
-            BackupResourceEncryptionConfigExtendedCreateOrUpdateContent content = new BackupResourceEncryptionConfigExtendedCreateOrUpdateContent(new AzureLocation("placeholder"))
+            BackupResourceEncryptionConfigExtendedCreateOrUpdateContent content = new BackupResourceEncryptionConfigExtendedCreateOrUpdateContent(default)
             {
-                Properties = new BackupResourceEncryptionConfig()
+                Properties = new BackupResourceEncryptionConfig
                 {
                     EncryptionAtRestType = BackupEncryptionAtRestType.CustomerManaged,
                     KeyUri = new Uri("https://gktestkv1.vault.azure.net/keys/Test1/ed2e8cdc7f86477ebf0c6462b504a9ed"),
@@ -80,7 +79,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Samples
             };
             await backupResourceEncryptionConfigExtended.UpdateAsync(WaitUntil.Completed, content);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

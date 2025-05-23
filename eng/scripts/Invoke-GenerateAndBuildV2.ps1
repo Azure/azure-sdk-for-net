@@ -87,6 +87,7 @@ for ($i = 0; $i -le $readmeFiles.Count - 1; $i++) {
         $autorestConfigYaml = ConvertTo-YAML $yml
     }
     Invoke-GenerateAndBuildSDK -readmeAbsolutePath $readme -sdkRootPath $sdkPath -autorestConfigYaml "$autorestConfigYaml" -downloadUrlPrefix "$downloadUrlPrefix" -generatedSDKPackages $generatedSDKPackages
+    $generatedSDKPackages[$generatedSDKPackages.Count - 1]['readmeMd'] = @($readmeFile)
 }
 
 #update services without readme.md
@@ -136,9 +137,7 @@ if ($relatedTypeSpecProjectFolder) {
         Invoke-Expression $tspclientCommand
         if ($LASTEXITCODE) {
           # If Process script call fails, then return with failure to CI and don't need to call GeneratePackage
-          Write-Error "[ERROR] Failed to generate typespec project:$typespecFolder. Exit code: $LASTEXITCODE."
-          Write-Error "[ERROR] Please review the detail errors for potential fixes."
-          Write-Error "[ERROR] If the issue persists, contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request."
+          Write-Host "[ERROR] Failed to generate typespec project:$typespecFolder. Exit code: $LASTEXITCODE. Please review the detail errors for potential fixes. If the issue persists, contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request."
           $generatedSDKPackages.Add(@{
             result = "failed";
             path=@("");
@@ -156,6 +155,7 @@ if ($relatedTypeSpecProjectFolder) {
             -generatedSDKPackages $generatedSDKPackages `
             -specRepoRoot $swaggerDir
         }
+        $generatedSDKPackages[$generatedSDKPackages.Count - 1]['typespecProject'] = @($typespecRelativeFolder)
     }
 }
 $outputJson = [PSCustomObject]@{

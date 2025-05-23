@@ -71,8 +71,11 @@ namespace Azure.AI.Language.Conversations.Models
         /// <param name="offset"> Start position for the entity text. Use of different 'stringIndexType' values can affect the offset returned. </param>
         /// <param name="length"> Length for the entity text. Use of different 'stringIndexType' values can affect the length returned. </param>
         /// <param name="confidenceScore"> Confidence score between 0 and 1 of the extracted entity. </param>
+        /// <param name="mask"> Exact mask text to mask the PII entity. </param>
+        /// <param name="maskOffset"> Offset of the mask text. </param>
+        /// <param name="maskLength"> Length of the mask text. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NamedEntity(string text, string category, string subcategory, int offset, int length, double confidenceScore, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NamedEntity(string text, string category, string subcategory, int offset, int length, double confidenceScore, string mask, int? maskOffset, int? maskLength, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Text = text;
             Category = category;
@@ -80,6 +83,9 @@ namespace Azure.AI.Language.Conversations.Models
             Offset = offset;
             Length = length;
             ConfidenceScore = confidenceScore;
+            Mask = mask;
+            MaskOffset = maskOffset;
+            MaskLength = maskLength;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -100,5 +106,11 @@ namespace Azure.AI.Language.Conversations.Models
         public int Length { get; }
         /// <summary> Confidence score between 0 and 1 of the extracted entity. </summary>
         public double ConfidenceScore { get; }
+        /// <summary> Exact mask text to mask the PII entity. </summary>
+        public string Mask { get; }
+        /// <summary> Offset of the mask text. </summary>
+        public int? MaskOffset { get; }
+        /// <summary> Length of the mask text. </summary>
+        public int? MaskLength { get; }
     }
 }

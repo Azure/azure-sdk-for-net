@@ -33,9 +33,6 @@ namespace Azure.AI.Language.Text
         private const string CustomMultiLabelClassificationValue = "CustomMultiLabelClassification";
         private const string ExtractiveSummarizationValue = "ExtractiveSummarization";
         private const string AbstractiveSummarizationValue = "AbstractiveSummarization";
-        private const string CustomHealthcareValue = "CustomHealthcare";
-        private const string CustomSentimentAnalysisValue = "CustomSentimentAnalysis";
-        private const string CustomAbstractiveSummarizationValue = "CustomAbstractiveSummarization";
 
         /// <summary> Sentiment analysis task. </summary>
         public static AnalyzeTextOperationActionKind SentimentAnalysis { get; } = new AnalyzeTextOperationActionKind(SentimentAnalysisValue);
@@ -59,12 +56,6 @@ namespace Azure.AI.Language.Text
         public static AnalyzeTextOperationActionKind ExtractiveSummarization { get; } = new AnalyzeTextOperationActionKind(ExtractiveSummarizationValue);
         /// <summary> Abstractive summarization task. </summary>
         public static AnalyzeTextOperationActionKind AbstractiveSummarization { get; } = new AnalyzeTextOperationActionKind(AbstractiveSummarizationValue);
-        /// <summary> Custom healthcare task. </summary>
-        public static AnalyzeTextOperationActionKind CustomHealthcare { get; } = new AnalyzeTextOperationActionKind(CustomHealthcareValue);
-        /// <summary> Custom sentiment analysis task. </summary>
-        public static AnalyzeTextOperationActionKind CustomSentimentAnalysis { get; } = new AnalyzeTextOperationActionKind(CustomSentimentAnalysisValue);
-        /// <summary> Custom abstractive summarization task. </summary>
-        public static AnalyzeTextOperationActionKind CustomAbstractiveSummarization { get; } = new AnalyzeTextOperationActionKind(CustomAbstractiveSummarizationValue);
         /// <summary> Determines if two <see cref="AnalyzeTextOperationActionKind"/> values are the same. </summary>
         public static bool operator ==(AnalyzeTextOperationActionKind left, AnalyzeTextOperationActionKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AnalyzeTextOperationActionKind"/> values are not the same. </summary>

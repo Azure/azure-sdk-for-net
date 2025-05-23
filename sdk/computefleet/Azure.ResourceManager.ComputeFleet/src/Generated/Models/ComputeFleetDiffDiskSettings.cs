@@ -61,8 +61,8 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// values are: **CacheDisk,** **ResourceDisk.** The defaulting behavior is:
         /// **CacheDisk** if one is configured for the VM size otherwise **ResourceDisk**
         /// is used. Refer to the VM size documentation for Windows VM at
-        /// https://docs.microsoft.com/azure/virtual-machines/windows/sizes and Linux VM at
-        /// https://docs.microsoft.com/azure/virtual-machines/linux/sizes to check which VM
+        /// https://learn.microsoft.com/azure/virtual-machines/windows/sizes and Linux VM at
+        /// https://learn.microsoft.com/azure/virtual-machines/linux/sizes to check which VM
         /// sizes exposes a cache disk.
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// values are: **CacheDisk,** **ResourceDisk.** The defaulting behavior is:
         /// **CacheDisk** if one is configured for the VM size otherwise **ResourceDisk**
         /// is used. Refer to the VM size documentation for Windows VM at
-        /// https://docs.microsoft.com/azure/virtual-machines/windows/sizes and Linux VM at
-        /// https://docs.microsoft.com/azure/virtual-machines/linux/sizes to check which VM
+        /// https://learn.microsoft.com/azure/virtual-machines/windows/sizes and Linux VM at
+        /// https://learn.microsoft.com/azure/virtual-machines/linux/sizes to check which VM
         /// sizes exposes a cache disk.
         /// </summary>
         public ComputeFleetDiffDiskPlacement? Placement { get; set; }

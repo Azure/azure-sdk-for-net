@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.DataMigration
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataMigrationContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(DatabaseMigrationSqlVmData)} does not support writing '{options.Format}' format.");
             }
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.DataMigration
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeDatabaseMigrationSqlVmData(document.RootElement, options);
                     }
                 default:

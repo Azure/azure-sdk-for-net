@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Elastic.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Elastic.Models
             {
                 return null;
             }
-            IReadOnlyList<ConnectedPartnerResourcesListFormat> value = default;
+            IReadOnlyList<ConnectedPartnerResourceInfo> value = default;
             string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -98,10 +98,10 @@ namespace Azure.ResourceManager.Elastic.Models
                     {
                         continue;
                     }
-                    List<ConnectedPartnerResourcesListFormat> array = new List<ConnectedPartnerResourcesListFormat>();
+                    List<ConnectedPartnerResourceInfo> array = new List<ConnectedPartnerResourceInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ConnectedPartnerResourcesListFormat.DeserializeConnectedPartnerResourcesListFormat(item, options));
+                        array.Add(ConnectedPartnerResourceInfo.DeserializeConnectedPartnerResourceInfo(item, options));
                     }
                     value = array;
                     continue;
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Elastic.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ConnectedPartnerResourcesListResponse(value ?? new ChangeTrackingList<ConnectedPartnerResourcesListFormat>(), nextLink, serializedAdditionalRawData);
+            return new ConnectedPartnerResourcesListResponse(value ?? new ChangeTrackingList<ConnectedPartnerResourceInfo>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConnectedPartnerResourcesListResponse>.Write(ModelReaderWriterOptions options)
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Elastic.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerElasticContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ConnectedPartnerResourcesListResponse)} does not support writing '{options.Format}' format.");
             }
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Elastic.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeConnectedPartnerResourcesListResponse(document.RootElement, options);
                     }
                 default:

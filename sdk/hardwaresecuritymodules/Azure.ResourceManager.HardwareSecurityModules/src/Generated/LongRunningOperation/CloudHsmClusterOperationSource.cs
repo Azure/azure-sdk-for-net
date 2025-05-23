@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +23,14 @@ namespace Azure.ResourceManager.HardwareSecurityModules
 
         CloudHsmClusterResource IOperationSource<CloudHsmClusterResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = CloudHsmClusterData.DeserializeCloudHsmClusterData(document.RootElement);
+            var data = ModelReaderWriter.Read<CloudHsmClusterData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerHardwareSecurityModulesContext.Default);
             return new CloudHsmClusterResource(_client, data);
         }
 
         async ValueTask<CloudHsmClusterResource> IOperationSource<CloudHsmClusterResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = CloudHsmClusterData.DeserializeCloudHsmClusterData(document.RootElement);
-            return new CloudHsmClusterResource(_client, data);
+            var data = ModelReaderWriter.Read<CloudHsmClusterData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerHardwareSecurityModulesContext.Default);
+            return await Task.FromResult(new CloudHsmClusterResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

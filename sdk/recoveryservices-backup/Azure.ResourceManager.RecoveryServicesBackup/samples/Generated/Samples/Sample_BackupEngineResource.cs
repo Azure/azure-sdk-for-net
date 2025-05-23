@@ -9,17 +9,17 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Samples
 {
     public partial class Sample_BackupEngineResource
     {
-        // Get Dpm/AzureBackupServer/Lajolla Backup Engine Details
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetDpmAzureBackupServerLajollaBackupEngineDetails()
         {
-            // Generated from example definition: specification/recoveryservicesbackup/resource-manager/Microsoft.RecoveryServices/stable/2023-06-01/examples/Dpm/BackupEngines_Get.json
+            // Generated from example definition: specification/recoveryservicesbackup/resource-manager/Microsoft.RecoveryServices/stable/2025-02-01/examples/Dpm/BackupEngines_Get.json
             // this example is just showing the usage of "BackupEngines_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

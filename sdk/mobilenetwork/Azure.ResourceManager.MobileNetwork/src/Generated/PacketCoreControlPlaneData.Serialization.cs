@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.MobileNetwork
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(InteropSettings);
 #else
-                using (JsonDocument document = JsonDocument.Parse(InteropSettings))
+                using (JsonDocument document = JsonDocument.Parse(InteropSettings, ModelSerializationExtensions.JsonDocumentOptions))
                 {
                     JsonSerializer.Serialize(writer, document.RootElement);
                 }
@@ -938,7 +938,7 @@ namespace Azure.ResourceManager.MobileNetwork
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMobileNetworkContext.Default);
                 case "bicep":
                     return SerializeBicep(options);
                 default:
@@ -954,7 +954,7 @@ namespace Azure.ResourceManager.MobileNetwork
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializePacketCoreControlPlaneData(document.RootElement, options);
                     }
                 default:

@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
@@ -14,7 +15,7 @@ namespace Azure.Storage.DataMovement.Tests
     /// <typeparam name="T"></typeparam>
     internal class StepProcessor<T> : IProcessor<T>
     {
-        private readonly Queue<T> _queue = new();
+        private readonly ConcurrentQueue<T> _queue = new();
 
         public int ItemsInQueue => _queue.Count;
 
@@ -28,6 +29,8 @@ namespace Azure.Storage.DataMovement.Tests
             return new(Task.CompletedTask);
         }
 
+        public bool TryComplete() => true;
+
         /// <summary>
         /// Attmpts to read an item from internal queue, then completes
         /// a call to <see cref="Process"/> on it.
@@ -39,7 +42,8 @@ namespace Azure.Storage.DataMovement.Tests
         {
             if (_queue.Count > 0)
             {
-                await Process?.Invoke(_queue.Dequeue(), cancellationToken);
+                _queue.TryDequeue(out T result);
+                await Process?.Invoke(result, cancellationToken);
                 return true;
             }
             else
@@ -68,7 +72,9 @@ namespace Azure.Storage.DataMovement.Tests
             return steps;
         }
 
-        public void Dispose()
-        { }
+        public ValueTask DisposeAsync()
+        {
+            return new ValueTask();
+        }
     }
 }

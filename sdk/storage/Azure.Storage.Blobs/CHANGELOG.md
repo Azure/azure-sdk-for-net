@@ -1,23 +1,52 @@
 # Release History
 
-## 12.23.0-beta.3 (Unreleased)
+## 12.25.0-beta.2 (Unreleased)
 
 ### Features Added
 
 ### Breaking Changes
 
 ### Bugs Fixed
-- Fixed bug where network download streams were not properly disposed.
-- Fixed bug where DownloadToAsync() did not dispose all its network streams on error in some cases.
 
 ### Other Changes
 
-## 12.22.2 (2024-10-10)
+## 12.25.0-beta.1 (2025-05-06)
+
+### Features Added
+- Added support for service version 2025-07-05.
+- Added support for the `SourceShareTokenIntent` parameter to `AppendBlobClient.AppendBlockFromUri()`, `.AppendBlockFromUriAsync()`, `BlockBlobClient.StageBlockFromUri()`, `.StageBlockFromUriAsync()`, `BlockBlobClient.SyncUploadFromUri()`, `.SyncUploadFromUriAsync()`, `BlobBaseClient.SyncCopyFromUri()`, `.SyncCopyFromUriAsync()`, `PageBlobClient.UploadPagesFromUri()`, `.UploadPagesFromUriAsync()`,
+- Added `PageBlobCreateOptions.PremiumPageBlobAccessTier` to `PageBlobClient.Create(..)` overloads.
+
+## 12.24.0 (2025-03-11)
+
+### Features Added
+- Includes all features from 12.24.0-beta.1
+- Added the following Client Builders: `AddBlobServiceClient(Uri, Azure.SasCredential)`, `AddBlobServiceClient(Uri, TokenCredential)`
+
+### Bugs Fixed
+- Fixed bug where a `BlobServiceClient`, `BlobContainerClient`, `BlobBaseClient` created with a connection string with an account name specified (e.g. "AccountName=..;"), the account name was not populated on the Storage Clients if the account name was not also specified in the endpoint. (#42925)
+- Fixed bug where a `BlobServiceClient`, `BlobContainerClient`, `BlobBaseClient` created with a `StorageSharedKeyCredential`, the account name was not populated on the Storage Clients if the account name was not also specified in the endpoint. (#42925)
+
+## 12.24.0-beta.1 (2025-02-11)
+
+### Features Added
+- Added support for service version 2025-05-05.
+
+## 12.23.0 (2024-11-12)
+
+### Features Added
+- Includes all features from 12.23.0-beta.1 and 12.23.0-beta.2
+
+### Bugs Fixed
+- Fixed bug where network download streams were not properly disposed.
+- Fixed bug where DownloadToAsync() did not dispose all its network streams on error in some cases.
+
+## 12.23.0-beta.2 (2024-10-10)
 
 ### Other Changes
 - Upgraded `System.Text.Json` package dependency to 6.0.10 for security fix.
 
-## 12.23.0-beta.2 (2024-10-10)
+## 12.22.2 (2024-10-10)
 
 ### Other Changes
 - Upgraded `System.Text.Json` package dependency to 6.0.10 for security fix.

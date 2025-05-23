@@ -3,19 +3,15 @@
 
 #nullable disable
 
+using Azure.AI.OpenAI.Tests.Utils.Config;
+using OpenAI.Files;
+using OpenAI.TestFramework;
+using OpenAI.VectorStores;
 using System;
 using System.ClientModel;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
-using Azure.AI.OpenAI.Tests.Utils.Config;
-using NUnit.Framework;
-using OpenAI;
-using OpenAI.Assistants;
-using OpenAI.Files;
-using OpenAI.TestFramework;
-using OpenAI.VectorStores;
 
 namespace Azure.AI.OpenAI.Tests;
 
@@ -51,11 +47,7 @@ public class VectorStoreTests : AoaiTestBase<VectorStoreClient>
         {
             FileIds = { testFiles[0].Id },
             Name = "test vector store",
-            ExpirationPolicy = new VectorStoreExpirationPolicy()
-            {
-                Anchor = VectorStoreExpirationAnchor.LastActiveAt,
-                Days = 3,
-            },
+            ExpirationPolicy = new VectorStoreExpirationPolicy(VectorStoreExpirationAnchor.LastActiveAt, 3),
             Metadata =
             {
                 ["test-key"] = "test-value",
@@ -176,7 +168,8 @@ public class VectorStoreTests : AoaiTestBase<VectorStoreClient>
         Assert.True(removalResult.Removed);
 
         // Errata: removals aren't immediately reflected when requesting the list
-        Thread.Sleep(1000);
+        TimeSpan waitTime = Recording!.Mode == RecordedTestMode.Playback ? TimeSpan.FromMilliseconds(1) : TimeSpan.FromSeconds(10);
+        await Task.Delay(waitTime);
 
         int count = 0;
         AsyncCollectionResult<VectorStoreFileAssociation> response = client.GetFileAssociationsAsync(vectorStore.Id);

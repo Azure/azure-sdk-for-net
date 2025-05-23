@@ -1,6 +1,6 @@
 # Release History
 
-## 1.5.0-beta.1 (Unreleased)
+## 1.7.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,16 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.6.0 (2025-05-07)
+
+### Features Added
+- Added method `serviceClient.ListConnectionsInGroup` and `serviceClient.ListConnectionsInGroupAsync`.`
+
+## 1.5.0 (2025-02-27)
+
+### Features Added
+- Added support for SocketIO when generating ClientAccessURI
 
 ## 1.4.0 (2024-07-31)
 
@@ -55,7 +65,7 @@
 ## 1.0.0-beta.3 (2021-09-07)
 
 ### Features Added
-- Support for [Azure Active Directory](https://docs.microsoft.com/azure/active-directory/authentication/) based authentication. Users can specify a [`TokenCredential`](https://docs.microsoft.com/dotnet/api/azure.core.tokencredential) when creating a `WebPubSubServiceClient`. For example, you can get started with `new WebPubSubServiceClient(endpoint, hub, new DefaultAzureCredential())` to authenticate via AAD using [Azure.Identity](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md).
+- Support for [Azure Active Directory](https://learn.microsoft.com/azure/active-directory/authentication/) based authentication. Users can specify a [`TokenCredential`](https://learn.microsoft.com/dotnet/api/azure.core.tokencredential) when creating a `WebPubSubServiceClient`. For example, you can get started with `new WebPubSubServiceClient(endpoint, hub, new DefaultAzureCredential())` to authenticate via AAD using [Azure.Identity](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md).
 
 ## 1.0.0-beta.2 (2021-07-16)
 

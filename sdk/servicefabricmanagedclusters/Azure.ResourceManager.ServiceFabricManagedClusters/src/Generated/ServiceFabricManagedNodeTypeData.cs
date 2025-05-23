@@ -65,6 +65,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             VmSetupActions = new ChangeTrackingList<VmSetupAction>();
             NatConfigurations = new ChangeTrackingList<NodeTypeNatConfig>();
             AdditionalNetworkInterfaceConfigurations = new ChangeTrackingList<AdditionalNetworkInterfaceConfiguration>();
+            VmApplications = new ChangeTrackingList<ServiceFabricManagedVmApplication>();
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
@@ -123,9 +124,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <param name="dscpConfigurationId"> Specifies the resource id of the DSCP configuration to apply to the node type network interface. </param>
         /// <param name="additionalNetworkInterfaceConfigurations"> Specifies the settings for any additional secondary network interfaces to attach to the node type. </param>
         /// <param name="computerNamePrefix"> Specifies the computer name prefix. Limited to 9 characters. If specified, allows for a longer name to be specified for the node type name. </param>
+        /// <param name="vmApplications"> Specifies the gallery applications that should be made available to the underlying VMSS. </param>
         /// <param name="tags"> Azure resource tags. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ServiceFabricManagedNodeTypeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, NodeTypeSku sku, bool? isPrimary, int? vmInstanceCount, int? dataDiskSizeInGB, ServiceFabricManagedDataDiskType? dataDiskType, string dataDiskLetter, IDictionary<string, string> placementProperties, IDictionary<string, string> capacities, EndpointRangeDescription applicationPorts, EndpointRangeDescription ephemeralPorts, string vmSize, string vmImagePublisher, string vmImageOffer, string vmImageSku, string vmImageVersion, IList<NodeTypeVaultSecretGroup> vmSecrets, IList<NodeTypeVmssExtension> vmExtensions, VmManagedIdentity vmManagedIdentity, bool? isStateless, bool? hasMultiplePlacementGroups, IList<NodeTypeFrontendConfiguration> frontendConfigurations, IList<ServiceFabricManagedNetworkSecurityRule> networkSecurityRules, IList<NodeTypeVmssDataDisk> additionalDataDisks, bool? isEncryptionAtHostEnabled, ServiceFabricManagedResourceProvisioningState? provisioningState, bool? isAcceleratedNetworkingEnabled, bool? useDefaultPublicLoadBalancer, bool? useTempDataDisk, bool? isOverProvisioningEnabled, IList<string> zones, bool? isSpotVm, string hostGroupId, bool? useEphemeralOSDisk, string spotRestoreTimeout, SpotNodeVmEvictionPolicyType? evictionPolicy, ResourceIdentifier vmImageResourceId, ResourceIdentifier subnetId, IList<VmSetupAction> vmSetupActions, ServiceFabricManagedClusterSecurityType? securityType, bool? isSecureBootEnabled, bool? isNodePublicIPEnabled, bool? isNodePublicIPv6Enabled, ResourceIdentifier vmSharedGalleryImageId, ResourceIdentifier natGatewayId, IList<NodeTypeNatConfig> natConfigurations, VmImagePlan vmImagePlan, ResourceIdentifier serviceArtifactReferenceId, ResourceIdentifier dscpConfigurationId, IList<AdditionalNetworkInterfaceConfiguration> additionalNetworkInterfaceConfigurations, string computerNamePrefix, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ServiceFabricManagedNodeTypeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, NodeTypeSku sku, bool? isPrimary, int? vmInstanceCount, int? dataDiskSizeInGB, ServiceFabricManagedDataDiskType? dataDiskType, string dataDiskLetter, IDictionary<string, string> placementProperties, IDictionary<string, string> capacities, EndpointRangeDescription applicationPorts, EndpointRangeDescription ephemeralPorts, string vmSize, string vmImagePublisher, string vmImageOffer, string vmImageSku, string vmImageVersion, IList<NodeTypeVaultSecretGroup> vmSecrets, IList<NodeTypeVmssExtension> vmExtensions, VmManagedIdentity vmManagedIdentity, bool? isStateless, bool? hasMultiplePlacementGroups, IList<NodeTypeFrontendConfiguration> frontendConfigurations, IList<ServiceFabricManagedNetworkSecurityRule> networkSecurityRules, IList<NodeTypeVmssDataDisk> additionalDataDisks, bool? isEncryptionAtHostEnabled, ServiceFabricManagedResourceProvisioningState? provisioningState, bool? isAcceleratedNetworkingEnabled, bool? useDefaultPublicLoadBalancer, bool? useTempDataDisk, bool? isOverProvisioningEnabled, IList<string> zones, bool? isSpotVm, string hostGroupId, bool? useEphemeralOSDisk, string spotRestoreTimeout, SpotNodeVmEvictionPolicyType? evictionPolicy, ResourceIdentifier vmImageResourceId, ResourceIdentifier subnetId, IList<VmSetupAction> vmSetupActions, ServiceFabricManagedClusterSecurityType? securityType, bool? isSecureBootEnabled, bool? isNodePublicIPEnabled, bool? isNodePublicIPv6Enabled, ResourceIdentifier vmSharedGalleryImageId, ResourceIdentifier natGatewayId, IList<NodeTypeNatConfig> natConfigurations, VmImagePlan vmImagePlan, ResourceIdentifier serviceArtifactReferenceId, ResourceIdentifier dscpConfigurationId, IList<AdditionalNetworkInterfaceConfiguration> additionalNetworkInterfaceConfigurations, string computerNamePrefix, IList<ServiceFabricManagedVmApplication> vmApplications, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Sku = sku;
             IsPrimary = isPrimary;
@@ -177,6 +179,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             DscpConfigurationId = dscpConfigurationId;
             AdditionalNetworkInterfaceConfigurations = additionalNetworkInterfaceConfigurations;
             ComputerNamePrefix = computerNamePrefix;
+            VmApplications = vmApplications;
             Tags = tags;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
@@ -292,6 +295,8 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         public IList<AdditionalNetworkInterfaceConfiguration> AdditionalNetworkInterfaceConfigurations { get; }
         /// <summary> Specifies the computer name prefix. Limited to 9 characters. If specified, allows for a longer name to be specified for the node type name. </summary>
         public string ComputerNamePrefix { get; set; }
+        /// <summary> Specifies the gallery applications that should be made available to the underlying VMSS. </summary>
+        public IList<ServiceFabricManagedVmApplication> VmApplications { get; }
         /// <summary> Azure resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
     }

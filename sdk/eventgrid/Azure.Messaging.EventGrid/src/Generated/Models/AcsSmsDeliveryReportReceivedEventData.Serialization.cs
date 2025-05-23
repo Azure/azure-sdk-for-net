@@ -43,10 +43,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 if (property.NameEquals("deliveryAttempts"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<AcsSmsDeliveryAttemptProperties> array = new List<AcsSmsDeliveryAttemptProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -91,7 +87,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 to,
                 deliveryStatus,
                 deliveryStatusDetails,
-                deliveryAttempts ?? new ChangeTrackingList<AcsSmsDeliveryAttemptProperties>(),
+                deliveryAttempts,
                 receivedTimestamp,
                 tag);
         }
@@ -100,7 +96,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static new AcsSmsDeliveryReportReceivedEventData FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeAcsSmsDeliveryReportReceivedEventData(document.RootElement);
         }
 

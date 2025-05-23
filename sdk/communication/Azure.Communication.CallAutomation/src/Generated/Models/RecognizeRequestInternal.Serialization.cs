@@ -28,7 +28,7 @@ namespace Azure.Communication.CallAutomation
                 writer.WriteStartArray();
                 foreach (var item in PlayPrompts)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<PlaySourceInternal>(item);
                 }
                 writer.WriteEndArray();
             }

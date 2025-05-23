@@ -554,6 +554,48 @@ namespace Azure.Storage.Blobs.Test
             }
         }
 
+        [RecordedTest]
+        public async Task SasCredentialRequiresUriWithoutSasError_RedactedSasUri()
+        {
+            // Arrange
+            BlobServiceClient oauthService = GetServiceClient_OAuth();
+            string containerName = GetNewContainerName();
+
+            await using DisposingContainer test = await GetTestContainerAsync(service: oauthService, containerName: containerName);
+
+            Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
+                startsOn: Recording.UtcNow.AddHours(-1),
+                expiresOn: Recording.UtcNow.AddHours(1));
+
+            BlobSasBuilder blobSasBuilder = new BlobSasBuilder
+            {
+                StartsOn = Recording.UtcNow.AddHours(-1),
+                ExpiresOn = Recording.UtcNow.AddHours(1),
+                BlobContainerName = containerName,
+            };
+
+            blobSasBuilder.SetPermissions(BlobSasPermissions.All);
+
+            BlobUriBuilder blobUriBuilder = new BlobUriBuilder(test.Container.Uri)
+            {
+                Sas = blobSasBuilder.ToSasQueryParameters(userDelegationKey, test.Container.AccountName)
+            };
+
+            Uri sasUri = blobUriBuilder.ToUri();
+
+            UriBuilder uriBuilder = new UriBuilder(sasUri);
+            uriBuilder.Query = "[REDACTED]";
+            string redactedUri = uriBuilder.Uri.ToString();
+
+            ArgumentException ex = Errors.SasCredentialRequiresUriWithoutSas<BlobUriBuilder>(sasUri);
+
+            // Assert
+            Assert.IsTrue(ex.Message.Contains(redactedUri));
+            Assert.IsFalse(ex.Message.Contains("st="));
+            Assert.IsFalse(ex.Message.Contains("se="));
+            Assert.IsFalse(ex.Message.Contains("sig="));
+        }
+
         private string BuildSignature(bool includeBlob, bool includeSnapshot, string containerName, string blobName, TestConstants constants)
         {
             var canonicalName = includeBlob ? $"/blob/{constants.Sas.Account}/{containerName}/{blobName}"
@@ -621,6 +663,8 @@ namespace Azure.Storage.Blobs.Test
                 null,
                 null,
                 null,
+                null, // SignedKeyDelegatedUserTenantId, will be added in a future release.
+                null, // SignedDelegatedUserObjectId, will be added in future release.
                 constants.Sas.IPRange.ToString(),
                 SasExtensions.ToProtocolString(constants.Sas.Protocol),
                 SasQueryParametersInternals.DefaultSasVersionInternal,

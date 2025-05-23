@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.EventHubs.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerEventHubsContext.Default);
                 case "bicep":
                     return SerializeBicep(options);
                 default:
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.EventHubs.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeEventHubsNspAccessRule(document.RootElement, options);
                     }
                 default:

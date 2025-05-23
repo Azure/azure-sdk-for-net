@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +23,14 @@ namespace Azure.ResourceManager.StorageCache
 
         AmlFileSystemResource IOperationSource<AmlFileSystemResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = AmlFileSystemData.DeserializeAmlFileSystemData(document.RootElement);
+            var data = ModelReaderWriter.Read<AmlFileSystemData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerStorageCacheContext.Default);
             return new AmlFileSystemResource(_client, data);
         }
 
         async ValueTask<AmlFileSystemResource> IOperationSource<AmlFileSystemResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = AmlFileSystemData.DeserializeAmlFileSystemData(document.RootElement);
-            return new AmlFileSystemResource(_client, data);
+            var data = ModelReaderWriter.Read<AmlFileSystemData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerStorageCacheContext.Default);
+            return await Task.FromResult(new AmlFileSystemResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

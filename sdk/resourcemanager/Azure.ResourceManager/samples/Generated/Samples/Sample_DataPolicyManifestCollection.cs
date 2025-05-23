@@ -9,14 +9,14 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Resources.Samples
 {
     public partial class Sample_DataPolicyManifestCollection
     {
-        // Retrieve a data policy manifest by policy mode
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_RetrieveADataPolicyManifestByPolicyMode()
         {
             // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2020-09-01/examples/getDataPolicyManifest.json
@@ -27,9 +27,7 @@ namespace Azure.ResourceManager.Resources.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this TenantResource created on azure
-            // for more information of creating TenantResource, please refer to the document of TenantResource
-            var tenant = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
+            TenantResource tenant = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
 
             // get the collection of this DataPolicyManifestResource
             DataPolicyManifestCollection collection = tenant.GetDataPolicyManifests();
@@ -45,75 +43,8 @@ namespace Azure.ResourceManager.Resources.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Retrieve a data policy manifest by policy mode
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Exists_RetrieveADataPolicyManifestByPolicyMode()
-        {
-            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2020-09-01/examples/getDataPolicyManifest.json
-            // this example is just showing the usage of "DataPolicyManifests_GetByPolicyMode" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this TenantResource created on azure
-            // for more information of creating TenantResource, please refer to the document of TenantResource
-            var tenant = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
-
-            // get the collection of this DataPolicyManifestResource
-            DataPolicyManifestCollection collection = tenant.GetDataPolicyManifests();
-
-            // invoke the operation
-            string policyMode = "Microsoft.KeyVault.Data";
-            bool result = await collection.ExistsAsync(policyMode);
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        // Retrieve a data policy manifest by policy mode
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetIfExists_RetrieveADataPolicyManifestByPolicyMode()
-        {
-            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2020-09-01/examples/getDataPolicyManifest.json
-            // this example is just showing the usage of "DataPolicyManifests_GetByPolicyMode" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this TenantResource created on azure
-            // for more information of creating TenantResource, please refer to the document of TenantResource
-            var tenant = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
-
-            // get the collection of this DataPolicyManifestResource
-            DataPolicyManifestCollection collection = tenant.GetDataPolicyManifests();
-
-            // invoke the operation
-            string policyMode = "Microsoft.KeyVault.Data";
-            NullableResponse<DataPolicyManifestResource> response = await collection.GetIfExistsAsync(policyMode);
-            DataPolicyManifestResource result = response.HasValue ? response.Value : null;
-
-            if (result == null)
-            {
-                Console.WriteLine($"Succeeded with null as result");
-            }
-            else
-            {
-                // the variable result is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                DataPolicyManifestData resourceData = result.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-        }
-
-        // List data policy manifests
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListDataPolicyManifests()
         {
             // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2020-09-01/examples/listDataPolicyManifests.json
@@ -124,9 +55,7 @@ namespace Azure.ResourceManager.Resources.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this TenantResource created on azure
-            // for more information of creating TenantResource, please refer to the document of TenantResource
-            var tenant = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
+            TenantResource tenant = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
 
             // get the collection of this DataPolicyManifestResource
             DataPolicyManifestCollection collection = tenant.GetDataPolicyManifests();
@@ -141,12 +70,11 @@ namespace Azure.ResourceManager.Resources.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // List data policy manifests with namespace filter
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListDataPolicyManifestsWithNamespaceFilter()
         {
             // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2020-09-01/examples/listDataPolicyManifestsNamespaceFilter.json
@@ -157,9 +85,7 @@ namespace Azure.ResourceManager.Resources.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this TenantResource created on azure
-            // for more information of creating TenantResource, please refer to the document of TenantResource
-            var tenant = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
+            TenantResource tenant = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
 
             // get the collection of this DataPolicyManifestResource
             DataPolicyManifestCollection collection = tenant.GetDataPolicyManifests();
@@ -175,7 +101,67 @@ namespace Azure.ResourceManager.Resources.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Exists_RetrieveADataPolicyManifestByPolicyMode()
+        {
+            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2020-09-01/examples/getDataPolicyManifest.json
+            // this example is just showing the usage of "DataPolicyManifests_GetByPolicyMode" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            TenantResource tenant = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
+
+            // get the collection of this DataPolicyManifestResource
+            DataPolicyManifestCollection collection = tenant.GetDataPolicyManifests();
+
+            // invoke the operation
+            string policyMode = "Microsoft.KeyVault.Data";
+            bool result = await collection.ExistsAsync(policyMode);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetIfExists_RetrieveADataPolicyManifestByPolicyMode()
+        {
+            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2020-09-01/examples/getDataPolicyManifest.json
+            // this example is just showing the usage of "DataPolicyManifests_GetByPolicyMode" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            TenantResource tenant = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
+
+            // get the collection of this DataPolicyManifestResource
+            DataPolicyManifestCollection collection = tenant.GetDataPolicyManifests();
+
+            // invoke the operation
+            string policyMode = "Microsoft.KeyVault.Data";
+            NullableResponse<DataPolicyManifestResource> response = await collection.GetIfExistsAsync(policyMode);
+            DataPolicyManifestResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine("Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                DataPolicyManifestData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
         }
     }
 }

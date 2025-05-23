@@ -99,6 +99,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             SnapshotRestoreContent snapshotRestoreParameters = default;
             ResourceIdentifier targetVirtualMachineId = default;
             string objectType = "AzureWorkloadSQLRestoreRequest";
+            IList<string> resourceGuardOperationRequests = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -222,6 +223,20 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     objectType = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("resourceGuardOperationRequests"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    resourceGuardOperationRequests = array;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -230,6 +245,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             serializedAdditionalRawData = rawDataDictionary;
             return new WorkloadSqlRestoreContent(
                 objectType,
+                resourceGuardOperationRequests ?? new ChangeTrackingList<string>(),
                 serializedAdditionalRawData,
                 recoveryType,
                 sourceResourceId,
@@ -252,7 +268,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesBackupContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(WorkloadSqlRestoreContent)} does not support writing '{options.Format}' format.");
             }
@@ -266,7 +282,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeWorkloadSqlRestoreContent(document.RootElement, options);
                     }
                 default:

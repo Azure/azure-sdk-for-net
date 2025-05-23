@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +23,14 @@ namespace Azure.ResourceManager.Communication
 
         EmailServiceResource IOperationSource<EmailServiceResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = EmailServiceResourceData.DeserializeEmailServiceResourceData(document.RootElement);
+            var data = ModelReaderWriter.Read<EmailServiceResourceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerCommunicationContext.Default);
             return new EmailServiceResource(_client, data);
         }
 
         async ValueTask<EmailServiceResource> IOperationSource<EmailServiceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = EmailServiceResourceData.DeserializeEmailServiceResourceData(document.RootElement);
-            return new EmailServiceResource(_client, data);
+            var data = ModelReaderWriter.Read<EmailServiceResourceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerCommunicationContext.Default);
+            return await Task.FromResult(new EmailServiceResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

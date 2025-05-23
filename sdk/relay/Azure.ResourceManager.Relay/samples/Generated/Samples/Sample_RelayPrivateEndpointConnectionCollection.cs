@@ -10,51 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Relay.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Relay.Samples
 {
     public partial class Sample_RelayPrivateEndpointConnectionCollection
     {
-        // PrivateEndpointConnectionsList
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetAll_PrivateEndpointConnectionsList()
-        {
-            // Generated from example definition: specification/relay/resource-manager/Microsoft.Relay/stable/2021-11-01/examples/PrivateEndpointConnections/PrivateEndpointConnectionsList.json
-            // this example is just showing the usage of "PrivateEndpointConnections_List" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this RelayNamespaceResource created on azure
-            // for more information of creating RelayNamespaceResource, please refer to the document of RelayNamespaceResource
-            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
-            string resourceGroupName = "myResourceGroup";
-            string namespaceName = "example-RelayNamespace-5849";
-            ResourceIdentifier relayNamespaceResourceId = RelayNamespaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, namespaceName);
-            RelayNamespaceResource relayNamespace = client.GetRelayNamespaceResource(relayNamespaceResourceId);
-
-            // get the collection of this RelayPrivateEndpointConnectionResource
-            RelayPrivateEndpointConnectionCollection collection = relayNamespace.GetRelayPrivateEndpointConnections();
-
-            // invoke the operation and iterate over the result
-            await foreach (RelayPrivateEndpointConnectionResource item in collection.GetAllAsync())
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                RelayPrivateEndpointConnectionData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // NameSpacePrivateEndPointConnectionCreate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_NameSpacePrivateEndPointConnectionCreate()
         {
             // Generated from example definition: specification/relay/resource-manager/Microsoft.Relay/stable/2021-11-01/examples/PrivateEndpointConnections/PrivateEndpointConnectionsCreate.json
@@ -78,10 +41,10 @@ namespace Azure.ResourceManager.Relay.Samples
 
             // invoke the operation
             string privateEndpointConnectionName = "{privateEndpointConnection name}";
-            RelayPrivateEndpointConnectionData data = new RelayPrivateEndpointConnectionData()
+            RelayPrivateEndpointConnectionData data = new RelayPrivateEndpointConnectionData
             {
                 PrivateEndpointId = new ResourceIdentifier("/subscriptions/ffffffff-ffff-ffff-ffff-ffffffffffff/resourceGroups/resourcegroup/providers/Microsoft.Network/privateEndpoints/ali-relay-pve-1"),
-                ConnectionState = new RelayPrivateLinkServiceConnectionState()
+                ConnectionState = new RelayPrivateLinkServiceConnectionState
                 {
                     Status = RelayPrivateLinkConnectionStatus.Approved,
                     Description = "You may pass",
@@ -97,9 +60,8 @@ namespace Azure.ResourceManager.Relay.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // NameSpacePrivateEndPointConnectionGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_NameSpacePrivateEndPointConnectionGet()
         {
             // Generated from example definition: specification/relay/resource-manager/Microsoft.Relay/stable/2021-11-01/examples/PrivateEndpointConnections/PrivateEndpointConnectionsGet.json
@@ -132,9 +94,44 @@ namespace Azure.ResourceManager.Relay.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // NameSpacePrivateEndPointConnectionGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetAll_PrivateEndpointConnectionsList()
+        {
+            // Generated from example definition: specification/relay/resource-manager/Microsoft.Relay/stable/2021-11-01/examples/PrivateEndpointConnections/PrivateEndpointConnectionsList.json
+            // this example is just showing the usage of "PrivateEndpointConnections_List" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this RelayNamespaceResource created on azure
+            // for more information of creating RelayNamespaceResource, please refer to the document of RelayNamespaceResource
+            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
+            string resourceGroupName = "myResourceGroup";
+            string namespaceName = "example-RelayNamespace-5849";
+            ResourceIdentifier relayNamespaceResourceId = RelayNamespaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, namespaceName);
+            RelayNamespaceResource relayNamespace = client.GetRelayNamespaceResource(relayNamespaceResourceId);
+
+            // get the collection of this RelayPrivateEndpointConnectionResource
+            RelayPrivateEndpointConnectionCollection collection = relayNamespace.GetRelayPrivateEndpointConnections();
+
+            // invoke the operation and iterate over the result
+            await foreach (RelayPrivateEndpointConnectionResource item in collection.GetAllAsync())
+            {
+                // the variable item is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                RelayPrivateEndpointConnectionData resourceData = item.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_NameSpacePrivateEndPointConnectionGet()
         {
             // Generated from example definition: specification/relay/resource-manager/Microsoft.Relay/stable/2021-11-01/examples/PrivateEndpointConnections/PrivateEndpointConnectionsGet.json
@@ -163,9 +160,8 @@ namespace Azure.ResourceManager.Relay.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // NameSpacePrivateEndPointConnectionGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_NameSpacePrivateEndPointConnectionGet()
         {
             // Generated from example definition: specification/relay/resource-manager/Microsoft.Relay/stable/2021-11-01/examples/PrivateEndpointConnections/PrivateEndpointConnectionsGet.json
@@ -194,7 +190,7 @@ namespace Azure.ResourceManager.Relay.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {

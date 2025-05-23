@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.Peering
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerPeeringContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(PeerAsnData)} does not support writing '{options.Format}' format.");
             }
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Peering
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializePeerAsnData(document.RootElement, options);
                     }
                 default:

@@ -61,6 +61,8 @@ public void ConfigureServices(IServiceCollection services)
 
 ### Map `WebPubSubHub` to endpoint routing
 
+The name of the hub has to match the class name e.g. `SampleHub`.
+
 ```C# Snippet:WebPubSubMapHub
 public void Configure(IApplicationBuilder app)
 {
@@ -71,13 +73,25 @@ public void Configure(IApplicationBuilder app)
 }
 ```
 
+Hub name can be overriden by using extension method.
+
+```C# Snippet:WebPubSubMapHubCustom
+public void Configure(IApplicationBuilder app)
+{
+    app.UseEndpoints(endpoint =>
+    {
+        endpoint.MapWebPubSubHub<SampleHub>("/eventhandler", "customHub");
+    });
+}
+```
+
 ## Key concepts
 
-For information about general Web PubSub concepts [Concepts in Azure Web PubSub](https://docs.microsoft.com/azure/azure-web-pubsub/key-concepts)
+For information about general Web PubSub concepts [Concepts in Azure Web PubSub](https://learn.microsoft.com/azure/azure-web-pubsub/key-concepts)
 
 ### `WebPubSubHub`
 
-`WebPubSubHub` is an abstract class to let users implement the subscribed Web PubSub service events. After user register the [event handler](https://docs.microsoft.com/azure/azure-web-pubsub/howto-develop-eventhandler) in service side, these events will be forwarded from service to server. And `WebPubSubHub` provides methods mapping to the service events to enable users deal with these events, for example, client management, validations or working with `Azure.Messaging.WebPubSub` to broadcast the messages. See samples below for details.
+`WebPubSubHub` is an abstract class to let users implement the subscribed Web PubSub service events. After user register the [event handler](https://learn.microsoft.com/azure/azure-web-pubsub/howto-develop-eventhandler) in service side, these events will be forwarded from service to server. And `WebPubSubHub` provides methods mapping to the service events to enable users deal with these events, for example, client management, validations or working with `Azure.Messaging.WebPubSub` to broadcast the messages. See samples below for details.
 
 > NOTE
 >
@@ -231,8 +245,6 @@ You will only need to do this once across all repos using our CLA.
 
 This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/).
 For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
-
-![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Ftemplate%2FAzure.Template%2FREADME.png)
 
 [azure_sub]: https://azure.microsoft.com/free/dotnet/
 [sample_ref]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/webpubsub/Microsoft.Azure.WebPubSub.AspNetCore/tests/Samples/

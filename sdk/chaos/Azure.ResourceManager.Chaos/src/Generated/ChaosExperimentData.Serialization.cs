@@ -40,7 +40,8 @@ namespace Azure.ResourceManager.Chaos
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                JsonSerializer.Serialize(writer, Identity);
+                var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
+                JsonSerializer.Serialize(writer, Identity, serializeOptions);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -106,7 +107,8 @@ namespace Azure.ResourceManager.Chaos
                     {
                         continue;
                     }
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
+                    var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
+                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText(), serializeOptions);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -220,7 +222,7 @@ namespace Azure.ResourceManager.Chaos
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerChaosContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ChaosExperimentData)} does not support writing '{options.Format}' format.");
             }
@@ -234,7 +236,7 @@ namespace Azure.ResourceManager.Chaos
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeChaosExperimentData(document.RootElement, options);
                     }
                 default:

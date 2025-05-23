@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.MySql
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMySqlContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(MySqlServerAdministratorData)} does not support writing '{options.Format}' format.");
             }
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.MySql
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeMySqlServerAdministratorData(document.RootElement, options);
                     }
                 default:

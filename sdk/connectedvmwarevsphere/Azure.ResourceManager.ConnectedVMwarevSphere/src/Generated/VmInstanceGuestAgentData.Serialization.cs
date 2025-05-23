@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerConnectedVMwarevSphereContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(VmInstanceGuestAgentData)} does not support writing '{options.Format}' format.");
             }
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeVmInstanceGuestAgentData(document.RootElement, options);
                     }
                 default:

@@ -1494,7 +1494,7 @@ namespace Azure.ResourceManager.MachineLearning
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMachineLearningContext.Default);
                 case "bicep":
                     return SerializeBicep(options);
                 default:
@@ -1510,7 +1510,7 @@ namespace Azure.ResourceManager.MachineLearning
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeMachineLearningWorkspaceData(document.RootElement, options);
                     }
                 default:

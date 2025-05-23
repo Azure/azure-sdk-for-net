@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.DigitalTwins.Core
 {
-    internal partial class InnerError : IUtf8JsonSerializable
+    public partial class InnerError : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -60,7 +60,7 @@ namespace Azure.DigitalTwins.Core
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static InnerError FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeInnerError(document.RootElement);
         }
 

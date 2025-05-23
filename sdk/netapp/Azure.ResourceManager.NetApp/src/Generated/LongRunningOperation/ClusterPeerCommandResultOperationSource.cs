@@ -17,13 +17,13 @@ namespace Azure.ResourceManager.NetApp
     {
         ClusterPeerCommandResult IOperationSource<ClusterPeerCommandResult>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
+            using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
             return ClusterPeerCommandResult.DeserializeClusterPeerCommandResult(document.RootElement);
         }
 
         async ValueTask<ClusterPeerCommandResult> IOperationSource<ClusterPeerCommandResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
             return ClusterPeerCommandResult.DeserializeClusterPeerCommandResult(document.RootElement);
         }
     }

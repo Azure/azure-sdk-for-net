@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Qumulo.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.Qumulo.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerQumuloContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(FileSystemResourceUpdateProperties)} does not support writing '{options.Format}' format.");
             }
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.Qumulo.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeFileSystemResourceUpdateProperties(document.RootElement, options);
                     }
                 default:

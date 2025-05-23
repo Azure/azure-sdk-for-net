@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +23,14 @@ namespace Azure.ResourceManager.ElasticSan
 
         ElasticSanSnapshotResource IOperationSource<ElasticSanSnapshotResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = ElasticSanSnapshotData.DeserializeElasticSanSnapshotData(document.RootElement);
+            var data = ModelReaderWriter.Read<ElasticSanSnapshotData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerElasticSanContext.Default);
             return new ElasticSanSnapshotResource(_client, data);
         }
 
         async ValueTask<ElasticSanSnapshotResource> IOperationSource<ElasticSanSnapshotResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = ElasticSanSnapshotData.DeserializeElasticSanSnapshotData(document.RootElement);
-            return new ElasticSanSnapshotResource(_client, data);
+            var data = ModelReaderWriter.Read<ElasticSanSnapshotData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerElasticSanContext.Default);
+            return await Task.FromResult(new ElasticSanSnapshotResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

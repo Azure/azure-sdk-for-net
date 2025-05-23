@@ -84,6 +84,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     case "DynamicsCrmSink": return DynamicsCrmSink.DeserializeDynamicsCrmSink(element);
                     case "DynamicsSink": return DynamicsSink.DeserializeDynamicsSink(element);
                     case "FileSystemSink": return FileSystemSink.DeserializeFileSystemSink(element);
+                    case "IcebergSink": return IcebergSink.DeserializeIcebergSink(element);
                     case "InformixSink": return InformixSink.DeserializeInformixSink(element);
                     case "JsonSink": return JsonSink.DeserializeJsonSink(element);
                     case "LakeHouseTableSink": return LakeHouseTableSink.DeserializeLakeHouseTableSink(element);
@@ -104,6 +105,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     case "SqlMISink": return SqlMISink.DeserializeSqlMISink(element);
                     case "SqlServerSink": return SqlServerSink.DeserializeSqlServerSink(element);
                     case "SqlSink": return SqlSink.DeserializeSqlSink(element);
+                    case "TeradataSink": return TeradataSink.DeserializeTeradataSink(element);
                     case "WarehouseSink": return WarehouseSink.DeserializeWarehouseSink(element);
                 }
             }
@@ -114,7 +116,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static CopySink FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeCopySink(document.RootElement);
         }
 

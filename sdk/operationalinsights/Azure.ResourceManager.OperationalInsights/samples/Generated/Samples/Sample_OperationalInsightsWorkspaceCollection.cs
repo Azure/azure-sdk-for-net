@@ -11,53 +11,17 @@ using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.OperationalInsights.Models;
 using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.OperationalInsights.Samples
 {
     public partial class Sample_OperationalInsightsWorkspaceCollection
     {
-        // WorkspacesGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetAll_WorkspacesGet()
-        {
-            // Generated from example definition: specification/operationalinsights/resource-manager/Microsoft.OperationalInsights/stable/2022-10-01/examples/WorkspacesListByResourceGroup.json
-            // this example is just showing the usage of "Workspaces_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ResourceGroupResource created on azure
-            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "00000000-0000-0000-0000-00000000000";
-            string resourceGroupName = "oiautorest6685";
-            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
-            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
-
-            // get the collection of this OperationalInsightsWorkspaceResource
-            OperationalInsightsWorkspaceCollection collection = resourceGroupResource.GetOperationalInsightsWorkspaces();
-
-            // invoke the operation and iterate over the result
-            await foreach (OperationalInsightsWorkspaceResource item in collection.GetAllAsync())
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                OperationalInsightsWorkspaceData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // WorkspacesCreate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_WorkspacesCreate()
         {
-            // Generated from example definition: specification/operationalinsights/resource-manager/Microsoft.OperationalInsights/stable/2022-10-01/examples/WorkspacesCreate.json
+            // Generated from example definition: specification/operationalinsights/resource-manager/Microsoft.OperationalInsights/stable/2025-02-01/examples/WorkspacesCreate.json
             // this example is just showing the usage of "Workspaces_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -83,7 +47,7 @@ namespace Azure.ResourceManager.OperationalInsights.Samples
                 RetentionInDays = 30,
                 Tags =
 {
-["tag1"] = "val1",
+["tag1"] = "val1"
 },
             };
             ArmOperation<OperationalInsightsWorkspaceResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, workspaceName, data);
@@ -96,12 +60,11 @@ namespace Azure.ResourceManager.OperationalInsights.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // WorkspaceGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_WorkspaceGet()
         {
-            // Generated from example definition: specification/operationalinsights/resource-manager/Microsoft.OperationalInsights/stable/2022-10-01/examples/WorkspacesGet.json
+            // Generated from example definition: specification/operationalinsights/resource-manager/Microsoft.OperationalInsights/stable/2025-02-01/examples/WorkspacesGet.json
             // this example is just showing the usage of "Workspaces_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -130,12 +93,46 @@ namespace Azure.ResourceManager.OperationalInsights.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // WorkspaceGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetAll_WorkspacesGet()
+        {
+            // Generated from example definition: specification/operationalinsights/resource-manager/Microsoft.OperationalInsights/stable/2025-02-01/examples/WorkspacesListByResourceGroup.json
+            // this example is just showing the usage of "Workspaces_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "00000000-0000-0000-0000-00000000000";
+            string resourceGroupName = "oiautorest6685";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // get the collection of this OperationalInsightsWorkspaceResource
+            OperationalInsightsWorkspaceCollection collection = resourceGroupResource.GetOperationalInsightsWorkspaces();
+
+            // invoke the operation and iterate over the result
+            await foreach (OperationalInsightsWorkspaceResource item in collection.GetAllAsync())
+            {
+                // the variable item is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                OperationalInsightsWorkspaceData resourceData = item.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_WorkspaceGet()
         {
-            // Generated from example definition: specification/operationalinsights/resource-manager/Microsoft.OperationalInsights/stable/2022-10-01/examples/WorkspacesGet.json
+            // Generated from example definition: specification/operationalinsights/resource-manager/Microsoft.OperationalInsights/stable/2025-02-01/examples/WorkspacesGet.json
             // this example is just showing the usage of "Workspaces_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -160,12 +157,11 @@ namespace Azure.ResourceManager.OperationalInsights.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // WorkspaceGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_WorkspaceGet()
         {
-            // Generated from example definition: specification/operationalinsights/resource-manager/Microsoft.OperationalInsights/stable/2022-10-01/examples/WorkspacesGet.json
+            // Generated from example definition: specification/operationalinsights/resource-manager/Microsoft.OperationalInsights/stable/2025-02-01/examples/WorkspacesGet.json
             // this example is just showing the usage of "Workspaces_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -190,7 +186,7 @@ namespace Azure.ResourceManager.OperationalInsights.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {

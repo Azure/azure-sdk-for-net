@@ -11,17 +11,17 @@ using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.ManagementGroups;
 using Azure.ResourceManager.Quota.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Quota.Samples
 {
     public partial class Sample_GroupQuotaEntityCollection
     {
-        // GroupQuotas_Put_Request_ForCompute
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_GroupQuotasPutRequestForCompute()
         {
-            // Generated from example definition: specification/quota/resource-manager/Microsoft.Quota/preview/2023-06-01-preview/examples/GroupQuotas/PutGroupQuotas.json
+            // Generated from example definition: specification/quota/resource-manager/Microsoft.Quota/stable/2025-03-01/examples/GroupQuotas/PutGroupQuotas.json
             // this example is just showing the usage of "GroupQuotas_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -40,19 +40,11 @@ namespace Azure.ResourceManager.Quota.Samples
 
             // invoke the operation
             string groupQuotaName = "groupquota1";
-            GroupQuotaEntityData data = new GroupQuotaEntityData()
+            GroupQuotaEntityData data = new GroupQuotaEntityData
             {
-                Properties = new GroupQuotaEntityBase()
+                Properties = new GroupQuotasEntityProperties
                 {
                     DisplayName = "GroupQuota1",
-                    AdditionalAttributes = new GroupQuotaAdditionalAttributes(new GroupQuotaGroupingId()
-                    {
-                        GroupingIdType = GroupQuotaGroupingIdType.ServiceTreeId,
-                        Value = "yourServiceTreeIdHere",
-                    })
-                    {
-                        Environment = GroupQuotaEnvironmentType.Production,
-                    },
                 },
             };
             ArmOperation<GroupQuotaEntityResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, groupQuotaName, data);
@@ -65,12 +57,11 @@ namespace Azure.ResourceManager.Quota.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // GroupQuotas_Get_Request_ForCompute
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GroupQuotasGetRequestForCompute()
         {
-            // Generated from example definition: specification/quota/resource-manager/Microsoft.Quota/preview/2023-06-01-preview/examples/GroupQuotas/GetGroupQuotas.json
+            // Generated from example definition: specification/quota/resource-manager/Microsoft.Quota/stable/2025-03-01/examples/GroupQuotas/GetGroupQuotas.json
             // this example is just showing the usage of "GroupQuotas_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -98,82 +89,11 @@ namespace Azure.ResourceManager.Quota.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // GroupQuotas_Get_Request_ForCompute
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Exists_GroupQuotasGetRequestForCompute()
-        {
-            // Generated from example definition: specification/quota/resource-manager/Microsoft.Quota/preview/2023-06-01-preview/examples/GroupQuotas/GetGroupQuotas.json
-            // this example is just showing the usage of "GroupQuotas_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ManagementGroupResource created on azure
-            // for more information of creating ManagementGroupResource, please refer to the document of ManagementGroupResource
-            string managementGroupId = "E7EC67B3-7657-4966-BFFC-41EFD36BAA09";
-            ResourceIdentifier managementGroupResourceId = ManagementGroupResource.CreateResourceIdentifier(managementGroupId);
-            ManagementGroupResource managementGroupResource = client.GetManagementGroupResource(managementGroupResourceId);
-
-            // get the collection of this GroupQuotaEntityResource
-            GroupQuotaEntityCollection collection = managementGroupResource.GetGroupQuotaEntities();
-
-            // invoke the operation
-            string groupQuotaName = "groupquota1";
-            bool result = await collection.ExistsAsync(groupQuotaName);
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        // GroupQuotas_Get_Request_ForCompute
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetIfExists_GroupQuotasGetRequestForCompute()
-        {
-            // Generated from example definition: specification/quota/resource-manager/Microsoft.Quota/preview/2023-06-01-preview/examples/GroupQuotas/GetGroupQuotas.json
-            // this example is just showing the usage of "GroupQuotas_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ManagementGroupResource created on azure
-            // for more information of creating ManagementGroupResource, please refer to the document of ManagementGroupResource
-            string managementGroupId = "E7EC67B3-7657-4966-BFFC-41EFD36BAA09";
-            ResourceIdentifier managementGroupResourceId = ManagementGroupResource.CreateResourceIdentifier(managementGroupId);
-            ManagementGroupResource managementGroupResource = client.GetManagementGroupResource(managementGroupResourceId);
-
-            // get the collection of this GroupQuotaEntityResource
-            GroupQuotaEntityCollection collection = managementGroupResource.GetGroupQuotaEntities();
-
-            // invoke the operation
-            string groupQuotaName = "groupquota1";
-            NullableResponse<GroupQuotaEntityResource> response = await collection.GetIfExistsAsync(groupQuotaName);
-            GroupQuotaEntityResource result = response.HasValue ? response.Value : null;
-
-            if (result == null)
-            {
-                Console.WriteLine($"Succeeded with null as result");
-            }
-            else
-            {
-                // the variable result is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                GroupQuotaEntityData resourceData = result.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-        }
-
-        // GroupQuotas_List_Request_ForCompute
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_GroupQuotasListRequestForCompute()
         {
-            // Generated from example definition: specification/quota/resource-manager/Microsoft.Quota/preview/2023-06-01-preview/examples/GroupQuotas/GetGroupQuotasList.json
+            // Generated from example definition: specification/quota/resource-manager/Microsoft.Quota/stable/2025-03-01/examples/GroupQuotas/GetGroupQuotasList.json
             // this example is just showing the usage of "GroupQuotas_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -200,7 +120,75 @@ namespace Azure.ResourceManager.Quota.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Exists_GroupQuotasGetRequestForCompute()
+        {
+            // Generated from example definition: specification/quota/resource-manager/Microsoft.Quota/stable/2025-03-01/examples/GroupQuotas/GetGroupQuotas.json
+            // this example is just showing the usage of "GroupQuotas_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ManagementGroupResource created on azure
+            // for more information of creating ManagementGroupResource, please refer to the document of ManagementGroupResource
+            string managementGroupId = "E7EC67B3-7657-4966-BFFC-41EFD36BAA09";
+            ResourceIdentifier managementGroupResourceId = ManagementGroupResource.CreateResourceIdentifier(managementGroupId);
+            ManagementGroupResource managementGroupResource = client.GetManagementGroupResource(managementGroupResourceId);
+
+            // get the collection of this GroupQuotaEntityResource
+            GroupQuotaEntityCollection collection = managementGroupResource.GetGroupQuotaEntities();
+
+            // invoke the operation
+            string groupQuotaName = "groupquota1";
+            bool result = await collection.ExistsAsync(groupQuotaName);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetIfExists_GroupQuotasGetRequestForCompute()
+        {
+            // Generated from example definition: specification/quota/resource-manager/Microsoft.Quota/stable/2025-03-01/examples/GroupQuotas/GetGroupQuotas.json
+            // this example is just showing the usage of "GroupQuotas_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ManagementGroupResource created on azure
+            // for more information of creating ManagementGroupResource, please refer to the document of ManagementGroupResource
+            string managementGroupId = "E7EC67B3-7657-4966-BFFC-41EFD36BAA09";
+            ResourceIdentifier managementGroupResourceId = ManagementGroupResource.CreateResourceIdentifier(managementGroupId);
+            ManagementGroupResource managementGroupResource = client.GetManagementGroupResource(managementGroupResourceId);
+
+            // get the collection of this GroupQuotaEntityResource
+            GroupQuotaEntityCollection collection = managementGroupResource.GetGroupQuotaEntities();
+
+            // invoke the operation
+            string groupQuotaName = "groupquota1";
+            NullableResponse<GroupQuotaEntityResource> response = await collection.GetIfExistsAsync(groupQuotaName);
+            GroupQuotaEntityResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine("Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                GroupQuotaEntityData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
         }
     }
 }

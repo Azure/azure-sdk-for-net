@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.WorkloadMonitor
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Evidence);
 #else
-                using (JsonDocument document = JsonDocument.Parse(Evidence))
+                using (JsonDocument document = JsonDocument.Parse(Evidence, ModelSerializationExtensions.JsonDocumentOptions))
                 {
                     JsonSerializer.Serialize(writer, document.RootElement);
                 }
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.WorkloadMonitor
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(MonitorConfiguration);
 #else
-                using (JsonDocument document = JsonDocument.Parse(MonitorConfiguration))
+                using (JsonDocument document = JsonDocument.Parse(MonitorConfiguration, ModelSerializationExtensions.JsonDocumentOptions))
                 {
                     JsonSerializer.Serialize(writer, document.RootElement);
                 }
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.WorkloadMonitor
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerWorkloadMonitorContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(HealthMonitorData)} does not support writing '{options.Format}' format.");
             }
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.WorkloadMonitor
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeHealthMonitorData(document.RootElement, options);
                     }
                 default:

@@ -10,17 +10,17 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Sql.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Sql.Samples
 {
     public partial class Sample_ManagedLedgerDigestUploadResource
     {
-        // Gets the current ledger digest upload configuration for a database.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetsTheCurrentLedgerDigestUploadConfigurationForADatabase()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2022-08-01-preview/examples/ManagedLedgerDigestUploadsGet.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-05-01-preview/examples/ManagedLedgerDigestUploadsGet.json
             // this example is just showing the usage of "ManagedLedgerDigestUploads_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -48,12 +48,11 @@ namespace Azure.ResourceManager.Sql.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Enables managed ledger digest upload configuration for a database
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_EnablesManagedLedgerDigestUploadConfigurationForADatabase()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2022-08-01-preview/examples/ManagedLedgerDigestUploadsEnable.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-05-01-preview/examples/ManagedLedgerDigestUploadsEnable.json
             // this example is just showing the usage of "ManagedLedgerDigestUploads_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -72,7 +71,7 @@ namespace Azure.ResourceManager.Sql.Samples
             ManagedLedgerDigestUploadResource managedLedgerDigestUpload = client.GetManagedLedgerDigestUploadResource(managedLedgerDigestUploadResourceId);
 
             // invoke the operation
-            ManagedLedgerDigestUploadData data = new ManagedLedgerDigestUploadData()
+            ManagedLedgerDigestUploadData data = new ManagedLedgerDigestUploadData
             {
                 DigestStorageEndpoint = "https://MyAccount.blob.core.windows.net",
             };
@@ -86,12 +85,11 @@ namespace Azure.ResourceManager.Sql.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Disables uploading ledger digests for a database
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Disable_DisablesUploadingLedgerDigestsForADatabase()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2022-08-01-preview/examples/ManagedLedgerDigestUploadsDisable.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-05-01-preview/examples/ManagedLedgerDigestUploadsDisable.json
             // this example is just showing the usage of "ManagedLedgerDigestUploads_Disable" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

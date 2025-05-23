@@ -329,7 +329,7 @@ namespace Azure.ResourceManager.ContainerService
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerContainerServiceContext.Default);
                 case "bicep":
                     return SerializeBicep(options);
                 default:
@@ -345,7 +345,7 @@ namespace Azure.ResourceManager.ContainerService
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeContainerServiceMaintenanceConfigurationData(document.RootElement, options);
                     }
                 default:

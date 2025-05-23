@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +23,14 @@ namespace Azure.ResourceManager.PlaywrightTesting
 
         PlaywrightTestingAccountResource IOperationSource<PlaywrightTestingAccountResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = PlaywrightTestingAccountData.DeserializePlaywrightTestingAccountData(document.RootElement);
+            var data = ModelReaderWriter.Read<PlaywrightTestingAccountData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerPlaywrightTestingContext.Default);
             return new PlaywrightTestingAccountResource(_client, data);
         }
 
         async ValueTask<PlaywrightTestingAccountResource> IOperationSource<PlaywrightTestingAccountResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = PlaywrightTestingAccountData.DeserializePlaywrightTestingAccountData(document.RootElement);
-            return new PlaywrightTestingAccountResource(_client, data);
+            var data = ModelReaderWriter.Read<PlaywrightTestingAccountData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerPlaywrightTestingContext.Default);
+            return await Task.FromResult(new PlaywrightTestingAccountResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

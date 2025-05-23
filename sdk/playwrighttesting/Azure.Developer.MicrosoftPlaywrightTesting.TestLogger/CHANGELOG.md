@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.2 (Unreleased)
+## 1.0.0-beta.5 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,39 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.0.0-beta.4 (2025-01-17)
+
+### Features Added
+ 
+- Warning message when MPT access token is close to expiry
+ 
+### Bugs Fixed
+ 
+- Max character limits in reporting API calls
+
+## 1.0.0-beta.3 (2024-11-18)
+
+### Features Added
+
+- Added a runName field which allows customers to customize the display name when using the reporting feature.
+- Added stacktrace into error list.
+
+### Bugs Fixed
+
+- Fixed a bug where the upload buffer and upload file methods were not awaited, which sometimes resulted in 404 errors in the web application.
+- Fixed a bug where the authentication error occurred when the scalable scenario was disabled in Playwright testing.
+- Fixed a bug where the GetConnectOptionsAsync method did not use the runsetting defaults in Playwright testing.
+
+### Other Changes
+
+- Populated NumberOfTestWorkers from runsettings.
+
+## 1.0.0-beta.2 (2024-11-05)
+ 
+### Features Added
+ 
+- Added support for publishing test results and artifacts to the service from the client. 
 
 ## 1.0.0-beta.1 (2024-10-23)
 

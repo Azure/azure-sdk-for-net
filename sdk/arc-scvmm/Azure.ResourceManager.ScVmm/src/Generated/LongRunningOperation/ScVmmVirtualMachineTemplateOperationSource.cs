@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +23,14 @@ namespace Azure.ResourceManager.ScVmm
 
         ScVmmVirtualMachineTemplateResource IOperationSource<ScVmmVirtualMachineTemplateResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = ScVmmVirtualMachineTemplateData.DeserializeScVmmVirtualMachineTemplateData(document.RootElement);
+            var data = ModelReaderWriter.Read<ScVmmVirtualMachineTemplateData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerScVmmContext.Default);
             return new ScVmmVirtualMachineTemplateResource(_client, data);
         }
 
         async ValueTask<ScVmmVirtualMachineTemplateResource> IOperationSource<ScVmmVirtualMachineTemplateResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = ScVmmVirtualMachineTemplateData.DeserializeScVmmVirtualMachineTemplateData(document.RootElement);
-            return new ScVmmVirtualMachineTemplateResource(_client, data);
+            var data = ModelReaderWriter.Read<ScVmmVirtualMachineTemplateData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerScVmmContext.Default);
+            return await Task.FromResult(new ScVmmVirtualMachineTemplateResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

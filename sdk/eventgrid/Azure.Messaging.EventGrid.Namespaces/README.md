@@ -1,6 +1,6 @@
 # Azure Event Grid client library for .NET
 
-Azure Event Grid allows you to easily build applications with event-based architectures. The Event Grid service fully manages all routing of events from any source, to any destination, for any application. Azure service events and custom events can be published directly to the service, where the events can then be filtered and sent to various recipients, such as built-in handlers or custom webhooks. To learn more about Azure Event Grid: [What is Event Grid?](https://docs.microsoft.com/azure/event-grid/overview)
+Azure Event Grid allows you to easily build applications with event-based architectures. The Event Grid service fully manages all routing of events from any source, to any destination, for any application. Azure service events and custom events can be published directly to the service, where the events can then be filtered and sent to various recipients, such as built-in handlers or custom webhooks. To learn more about Azure Event Grid: [What is Event Grid?](https://learn.microsoft.com/azure/event-grid/overview)
 
 Use the client library for Azure Event Grid to:
 - Publish events to Event Grid topics using the Cloud Event schema
@@ -20,19 +20,19 @@ dotnet add package Azure.Messaging.EventGrid.Namespaces
 
 ### Prerequisites
 
-You must have an [Azure subscription](https://azure.microsoft.com/free/dotnet/) and an Azure resource group with a custom Event Grid topic or domain. Follow this [step-by-step tutorial](https://docs.microsoft.com/azure/event-grid/custom-event-quickstart-portal) to register the Event Grid resource provider and create Event Grid topics using the [Azure portal](https://portal.azure.com/). There is a [similar tutorial](https://docs.microsoft.com/azure/event-grid/custom-event-quickstart) using [Azure CLI](https://docs.microsoft.com/cli/azure).
+You must have an [Azure subscription](https://azure.microsoft.com/free/dotnet/) and an Azure resource group with a custom Event Grid topic or domain. Follow this [step-by-step tutorial](https://learn.microsoft.com/azure/event-grid/custom-event-quickstart-portal) to register the Event Grid resource provider and create Event Grid topics using the [Azure portal](https://portal.azure.com/). There is a [similar tutorial](https://learn.microsoft.com/azure/event-grid/custom-event-quickstart) using [Azure CLI](https://learn.microsoft.com/cli/azure).
 
 ### Authenticate the client
 
 In order for the client library to interact with a topic or domain, you will need the `endpoint` of the Event Grid topic and a `credential`, which can be created using the topic's access key.
 
-You can find the endpoint for your Event Grid topic either in the [Azure Portal](https://portal.azure.com/) or by using the [Azure CLI](https://docs.microsoft.com/cli/azure) snippet below.
+You can find the endpoint for your Event Grid topic either in the [Azure Portal](https://portal.azure.com/) or by using the [Azure CLI](https://learn.microsoft.com/cli/azure) snippet below.
 
 ```bash
 az eventgrid topic show --name <your-resource-name> --resource-group <your-resource-group-name> --query "endpoint"
 ```
 
-The access key can also be found through the [portal](https://docs.microsoft.com/azure/event-grid/get-access-keys), or by using the Azure CLI snippet below:
+The access key can also be found through the [portal](https://learn.microsoft.com/azure/event-grid/get-access-keys), or by using the Azure CLI snippet below:
 ```bash
 az eventgrid topic key list --name <your-resource-name> --resource-group <your-resource-group-name> --query "key1"
 ```
@@ -103,7 +103,5 @@ This project has adopted the [Microsoft Open Source Code of Conduct](https://ope
 For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
 
 <!-- LINKS -->
-[style-guide-msft]: https://docs.microsoft.com/style-guide/capitalization
+[style-guide-msft]: https://learn.microsoft.com/style-guide/capitalization
 [style-guide-cloud]: https://aka.ms/azsdk/cloud-style-guide
-
-![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net/sdk/eventgrid/Azure.Messaging.EventGrid.Namespaces/README.png)

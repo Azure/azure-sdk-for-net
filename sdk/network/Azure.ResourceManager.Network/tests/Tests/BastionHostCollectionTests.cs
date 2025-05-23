@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Network.Tests
             _resourceGroupIdentifier = rg.Id;
             VirtualNetworkData vnetData = new VirtualNetworkData();
             vnetData.Location = AzureLocation.WestUS2;
-            vnetData.AddressSpace = new AddressSpace();
+            vnetData.AddressSpace = new VirtualNetworkAddressSpace();
             vnetData.AddressSpace.AddressPrefixes.Add("10.0.0.0/16");
             var vnetLro = await rg.GetVirtualNetworks().CreateOrUpdateAsync(WaitUntil.Completed, SessionRecording.GenerateAssetName("vnet-"), vnetData);
             VirtualNetworkResource vnet = vnetLro.Value;

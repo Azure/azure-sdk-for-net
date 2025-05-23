@@ -5,15 +5,19 @@
       Azure OpenAI's official extension package for using OpenAI's .NET library with the Azure OpenAI Service.
     </Description>
     <AssemblyTitle>Azure.AI.OpenAI Client Library</AssemblyTitle>
-    <VersionPrefix>2.1.0</VersionPrefix>
     <PackageTags>Microsoft Azure OpenAI</PackageTags>
     <DisableEnhancedAnalysis>true</DisableEnhancedAnalysis>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <GenerateAPIListing>true</GenerateAPIListing>
-    <NoWarn>$(NoWarn);CS1591;AZC0012;AZC0102;CS8002;CS0436;AZC0112;OPENAI001;OPENAI002</NoWarn>
+    <NoWarn>$(NoWarn);CS1591;AZC0012;AZC0102;CS8002;CS0436;AZC0112;OPENAI001;OPENAI002;AOAI001</NoWarn>
+    <!-- Needs System.ClientModel 1.5.0 in order to add the context and use the new overloads -->
+    <!-- After this https://github.com/Azure/azure-sdk-for-net/issues/49916 we can remove this no warn -->
+    <NoWarn>$(NoWarn);AZC0150</NoWarn>
     <ImplicitUsings>enable</ImplicitUsings>
     <LangVersion>preview</LangVersion>
     <Nullable>disable</Nullable>
+    <IsTrimmable Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net6.0'))">true</IsTrimmable>
+    <IsAotCompatible Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net7.0'))">true</IsAotCompatible>
   </PropertyGroup>
 
   <ItemGroup>
@@ -22,16 +26,22 @@
     </InternalsVisibleTo>
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="System.Text.Json" />
+  </ItemGroup>
+
   <Choose>
     <When Condition="'$(GAServiceVersionLabel)' != ''">
       <PropertyGroup>
         <DefineConstants>AZURE_OPENAI_GA</DefineConstants>
+        <VersionPrefix>2.1.0</VersionPrefix>
         <VersionSuffix />
       </PropertyGroup>
     </When>
     <Otherwise>
       <PropertyGroup>
-        <VersionSuffix>beta.1</VersionSuffix>
+        <VersionPrefix>2.2.0</VersionPrefix>
+        <VersionSuffix>beta.4</VersionSuffix>
       </PropertyGroup>
     </Otherwise>
   </Choose>
@@ -65,10 +75,13 @@
         <NoWarn>$(NoWarn);NU5104</NoWarn>
       </PropertyGroup>
     </When>
-    <When Condition="'$(ExternalOpenAILibrary)' != ''">
+    <When Condition="'$(UseExternalOpenAILibrary)' != ''">
+      <PropertyGroup>
+          <ExternalSourceFramework>netstandard2.0</ExternalSourceFramework>
+          <ExternalSourceFramework Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net8.0'))">net8.0</ExternalSourceFramework>
+      </PropertyGroup>
       <ItemGroup>
-        <Reference Include="$([System.IO.Path]::GetFileName('$(ExternalOpenAILibrary)'))" HintPath="$(ExternalOpenAILibrary)" />
-        <PackageReference Include="System.ClientModel" VersionOverride="$(SystemClientModelVersion)" />
+        <Reference Include="$([System.IO.Path]::GetFileName('../../external/$(ExternalSourceFramework)/OpenAI.dll'))" HintPath="../../external/$(ExternalSourceFramework)/OpenAI.dll" />
       </ItemGroup>
     </When>
     <Otherwise>

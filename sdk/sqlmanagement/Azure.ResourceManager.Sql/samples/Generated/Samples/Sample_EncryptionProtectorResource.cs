@@ -10,17 +10,17 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Sql.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Sql.Samples
 {
     public partial class Sample_EncryptionProtectorResource
     {
-        // Get the encryption protector
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetTheEncryptionProtector()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2020-11-01-preview/examples/EncryptionProtectorGet.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-05-01-preview/examples/EncryptionProtectorGet.json
             // this example is just showing the usage of "EncryptionProtectors_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -47,12 +47,11 @@ namespace Azure.ResourceManager.Sql.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Update the encryption protector to key vault
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateTheEncryptionProtectorToKeyVault()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2020-11-01-preview/examples/EncryptionProtectorCreateOrUpdateKeyVault.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-05-01-preview/examples/EncryptionProtectorCreateOrUpdateKeyVault.json
             // this example is just showing the usage of "EncryptionProtectors_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -70,7 +69,7 @@ namespace Azure.ResourceManager.Sql.Samples
             EncryptionProtectorResource encryptionProtector = client.GetEncryptionProtectorResource(encryptionProtectorResourceId);
 
             // invoke the operation
-            EncryptionProtectorData data = new EncryptionProtectorData()
+            EncryptionProtectorData data = new EncryptionProtectorData
             {
                 ServerKeyName = "someVault_someKey_01234567890123456789012345678901",
                 ServerKeyType = SqlServerKeyType.AzureKeyVault,
@@ -86,12 +85,11 @@ namespace Azure.ResourceManager.Sql.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Update the encryption protector to service managed
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateTheEncryptionProtectorToServiceManaged()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2020-11-01-preview/examples/EncryptionProtectorCreateOrUpdateServiceManaged.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-05-01-preview/examples/EncryptionProtectorCreateOrUpdateServiceManaged.json
             // this example is just showing the usage of "EncryptionProtectors_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -109,7 +107,7 @@ namespace Azure.ResourceManager.Sql.Samples
             EncryptionProtectorResource encryptionProtector = client.GetEncryptionProtectorResource(encryptionProtectorResourceId);
 
             // invoke the operation
-            EncryptionProtectorData data = new EncryptionProtectorData()
+            EncryptionProtectorData data = new EncryptionProtectorData
             {
                 ServerKeyName = "ServiceManaged",
                 ServerKeyType = SqlServerKeyType.ServiceManaged,
@@ -124,12 +122,11 @@ namespace Azure.ResourceManager.Sql.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Revalidates the encryption protector
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Revalidate_RevalidatesTheEncryptionProtector()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2020-11-01-preview/examples/EncryptionProtectorRevalidate.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-05-01-preview/examples/EncryptionProtectorRevalidate.json
             // this example is just showing the usage of "EncryptionProtectors_Revalidate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -149,7 +146,7 @@ namespace Azure.ResourceManager.Sql.Samples
             // invoke the operation
             await encryptionProtector.RevalidateAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

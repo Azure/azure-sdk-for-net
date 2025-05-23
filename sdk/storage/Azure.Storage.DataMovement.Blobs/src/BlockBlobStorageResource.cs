@@ -34,26 +34,14 @@ namespace Azure.Storage.DataMovement.Blobs
 
         public override string ProviderId => "blob";
 
-        /// <summary>
-        /// Defines the recommended Transfer Type of the storage resource.
-        /// </summary>
-        protected override DataTransferOrder TransferType => DataTransferOrder.Unordered;
+        protected override TransferOrder TransferType => TransferOrder.Unordered;
 
-        /// <summary>
-        /// Store Max Initial Size that a Put Blob can get to.
-        /// </summary>
-        internal static long _maxInitialSize => Constants.Blob.Block.Pre_2019_12_12_MaxUploadBytes;
+        protected override long MaxSupportedSingleTransferSize => Constants.Blob.Block.MaxUploadBytes;
 
-        /// <summary>
-        /// Defines the maximum chunk size for the storage resource.
-        /// </summary>
         protected override long MaxSupportedChunkSize => Constants.Blob.Block.MaxStageBytes;
 
-        /// <summary>
-        /// Length of the storage resource. This information is can obtained during a GetStorageResources API call.
-        ///
-        /// Will return default if the length was not set by a GetStorageResources API call.
-        /// </summary>
+        protected override int MaxSupportedChunkCount => Constants.Blob.Block.MaxBlocks;
+
         protected override long? Length => ResourceProperties?.ResourceLength;
 
         /// <summary>
@@ -168,7 +156,7 @@ namespace Azure.Storage.DataMovement.Blobs
                     DataMovementBlobsExtensions.GetBlobUploadOptions(
                         _options,
                         overwrite,
-                        _maxInitialSize,
+                        MaxSupportedSingleTransferSize,  // We don't want any internal partioning
                         options?.SourceProperties),
                     cancellationToken: cancellationToken).ConfigureAwait(false);
                 return;
@@ -360,23 +348,17 @@ namespace Azure.Storage.DataMovement.Blobs
             return await BlobClient.DeleteIfExistsAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
         }
 
-        protected override StorageResourceCheckpointData GetSourceCheckpointData()
+        protected override StorageResourceCheckpointDetails GetSourceCheckpointDetails()
         {
-            return new BlobSourceCheckpointData();
+            return new BlobSourceCheckpointDetails();
         }
 
-        protected override StorageResourceCheckpointData GetDestinationCheckpointData()
+        protected override StorageResourceCheckpointDetails GetDestinationCheckpointDetails()
         {
-            return new BlobDestinationCheckpointData(
-                blobType: new(BlobType.Block),
-                contentType: _options?.ContentType,
-                contentEncoding: _options?.ContentEncoding,
-                contentLanguage: _options?.ContentLanguage,
-                contentDisposition: _options?.ContentDisposition,
-                cacheControl: _options?.CacheControl,
-                accessTier: _options?.AccessTier,
-                metadata: _options?.Metadata,
-                tags: default);
+            return new BlobDestinationCheckpointDetails(
+                isBlobTypeSet: true,
+                blobType: BlobType.Block,
+                blobOptions: _options);
         }
 
         // no-op for get permissions
@@ -391,5 +373,25 @@ namespace Azure.Storage.DataMovement.Blobs
             StorageResourceItemProperties sourceProperties,
             CancellationToken cancellationToken = default)
             => Task.CompletedTask;
+
+        /// <summary>
+        /// Creates this resource an empty directory stub. This is only intended to be used
+        /// for HNS accounts as empty directories do not exist on FNS accounts.
+        ///
+        /// Creates an empty Block Blob with the hdi_isfolder metadata. All other properties
+        /// of the blob are left default.
+        /// </summary>
+        internal async Task CreateEmptyDirectoryStubAsync(CancellationToken cancellationToken = default)
+        {
+            Dictionary<string, string> folderMetadata = new() {
+                { DataMovementBlobConstants.FolderMetadataKey, "true" }
+            };
+
+            BlobUploadOptions options = new()
+            {
+                Metadata = folderMetadata
+            };
+            await BlobClient.UploadAsync(Stream.Null, options, cancellationToken).ConfigureAwait(false);
+        }
     }
 }

@@ -401,7 +401,7 @@ namespace Azure.ResourceManager.TrustedSigning
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerTrustedSigningContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(TrustedSigningCertificateProfileData)} does not support writing '{options.Format}' format.");
             }
@@ -415,7 +415,7 @@ namespace Azure.ResourceManager.TrustedSigning
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeTrustedSigningCertificateProfileData(document.RootElement, options);
                     }
                 default:

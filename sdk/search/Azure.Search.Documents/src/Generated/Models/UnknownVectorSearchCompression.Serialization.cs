@@ -22,8 +22,15 @@ namespace Azure.Search.Documents.Models
             writer.WriteStringValue(Kind.ToString());
             if (Optional.IsDefined(RerankWithOriginalVectors))
             {
-                writer.WritePropertyName("rerankWithOriginalVectors"u8);
-                writer.WriteBooleanValue(RerankWithOriginalVectors.Value);
+                if (RerankWithOriginalVectors != null)
+                {
+                    writer.WritePropertyName("rerankWithOriginalVectors"u8);
+                    writer.WriteBooleanValue(RerankWithOriginalVectors.Value);
+                }
+                else
+                {
+                    writer.WriteNull("rerankWithOriginalVectors");
+                }
             }
             if (Optional.IsDefined(DefaultOversampling))
             {
@@ -35,6 +42,18 @@ namespace Azure.Search.Documents.Models
                 else
                 {
                     writer.WriteNull("defaultOversampling");
+                }
+            }
+            if (Optional.IsDefined(RescoringOptions))
+            {
+                if (RescoringOptions != null)
+                {
+                    writer.WritePropertyName("rescoringOptions"u8);
+                    writer.WriteObjectValue(RescoringOptions);
+                }
+                else
+                {
+                    writer.WriteNull("rescoringOptions");
                 }
             }
             if (Optional.IsDefined(TruncationDimension))
@@ -62,6 +81,7 @@ namespace Azure.Search.Documents.Models
             VectorSearchCompressionKind kind = "Unknown";
             bool? rerankWithOriginalVectors = default;
             double? defaultOversampling = default;
+            RescoringOptions rescoringOptions = default;
             int? truncationDimension = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -79,6 +99,7 @@ namespace Azure.Search.Documents.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        rerankWithOriginalVectors = null;
                         continue;
                     }
                     rerankWithOriginalVectors = property.Value.GetBoolean();
@@ -94,6 +115,16 @@ namespace Azure.Search.Documents.Models
                     defaultOversampling = property.Value.GetDouble();
                     continue;
                 }
+                if (property.NameEquals("rescoringOptions"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        rescoringOptions = null;
+                        continue;
+                    }
+                    rescoringOptions = RescoringOptions.DeserializeRescoringOptions(property.Value);
+                    continue;
+                }
                 if (property.NameEquals("truncationDimension"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -105,14 +136,20 @@ namespace Azure.Search.Documents.Models
                     continue;
                 }
             }
-            return new UnknownVectorSearchCompression(name, kind, rerankWithOriginalVectors, defaultOversampling, truncationDimension);
+            return new UnknownVectorSearchCompression(
+                name,
+                kind,
+                rerankWithOriginalVectors,
+                defaultOversampling,
+                rescoringOptions,
+                truncationDimension);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static new UnknownVectorSearchCompression FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeUnknownVectorSearchCompression(document.RootElement);
         }
 

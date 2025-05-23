@@ -55,6 +55,11 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 writer.WritePropertyName("exportPolicy"u8);
                 writer.WriteObjectValue(ExportPolicy, options);
             }
+            if (Optional.IsDefined(AzureADAuthenticationAsArmPolicy))
+            {
+                writer.WritePropertyName("azureADAuthenticationAsArmPolicy"u8);
+                writer.WriteObjectValue(AzureADAuthenticationAsArmPolicy, options);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -63,7 +68,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -96,6 +101,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             ContainerRegistryTrustPolicy trustPolicy = default;
             ContainerRegistryRetentionPolicy retentionPolicy = default;
             ContainerRegistryExportPolicy exportPolicy = default;
+            AzureADAuthenticationAsArmPolicy azureADAuthenticationAsArmPolicy = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -136,13 +142,28 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     exportPolicy = ContainerRegistryExportPolicy.DeserializeContainerRegistryExportPolicy(property.Value, options);
                     continue;
                 }
+                if (property.NameEquals("azureADAuthenticationAsArmPolicy"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    azureADAuthenticationAsArmPolicy = AzureADAuthenticationAsArmPolicy.DeserializeAzureADAuthenticationAsArmPolicy(property.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ContainerRegistryPolicies(quarantinePolicy, trustPolicy, retentionPolicy, exportPolicy, serializedAdditionalRawData);
+            return new ContainerRegistryPolicies(
+                quarantinePolicy,
+                trustPolicy,
+                retentionPolicy,
+                exportPolicy,
+                azureADAuthenticationAsArmPolicy,
+                serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -222,6 +243,24 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
             }
 
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("AzureADAuthenticationAsArmStatus", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  azureADAuthenticationAsArmPolicy: ");
+                builder.AppendLine("{");
+                builder.Append("    status: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("  }");
+            }
+            else
+            {
+                if (Optional.IsDefined(AzureADAuthenticationAsArmPolicy))
+                {
+                    builder.Append("  azureADAuthenticationAsArmPolicy: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, AzureADAuthenticationAsArmPolicy, options, 2, false, "  azureADAuthenticationAsArmPolicy: ");
+                }
+            }
+
             builder.AppendLine("}");
             return BinaryData.FromString(builder.ToString());
         }
@@ -233,7 +272,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerContainerRegistryContext.Default);
                 case "bicep":
                     return SerializeBicep(options);
                 default:
@@ -249,7 +288,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeContainerRegistryPolicies(document.RootElement, options);
                     }
                 default:

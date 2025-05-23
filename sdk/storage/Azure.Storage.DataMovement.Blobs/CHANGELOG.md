@@ -1,14 +1,47 @@
 # Release History
 
-## 12.0.0-beta.7 (Unreleased)
+## 12.2.0-beta.1 (Unreleased)
 
 ### Features Added
+- Explicitly setting `BlobStorageResourceOptions.AccessTier` to `null` will disable preserving the access tier value from the source blob to the destination blob.
 
 ### Breaking Changes
 
 ### Bugs Fixed
+- Fixed bug where AccessTier for Premium Page Blobs were not being preserved.
+- Fixed some issues when transferring virtual directories with Blob Storage as the source.
 
 ### Other Changes
+
+## 12.1.0 (2025-02-27)
+
+### Features Added
+- Added support for anonymous access by adding a default constructor for `BlobsStorageResourceProvider`.
+
+### Bugs Fixed
+- Fixed an issue that would prevent transfers of large files (>200 GiB) for certain destination resource types.
+
+## 12.0.0 (2025-02-11)
+
+### Breaking Changes
+- Changed `BlobStorageResourceContainerOptions.BlobType` type from `DataTransferProperty<BlobType>` to `BlobType`
+- Changed `BlobStorageResourceOptions.Metadata` type from `DataTransferProperty<IDictionary<string, string>>` to `IDictionary<string, string>`
+- Changed the following types from `DataTranferProperty<string>` to `string`
+    - `BlobStorageResourceOptions.ContentType`
+    - `BlobStorageResourceOptions.ContentLanguage`
+    - `BlobStorageResourceOptions.ContentEncoding`
+    - `BlobStorageResourceOptions.ContentDisposition`
+    - `BlobStorageResourceOptions.CacheControl`
+- Renamed `BlobStorageResourceContainerOptions.BlobDirectoryPrefix` to `BlobPrefix`
+- Changed `BlobContainerClient.StartUploadDirectoryAsync` to `BlobContainerClient.UploadDirectoryAsync` and added a required `waitUntil` parameter.
+- Changed `BlobContainerClient.StartDownloadToDirectoryAsync` to `BlobContainerClient.DownloadToDirectoryAsync` and added a required `waitUntil` parameter.
+- Several refactors to `BlobsStorageResourceProvider`:
+  - Removed nested delegates `GetStorageSharedKeyCredential`, `GetTokenCredential`, and `GetAzureSasCredential`.
+  - Removed default constructor.
+  - Removed constructor overload for `GetTokenCredential` entirely.
+  - Changed constructor overloads for `GetStorageSharedKeyCredential` and `GetAzureSasCredential` to use `Func`. These callbacks are also now async, returning a `ValueTask`, and the `readOnly` parameter was removed.
+  - Changed `FromBlob` and `FromContainer` to async, returning a `ValueTask`, and renamed to `FromBlobAsync` and `FromContainerAsync` respectively.
+  - Changed `FromClient` methods to `static` methods.
 
 ## 12.0.0-beta.6 (2024-10-14)
 

@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.Monitor
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMonitorContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(VmInsightsOnboardingStatusData)} does not support writing '{options.Format}' format.");
             }
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.Monitor
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeVmInsightsOnboardingStatusData(document.RootElement, options);
                     }
                 default:

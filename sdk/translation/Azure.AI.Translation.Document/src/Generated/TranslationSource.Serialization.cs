@@ -19,13 +19,21 @@ namespace Azure.AI.Translation.Document
 
         void IJsonModel<TranslationSource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<TranslationSource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(TranslationSource)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("sourceUrl"u8);
             writer.WriteStringValue(SourceUri.AbsoluteUri);
             if (Optional.IsDefined(Filter))
@@ -41,7 +49,7 @@ namespace Azure.AI.Translation.Document
             if (Optional.IsDefined(StorageSource))
             {
                 writer.WritePropertyName("storageSource"u8);
-                writer.WriteStringValue(StorageSource);
+                writer.WriteStringValue(StorageSource.Value.ToString());
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -51,14 +59,13 @@ namespace Azure.AI.Translation.Document
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         TranslationSource IJsonModel<TranslationSource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -84,7 +91,7 @@ namespace Azure.AI.Translation.Document
             Uri sourceUrl = default;
             DocumentFilter filter = default;
             string language = default;
-            string storageSource = default;
+            TranslationStorageSource? storageSource = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +117,11 @@ namespace Azure.AI.Translation.Document
                 }
                 if (property.NameEquals("storageSource"u8))
                 {
-                    storageSource = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    storageSource = new TranslationStorageSource(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -129,7 +140,7 @@ namespace Azure.AI.Translation.Document
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureAITranslationDocumentContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(TranslationSource)} does not support writing '{options.Format}' format.");
             }
@@ -143,7 +154,7 @@ namespace Azure.AI.Translation.Document
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeTranslationSource(document.RootElement, options);
                     }
                 default:
@@ -157,7 +168,7 @@ namespace Azure.AI.Translation.Document
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static TranslationSource FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeTranslationSource(document.RootElement);
         }
 

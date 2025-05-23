@@ -10,50 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.OracleDatabase.Samples
 {
     public partial class Sample_AutonomousDatabaseCharacterSetCollection
     {
-        // List autonomous db character sets by location
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetAll_ListAutonomousDbCharacterSetsByLocation()
-        {
-            // Generated from example definition: specification/oracle/resource-manager/Oracle.Database/stable/2023-09-01/examples/autonomousDatabaseCharacterSet_listByLocation.json
-            // this example is just showing the usage of "AutonomousDatabaseCharacterSets_ListByLocation" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
-
-            // get the collection of this AutonomousDatabaseCharacterSetResource
-            AzureLocation location = new AzureLocation("eastus");
-            AutonomousDatabaseCharacterSetCollection collection = subscriptionResource.GetAutonomousDatabaseCharacterSets(location);
-
-            // invoke the operation and iterate over the result
-            await foreach (AutonomousDatabaseCharacterSetResource item in collection.GetAllAsync())
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                AutonomousDatabaseCharacterSetData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // Get autonomous db character set
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAutonomousDbCharacterSet()
         {
             // Generated from example definition: specification/oracle/resource-manager/Oracle.Database/stable/2023-09-01/examples/autonomousDatabaseCharacterSet_get.json
@@ -85,9 +49,43 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get autonomous db character set
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetAll_ListAutonomousDbCharacterSetsByLocation()
+        {
+            // Generated from example definition: specification/oracle/resource-manager/Oracle.Database/stable/2023-09-01/examples/autonomousDatabaseCharacterSet_listByLocation.json
+            // this example is just showing the usage of "AutonomousDatabaseCharacterSets_ListByLocation" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this SubscriptionResource created on azure
+            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
+            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
+
+            // get the collection of this AutonomousDatabaseCharacterSetResource
+            AzureLocation location = new AzureLocation("eastus");
+            AutonomousDatabaseCharacterSetCollection collection = subscriptionResource.GetAutonomousDatabaseCharacterSets(location);
+
+            // invoke the operation and iterate over the result
+            await foreach (AutonomousDatabaseCharacterSetResource item in collection.GetAllAsync())
+            {
+                // the variable item is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                AutonomousDatabaseCharacterSetData resourceData = item.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetAutonomousDbCharacterSet()
         {
             // Generated from example definition: specification/oracle/resource-manager/Oracle.Database/stable/2023-09-01/examples/autonomousDatabaseCharacterSet_get.json
@@ -115,9 +113,8 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Get autonomous db character set
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetAutonomousDbCharacterSet()
         {
             // Generated from example definition: specification/oracle/resource-manager/Oracle.Database/stable/2023-09-01/examples/autonomousDatabaseCharacterSet_get.json
@@ -145,7 +142,7 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {

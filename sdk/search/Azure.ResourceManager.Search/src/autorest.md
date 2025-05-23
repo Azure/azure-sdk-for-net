@@ -8,8 +8,8 @@ azure-arm: true
 csharp: true
 library-name: Search
 namespace: Azure.ResourceManager.Search
-require: https://github.com/Azure/azure-rest-api-specs/blob/c3cc9abe085093ba880ee3eeb792edb4fa789553/specification/search/resource-manager/readme.md
-#tag: package-preview-2024-06
+require: https://github.com/Azure/azure-rest-api-specs/blob/5c73e496040fa9fec8725b7e26f8e45864211e62/specification/search/resource-manager/readme.md
+#tag: package-preview-2025-02-01
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -19,10 +19,9 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 use-model-reader-writer: true
-use-write-core: true
 enable-bicep-serialization: true
 
-#mgmt-debug: 
+#mgmt-debug:
 #  show-serialized-names: true
 
 rename-mapping:
@@ -31,24 +30,31 @@ rename-mapping:
   AdminKeyResult: SearchServiceAdminKeyResult
   CheckNameAvailabilityInput: SearchServiceNameAvailabilityContent
   CheckNameAvailabilityOutput: SearchServiceNameAvailabilityResult
+  ComputeType: SearchServiceComputeType 
   DataPlaneAuthOptions: SearchAadAuthDataPlaneAuthOptions
   EncryptionWithCmk: SearchEncryptionWithCmk
+  FeatureName: SearchServiceFeatureName
+  FeatureOffering: SearchServiceFeatureOffering
   HostingMode: SearchServiceHostingMode
   IpRule: SearchServiceIPRule
+  NetworkRuleSet: SearchServiceNetworkRuleSet
   PrivateEndpointConnectionProperties: SearchServicePrivateEndpointConnectionProperties
   PrivateEndpointConnectionPropertiesPrivateLinkServiceConnectionState: SearchServicePrivateLinkServiceConnectionState
   PrivateLinkServiceConnectionStatus: SearchServicePrivateLinkServiceConnectionStatus
   PrivateLinkServiceConnectionProvisioningState: SearchPrivateLinkServiceConnectionProvisioningState
   ProvisioningState: SearchServiceProvisioningState
   PublicNetworkAccess: SearchServicePublicInternetAccess
+  OfferingsByRegion: SearchServiceOfferingsByRegion
   QueryKey: SearchServiceQueryKey
   ResourceType: SearchServiceResourceType
   SearchEncryptionWithCmk: SearchEncryptionWithCmkEnforcement
   SearchService.properties.disableLocalAuth: isLocalAuthDisabled
   SearchService.properties.publicNetworkAccess: PublicInternetAccess
+  SearchService.properties.upgradeAvailable: IsUpgradeAvailable
   SearchService.sku: SearchSku
   SearchServiceUpdate.properties.disableLocalAuth: isLocalAuthDisabled
   SearchServiceUpdate.properties.publicNetworkAccess: PublicInternetAccess
+  SearchServiceUpdate.properties.upgradeAvailable: IsUpgradeAvailable
   SearchServiceUpdate.sku: SearchSku
   ShareablePrivateLinkResourceProperties: ShareableSearchServicePrivateLinkResourceProperties
   ShareablePrivateLinkResourceType: ShareableSearchServicePrivateLinkResourceType
@@ -60,9 +66,10 @@ rename-mapping:
   SharedPrivateLinkResourceProperties.provisioningState: SharedPrivateLinkResourceProvisioningState
   SharedPrivateLinkResourceProvisioningState: SearchServiceSharedPrivateLinkResourceProvisioningState
   SharedPrivateLinkResourceStatus: SearchServiceSharedPrivateLinkResourceStatus
-  UnavailableNameReason: SearchServiceNameUnavailableReason
   SkuName: SearchServiceSkuName
-  NetworkRuleSet: SearchServiceNetworkRuleSet
+  SkuOffering: SearchServiceSkuOffering
+  SkuOfferingLimits: SearchServiceSkuOfferingLimits
+  UnavailableNameReason: SearchServiceNameUnavailableReason
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -100,7 +107,6 @@ override-operation-name:
   Services_CheckNameAvailability: CheckSearchServiceNameAvailability
 
 # Remove "stopped" enum from SearchServiceStatus
-
 directive:
   - from: search.json
     where: $.definitions.SearchServiceProperties.properties.status

@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +23,14 @@ namespace Azure.ResourceManager.ContainerServiceFleet
 
         ContainerServiceFleetMemberResource IOperationSource<ContainerServiceFleetMemberResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = ContainerServiceFleetMemberData.DeserializeContainerServiceFleetMemberData(document.RootElement);
+            var data = ModelReaderWriter.Read<ContainerServiceFleetMemberData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerContainerServiceFleetContext.Default);
             return new ContainerServiceFleetMemberResource(_client, data);
         }
 
         async ValueTask<ContainerServiceFleetMemberResource> IOperationSource<ContainerServiceFleetMemberResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = ContainerServiceFleetMemberData.DeserializeContainerServiceFleetMemberData(document.RootElement);
-            return new ContainerServiceFleetMemberResource(_client, data);
+            var data = ModelReaderWriter.Read<ContainerServiceFleetMemberData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerContainerServiceFleetContext.Default);
+            return await Task.FromResult(new ContainerServiceFleetMemberResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

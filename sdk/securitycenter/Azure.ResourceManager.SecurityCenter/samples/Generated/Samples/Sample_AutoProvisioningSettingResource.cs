@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.SecurityCenter.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.SecurityCenter.Samples
 {
     public partial class Sample_AutoProvisioningSettingResource
     {
-        // Get an auto provisioning setting for subscription
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAnAutoProvisioningSettingForSubscription()
         {
             // Generated from example definition: specification/security/resource-manager/Microsoft.Security/preview/2017-08-01-preview/examples/AutoProvisioningSettings/GetAutoProvisioningSettingSubscription_example.json
@@ -45,9 +45,8 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create auto provisioning settings for subscription
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_CreateAutoProvisioningSettingsForSubscription()
         {
             // Generated from example definition: specification/security/resource-manager/Microsoft.Security/preview/2017-08-01-preview/examples/AutoProvisioningSettings/CreateAutoProvisioningSettingsSubscription_example.json
@@ -66,7 +65,7 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
             AutoProvisioningSettingResource autoProvisioningSetting = client.GetAutoProvisioningSettingResource(autoProvisioningSettingResourceId);
 
             // invoke the operation
-            AutoProvisioningSettingData data = new AutoProvisioningSettingData()
+            AutoProvisioningSettingData data = new AutoProvisioningSettingData
             {
                 AutoProvision = AutoProvisionState.On,
             };

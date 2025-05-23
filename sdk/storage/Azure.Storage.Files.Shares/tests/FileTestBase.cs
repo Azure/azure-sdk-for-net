@@ -110,6 +110,9 @@ namespace Azure.Storage.Files.Shares.Tests
         public ShareServiceClient GetServiceClient_OAuth()
             => SharesClientBuilder.GetServiceClient_OAuth(TestEnvironment.Credential);
 
+        public ShareServiceClient GetServiceClient_PremiumFileOAuth()
+            => SharesClientBuilder.GetServiceClient_PremiumFileOAuth(TestEnvironment.Credential);
+
         public SasQueryParameters GetNewAccountSasCredentials(StorageSharedKeyCredential sharedKeyCredentials = default,
             AccountSasResourceTypes resourceTypes = AccountSasResourceTypes.Container,
             AccountSasPermissions permissions = AccountSasPermissions.Create | AccountSasPermissions.Delete)

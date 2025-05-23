@@ -295,11 +295,11 @@ namespace Azure.Messaging.EventHubs.Tests
         public void SystemPropertiesCanBeRead()
         {
             var sequenceNumber = 123L;
-            var offset = 456L;
+            var offset = "456L";
             var enqueueTime = new DateTimeOffset(2015, 10, 27, 00, 00, 00, TimeSpan.Zero);
             var partitionKey = "fake-key";
             var lastSequence = 321L;
-            var lastOffset = 654L;
+            var lastOffset = "654L";
             var lastEnqueue = new DateTimeOffset(2012, 03, 04, 08, 00, 00, TimeSpan.Zero);
             var lastRetrieve = new DateTimeOffset(2020, 01, 01, 05, 15, 37, TimeSpan.Zero);
             var message = CreateDataBodyMessageWithSystemProperties(sequenceNumber, lastSequence, offset, lastOffset, partitionKey, enqueueTime, lastEnqueue, lastRetrieve);
@@ -330,11 +330,11 @@ namespace Azure.Messaging.EventHubs.Tests
             };
 
             var sequenceNumber = 123L;
-            var offset = 456L;
+            var offset = "456L";
             var enqueueTime = new DateTimeOffset(2015, 10, 27, 00, 00, 00, TimeSpan.Zero);
             var partitionKey = "fake-key";
             var lastSequence = 321L;
-            var lastOffset = 654L;
+            var lastOffset = "654L";
             var lastEnqueue = new DateTimeOffset(2012, 03, 04, 08, 00, 00, TimeSpan.Zero);
             var lastRetrieve = new DateTimeOffset(2020, 01, 01, 05, 15, 37, TimeSpan.Zero);
 
@@ -361,11 +361,11 @@ namespace Azure.Messaging.EventHubs.Tests
         public void SystemPropertiesReturnCustomDefaultValuesWhenNotInTheMessage()
         {
             var sequenceNumber = 123L;
-            var offset = 456L;
+            var offset = "456L";
             var enqueueTime = new DateTimeOffset(2015, 10, 27, 00, 00, 00, TimeSpan.Zero);
             var partitionKey = "fake-key";
             var lastSequence = 321L;
-            var lastOffset = 654L;
+            var lastOffset = "654L";
             var lastEnqueue = new DateTimeOffset(2012, 03, 04, 08, 00, 00, TimeSpan.Zero);
             var lastRetrieve = new DateTimeOffset(2020, 01, 01, 05, 15, 37, TimeSpan.Zero);
             var message = CreateDataBodyMessageWithSystemProperties(default, default, default, default, default, default, default, default);
@@ -391,7 +391,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var message = CreateDataBodyMessageWithSystemProperties(default, default, default, default, default, default, default, default);
 
             Assert.That(message.GetSequenceNumber(), Is.EqualTo(long.MinValue), "The sequence number should match.");
-            Assert.That(message.GetOffset(), Is.EqualTo(long.MinValue), "The offset should match.");
+            Assert.That(message.GetOffset(), Is.EqualTo(null), "The offset should match.");
             Assert.That(message.GetEnqueuedTime(), Is.EqualTo(default(DateTimeOffset)), "The enqueue time should match.");
             Assert.That(message.GetPartitionKey(), Is.EqualTo(null), "The partition key should match.");
             Assert.That(message.GetLastPartitionSequenceNumber(), Is.EqualTo(null), "The last sequence number should match.");
@@ -432,6 +432,121 @@ namespace Azure.Messaging.EventHubs.Tests
 
             message.SetEnqueuedTime(enqueueTime);
             Assert.That(message.GetEnqueuedTime(), Is.EqualTo(enqueueTime), "The enqueue time should match.");
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="AmqpAnnotatedMessageExtensions.GetMessageAnnotationNormalizedValue" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public void GetMessageAnnotationNormalizedValueReturnsNullWhenNoAnnotations()
+        {
+            var message = new AmqpAnnotatedMessage(AmqpMessageBody.FromData([ReadOnlyMemory<byte>.Empty]));
+            var value = message.GetMessageAnnotationNormalizedValue("anyKey");
+            Assert.That(value, Is.Null, "A missing annotation section should return null.");
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="AmqpAnnotatedMessageExtensions.GetMessageAnnotationNormalizedValue" />
+        ///   method for enqueued time normalization.
+        /// </summary>
+        ///
+        [Test]
+        public void GetMessageAnnotationNormalizedValueNormalizesEnqueuedTime()
+        {
+            var key = AmqpProperty.EnqueuedTime.ToString();
+            var expected = new DateTimeOffset(2024, 5, 19, 12, 0, 0, TimeSpan.Zero);
+            var message = new AmqpAnnotatedMessage(AmqpMessageBody.FromData([ReadOnlyMemory<byte>.Empty]));
+            message.MessageAnnotations.Add(key, expected.UtcDateTime);
+
+            var value = message.GetMessageAnnotationNormalizedValue(key);
+            Assert.That(value, Is.EqualTo(expected), "The enqueued time should be normalized to DateTimeOffset.");
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="AmqpAnnotatedMessageExtensions.GetMessageAnnotationNormalizedValue" />
+        ///   method for sequence number normalization.
+        /// </summary>
+        ///
+        [Test]
+        [TestCase(42, 42L)]
+        [TestCase(12345L, 12345L)]
+        [TestCase("12345", 12345L)]
+        public void GetMessageAnnotationNormalizedValueNormalizesSequenceNumber(object input,
+                                                                                long expected)
+        {
+            var key = AmqpProperty.SequenceNumber.ToString();
+            var message = new AmqpAnnotatedMessage(AmqpMessageBody.FromData([ReadOnlyMemory<byte>.Empty]));
+            message.MessageAnnotations.Add(key, input);
+
+            var value = message.GetMessageAnnotationNormalizedValue(key);
+            Assert.That(value, Is.EqualTo(expected), "The sequence number should be normalized to long.");
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="AmqpAnnotatedMessageExtensions.GetMessageAnnotationNormalizedValue" />
+        ///   method for AmqpMessageId normalization.
+        /// </summary>
+        ///
+        [Test]
+        public void GetMessageAnnotationNormalizedValueNormalizesAmqpMessageId()
+        {
+            var key = "customId";
+            var id = new AmqpMessageId("id-123");
+            var message = new AmqpAnnotatedMessage(AmqpMessageBody.FromData([ReadOnlyMemory<byte>.Empty]));
+            message.MessageAnnotations.Add(key, id);
+
+            var value = message.GetMessageAnnotationNormalizedValue(key);
+            Assert.That(value, Is.EqualTo(id.ToString()), "The AmqpMessageId should be normalized to string.");
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="AmqpAnnotatedMessageExtensions.GetMessageAnnotationNormalizedValue" />
+        ///   method for AmqpAddress normalization.
+        /// </summary>
+        ///
+        [Test]
+        public void GetMessageAnnotationNormalizedValueNormalizesAmqpAddress()
+        {
+            var key = "customAddress";
+            var address = new AmqpAddress("amqps://test");
+            var message = new AmqpAnnotatedMessage(AmqpMessageBody.FromData([ReadOnlyMemory<byte>.Empty]));
+            message.MessageAnnotations.Add(key, address);
+
+            var value = message.GetMessageAnnotationNormalizedValue(key);
+            Assert.That(value, Is.EqualTo(address.ToString()), "The AmqpAddress should be normalized to string.");
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="AmqpAnnotatedMessageExtensions.GetMessageAnnotationNormalizedValue" />
+        ///   method for pass through of other types.
+        /// </summary>
+        ///
+        [Test]
+        public void GetMessageAnnotationNormalizedValueReturnsRawValueForOtherTypes()
+        {
+            var key = "customInt";
+            var message = new AmqpAnnotatedMessage(AmqpMessageBody.FromData([ReadOnlyMemory<byte>.Empty]));
+            message.MessageAnnotations.Add(key, 42);
+
+            var value = message.GetMessageAnnotationNormalizedValue(key);
+            Assert.That(value, Is.EqualTo(42), "Other types should be returned as-is.");
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="AmqpAnnotatedMessageExtensions.GetMessageAnnotationNormalizedValue" />
+        ///   method when the key is not present.
+        /// </summary>
+        ///
+        [Test]
+        public void GetMessageAnnotationNormalizedValueReturnsNullWhenKeyNotPresent()
+        {
+            var message = new AmqpAnnotatedMessage(AmqpMessageBody.FromData([ReadOnlyMemory<byte>.Empty]));
+            message.MessageAnnotations.Add("someKey", "someValue");
+
+            var value = message.GetMessageAnnotationNormalizedValue("otherKey");
+            Assert.That(value, Is.Null, "A missing key should return null.");
         }
 
         /// <summary>
@@ -510,8 +625,8 @@ namespace Azure.Messaging.EventHubs.Tests
         ///
         private static AmqpAnnotatedMessage CreateDataBodyMessageWithSystemProperties(long? sequenceNumber,
                                                                                       long? lastSequenceNumber,
-                                                                                      long? offset,
-                                                                                      long? lastOffset,
+                                                                                      string offset,
+                                                                                      string lastOffset,
                                                                                       string partitionKey,
                                                                                       DateTimeOffset? enqueueTime,
                                                                                       DateTimeOffset? lastEnqueueTime,
@@ -526,9 +641,9 @@ namespace Azure.Messaging.EventHubs.Tests
                 message.MessageAnnotations.Add(AmqpProperty.SequenceNumber.ToString(), sequenceNumber.Value);
             }
 
-            if (offset.HasValue)
+            if (!string.IsNullOrEmpty(offset))
             {
-                message.MessageAnnotations.Add(AmqpProperty.Offset.ToString(), offset.Value);
+                message.MessageAnnotations.Add(AmqpProperty.Offset.ToString(), offset);
             }
 
             if (enqueueTime.HasValue)
@@ -550,9 +665,9 @@ namespace Azure.Messaging.EventHubs.Tests
                 message.DeliveryAnnotations.Add(AmqpProperty.PartitionLastEnqueuedSequenceNumber.ToString(), lastSequenceNumber.Value);
             }
 
-            if (lastOffset.HasValue)
+            if (!string.IsNullOrEmpty(lastOffset))
             {
-                message.DeliveryAnnotations.Add(AmqpProperty.PartitionLastEnqueuedOffset.ToString(), lastOffset.Value);
+                message.DeliveryAnnotations.Add(AmqpProperty.PartitionLastEnqueuedOffset.ToString(), lastOffset);
             }
 
             if (lastEnqueueTime.HasValue)

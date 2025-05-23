@@ -59,6 +59,11 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(NetworkGroupAddressSpaceAggregationOption))
+            {
+                writer.WritePropertyName("networkGroupAddressSpaceAggregationOption"u8);
+                writer.WriteStringValue(NetworkGroupAddressSpaceAggregationOption.Value.ToString());
+            }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
@@ -99,6 +104,7 @@ namespace Azure.ResourceManager.Network
             SystemData systemData = default;
             string description = default;
             IList<NetworkIntentPolicyBasedService> applyOnNetworkIntentPolicyBasedServices = default;
+            AddressSpaceAggregationOption? networkGroupAddressSpaceAggregationOption = default;
             NetworkProvisioningState? provisioningState = default;
             Guid? resourceGuid = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -166,6 +172,15 @@ namespace Azure.ResourceManager.Network
                             applyOnNetworkIntentPolicyBasedServices = array;
                             continue;
                         }
+                        if (property0.NameEquals("networkGroupAddressSpaceAggregationOption"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            networkGroupAddressSpaceAggregationOption = new AddressSpaceAggregationOption(property0.Value.GetString());
+                            continue;
+                        }
                         if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -200,6 +215,7 @@ namespace Azure.ResourceManager.Network
                 systemData,
                 description,
                 applyOnNetworkIntentPolicyBasedServices ?? new ChangeTrackingList<NetworkIntentPolicyBasedService>(),
+                networkGroupAddressSpaceAggregationOption,
                 provisioningState,
                 resourceGuid,
                 etag,
@@ -213,7 +229,7 @@ namespace Azure.ResourceManager.Network
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(SecurityAdminConfigurationData)} does not support writing '{options.Format}' format.");
             }
@@ -227,7 +243,7 @@ namespace Azure.ResourceManager.Network
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeSecurityAdminConfigurationData(document.RootElement, options);
                     }
                 default:

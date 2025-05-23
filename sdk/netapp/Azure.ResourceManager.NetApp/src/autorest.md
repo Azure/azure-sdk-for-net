@@ -8,8 +8,8 @@ azure-arm: true
 csharp: true
 library-name: NetApp
 namespace: Azure.ResourceManager.NetApp
-require: https://github.com/Azure/azure-rest-api-specs/blob/92e45eacb58f010293254e88a2bf1160c9a25478/specification/netapp/resource-manager/readme.md
-#tag: package-2024-07
+require: https://github.com/Azure/azure-rest-api-specs/blob/d7a38bf0c0b5fbd9e893e05ad0a7dbee18ac3a8d/specification/netapp/resource-manager/readme.md
+tag: package-2025-01-01
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -19,7 +19,6 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 use-model-reader-writer: true
-use-write-core: true
 
 #mgmt-debug:
 #  show-serialized-names: true
@@ -104,6 +103,12 @@ prepend-rp-prefix:
   - RegionInfo
   - EncryptionIdentity
   - BackupVault
+  - ChangeKeyVault
+  - DestinationReplication
+  - EncryptionTransitionRequest
+  - KeyVaultPrivateEndpoint
+  - ReplicationType
+  - VolumeLanguage
 
 rename-mapping:
   CapacityPool.properties.poolId: -|uuid
@@ -248,6 +253,11 @@ rename-mapping:
   VolumeRevert.snapshotId: -|string
   Volume.properties.backupId: -|string
   BackupsMigrationRequest.backupVaultId: -|string
+  ListQuotaReportResponse: NetAppVolumeQuotaReportListResult
+  QuotaReport: NetAppVolumeQuotaReport
+  GetKeyVaultStatusResponse: NetAppKeyVaultStatusResult
+  UsageResult : NetAppUsageResult
+  UsageName: NetAppUsageName
 
 models-to-treat-empty-string-as-null:
 - VolumeSnapshotProperties
@@ -256,7 +266,7 @@ list-exception:
   - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}/volumeGroups/{volumeGroupName}
 
 directive:
-  # remove this operation because the Snapshots_Update defines an empty object
+  # remove this operation because the Snapshots_Update defines an empty object-
   - remove-operation: Snapshots_Update
 
 ```

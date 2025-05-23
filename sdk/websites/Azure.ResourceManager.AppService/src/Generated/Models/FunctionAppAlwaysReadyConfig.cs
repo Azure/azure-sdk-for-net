@@ -52,12 +52,12 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Initializes a new instance of <see cref="FunctionAppAlwaysReadyConfig"/>. </summary>
         /// <param name="name"> Either a function group or a function name is required. For additional information see https://aka.ms/flexconsumption/alwaysready. </param>
-        /// <param name="instanceCount"> Sets the number of 'Always Ready' instances for a given function group or a specific function. For additional information see https://aka.ms/flexconsumption/alwaysready. </param>
+        /// <param name="alwaysReadyInstanceCount"> Sets the number of 'Always Ready' instances for a given function group or a specific function. For additional information see https://aka.ms/flexconsumption/alwaysready. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FunctionAppAlwaysReadyConfig(string name, float? instanceCount, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal FunctionAppAlwaysReadyConfig(string name, int? alwaysReadyInstanceCount, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
-            InstanceCount = instanceCount;
+            AlwaysReadyInstanceCount = alwaysReadyInstanceCount;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -66,6 +66,6 @@ namespace Azure.ResourceManager.AppService.Models
         public string Name { get; set; }
         /// <summary> Sets the number of 'Always Ready' instances for a given function group or a specific function. For additional information see https://aka.ms/flexconsumption/alwaysready. </summary>
         [WirePath("instanceCount")]
-        public float? InstanceCount { get; set; }
+        public int? AlwaysReadyInstanceCount { get; set; }
     }
 }

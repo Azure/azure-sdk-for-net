@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.DataLakeStore
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataLakeStoreContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(DataLakeStoreTrustedIdProviderData)} does not support writing '{options.Format}' format.");
             }
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.DataLakeStore
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeDataLakeStoreTrustedIdProviderData(document.RootElement, options);
                     }
                 default:

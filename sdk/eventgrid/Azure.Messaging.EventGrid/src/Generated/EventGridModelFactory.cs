@@ -144,14 +144,29 @@ namespace Azure.Messaging.EventGrid
 
         /// <summary> Initializes a new instance of <see cref="SystemEvents.StorageLifecyclePolicyCompletedEventData"/>. </summary>
         /// <param name="scheduleTime"> The time the policy task was scheduled. </param>
+        /// <param name="policyRunSummary"> Policy run status of an account in a Blob Management cycle. </param>
         /// <param name="deleteSummary"> Execution statistics of a specific policy action in a Blob Management cycle. </param>
         /// <param name="tierToCoolSummary"> Execution statistics of a specific policy action in a Blob Management cycle. </param>
         /// <param name="tierToColdSummary"> Execution statistics of a specific policy action in a Blob Management cycle. </param>
         /// <param name="tierToArchiveSummary"> Execution statistics of a specific policy action in a Blob Management cycle. </param>
         /// <returns> A new <see cref="SystemEvents.StorageLifecyclePolicyCompletedEventData"/> instance for mocking. </returns>
-        public static StorageLifecyclePolicyCompletedEventData StorageLifecyclePolicyCompletedEventData(string scheduleTime = null, StorageLifecyclePolicyActionSummaryDetail deleteSummary = null, StorageLifecyclePolicyActionSummaryDetail tierToCoolSummary = null, StorageLifecyclePolicyActionSummaryDetail tierToColdSummary = null, StorageLifecyclePolicyActionSummaryDetail tierToArchiveSummary = null)
+        public static StorageLifecyclePolicyCompletedEventData StorageLifecyclePolicyCompletedEventData(string scheduleTime = null, StorageLifecyclePolicyRunSummary policyRunSummary = null, StorageLifecyclePolicyActionSummaryDetail deleteSummary = null, StorageLifecyclePolicyActionSummaryDetail tierToCoolSummary = null, StorageLifecyclePolicyActionSummaryDetail tierToColdSummary = null, StorageLifecyclePolicyActionSummaryDetail tierToArchiveSummary = null)
         {
-            return new StorageLifecyclePolicyCompletedEventData(scheduleTime, deleteSummary, tierToCoolSummary, tierToColdSummary, tierToArchiveSummary);
+            return new StorageLifecyclePolicyCompletedEventData(
+                scheduleTime,
+                policyRunSummary,
+                deleteSummary,
+                tierToCoolSummary,
+                tierToColdSummary,
+                tierToArchiveSummary);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.StorageLifecyclePolicyRunSummary"/>. </summary>
+        /// <param name="completionStatus"> Policy status can be Completed/CompletedWithError/Incomplete. </param>
+        /// <returns> A new <see cref="SystemEvents.StorageLifecyclePolicyRunSummary"/> instance for mocking. </returns>
+        public static StorageLifecyclePolicyRunSummary StorageLifecyclePolicyRunSummary(StorageLifecycleCompletionStatus completionStatus = default)
+        {
+            return new StorageLifecyclePolicyRunSummary(completionStatus);
         }
 
         /// <summary> Initializes a new instance of <see cref="SystemEvents.StorageLifecyclePolicyActionSummaryDetail"/>. </summary>
@@ -2818,6 +2833,180 @@ namespace Azure.Messaging.EventGrid
                 updatedWorkerProperties?.ToList());
         }
 
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsCallParticipantAddedEventData"/>. </summary>
+        /// <param name="startedBy"> The call participant who initiated the call. </param>
+        /// <param name="serverCallId"> The callId of the server. </param>
+        /// <param name="group"> The group metadata. </param>
+        /// <param name="room"> The group metadata. </param>
+        /// <param name="isTwoParty"> Is two-party in calling event. </param>
+        /// <param name="correlationId"> The correlation ID of the calling event. </param>
+        /// <param name="isRoomsCall"> Is the calling event a room call. </param>
+        /// <param name="user"> The user of the call participant. </param>
+        /// <param name="displayName"> The display name of the participant. </param>
+        /// <param name="participantId"> The Id of the participant. </param>
+        /// <param name="userAgent"> The user agent of the participant. </param>
+        /// <returns> A new <see cref="SystemEvents.AcsCallParticipantAddedEventData"/> instance for mocking. </returns>
+        public static AcsCallParticipantAddedEventData AcsCallParticipantAddedEventData(AcsCallParticipantProperties startedBy = null, string serverCallId = null, AcsCallGroupProperties group = null, AcsCallRoomProperties room = null, bool? isTwoParty = null, string correlationId = null, bool? isRoomsCall = null, AcsCallParticipantProperties user = null, string displayName = null, string participantId = null, string userAgent = null)
+        {
+            return new AcsCallParticipantAddedEventData(
+                startedBy,
+                serverCallId,
+                group,
+                room,
+                isTwoParty,
+                correlationId,
+                isRoomsCall,
+                user,
+                displayName,
+                participantId,
+                userAgent);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsCallParticipantEventData"/>. </summary>
+        /// <param name="startedBy"> The call participant who initiated the call. </param>
+        /// <param name="serverCallId"> The callId of the server. </param>
+        /// <param name="group"> The group metadata. </param>
+        /// <param name="room"> The group metadata. </param>
+        /// <param name="isTwoParty"> Is two-party in calling event. </param>
+        /// <param name="correlationId"> The correlation ID of the calling event. </param>
+        /// <param name="isRoomsCall"> Is the calling event a room call. </param>
+        /// <param name="user"> The user of the call participant. </param>
+        /// <param name="displayName"> The display name of the participant. </param>
+        /// <param name="participantId"> The Id of the participant. </param>
+        /// <param name="userAgent"> The user agent of the participant. </param>
+        /// <returns> A new <see cref="SystemEvents.AcsCallParticipantEventData"/> instance for mocking. </returns>
+        public static AcsCallParticipantEventData AcsCallParticipantEventData(AcsCallParticipantProperties startedBy = null, string serverCallId = null, AcsCallGroupProperties group = null, AcsCallRoomProperties room = null, bool? isTwoParty = null, string correlationId = null, bool? isRoomsCall = null, AcsCallParticipantProperties user = null, string displayName = null, string participantId = null, string userAgent = null)
+        {
+            return new AcsCallParticipantEventData(
+                startedBy,
+                serverCallId,
+                group,
+                room,
+                isTwoParty,
+                correlationId,
+                isRoomsCall,
+                user,
+                displayName,
+                participantId,
+                userAgent);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsCallParticipantProperties"/>. </summary>
+        /// <param name="communicationIdentifier"> The communication identifier of the call ended by. </param>
+        /// <param name="role"> The role of participant user. </param>
+        /// <returns> A new <see cref="SystemEvents.AcsCallParticipantProperties"/> instance for mocking. </returns>
+        public static AcsCallParticipantProperties AcsCallParticipantProperties(CommunicationIdentifierModel communicationIdentifier = null, AcsCallParticipantKind? role = null)
+        {
+            return new AcsCallParticipantProperties(communicationIdentifier, role);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsCallingEventProperties"/>. </summary>
+        /// <param name="startedBy"> The call participant who initiated the call. </param>
+        /// <param name="serverCallId"> The callId of the server. </param>
+        /// <param name="group"> The group metadata. </param>
+        /// <param name="room"> The group metadata. </param>
+        /// <param name="isTwoParty"> Is two-party in calling event. </param>
+        /// <param name="correlationId"> The correlation ID of the calling event. </param>
+        /// <param name="isRoomsCall"> Is the calling event a room call. </param>
+        /// <returns> A new <see cref="SystemEvents.AcsCallingEventProperties"/> instance for mocking. </returns>
+        public static AcsCallingEventProperties AcsCallingEventProperties(AcsCallParticipantProperties startedBy = null, string serverCallId = null, AcsCallGroupProperties group = null, AcsCallRoomProperties room = null, bool? isTwoParty = null, string correlationId = null, bool? isRoomsCall = null)
+        {
+            return new AcsCallingEventProperties(
+                startedBy,
+                serverCallId,
+                group,
+                room,
+                isTwoParty,
+                correlationId,
+                isRoomsCall);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsCallGroupProperties"/>. </summary>
+        /// <param name="id"> Group Id. Format is Guid as string. </param>
+        /// <returns> A new <see cref="SystemEvents.AcsCallGroupProperties"/> instance for mocking. </returns>
+        public static AcsCallGroupProperties AcsCallGroupProperties(string id = null)
+        {
+            return new AcsCallGroupProperties(id);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsCallRoomProperties"/>. </summary>
+        /// <param name="id"> Room Id. Format is Guid as string. </param>
+        /// <returns> A new <see cref="SystemEvents.AcsCallRoomProperties"/> instance for mocking. </returns>
+        public static AcsCallRoomProperties AcsCallRoomProperties(string id = null)
+        {
+            return new AcsCallRoomProperties(id);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsCallParticipantRemovedEventData"/>. </summary>
+        /// <param name="startedBy"> The call participant who initiated the call. </param>
+        /// <param name="serverCallId"> The callId of the server. </param>
+        /// <param name="group"> The group metadata. </param>
+        /// <param name="room"> The group metadata. </param>
+        /// <param name="isTwoParty"> Is two-party in calling event. </param>
+        /// <param name="correlationId"> The correlation ID of the calling event. </param>
+        /// <param name="isRoomsCall"> Is the calling event a room call. </param>
+        /// <param name="user"> The user of the call participant. </param>
+        /// <param name="displayName"> The display name of the participant. </param>
+        /// <param name="participantId"> The Id of the participant. </param>
+        /// <param name="userAgent"> The user agent of the participant. </param>
+        /// <returns> A new <see cref="SystemEvents.AcsCallParticipantRemovedEventData"/> instance for mocking. </returns>
+        public static AcsCallParticipantRemovedEventData AcsCallParticipantRemovedEventData(AcsCallParticipantProperties startedBy = null, string serverCallId = null, AcsCallGroupProperties group = null, AcsCallRoomProperties room = null, bool? isTwoParty = null, string correlationId = null, bool? isRoomsCall = null, AcsCallParticipantProperties user = null, string displayName = null, string participantId = null, string userAgent = null)
+        {
+            return new AcsCallParticipantRemovedEventData(
+                startedBy,
+                serverCallId,
+                group,
+                room,
+                isTwoParty,
+                correlationId,
+                isRoomsCall,
+                user,
+                displayName,
+                participantId,
+                userAgent);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsCallStartedEventData"/>. </summary>
+        /// <param name="startedBy"> The call participant who initiated the call. </param>
+        /// <param name="serverCallId"> The callId of the server. </param>
+        /// <param name="group"> The group metadata. </param>
+        /// <param name="room"> The group metadata. </param>
+        /// <param name="isTwoParty"> Is two-party in calling event. </param>
+        /// <param name="correlationId"> The correlation ID of the calling event. </param>
+        /// <param name="isRoomsCall"> Is the calling event a room call. </param>
+        /// <returns> A new <see cref="SystemEvents.AcsCallStartedEventData"/> instance for mocking. </returns>
+        public static AcsCallStartedEventData AcsCallStartedEventData(AcsCallParticipantProperties startedBy = null, string serverCallId = null, AcsCallGroupProperties group = null, AcsCallRoomProperties room = null, bool? isTwoParty = null, string correlationId = null, bool? isRoomsCall = null)
+        {
+            return new AcsCallStartedEventData(
+                startedBy,
+                serverCallId,
+                group,
+                room,
+                isTwoParty,
+                correlationId,
+                isRoomsCall);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsCallEndedByProperties"/>. </summary>
+        /// <param name="communicationIdentifier"> The communication identifier of the call ended by. </param>
+        /// <param name="kind"> The type of the call ended by. </param>
+        /// <param name="name"> The name of the call ended by. </param>
+        /// <returns> A new <see cref="SystemEvents.AcsCallEndedByProperties"/> instance for mocking. </returns>
+        public static AcsCallEndedByProperties AcsCallEndedByProperties(CommunicationIdentifierModel communicationIdentifier = null, AcsCallEndedByKind? kind = null, string name = null)
+        {
+            return new AcsCallEndedByProperties(communicationIdentifier, kind, name);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsCallEndReasonProperties"/>. </summary>
+        /// <param name="code"> Reason code for ending the call. </param>
+        /// <param name="subCode"> Reason subcode for ending the call. </param>
+        /// <param name="phrase"> Reason for ending the call. </param>
+        /// <returns> A new <see cref="SystemEvents.AcsCallEndReasonProperties"/> instance for mocking. </returns>
+        public static AcsCallEndReasonProperties AcsCallEndReasonProperties(int? code = null, int? subCode = null, string phrase = null)
+        {
+            return new AcsCallEndReasonProperties(code, subCode, phrase);
+        }
+
         /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsChatMessageReceivedEventData"/>. </summary>
         /// <param name="recipientCommunicationIdentifier"> The communication identifier of the target user. </param>
         /// <param name="transactionId"> The transaction id will be used as co-relation vector. </param>
@@ -2884,7 +3073,7 @@ namespace Azure.Messaging.EventGrid
             return new AcsChatEventBaseProperties(recipientCommunicationIdentifier, transactionId, threadId);
         }
 
-        /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsChatMessageReceivedInThreadEventData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsChatAzureBotCommandReceivedInThreadEventData"/>. </summary>
         /// <param name="transactionId"> The transaction id will be used as co-relation vector. </param>
         /// <param name="threadId"> The chat thread id. </param>
         /// <param name="messageId"> The chat message id. </param>
@@ -2895,12 +3084,21 @@ namespace Azure.Messaging.EventGrid
         /// <param name="version"> The version of the message. </param>
         /// <param name="messageBody"> The body of the chat message. </param>
         /// <param name="metadata"> The chat message metadata. </param>
-        /// <returns> A new <see cref="SystemEvents.AcsChatMessageReceivedInThreadEventData"/> instance for mocking. </returns>
-        public static AcsChatMessageReceivedInThreadEventData AcsChatMessageReceivedInThreadEventData(string transactionId = null, string threadId = null, string messageId = null, CommunicationIdentifierModel senderCommunicationIdentifier = null, string senderDisplayName = null, DateTimeOffset? composeTime = null, string type = null, long? version = null, string messageBody = null, IReadOnlyDictionary<string, string> metadata = null)
+        /// <exception cref="ArgumentNullException"> <paramref name="transactionId"/> or <paramref name="threadId"/> is null. </exception>
+        /// <returns> A new <see cref="SystemEvents.AcsChatAzureBotCommandReceivedInThreadEventData"/> instance for mocking. </returns>
+        public static AcsChatAzureBotCommandReceivedInThreadEventData AcsChatAzureBotCommandReceivedInThreadEventData(string transactionId = null, string threadId = null, string messageId = null, CommunicationIdentifierModel senderCommunicationIdentifier = null, string senderDisplayName = null, DateTimeOffset? composeTime = null, string type = null, long? version = null, string messageBody = null, IReadOnlyDictionary<string, string> metadata = null)
         {
+            if (transactionId == null)
+            {
+                throw new ArgumentNullException(nameof(transactionId));
+            }
+            if (threadId == null)
+            {
+                throw new ArgumentNullException(nameof(threadId));
+            }
             metadata ??= new Dictionary<string, string>();
 
-            return new AcsChatMessageReceivedInThreadEventData(
+            return new AcsChatAzureBotCommandReceivedInThreadEventData(
                 transactionId,
                 threadId,
                 messageId,
@@ -2922,9 +3120,19 @@ namespace Azure.Messaging.EventGrid
         /// <param name="composeTime"> The original compose time of the message. </param>
         /// <param name="type"> The type of the message. </param>
         /// <param name="version"> The version of the message. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="transactionId"/> or <paramref name="threadId"/> is null. </exception>
         /// <returns> A new <see cref="SystemEvents.AcsChatMessageEventInThreadBaseProperties"/> instance for mocking. </returns>
         public static AcsChatMessageEventInThreadBaseProperties AcsChatMessageEventInThreadBaseProperties(string transactionId = null, string threadId = null, string messageId = null, CommunicationIdentifierModel senderCommunicationIdentifier = null, string senderDisplayName = null, DateTimeOffset? composeTime = null, string type = null, long? version = null)
         {
+            if (transactionId == null)
+            {
+                throw new ArgumentNullException(nameof(transactionId));
+            }
+            if (threadId == null)
+            {
+                throw new ArgumentNullException(nameof(threadId));
+            }
+
             return new AcsChatMessageEventInThreadBaseProperties(
                 transactionId,
                 threadId,
@@ -2939,10 +3147,96 @@ namespace Azure.Messaging.EventGrid
         /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsChatEventInThreadBaseProperties"/>. </summary>
         /// <param name="transactionId"> The transaction id will be used as co-relation vector. </param>
         /// <param name="threadId"> The chat thread id. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="transactionId"/> or <paramref name="threadId"/> is null. </exception>
         /// <returns> A new <see cref="SystemEvents.AcsChatEventInThreadBaseProperties"/> instance for mocking. </returns>
         public static AcsChatEventInThreadBaseProperties AcsChatEventInThreadBaseProperties(string transactionId = null, string threadId = null)
         {
+            if (transactionId == null)
+            {
+                throw new ArgumentNullException(nameof(transactionId));
+            }
+            if (threadId == null)
+            {
+                throw new ArgumentNullException(nameof(threadId));
+            }
+
             return new AcsChatEventInThreadBaseProperties(transactionId, threadId);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsChatTypingIndicatorReceivedInThreadEventData"/>. </summary>
+        /// <param name="transactionId"> The transaction id will be used as co-relation vector. </param>
+        /// <param name="threadId"> The chat thread id. </param>
+        /// <param name="messageId"> The chat message id. </param>
+        /// <param name="senderCommunicationIdentifier"> The communication identifier of the sender. </param>
+        /// <param name="senderDisplayName"> The display name of the sender. </param>
+        /// <param name="composeTime"> The original compose time of the message. </param>
+        /// <param name="type"> The type of the message. </param>
+        /// <param name="version"> The version of the message. </param>
+        /// <param name="messageBody"> The body of the chat message. </param>
+        /// <param name="metadata"> The chat message metadata. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="transactionId"/> or <paramref name="threadId"/> is null. </exception>
+        /// <returns> A new <see cref="SystemEvents.AcsChatTypingIndicatorReceivedInThreadEventData"/> instance for mocking. </returns>
+        public static AcsChatTypingIndicatorReceivedInThreadEventData AcsChatTypingIndicatorReceivedInThreadEventData(string transactionId = null, string threadId = null, string messageId = null, CommunicationIdentifierModel senderCommunicationIdentifier = null, string senderDisplayName = null, DateTimeOffset? composeTime = null, string type = null, long? version = null, string messageBody = null, IReadOnlyDictionary<string, string> metadata = null)
+        {
+            if (transactionId == null)
+            {
+                throw new ArgumentNullException(nameof(transactionId));
+            }
+            if (threadId == null)
+            {
+                throw new ArgumentNullException(nameof(threadId));
+            }
+            metadata ??= new Dictionary<string, string>();
+
+            return new AcsChatTypingIndicatorReceivedInThreadEventData(
+                transactionId,
+                threadId,
+                messageId,
+                senderCommunicationIdentifier,
+                senderDisplayName,
+                composeTime,
+                type,
+                version,
+                messageBody,
+                metadata);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsChatMessageReceivedInThreadEventData"/>. </summary>
+        /// <param name="transactionId"> The transaction id will be used as co-relation vector. </param>
+        /// <param name="threadId"> The chat thread id. </param>
+        /// <param name="messageId"> The chat message id. </param>
+        /// <param name="senderCommunicationIdentifier"> The communication identifier of the sender. </param>
+        /// <param name="senderDisplayName"> The display name of the sender. </param>
+        /// <param name="composeTime"> The original compose time of the message. </param>
+        /// <param name="type"> The type of the message. </param>
+        /// <param name="version"> The version of the message. </param>
+        /// <param name="messageBody"> The body of the chat message. </param>
+        /// <param name="metadata"> The chat message metadata. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="transactionId"/> or <paramref name="threadId"/> is null. </exception>
+        /// <returns> A new <see cref="SystemEvents.AcsChatMessageReceivedInThreadEventData"/> instance for mocking. </returns>
+        public static AcsChatMessageReceivedInThreadEventData AcsChatMessageReceivedInThreadEventData(string transactionId = null, string threadId = null, string messageId = null, CommunicationIdentifierModel senderCommunicationIdentifier = null, string senderDisplayName = null, DateTimeOffset? composeTime = null, string type = null, long? version = null, string messageBody = null, IReadOnlyDictionary<string, string> metadata = null)
+        {
+            if (transactionId == null)
+            {
+                throw new ArgumentNullException(nameof(transactionId));
+            }
+            if (threadId == null)
+            {
+                throw new ArgumentNullException(nameof(threadId));
+            }
+            metadata ??= new Dictionary<string, string>();
+
+            return new AcsChatMessageReceivedInThreadEventData(
+                transactionId,
+                threadId,
+                messageId,
+                senderCommunicationIdentifier,
+                senderDisplayName,
+                composeTime,
+                type,
+                version,
+                messageBody,
+                metadata);
         }
 
         /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsChatMessageEditedEventData"/>. </summary>
@@ -2990,9 +3284,18 @@ namespace Azure.Messaging.EventGrid
         /// <param name="messageBody"> The body of the chat message. </param>
         /// <param name="metadata"> The chat message metadata. </param>
         /// <param name="editTime"> The time at which the message was edited. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="transactionId"/> or <paramref name="threadId"/> is null. </exception>
         /// <returns> A new <see cref="SystemEvents.AcsChatMessageEditedInThreadEventData"/> instance for mocking. </returns>
         public static AcsChatMessageEditedInThreadEventData AcsChatMessageEditedInThreadEventData(string transactionId = null, string threadId = null, string messageId = null, CommunicationIdentifierModel senderCommunicationIdentifier = null, string senderDisplayName = null, DateTimeOffset? composeTime = null, string type = null, long? version = null, string messageBody = null, IReadOnlyDictionary<string, string> metadata = null, DateTimeOffset? editTime = null)
         {
+            if (transactionId == null)
+            {
+                throw new ArgumentNullException(nameof(transactionId));
+            }
+            if (threadId == null)
+            {
+                throw new ArgumentNullException(nameof(threadId));
+            }
             metadata ??= new Dictionary<string, string>();
 
             return new AcsChatMessageEditedInThreadEventData(
@@ -3046,9 +3349,19 @@ namespace Azure.Messaging.EventGrid
         /// <param name="type"> The type of the message. </param>
         /// <param name="version"> The version of the message. </param>
         /// <param name="deleteTime"> The time at which the message was deleted. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="transactionId"/> or <paramref name="threadId"/> is null. </exception>
         /// <returns> A new <see cref="SystemEvents.AcsChatMessageDeletedInThreadEventData"/> instance for mocking. </returns>
         public static AcsChatMessageDeletedInThreadEventData AcsChatMessageDeletedInThreadEventData(string transactionId = null, string threadId = null, string messageId = null, CommunicationIdentifierModel senderCommunicationIdentifier = null, string senderDisplayName = null, DateTimeOffset? composeTime = null, string type = null, long? version = null, DateTimeOffset? deleteTime = null)
         {
+            if (transactionId == null)
+            {
+                throw new ArgumentNullException(nameof(transactionId));
+            }
+            if (threadId == null)
+            {
+                throw new ArgumentNullException(nameof(threadId));
+            }
+
             return new AcsChatMessageDeletedInThreadEventData(
                 transactionId,
                 threadId,
@@ -3123,9 +3436,18 @@ namespace Azure.Messaging.EventGrid
         /// <param name="properties"> The thread properties. </param>
         /// <param name="metadata"> The chat thread created metadata. </param>
         /// <param name="participants"> The list of properties of participants who are part of the thread. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="transactionId"/> or <paramref name="threadId"/> is null. </exception>
         /// <returns> A new <see cref="SystemEvents.AcsChatThreadCreatedEventData"/> instance for mocking. </returns>
         public static AcsChatThreadCreatedEventData AcsChatThreadCreatedEventData(string transactionId = null, string threadId = null, DateTimeOffset? createTime = null, long? version = null, CommunicationIdentifierModel createdByCommunicationIdentifier = null, IReadOnlyDictionary<string, object> properties = null, IReadOnlyDictionary<string, string> metadata = null, IEnumerable<AcsChatThreadParticipantProperties> participants = null)
         {
+            if (transactionId == null)
+            {
+                throw new ArgumentNullException(nameof(transactionId));
+            }
+            if (threadId == null)
+            {
+                throw new ArgumentNullException(nameof(threadId));
+            }
             properties ??= new Dictionary<string, object>();
             metadata ??= new Dictionary<string, string>();
             participants ??= new List<AcsChatThreadParticipantProperties>();
@@ -3146,9 +3468,19 @@ namespace Azure.Messaging.EventGrid
         /// <param name="threadId"> The chat thread id. </param>
         /// <param name="createTime"> The original creation time of the thread. </param>
         /// <param name="version"> The version of the thread. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="transactionId"/> or <paramref name="threadId"/> is null. </exception>
         /// <returns> A new <see cref="SystemEvents.AcsChatThreadEventInThreadBaseProperties"/> instance for mocking. </returns>
         public static AcsChatThreadEventInThreadBaseProperties AcsChatThreadEventInThreadBaseProperties(string transactionId = null, string threadId = null, DateTimeOffset? createTime = null, long? version = null)
         {
+            if (transactionId == null)
+            {
+                throw new ArgumentNullException(nameof(transactionId));
+            }
+            if (threadId == null)
+            {
+                throw new ArgumentNullException(nameof(threadId));
+            }
+
             return new AcsChatThreadEventInThreadBaseProperties(transactionId, threadId, createTime, version);
         }
 
@@ -3180,9 +3512,19 @@ namespace Azure.Messaging.EventGrid
         /// <param name="version"> The version of the thread. </param>
         /// <param name="deletedByCommunicationIdentifier"> The communication identifier of the user who deleted the thread. </param>
         /// <param name="deleteTime"> The deletion time of the thread. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="transactionId"/> or <paramref name="threadId"/> is null. </exception>
         /// <returns> A new <see cref="SystemEvents.AcsChatThreadDeletedEventData"/> instance for mocking. </returns>
         public static AcsChatThreadDeletedEventData AcsChatThreadDeletedEventData(string transactionId = null, string threadId = null, DateTimeOffset? createTime = null, long? version = null, CommunicationIdentifierModel deletedByCommunicationIdentifier = null, DateTimeOffset? deleteTime = null)
         {
+            if (transactionId == null)
+            {
+                throw new ArgumentNullException(nameof(transactionId));
+            }
+            if (threadId == null)
+            {
+                throw new ArgumentNullException(nameof(threadId));
+            }
+
             return new AcsChatThreadDeletedEventData(
                 transactionId,
                 threadId,
@@ -3229,9 +3571,18 @@ namespace Azure.Messaging.EventGrid
         /// <param name="editTime"> The time at which the properties of the thread were updated. </param>
         /// <param name="properties"> The updated thread properties. </param>
         /// <param name="metadata"> The thread metadata. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="transactionId"/> or <paramref name="threadId"/> is null. </exception>
         /// <returns> A new <see cref="SystemEvents.AcsChatThreadPropertiesUpdatedEventData"/> instance for mocking. </returns>
         public static AcsChatThreadPropertiesUpdatedEventData AcsChatThreadPropertiesUpdatedEventData(string transactionId = null, string threadId = null, DateTimeOffset? createTime = null, long? version = null, CommunicationIdentifierModel editedByCommunicationIdentifier = null, DateTimeOffset? editTime = null, IReadOnlyDictionary<string, object> properties = null, IReadOnlyDictionary<string, string> metadata = null)
         {
+            if (transactionId == null)
+            {
+                throw new ArgumentNullException(nameof(transactionId));
+            }
+            if (threadId == null)
+            {
+                throw new ArgumentNullException(nameof(threadId));
+            }
             properties ??= new Dictionary<string, object>();
             metadata ??= new Dictionary<string, string>();
 
@@ -3299,9 +3650,19 @@ namespace Azure.Messaging.EventGrid
         /// <param name="addedByCommunicationIdentifier"> The communication identifier of the user who added the user. </param>
         /// <param name="participantAdded"> The details of the user who was added. </param>
         /// <param name="version"> The version of the thread. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="transactionId"/> or <paramref name="threadId"/> is null. </exception>
         /// <returns> A new <see cref="SystemEvents.AcsChatParticipantAddedToThreadEventData"/> instance for mocking. </returns>
         public static AcsChatParticipantAddedToThreadEventData AcsChatParticipantAddedToThreadEventData(string transactionId = null, string threadId = null, DateTimeOffset? time = null, CommunicationIdentifierModel addedByCommunicationIdentifier = null, AcsChatThreadParticipantProperties participantAdded = null, long? version = null)
         {
+            if (transactionId == null)
+            {
+                throw new ArgumentNullException(nameof(transactionId));
+            }
+            if (threadId == null)
+            {
+                throw new ArgumentNullException(nameof(threadId));
+            }
+
             return new AcsChatParticipantAddedToThreadEventData(
                 transactionId,
                 threadId,
@@ -3318,9 +3679,19 @@ namespace Azure.Messaging.EventGrid
         /// <param name="removedByCommunicationIdentifier"> The communication identifier of the user who removed the user. </param>
         /// <param name="participantRemoved"> The details of the user who was removed. </param>
         /// <param name="version"> The version of the thread. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="transactionId"/> or <paramref name="threadId"/> is null. </exception>
         /// <returns> A new <see cref="SystemEvents.AcsChatParticipantRemovedFromThreadEventData"/> instance for mocking. </returns>
         public static AcsChatParticipantRemovedFromThreadEventData AcsChatParticipantRemovedFromThreadEventData(string transactionId = null, string threadId = null, DateTimeOffset? time = null, CommunicationIdentifierModel removedByCommunicationIdentifier = null, AcsChatThreadParticipantProperties participantRemoved = null, long? version = null)
         {
+            if (transactionId == null)
+            {
+                throw new ArgumentNullException(nameof(transactionId));
+            }
+            if (threadId == null)
+            {
+                throw new ArgumentNullException(nameof(threadId));
+            }
+
             return new AcsChatParticipantRemovedFromThreadEventData(
                 transactionId,
                 threadId,
@@ -3339,9 +3710,22 @@ namespace Azure.Messaging.EventGrid
         /// <param name="deliveryAttempts"> List of details of delivery attempts made. </param>
         /// <param name="receivedTimestamp"> The time at which the SMS delivery report was received. </param>
         /// <param name="tag"> Customer Content. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="messageId"/>, <paramref name="from"/> or <paramref name="to"/> is null. </exception>
         /// <returns> A new <see cref="SystemEvents.AcsSmsDeliveryReportReceivedEventData"/> instance for mocking. </returns>
         public static AcsSmsDeliveryReportReceivedEventData AcsSmsDeliveryReportReceivedEventData(string messageId = null, string @from = null, string to = null, string deliveryStatus = null, string deliveryStatusDetails = null, IEnumerable<AcsSmsDeliveryAttemptProperties> deliveryAttempts = null, DateTimeOffset? receivedTimestamp = null, string tag = null)
         {
+            if (messageId == null)
+            {
+                throw new ArgumentNullException(nameof(messageId));
+            }
+            if (@from == null)
+            {
+                throw new ArgumentNullException(nameof(@from));
+            }
+            if (to == null)
+            {
+                throw new ArgumentNullException(nameof(to));
+            }
             deliveryAttempts ??= new List<AcsSmsDeliveryAttemptProperties>();
 
             return new AcsSmsDeliveryReportReceivedEventData(
@@ -3369,9 +3753,23 @@ namespace Azure.Messaging.EventGrid
         /// <param name="messageId"> The identity of the SMS message. </param>
         /// <param name="from"> The identity of SMS message sender. </param>
         /// <param name="to"> The identity of SMS message receiver. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="messageId"/>, <paramref name="from"/> or <paramref name="to"/> is null. </exception>
         /// <returns> A new <see cref="SystemEvents.AcsSmsEventBaseProperties"/> instance for mocking. </returns>
         public static AcsSmsEventBaseProperties AcsSmsEventBaseProperties(string messageId = null, string @from = null, string to = null)
         {
+            if (messageId == null)
+            {
+                throw new ArgumentNullException(nameof(messageId));
+            }
+            if (@from == null)
+            {
+                throw new ArgumentNullException(nameof(@from));
+            }
+            if (to == null)
+            {
+                throw new ArgumentNullException(nameof(to));
+            }
+
             return new AcsSmsEventBaseProperties(messageId, @from, to);
         }
 
@@ -3381,10 +3779,31 @@ namespace Azure.Messaging.EventGrid
         /// <param name="to"> The identity of SMS message receiver. </param>
         /// <param name="message"> The SMS content. </param>
         /// <param name="receivedTimestamp"> The time at which the SMS was received. </param>
+        /// <param name="segmentCount"> Number of segments in the message. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="messageId"/>, <paramref name="from"/> or <paramref name="to"/> is null. </exception>
         /// <returns> A new <see cref="SystemEvents.AcsSmsReceivedEventData"/> instance for mocking. </returns>
-        public static AcsSmsReceivedEventData AcsSmsReceivedEventData(string messageId = null, string @from = null, string to = null, string message = null, DateTimeOffset? receivedTimestamp = null)
+        public static AcsSmsReceivedEventData AcsSmsReceivedEventData(string messageId = null, string @from = null, string to = null, string message = null, DateTimeOffset? receivedTimestamp = null, int segmentCount = default)
         {
-            return new AcsSmsReceivedEventData(messageId, @from, to, message, receivedTimestamp);
+            if (messageId == null)
+            {
+                throw new ArgumentNullException(nameof(messageId));
+            }
+            if (@from == null)
+            {
+                throw new ArgumentNullException(nameof(@from));
+            }
+            if (to == null)
+            {
+                throw new ArgumentNullException(nameof(to));
+            }
+
+            return new AcsSmsReceivedEventData(
+                messageId,
+                @from,
+                to,
+                message,
+                receivedTimestamp,
+                segmentCount);
         }
 
         /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsRecordingFileStatusUpdatedEventData"/>. </summary>
@@ -3440,16 +3859,18 @@ namespace Azure.Messaging.EventGrid
         /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsEmailDeliveryReportReceivedEventData"/>. </summary>
         /// <param name="sender"> The Sender Email Address. </param>
         /// <param name="recipient"> The recipient Email Address. </param>
+        /// <param name="internetMessageId"> The Internet Message Id of the email been sent. </param>
         /// <param name="messageId"> The Id of the email been sent. </param>
         /// <param name="status"> The status of the email. Any value other than Delivered is considered failed. </param>
         /// <param name="deliveryStatusDetails"> Detailed information about the status if any. </param>
         /// <param name="deliveryAttemptTimestamp"> The time at which the email delivery report received timestamp. </param>
         /// <returns> A new <see cref="SystemEvents.AcsEmailDeliveryReportReceivedEventData"/> instance for mocking. </returns>
-        public static AcsEmailDeliveryReportReceivedEventData AcsEmailDeliveryReportReceivedEventData(string sender = null, string recipient = null, string messageId = null, AcsEmailDeliveryReportStatus? status = null, AcsEmailDeliveryReportStatusDetails deliveryStatusDetails = null, DateTimeOffset? deliveryAttemptTimestamp = null)
+        public static AcsEmailDeliveryReportReceivedEventData AcsEmailDeliveryReportReceivedEventData(string sender = null, string recipient = null, string internetMessageId = null, string messageId = null, AcsEmailDeliveryReportStatus? status = null, AcsEmailDeliveryReportStatusDetails deliveryStatusDetails = null, DateTimeOffset? deliveryAttemptTimestamp = null)
         {
             return new AcsEmailDeliveryReportReceivedEventData(
                 sender,
                 recipient,
+                internetMessageId,
                 messageId,
                 status,
                 deliveryStatusDetails,
@@ -3457,11 +3878,12 @@ namespace Azure.Messaging.EventGrid
         }
 
         /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsEmailDeliveryReportStatusDetails"/>. </summary>
+        /// <param name="recipientMailServerHostName"> Recipient Mail Server Host Name. </param>
         /// <param name="statusMessage"> Detailed status message. </param>
         /// <returns> A new <see cref="SystemEvents.AcsEmailDeliveryReportStatusDetails"/> instance for mocking. </returns>
-        public static AcsEmailDeliveryReportStatusDetails AcsEmailDeliveryReportStatusDetails(string statusMessage = null)
+        public static AcsEmailDeliveryReportStatusDetails AcsEmailDeliveryReportStatusDetails(string recipientMailServerHostName = null, string statusMessage = null)
         {
-            return new AcsEmailDeliveryReportStatusDetails(statusMessage);
+            return new AcsEmailDeliveryReportStatusDetails(recipientMailServerHostName, statusMessage);
         }
 
         /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsEmailEngagementTrackingReportReceivedEventData"/>. </summary>
@@ -3490,10 +3912,20 @@ namespace Azure.Messaging.EventGrid
         /// <param name="mediaId"> The media identifier. </param>
         /// <param name="fileName"> The filename of the underlying media file as specified when uploaded. </param>
         /// <param name="caption"> The caption for the media object, if supported and provided. </param>
+        /// <param name="animated"> Set to true if the sticker is animated; false otherwise. </param>
         /// <returns> A new <see cref="SystemEvents.AcsMessageMediaContent"/> instance for mocking. </returns>
-        public static AcsMessageMediaContent AcsMessageMediaContent(string mimeType = null, string mediaId = null, string fileName = null, string caption = null)
+        public static AcsMessageMediaContent AcsMessageMediaContent(string mimeType = null, string mediaId = null, string fileName = null, string caption = null, bool? animated = null)
         {
-            return new AcsMessageMediaContent(mimeType, mediaId, fileName, caption);
+            return new AcsMessageMediaContent(mimeType, mediaId, fileName, caption, animated);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsMessageReactionContent"/>. </summary>
+        /// <param name="messageId"> WhatsApp message ID of message you want to apply the emoji to. </param>
+        /// <param name="emoji"> Unicode escape sequence of the emoji. </param>
+        /// <returns> A new <see cref="SystemEvents.AcsMessageReactionContent"/> instance for mocking. </returns>
+        public static AcsMessageReactionContent AcsMessageReactionContent(string messageId = null, string emoji = null)
+        {
+            return new AcsMessageReactionContent(messageId, emoji);
         }
 
         /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsMessageContext"/>. </summary>
@@ -3881,6 +4313,77 @@ namespace Azure.Messaging.EventGrid
             return new ApiManagementGatewayApiRemovedEventData(resourceUri);
         }
 
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.ApiManagementCircuitBreakerOpenedEventData"/>. </summary>
+        /// <param name="backendName"> Name of the backend for which the circuit has opened. </param>
+        /// <param name="circuitBreaker"> Information related to the circuit breaker configured on the backend. </param>
+        /// <returns> A new <see cref="SystemEvents.ApiManagementCircuitBreakerOpenedEventData"/> instance for mocking. </returns>
+        public static ApiManagementCircuitBreakerOpenedEventData ApiManagementCircuitBreakerOpenedEventData(string backendName = null, ApiManagementCircuitBreakerProperties circuitBreaker = null)
+        {
+            return new ApiManagementCircuitBreakerOpenedEventData(backendName, circuitBreaker);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.ApiManagementCircuitBreakerProperties"/>. </summary>
+        /// <param name="rules"> Overview of all configured rules and respective details. </param>
+        /// <returns> A new <see cref="SystemEvents.ApiManagementCircuitBreakerProperties"/> instance for mocking. </returns>
+        public static ApiManagementCircuitBreakerProperties ApiManagementCircuitBreakerProperties(IReadOnlyDictionary<string, object> rules = null)
+        {
+            rules ??= new Dictionary<string, object>();
+
+            return new ApiManagementCircuitBreakerProperties(rules);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.ApiManagementCircuitBreakerClosedEventData"/>. </summary>
+        /// <param name="backendName"> Name of the backend for which the circuit has closed. </param>
+        /// <param name="circuitBreaker"> Information related to the circuit breaker configured on the backend. </param>
+        /// <returns> A new <see cref="SystemEvents.ApiManagementCircuitBreakerClosedEventData"/> instance for mocking. </returns>
+        public static ApiManagementCircuitBreakerClosedEventData ApiManagementCircuitBreakerClosedEventData(string backendName = null, ApiManagementCircuitBreakerProperties circuitBreaker = null)
+        {
+            return new ApiManagementCircuitBreakerClosedEventData(backendName, circuitBreaker);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.ApiManagementGatewayTokenNearExpiryEventData"/>. </summary>
+        /// <param name="gateway"> Information related to a given self-hosted gateway deployment. </param>
+        /// <param name="token"> Information related to a gateway token that is near expiry for a self-hosted gateway deployment. </param>
+        /// <returns> A new <see cref="SystemEvents.ApiManagementGatewayTokenNearExpiryEventData"/> instance for mocking. </returns>
+        public static ApiManagementGatewayTokenNearExpiryEventData ApiManagementGatewayTokenNearExpiryEventData(ApiManagementGatewayProperties gateway = null, ApiManagementGatewayTokenNearExpiryProperties token = null)
+        {
+            return new ApiManagementGatewayTokenNearExpiryEventData(gateway, token);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.ApiManagementGatewayProperties"/>. </summary>
+        /// <param name="gatewayId"> Id of Gateway that is used to deploy the gateway to get the configuration for. This is the ARM resource ID referenced in the Azure API Management instance. </param>
+        /// <param name="instanceId"> Unique instance ID of the deployed gateway. </param>
+        /// <returns> A new <see cref="SystemEvents.ApiManagementGatewayProperties"/> instance for mocking. </returns>
+        public static ApiManagementGatewayProperties ApiManagementGatewayProperties(string gatewayId = null, string instanceId = null)
+        {
+            return new ApiManagementGatewayProperties(gatewayId, instanceId);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.ApiManagementGatewayTokenNearExpiryProperties"/>. </summary>
+        /// <param name="expiresOn"> Timestamp when the gateway token will expire. </param>
+        /// <returns> A new <see cref="SystemEvents.ApiManagementGatewayTokenNearExpiryProperties"/> instance for mocking. </returns>
+        public static ApiManagementGatewayTokenNearExpiryProperties ApiManagementGatewayTokenNearExpiryProperties(DateTimeOffset? expiresOn = null)
+        {
+            return new ApiManagementGatewayTokenNearExpiryProperties(expiresOn);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.ApiManagementGatewayTokenExpiredEventData"/>. </summary>
+        /// <param name="gateway"> Information related to a given self-hosted gateway deployment. </param>
+        /// <param name="token"> Information related to a an expired gateway token for a self-hosted gateway deployment. </param>
+        /// <returns> A new <see cref="SystemEvents.ApiManagementGatewayTokenExpiredEventData"/> instance for mocking. </returns>
+        public static ApiManagementGatewayTokenExpiredEventData ApiManagementGatewayTokenExpiredEventData(ApiManagementGatewayProperties gateway = null, ApiManagementExpiredGatewayTokenProperties token = null)
+        {
+            return new ApiManagementGatewayTokenExpiredEventData(gateway, token);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.ApiManagementExpiredGatewayTokenProperties"/>. </summary>
+        /// <param name="expiresOn"> Timestamp when the gateway token has expired. </param>
+        /// <returns> A new <see cref="SystemEvents.ApiManagementExpiredGatewayTokenProperties"/> instance for mocking. </returns>
+        public static ApiManagementExpiredGatewayTokenProperties ApiManagementExpiredGatewayTokenProperties(DateTimeOffset? expiresOn = null)
+        {
+            return new ApiManagementExpiredGatewayTokenProperties(expiresOn);
+        }
+
         /// <summary> Initializes a new instance of <see cref="SystemEvents.HealthcareFhirResourceCreatedEventData"/>. </summary>
         /// <param name="fhirResourceType"> Type of HL7 FHIR resource. </param>
         /// <param name="fhirServiceHostName"> Domain name of FHIR account for this resource. </param>
@@ -4057,6 +4560,16 @@ namespace Azure.Messaging.EventGrid
         public static ResourceNotificationsResourceManagementDeletedEventData ResourceNotificationsResourceManagementDeletedEventData(ResourceNotificationsResourceDeletedDetails resourceDetails = null, ResourceNotificationsOperationalDetails operationalDetails = null)
         {
             return new ResourceNotificationsResourceManagementDeletedEventData(resourceDetails, operationalDetails);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.ResourceNotificationsContainerServiceEventResourcesScheduledEventData"/>. </summary>
+        /// <param name="resourceDetails"> resourceInfo details for update event. </param>
+        /// <param name="operationalDetails"> details about operational info. </param>
+        /// <param name="apiVersion"> api version of the resource properties bag. </param>
+        /// <returns> A new <see cref="SystemEvents.ResourceNotificationsContainerServiceEventResourcesScheduledEventData"/> instance for mocking. </returns>
+        public static ResourceNotificationsContainerServiceEventResourcesScheduledEventData ResourceNotificationsContainerServiceEventResourcesScheduledEventData(ResourceNotificationsResourceUpdatedDetails resourceDetails = null, ResourceNotificationsOperationalDetails operationalDetails = null, string apiVersion = null)
+        {
+            return new ResourceNotificationsContainerServiceEventResourcesScheduledEventData(resourceDetails, operationalDetails, apiVersion);
         }
 
         /// <summary> Initializes a new instance of <see cref="SystemEvents.AvsPrivateCloudUpdatingEventData"/>. </summary>
@@ -4273,6 +4786,57 @@ namespace Azure.Messaging.EventGrid
         public static ApiCenterApiDefinitionUpdatedEventData ApiCenterApiDefinitionUpdatedEventData(string title = null, string description = null, ApiCenterApiSpecification specification = null)
         {
             return new ApiCenterApiDefinitionUpdatedEventData(title, description, specification);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.EdgeSolutionVersionPublishedEventData"/>. </summary>
+        /// <param name="externalValidationId"> A GUID to uniquely track External Solution Validation. </param>
+        /// <param name="targetId"> ARM ID of the Target resource. </param>
+        /// <param name="solutionTemplateId"> ARM ID of the Solution Template resource. </param>
+        /// <param name="solutionTemplateVersionId"> ARM ID of the Solution Template Version resource. </param>
+        /// <param name="solutionVersionId"> ARM ID of the Solution Version resource. </param>
+        /// <param name="apiVersion"> API Version supported for the resources. </param>
+        /// <param name="callbackUrl"> Direct URL to callback for updating validation status. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="externalValidationId"/>, <paramref name="targetId"/>, <paramref name="solutionTemplateId"/>, <paramref name="solutionTemplateVersionId"/>, <paramref name="solutionVersionId"/>, <paramref name="apiVersion"/> or <paramref name="callbackUrl"/> is null. </exception>
+        /// <returns> A new <see cref="SystemEvents.EdgeSolutionVersionPublishedEventData"/> instance for mocking. </returns>
+        public static EdgeSolutionVersionPublishedEventData EdgeSolutionVersionPublishedEventData(string externalValidationId = null, string targetId = null, string solutionTemplateId = null, string solutionTemplateVersionId = null, string solutionVersionId = null, string apiVersion = null, Uri callbackUrl = null)
+        {
+            if (externalValidationId == null)
+            {
+                throw new ArgumentNullException(nameof(externalValidationId));
+            }
+            if (targetId == null)
+            {
+                throw new ArgumentNullException(nameof(targetId));
+            }
+            if (solutionTemplateId == null)
+            {
+                throw new ArgumentNullException(nameof(solutionTemplateId));
+            }
+            if (solutionTemplateVersionId == null)
+            {
+                throw new ArgumentNullException(nameof(solutionTemplateVersionId));
+            }
+            if (solutionVersionId == null)
+            {
+                throw new ArgumentNullException(nameof(solutionVersionId));
+            }
+            if (apiVersion == null)
+            {
+                throw new ArgumentNullException(nameof(apiVersion));
+            }
+            if (callbackUrl == null)
+            {
+                throw new ArgumentNullException(nameof(callbackUrl));
+            }
+
+            return new EdgeSolutionVersionPublishedEventData(
+                externalValidationId,
+                targetId,
+                solutionTemplateId,
+                solutionTemplateVersionId,
+                solutionVersionId,
+                apiVersion,
+                callbackUrl);
         }
     }
 }

@@ -10,17 +10,17 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Cdn.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Cdn.Samples
 {
     public partial class Sample_FrontDoorRuleSetResource
     {
-        // RuleSets_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_RuleSetsGet()
         {
-            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2024-02-01/examples/RuleSets_Get.json
+            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2025-04-15/examples/RuleSets_Get.json
             // this example is just showing the usage of "FrontDoorRuleSets_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -47,12 +47,38 @@ namespace Azure.ResourceManager.Cdn.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // RuleSets_Create
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Delete_RuleSetsDelete()
+        {
+            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2025-04-15/examples/RuleSets_Delete.json
+            // this example is just showing the usage of "FrontDoorRuleSets_Delete" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this FrontDoorRuleSetResource created on azure
+            // for more information of creating FrontDoorRuleSetResource, please refer to the document of FrontDoorRuleSetResource
+            string subscriptionId = "subid";
+            string resourceGroupName = "RG";
+            string profileName = "profile1";
+            string ruleSetName = "ruleSet1";
+            ResourceIdentifier frontDoorRuleSetResourceId = FrontDoorRuleSetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, profileName, ruleSetName);
+            FrontDoorRuleSetResource frontDoorRuleSet = client.GetFrontDoorRuleSetResource(frontDoorRuleSetResourceId);
+
+            // invoke the operation
+            await frontDoorRuleSet.DeleteAsync(WaitUntil.Completed);
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_RuleSetsCreate()
         {
-            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2024-02-01/examples/RuleSets_Create.json
+            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2025-04-15/examples/RuleSets_Create.json
             // this example is just showing the usage of "FrontDoorRuleSets_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -80,40 +106,11 @@ namespace Azure.ResourceManager.Cdn.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // RuleSets_Delete
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Delete_RuleSetsDelete()
-        {
-            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2024-02-01/examples/RuleSets_Delete.json
-            // this example is just showing the usage of "FrontDoorRuleSets_Delete" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this FrontDoorRuleSetResource created on azure
-            // for more information of creating FrontDoorRuleSetResource, please refer to the document of FrontDoorRuleSetResource
-            string subscriptionId = "subid";
-            string resourceGroupName = "RG";
-            string profileName = "profile1";
-            string ruleSetName = "ruleSet1";
-            ResourceIdentifier frontDoorRuleSetResourceId = FrontDoorRuleSetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, profileName, ruleSetName);
-            FrontDoorRuleSetResource frontDoorRuleSet = client.GetFrontDoorRuleSetResource(frontDoorRuleSetResourceId);
-
-            // invoke the operation
-            await frontDoorRuleSet.DeleteAsync(WaitUntil.Completed);
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // RuleSets_ListResourceUsage
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetResourceUsages_RuleSetsListResourceUsage()
         {
-            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2024-02-01/examples/RuleSets_ListResourceUsage.json
+            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2025-04-15/examples/RuleSets_ListResourceUsage.json
             // this example is just showing the usage of "FrontDoorRuleSets_ListResourceUsage" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -136,7 +133,7 @@ namespace Azure.ResourceManager.Cdn.Samples
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

@@ -4,7 +4,6 @@
 using System;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Microsoft.Identity.Client;
 
 namespace Azure.Identity
 {
@@ -18,6 +17,7 @@ namespace Azure.Identity
         {
             HttpPipeline = HttpPipelineBuilder.Build(new HttpPipelineOptions(options) { RequestFailedDetailsParser = new ManagedIdentityRequestFailedDetailsParser() });
             Diagnostics = new ClientDiagnostics(options);
+            ClientOptions = options;
         }
 
         public CredentialPipeline(HttpPipeline httpPipeline, ClientDiagnostics diagnostics)
@@ -53,12 +53,9 @@ namespace Azure.Identity
 
         public HttpPipeline HttpPipeline { get; }
 
-        public ClientDiagnostics Diagnostics { get; }
+        public ClientOptions ClientOptions { get; }
 
-        public IConfidentialClientApplication CreateMsalConfidentialClient(string tenantId, string clientId, string clientSecret)
-        {
-            return ConfidentialClientApplicationBuilder.Create(clientId).WithHttpClientFactory(new HttpPipelineClientFactory(HttpPipeline)).WithTenantId(tenantId).WithClientSecret(clientSecret).Build();
-        }
+        public ClientDiagnostics Diagnostics { get; }
 
         public CredentialDiagnosticScope StartGetTokenScope(string fullyQualifiedMethod, TokenRequestContext context)
         {
@@ -75,14 +72,6 @@ namespace Azure.Identity
             CredentialDiagnosticScope scope = new CredentialDiagnosticScope(Diagnostics, fullyQualifiedMethod, context, scopeHandler);
             scope.Start();
             return scope;
-        }
-
-        private class CredentialResponseClassifier : ResponseClassifier
-        {
-            public override bool IsRetriableResponse(HttpMessage message)
-            {
-                return base.IsRetriableResponse(message) || message.Response.Status == 404;
-            }
         }
 
         private class ScopeHandler : IScopeHandler

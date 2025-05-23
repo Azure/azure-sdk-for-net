@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.DevSpaces
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDevSpacesContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ControllerData)} does not support writing '{options.Format}' format.");
             }
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.DevSpaces
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeControllerData(document.RootElement, options);
                     }
                 default:

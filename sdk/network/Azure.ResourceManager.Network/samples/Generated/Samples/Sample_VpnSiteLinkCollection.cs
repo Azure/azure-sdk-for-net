@@ -9,17 +9,17 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Network.Samples
 {
     public partial class Sample_VpnSiteLinkCollection
     {
-        // VpnSiteGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_VpnSiteGet()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/VpnSiteLinkGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-05-01/examples/VpnSiteLinkGet.json
             // this example is just showing the usage of "VpnSiteLinks_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -49,86 +49,11 @@ namespace Azure.ResourceManager.Network.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // VpnSiteGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Exists_VpnSiteGet()
-        {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/VpnSiteLinkGet.json
-            // this example is just showing the usage of "VpnSiteLinks_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this VpnSiteResource created on azure
-            // for more information of creating VpnSiteResource, please refer to the document of VpnSiteResource
-            string subscriptionId = "subid";
-            string resourceGroupName = "rg1";
-            string vpnSiteName = "vpnSite1";
-            ResourceIdentifier vpnSiteResourceId = VpnSiteResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vpnSiteName);
-            VpnSiteResource vpnSite = client.GetVpnSiteResource(vpnSiteResourceId);
-
-            // get the collection of this VpnSiteLinkResource
-            VpnSiteLinkCollection collection = vpnSite.GetVpnSiteLinks();
-
-            // invoke the operation
-            string vpnSiteLinkName = "vpnSiteLink1";
-            bool result = await collection.ExistsAsync(vpnSiteLinkName);
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        // VpnSiteGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetIfExists_VpnSiteGet()
-        {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/VpnSiteLinkGet.json
-            // this example is just showing the usage of "VpnSiteLinks_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this VpnSiteResource created on azure
-            // for more information of creating VpnSiteResource, please refer to the document of VpnSiteResource
-            string subscriptionId = "subid";
-            string resourceGroupName = "rg1";
-            string vpnSiteName = "vpnSite1";
-            ResourceIdentifier vpnSiteResourceId = VpnSiteResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vpnSiteName);
-            VpnSiteResource vpnSite = client.GetVpnSiteResource(vpnSiteResourceId);
-
-            // get the collection of this VpnSiteLinkResource
-            VpnSiteLinkCollection collection = vpnSite.GetVpnSiteLinks();
-
-            // invoke the operation
-            string vpnSiteLinkName = "vpnSiteLink1";
-            NullableResponse<VpnSiteLinkResource> response = await collection.GetIfExistsAsync(vpnSiteLinkName);
-            VpnSiteLinkResource result = response.HasValue ? response.Value : null;
-
-            if (result == null)
-            {
-                Console.WriteLine($"Succeeded with null as result");
-            }
-            else
-            {
-                // the variable result is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                VpnSiteLinkData resourceData = result.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-        }
-
-        // VpnSiteLinkListByVpnSite
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_VpnSiteLinkListByVpnSite()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/VpnSiteLinkListByVpnSite.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-05-01/examples/VpnSiteLinkListByVpnSite.json
             // this example is just showing the usage of "VpnSiteLinks_ListByVpnSite" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -157,7 +82,79 @@ namespace Azure.ResourceManager.Network.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Exists_VpnSiteGet()
+        {
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-05-01/examples/VpnSiteLinkGet.json
+            // this example is just showing the usage of "VpnSiteLinks_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this VpnSiteResource created on azure
+            // for more information of creating VpnSiteResource, please refer to the document of VpnSiteResource
+            string subscriptionId = "subid";
+            string resourceGroupName = "rg1";
+            string vpnSiteName = "vpnSite1";
+            ResourceIdentifier vpnSiteResourceId = VpnSiteResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vpnSiteName);
+            VpnSiteResource vpnSite = client.GetVpnSiteResource(vpnSiteResourceId);
+
+            // get the collection of this VpnSiteLinkResource
+            VpnSiteLinkCollection collection = vpnSite.GetVpnSiteLinks();
+
+            // invoke the operation
+            string vpnSiteLinkName = "vpnSiteLink1";
+            bool result = await collection.ExistsAsync(vpnSiteLinkName);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetIfExists_VpnSiteGet()
+        {
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-05-01/examples/VpnSiteLinkGet.json
+            // this example is just showing the usage of "VpnSiteLinks_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this VpnSiteResource created on azure
+            // for more information of creating VpnSiteResource, please refer to the document of VpnSiteResource
+            string subscriptionId = "subid";
+            string resourceGroupName = "rg1";
+            string vpnSiteName = "vpnSite1";
+            ResourceIdentifier vpnSiteResourceId = VpnSiteResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vpnSiteName);
+            VpnSiteResource vpnSite = client.GetVpnSiteResource(vpnSiteResourceId);
+
+            // get the collection of this VpnSiteLinkResource
+            VpnSiteLinkCollection collection = vpnSite.GetVpnSiteLinks();
+
+            // invoke the operation
+            string vpnSiteLinkName = "vpnSiteLink1";
+            NullableResponse<VpnSiteLinkResource> response = await collection.GetIfExistsAsync(vpnSiteLinkName);
+            VpnSiteLinkResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine("Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                VpnSiteLinkData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
         }
     }
 }

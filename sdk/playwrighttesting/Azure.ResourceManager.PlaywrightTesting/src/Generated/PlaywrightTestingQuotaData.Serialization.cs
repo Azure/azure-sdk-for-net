@@ -37,19 +37,11 @@ namespace Azure.ResourceManager.PlaywrightTesting
             }
 
             base.JsonModelWriteCore(writer, options);
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (Optional.IsDefined(FreeTrial))
+            if (Optional.IsDefined(Properties))
             {
-                writer.WritePropertyName("freeTrial"u8);
-                writer.WriteObjectValue(FreeTrial, options);
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
-            {
-                writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
-            }
-            writer.WriteEndObject();
         }
 
         PlaywrightTestingQuotaData IJsonModel<PlaywrightTestingQuotaData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -72,16 +64,24 @@ namespace Azure.ResourceManager.PlaywrightTesting
             {
                 return null;
             }
+            PlaywrightTestingQuotaProperties properties = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            FreeTrialProperties freeTrial = default;
-            PlaywrightTestingProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("properties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    properties = PlaywrightTestingQuotaProperties.DeserializePlaywrightTestingQuotaProperties(property.Value, options);
+                    continue;
+                }
                 if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
@@ -106,36 +106,6 @@ namespace Azure.ResourceManager.PlaywrightTesting
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("freeTrial"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            freeTrial = FreeTrialProperties.DeserializeFreeTrialProperties(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("provisioningState"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            provisioningState = new PlaywrightTestingProvisioningState(property0.Value.GetString());
-                            continue;
-                        }
-                    }
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -147,8 +117,7 @@ namespace Azure.ResourceManager.PlaywrightTesting
                 name,
                 type,
                 systemData,
-                freeTrial,
-                provisioningState,
+                properties,
                 serializedAdditionalRawData);
         }
 
@@ -159,7 +128,7 @@ namespace Azure.ResourceManager.PlaywrightTesting
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerPlaywrightTestingContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(PlaywrightTestingQuotaData)} does not support writing '{options.Format}' format.");
             }
@@ -173,7 +142,7 @@ namespace Azure.ResourceManager.PlaywrightTesting
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializePlaywrightTestingQuotaData(document.RootElement, options);
                     }
                 default:

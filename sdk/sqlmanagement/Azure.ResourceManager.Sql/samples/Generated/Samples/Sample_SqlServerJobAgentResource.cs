@@ -9,18 +9,19 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Sql.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Sql.Samples
 {
     public partial class Sample_SqlServerJobAgentResource
     {
-        // Get a job agent
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAJobAgent()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2020-11-01-preview/examples/GetJobAgent.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-05-01-preview/examples/GetJobAgent.json
             // this example is just showing the usage of "JobAgents_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -47,12 +48,11 @@ namespace Azure.ResourceManager.Sql.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Delete a job agent
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteAJobAgent()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2020-11-01-preview/examples/DeleteJobAgent.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-05-01-preview/examples/DeleteJobAgent.json
             // this example is just showing the usage of "JobAgents_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -72,15 +72,14 @@ namespace Azure.ResourceManager.Sql.Samples
             // invoke the operation
             await sqlServerJobAgent.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Update a job agent's tags.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Update_UpdateAJobAgentSTags()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Update_UpdateAJobAgentSIdentity()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2020-11-01-preview/examples/UpdateJobAgent.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-05-01-preview/examples/UpdateJobAgentWithIdentity.json
             // this example is just showing the usage of "JobAgents_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -98,11 +97,89 @@ namespace Azure.ResourceManager.Sql.Samples
             SqlServerJobAgentResource sqlServerJobAgent = client.GetSqlServerJobAgentResource(sqlServerJobAgentResourceId);
 
             // invoke the operation
-            SqlServerJobAgentPatch patch = new SqlServerJobAgentPatch()
+            SqlServerJobAgentPatch patch = new SqlServerJobAgentPatch
+            {
+                Identity = new JobAgentIdentity(JobAgentIdentityType.UserAssigned)
+                {
+                    UserAssignedIdentities =
+{
+["/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/group1/providers/Microsoft.ManagedIdentity/userAssignedIdentities/test-umi"] = new UserAssignedIdentity()
+},
+                },
+            };
+            ArmOperation<SqlServerJobAgentResource> lro = await sqlServerJobAgent.UpdateAsync(WaitUntil.Completed, patch);
+            SqlServerJobAgentResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            SqlServerJobAgentData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Update_UpdateAJobAgentSSku()
+        {
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-05-01-preview/examples/UpdateJobAgentWithSku.json
+            // this example is just showing the usage of "JobAgents_Update" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this SqlServerJobAgentResource created on azure
+            // for more information of creating SqlServerJobAgentResource, please refer to the document of SqlServerJobAgentResource
+            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string resourceGroupName = "group1";
+            string serverName = "server1";
+            string jobAgentName = "agent1";
+            ResourceIdentifier sqlServerJobAgentResourceId = SqlServerJobAgentResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName, jobAgentName);
+            SqlServerJobAgentResource sqlServerJobAgent = client.GetSqlServerJobAgentResource(sqlServerJobAgentResourceId);
+
+            // invoke the operation
+            SqlServerJobAgentPatch patch = new SqlServerJobAgentPatch
+            {
+                Sku = new SqlSku("JA200"),
+            };
+            ArmOperation<SqlServerJobAgentResource> lro = await sqlServerJobAgent.UpdateAsync(WaitUntil.Completed, patch);
+            SqlServerJobAgentResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            SqlServerJobAgentData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Update_UpdateAJobAgentSTags()
+        {
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-05-01-preview/examples/UpdateJobAgent.json
+            // this example is just showing the usage of "JobAgents_Update" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this SqlServerJobAgentResource created on azure
+            // for more information of creating SqlServerJobAgentResource, please refer to the document of SqlServerJobAgentResource
+            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string resourceGroupName = "group1";
+            string serverName = "server1";
+            string jobAgentName = "agent1";
+            ResourceIdentifier sqlServerJobAgentResourceId = SqlServerJobAgentResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName, jobAgentName);
+            SqlServerJobAgentResource sqlServerJobAgent = client.GetSqlServerJobAgentResource(sqlServerJobAgentResourceId);
+
+            // invoke the operation
+            SqlServerJobAgentPatch patch = new SqlServerJobAgentPatch
             {
                 Tags =
 {
-["mytag1"] = "myvalue1",
+["mytag1"] = "myvalue1"
 },
             };
             ArmOperation<SqlServerJobAgentResource> lro = await sqlServerJobAgent.UpdateAsync(WaitUntil.Completed, patch);
@@ -115,12 +192,11 @@ namespace Azure.ResourceManager.Sql.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // List all job executions in a job agent with filtering.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetJobExecutionsByAgent_ListAllJobExecutionsInAJobAgentWithFiltering()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2020-11-01-preview/examples/ListJobExecutionsByAgentWithFilter.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-05-01-preview/examples/ListJobExecutionsByAgentWithFilter.json
             // this example is just showing the usage of "JobExecutions_ListByAgent" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -138,7 +214,7 @@ namespace Azure.ResourceManager.Sql.Samples
             SqlServerJobAgentResource sqlServerJobAgent = client.GetSqlServerJobAgentResource(sqlServerJobAgentResourceId);
 
             // invoke the operation and iterate over the result
-            SqlServerJobAgentResourceGetJobExecutionsByAgentOptions options = new SqlServerJobAgentResourceGetJobExecutionsByAgentOptions() { CreateTimeMin = DateTimeOffset.Parse("2017-03-21T19:00:00Z"), CreateTimeMax = DateTimeOffset.Parse("2017-03-21T19:05:00Z"), EndTimeMin = DateTimeOffset.Parse("2017-03-21T19:20:00Z"), EndTimeMax = DateTimeOffset.Parse("2017-03-21T19:25:00Z"), IsActive = false };
+            SqlServerJobAgentResourceGetJobExecutionsByAgentOptions options = new SqlServerJobAgentResourceGetJobExecutionsByAgentOptions { CreateTimeMin = DateTimeOffset.Parse("2017-03-21T19:00:00Z"), CreateTimeMax = DateTimeOffset.Parse("2017-03-21T19:05:00Z"), EndTimeMin = DateTimeOffset.Parse("2017-03-21T19:20:00Z"), EndTimeMax = DateTimeOffset.Parse("2017-03-21T19:25:00Z"), IsActive = false };
             await foreach (SqlServerJobExecutionResource item in sqlServerJobAgent.GetJobExecutionsByAgentAsync(options))
             {
                 // the variable item is a resource, you could call other operations on this instance as well
@@ -148,15 +224,14 @@ namespace Azure.ResourceManager.Sql.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // List all job executions in a job agent.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetJobExecutionsByAgent_ListAllJobExecutionsInAJobAgent()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2020-11-01-preview/examples/ListJobExecutionsByAgent.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-05-01-preview/examples/ListJobExecutionsByAgent.json
             // this example is just showing the usage of "JobExecutions_ListByAgent" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -174,7 +249,7 @@ namespace Azure.ResourceManager.Sql.Samples
             SqlServerJobAgentResource sqlServerJobAgent = client.GetSqlServerJobAgentResource(sqlServerJobAgentResourceId);
 
             // invoke the operation and iterate over the result
-            SqlServerJobAgentResourceGetJobExecutionsByAgentOptions options = new SqlServerJobAgentResourceGetJobExecutionsByAgentOptions() { };
+            SqlServerJobAgentResourceGetJobExecutionsByAgentOptions options = new SqlServerJobAgentResourceGetJobExecutionsByAgentOptions();
             await foreach (SqlServerJobExecutionResource item in sqlServerJobAgent.GetJobExecutionsByAgentAsync(options))
             {
                 // the variable item is a resource, you could call other operations on this instance as well
@@ -184,7 +259,7 @@ namespace Azure.ResourceManager.Sql.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

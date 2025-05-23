@@ -126,6 +126,7 @@ namespace Azure.Storage.Queues
         {
             var conn = StorageConnectionString.Parse(connectionString);
             _uri = conn.QueueEndpoint;
+            _accountName = conn.AccountName;
             options ??= new QueueClientOptions();
             _clientConfiguration = new QueueClientConfiguration(
                 pipeline: options.Build(conn.Credentials),
@@ -190,6 +191,7 @@ namespace Azure.Storage.Queues
                   sasCredential: null,
                   tokenCredential: null)
         {
+            _accountName ??= credential?.AccountName;
         }
 
         /// <summary>
@@ -992,6 +994,8 @@ namespace Azure.Storage.Queues
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-queues")]
         public Uri GenerateAccountSasUri(
@@ -1032,6 +1036,8 @@ namespace Azure.Storage.Queues
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
         /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-queues")]

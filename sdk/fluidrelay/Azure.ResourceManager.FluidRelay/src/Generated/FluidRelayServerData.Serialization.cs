@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.FluidRelay
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerFluidRelayContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(FluidRelayServerData)} does not support writing '{options.Format}' format.");
             }
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.FluidRelay
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeFluidRelayServerData(document.RootElement, options);
                     }
                 default:

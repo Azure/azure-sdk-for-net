@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.Purview
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerPurviewContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(PurviewPrivateEndpointConnectionData)} does not support writing '{options.Format}' format.");
             }
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.Purview
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializePurviewPrivateEndpointConnectionData(document.RootElement, options);
                     }
                 default:

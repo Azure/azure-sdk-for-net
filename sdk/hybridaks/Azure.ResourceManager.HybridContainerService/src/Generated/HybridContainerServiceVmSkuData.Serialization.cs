@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.HybridContainerService
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHybridContainerServiceContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(HybridContainerServiceVmSkuData)} does not support writing '{options.Format}' format.");
             }
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.HybridContainerService
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeHybridContainerServiceVmSkuData(document.RootElement, options);
                     }
                 default:

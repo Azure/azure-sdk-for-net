@@ -5,6 +5,7 @@ using System;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Xml;
+using Azure.Core.TestFramework;
 using Azure.Data.Tables.Models;
 using NUnit.Framework;
 using static Azure.Data.Tables.Tests.TableServiceLiveTestsBase;
@@ -23,6 +24,7 @@ namespace Azure.Data.Tables.Tests
         private const string TableName = "someTableName";
         private const string TableName2 = "otherTableName";
         private const string Partition = "partition";
+        private const string MixedCasePK = "PartitionKey";
         private const string Row = "row";
         private const int SomeInt = 10;
         private const double SomeDouble = 10.10;
@@ -94,6 +96,13 @@ namespace Azure.Data.Tables.Tests
         private static readonly Expression<Func<TableEntity, bool>> s_tableEntExpImplicitBooleanCmpCasted = ent => (bool)ent.GetBoolean("Bool");
         private static readonly Expression<Func<TableEntity, bool>> s_tableEntExpImplicitBooleanCmpOr = ent => ent.GetBoolean("Bool").Value || (bool)ent.GetBoolean("Bool");
         private static readonly Expression<Func<TableEntity, bool>> s_tableEntExpImplicitBooleanCmpNot = ent => !ent.GetBoolean("Bool").Value;
+        private static readonly Expression<Func<TableEntity, bool>> s_tableEntExpEquals = ent => ent.PartitionKey.Equals(Partition);
+        private static readonly Expression<Func<ComplexEntity, bool>> s_CEtableEntExpEquals = ent => ent.String.Equals(Partition);
+        private static readonly Expression<Func<ComplexEntity, bool>> s_CEtableEntExpStaticEquals = ent => string.Equals(ent.String, Partition);
+        private static readonly Expression<Func<TableEntity, bool>> s_TEequalsUnsupported = ent => ent.PartitionKey.Equals(Partition, StringComparison.OrdinalIgnoreCase);
+        private static readonly Expression<Func<TableEntity, bool>> s_TEequalsToLowerUnsupported = ent => ent.PartitionKey.Equals(Partition.ToLower(), StringComparison.OrdinalIgnoreCase);
+        private static readonly Expression<Func<TableEntity, bool>> s_TEequalsStaticUnsupported = ent => string.Equals(ent.PartitionKey, Partition, StringComparison.OrdinalIgnoreCase);
+        private static readonly Expression<Func<TableEntity, bool>> s_TECompareStaticUnsupported = ent => string.Compare(ent.PartitionKey, Partition, StringComparison.OrdinalIgnoreCase) > 0;
 
         public static object[] TableEntityExpressionTestCases =
         {
@@ -125,7 +134,9 @@ namespace Azure.Data.Tables.Tests
             new object[] { $"not (Bool eq true)", s_complexExpImplicitBooleanCmpNot },
             new object[] { $"BoolN eq true", s_complexExpImplicitCastedNullableBooleanCmp },
             new object[] { $"(Bool eq true) and (BoolN eq true)", s_complexExpImplicitBooleanCmpAnd },
-            new object[] { $"(Bool eq true) or (BoolN eq true)", s_complexExpImplicitCastedBooleanCmpOr }
+            new object[] { $"(Bool eq true) or (BoolN eq true)", s_complexExpImplicitCastedBooleanCmpOr  },
+            new object[] { $"String eq '{Partition}'", s_CEtableEntExpEquals },
+            new object[] { $"String eq '{Partition}'", s_CEtableEntExpStaticEquals },
         };
 
         public static object[] TableItemExpressionTestCases =
@@ -162,7 +173,16 @@ namespace Azure.Data.Tables.Tests
             new object[] { $"Bool eq true", s_tableEntExpImplicitBooleanCmp },
             new object[] { $"Bool eq true", s_tableEntExpImplicitBooleanCmpCasted },
             new object[] { $"(Bool eq true) or (Bool eq true)", s_tableEntExpImplicitBooleanCmpOr },
-            new object[] { $"not (Bool eq true)", s_tableEntExpImplicitBooleanCmpNot }
+            new object[] { $"not (Bool eq true)", s_tableEntExpImplicitBooleanCmpNot },
+            new object[] { $"PartitionKey eq '{Partition}'", s_tableEntExpEquals },
+        };
+
+        public static object[] UnsupportedTableItemExpressionTestCases =
+        {
+            new object[] { s_TEequalsUnsupported },
+            new object[] { s_TEequalsStaticUnsupported },
+            new object[] { s_TEequalsToLowerUnsupported },
+            new object[] { s_TECompareStaticUnsupported },
         };
 
         [TestCaseSource(nameof(TableItemExpressionTestCases))]
@@ -190,6 +210,40 @@ namespace Azure.Data.Tables.Tests
             var filter = TableClient.CreateQueryFilter(expression);
 
             Assert.That(filter, Is.EqualTo(expectedFilter));
+        }
+
+        [TestCaseSource(nameof(UnsupportedTableItemExpressionTestCases))]
+        [Test]
+        [NonParallelizable]
+        public void TestTableItemFilterExpressionsUnsupported(Expression<Func<TableEntity, bool>> expression)
+        {
+            Assert.Throws<NotSupportedException>(() => TableClient.CreateQueryFilter(expression));
+        }
+
+        [TestCaseSource(nameof(UnsupportedTableItemExpressionTestCases))]
+        [Test]
+        [NonParallelizable]
+        public void TestTableItemFilterExpressionsUnsupportedDoesNotThrowWithCompatSwitch(Expression<Func<TableEntity, bool>> expression)
+        {
+            if (expression == s_TEequalsStaticUnsupported)
+            {
+                Assert.Ignore("Ignore this expression because it was never supported.");
+            }
+            using var ctx = new TestAppContextSwitch(TableConstants.CompatSwitches.DisableThrowOnStringComparisonFilterSwitchName, true.ToString());
+            TableClient.CreateQueryFilter(expression);
+        }
+
+        [TestCaseSource(nameof(UnsupportedTableItemExpressionTestCases))]
+        [Test]
+        [NonParallelizable]
+        public void TestTableItemFilterExpressionsUnsupportedDoesNotThrowWithCompatSwitchEnv(Expression<Func<TableEntity, bool>> expression)
+        {
+            if (expression == s_TEequalsStaticUnsupported)
+            {
+                Assert.Ignore("Ignore this expression because it was never supported.");
+            }
+            using var env = new TestEnvVar(TableConstants.CompatSwitches.DisableThrowOnStringComparisonFilterEnvVar, true.ToString());
+            TableClient.CreateQueryFilter(expression);
         }
     }
 }

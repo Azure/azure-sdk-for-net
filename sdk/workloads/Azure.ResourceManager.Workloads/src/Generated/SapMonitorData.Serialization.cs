@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Workloads
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerWorkloadsContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(SapMonitorData)} does not support writing '{options.Format}' format.");
             }
@@ -336,7 +336,7 @@ namespace Azure.ResourceManager.Workloads
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeSapMonitorData(document.RootElement, options);
                     }
                 default:

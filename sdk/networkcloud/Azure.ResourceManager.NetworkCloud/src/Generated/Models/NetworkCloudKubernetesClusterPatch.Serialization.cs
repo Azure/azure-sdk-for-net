@@ -47,6 +47,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
+            if (Optional.IsDefined(AdministratorConfiguration))
+            {
+                writer.WritePropertyName("administratorConfiguration"u8);
+                writer.WriteObjectValue(AdministratorConfiguration, options);
+            }
             if (Optional.IsDefined(ControlPlaneNodeConfiguration))
             {
                 writer.WritePropertyName("controlPlaneNodeConfiguration"u8);
@@ -66,7 +71,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -96,6 +101,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 return null;
             }
             IDictionary<string, string> tags = default;
+            AdministratorConfigurationPatch administratorConfiguration = default;
             ControlPlaneNodePatchConfiguration controlPlaneNodeConfiguration = default;
             string kubernetesVersion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -125,6 +131,15 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
+                        if (property0.NameEquals("administratorConfiguration"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            administratorConfiguration = AdministratorConfigurationPatch.DeserializeAdministratorConfigurationPatch(property0.Value, options);
+                            continue;
+                        }
                         if (property0.NameEquals("controlPlaneNodeConfiguration"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -148,7 +163,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new NetworkCloudKubernetesClusterPatch(tags ?? new ChangeTrackingDictionary<string, string>(), controlPlaneNodeConfiguration, kubernetesVersion, serializedAdditionalRawData);
+            return new NetworkCloudKubernetesClusterPatch(tags ?? new ChangeTrackingDictionary<string, string>(), administratorConfiguration, controlPlaneNodeConfiguration, kubernetesVersion, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkCloudKubernetesClusterPatch>.Write(ModelReaderWriterOptions options)
@@ -158,7 +173,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkCloudContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(NetworkCloudKubernetesClusterPatch)} does not support writing '{options.Format}' format.");
             }
@@ -172,7 +187,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeNetworkCloudKubernetesClusterPatch(document.RootElement, options);
                     }
                 default:

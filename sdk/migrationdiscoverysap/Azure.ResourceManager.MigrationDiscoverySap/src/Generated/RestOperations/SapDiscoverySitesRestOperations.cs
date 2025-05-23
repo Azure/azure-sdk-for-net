@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
                 case 200:
                     {
                         SapDiscoverySiteListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SapDiscoverySiteListResult.DeserializeSapDiscoverySiteListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
                 case 200:
                     {
                         SapDiscoverySiteListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SapDiscoverySiteListResult.DeserializeSapDiscoverySiteListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
                 case 200:
                     {
                         SapDiscoverySiteListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SapDiscoverySiteListResult.DeserializeSapDiscoverySiteListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
                 case 200:
                     {
                         SapDiscoverySiteListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SapDiscoverySiteListResult.DeserializeSapDiscoverySiteListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
                 case 200:
                     {
                         SapDiscoverySiteData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SapDiscoverySiteData.DeserializeSapDiscoverySiteData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
                 case 200:
                     {
                         SapDiscoverySiteData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SapDiscoverySiteData.DeserializeSapDiscoverySiteData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -448,7 +448,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
                 case 200:
                     {
                         SapDiscoverySiteData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SapDiscoverySiteData.DeserializeSapDiscoverySiteData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -479,7 +479,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
                 case 200:
                     {
                         SapDiscoverySiteData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SapDiscoverySiteData.DeserializeSapDiscoverySiteData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -700,7 +700,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
                 case 200:
                     {
                         SapDiscoverySiteListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SapDiscoverySiteListResult.DeserializeSapDiscoverySiteListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -727,7 +727,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
                 case 200:
                     {
                         SapDiscoverySiteListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SapDiscoverySiteListResult.DeserializeSapDiscoverySiteListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -778,7 +778,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
                 case 200:
                     {
                         SapDiscoverySiteListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SapDiscoverySiteListResult.DeserializeSapDiscoverySiteListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -807,7 +807,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
                 case 200:
                     {
                         SapDiscoverySiteListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SapDiscoverySiteListResult.DeserializeSapDiscoverySiteListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

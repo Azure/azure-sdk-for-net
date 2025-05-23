@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.Grafana
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerGrafanaContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(GrafanaPrivateEndpointConnectionData)} does not support writing '{options.Format}' format.");
             }
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.Grafana
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeGrafanaPrivateEndpointConnectionData(document.RootElement, options);
                     }
                 default:

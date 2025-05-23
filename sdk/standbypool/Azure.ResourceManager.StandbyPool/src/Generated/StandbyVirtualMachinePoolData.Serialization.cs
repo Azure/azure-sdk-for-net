@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.StandbyPool
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerStandbyPoolContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(StandbyVirtualMachinePoolData)} does not support writing '{options.Format}' format.");
             }
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.StandbyPool
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeStandbyVirtualMachinePoolData(document.RootElement, options);
                     }
                 default:

@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.ContainerRegistry.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.ContainerRegistry.Samples
 {
     public partial class Sample_ContainerRegistryTaskRunResource
     {
-        // TaskRuns_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_TaskRunsGet()
         {
             // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/preview/2019-06-01-preview/examples/TaskRunsGet.json
@@ -47,9 +47,8 @@ namespace Azure.ResourceManager.ContainerRegistry.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // TaskRuns_Delete
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_TaskRunsDelete()
         {
             // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/preview/2019-06-01-preview/examples/TaskRunsDelete.json
@@ -72,12 +71,11 @@ namespace Azure.ResourceManager.ContainerRegistry.Samples
             // invoke the operation
             await containerRegistryTaskRun.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // TaskRuns_Update
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_TaskRunsUpdate()
         {
             // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/preview/2019-06-01-preview/examples/TaskRunsUpdate.json
@@ -98,7 +96,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Samples
             ContainerRegistryTaskRunResource containerRegistryTaskRun = client.GetContainerRegistryTaskRunResource(containerRegistryTaskRunResourceId);
 
             // invoke the operation
-            ContainerRegistryTaskRunPatch patch = new ContainerRegistryTaskRunPatch()
+            ContainerRegistryTaskRunPatch patch = new ContainerRegistryTaskRunPatch
             {
                 RunRequest = new ContainerRegistryEncodedTaskRunContent("c3RlcHM6IAogIC0gY21kOiB7eyAuVmFsdWVzLmNvbW1hbmQgfX0K", new ContainerRegistryPlatformProperties(ContainerRegistryOS.Linux)
                 {
@@ -106,9 +104,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Samples
                 })
                 {
                     EncodedValuesContent = "Y29tbWFuZDogYmFzaCBlY2hvIHt7LlJ1bi5SZWdpc3RyeX19Cg==",
-                    Values =
-{
-},
+                    Values = { },
                     Credentials = new ContainerRegistryCredentials(),
                     IsArchiveEnabled = true,
                 },
@@ -124,9 +120,8 @@ namespace Azure.ResourceManager.ContainerRegistry.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // TaskRuns_GetDetails
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetDetails_TaskRunsGetDetails()
         {
             // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/preview/2019-06-01-preview/examples/TaskRunsGetDetails.json

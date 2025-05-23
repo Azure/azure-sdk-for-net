@@ -19,13 +19,21 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 
         void IJsonModel<WebAppServicePlanUpdatedEventData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<WebAppServicePlanUpdatedEventData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(WebAppServicePlanUpdatedEventData)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("appServicePlanEventTypeDetail"u8);
             writer.WriteObjectValue(AppServicePlanEventTypeDetail, options);
             writer.WritePropertyName("sku"u8);
@@ -68,14 +76,13 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         WebAppServicePlanUpdatedEventData IJsonModel<WebAppServicePlanUpdatedEventData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -175,7 +182,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureMessagingEventGridSystemEventsContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(WebAppServicePlanUpdatedEventData)} does not support writing '{options.Format}' format.");
             }
@@ -189,7 +196,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeWebAppServicePlanUpdatedEventData(document.RootElement, options);
                     }
                 default:
@@ -203,7 +210,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static WebAppServicePlanUpdatedEventData FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeWebAppServicePlanUpdatedEventData(document.RootElement);
         }
 

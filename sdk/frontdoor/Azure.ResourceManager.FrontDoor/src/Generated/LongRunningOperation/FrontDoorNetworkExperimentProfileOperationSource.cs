@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +23,14 @@ namespace Azure.ResourceManager.FrontDoor
 
         FrontDoorNetworkExperimentProfileResource IOperationSource<FrontDoorNetworkExperimentProfileResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = FrontDoorNetworkExperimentProfileData.DeserializeFrontDoorNetworkExperimentProfileData(document.RootElement);
+            var data = ModelReaderWriter.Read<FrontDoorNetworkExperimentProfileData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerFrontDoorContext.Default);
             return new FrontDoorNetworkExperimentProfileResource(_client, data);
         }
 
         async ValueTask<FrontDoorNetworkExperimentProfileResource> IOperationSource<FrontDoorNetworkExperimentProfileResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = FrontDoorNetworkExperimentProfileData.DeserializeFrontDoorNetworkExperimentProfileData(document.RootElement);
-            return new FrontDoorNetworkExperimentProfileResource(_client, data);
+            var data = ModelReaderWriter.Read<FrontDoorNetworkExperimentProfileData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerFrontDoorContext.Default);
+            return await Task.FromResult(new FrontDoorNetworkExperimentProfileResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

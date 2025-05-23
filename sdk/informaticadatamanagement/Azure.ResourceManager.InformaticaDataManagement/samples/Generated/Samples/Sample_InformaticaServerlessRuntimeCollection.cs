@@ -10,232 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.InformaticaDataManagement.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.InformaticaDataManagement.Samples
 {
     public partial class Sample_InformaticaServerlessRuntimeCollection
     {
-        // ServerlessRuntimes_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Get_ServerlessRuntimesGet()
-        {
-            // Generated from example definition: 2024-05-08/ServerlessRuntimes_Get_MaximumSet_Gen.json
-            // this example is just showing the usage of "InformaticaServerlessRuntimeResource_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this InformaticaOrganizationResource created on azure
-            // for more information of creating InformaticaOrganizationResource, please refer to the document of InformaticaOrganizationResource
-            string subscriptionId = "3599DA28-E346-4D9F-811E-189C0445F0FE";
-            string resourceGroupName = "rgopenapi";
-            string organizationName = "e3Y";
-            ResourceIdentifier informaticaOrganizationResourceId = InformaticaOrganizationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, organizationName);
-            InformaticaOrganizationResource informaticaOrganization = client.GetInformaticaOrganizationResource(informaticaOrganizationResourceId);
-
-            // get the collection of this InformaticaServerlessRuntimeResource
-            InformaticaServerlessRuntimeCollection collection = informaticaOrganization.GetInformaticaServerlessRuntimes();
-
-            // invoke the operation
-            string serverlessRuntimeName = "48-";
-            InformaticaServerlessRuntimeResource result = await collection.GetAsync(serverlessRuntimeName);
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            InformaticaServerlessRuntimeData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // ServerlessRuntimes_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Exists_ServerlessRuntimesGet()
-        {
-            // Generated from example definition: 2024-05-08/ServerlessRuntimes_Get_MaximumSet_Gen.json
-            // this example is just showing the usage of "InformaticaServerlessRuntimeResource_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this InformaticaOrganizationResource created on azure
-            // for more information of creating InformaticaOrganizationResource, please refer to the document of InformaticaOrganizationResource
-            string subscriptionId = "3599DA28-E346-4D9F-811E-189C0445F0FE";
-            string resourceGroupName = "rgopenapi";
-            string organizationName = "e3Y";
-            ResourceIdentifier informaticaOrganizationResourceId = InformaticaOrganizationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, organizationName);
-            InformaticaOrganizationResource informaticaOrganization = client.GetInformaticaOrganizationResource(informaticaOrganizationResourceId);
-
-            // get the collection of this InformaticaServerlessRuntimeResource
-            InformaticaServerlessRuntimeCollection collection = informaticaOrganization.GetInformaticaServerlessRuntimes();
-
-            // invoke the operation
-            string serverlessRuntimeName = "48-";
-            bool result = await collection.ExistsAsync(serverlessRuntimeName);
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        // ServerlessRuntimes_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetIfExists_ServerlessRuntimesGet()
-        {
-            // Generated from example definition: 2024-05-08/ServerlessRuntimes_Get_MaximumSet_Gen.json
-            // this example is just showing the usage of "InformaticaServerlessRuntimeResource_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this InformaticaOrganizationResource created on azure
-            // for more information of creating InformaticaOrganizationResource, please refer to the document of InformaticaOrganizationResource
-            string subscriptionId = "3599DA28-E346-4D9F-811E-189C0445F0FE";
-            string resourceGroupName = "rgopenapi";
-            string organizationName = "e3Y";
-            ResourceIdentifier informaticaOrganizationResourceId = InformaticaOrganizationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, organizationName);
-            InformaticaOrganizationResource informaticaOrganization = client.GetInformaticaOrganizationResource(informaticaOrganizationResourceId);
-
-            // get the collection of this InformaticaServerlessRuntimeResource
-            InformaticaServerlessRuntimeCollection collection = informaticaOrganization.GetInformaticaServerlessRuntimes();
-
-            // invoke the operation
-            string serverlessRuntimeName = "48-";
-            NullableResponse<InformaticaServerlessRuntimeResource> response = await collection.GetIfExistsAsync(serverlessRuntimeName);
-            InformaticaServerlessRuntimeResource result = response.HasValue ? response.Value : null;
-
-            if (result == null)
-            {
-                Console.WriteLine($"Succeeded with null as result");
-            }
-            else
-            {
-                // the variable result is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                InformaticaServerlessRuntimeData resourceData = result.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-        }
-
-        // ServerlessRuntimes_Get_Min
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Get_ServerlessRuntimesGetMin()
-        {
-            // Generated from example definition: 2024-05-08/ServerlessRuntimes_Get_MinimumSet_Gen.json
-            // this example is just showing the usage of "InformaticaServerlessRuntimeResource_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this InformaticaOrganizationResource created on azure
-            // for more information of creating InformaticaOrganizationResource, please refer to the document of InformaticaOrganizationResource
-            string subscriptionId = "3599DA28-E346-4D9F-811E-189C0445F0FE";
-            string resourceGroupName = "rgopenapi";
-            string organizationName = "YC";
-            ResourceIdentifier informaticaOrganizationResourceId = InformaticaOrganizationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, organizationName);
-            InformaticaOrganizationResource informaticaOrganization = client.GetInformaticaOrganizationResource(informaticaOrganizationResourceId);
-
-            // get the collection of this InformaticaServerlessRuntimeResource
-            InformaticaServerlessRuntimeCollection collection = informaticaOrganization.GetInformaticaServerlessRuntimes();
-
-            // invoke the operation
-            string serverlessRuntimeName = "___";
-            InformaticaServerlessRuntimeResource result = await collection.GetAsync(serverlessRuntimeName);
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            InformaticaServerlessRuntimeData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // ServerlessRuntimes_Get_Min
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Exists_ServerlessRuntimesGetMin()
-        {
-            // Generated from example definition: 2024-05-08/ServerlessRuntimes_Get_MinimumSet_Gen.json
-            // this example is just showing the usage of "InformaticaServerlessRuntimeResource_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this InformaticaOrganizationResource created on azure
-            // for more information of creating InformaticaOrganizationResource, please refer to the document of InformaticaOrganizationResource
-            string subscriptionId = "3599DA28-E346-4D9F-811E-189C0445F0FE";
-            string resourceGroupName = "rgopenapi";
-            string organizationName = "YC";
-            ResourceIdentifier informaticaOrganizationResourceId = InformaticaOrganizationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, organizationName);
-            InformaticaOrganizationResource informaticaOrganization = client.GetInformaticaOrganizationResource(informaticaOrganizationResourceId);
-
-            // get the collection of this InformaticaServerlessRuntimeResource
-            InformaticaServerlessRuntimeCollection collection = informaticaOrganization.GetInformaticaServerlessRuntimes();
-
-            // invoke the operation
-            string serverlessRuntimeName = "___";
-            bool result = await collection.ExistsAsync(serverlessRuntimeName);
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        // ServerlessRuntimes_Get_Min
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetIfExists_ServerlessRuntimesGetMin()
-        {
-            // Generated from example definition: 2024-05-08/ServerlessRuntimes_Get_MinimumSet_Gen.json
-            // this example is just showing the usage of "InformaticaServerlessRuntimeResource_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this InformaticaOrganizationResource created on azure
-            // for more information of creating InformaticaOrganizationResource, please refer to the document of InformaticaOrganizationResource
-            string subscriptionId = "3599DA28-E346-4D9F-811E-189C0445F0FE";
-            string resourceGroupName = "rgopenapi";
-            string organizationName = "YC";
-            ResourceIdentifier informaticaOrganizationResourceId = InformaticaOrganizationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, organizationName);
-            InformaticaOrganizationResource informaticaOrganization = client.GetInformaticaOrganizationResource(informaticaOrganizationResourceId);
-
-            // get the collection of this InformaticaServerlessRuntimeResource
-            InformaticaServerlessRuntimeCollection collection = informaticaOrganization.GetInformaticaServerlessRuntimes();
-
-            // invoke the operation
-            string serverlessRuntimeName = "___";
-            NullableResponse<InformaticaServerlessRuntimeResource> response = await collection.GetIfExistsAsync(serverlessRuntimeName);
-            InformaticaServerlessRuntimeResource result = response.HasValue ? response.Value : null;
-
-            if (result == null)
-            {
-                Console.WriteLine($"Succeeded with null as result");
-            }
-            else
-            {
-                // the variable result is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                InformaticaServerlessRuntimeData resourceData = result.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-        }
-
-        // ServerlessRuntimes_CreateOrUpdate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_ServerlessRuntimesCreateOrUpdate()
         {
             // Generated from example definition: 2024-05-08/ServerlessRuntimes_CreateOrUpdate_MaximumSet_Gen.json
@@ -259,7 +41,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Samples
 
             // invoke the operation
             string serverlessRuntimeName = "0j-__";
-            InformaticaServerlessRuntimeData data = new InformaticaServerlessRuntimeData()
+            InformaticaServerlessRuntimeData data = new InformaticaServerlessRuntimeData
             {
                 Properties = new InformaticaServerlessRuntimeProperties("bkxdfopapbqucyhduewrubjpaei")
                 {
@@ -272,40 +54,40 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Samples
                     {
                         VnetResourceGuid = "5328d299-1462-4be0-bef1-303a28e556a0",
                     },
-                    AdvancedCustomProperties =
-{
-new AdvancedCustomProperties()
+                    AdvancedCustomProperties = {new AdvancedCustomProperties
 {
 Key = "qcmc",
 Value = "unraxmnohdmvutt",
-}
-},
+}},
                     SupplementaryFileLocation = "zmlqtkncwgqhhupsnqluumz",
-                    ServerlessRuntimeConfig = new ServerlessRuntimeConfigProperties()
+                    ServerlessRuntimeConfig = new ServerlessRuntimeConfigProperties
                     {
-                        CdiConfigProps =
+                        CdiConfigProps = {new CdiConfigProperties("hngsdqvtjdhwqlbqfotipaiwjuys", "zlrlbg", new InformaticaApplicationConfigs[]
 {
-new CdiConfigProperties("hngsdqvtjdhwqlbqfotipaiwjuys","zlrlbg",new InformaticaApplicationConfigs[]
+new InformaticaApplicationConfigs(
+    "lw",
+    "upfvjrqcrwwedfujkmsodeinw",
+    "mozgsetpwjmtyl",
+    "dixfyeobngivyvf",
+    "j",
+    "zvgkqwmi")
+})},
+                        CdieConfigProps = {new CdiConfigProperties("hngsdqvtjdhwqlbqfotipaiwjuys", "zlrlbg", new InformaticaApplicationConfigs[]
 {
-new InformaticaApplicationConfigs("lw","upfvjrqcrwwedfujkmsodeinw","mozgsetpwjmtyl","dixfyeobngivyvf","j","zvgkqwmi")
-})
-},
-                        CdieConfigProps =
-{
-new CdiConfigProperties("hngsdqvtjdhwqlbqfotipaiwjuys","zlrlbg",new InformaticaApplicationConfigs[]
-{
-new InformaticaApplicationConfigs("lw","upfvjrqcrwwedfujkmsodeinw","mozgsetpwjmtyl","dixfyeobngivyvf","j","zvgkqwmi")
-})
-},
+new InformaticaApplicationConfigs(
+    "lw",
+    "upfvjrqcrwwedfujkmsodeinw",
+    "mozgsetpwjmtyl",
+    "dixfyeobngivyvf",
+    "j",
+    "zvgkqwmi")
+})},
                     },
-                    ServerlessRuntimeTags =
-{
-new ServerlessRuntimeTag()
+                    ServerlessRuntimeTags = {new ServerlessRuntimeTag
 {
 Name = "korveuycuwhs",
 Value = "uyiuegxnkgp",
-}
-},
+}},
                     UserContextToken = "oludf",
                 },
             };
@@ -319,9 +101,8 @@ Value = "uyiuegxnkgp",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ServerlessRuntimes_CreateOrUpdate_Min
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_ServerlessRuntimesCreateOrUpdateMin()
         {
             // Generated from example definition: 2024-05-08/ServerlessRuntimes_CreateOrUpdate_MinimumSet_Gen.json
@@ -354,6 +135,218 @@ Value = "uyiuegxnkgp",
             InformaticaServerlessRuntimeData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Get_ServerlessRuntimesGet()
+        {
+            // Generated from example definition: 2024-05-08/ServerlessRuntimes_Get_MaximumSet_Gen.json
+            // this example is just showing the usage of "InformaticaServerlessRuntimeResource_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this InformaticaOrganizationResource created on azure
+            // for more information of creating InformaticaOrganizationResource, please refer to the document of InformaticaOrganizationResource
+            string subscriptionId = "3599DA28-E346-4D9F-811E-189C0445F0FE";
+            string resourceGroupName = "rgopenapi";
+            string organizationName = "e3Y";
+            ResourceIdentifier informaticaOrganizationResourceId = InformaticaOrganizationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, organizationName);
+            InformaticaOrganizationResource informaticaOrganization = client.GetInformaticaOrganizationResource(informaticaOrganizationResourceId);
+
+            // get the collection of this InformaticaServerlessRuntimeResource
+            InformaticaServerlessRuntimeCollection collection = informaticaOrganization.GetInformaticaServerlessRuntimes();
+
+            // invoke the operation
+            string serverlessRuntimeName = "48-";
+            InformaticaServerlessRuntimeResource result = await collection.GetAsync(serverlessRuntimeName);
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            InformaticaServerlessRuntimeData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Get_ServerlessRuntimesGetMin()
+        {
+            // Generated from example definition: 2024-05-08/ServerlessRuntimes_Get_MinimumSet_Gen.json
+            // this example is just showing the usage of "InformaticaServerlessRuntimeResource_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this InformaticaOrganizationResource created on azure
+            // for more information of creating InformaticaOrganizationResource, please refer to the document of InformaticaOrganizationResource
+            string subscriptionId = "3599DA28-E346-4D9F-811E-189C0445F0FE";
+            string resourceGroupName = "rgopenapi";
+            string organizationName = "YC";
+            ResourceIdentifier informaticaOrganizationResourceId = InformaticaOrganizationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, organizationName);
+            InformaticaOrganizationResource informaticaOrganization = client.GetInformaticaOrganizationResource(informaticaOrganizationResourceId);
+
+            // get the collection of this InformaticaServerlessRuntimeResource
+            InformaticaServerlessRuntimeCollection collection = informaticaOrganization.GetInformaticaServerlessRuntimes();
+
+            // invoke the operation
+            string serverlessRuntimeName = "___";
+            InformaticaServerlessRuntimeResource result = await collection.GetAsync(serverlessRuntimeName);
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            InformaticaServerlessRuntimeData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Exists_ServerlessRuntimesGet()
+        {
+            // Generated from example definition: 2024-05-08/ServerlessRuntimes_Get_MaximumSet_Gen.json
+            // this example is just showing the usage of "InformaticaServerlessRuntimeResource_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this InformaticaOrganizationResource created on azure
+            // for more information of creating InformaticaOrganizationResource, please refer to the document of InformaticaOrganizationResource
+            string subscriptionId = "3599DA28-E346-4D9F-811E-189C0445F0FE";
+            string resourceGroupName = "rgopenapi";
+            string organizationName = "e3Y";
+            ResourceIdentifier informaticaOrganizationResourceId = InformaticaOrganizationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, organizationName);
+            InformaticaOrganizationResource informaticaOrganization = client.GetInformaticaOrganizationResource(informaticaOrganizationResourceId);
+
+            // get the collection of this InformaticaServerlessRuntimeResource
+            InformaticaServerlessRuntimeCollection collection = informaticaOrganization.GetInformaticaServerlessRuntimes();
+
+            // invoke the operation
+            string serverlessRuntimeName = "48-";
+            bool result = await collection.ExistsAsync(serverlessRuntimeName);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Exists_ServerlessRuntimesGetMin()
+        {
+            // Generated from example definition: 2024-05-08/ServerlessRuntimes_Get_MinimumSet_Gen.json
+            // this example is just showing the usage of "InformaticaServerlessRuntimeResource_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this InformaticaOrganizationResource created on azure
+            // for more information of creating InformaticaOrganizationResource, please refer to the document of InformaticaOrganizationResource
+            string subscriptionId = "3599DA28-E346-4D9F-811E-189C0445F0FE";
+            string resourceGroupName = "rgopenapi";
+            string organizationName = "YC";
+            ResourceIdentifier informaticaOrganizationResourceId = InformaticaOrganizationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, organizationName);
+            InformaticaOrganizationResource informaticaOrganization = client.GetInformaticaOrganizationResource(informaticaOrganizationResourceId);
+
+            // get the collection of this InformaticaServerlessRuntimeResource
+            InformaticaServerlessRuntimeCollection collection = informaticaOrganization.GetInformaticaServerlessRuntimes();
+
+            // invoke the operation
+            string serverlessRuntimeName = "___";
+            bool result = await collection.ExistsAsync(serverlessRuntimeName);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetIfExists_ServerlessRuntimesGet()
+        {
+            // Generated from example definition: 2024-05-08/ServerlessRuntimes_Get_MaximumSet_Gen.json
+            // this example is just showing the usage of "InformaticaServerlessRuntimeResource_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this InformaticaOrganizationResource created on azure
+            // for more information of creating InformaticaOrganizationResource, please refer to the document of InformaticaOrganizationResource
+            string subscriptionId = "3599DA28-E346-4D9F-811E-189C0445F0FE";
+            string resourceGroupName = "rgopenapi";
+            string organizationName = "e3Y";
+            ResourceIdentifier informaticaOrganizationResourceId = InformaticaOrganizationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, organizationName);
+            InformaticaOrganizationResource informaticaOrganization = client.GetInformaticaOrganizationResource(informaticaOrganizationResourceId);
+
+            // get the collection of this InformaticaServerlessRuntimeResource
+            InformaticaServerlessRuntimeCollection collection = informaticaOrganization.GetInformaticaServerlessRuntimes();
+
+            // invoke the operation
+            string serverlessRuntimeName = "48-";
+            NullableResponse<InformaticaServerlessRuntimeResource> response = await collection.GetIfExistsAsync(serverlessRuntimeName);
+            InformaticaServerlessRuntimeResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine("Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                InformaticaServerlessRuntimeData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetIfExists_ServerlessRuntimesGetMin()
+        {
+            // Generated from example definition: 2024-05-08/ServerlessRuntimes_Get_MinimumSet_Gen.json
+            // this example is just showing the usage of "InformaticaServerlessRuntimeResource_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this InformaticaOrganizationResource created on azure
+            // for more information of creating InformaticaOrganizationResource, please refer to the document of InformaticaOrganizationResource
+            string subscriptionId = "3599DA28-E346-4D9F-811E-189C0445F0FE";
+            string resourceGroupName = "rgopenapi";
+            string organizationName = "YC";
+            ResourceIdentifier informaticaOrganizationResourceId = InformaticaOrganizationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, organizationName);
+            InformaticaOrganizationResource informaticaOrganization = client.GetInformaticaOrganizationResource(informaticaOrganizationResourceId);
+
+            // get the collection of this InformaticaServerlessRuntimeResource
+            InformaticaServerlessRuntimeCollection collection = informaticaOrganization.GetInformaticaServerlessRuntimes();
+
+            // invoke the operation
+            string serverlessRuntimeName = "___";
+            NullableResponse<InformaticaServerlessRuntimeResource> response = await collection.GetIfExistsAsync(serverlessRuntimeName);
+            InformaticaServerlessRuntimeResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine("Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                InformaticaServerlessRuntimeData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
         }
     }
 }

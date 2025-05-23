@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
-    /// <summary> Microsoft Fabric LakeHouse Table. </summary>
+    /// <summary> Microsoft Fabric Lakehouse Table. </summary>
     public partial class LakeHouseTableDataset : Dataset
     {
         /// <summary> Initializes a new instance of <see cref="LakeHouseTableDataset"/>. </summary>
@@ -20,7 +20,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             Argument.AssertNotNull(linkedServiceName, nameof(linkedServiceName));
 
-            Type = "LakeHouseTable";
+            Type = "LakehouseTable";
         }
 
         /// <summary> Initializes a new instance of <see cref="LakeHouseTableDataset"/>. </summary>
@@ -33,14 +33,18 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="annotations"> List of tags that can be used for describing the Dataset. </param>
         /// <param name="folder"> The folder that this Dataset is in. If not specified, Dataset will appear at the root level. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="table"> The name of Microsoft Fabric LakeHouse Table. Type: string (or Expression with resultType string). </param>
-        internal LakeHouseTableDataset(string type, string description, object structure, object schema, LinkedServiceReference linkedServiceName, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, DatasetFolder folder, IDictionary<string, object> additionalProperties, object table) : base(type, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
+        /// <param name="schemaTypePropertiesSchema"> The schema name of Microsoft Fabric Lakehouse Table. Type: string (or Expression with resultType string). </param>
+        /// <param name="table"> The name of Microsoft Fabric Lakehouse Table. Type: string (or Expression with resultType string). </param>
+        internal LakeHouseTableDataset(string type, string description, object structure, object schema, LinkedServiceReference linkedServiceName, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, DatasetFolder folder, IDictionary<string, object> additionalProperties, object schemaTypePropertiesSchema, object table) : base(type, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
         {
+            SchemaTypePropertiesSchema = schemaTypePropertiesSchema;
             Table = table;
-            Type = type ?? "LakeHouseTable";
+            Type = type ?? "LakehouseTable";
         }
 
-        /// <summary> The name of Microsoft Fabric LakeHouse Table. Type: string (or Expression with resultType string). </summary>
+        /// <summary> The schema name of Microsoft Fabric Lakehouse Table. Type: string (or Expression with resultType string). </summary>
+        public object SchemaTypePropertiesSchema { get; set; }
+        /// <summary> The name of Microsoft Fabric Lakehouse Table. Type: string (or Expression with resultType string). </summary>
         public object Table { get; set; }
     }
 }

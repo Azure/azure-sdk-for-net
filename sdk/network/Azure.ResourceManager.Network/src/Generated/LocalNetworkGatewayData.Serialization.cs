@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Network
             ResourceType? type = default;
             AzureLocation? location = default;
             IDictionary<string, string> tags = default;
-            AddressSpace localNetworkAddressSpace = default;
+            VirtualNetworkAddressSpace localNetworkAddressSpace = default;
             string gatewayIPAddress = default;
             string fqdn = default;
             BgpSettings bgpSettings = default;
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            localNetworkAddressSpace = AddressSpace.DeserializeAddressSpace(property0.Value, options);
+                            localNetworkAddressSpace = VirtualNetworkAddressSpace.DeserializeVirtualNetworkAddressSpace(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("gatewayIpAddress"u8))
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.Network
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(LocalNetworkGatewayData)} does not support writing '{options.Format}' format.");
             }
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.Network
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeLocalNetworkGatewayData(document.RootElement, options);
                     }
                 default:

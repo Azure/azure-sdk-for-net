@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +23,14 @@ namespace Azure.ResourceManager.EventGrid
 
         PartnerConfigurationResource IOperationSource<PartnerConfigurationResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = PartnerConfigurationData.DeserializePartnerConfigurationData(document.RootElement);
+            var data = ModelReaderWriter.Read<PartnerConfigurationData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerEventGridContext.Default);
             return new PartnerConfigurationResource(_client, data);
         }
 
         async ValueTask<PartnerConfigurationResource> IOperationSource<PartnerConfigurationResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = PartnerConfigurationData.DeserializePartnerConfigurationData(document.RootElement);
-            return new PartnerConfigurationResource(_client, data);
+            var data = ModelReaderWriter.Read<PartnerConfigurationData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerEventGridContext.Default);
+            return await Task.FromResult(new PartnerConfigurationResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

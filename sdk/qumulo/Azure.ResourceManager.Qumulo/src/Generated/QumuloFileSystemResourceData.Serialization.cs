@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.Qumulo
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerQumuloContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(QumuloFileSystemResourceData)} does not support writing '{options.Format}' format.");
             }
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.Qumulo
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeQumuloFileSystemResourceData(document.RootElement, options);
                     }
                 default:

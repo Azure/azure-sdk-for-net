@@ -388,7 +388,7 @@ namespace Azure.ResourceManager.AppService.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAppServiceContext.Default);
                 case "bicep":
                     return SerializeBicep(options);
                 default:
@@ -404,7 +404,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeSiteAuthSettingsV2(document.RootElement, options);
                     }
                 default:

@@ -37,6 +37,11 @@ namespace Azure.ResourceManager.IotFirmwareDefense
             }
 
             base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(Sku))
+            {
+                writer.WritePropertyName("sku"u8);
+                writer.WriteObjectValue(Sku, options);
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
@@ -67,6 +72,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
             {
                 return null;
             }
+            IotFirmwareDefenseSku sku = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -78,6 +84,15 @@ namespace Azure.ResourceManager.IotFirmwareDefense
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("sku"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    sku = IotFirmwareDefenseSku.DeserializeIotFirmwareDefenseSku(property.Value, options);
+                    continue;
+                }
                 if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -155,6 +170,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
+                sku,
                 provisioningState,
                 serializedAdditionalRawData);
         }
@@ -166,7 +182,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerIotFirmwareDefenseContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(FirmwareAnalysisWorkspaceData)} does not support writing '{options.Format}' format.");
             }
@@ -180,7 +196,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeFirmwareAnalysisWorkspaceData(document.RootElement, options);
                     }
                 default:

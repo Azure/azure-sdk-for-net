@@ -49,7 +49,7 @@ namespace Azure.AI.Language.Text
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -83,11 +83,8 @@ namespace Azure.AI.Language.Text
                 switch (discriminator.GetString())
                 {
                     case "AbstractiveSummarization": return AbstractiveSummarizationOperationAction.DeserializeAbstractiveSummarizationOperationAction(element, options);
-                    case "CustomAbstractiveSummarization": return CustomAbstractiveSummarizationOperationAction.DeserializeCustomAbstractiveSummarizationOperationAction(element, options);
                     case "CustomEntityRecognition": return CustomEntitiesOperationAction.DeserializeCustomEntitiesOperationAction(element, options);
-                    case "CustomHealthcare": return CustomHealthcareOperationAction.DeserializeCustomHealthcareOperationAction(element, options);
                     case "CustomMultiLabelClassification": return CustomMultiLabelClassificationOperationAction.DeserializeCustomMultiLabelClassificationOperationAction(element, options);
-                    case "CustomSentimentAnalysis": return CustomSentimentAnalysisOperationAction.DeserializeCustomSentimentAnalysisOperationAction(element, options);
                     case "CustomSingleLabelClassification": return CustomSingleLabelClassificationOperationAction.DeserializeCustomSingleLabelClassificationOperationAction(element, options);
                     case "EntityLinking": return EntityLinkingOperationAction.DeserializeEntityLinkingOperationAction(element, options);
                     case "EntityRecognition": return EntitiesOperationAction.DeserializeEntitiesOperationAction(element, options);
@@ -108,7 +105,7 @@ namespace Azure.AI.Language.Text
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureAILanguageTextContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(AnalyzeTextOperationAction)} does not support writing '{options.Format}' format.");
             }
@@ -122,7 +119,7 @@ namespace Azure.AI.Language.Text
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeAnalyzeTextOperationAction(document.RootElement, options);
                     }
                 default:
@@ -136,7 +133,7 @@ namespace Azure.AI.Language.Text
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static AnalyzeTextOperationAction FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeAnalyzeTextOperationAction(document.RootElement);
         }
 

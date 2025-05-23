@@ -42,7 +42,7 @@ namespace Azure.Compute.Batch
             writer.WritePropertyName("lastModified"u8);
             writer.WriteStringValue(LastModified, "O");
             writer.WritePropertyName("contentLength"u8);
-            writer.WriteNumberValue(ContentLength);
+            writer.WriteStringValue(ContentLength.ToString());
             if (Optional.IsDefined(ContentType))
             {
                 writer.WritePropertyName("contentType"u8);
@@ -61,7 +61,7 @@ namespace Azure.Compute.Batch
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -115,7 +115,7 @@ namespace Azure.Compute.Batch
                 }
                 if (property.NameEquals("contentLength"u8))
                 {
-                    contentLength = property.Value.GetInt64();
+                    contentLength = long.Parse(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("contentType"u8))
@@ -150,7 +150,7 @@ namespace Azure.Compute.Batch
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureComputeBatchContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(FileProperties)} does not support writing '{options.Format}' format.");
             }
@@ -164,7 +164,7 @@ namespace Azure.Compute.Batch
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeFileProperties(document.RootElement, options);
                     }
                 default:
@@ -178,7 +178,7 @@ namespace Azure.Compute.Batch
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static FileProperties FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeFileProperties(document.RootElement);
         }
 

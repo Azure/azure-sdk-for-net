@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.OperationalInsights
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2020-08-01";
+            _apiVersion = apiVersion ?? "2025-02-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 case 201:
                     {
                         StorageInsightData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = StorageInsightData.DeserializeStorageInsightData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 case 201:
                     {
                         StorageInsightData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = StorageInsightData.DeserializeStorageInsightData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 case 200:
                     {
                         StorageInsightData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = StorageInsightData.DeserializeStorageInsightData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 case 200:
                     {
                         StorageInsightData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = StorageInsightData.DeserializeStorageInsightData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -397,7 +397,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 case 200:
                     {
                         StorageInsightListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = StorageInsightListResult.DeserializeStorageInsightListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 case 200:
                     {
                         StorageInsightListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = StorageInsightListResult.DeserializeStorageInsightListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -479,7 +479,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 case 200:
                     {
                         StorageInsightListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = StorageInsightListResult.DeserializeStorageInsightListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -510,7 +510,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 case 200:
                     {
                         StorageInsightListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = StorageInsightListResult.DeserializeStorageInsightListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

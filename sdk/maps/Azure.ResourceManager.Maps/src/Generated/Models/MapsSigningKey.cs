@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Maps.Models
 {
-    /// <summary> The Map account key to use for signing. </summary>
+    /// <summary> The Map account key to use for signing. Picking `primaryKey` or `secondaryKey` will use the Map account Shared Keys, and using `managedIdentity` will use the auto-renewed private key to sign the SAS. </summary>
     public readonly partial struct MapsSigningKey : IEquatable<MapsSigningKey>
     {
         private readonly string _value;
@@ -24,11 +24,14 @@ namespace Azure.ResourceManager.Maps.Models
 
         private const string PrimaryKeyValue = "primaryKey";
         private const string SecondaryKeyValue = "secondaryKey";
+        private const string ManagedIdentityValue = "managedIdentity";
 
         /// <summary> primaryKey. </summary>
         public static MapsSigningKey PrimaryKey { get; } = new MapsSigningKey(PrimaryKeyValue);
         /// <summary> secondaryKey. </summary>
         public static MapsSigningKey SecondaryKey { get; } = new MapsSigningKey(SecondaryKeyValue);
+        /// <summary> managedIdentity. </summary>
+        public static MapsSigningKey ManagedIdentity { get; } = new MapsSigningKey(ManagedIdentityValue);
         /// <summary> Determines if two <see cref="MapsSigningKey"/> values are the same. </summary>
         public static bool operator ==(MapsSigningKey left, MapsSigningKey right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MapsSigningKey"/> values are not the same. </summary>

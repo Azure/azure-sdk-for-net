@@ -67,6 +67,41 @@ namespace Azure.ResourceManager.Storage
                 writer.WritePropertyName("shareQuota"u8);
                 writer.WriteNumberValue(ShareQuota.Value);
             }
+            if (Optional.IsDefined(ProvisionedIops))
+            {
+                writer.WritePropertyName("provisionedIops"u8);
+                writer.WriteNumberValue(ProvisionedIops.Value);
+            }
+            if (Optional.IsDefined(ProvisionedBandwidthMibps))
+            {
+                writer.WritePropertyName("provisionedBandwidthMibps"u8);
+                writer.WriteNumberValue(ProvisionedBandwidthMibps.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(IncludedBurstIops))
+            {
+                writer.WritePropertyName("includedBurstIops"u8);
+                writer.WriteNumberValue(IncludedBurstIops.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(MaxBurstCreditsForIops))
+            {
+                writer.WritePropertyName("maxBurstCreditsForIops"u8);
+                writer.WriteNumberValue(MaxBurstCreditsForIops.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(NextAllowedQuotaDowngradeOn))
+            {
+                writer.WritePropertyName("nextAllowedQuotaDowngradeTime"u8);
+                writer.WriteStringValue(NextAllowedQuotaDowngradeOn.Value, "R");
+            }
+            if (options.Format != "W" && Optional.IsDefined(NextAllowedProvisionedIopsDowngradeOn))
+            {
+                writer.WritePropertyName("nextAllowedProvisionedIopsDowngradeTime"u8);
+                writer.WriteStringValue(NextAllowedProvisionedIopsDowngradeOn.Value, "R");
+            }
+            if (options.Format != "W" && Optional.IsDefined(NextAllowedProvisionedBandwidthDowngradeOn))
+            {
+                writer.WritePropertyName("nextAllowedProvisionedBandwidthDowngradeTime"u8);
+                writer.WriteStringValue(NextAllowedProvisionedBandwidthDowngradeOn.Value, "R");
+            }
             if (Optional.IsDefined(EnabledProtocol))
             {
                 writer.WritePropertyName("enabledProtocols"u8);
@@ -147,6 +182,11 @@ namespace Azure.ResourceManager.Storage
                 writer.WritePropertyName("snapshotTime"u8);
                 writer.WriteStringValue(SnapshotOn.Value, "O");
             }
+            if (Optional.IsDefined(FileSharePaidBursting))
+            {
+                writer.WritePropertyName("fileSharePaidBursting"u8);
+                writer.WriteObjectValue(FileSharePaidBursting, options);
+            }
             writer.WriteEndObject();
         }
 
@@ -178,6 +218,13 @@ namespace Azure.ResourceManager.Storage
             DateTimeOffset? lastModifiedTime = default;
             IDictionary<string, string> metadata = default;
             int? shareQuota = default;
+            int? provisionedIops = default;
+            int? provisionedBandwidthMibps = default;
+            int? includedBurstIops = default;
+            long? maxBurstCreditsForIops = default;
+            DateTimeOffset? nextAllowedQuotaDowngradeTime = default;
+            DateTimeOffset? nextAllowedProvisionedIopsDowngradeTime = default;
+            DateTimeOffset? nextAllowedProvisionedBandwidthDowngradeTime = default;
             FileShareEnabledProtocol? enabledProtocols = default;
             RootSquashType? rootSquash = default;
             string version = default;
@@ -193,6 +240,7 @@ namespace Azure.ResourceManager.Storage
             StorageLeaseDurationType? leaseDuration = default;
             IList<StorageSignedIdentifier> signedIdentifiers = default;
             DateTimeOffset? snapshotTime = default;
+            FileSharePropertiesFileSharePaidBursting fileSharePaidBursting = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -269,6 +317,69 @@ namespace Azure.ResourceManager.Storage
                                 continue;
                             }
                             shareQuota = property0.Value.GetInt32();
+                            continue;
+                        }
+                        if (property0.NameEquals("provisionedIops"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            provisionedIops = property0.Value.GetInt32();
+                            continue;
+                        }
+                        if (property0.NameEquals("provisionedBandwidthMibps"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            provisionedBandwidthMibps = property0.Value.GetInt32();
+                            continue;
+                        }
+                        if (property0.NameEquals("includedBurstIops"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            includedBurstIops = property0.Value.GetInt32();
+                            continue;
+                        }
+                        if (property0.NameEquals("maxBurstCreditsForIops"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            maxBurstCreditsForIops = property0.Value.GetInt64();
+                            continue;
+                        }
+                        if (property0.NameEquals("nextAllowedQuotaDowngradeTime"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            nextAllowedQuotaDowngradeTime = property0.Value.GetDateTimeOffset("R");
+                            continue;
+                        }
+                        if (property0.NameEquals("nextAllowedProvisionedIopsDowngradeTime"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            nextAllowedProvisionedIopsDowngradeTime = property0.Value.GetDateTimeOffset("R");
+                            continue;
+                        }
+                        if (property0.NameEquals("nextAllowedProvisionedBandwidthDowngradeTime"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            nextAllowedProvisionedBandwidthDowngradeTime = property0.Value.GetDateTimeOffset("R");
                             continue;
                         }
                         if (property0.NameEquals("enabledProtocols"u8))
@@ -403,6 +514,15 @@ namespace Azure.ResourceManager.Storage
                             snapshotTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
+                        if (property0.NameEquals("fileSharePaidBursting"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            fileSharePaidBursting = FileSharePropertiesFileSharePaidBursting.DeserializeFileSharePropertiesFileSharePaidBursting(property0.Value, options);
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -420,6 +540,13 @@ namespace Azure.ResourceManager.Storage
                 lastModifiedTime,
                 metadata ?? new ChangeTrackingDictionary<string, string>(),
                 shareQuota,
+                provisionedIops,
+                provisionedBandwidthMibps,
+                includedBurstIops,
+                maxBurstCreditsForIops,
+                nextAllowedQuotaDowngradeTime,
+                nextAllowedProvisionedIopsDowngradeTime,
+                nextAllowedProvisionedBandwidthDowngradeTime,
                 enabledProtocols,
                 rootSquash,
                 version,
@@ -435,6 +562,7 @@ namespace Azure.ResourceManager.Storage
                 leaseDuration,
                 signedIdentifiers ?? new ChangeTrackingList<StorageSignedIdentifier>(),
                 snapshotTime,
+                fileSharePaidBursting,
                 etag,
                 serializedAdditionalRawData);
         }
@@ -585,6 +713,114 @@ namespace Azure.ResourceManager.Storage
                 {
                     builder.Append("    shareQuota: ");
                     builder.AppendLine($"{ShareQuota.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProvisionedIops), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    provisionedIops: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ProvisionedIops))
+                {
+                    builder.Append("    provisionedIops: ");
+                    builder.AppendLine($"{ProvisionedIops.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProvisionedBandwidthMibps), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    provisionedBandwidthMibps: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ProvisionedBandwidthMibps))
+                {
+                    builder.Append("    provisionedBandwidthMibps: ");
+                    builder.AppendLine($"{ProvisionedBandwidthMibps.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IncludedBurstIops), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    includedBurstIops: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IncludedBurstIops))
+                {
+                    builder.Append("    includedBurstIops: ");
+                    builder.AppendLine($"{IncludedBurstIops.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaxBurstCreditsForIops), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    maxBurstCreditsForIops: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MaxBurstCreditsForIops))
+                {
+                    builder.Append("    maxBurstCreditsForIops: ");
+                    builder.AppendLine($"'{MaxBurstCreditsForIops.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NextAllowedQuotaDowngradeOn), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    nextAllowedQuotaDowngradeTime: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(NextAllowedQuotaDowngradeOn))
+                {
+                    builder.Append("    nextAllowedQuotaDowngradeTime: ");
+                    var formattedDateTimeString = TypeFormatters.ToString(NextAllowedQuotaDowngradeOn.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NextAllowedProvisionedIopsDowngradeOn), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    nextAllowedProvisionedIopsDowngradeTime: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(NextAllowedProvisionedIopsDowngradeOn))
+                {
+                    builder.Append("    nextAllowedProvisionedIopsDowngradeTime: ");
+                    var formattedDateTimeString = TypeFormatters.ToString(NextAllowedProvisionedIopsDowngradeOn.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NextAllowedProvisionedBandwidthDowngradeOn), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    nextAllowedProvisionedBandwidthDowngradeTime: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(NextAllowedProvisionedBandwidthDowngradeOn))
+                {
+                    builder.Append("    nextAllowedProvisionedBandwidthDowngradeTime: ");
+                    var formattedDateTimeString = TypeFormatters.ToString(NextAllowedProvisionedBandwidthDowngradeOn.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
                 }
             }
 
@@ -841,6 +1077,21 @@ namespace Azure.ResourceManager.Storage
                 }
             }
 
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FileSharePaidBursting), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    fileSharePaidBursting: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(FileSharePaidBursting))
+                {
+                    builder.Append("    fileSharePaidBursting: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, FileSharePaidBursting, options, 4, false, "    fileSharePaidBursting: ");
+                }
+            }
+
             builder.AppendLine("  }");
             builder.AppendLine("}");
             return BinaryData.FromString(builder.ToString());
@@ -853,7 +1104,7 @@ namespace Azure.ResourceManager.Storage
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerStorageContext.Default);
                 case "bicep":
                     return SerializeBicep(options);
                 default:
@@ -869,7 +1120,7 @@ namespace Azure.ResourceManager.Storage
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeFileShareData(document.RootElement, options);
                     }
                 default:

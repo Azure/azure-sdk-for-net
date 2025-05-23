@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDevTestLabsContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(DevTestLabApplicableSchedule)} does not support writing '{options.Format}' format.");
             }
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeDevTestLabApplicableSchedule(document.RootElement, options);
                     }
                 default:

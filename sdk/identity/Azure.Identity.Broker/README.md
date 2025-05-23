@@ -165,5 +165,3 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [code_of_conduct_faq]: https://opensource.microsoft.com/codeofconduct/faq/
 [nuget]: https://www.nuget.org/
 [identity_api_docs]: https://learn.microsoft.com/dotnet/api/azure.identity?view=azure-dotnet
-
-![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fidentity%2FAzure.Identity%2FREADME.png)

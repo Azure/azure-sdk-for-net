@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Resources
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Properties);
 #else
-                using (JsonDocument document = JsonDocument.Parse(Properties))
+                using (JsonDocument document = JsonDocument.Parse(Properties, ModelSerializationExtensions.JsonDocumentOptions))
                 {
                     JsonSerializer.Serialize(writer, document.RootElement);
                 }
@@ -580,7 +580,7 @@ namespace Azure.ResourceManager.Resources
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerContext.Default);
                 case "bicep":
                     return SerializeBicep(options);
                 default:
@@ -596,7 +596,7 @@ namespace Azure.ResourceManager.Resources
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeGenericResourceData(document.RootElement, options);
                     }
                 default:

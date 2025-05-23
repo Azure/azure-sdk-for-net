@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.SecurityCenter
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSecurityCenterContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(GovernanceAssignmentData)} does not support writing '{options.Format}' format.");
             }
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeGovernanceAssignmentData(document.RootElement, options);
                     }
                 default:

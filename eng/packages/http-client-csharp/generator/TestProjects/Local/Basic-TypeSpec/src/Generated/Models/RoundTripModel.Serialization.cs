@@ -11,17 +11,19 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
-using BasicTypeSpec;
 
-namespace BasicTypeSpec.Models
+namespace BasicTypeSpec
 {
     /// <summary></summary>
     public partial class RoundTripModel : IJsonModel<RoundTripModel>
     {
+        /// <summary> Initializes a new instance of <see cref="RoundTripModel"/> for deserialization. </summary>
         internal RoundTripModel()
         {
         }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<RoundTripModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -265,6 +267,8 @@ namespace BasicTypeSpec.Models
             }
         }
 
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         RoundTripModel IJsonModel<RoundTripModel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
@@ -280,6 +284,8 @@ namespace BasicTypeSpec.Models
             return DeserializeRoundTripModel(document.RootElement, options);
         }
 
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         internal static RoundTripModel DeserializeRoundTripModel(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
@@ -290,7 +296,7 @@ namespace BasicTypeSpec.Models
             int requiredInt = default;
             IList<StringFixedEnum> requiredCollection = default;
             IDictionary<string, StringExtensibleEnum> requiredDictionary = default;
-            Thing requiredModel = default;
+            ThingModel requiredModel = default;
             IntExtensibleEnum? intExtensibleEnum = default;
             IList<IntExtensibleEnum> intExtensibleEnumCollection = default;
             FloatExtensibleEnum? floatExtensibleEnum = default;
@@ -345,14 +351,13 @@ namespace BasicTypeSpec.Models
                 }
                 if (prop.NameEquals("requiredModel"u8))
                 {
-                    requiredModel = Thing.DeserializeThing(prop.Value, options);
+                    requiredModel = ThingModel.DeserializeThingModel(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("intExtensibleEnum"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        intExtensibleEnum = null;
                         continue;
                     }
                     intExtensibleEnum = new IntExtensibleEnum(prop.Value.GetInt32());
@@ -376,7 +381,6 @@ namespace BasicTypeSpec.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        floatExtensibleEnum = null;
                         continue;
                     }
                     floatExtensibleEnum = new FloatExtensibleEnum(prop.Value.GetSingle());
@@ -386,7 +390,6 @@ namespace BasicTypeSpec.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        floatExtensibleEnumWithIntValue = null;
                         continue;
                     }
                     floatExtensibleEnumWithIntValue = new FloatExtensibleEnumWithIntValue(prop.Value.GetSingle());
@@ -410,7 +413,6 @@ namespace BasicTypeSpec.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        floatFixedEnum = null;
                         continue;
                     }
                     floatFixedEnum = prop.Value.GetSingle().ToFloatFixedEnum();
@@ -420,7 +422,6 @@ namespace BasicTypeSpec.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        floatFixedEnumWithIntValue = null;
                         continue;
                     }
                     floatFixedEnumWithIntValue = prop.Value.GetInt32().ToFloatFixedEnumWithIntValue();
@@ -444,7 +445,6 @@ namespace BasicTypeSpec.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        intFixedEnum = null;
                         continue;
                     }
                     intFixedEnum = prop.Value.GetInt32().ToIntFixedEnum();
@@ -468,7 +468,6 @@ namespace BasicTypeSpec.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        stringFixedEnum = null;
                         continue;
                     }
                     stringFixedEnum = prop.Value.GetString().ToStringFixedEnum();
@@ -483,7 +482,6 @@ namespace BasicTypeSpec.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        optionalUnknown = null;
                         continue;
                     }
                     optionalUnknown = BinaryData.FromString(prop.Value.GetRawText());
@@ -608,6 +606,7 @@ namespace BasicTypeSpec.Models
                 additionalBinaryDataProperties);
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<RoundTripModel>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -617,12 +616,14 @@ namespace BasicTypeSpec.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, BasicTypeSpecContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(RoundTripModel)} does not support writing '{options.Format}' format.");
             }
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         RoundTripModel IPersistableModel<RoundTripModel>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
@@ -642,11 +643,16 @@ namespace BasicTypeSpec.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<RoundTripModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="roundTripModel"> The <see cref="RoundTripModel"/> to serialize into <see cref="RequestContent"/>. </param>
         public static implicit operator RequestContent(RoundTripModel roundTripModel)
         {
+            if (roundTripModel == null)
+            {
+                return null;
+            }
             Utf8JsonBinaryContent content = new Utf8JsonBinaryContent();
             content.JsonWriter.WriteObjectValue(roundTripModel, ModelSerializationExtensions.WireOptions);
             return content;

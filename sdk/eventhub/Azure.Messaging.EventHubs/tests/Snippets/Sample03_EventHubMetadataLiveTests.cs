@@ -142,7 +142,7 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
                 Debug.WriteLine($"\tThe partition contains no events: { partitionProperties.IsEmpty }");
                 Debug.WriteLine($"\tThe first sequence number is: { partitionProperties.BeginningSequenceNumber }");
                 Debug.WriteLine($"\tThe last sequence number is: { partitionProperties.LastEnqueuedSequenceNumber }");
-                Debug.WriteLine($"\tThe last offset is: { partitionProperties.LastEnqueuedOffset }");
+                Debug.WriteLine($"\tThe last offset is: { partitionProperties.LastEnqueuedOffsetString }");
                 Debug.WriteLine($"\tThe last enqueued time is: { partitionProperties.LastEnqueuedTime }, in UTC.");
             }
             finally

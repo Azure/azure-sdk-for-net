@@ -46,8 +46,19 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ContainerRegistryEventRequest"/>. </summary>
-        internal ContainerRegistryEventRequest()
+        /// <param name="id"> The ID of the request that initiated the event. </param>
+        /// <param name="host"> The externally accessible hostname of the registry instance, as specified by the http host header on incoming requests. </param>
+        /// <param name="method"> The request method that generated the event. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="host"/> or <paramref name="method"/> is null. </exception>
+        internal ContainerRegistryEventRequest(string id, string host, string method)
         {
+            Argument.AssertNotNull(id, nameof(id));
+            Argument.AssertNotNull(host, nameof(host));
+            Argument.AssertNotNull(method, nameof(method));
+
+            Id = id;
+            Host = host;
+            Method = method;
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerRegistryEventRequest"/>. </summary>
@@ -65,6 +76,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Method = method;
             Useragent = useragent;
             _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryEventRequest"/> for deserialization. </summary>
+        internal ContainerRegistryEventRequest()
+        {
         }
 
         /// <summary> The ID of the request that initiated the event. </summary>

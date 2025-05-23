@@ -10,18 +10,18 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Sql.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Sql.Samples
 {
     public partial class Sample_ManagedDatabaseAdvancedThreatProtectionCollection
     {
-        // Get a list of the managed database's Advanced Threat Protection settings.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetAll_GetAListOfTheManagedDatabaseSAdvancedThreatProtectionSettings()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task CreateOrUpdate_UpdateAManagedDatabaseSAdvancedThreatProtectionSettingsWithAllParameters()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2022-02-01-preview/examples/ManagedDatabaseAdvancedThreatProtectionSettingsListByDatabase.json
-            // this example is just showing the usage of "ManagedDatabaseAdvancedThreatProtectionSettings_ListByDatabase" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-05-01-preview/examples/ManagedDatabaseAdvancedThreatProtectionSettingsCreateMax.json
+            // this example is just showing the usage of "ManagedDatabaseAdvancedThreatProtectionSettings_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -31,8 +31,8 @@ namespace Azure.ResourceManager.Sql.Samples
             // this example assumes you already have this ManagedDatabaseResource created on azure
             // for more information of creating ManagedDatabaseResource, please refer to the document of ManagedDatabaseResource
             string subscriptionId = "00000000-1111-2222-3333-444444444444";
-            string resourceGroupName = "threatprotection-6852";
-            string managedInstanceName = "threatprotection-2080";
+            string resourceGroupName = "threatprotection-4799";
+            string managedInstanceName = "threatprotection-6440";
             string databaseName = "testdb";
             ResourceIdentifier managedDatabaseResourceId = ManagedDatabaseResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, managedInstanceName, databaseName);
             ManagedDatabaseResource managedDatabase = client.GetManagedDatabaseResource(managedDatabaseResourceId);
@@ -40,25 +40,67 @@ namespace Azure.ResourceManager.Sql.Samples
             // get the collection of this ManagedDatabaseAdvancedThreatProtectionResource
             ManagedDatabaseAdvancedThreatProtectionCollection collection = managedDatabase.GetManagedDatabaseAdvancedThreatProtections();
 
-            // invoke the operation and iterate over the result
-            await foreach (ManagedDatabaseAdvancedThreatProtectionResource item in collection.GetAllAsync())
+            // invoke the operation
+            AdvancedThreatProtectionName advancedThreatProtectionName = AdvancedThreatProtectionName.Default;
+            ManagedDatabaseAdvancedThreatProtectionData data = new ManagedDatabaseAdvancedThreatProtectionData
             {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                ManagedDatabaseAdvancedThreatProtectionData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
+                State = AdvancedThreatProtectionState.Enabled,
+            };
+            ArmOperation<ManagedDatabaseAdvancedThreatProtectionResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, advancedThreatProtectionName, data);
+            ManagedDatabaseAdvancedThreatProtectionResource result = lro.Value;
 
-            Console.WriteLine($"Succeeded");
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            ManagedDatabaseAdvancedThreatProtectionData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get a managed database's Advanced Threat Protection settings.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task CreateOrUpdate_UpdateAManagedDatabaseSAdvancedThreatProtectionSettingsWithMinimalParameters()
+        {
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-05-01-preview/examples/ManagedDatabaseAdvancedThreatProtectionSettingsCreateMin.json
+            // this example is just showing the usage of "ManagedDatabaseAdvancedThreatProtectionSettings_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ManagedDatabaseResource created on azure
+            // for more information of creating ManagedDatabaseResource, please refer to the document of ManagedDatabaseResource
+            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string resourceGroupName = "threatprotection-4799";
+            string managedInstanceName = "threatprotection-6440";
+            string databaseName = "testdb";
+            ResourceIdentifier managedDatabaseResourceId = ManagedDatabaseResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, managedInstanceName, databaseName);
+            ManagedDatabaseResource managedDatabase = client.GetManagedDatabaseResource(managedDatabaseResourceId);
+
+            // get the collection of this ManagedDatabaseAdvancedThreatProtectionResource
+            ManagedDatabaseAdvancedThreatProtectionCollection collection = managedDatabase.GetManagedDatabaseAdvancedThreatProtections();
+
+            // invoke the operation
+            AdvancedThreatProtectionName advancedThreatProtectionName = AdvancedThreatProtectionName.Default;
+            ManagedDatabaseAdvancedThreatProtectionData data = new ManagedDatabaseAdvancedThreatProtectionData
+            {
+                State = AdvancedThreatProtectionState.Disabled,
+            };
+            ArmOperation<ManagedDatabaseAdvancedThreatProtectionResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, advancedThreatProtectionName, data);
+            ManagedDatabaseAdvancedThreatProtectionResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            ManagedDatabaseAdvancedThreatProtectionData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAManagedDatabaseSAdvancedThreatProtectionSettings()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2022-02-01-preview/examples/ManagedDatabaseAdvancedThreatProtectionSettingsGet.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-05-01-preview/examples/ManagedDatabaseAdvancedThreatProtectionSettingsGet.json
             // this example is just showing the usage of "ManagedDatabaseAdvancedThreatProtectionSettings_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -89,12 +131,48 @@ namespace Azure.ResourceManager.Sql.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get a managed database's Advanced Threat Protection settings.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetAll_GetAListOfTheManagedDatabaseSAdvancedThreatProtectionSettings()
+        {
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-05-01-preview/examples/ManagedDatabaseAdvancedThreatProtectionSettingsListByDatabase.json
+            // this example is just showing the usage of "ManagedDatabaseAdvancedThreatProtectionSettings_ListByDatabase" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ManagedDatabaseResource created on azure
+            // for more information of creating ManagedDatabaseResource, please refer to the document of ManagedDatabaseResource
+            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string resourceGroupName = "threatprotection-6852";
+            string managedInstanceName = "threatprotection-2080";
+            string databaseName = "testdb";
+            ResourceIdentifier managedDatabaseResourceId = ManagedDatabaseResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, managedInstanceName, databaseName);
+            ManagedDatabaseResource managedDatabase = client.GetManagedDatabaseResource(managedDatabaseResourceId);
+
+            // get the collection of this ManagedDatabaseAdvancedThreatProtectionResource
+            ManagedDatabaseAdvancedThreatProtectionCollection collection = managedDatabase.GetManagedDatabaseAdvancedThreatProtections();
+
+            // invoke the operation and iterate over the result
+            await foreach (ManagedDatabaseAdvancedThreatProtectionResource item in collection.GetAllAsync())
+            {
+                // the variable item is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                ManagedDatabaseAdvancedThreatProtectionData resourceData = item.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetAManagedDatabaseSAdvancedThreatProtectionSettings()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2022-02-01-preview/examples/ManagedDatabaseAdvancedThreatProtectionSettingsGet.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-05-01-preview/examples/ManagedDatabaseAdvancedThreatProtectionSettingsGet.json
             // this example is just showing the usage of "ManagedDatabaseAdvancedThreatProtectionSettings_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -121,12 +199,11 @@ namespace Azure.ResourceManager.Sql.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Get a managed database's Advanced Threat Protection settings.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetAManagedDatabaseSAdvancedThreatProtectionSettings()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2022-02-01-preview/examples/ManagedDatabaseAdvancedThreatProtectionSettingsGet.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-05-01-preview/examples/ManagedDatabaseAdvancedThreatProtectionSettingsGet.json
             // this example is just showing the usage of "ManagedDatabaseAdvancedThreatProtectionSettings_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -153,7 +230,7 @@ namespace Azure.ResourceManager.Sql.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -163,88 +240,6 @@ namespace Azure.ResourceManager.Sql.Samples
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
-        }
-
-        // Update a managed database's Advanced Threat Protection settings with all parameters
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task CreateOrUpdate_UpdateAManagedDatabaseSAdvancedThreatProtectionSettingsWithAllParameters()
-        {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2022-02-01-preview/examples/ManagedDatabaseAdvancedThreatProtectionSettingsCreateMax.json
-            // this example is just showing the usage of "ManagedDatabaseAdvancedThreatProtectionSettings_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ManagedDatabaseResource created on azure
-            // for more information of creating ManagedDatabaseResource, please refer to the document of ManagedDatabaseResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
-            string resourceGroupName = "threatprotection-4799";
-            string managedInstanceName = "threatprotection-6440";
-            string databaseName = "testdb";
-            ResourceIdentifier managedDatabaseResourceId = ManagedDatabaseResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, managedInstanceName, databaseName);
-            ManagedDatabaseResource managedDatabase = client.GetManagedDatabaseResource(managedDatabaseResourceId);
-
-            // get the collection of this ManagedDatabaseAdvancedThreatProtectionResource
-            ManagedDatabaseAdvancedThreatProtectionCollection collection = managedDatabase.GetManagedDatabaseAdvancedThreatProtections();
-
-            // invoke the operation
-            AdvancedThreatProtectionName advancedThreatProtectionName = AdvancedThreatProtectionName.Default;
-            ManagedDatabaseAdvancedThreatProtectionData data = new ManagedDatabaseAdvancedThreatProtectionData()
-            {
-                State = AdvancedThreatProtectionState.Enabled,
-            };
-            ArmOperation<ManagedDatabaseAdvancedThreatProtectionResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, advancedThreatProtectionName, data);
-            ManagedDatabaseAdvancedThreatProtectionResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            ManagedDatabaseAdvancedThreatProtectionData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // Update a managed database's Advanced Threat Protection settings with minimal parameters
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task CreateOrUpdate_UpdateAManagedDatabaseSAdvancedThreatProtectionSettingsWithMinimalParameters()
-        {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2022-02-01-preview/examples/ManagedDatabaseAdvancedThreatProtectionSettingsCreateMin.json
-            // this example is just showing the usage of "ManagedDatabaseAdvancedThreatProtectionSettings_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ManagedDatabaseResource created on azure
-            // for more information of creating ManagedDatabaseResource, please refer to the document of ManagedDatabaseResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
-            string resourceGroupName = "threatprotection-4799";
-            string managedInstanceName = "threatprotection-6440";
-            string databaseName = "testdb";
-            ResourceIdentifier managedDatabaseResourceId = ManagedDatabaseResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, managedInstanceName, databaseName);
-            ManagedDatabaseResource managedDatabase = client.GetManagedDatabaseResource(managedDatabaseResourceId);
-
-            // get the collection of this ManagedDatabaseAdvancedThreatProtectionResource
-            ManagedDatabaseAdvancedThreatProtectionCollection collection = managedDatabase.GetManagedDatabaseAdvancedThreatProtections();
-
-            // invoke the operation
-            AdvancedThreatProtectionName advancedThreatProtectionName = AdvancedThreatProtectionName.Default;
-            ManagedDatabaseAdvancedThreatProtectionData data = new ManagedDatabaseAdvancedThreatProtectionData()
-            {
-                State = AdvancedThreatProtectionState.Disabled,
-            };
-            ArmOperation<ManagedDatabaseAdvancedThreatProtectionResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, advancedThreatProtectionName, data);
-            ManagedDatabaseAdvancedThreatProtectionResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            ManagedDatabaseAdvancedThreatProtectionData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
     }
 }

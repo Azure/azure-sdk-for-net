@@ -44,7 +44,8 @@ public class Program
         environment = EnvironmentReader.LoadFromFile(environmentFile);
 
         environment.TryGetValue(DataMovementBlobStressConstants.EnvironmentVariables.ApplicationInsightsKey, out var appInsightsKey);
-        environment.TryGetValue(DataMovementBlobStressConstants.EnvironmentVariables.StorageBlobEndpoint, out var blobEndpoint);
+        environment.TryGetValue(DataMovementBlobStressConstants.EnvironmentVariables.StorageSourceBlobEndpoint, out var blobSourceEndpoint);
+        environment.TryGetValue(DataMovementBlobStressConstants.EnvironmentVariables.StorageDestinationBlobEndpoint, out var blobDestinationEndpoint);
 
         // Check values
 
@@ -74,7 +75,7 @@ public class Program
             {
                 MaximumConcurrency = opts.Parallel,
             };
-            DataTransferOptions transferOptions = new DataTransferOptions()
+            TransferOptions transferOptions = new()
             {
                 MaximumTransferChunkSize = opts.BlockSize,
                 InitialTransferSize = opts.InitialTransferSize,
@@ -83,7 +84,7 @@ public class Program
             {
                 case TestScenarioName.UploadSingleBlockBlob:
                     testScenario = new UploadBlockBlobSingleScenario(
-                        new Uri(blobEndpoint),
+                        new Uri(blobSourceEndpoint),
                         opts.Size,
                         transferManagerOptions,
                         transferOptions,
@@ -93,18 +94,18 @@ public class Program
                     break;
                 case TestScenarioName.UploadDirectoryBlockBlob:
                     testScenario = new UploadBlockBlobDirectoryScenario(
-                        destinationBlobUri: new Uri(blobEndpoint),
+                        destinationBlobUri: new Uri(blobSourceEndpoint),
                         blobSize: opts.Size,
                         blobCount: opts.Count,
                         transferManagerOptions: transferManagerOptions,
-                        dataTransferOptions: transferOptions,
+                        transferOptions: transferOptions,
                         tokenCredential: tokenCredential,
                         metrics: metrics,
                         testRunId: guid);
                     break;
                 case TestScenarioName.DownloadSingleBlockBlob:
                     testScenario = new DownloadBlockBlobSingleScenario(
-                        new Uri(blobEndpoint),
+                        new Uri(blobSourceEndpoint),
                         opts.Size,
                         transferManagerOptions,
                         transferOptions,
@@ -114,7 +115,7 @@ public class Program
                     break;
                 case TestScenarioName.DownloadDirectoryBlockBlob:
                     testScenario = new DownloadBlockBlobDirectoryScenario(
-                        new Uri(blobEndpoint),
+                        new Uri(blobSourceEndpoint),
                         opts.Size,
                         opts.Count,
                         transferManagerOptions,
@@ -125,8 +126,8 @@ public class Program
                     break;
                 case TestScenarioName.CopySingleBlockBlob:
                     testScenario = new CopyBlockBlobSingleScenario(
-                        new Uri(blobEndpoint),
-                        new Uri(blobEndpoint),
+                        new Uri(blobSourceEndpoint),
+                        new Uri(blobDestinationEndpoint),
                         opts.Size,
                         transferManagerOptions,
                         transferOptions,
@@ -137,8 +138,8 @@ public class Program
                     break;
                 case TestScenarioName.CopyDirectoryBlockBlob:
                     testScenario = new CopyBlockBlobDirectoryScenario(
-                        new Uri(blobEndpoint),
-                        new Uri(blobEndpoint),
+                        new Uri(blobSourceEndpoint),
+                        new Uri(blobDestinationEndpoint),
                         opts.Size,
                         opts.Count,
                         transferManagerOptions,
@@ -150,7 +151,7 @@ public class Program
                     break;
                 case TestScenarioName.UploadSingleAppendBlob:
                     testScenario = new UploadAppendBlobSingleScenario(
-                        new Uri(blobEndpoint),
+                        new Uri(blobSourceEndpoint),
                         opts.Size,
                         transferManagerOptions,
                         transferOptions,
@@ -160,7 +161,7 @@ public class Program
                     break;
                 case TestScenarioName.UploadDirectoryAppendBlob:
                     testScenario = new UploadAppendBlobDirectoryScenario(
-                        new Uri(blobEndpoint),
+                        new Uri(blobSourceEndpoint),
                         opts.Size,
                         opts.Count,
                         transferManagerOptions,
@@ -171,7 +172,7 @@ public class Program
                     break;
                 case TestScenarioName.DownloadSingleAppendBlob:
                     testScenario = new DownloadAppendBlobSingleScenario(
-                        new Uri(blobEndpoint),
+                        new Uri(blobSourceEndpoint),
                         opts.Size,
                         transferManagerOptions,
                         transferOptions,
@@ -181,7 +182,7 @@ public class Program
                     break;
                 case TestScenarioName.DownloadDirectoryAppendBlob:
                     testScenario = new DownloadAppendBlobDirectoryScenario(
-                        new Uri(blobEndpoint),
+                        new Uri(blobSourceEndpoint),
                         opts.Size,
                         opts.Count,
                         transferManagerOptions,
@@ -192,8 +193,8 @@ public class Program
                     break;
                 case TestScenarioName.CopySingleAppendBlob:
                     testScenario = new CopyAppendBlobSingleScenario(
-                        new Uri(blobEndpoint),
-                        new Uri(blobEndpoint),
+                        new Uri(blobSourceEndpoint),
+                        new Uri(blobDestinationEndpoint),
                         opts.Size,
                         transferManagerOptions,
                         transferOptions,
@@ -204,8 +205,8 @@ public class Program
                     break;
                 case TestScenarioName.CopyDirectoryAppendBlob:
                     testScenario = new CopyAppendBlobDirectoryScenario(
-                        new Uri(blobEndpoint),
-                        new Uri(blobEndpoint),
+                        new Uri(blobSourceEndpoint),
+                        new Uri(blobDestinationEndpoint),
                         opts.Size,
                         opts.Count,
                         transferManagerOptions,
@@ -217,7 +218,7 @@ public class Program
                     break;
                 case TestScenarioName.UploadSinglePageBlob:
                     testScenario = new UploadPageBlobSingleScenario(
-                        new Uri(blobEndpoint),
+                        new Uri(blobSourceEndpoint),
                         opts.Size,
                         transferManagerOptions,
                         transferOptions,
@@ -227,7 +228,7 @@ public class Program
                     break;
                 case TestScenarioName.UploadDirectoryPageBlob:
                     testScenario = new UploadPageBlobDirectoryScenario(
-                        new Uri(blobEndpoint),
+                        new Uri(blobSourceEndpoint),
                         opts.Size,
                         opts.Count,
                         transferManagerOptions,
@@ -238,7 +239,7 @@ public class Program
                     break;
                 case TestScenarioName.DownloadSinglePageBlob:
                     testScenario = new DownloadPageBlobSingleScenario(
-                        new Uri(blobEndpoint),
+                        new Uri(blobSourceEndpoint),
                         opts.Size,
                         transferManagerOptions,
                         transferOptions,
@@ -248,7 +249,7 @@ public class Program
                     break;
                 case TestScenarioName.DownloadDirectoryPageBlob:
                     testScenario = new DownloadPageBlobDirectoryScenario(
-                        new Uri(blobEndpoint),
+                        new Uri(blobSourceEndpoint),
                         opts.Size,
                         opts.Count,
                         transferManagerOptions,
@@ -259,8 +260,8 @@ public class Program
                     break;
                 case TestScenarioName.CopySinglePageBlob:
                     testScenario = new CopyPageBlobSingleScenario(
-                        new Uri(blobEndpoint),
-                        new Uri(blobEndpoint),
+                        new Uri(blobSourceEndpoint),
+                        new Uri(blobDestinationEndpoint),
                         opts.Size,
                         transferManagerOptions,
                         transferOptions,
@@ -271,8 +272,8 @@ public class Program
                     break;
                 case TestScenarioName.CopyDirectoryPageBlob:
                     testScenario = new CopyPageBlobDirectoryScenario(
-                        new Uri(blobEndpoint),
-                        new Uri(blobEndpoint),
+                        new Uri(blobSourceEndpoint),
+                        new Uri(blobDestinationEndpoint),
                         opts.Size,
                         opts.Count,
                         transferManagerOptions,

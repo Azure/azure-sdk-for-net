@@ -3,8 +3,8 @@
 
 using System;
 using System.Diagnostics;
-using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
@@ -39,6 +39,12 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Utility
                 var hash = sha1.ComputeHash(System.Text.Encoding.UTF8.GetBytes(input));
                 return BitConverter.ToString(hash).Replace("-", string.Empty).ToLower();
             }
+        }
+        internal static string? TruncateData(string? value, int maxLength)
+        {
+            if (string.IsNullOrEmpty(value))
+                return value;
+            return value?.Length <= maxLength ? value : value?.Substring(0, maxLength);
         }
 
         internal static string GetRunName(CIInfo ciInfo)
@@ -81,7 +87,18 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Utility
 
         internal static async Task<string> RunCommandAsync(string command, bool async = false)
         {
-            var processInfo = new ProcessStartInfo("cmd", $"/c {command}")
+            string shell, shellArgs;
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux) || RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+            {
+                shell = "/bin/bash";
+                shellArgs = $"-c \"{command}\"";
+            }
+            else
+            {
+                shell = "cmd";
+                shellArgs = $"/c {command}";
+            }
+            var processInfo = new ProcessStartInfo(shell, shellArgs)
             {
                 RedirectStandardOutput = true,
                 UseShellExecute = false,
@@ -114,15 +131,6 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Utility
                 return OSConstants.s_mACOS;
             else
                 return OSConstants.s_wINDOWS;
-        }
-        internal static string? GetCloudFileName(string filePath, string testExecutionId)
-        {
-            var fileName = Path.GetFileName(filePath);
-            if (fileName == null)
-            {
-                return null;
-            }
-            return $"{testExecutionId}/{fileName}"; // TODO check if we need to add {Guid.NewGuid()} for file with same name
         }
 
         internal TokenDetails ParseWorkspaceIdFromAccessToken(JsonWebTokenHandler? jsonWebTokenHandler, string? accessToken)
@@ -175,7 +183,7 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Utility
                 Uri url = new Uri(sasUri);
                 string query = url.Query;
                 var queryParams = System.Web.HttpUtility.ParseQueryString(query);
-                string expiryTime = queryParams["se"]; // 'se' is the query parameter for the expiry time
+                string? expiryTime = queryParams["se"]; // 'se' is the query parameter for the expiry time
 
                 if (!string.IsNullOrEmpty(expiryTime))
                 {

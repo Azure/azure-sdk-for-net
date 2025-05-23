@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.StoragePool.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerStoragePoolContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(DiskPoolIscsiTargetCreateOrUpdateContent)} does not support writing '{options.Format}' format.");
             }
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.StoragePool.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeDiskPoolIscsiTargetCreateOrUpdateContent(document.RootElement, options);
                     }
                 default:

@@ -62,14 +62,16 @@ namespace Azure.ResourceManager.Kusto
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="language"> The language name, for example Python. </param>
-        /// <param name="languageVersion"> The version of the language. </param>
+        /// <param name="languageVersion"> The version of the language. Either this property or baseImageName should be specified. </param>
+        /// <param name="baseImageName"> The base image name on which the custom image is built on top of. It can be one of the LanguageExtensionImageName (e.g.: 'Python3_10_8', 'Python3_10_8_DL') or the name of an existing custom image. Either this property or languageVersion should be specified. </param>
         /// <param name="requirementsFileContent"> The requirements file content. </param>
         /// <param name="provisioningState"> The provisioned state of the resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SandboxCustomImageData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SandboxCustomImageLanguage? language, string languageVersion, string requirementsFileContent, KustoProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal SandboxCustomImageData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SandboxCustomImageLanguage? language, string languageVersion, string baseImageName, string requirementsFileContent, KustoProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Language = language;
             LanguageVersion = languageVersion;
+            BaseImageName = baseImageName;
             RequirementsFileContent = requirementsFileContent;
             ProvisioningState = provisioningState;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -77,8 +79,10 @@ namespace Azure.ResourceManager.Kusto
 
         /// <summary> The language name, for example Python. </summary>
         public SandboxCustomImageLanguage? Language { get; set; }
-        /// <summary> The version of the language. </summary>
+        /// <summary> The version of the language. Either this property or baseImageName should be specified. </summary>
         public string LanguageVersion { get; set; }
+        /// <summary> The base image name on which the custom image is built on top of. It can be one of the LanguageExtensionImageName (e.g.: 'Python3_10_8', 'Python3_10_8_DL') or the name of an existing custom image. Either this property or languageVersion should be specified. </summary>
+        public string BaseImageName { get; set; }
         /// <summary> The requirements file content. </summary>
         public string RequirementsFileContent { get; set; }
         /// <summary> The provisioned state of the resource. </summary>

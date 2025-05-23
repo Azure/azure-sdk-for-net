@@ -12,6 +12,8 @@ namespace Azure.Communication.CallAutomation
     {
         /// <summary>
         /// Creates a new CallInvite object.
+        /// When the source of the call is a Teams App source, callerIdNumber is not supported and should be null.
+        /// Sip Headers are supported for PSTN calls only. Voip Headers are not supported.
         /// </summary>
         /// <param name="targetPhoneNumberIdentity"></param>
         /// <param name="callerIdNumber"></param>
@@ -19,27 +21,40 @@ namespace Azure.Communication.CallAutomation
         {
             Target = targetPhoneNumberIdentity;
             SourceCallerIdNumber = callerIdNumber;
-            CustomCallingContext = new CustomCallingContext(sipHeaders: new Dictionary<string, string>(), voipHeaders: null);
+            CustomCallingContext = new CustomCallingContext(sipHeaders: new Dictionary<string, string>(), voipHeaders: null, teamsPhoneCallDetails:null);
         }
 
         /// <summary>
         /// Creates a new CallInvite object.
+        /// Sip Headers are not supported. Voip Headers are supported for ACS Users.
         /// </summary>
         /// <param name="targetIdentity"></param>
         public CallInvite(CommunicationUserIdentifier targetIdentity)
         {
             Target = targetIdentity;
-            CustomCallingContext = new CustomCallingContext(sipHeaders: null, voipHeaders: new Dictionary<string, string>());
+            CustomCallingContext = new CustomCallingContext(sipHeaders: null, voipHeaders: new Dictionary<string, string>(), teamsPhoneCallDetails: null);
         }
 
         /// <summary>
         /// Creates a new CallInvite object.
+        /// Sip Headers are not supported. Voip Headers are supported for Microsoft teams Users.
         /// </summary>
         /// <param name="targetIdentity"></param>
         public CallInvite(MicrosoftTeamsUserIdentifier targetIdentity)
         {
             Target = targetIdentity;
-            CustomCallingContext = new CustomCallingContext(sipHeaders: null, voipHeaders: new Dictionary<string, string>());
+            CustomCallingContext = new CustomCallingContext(sipHeaders: null, voipHeaders: new Dictionary<string, string>(), teamsPhoneCallDetails: null);
+        }
+
+        /// <summary>
+        /// Creates a new CallInvite object.
+        /// Sip Headers are not supported. Voip Headers are supported for Microsoft Teams Apps.
+        /// </summary>
+        /// <param name="targetIdentity"></param>
+        public CallInvite(MicrosoftTeamsAppIdentifier targetIdentity)
+        {
+            Target = targetIdentity;
+            CustomCallingContext = new CustomCallingContext(sipHeaders: null, voipHeaders: new Dictionary<string, string>(), teamsPhoneCallDetails: null);
         }
 
         /// <summary>

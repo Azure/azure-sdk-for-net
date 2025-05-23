@@ -1,5 +1,11 @@
 namespace Azure.Storage.Queues
 {
+    public partial class AzureStorageQueuesContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureStorageQueuesContext() { }
+        public static Azure.Storage.Queues.AzureStorageQueuesContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class QueueClient
     {
         protected QueueClient() { }
@@ -74,7 +80,7 @@ namespace Azure.Storage.Queues
     }
     public partial class QueueClientOptions : Azure.Core.ClientOptions
     {
-        public QueueClientOptions(Azure.Storage.Queues.QueueClientOptions.ServiceVersion version = Azure.Storage.Queues.QueueClientOptions.ServiceVersion.V2025_01_05) { }
+        public QueueClientOptions(Azure.Storage.Queues.QueueClientOptions.ServiceVersion version = Azure.Storage.Queues.QueueClientOptions.ServiceVersion.V2025_07_05) { }
         public Azure.Storage.Queues.Models.QueueAudience? Audience { get { throw null; } set { } }
         public bool EnableTenantDiscovery { get { throw null; } set { } }
         public System.Uri GeoRedundantSecondaryUri { get { throw null; } set { } }
@@ -108,6 +114,8 @@ namespace Azure.Storage.Queues
             V2024_08_04 = 23,
             V2024_11_04 = 24,
             V2025_01_05 = 25,
+            V2025_05_05 = 26,
+            V2025_07_05 = 27,
         }
     }
     public partial class QueueMessageDecodingFailedEventArgs : Azure.SyncAsyncEventArgs
@@ -426,7 +434,7 @@ namespace Azure.Storage.Queues.Specialized
     }
     public partial class SpecializedQueueClientOptions : Azure.Storage.Queues.QueueClientOptions
     {
-        public SpecializedQueueClientOptions(Azure.Storage.Queues.QueueClientOptions.ServiceVersion version = Azure.Storage.Queues.QueueClientOptions.ServiceVersion.V2025_01_05) : base (default(Azure.Storage.Queues.QueueClientOptions.ServiceVersion)) { }
+        public SpecializedQueueClientOptions(Azure.Storage.Queues.QueueClientOptions.ServiceVersion version = Azure.Storage.Queues.QueueClientOptions.ServiceVersion.V2025_07_05) : base (default(Azure.Storage.Queues.QueueClientOptions.ServiceVersion)) { }
         public Azure.Storage.ClientSideEncryptionOptions ClientSideEncryption { get { throw null; } set { } }
     }
     public static partial class SpecializedQueueExtensions
@@ -493,6 +501,8 @@ namespace Microsoft.Extensions.Azure
     {
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Storage.Queues.QueueServiceClient, Azure.Storage.Queues.QueueClientOptions> AddQueueServiceClient<TBuilder>(this TBuilder builder, string connectionString) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilder { throw null; }
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Storage.Queues.QueueServiceClient, Azure.Storage.Queues.QueueClientOptions> AddQueueServiceClient<TBuilder>(this TBuilder builder, System.Uri serviceUri) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithCredential { throw null; }
+        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Storage.Queues.QueueServiceClient, Azure.Storage.Queues.QueueClientOptions> AddQueueServiceClient<TBuilder>(this TBuilder builder, System.Uri serviceUri, Azure.AzureSasCredential sasCredential) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilder { throw null; }
+        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Storage.Queues.QueueServiceClient, Azure.Storage.Queues.QueueClientOptions> AddQueueServiceClient<TBuilder>(this TBuilder builder, System.Uri serviceUri, Azure.Core.TokenCredential tokenCredential) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithCredential { throw null; }
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Storage.Queues.QueueServiceClient, Azure.Storage.Queues.QueueClientOptions> AddQueueServiceClient<TBuilder>(this TBuilder builder, System.Uri serviceUri, Azure.Storage.StorageSharedKeyCredential sharedKeyCredential) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilder { throw null; }
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Storage.Queues.QueueServiceClient, Azure.Storage.Queues.QueueClientOptions> AddQueueServiceClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithConfiguration<TConfiguration> { throw null; }
     }

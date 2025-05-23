@@ -19,42 +19,53 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 
         void IJsonModel<ServiceBusActiveMessagesAvailablePeriodicNotificationsEventData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<ServiceBusActiveMessagesAvailablePeriodicNotificationsEventData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ServiceBusActiveMessagesAvailablePeriodicNotificationsEventData)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
-            if (Optional.IsDefined(NamespaceName))
-            {
-                writer.WritePropertyName("namespaceName"u8);
-                writer.WriteStringValue(NamespaceName);
-            }
-            if (Optional.IsDefined(RequestUri))
-            {
-                writer.WritePropertyName("requestUri"u8);
-                writer.WriteStringValue(RequestUri);
-            }
-            if (Optional.IsDefined(EntityType))
-            {
-                writer.WritePropertyName("entityType"u8);
-                writer.WriteStringValue(EntityType);
-            }
-            if (Optional.IsDefined(QueueName))
+            writer.WritePropertyName("namespaceName"u8);
+            writer.WriteStringValue(NamespaceName);
+            writer.WritePropertyName("requestUri"u8);
+            writer.WriteStringValue(RequestUri);
+            writer.WritePropertyName("entityType"u8);
+            writer.WriteStringValue(EntityType);
+            if (QueueName != null)
             {
                 writer.WritePropertyName("queueName"u8);
                 writer.WriteStringValue(QueueName);
             }
-            if (Optional.IsDefined(TopicName))
+            else
+            {
+                writer.WriteNull("queueName");
+            }
+            if (TopicName != null)
             {
                 writer.WritePropertyName("topicName"u8);
                 writer.WriteStringValue(TopicName);
             }
-            if (Optional.IsDefined(SubscriptionName))
+            else
+            {
+                writer.WriteNull("topicName");
+            }
+            if (SubscriptionName != null)
             {
                 writer.WritePropertyName("subscriptionName"u8);
                 writer.WriteStringValue(SubscriptionName);
+            }
+            else
+            {
+                writer.WriteNull("subscriptionName");
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -64,14 +75,13 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         ServiceBusActiveMessagesAvailablePeriodicNotificationsEventData IJsonModel<ServiceBusActiveMessagesAvailablePeriodicNotificationsEventData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -121,16 +131,31 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 if (property.NameEquals("queueName"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        queueName = null;
+                        continue;
+                    }
                     queueName = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("topicName"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        topicName = null;
+                        continue;
+                    }
                     topicName = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("subscriptionName"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        subscriptionName = null;
+                        continue;
+                    }
                     subscriptionName = property.Value.GetString();
                     continue;
                 }
@@ -157,7 +182,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureMessagingEventGridSystemEventsContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ServiceBusActiveMessagesAvailablePeriodicNotificationsEventData)} does not support writing '{options.Format}' format.");
             }
@@ -171,7 +196,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeServiceBusActiveMessagesAvailablePeriodicNotificationsEventData(document.RootElement, options);
                     }
                 default:
@@ -185,7 +210,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static ServiceBusActiveMessagesAvailablePeriodicNotificationsEventData FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeServiceBusActiveMessagesAvailablePeriodicNotificationsEventData(document.RootElement);
         }
 

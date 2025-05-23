@@ -10,17 +10,17 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Sql.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Sql.Samples
 {
     public partial class Sample_DatabaseAdvancedThreatProtectionResource
     {
-        // Get a database's Advanced Threat Protection settings.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetADatabaseSAdvancedThreatProtectionSettings()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2021-11-01-preview/examples/DatabaseAdvancedThreatProtectionSettingsGet.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-05-01-preview/examples/DatabaseAdvancedThreatProtectionSettingsGet.json
             // this example is just showing the usage of "DatabaseAdvancedThreatProtectionSettings_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -48,12 +48,11 @@ namespace Azure.ResourceManager.Sql.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Update a database's Advanced Threat Protection settings with all parameters
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateADatabaseSAdvancedThreatProtectionSettingsWithAllParameters()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2021-11-01-preview/examples/DatabaseAdvancedThreatProtectionSettingsCreateMax.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-05-01-preview/examples/DatabaseAdvancedThreatProtectionSettingsCreateMax.json
             // this example is just showing the usage of "DatabaseAdvancedThreatProtectionSettings_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -72,7 +71,7 @@ namespace Azure.ResourceManager.Sql.Samples
             DatabaseAdvancedThreatProtectionResource databaseAdvancedThreatProtection = client.GetDatabaseAdvancedThreatProtectionResource(databaseAdvancedThreatProtectionResourceId);
 
             // invoke the operation
-            DatabaseAdvancedThreatProtectionData data = new DatabaseAdvancedThreatProtectionData()
+            DatabaseAdvancedThreatProtectionData data = new DatabaseAdvancedThreatProtectionData
             {
                 State = AdvancedThreatProtectionState.Enabled,
             };
@@ -86,12 +85,11 @@ namespace Azure.ResourceManager.Sql.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Update a database's Advanced Threat Protection settings with minimal parameters
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateADatabaseSAdvancedThreatProtectionSettingsWithMinimalParameters()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2021-11-01-preview/examples/DatabaseAdvancedThreatProtectionSettingsCreateMin.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-05-01-preview/examples/DatabaseAdvancedThreatProtectionSettingsCreateMin.json
             // this example is just showing the usage of "DatabaseAdvancedThreatProtectionSettings_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -110,7 +108,7 @@ namespace Azure.ResourceManager.Sql.Samples
             DatabaseAdvancedThreatProtectionResource databaseAdvancedThreatProtection = client.GetDatabaseAdvancedThreatProtectionResource(databaseAdvancedThreatProtectionResourceId);
 
             // invoke the operation
-            DatabaseAdvancedThreatProtectionData data = new DatabaseAdvancedThreatProtectionData()
+            DatabaseAdvancedThreatProtectionData data = new DatabaseAdvancedThreatProtectionData
             {
                 State = AdvancedThreatProtectionState.Disabled,
             };

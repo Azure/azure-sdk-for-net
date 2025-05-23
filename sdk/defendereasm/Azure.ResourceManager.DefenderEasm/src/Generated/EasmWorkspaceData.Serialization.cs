@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.DefenderEasm
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDefenderEasmContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(EasmWorkspaceData)} does not support writing '{options.Format}' format.");
             }
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.DefenderEasm
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeEasmWorkspaceData(document.RootElement, options);
                     }
                 default:

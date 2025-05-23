@@ -39,7 +39,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
     where TDestinationObjectClient : BlobBaseClient
     {
         private readonly AccessTier _defaultAccessTier = AccessTier.Cold;
-        private const string _defaultContentType = "text/plain";
+        private const string _defaultContentType = "image/jpeg";
         private const string _defaultContentLanguage = "en-US";
         private const string _defaultContentDisposition = "inline";
         private const string _defaultCacheControl = "no-cache";
@@ -81,21 +81,22 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
 
         internal async Task CreateBlockBlobAsync(
             BlobContainerClient container,
-            string blobName,
-            Stream contents,
+            long? objectLength = null,
+            string objectName = null,
+            Stream contents = null,
             CancellationToken cancellationToken = default)
         {
             CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
-            blobName ??= GetNewObjectName();
+            objectName ??= GetNewObjectName();
 
-            BlockBlobClient blobClient = container.GetBlockBlobClient(blobName);
+            BlockBlobClient blobClient = container.GetBlockBlobClient(objectName);
             if (contents != default)
             {
                 await blobClient.UploadAsync(contents, cancellationToken: cancellationToken);
             }
             else
             {
-                var data = new byte[0];
+                byte[] data = GetRandomBuffer(objectLength ?? 0);
                 using (var stream = new MemoryStream(data))
                 {
                     await blobClient.UploadAsync(
@@ -163,7 +164,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             }
             else
             {
-                var data = new byte[0];
+                byte[] data = GetRandomBuffer(objectLength ?? 0);
                 using (var stream = new MemoryStream(data))
                 {
                     await UploadAppendBlocksAsync(
@@ -222,7 +223,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             }
             else
             {
-                var data = new byte[0];
+                byte[] data = GetRandomBuffer(objectLength ?? 0);
                 using (var stream = new MemoryStream(data))
                 {
                     await UploadPagesAsync(
@@ -285,14 +286,16 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             // Get source directory client and list the paths
             await foreach (Page<BlobItem> page in sourceContainer.GetBlobsAsync(prefix: sourcePrefix, cancellationToken: cancellationToken).AsPages())
             {
-                sourceFileNames.AddRange(page.Values.Select((BlobItem item) => item.Name.Substring(sourcePrefix.Length + 1)));
+                sourceFileNames.AddRange(page.Values.Select(
+                    (BlobItem item) => !string.IsNullOrEmpty(sourcePrefix) ? item.Name.Substring(sourcePrefix.Length + 1) : item.Name));
             }
 
             // List all files in the destination blob folder path
             List<string> destinationFileNames = new List<string>();
             await foreach (Page<BlobItem> page in destinationContainer.GetBlobsAsync(prefix: destinationPrefix, cancellationToken: cancellationToken).AsPages())
             {
-                destinationFileNames.AddRange(page.Values.Select((BlobItem item) => item.Name.Substring(destinationPrefix.Length + 1)));
+                destinationFileNames.AddRange(page.Values.Select(
+                    (BlobItem item) => !string.IsNullOrEmpty(destinationPrefix) ? item.Name.Substring(destinationPrefix.Length + 1) : item.Name));
             }
 
             // Assert file and file contents
@@ -306,8 +309,12 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                     destinationFileNames[i]);
 
                 // Verify contents
-                string sourceFullName = string.Join("/", sourcePrefix, sourceFileNames[i]);
-                string destinationFullName = string.Join("/", destinationPrefix, destinationFileNames[i]);
+                string sourceFullName = !string.IsNullOrEmpty(sourcePrefix) ?
+                    string.Join("/", sourcePrefix, sourceFileNames[i]) :
+                    sourceFileNames[i];
+                string destinationFullName = !string.IsNullOrEmpty(destinationPrefix) ?
+                    string.Join("/", destinationPrefix, destinationFileNames[i]) :
+                    destinationFileNames[i];
                 TSourceObjectClient sourceClient = GetSourceBlob(sourceContainer, sourceFullName);
                 TDestinationObjectClient destinationClient = GetDestinationBlob(destinationContainer, destinationFullName);
                 using Stream sourceStream = await sourceClient.OpenReadAsync(cancellationToken: cancellationToken);
@@ -373,11 +380,11 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             => new BlobStorageResourceOptions
             {
                 AccessTier = _defaultAccessTier,
-                ContentDisposition = new(_defaultContentDisposition),
-                ContentLanguage = new(_defaultContentLanguage),
-                CacheControl = new(_defaultCacheControl),
-                ContentType = new(_defaultContentType),
-                Metadata = new(_defaultMetadata),
+                ContentDisposition = _defaultContentDisposition,
+                ContentLanguage = _defaultContentLanguage,
+                CacheControl = _defaultCacheControl,
+                ContentType = _defaultContentType,
+                Metadata = _defaultMetadata,
             };
     }
 }

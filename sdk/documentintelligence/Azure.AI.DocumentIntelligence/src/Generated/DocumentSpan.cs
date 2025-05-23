@@ -14,7 +14,7 @@ namespace Azure.AI.DocumentIntelligence
     /// Contiguous region of the concatenated content property, specified as an offset
     /// and length.
     /// </summary>
-    public partial class DocumentSpan
+    public readonly partial struct DocumentSpan
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,7 +46,7 @@ namespace Azure.AI.DocumentIntelligence
         /// </list>
         /// </para>
         /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        private readonly IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="DocumentSpan"/>. </summary>
         /// <param name="offset"> Zero-based index of the content represented by the span. </param>
@@ -69,7 +69,7 @@ namespace Azure.AI.DocumentIntelligence
         }
 
         /// <summary> Initializes a new instance of <see cref="DocumentSpan"/> for deserialization. </summary>
-        internal DocumentSpan()
+        public DocumentSpan()
         {
         }
 

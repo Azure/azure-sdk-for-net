@@ -29,7 +29,19 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Processor
         {
             var startTime = _cloudRunMetadata.TestRunStartTime.ToString("yyyy-MM-ddTHH:mm:ssZ");
             var gitBasedRunName = ReporterUtils.GetRunName(CiInfoProvider.GetCIInfo())?.Trim();
-            string runName = string.IsNullOrEmpty(gitBasedRunName) ? _cloudRunMetadata.RunId! : gitBasedRunName!;
+            string runName;
+            if (!string.IsNullOrEmpty(_cloudRunMetadata.RunName))
+            {
+                runName = _cloudRunMetadata.RunName!;
+            }
+            else if (!string.IsNullOrEmpty(gitBasedRunName))
+            {
+                runName = gitBasedRunName!;
+            }
+            else
+            {
+                runName = _cloudRunMetadata.RunId!;
+            }
             var run = new TestRunDto
             {
                 TestRunId = _cloudRunMetadata.RunId!,
@@ -41,21 +53,21 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Processor
                 CloudRunEnabled = false,
                 CiConfig = new CIConfig
                 {
-                    Branch = _cIInfo.Branch,
-                    Author = _cIInfo.Author,
-                    CommitId = _cIInfo.CommitId,
-                    RevisionUrl = _cIInfo.RevisionUrl,
+                    Branch = ReporterUtils.TruncateData(_cIInfo.Branch, 500),
+                    Author = ReporterUtils.TruncateData(_cIInfo.Author,500),
+                    CommitId = ReporterUtils.TruncateData(_cIInfo.CommitId,500),
+                    RevisionUrl = ReporterUtils.TruncateData(_cIInfo.RevisionUrl,1000),
                     CiProviderName = _cIInfo.Provider ?? CIConstants.s_dEFAULT
                 },
                 TestRunConfig = new ClientConfig // TODO fetch some of these dynamically
                 {
-                    Workers = 1,
+                    Workers = _cloudRunMetadata.NumberOfTestWorkers,
                     PwVersion = "1.40",
                     Timeout = 60000,
                     TestType = "WebTest",
                     TestSdkLanguage = "CSHARP",
                     TestFramework = new TestFramework() { Name = "PLAYWRIGHT", RunnerName = "NUNIT", Version = "3.1" }, // TODO fetch runner name MSTest/Nunit
-                    ReporterPackageVersion = "1.0.0-beta.1",
+                    ReporterPackageVersion = "1.0.0-beta.4",
                     Shards = new Shard() { Total = 1 }
                 }
             };
@@ -74,7 +86,7 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Processor
                     Status = "RUNNING",
                     StartTime = startTime,
                 },
-                Workers = 1
+                Workers = _cloudRunMetadata.NumberOfTestWorkers
             };
             return shard;
         }
@@ -92,16 +104,17 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Processor
             };
             testCaseResultData.TestCombinationId = testCaseResultData.TestExecutionId; // TODO check
             testCaseResultData.TestId = testResultSource.TestCase.Id.ToString();
-            testCaseResultData.TestTitle = testResultSource.TestCase.DisplayName;
+            testCaseResultData.TestTitle = ReporterUtils.TruncateData(testResultSource.TestCase.DisplayName, 500)!;
+            testCaseResultData.TestTitle = ReporterUtils.TruncateData(testResultSource.TestCase.DisplayName, 500)!;
             var className = FetchTestClassName(testResultSource.TestCase.FullyQualifiedName);
-            testCaseResultData.SuiteTitle = className;
-            testCaseResultData.SuiteId = className;
-            testCaseResultData.FileName = FetchFileName(testResultSource.TestCase.Source);
+            testCaseResultData.SuiteTitle = ReporterUtils.TruncateData(className,500)!;
+            testCaseResultData.SuiteId = ReporterUtils.CalculateSha1Hash(className);
+            testCaseResultData.FileName = ReporterUtils.TruncateData(FetchFileName(testResultSource.TestCase.Source),300)!;
             testCaseResultData.LineNumber = testResultSource.TestCase.LineNumber;
             testCaseResultData.Retry = 0; // TODO Retry and PreviousRetries
             testCaseResultData.WebTestConfig = new WebTestConfig
             {
-                JobName = _cIInfo.JobId ?? "",
+                JobName = _cIInfo.JobId != null ? ReporterUtils.TruncateData(_cIInfo.JobId, 500) ?? "" : "",
                 //ProjectName = "playwright-dotnet", // TODO no project concept NA??
                 //BrowserName = "chromium", // TODO check if possible to get from test
                 Os = ReporterUtils.GetCurrentOS(),
@@ -143,13 +156,14 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Processor
         {
             if (testResultSource == null)
                 return new RawTestResult();
-            List <MPTError> errors = new();//[testResultSource.ErrorMessage];
+            List <MPTError> errors = new();
             if (testResultSource.ErrorMessage != null)
                 errors.Add(new MPTError() { message = testResultSource.ErrorMessage });
+            if (testResultSource.ErrorStackTrace != null)
+                errors.Add(new MPTError() { message = testResultSource.ErrorStackTrace });
             var rawTestResult = new RawTestResult
             {
-                errors = JsonSerializer.Serialize(errors),
-                stdErr = testResultSource?.ErrorStackTrace ?? string.Empty
+                errors = JsonSerializer.Serialize(errors)
             };
             return rawTestResult;
         }

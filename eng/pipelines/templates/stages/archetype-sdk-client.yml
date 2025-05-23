@@ -14,12 +14,6 @@ parameters:
   - name: ServiceDirectory
     type: string
     default: not-specified
-  - name: TargetDocRepoOwner
-    type: string
-    default: Azure
-  - name: TargetDocRepoName
-    type: string
-    default: azure-docs-sdk-dotnet
   - name: BuildSnippets
     type: boolean
     default: true
@@ -60,6 +54,9 @@ parameters:
   - name: oneESTemplateTag
     type: string
     default: true
+  - name: ExcludePaths
+    type: object
+    default: []
 
 extends:
   template: /eng/pipelines/templates/stages/1es-redirect.yml
@@ -107,10 +104,11 @@ extends:
             ServiceDirectory: ${{ parameters.ServiceDirectory }}
             DependsOn:
               - Build
-            Artifacts: ${{ parameters.Artifacts }}
+            Artifacts:
+              - ${{ each artifact in parameters.Artifacts }}:
+                 - ${{ if ne(artifact.createReleaseStage, 'false') }}:
+                    - ${{ artifact }}
             ${{ if eq(parameters.ServiceDirectory, 'template') }}:
               TestPipeline: true
             ArtifactName: packages
-            TargetDocRepoOwner: ${{ parameters.TargetDocRepoOwner }}
-            TargetDocRepoName: ${{ parameters.TargetDocRepoName }}
 

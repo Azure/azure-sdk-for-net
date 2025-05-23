@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.EdgeOrder
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerEdgeOrderContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(EdgeOrderData)} does not support writing '{options.Format}' format.");
             }
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.EdgeOrder
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeEdgeOrderData(document.RootElement, options);
                     }
                 default:

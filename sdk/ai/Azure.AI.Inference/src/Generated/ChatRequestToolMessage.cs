@@ -14,15 +14,13 @@ namespace Azure.AI.Inference
     public partial class ChatRequestToolMessage : ChatRequestMessage
     {
         /// <summary> Initializes a new instance of <see cref="ChatRequestToolMessage"/>. </summary>
-        /// <param name="content"> The content of the message. </param>
         /// <param name="toolCallId"> The ID of the tool call resolved by the provided content. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="toolCallId"/> is null. </exception>
-        public ChatRequestToolMessage(string content, string toolCallId)
+        public ChatRequestToolMessage(string toolCallId)
         {
             Argument.AssertNotNull(toolCallId, nameof(toolCallId));
 
             Role = ChatRole.Tool;
-            Content = content;
             ToolCallId = toolCallId;
         }
 
@@ -43,7 +41,7 @@ namespace Azure.AI.Inference
         }
 
         /// <summary> The content of the message. </summary>
-        public string Content { get; }
+        public string Content { get; set; }
         /// <summary> The ID of the tool call resolved by the provided content. </summary>
         public string ToolCallId { get; }
     }

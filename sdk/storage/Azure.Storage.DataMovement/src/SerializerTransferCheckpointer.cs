@@ -45,7 +45,7 @@ namespace Azure.Storage.DataMovement
         /// </summary>
         /// <param name="transferId">The transfer ID.</param>
         /// <param name="partNumber">The job part number.</param>
-        /// <param name="headerStream">A <see cref="Stream"/> to the job part plan header.</param>
+        /// <param name="header">A <see cref="Stream"/> to the job part plan header.</param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be canceled.
@@ -53,7 +53,7 @@ namespace Azure.Storage.DataMovement
         public abstract Task AddNewJobPartAsync(
             string transferId,
             int partNumber,
-            Stream headerStream,
+            JobPartPlanHeader header,
             CancellationToken cancellationToken = default);
 
         /// <summary>
@@ -136,14 +136,14 @@ namespace Azure.Storage.DataMovement
         /// Sets the Job Transfer Status in the Job Part Plan files.
         /// </summary>
         /// <param name="transferId">The transfer ID.</param>
-        /// <param name="status">The <see cref="DataTransferStatus"/> of the job.</param>
+        /// <param name="status">The <see cref="TransferStatus"/> of the job.</param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be canceled.
         /// </param>
         public abstract Task SetJobTransferStatusAsync(
             string transferId,
-            DataTransferStatus status,
+            TransferStatus status,
             CancellationToken cancellationToken = default);
 
         /// <summary>
@@ -151,7 +151,7 @@ namespace Azure.Storage.DataMovement
         /// </summary>
         /// <param name="transferId">The transfer ID.</param>
         /// <param name="partNumber">The job part number.</param>
-        /// <param name="status">The <see cref="DataTransferStatus"/> of the job part.</param>
+        /// <param name="status">The <see cref="TransferStatus"/> of the job part.</param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be canceled.
@@ -159,7 +159,7 @@ namespace Azure.Storage.DataMovement
         public abstract Task SetJobPartTransferStatusAsync(
             string transferId,
             int partNumber,
-            DataTransferStatus status,
+            TransferStatus status,
             CancellationToken cancellationToken = default);
 
         /// <summary>
@@ -190,11 +190,11 @@ namespace Azure.Storage.DataMovement
         Task<int> ITransferCheckpointer.GetCurrentJobPartCountAsync(string transferId, CancellationToken cancellationToken)
             => this.CurrentJobPartCountAsync(transferId, cancellationToken);
 
-        Task<DataTransferStatus> ITransferCheckpointer.GetJobStatusAsync(string transferId, CancellationToken cancellationToken)
+        Task<TransferStatus> ITransferCheckpointer.GetJobStatusAsync(string transferId, CancellationToken cancellationToken)
             => CheckpointerExtensions.GetJobStatusAsync(this, transferId, cancellationToken);
 
-        Task<DataTransferProperties> ITransferCheckpointer.GetDataTransferPropertiesAsync(string transferId, CancellationToken cancellationToken)
-            => CheckpointerExtensions.GetDataTransferPropertiesAsync(this, transferId, cancellationToken);
+        Task<TransferProperties> ITransferCheckpointer.GetTransferPropertiesAsync(string transferId, CancellationToken cancellationToken)
+            => CheckpointerExtensions.GetTransferPropertiesAsync(this, transferId, cancellationToken);
 
         async Task<JobPartPlanHeader> ITransferCheckpointer.GetJobPartAsync(string transferId, int partNumber, CancellationToken cancellationToken)
         {
@@ -207,12 +207,12 @@ namespace Azure.Storage.DataMovement
            return JobPartPlanHeader.Deserialize(stream);
         }
 
-        Task ITransferCheckpointer.SetJobStatusAsync(string transferId, DataTransferStatus status, CancellationToken cancellationToken)
+        Task ITransferCheckpointer.SetJobStatusAsync(string transferId, TransferStatus status, CancellationToken cancellationToken)
         {
             return this.SetJobTransferStatusAsync(transferId, status, cancellationToken);
         }
 
-        Task ITransferCheckpointer.SetJobPartStatusAsync(string transferId, int partNumber, DataTransferStatus status, CancellationToken cancellationToken)
+        Task ITransferCheckpointer.SetJobPartStatusAsync(string transferId, int partNumber, TransferStatus status, CancellationToken cancellationToken)
         {
             return this.SetJobPartTransferStatusAsync(transferId, partNumber, status, cancellationToken);
         }

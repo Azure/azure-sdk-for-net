@@ -42,7 +42,7 @@ dotnet test --settings .runsettings
 
 This issue only impacts the reporting feature. Currently, the service provides minimal support for the following [Azure Credential types.](https://learn.microsoft.com/dotnet/api/overview/azure/identity-readme?view=azure-dotnet#credential-classes)
 
-Along with this, we also support passing a Managed Identity ClientId to be used along with `DefaultAzureCredential` and `ManagedIdentityCredential`. 
+Along with this, we also support passing a Managed Identity ClientId to be used along with `DefaultAzureCredential` and `ManagedIdentityCredential`.
 
 If you only want to use cloud-hosted browsers along with your tests, you can disable the reporting feature by removing the logger from the runsettings file and then modify the `PlaywrightServiceSetup.cs` file as per the following.
 
@@ -51,7 +51,7 @@ using Azure.Core;
 using Azure.Developer.MicrosoftPlaywrightTesting.NUnit;
 using Azure.Identity;
 
-namespace PlaywrightTests;
+namespace PlaywrightTests.Sample1; // Remember to change this as per your project namespace
 
 [SetUpFixture]
 public class PlaywrightServiceSetup : PlaywrightServiceNUnit

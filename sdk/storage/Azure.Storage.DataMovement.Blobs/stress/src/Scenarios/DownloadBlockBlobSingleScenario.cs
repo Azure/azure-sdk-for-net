@@ -1,13 +1,15 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+extern alias BaseBlobs;
+
 using System;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Storage.Stress;
-using Azure.Storage.Blobs.Models;
+using BaseBlobs::Azure.Storage.Blobs.Models;
 
 namespace Azure.Storage.DataMovement.Blobs.Stress
 {
@@ -17,11 +19,11 @@ namespace Azure.Storage.DataMovement.Blobs.Stress
             Uri sourceBlobUri,
             int? blobSize,
             TransferManagerOptions transferManagerOptions,
-            DataTransferOptions dataTransferOptions,
+            TransferOptions transferOptions,
             TokenCredential tokenCredential,
             Metrics metrics,
             string testRunId)
-            : base(sourceBlobUri, blobSize, transferManagerOptions, dataTransferOptions, tokenCredential, metrics, testRunId)
+            : base(sourceBlobUri, blobSize, transferManagerOptions, transferOptions, tokenCredential, metrics, testRunId)
         {
         }
 

@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.Media
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMediaContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ContentKeyPolicyData)} does not support writing '{options.Format}' format.");
             }
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Media
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeContentKeyPolicyData(document.RootElement, options);
                     }
                 default:

@@ -33,19 +33,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 if (property.NameEquals("createdByCommunicationIdentifier"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     createdByCommunicationIdentifier = CommunicationIdentifierModel.DeserializeCommunicationIdentifierModel(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     Dictionary<string, object> dictionary = new Dictionary<string, object>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
@@ -77,10 +69,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 if (property.NameEquals("participants"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<AcsChatThreadParticipantProperties> array = new List<AcsChatThreadParticipantProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -124,16 +112,16 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 createTime,
                 version,
                 createdByCommunicationIdentifier,
-                properties ?? new ChangeTrackingDictionary<string, object>(),
+                properties,
                 metadata ?? new ChangeTrackingDictionary<string, string>(),
-                participants ?? new ChangeTrackingList<AcsChatThreadParticipantProperties>());
+                participants);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static new AcsChatThreadCreatedEventData FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeAcsChatThreadCreatedEventData(document.RootElement);
         }
 

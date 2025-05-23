@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Synapse
                 case 200:
                     {
                         KustoPoolSkuDescriptionListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = KustoPoolSkuDescriptionListResult.DeserializeKustoPoolSkuDescriptionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Synapse
                 case 200:
                     {
                         KustoPoolSkuDescriptionListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = KustoPoolSkuDescriptionListResult.DeserializeKustoPoolSkuDescriptionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Synapse
                 case 200:
                     {
                         KustoPoolNameAvailabilityResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = KustoPoolNameAvailabilityResult.DeserializeKustoPoolNameAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.Synapse
                 case 200:
                     {
                         KustoPoolNameAvailabilityResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = KustoPoolNameAvailabilityResult.DeserializeKustoPoolNameAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.Synapse
                 case 200:
                     {
                         KustoPoolListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = KustoPoolListResult.DeserializeKustoPoolListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.Synapse
                 case 200:
                     {
                         KustoPoolListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = KustoPoolListResult.DeserializeKustoPoolListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -360,7 +360,7 @@ namespace Azure.ResourceManager.Synapse
                 case 200:
                     {
                         SynapseKustoPoolData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SynapseKustoPoolData.DeserializeSynapseKustoPoolData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -393,7 +393,7 @@ namespace Azure.ResourceManager.Synapse
                 case 200:
                     {
                         SynapseKustoPoolData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SynapseKustoPoolData.DeserializeSynapseKustoPoolData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -966,7 +966,7 @@ namespace Azure.ResourceManager.Synapse
                 case 200:
                     {
                         SynapseDataSourceResourceSkuListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SynapseDataSourceResourceSkuListResult.DeserializeSynapseDataSourceResourceSkuListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -997,7 +997,7 @@ namespace Azure.ResourceManager.Synapse
                 case 200:
                     {
                         SynapseDataSourceResourceSkuListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SynapseDataSourceResourceSkuListResult.DeserializeSynapseDataSourceResourceSkuListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1068,7 +1068,7 @@ namespace Azure.ResourceManager.Synapse
                 case 200:
                     {
                         SynapseLanguageExtensionsList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SynapseLanguageExtensionsList.DeserializeSynapseLanguageExtensionsList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1099,7 +1099,7 @@ namespace Azure.ResourceManager.Synapse
                 case 200:
                     {
                         SynapseLanguageExtensionsList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SynapseLanguageExtensionsList.DeserializeSynapseLanguageExtensionsList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1374,7 +1374,7 @@ namespace Azure.ResourceManager.Synapse
                 case 200:
                     {
                         SynapseFollowerDatabaseListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SynapseFollowerDatabaseListResult.DeserializeSynapseFollowerDatabaseListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1405,7 +1405,7 @@ namespace Azure.ResourceManager.Synapse
                 case 200:
                     {
                         SynapseFollowerDatabaseListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SynapseFollowerDatabaseListResult.DeserializeSynapseFollowerDatabaseListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

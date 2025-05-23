@@ -11,17 +11,17 @@ using System.Xml;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Sql.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Sql.Samples
 {
     public partial class Sample_MaintenanceWindowsResource
     {
-        // Gets maintenance window settings for a selected database.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetsMaintenanceWindowSettingsForASelectedDatabase()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2020-11-01-preview/examples/GetMaintenanceWindows.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-05-01-preview/examples/GetMaintenanceWindows.json
             // this example is just showing the usage of "MaintenanceWindows_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -49,12 +49,11 @@ namespace Azure.ResourceManager.Sql.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Sets maintenance window settings for a selected database.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_SetsMaintenanceWindowSettingsForASelectedDatabase()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2020-11-01-preview/examples/CreateOrUpdateMaintenanceWindows.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-05-01-preview/examples/CreateOrUpdateMaintenanceWindows.json
             // this example is just showing the usage of "MaintenanceWindows_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -73,21 +72,18 @@ namespace Azure.ResourceManager.Sql.Samples
 
             // invoke the operation
             string maintenanceWindowName = "current";
-            MaintenanceWindowsData data = new MaintenanceWindowsData()
+            MaintenanceWindowsData data = new MaintenanceWindowsData
             {
-                TimeRanges =
-{
-new MaintenanceWindowTimeRange()
+                TimeRanges = {new MaintenanceWindowTimeRange
 {
 DayOfWeek = SqlDayOfWeek.Saturday,
 StartTime = "00:00:00",
 Duration = XmlConvert.ToTimeSpan("PT60M"),
-}
-},
+}},
             };
             await maintenanceWindows.CreateOrUpdateAsync(WaitUntil.Completed, maintenanceWindowName, data);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

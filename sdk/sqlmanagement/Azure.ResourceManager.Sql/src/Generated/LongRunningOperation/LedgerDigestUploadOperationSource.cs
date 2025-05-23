@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +23,14 @@ namespace Azure.ResourceManager.Sql
 
         LedgerDigestUploadResource IOperationSource<LedgerDigestUploadResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = LedgerDigestUploadData.DeserializeLedgerDigestUploadData(document.RootElement);
+            var data = ModelReaderWriter.Read<LedgerDigestUploadData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSqlContext.Default);
             return new LedgerDigestUploadResource(_client, data);
         }
 
         async ValueTask<LedgerDigestUploadResource> IOperationSource<LedgerDigestUploadResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = LedgerDigestUploadData.DeserializeLedgerDigestUploadData(document.RootElement);
-            return new LedgerDigestUploadResource(_client, data);
+            var data = ModelReaderWriter.Read<LedgerDigestUploadData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSqlContext.Default);
+            return await Task.FromResult(new LedgerDigestUploadResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

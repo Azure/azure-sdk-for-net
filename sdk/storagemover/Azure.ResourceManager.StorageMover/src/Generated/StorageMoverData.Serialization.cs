@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.StorageMover
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerStorageMoverContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(StorageMoverData)} does not support writing '{options.Format}' format.");
             }
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.StorageMover
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeStorageMoverData(document.RootElement, options);
                     }
                 default:

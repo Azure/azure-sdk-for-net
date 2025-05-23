@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
-using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Storage.DataMovement.JobPlan;
@@ -16,7 +15,7 @@ namespace Azure.Storage.DataMovement
             return Task.CompletedTask;
         }
 
-        public Task AddNewJobPartAsync(string transferId, int partNumber, Stream headerStream, CancellationToken cancellationToken = default)
+        public Task AddNewJobPartAsync(string transferId, int partNumber, JobPartPlanHeader header, CancellationToken cancellationToken = default)
         {
             return Task.CompletedTask;
         }
@@ -26,9 +25,9 @@ namespace Azure.Storage.DataMovement
             return Task.FromResult(0);
         }
 
-        public Task<DataTransferProperties> GetDataTransferPropertiesAsync(string transferId, CancellationToken cancellationToken = default)
+        public Task<TransferProperties> GetTransferPropertiesAsync(string transferId, CancellationToken cancellationToken = default)
         {
-            throw Errors.CheckpointerDisabled(nameof(GetDataTransferPropertiesAsync));
+            throw Errors.CheckpointerDisabled(nameof(GetTransferPropertiesAsync));
         }
 
         public Task<JobPartPlanHeader> GetJobPartAsync(string transferId, int partNumber, CancellationToken cancellationToken = default)
@@ -36,7 +35,7 @@ namespace Azure.Storage.DataMovement
             throw Errors.CheckpointerDisabled(nameof(GetJobPartAsync));
         }
 
-        public Task<DataTransferStatus> GetJobStatusAsync(string transferId, CancellationToken cancellationToken = default)
+        public Task<TransferStatus> GetJobStatusAsync(string transferId, CancellationToken cancellationToken = default)
         {
             throw Errors.CheckpointerDisabled(nameof(GetJobStatusAsync));
         }
@@ -56,12 +55,12 @@ namespace Azure.Storage.DataMovement
             return Task.CompletedTask;
         }
 
-        public Task SetJobPartStatusAsync(string transferId, int partNumber, DataTransferStatus status, CancellationToken cancellationToken = default)
+        public Task SetJobPartStatusAsync(string transferId, int partNumber, TransferStatus status, CancellationToken cancellationToken = default)
         {
             return Task.CompletedTask;
         }
 
-        public Task SetJobStatusAsync(string transferId, DataTransferStatus status, CancellationToken cancellationToken = default)
+        public Task SetJobStatusAsync(string transferId, TransferStatus status, CancellationToken cancellationToken = default)
         {
             return Task.CompletedTask;
         }

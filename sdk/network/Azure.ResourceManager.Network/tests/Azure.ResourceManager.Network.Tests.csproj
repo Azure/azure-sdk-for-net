@@ -17,6 +17,9 @@
     <None Update="TestData\VmssDeploymentTemplateAsync.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="TestData\ServiceTags.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="$(TestFrameworkSupportFiles)" LinkBase="Shared\TestFramework" />

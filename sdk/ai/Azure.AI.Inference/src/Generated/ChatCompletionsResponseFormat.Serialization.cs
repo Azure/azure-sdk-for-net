@@ -44,7 +44,7 @@ namespace Azure.AI.Inference
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -77,7 +77,8 @@ namespace Azure.AI.Inference
             {
                 switch (discriminator.GetString())
                 {
-                    case "json_object": return ChatCompletionsResponseFormatJSON.DeserializeChatCompletionsResponseFormatJSON(element, options);
+                    case "json_object": return ChatCompletionsResponseFormatJsonObject.DeserializeChatCompletionsResponseFormatJsonObject(element, options);
+                    case "json_schema": return ChatCompletionsResponseFormatJsonSchema.DeserializeChatCompletionsResponseFormatJsonSchema(element, options);
                     case "text": return ChatCompletionsResponseFormatText.DeserializeChatCompletionsResponseFormatText(element, options);
                 }
             }
@@ -91,7 +92,7 @@ namespace Azure.AI.Inference
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureAIInferenceContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ChatCompletionsResponseFormat)} does not support writing '{options.Format}' format.");
             }
@@ -105,7 +106,7 @@ namespace Azure.AI.Inference
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeChatCompletionsResponseFormat(document.RootElement, options);
                     }
                 default:
@@ -119,7 +120,7 @@ namespace Azure.AI.Inference
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static ChatCompletionsResponseFormat FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeChatCompletionsResponseFormat(document.RootElement);
         }
 

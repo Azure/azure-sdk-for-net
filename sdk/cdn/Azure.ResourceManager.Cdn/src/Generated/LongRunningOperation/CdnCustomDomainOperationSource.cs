@@ -5,8 +5,8 @@
 
 #nullable disable
 
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -32,16 +32,14 @@ namespace Azure.ResourceManager.Cdn
 
         CdnCustomDomainResource IOperationSource<CdnCustomDomainResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = ScrubId(CdnCustomDomainData.DeserializeCdnCustomDomainData(document.RootElement));
+            var data = ScrubId(ModelReaderWriter.Read<CdnCustomDomainData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerCdnContext.Default));
             return new CdnCustomDomainResource(_client, data);
         }
 
         async ValueTask<CdnCustomDomainResource> IOperationSource<CdnCustomDomainResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = ScrubId(CdnCustomDomainData.DeserializeCdnCustomDomainData(document.RootElement));
-            return new CdnCustomDomainResource(_client, data);
+            var data = ScrubId(ModelReaderWriter.Read<CdnCustomDomainData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerCdnContext.Default));
+            return await Task.FromResult(new CdnCustomDomainResource(_client, data)).ConfigureAwait(false);
         }
 
         private CdnCustomDomainData ScrubId(CdnCustomDomainData data)

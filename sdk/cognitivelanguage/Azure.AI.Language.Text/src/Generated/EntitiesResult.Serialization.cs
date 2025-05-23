@@ -63,7 +63,7 @@ namespace Azure.AI.Language.Text
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -95,7 +95,7 @@ namespace Azure.AI.Language.Text
             IReadOnlyList<DocumentError> errors = default;
             RequestStatistics statistics = default;
             string modelVersion = default;
-            IReadOnlyList<EntitiesDocumentResultWithMetadataDetectedLanguage> documents = default;
+            IReadOnlyList<EntityActionResultWithMetadata> documents = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,10 +126,10 @@ namespace Azure.AI.Language.Text
                 }
                 if (property.NameEquals("documents"u8))
                 {
-                    List<EntitiesDocumentResultWithMetadataDetectedLanguage> array = new List<EntitiesDocumentResultWithMetadataDetectedLanguage>();
+                    List<EntityActionResultWithMetadata> array = new List<EntityActionResultWithMetadata>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EntitiesDocumentResultWithMetadataDetectedLanguage.DeserializeEntitiesDocumentResultWithMetadataDetectedLanguage(item, options));
+                        array.Add(EntityActionResultWithMetadata.DeserializeEntityActionResultWithMetadata(item, options));
                     }
                     documents = array;
                     continue;
@@ -150,7 +150,7 @@ namespace Azure.AI.Language.Text
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureAILanguageTextContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(EntitiesResult)} does not support writing '{options.Format}' format.");
             }
@@ -164,7 +164,7 @@ namespace Azure.AI.Language.Text
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeEntitiesResult(document.RootElement, options);
                     }
                 default:
@@ -178,7 +178,7 @@ namespace Azure.AI.Language.Text
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static EntitiesResult FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeEntitiesResult(document.RootElement);
         }
 

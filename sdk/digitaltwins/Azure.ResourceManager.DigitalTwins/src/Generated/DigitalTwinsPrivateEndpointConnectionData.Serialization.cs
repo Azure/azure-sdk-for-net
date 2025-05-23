@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.DigitalTwins
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDigitalTwinsContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(DigitalTwinsPrivateEndpointConnectionData)} does not support writing '{options.Format}' format.");
             }
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.DigitalTwins
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeDigitalTwinsPrivateEndpointConnectionData(document.RootElement, options);
                     }
                 default:

@@ -11,14 +11,14 @@ using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.DevOpsInfrastructure.Models;
 using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.DevOpsInfrastructure.Samples
 {
     public partial class Sample_ResourceGroupResourceExtensions
     {
-        // ImageVersions_ListByImage
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetImageVersionsByImage_ImageVersionsListByImage()
         {
             // Generated from example definition: 2024-10-19/ImageVersions_ListByImage.json
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Samples
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

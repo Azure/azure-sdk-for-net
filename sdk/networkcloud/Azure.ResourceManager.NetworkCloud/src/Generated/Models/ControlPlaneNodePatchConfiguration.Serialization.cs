@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
-    internal partial class ControlPlaneNodePatchConfiguration : IUtf8JsonSerializable, IJsonModel<ControlPlaneNodePatchConfiguration>
+    public partial class ControlPlaneNodePatchConfiguration : IUtf8JsonSerializable, IJsonModel<ControlPlaneNodePatchConfiguration>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ControlPlaneNodePatchConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
@@ -34,6 +34,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 throw new FormatException($"The model {nameof(ControlPlaneNodePatchConfiguration)} does not support writing '{format}' format.");
             }
 
+            if (Optional.IsDefined(AdministratorConfiguration))
+            {
+                writer.WritePropertyName("administratorConfiguration"u8);
+                writer.WriteObjectValue(AdministratorConfiguration, options);
+            }
             if (Optional.IsDefined(Count))
             {
                 writer.WritePropertyName("count"u8);
@@ -47,7 +52,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -76,11 +81,21 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 return null;
             }
+            AdministratorConfigurationPatch administratorConfiguration = default;
             long? count = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("administratorConfiguration"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    administratorConfiguration = AdministratorConfigurationPatch.DeserializeAdministratorConfigurationPatch(property.Value, options);
+                    continue;
+                }
                 if (property.NameEquals("count"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -96,7 +111,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ControlPlaneNodePatchConfiguration(count, serializedAdditionalRawData);
+            return new ControlPlaneNodePatchConfiguration(administratorConfiguration, count, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ControlPlaneNodePatchConfiguration>.Write(ModelReaderWriterOptions options)
@@ -106,7 +121,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkCloudContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ControlPlaneNodePatchConfiguration)} does not support writing '{options.Format}' format.");
             }
@@ -120,7 +135,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeControlPlaneNodePatchConfiguration(document.RootElement, options);
                     }
                 default:

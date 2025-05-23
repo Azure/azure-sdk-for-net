@@ -64,6 +64,11 @@ namespace Azure.ResourceManager.Maps.Models
                 writer.WritePropertyName("cors"u8);
                 writer.WriteObjectValue(Cors, options);
             }
+            if (Optional.IsDefined(Encryption))
+            {
+                writer.WritePropertyName("encryption"u8);
+                writer.WriteObjectValue(Encryption, options);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -72,7 +77,7 @@ namespace Azure.ResourceManager.Maps.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -106,6 +111,7 @@ namespace Azure.ResourceManager.Maps.Models
             string provisioningState = default;
             IList<MapsLinkedResource> linkedResources = default;
             CorsRules cors = default;
+            MapsEncryption encryption = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -156,6 +162,15 @@ namespace Azure.ResourceManager.Maps.Models
                     cors = CorsRules.DeserializeCorsRules(property.Value, options);
                     continue;
                 }
+                if (property.NameEquals("encryption"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    encryption = MapsEncryption.DeserializeMapsEncryption(property.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -168,6 +183,7 @@ namespace Azure.ResourceManager.Maps.Models
                 provisioningState,
                 linkedResources ?? new ChangeTrackingList<MapsLinkedResource>(),
                 cors,
+                encryption,
                 serializedAdditionalRawData);
         }
 
@@ -178,7 +194,7 @@ namespace Azure.ResourceManager.Maps.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMapsContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(MapsAccountProperties)} does not support writing '{options.Format}' format.");
             }
@@ -192,7 +208,7 @@ namespace Azure.ResourceManager.Maps.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeMapsAccountProperties(document.RootElement, options);
                     }
                 default:

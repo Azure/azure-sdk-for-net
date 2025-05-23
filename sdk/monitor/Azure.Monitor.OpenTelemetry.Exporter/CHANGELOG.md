@@ -1,6 +1,6 @@
 # Release History
 
-## 1.4.0-beta.3 (Unreleased)
+## 1.5.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,45 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.4.0 (2025-05-08)
+
+### Other Changes
+
+* Changed `AzureMonitorLogExporter` to be internal to match the other Exporters (Trace and Metric).
+  ([#49849](https://github.com/Azure/azure-sdk-for-net/pull/49849))
+
+* Update OpenTelemetry dependencies
+  ([#49861](https://github.com/Azure/azure-sdk-for-net/pull/49861))
+  - OpenTelemetry 1.12.0
+
+## 1.4.0-beta.3 (2025-04-01)
+
+### Features Added
+
+* Added support for emitting Application Insights Custom Events.
+  ([#48378](https://github.com/Azure/azure-sdk-for-net/pull/48378))
+
+* Added new api `UseAzureMonitorExporter` which automatically enables logging, tracing, and metrics.
+  Additional calls to `WithLogging`, `WithMetrics`, and `WithTracing` are NOT required.
+  However, you may still need to enable specific tracing/metric sources/meters separately.
+  ([#48402](https://github.com/Azure/azure-sdk-for-net/pull/48402))
+  - Added support for LiveMetrics when using the `UseAzureMonitorExporter` api.
+
+### Bugs Fixed
+
+* Fixed an issue where array attributes on metrics weren't exported correctly.
+  ([#47300](https://github.com/Azure/azure-sdk-for-net/pull/47300))
+
+* Always set Dependency.Target to "server.address" and "server.port" if present.
+  ([#48317](https://github.com/Azure/azure-sdk-for-net/pull/48317))
+
+### Other Changes
+
+* Update OpenTelemetry dependencies
+  ([#48574](https://github.com/Azure/azure-sdk-for-net/pull/48574))
+  - OpenTelemetry 1.11.2
+  - OpenTelemetry.PersistentStorage.FileSystem 1.0.1
 
 ## 1.4.0-beta.2 (2024-10-11)
 

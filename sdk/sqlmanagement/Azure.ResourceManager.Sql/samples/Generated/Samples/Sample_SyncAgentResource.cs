@@ -10,17 +10,17 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Sql.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Sql.Samples
 {
     public partial class Sample_SyncAgentResource
     {
-        // Get a sync agent
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetASyncAgent()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2020-11-01-preview/examples/SyncAgentGet.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-05-01-preview/examples/SyncAgentGet.json
             // this example is just showing the usage of "SyncAgents_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -47,86 +47,11 @@ namespace Azure.ResourceManager.Sql.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a new sync agent
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Update_CreateANewSyncAgent()
-        {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2020-11-01-preview/examples/SyncAgentCreate.json
-            // this example is just showing the usage of "SyncAgents_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SyncAgentResource created on azure
-            // for more information of creating SyncAgentResource, please refer to the document of SyncAgentResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
-            string resourceGroupName = "syncagentcrud-65440";
-            string serverName = "syncagentcrud-8475";
-            string syncAgentName = "syncagentcrud-3187";
-            ResourceIdentifier syncAgentResourceId = SyncAgentResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName, syncAgentName);
-            SyncAgentResource syncAgent = client.GetSyncAgentResource(syncAgentResourceId);
-
-            // invoke the operation
-            SyncAgentData data = new SyncAgentData()
-            {
-                SyncDatabaseId = new ResourceIdentifier("/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/Default-SQL-Onebox/providers/Microsoft.Sql/servers/syncagentcrud-8475/databases/sync"),
-            };
-            ArmOperation<SyncAgentResource> lro = await syncAgent.UpdateAsync(WaitUntil.Completed, data);
-            SyncAgentResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            SyncAgentData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // Update a sync agent
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Update_UpdateASyncAgent()
-        {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2020-11-01-preview/examples/SyncAgentUpdate.json
-            // this example is just showing the usage of "SyncAgents_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SyncAgentResource created on azure
-            // for more information of creating SyncAgentResource, please refer to the document of SyncAgentResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
-            string resourceGroupName = "syncagentcrud-65440";
-            string serverName = "syncagentcrud-8475";
-            string syncAgentName = "syncagentcrud-3187";
-            ResourceIdentifier syncAgentResourceId = SyncAgentResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName, syncAgentName);
-            SyncAgentResource syncAgent = client.GetSyncAgentResource(syncAgentResourceId);
-
-            // invoke the operation
-            SyncAgentData data = new SyncAgentData()
-            {
-                SyncDatabaseId = new ResourceIdentifier("/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/Default-SQL-Onebox/providers/Microsoft.Sql/servers/syncagentcrud-8475/databases/sync"),
-            };
-            ArmOperation<SyncAgentResource> lro = await syncAgent.UpdateAsync(WaitUntil.Completed, data);
-            SyncAgentResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            SyncAgentData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // Delete a sync agent
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteASyncAgent()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2020-11-01-preview/examples/SyncAgentDelete.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-05-01-preview/examples/SyncAgentDelete.json
             // this example is just showing the usage of "SyncAgents_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -146,15 +71,86 @@ namespace Azure.ResourceManager.Sql.Samples
             // invoke the operation
             await syncAgent.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Generate a sync agent key
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Update_CreateANewSyncAgent()
+        {
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-05-01-preview/examples/SyncAgentCreate.json
+            // this example is just showing the usage of "SyncAgents_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this SyncAgentResource created on azure
+            // for more information of creating SyncAgentResource, please refer to the document of SyncAgentResource
+            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string resourceGroupName = "syncagentcrud-65440";
+            string serverName = "syncagentcrud-8475";
+            string syncAgentName = "syncagentcrud-3187";
+            ResourceIdentifier syncAgentResourceId = SyncAgentResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName, syncAgentName);
+            SyncAgentResource syncAgent = client.GetSyncAgentResource(syncAgentResourceId);
+
+            // invoke the operation
+            SyncAgentData data = new SyncAgentData
+            {
+                SyncDatabaseId = new ResourceIdentifier("/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/Default-SQL-Onebox/providers/Microsoft.Sql/servers/syncagentcrud-8475/databases/sync"),
+            };
+            ArmOperation<SyncAgentResource> lro = await syncAgent.UpdateAsync(WaitUntil.Completed, data);
+            SyncAgentResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            SyncAgentData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Update_UpdateASyncAgent()
+        {
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-05-01-preview/examples/SyncAgentUpdate.json
+            // this example is just showing the usage of "SyncAgents_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this SyncAgentResource created on azure
+            // for more information of creating SyncAgentResource, please refer to the document of SyncAgentResource
+            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string resourceGroupName = "syncagentcrud-65440";
+            string serverName = "syncagentcrud-8475";
+            string syncAgentName = "syncagentcrud-3187";
+            ResourceIdentifier syncAgentResourceId = SyncAgentResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName, syncAgentName);
+            SyncAgentResource syncAgent = client.GetSyncAgentResource(syncAgentResourceId);
+
+            // invoke the operation
+            SyncAgentData data = new SyncAgentData
+            {
+                SyncDatabaseId = new ResourceIdentifier("/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/Default-SQL-Onebox/providers/Microsoft.Sql/servers/syncagentcrud-8475/databases/sync"),
+            };
+            ArmOperation<SyncAgentResource> lro = await syncAgent.UpdateAsync(WaitUntil.Completed, data);
+            SyncAgentResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            SyncAgentData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GenerateKey_GenerateASyncAgentKey()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2020-11-01-preview/examples/SyncAgentGenerateKey.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-05-01-preview/examples/SyncAgentGenerateKey.json
             // this example is just showing the usage of "SyncAgents_GenerateKey" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -177,12 +173,11 @@ namespace Azure.ResourceManager.Sql.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Get sync agent linked databases
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetLinkedDatabases_GetSyncAgentLinkedDatabases()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2020-11-01-preview/examples/SyncAgentGetLinkedDatabases.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-05-01-preview/examples/SyncAgentGetLinkedDatabases.json
             // this example is just showing the usage of "SyncAgents_ListLinkedDatabases" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -205,7 +200,7 @@ namespace Azure.ResourceManager.Sql.Samples
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

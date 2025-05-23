@@ -19,7 +19,6 @@ modelerfour:
   flatten-payloads: false
   lenient-model-deduplication: true
 use-model-reader-writer: true
-use-write-core: true
 
 rename-mapping:
   Cache.properties.mountAddresses: -|ip-address

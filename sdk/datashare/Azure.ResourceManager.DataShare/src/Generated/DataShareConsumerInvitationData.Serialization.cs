@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.DataShare
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataShareContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(DataShareConsumerInvitationData)} does not support writing '{options.Format}' format.");
             }
@@ -342,7 +342,7 @@ namespace Azure.ResourceManager.DataShare
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeDataShareConsumerInvitationData(document.RootElement, options);
                     }
                 default:

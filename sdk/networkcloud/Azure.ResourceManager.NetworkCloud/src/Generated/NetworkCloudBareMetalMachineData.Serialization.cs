@@ -38,6 +38,11 @@ namespace Azure.ResourceManager.NetworkCloud
             }
 
             base.JsonModelWriteCore(writer, options);
+            if (options.Format != "W" && Optional.IsDefined(ETag))
+            {
+                writer.WritePropertyName("etag"u8);
+                writer.WriteStringValue(ETag.Value.ToString());
+            }
             writer.WritePropertyName("extendedLocation"u8);
             writer.WriteObjectValue(ExtendedLocation, options);
             writer.WritePropertyName("properties"u8);
@@ -115,10 +120,25 @@ namespace Azure.ResourceManager.NetworkCloud
                 writer.WritePropertyName("kubernetesVersion"u8);
                 writer.WriteStringValue(KubernetesVersion);
             }
+            if (Optional.IsDefined(MachineClusterVersion))
+            {
+                writer.WritePropertyName("machineClusterVersion"u8);
+                writer.WriteStringValue(MachineClusterVersion);
+            }
             writer.WritePropertyName("machineDetails"u8);
             writer.WriteStringValue(MachineDetails);
             writer.WritePropertyName("machineName"u8);
             writer.WriteStringValue(MachineName);
+            if (options.Format != "W" && Optional.IsCollectionDefined(MachineRoles))
+            {
+                writer.WritePropertyName("machineRoles"u8);
+                writer.WriteStartArray();
+                foreach (var item in MachineRoles)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
             writer.WritePropertyName("machineSkuId"u8);
             writer.WriteStringValue(MachineSkuId);
             if (options.Format != "W" && Optional.IsDefined(OamIPv4Address))
@@ -154,6 +174,21 @@ namespace Azure.ResourceManager.NetworkCloud
             {
                 writer.WritePropertyName("readyState"u8);
                 writer.WriteStringValue(ReadyState.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(RuntimeProtectionStatus))
+            {
+                writer.WritePropertyName("runtimeProtectionStatus"u8);
+                writer.WriteObjectValue(RuntimeProtectionStatus, options);
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(SecretRotationStatus))
+            {
+                writer.WritePropertyName("secretRotationStatus"u8);
+                writer.WriteStartArray();
+                foreach (var item in SecretRotationStatus)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
             }
             writer.WritePropertyName("serialNumber"u8);
             writer.WriteStringValue(SerialNumber);
@@ -195,6 +230,7 @@ namespace Azure.ResourceManager.NetworkCloud
             {
                 return null;
             }
+            ETag? etag = default;
             ExtendedLocation extendedLocation = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
@@ -216,8 +252,10 @@ namespace Azure.ResourceManager.NetworkCloud
             IReadOnlyList<string> hybridAksClustersAssociatedIds = default;
             string kubernetesNodeName = default;
             string kubernetesVersion = default;
+            string machineClusterVersion = default;
             string machineDetails = default;
             string machineName = default;
+            IReadOnlyList<string> machineRoles = default;
             string machineSkuId = default;
             IPAddress oamIPv4Address = default;
             string oamIPv6Address = default;
@@ -227,6 +265,8 @@ namespace Azure.ResourceManager.NetworkCloud
             ResourceIdentifier rackId = default;
             long rackSlot = default;
             BareMetalMachineReadyState? readyState = default;
+            RuntimeProtectionStatus runtimeProtectionStatus = default;
+            IReadOnlyList<SecretRotationStatus> secretRotationStatus = default;
             string serialNumber = default;
             string serviceTag = default;
             IReadOnlyList<string> virtualMachinesAssociatedIds = default;
@@ -234,6 +274,15 @@ namespace Azure.ResourceManager.NetworkCloud
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("etag"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    etag = new ETag(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("extendedLocation"u8))
                 {
                     extendedLocation = ExtendedLocation.DeserializeExtendedLocation(property.Value, options);
@@ -406,6 +455,11 @@ namespace Azure.ResourceManager.NetworkCloud
                             kubernetesVersion = property0.Value.GetString();
                             continue;
                         }
+                        if (property0.NameEquals("machineClusterVersion"u8))
+                        {
+                            machineClusterVersion = property0.Value.GetString();
+                            continue;
+                        }
                         if (property0.NameEquals("machineDetails"u8))
                         {
                             machineDetails = property0.Value.GetString();
@@ -414,6 +468,20 @@ namespace Azure.ResourceManager.NetworkCloud
                         if (property0.NameEquals("machineName"u8))
                         {
                             machineName = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("machineRoles"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<string> array = new List<string>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(item.GetString());
+                            }
+                            machineRoles = array;
                             continue;
                         }
                         if (property0.NameEquals("machineSkuId"u8))
@@ -477,6 +545,29 @@ namespace Azure.ResourceManager.NetworkCloud
                             readyState = new BareMetalMachineReadyState(property0.Value.GetString());
                             continue;
                         }
+                        if (property0.NameEquals("runtimeProtectionStatus"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            runtimeProtectionStatus = RuntimeProtectionStatus.DeserializeRuntimeProtectionStatus(property0.Value, options);
+                            continue;
+                        }
+                        if (property0.NameEquals("secretRotationStatus"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<SecretRotationStatus> array = new List<SecretRotationStatus>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(Models.SecretRotationStatus.DeserializeSecretRotationStatus(item, options));
+                            }
+                            secretRotationStatus = array;
+                            continue;
+                        }
                         if (property0.NameEquals("serialNumber"u8))
                         {
                             serialNumber = property0.Value.GetString();
@@ -517,6 +608,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
+                etag,
                 extendedLocation,
                 associatedResourceIds ?? new ChangeTrackingList<ResourceIdentifier>(),
                 bmcConnectionString,
@@ -532,8 +624,10 @@ namespace Azure.ResourceManager.NetworkCloud
                 hybridAksClustersAssociatedIds ?? new ChangeTrackingList<string>(),
                 kubernetesNodeName,
                 kubernetesVersion,
+                machineClusterVersion,
                 machineDetails,
                 machineName,
+                machineRoles ?? new ChangeTrackingList<string>(),
                 machineSkuId,
                 oamIPv4Address,
                 oamIPv6Address,
@@ -543,6 +637,8 @@ namespace Azure.ResourceManager.NetworkCloud
                 rackId,
                 rackSlot,
                 readyState,
+                runtimeProtectionStatus,
+                secretRotationStatus ?? new ChangeTrackingList<SecretRotationStatus>(),
                 serialNumber,
                 serviceTag,
                 virtualMachinesAssociatedIds ?? new ChangeTrackingList<string>(),
@@ -556,7 +652,7 @@ namespace Azure.ResourceManager.NetworkCloud
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkCloudContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(NetworkCloudBareMetalMachineData)} does not support writing '{options.Format}' format.");
             }
@@ -570,7 +666,7 @@ namespace Azure.ResourceManager.NetworkCloud
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeNetworkCloudBareMetalMachineData(document.RootElement, options);
                     }
                 default:

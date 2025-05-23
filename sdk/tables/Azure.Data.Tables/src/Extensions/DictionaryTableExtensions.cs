@@ -40,7 +40,7 @@ namespace Azure.Data.Tables
                     case ulong _:
                         annotatedDictionary[item.Key.ToOdataTypeString()] = TableConstants.Odata.EdmInt64;
                         // Int64 / long should be serialized as string.
-                        annotatedDictionary[item.Key] = item.Value.ToString();
+                        annotatedDictionary[item.Key] = item.Value.ToString() ?? string.Empty;
                         break;
                     case double _:
                         annotatedDictionary[item.Key.ToOdataTypeString()] = TableConstants.Odata.EdmDouble;
@@ -88,11 +88,11 @@ namespace Azure.Data.Tables
             {
                 entity[annotation] = typeAnnotationsWithKeys[annotation].TypeAnnotation switch
                 {
-                    TableConstants.Odata.EdmBinary => Convert.FromBase64String(entity[annotation] as string),
-                    TableConstants.Odata.EdmDateTime => DateTimeOffset.Parse(entity[annotation] as string, CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind),
-                    TableConstants.Odata.EdmGuid => Guid.Parse(entity[annotation] as string),
-                    TableConstants.Odata.EdmInt64 => long.Parse(entity[annotation] as string, CultureInfo.InvariantCulture),
-                    TableConstants.Odata.EdmDouble => double.Parse(entity[annotation] as string, CultureInfo.InvariantCulture),
+                    TableConstants.Odata.EdmBinary => Convert.FromBase64String(entity[annotation] as string ?? string.Empty),
+                    TableConstants.Odata.EdmDateTime => DateTimeOffset.Parse(entity[annotation] as string ?? string.Empty, CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind),
+                    TableConstants.Odata.EdmGuid => Guid.Parse(entity[annotation] as string ?? string.Empty),
+                    TableConstants.Odata.EdmInt64 => long.Parse(entity[annotation] as string ?? string.Empty, CultureInfo.InvariantCulture),
+                    TableConstants.Odata.EdmDouble => double.Parse(entity[annotation] as string ?? string.Empty, CultureInfo.InvariantCulture),
                     _ => throw new NotSupportedException("Not supported type " + typeAnnotationsWithKeys[annotation])
                 };
 
@@ -104,7 +104,7 @@ namespace Azure.Data.Tables
             // so we must cast it without a type annotation
             if (entity.TryGetValue(TableConstants.PropertyNames.Timestamp, out var value) && value is string)
             {
-                entity[TableConstants.PropertyNames.Timestamp] = DateTimeOffset.Parse(entity[TableConstants.PropertyNames.Timestamp] as string, CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind);
+                entity[TableConstants.PropertyNames.Timestamp] = DateTimeOffset.Parse(entity[TableConstants.PropertyNames.Timestamp] as string ?? string.Empty, CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind);
             }
 
             // Remove odata metadata.

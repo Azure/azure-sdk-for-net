@@ -10,17 +10,17 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Sql.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Sql.Samples
 {
     public partial class Sample_SqlServerSecurityAlertPolicyResource
     {
-        // Get a server's threat detection policy
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAServerSThreatDetectionPolicy()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2020-11-01-preview/examples/ServerSecurityAlertsGet.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-05-01-preview/examples/ServerSecurityAlertsGet.json
             // this example is just showing the usage of "ServerSecurityAlertPolicies_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -47,12 +47,11 @@ namespace Azure.ResourceManager.Sql.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Update a server's threat detection policy with all parameters
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateAServerSThreatDetectionPolicyWithAllParameters()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2020-11-01-preview/examples/ServerSecurityAlertsCreateMax.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-05-01-preview/examples/ServerSecurityAlertsCreateMax.json
             // this example is just showing the usage of "ServerSecurityAlertPolicies_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -70,17 +69,11 @@ namespace Azure.ResourceManager.Sql.Samples
             SqlServerSecurityAlertPolicyResource sqlServerSecurityAlertPolicy = client.GetSqlServerSecurityAlertPolicyResource(sqlServerSecurityAlertPolicyResourceId);
 
             // invoke the operation
-            SqlServerSecurityAlertPolicyData data = new SqlServerSecurityAlertPolicyData()
+            SqlServerSecurityAlertPolicyData data = new SqlServerSecurityAlertPolicyData
             {
                 State = SecurityAlertsPolicyState.Enabled,
-                DisabledAlerts =
-{
-"Access_Anomaly","Usage_Anomaly"
-},
-                EmailAddresses =
-{
-"testSecurityAlert@microsoft.com"
-},
+                DisabledAlerts = { "Access_Anomaly", "Usage_Anomaly" },
+                EmailAddresses = { "testSecurityAlert@microsoft.com" },
                 SendToEmailAccountAdmins = true,
                 StorageEndpoint = "https://mystorage.blob.core.windows.net",
                 StorageAccountAccessKey = "sdlfkjabc+sdlfkjsdlkfsjdfLDKFTERLKFDFKLjsdfksjdflsdkfD2342309432849328476458/3RSD==",
@@ -96,12 +89,11 @@ namespace Azure.ResourceManager.Sql.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Update a server's threat detection policy with minimal parameters
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateAServerSThreatDetectionPolicyWithMinimalParameters()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2020-11-01-preview/examples/ServerSecurityAlertsCreateMin.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-05-01-preview/examples/ServerSecurityAlertsCreateMin.json
             // this example is just showing the usage of "ServerSecurityAlertPolicies_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -119,7 +111,7 @@ namespace Azure.ResourceManager.Sql.Samples
             SqlServerSecurityAlertPolicyResource sqlServerSecurityAlertPolicy = client.GetSqlServerSecurityAlertPolicyResource(sqlServerSecurityAlertPolicyResourceId);
 
             // invoke the operation
-            SqlServerSecurityAlertPolicyData data = new SqlServerSecurityAlertPolicyData()
+            SqlServerSecurityAlertPolicyData data = new SqlServerSecurityAlertPolicyData
             {
                 State = SecurityAlertsPolicyState.Enabled,
             };

@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Network.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType? type = default;
-            AddressSpace vpnClientAddressPool = default;
+            VirtualNetworkAddressSpace vpnClientAddressPool = default;
             RoutingConfiguration routingConfiguration = default;
             bool? enableInternetSecurity = default;
             IReadOnlyList<WritableSubResource> configurationPolicyGroupAssociations = default;
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Network.Models
                             {
                                 continue;
                             }
-                            vpnClientAddressPool = AddressSpace.DeserializeAddressSpace(property0.Value, options);
+                            vpnClientAddressPool = VirtualNetworkAddressSpace.DeserializeVirtualNetworkAddressSpace(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("routingConfiguration"u8))
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.Network.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(P2SConnectionConfiguration)} does not support writing '{options.Format}' format.");
             }
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeP2SConnectionConfiguration(document.RootElement, options);
                     }
                 default:

@@ -19,77 +19,37 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 
         void IJsonModel<AcsRouterJobClassificationFailedEventData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<AcsRouterJobClassificationFailedEventData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AcsRouterJobClassificationFailedEventData)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
+            base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(ClassificationPolicyId))
             {
                 writer.WritePropertyName("classificationPolicyId"u8);
                 writer.WriteStringValue(ClassificationPolicyId);
             }
-            writer.WritePropertyName("errors"u8);
-            writer.WriteStartArray();
-            foreach (var item in Errors)
+            if (options.Format != "W")
             {
-                writer.WriteObjectValue(item, options);
-            }
-            writer.WriteEndArray();
-            if (Optional.IsDefined(QueueId))
-            {
-                writer.WritePropertyName("queueId"u8);
-                writer.WriteStringValue(QueueId);
-            }
-            writer.WritePropertyName("labels"u8);
-            writer.WriteStartObject();
-            foreach (var item in Labels)
-            {
-                writer.WritePropertyName(item.Key);
-                writer.WriteStringValue(item.Value);
-            }
-            writer.WriteEndObject();
-            writer.WritePropertyName("tags"u8);
-            writer.WriteStartObject();
-            foreach (var item in Tags)
-            {
-                writer.WritePropertyName(item.Key);
-                writer.WriteStringValue(item.Value);
-            }
-            writer.WriteEndObject();
-            if (Optional.IsDefined(JobId))
-            {
-                writer.WritePropertyName("jobId"u8);
-                writer.WriteStringValue(JobId);
-            }
-            if (Optional.IsDefined(ChannelReference))
-            {
-                writer.WritePropertyName("channelReference"u8);
-                writer.WriteStringValue(ChannelReference);
-            }
-            if (Optional.IsDefined(ChannelId))
-            {
-                writer.WritePropertyName("channelId"u8);
-                writer.WriteStringValue(ChannelId);
-            }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
+                writer.WritePropertyName("errors"u8);
+                writer.WriteStartArray();
+                foreach (var item in Errors)
                 {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
+                    writer.WriteObjectValue(item, options);
                 }
+                writer.WriteEndArray();
             }
-            writer.WriteEndObject();
         }
 
         AcsRouterJobClassificationFailedEventData IJsonModel<AcsRouterJobClassificationFailedEventData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -204,7 +164,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureMessagingEventGridSystemEventsContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(AcsRouterJobClassificationFailedEventData)} does not support writing '{options.Format}' format.");
             }
@@ -218,7 +178,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeAcsRouterJobClassificationFailedEventData(document.RootElement, options);
                     }
                 default:
@@ -232,7 +192,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static new AcsRouterJobClassificationFailedEventData FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeAcsRouterJobClassificationFailedEventData(document.RootElement);
         }
 

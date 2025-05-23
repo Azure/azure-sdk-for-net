@@ -1387,7 +1387,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDesktopVirtualizationContext.Default);
                 case "bicep":
                     return SerializeBicep(options);
                 default:
@@ -1403,7 +1403,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeHostPoolData(document.RootElement, options);
                     }
                 default:

@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Astro
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAstroContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(AstroOrganizationData)} does not support writing '{options.Format}' format.");
             }
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.Astro
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeAstroOrganizationData(document.RootElement, options);
                     }
                 default:

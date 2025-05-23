@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ComputeSchedule
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2024-08-15-preview";
+            _apiVersion = apiVersion ?? "2024-10-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.ComputeSchedule
             return message;
         }
 
-        /// <summary> virtualMachinesSubmitDeallocate: submitDeallocate for a virtual machine. </summary>
+        /// <summary> VirtualMachinesSubmitDeallocate: Schedule deallocate operation for a batch of virtual machines at datetime in future. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="locationparameter"> The location name. </param>
         /// <param name="content"> The request body. </param>
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.ComputeSchedule
                 case 200:
                     {
                         DeallocateResourceOperationResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DeallocateResourceOperationResult.DeserializeDeallocateResourceOperationResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.ComputeSchedule
             }
         }
 
-        /// <summary> virtualMachinesSubmitDeallocate: submitDeallocate for a virtual machine. </summary>
+        /// <summary> VirtualMachinesSubmitDeallocate: Schedule deallocate operation for a batch of virtual machines at datetime in future. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="locationparameter"> The location name. </param>
         /// <param name="content"> The request body. </param>
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.ComputeSchedule
                 case 200:
                     {
                         DeallocateResourceOperationResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DeallocateResourceOperationResult.DeserializeDeallocateResourceOperationResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.ComputeSchedule
             return message;
         }
 
-        /// <summary> virtualMachinesSubmitHibernate: submitHibernate for a virtual machine. </summary>
+        /// <summary> VirtualMachinesSubmitHibernate: Schedule hibernate operation for a batch of virtual machines at datetime in future. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="locationparameter"> The location name. </param>
         /// <param name="content"> The request body. </param>
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.ComputeSchedule
                 case 200:
                     {
                         HibernateResourceOperationResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = HibernateResourceOperationResult.DeserializeHibernateResourceOperationResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.ComputeSchedule
             }
         }
 
-        /// <summary> virtualMachinesSubmitHibernate: submitHibernate for a virtual machine. </summary>
+        /// <summary> VirtualMachinesSubmitHibernate: Schedule hibernate operation for a batch of virtual machines at datetime in future. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="locationparameter"> The location name. </param>
         /// <param name="content"> The request body. </param>
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.ComputeSchedule
                 case 200:
                     {
                         HibernateResourceOperationResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = HibernateResourceOperationResult.DeserializeHibernateResourceOperationResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.ComputeSchedule
             return message;
         }
 
-        /// <summary> virtualMachinesSubmitStart: submitStart for a virtual machine. </summary>
+        /// <summary> VirtualMachinesSubmitStart: Schedule start operation for a batch of virtual machines at datetime in future. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="locationparameter"> The location name. </param>
         /// <param name="content"> The request body. </param>
@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.ComputeSchedule
                 case 200:
                     {
                         StartResourceOperationResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = StartResourceOperationResult.DeserializeStartResourceOperationResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.ComputeSchedule
             }
         }
 
-        /// <summary> virtualMachinesSubmitStart: submitStart for a virtual machine. </summary>
+        /// <summary> VirtualMachinesSubmitStart: Schedule start operation for a batch of virtual machines at datetime in future. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="locationparameter"> The location name. </param>
         /// <param name="content"> The request body. </param>
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.ComputeSchedule
                 case 200:
                     {
                         StartResourceOperationResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = StartResourceOperationResult.DeserializeStartResourceOperationResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -354,7 +354,7 @@ namespace Azure.ResourceManager.ComputeSchedule
             return message;
         }
 
-        /// <summary> virtualMachinesExecuteDeallocate: executeDeallocate for a virtual machine. </summary>
+        /// <summary> VirtualMachinesExecuteDeallocate: Execute deallocate operation for a batch of virtual machines, this operation is triggered as soon as Computeschedule receives it. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="locationparameter"> The location name. </param>
         /// <param name="content"> The request body. </param>
@@ -374,7 +374,7 @@ namespace Azure.ResourceManager.ComputeSchedule
                 case 200:
                     {
                         DeallocateResourceOperationResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DeallocateResourceOperationResult.DeserializeDeallocateResourceOperationResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -383,7 +383,7 @@ namespace Azure.ResourceManager.ComputeSchedule
             }
         }
 
-        /// <summary> virtualMachinesExecuteDeallocate: executeDeallocate for a virtual machine. </summary>
+        /// <summary> VirtualMachinesExecuteDeallocate: Execute deallocate operation for a batch of virtual machines, this operation is triggered as soon as Computeschedule receives it. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="locationparameter"> The location name. </param>
         /// <param name="content"> The request body. </param>
@@ -403,7 +403,7 @@ namespace Azure.ResourceManager.ComputeSchedule
                 case 200:
                     {
                         DeallocateResourceOperationResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DeallocateResourceOperationResult.DeserializeDeallocateResourceOperationResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -448,7 +448,7 @@ namespace Azure.ResourceManager.ComputeSchedule
             return message;
         }
 
-        /// <summary> virtualMachinesExecuteHibernate: executeHibernate for a virtual machine. </summary>
+        /// <summary> VirtualMachinesExecuteHibernate: Execute hibernate operation for a batch of virtual machines, this operation is triggered as soon as Computeschedule receives it. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="locationparameter"> The location name. </param>
         /// <param name="content"> The request body. </param>
@@ -468,7 +468,7 @@ namespace Azure.ResourceManager.ComputeSchedule
                 case 200:
                     {
                         HibernateResourceOperationResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = HibernateResourceOperationResult.DeserializeHibernateResourceOperationResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -477,7 +477,7 @@ namespace Azure.ResourceManager.ComputeSchedule
             }
         }
 
-        /// <summary> virtualMachinesExecuteHibernate: executeHibernate for a virtual machine. </summary>
+        /// <summary> VirtualMachinesExecuteHibernate: Execute hibernate operation for a batch of virtual machines, this operation is triggered as soon as Computeschedule receives it. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="locationparameter"> The location name. </param>
         /// <param name="content"> The request body. </param>
@@ -497,7 +497,7 @@ namespace Azure.ResourceManager.ComputeSchedule
                 case 200:
                     {
                         HibernateResourceOperationResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = HibernateResourceOperationResult.DeserializeHibernateResourceOperationResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -542,7 +542,7 @@ namespace Azure.ResourceManager.ComputeSchedule
             return message;
         }
 
-        /// <summary> virtualMachinesExecuteStart: executeStart for a virtual machine. </summary>
+        /// <summary> VirtualMachinesExecuteStart: Execute start operation for a batch of virtual machines, this operation is triggered as soon as Computeschedule receives it. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="locationparameter"> The location name. </param>
         /// <param name="content"> The request body. </param>
@@ -562,7 +562,7 @@ namespace Azure.ResourceManager.ComputeSchedule
                 case 200:
                     {
                         StartResourceOperationResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = StartResourceOperationResult.DeserializeStartResourceOperationResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -571,7 +571,7 @@ namespace Azure.ResourceManager.ComputeSchedule
             }
         }
 
-        /// <summary> virtualMachinesExecuteStart: executeStart for a virtual machine. </summary>
+        /// <summary> VirtualMachinesExecuteStart: Execute start operation for a batch of virtual machines, this operation is triggered as soon as Computeschedule receives it. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="locationparameter"> The location name. </param>
         /// <param name="content"> The request body. </param>
@@ -591,7 +591,7 @@ namespace Azure.ResourceManager.ComputeSchedule
                 case 200:
                     {
                         StartResourceOperationResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = StartResourceOperationResult.DeserializeStartResourceOperationResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -636,7 +636,7 @@ namespace Azure.ResourceManager.ComputeSchedule
             return message;
         }
 
-        /// <summary> virtualMachinesGetOperationStatus: getOperationStatus for a virtual machine. </summary>
+        /// <summary> VirtualMachinesGetOperationStatus: Polling endpoint to read status of operations performed on virtual machines. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="locationparameter"> The location name. </param>
         /// <param name="content"> The request body. </param>
@@ -656,7 +656,7 @@ namespace Azure.ResourceManager.ComputeSchedule
                 case 200:
                     {
                         GetOperationStatusResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = GetOperationStatusResult.DeserializeGetOperationStatusResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -665,7 +665,7 @@ namespace Azure.ResourceManager.ComputeSchedule
             }
         }
 
-        /// <summary> virtualMachinesGetOperationStatus: getOperationStatus for a virtual machine. </summary>
+        /// <summary> VirtualMachinesGetOperationStatus: Polling endpoint to read status of operations performed on virtual machines. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="locationparameter"> The location name. </param>
         /// <param name="content"> The request body. </param>
@@ -685,7 +685,7 @@ namespace Azure.ResourceManager.ComputeSchedule
                 case 200:
                     {
                         GetOperationStatusResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = GetOperationStatusResult.DeserializeGetOperationStatusResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -730,7 +730,7 @@ namespace Azure.ResourceManager.ComputeSchedule
             return message;
         }
 
-        /// <summary> virtualMachinesCancelOperations: cancelOperations for a virtual machine. </summary>
+        /// <summary> VirtualMachinesCancelOperations: Cancel a previously submitted (start/deallocate/hibernate) request. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="locationparameter"> The location name. </param>
         /// <param name="content"> The request body. </param>
@@ -750,7 +750,7 @@ namespace Azure.ResourceManager.ComputeSchedule
                 case 200:
                     {
                         CancelOperationsResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CancelOperationsResult.DeserializeCancelOperationsResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -759,7 +759,7 @@ namespace Azure.ResourceManager.ComputeSchedule
             }
         }
 
-        /// <summary> virtualMachinesCancelOperations: cancelOperations for a virtual machine. </summary>
+        /// <summary> VirtualMachinesCancelOperations: Cancel a previously submitted (start/deallocate/hibernate) request. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="locationparameter"> The location name. </param>
         /// <param name="content"> The request body. </param>
@@ -779,7 +779,7 @@ namespace Azure.ResourceManager.ComputeSchedule
                 case 200:
                     {
                         CancelOperationsResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CancelOperationsResult.DeserializeCancelOperationsResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -824,7 +824,7 @@ namespace Azure.ResourceManager.ComputeSchedule
             return message;
         }
 
-        /// <summary> virtualMachinesGetOperationErrors: getOperationErrors associated with an operation on a virtual machine. </summary>
+        /// <summary> VirtualMachinesGetOperationErrors: Get error details on operation errors (like transient errors encountered, additional logs) if they exist. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="locationparameter"> The location name. </param>
         /// <param name="content"> The request body. </param>
@@ -844,7 +844,7 @@ namespace Azure.ResourceManager.ComputeSchedule
                 case 200:
                     {
                         GetOperationErrorsResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = GetOperationErrorsResult.DeserializeGetOperationErrorsResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -853,7 +853,7 @@ namespace Azure.ResourceManager.ComputeSchedule
             }
         }
 
-        /// <summary> virtualMachinesGetOperationErrors: getOperationErrors associated with an operation on a virtual machine. </summary>
+        /// <summary> VirtualMachinesGetOperationErrors: Get error details on operation errors (like transient errors encountered, additional logs) if they exist. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="locationparameter"> The location name. </param>
         /// <param name="content"> The request body. </param>
@@ -873,7 +873,7 @@ namespace Azure.ResourceManager.ComputeSchedule
                 case 200:
                     {
                         GetOperationErrorsResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = GetOperationErrorsResult.DeserializeGetOperationErrorsResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

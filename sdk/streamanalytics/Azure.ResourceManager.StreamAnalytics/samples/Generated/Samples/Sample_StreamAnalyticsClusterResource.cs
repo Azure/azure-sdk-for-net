@@ -9,55 +9,15 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.StreamAnalytics.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.StreamAnalytics.Samples
 {
     public partial class Sample_StreamAnalyticsClusterResource
     {
-        // Update a cluster
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Update_UpdateACluster()
-        {
-            // Generated from example definition: specification/streamanalytics/resource-manager/Microsoft.StreamAnalytics/preview/2020-03-01-preview/examples/Cluster_Update.json
-            // this example is just showing the usage of "Clusters_Update" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this StreamAnalyticsClusterResource created on azure
-            // for more information of creating StreamAnalyticsClusterResource, please refer to the document of StreamAnalyticsClusterResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
-            string resourceGroupName = "sjrg";
-            string clusterName = "testcluster";
-            ResourceIdentifier streamAnalyticsClusterResourceId = StreamAnalyticsClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName);
-            StreamAnalyticsClusterResource streamAnalyticsCluster = client.GetStreamAnalyticsClusterResource(streamAnalyticsClusterResourceId);
-
-            // invoke the operation
-            StreamAnalyticsClusterData data = new StreamAnalyticsClusterData(new AzureLocation("Central US"))
-            {
-                Sku = new StreamAnalyticsClusterSku()
-                {
-                    Capacity = 96,
-                },
-            };
-            ArmOperation<StreamAnalyticsClusterResource> lro = await streamAnalyticsCluster.UpdateAsync(WaitUntil.Completed, data);
-            StreamAnalyticsClusterResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            StreamAnalyticsClusterData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // Get a cluster
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetACluster()
         {
             // Generated from example definition: specification/streamanalytics/resource-manager/Microsoft.StreamAnalytics/preview/2020-03-01-preview/examples/Cluster_Get.json
@@ -86,9 +46,8 @@ namespace Azure.ResourceManager.StreamAnalytics.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Delete a cluster
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteACluster()
         {
             // Generated from example definition: specification/streamanalytics/resource-manager/Microsoft.StreamAnalytics/preview/2020-03-01-preview/examples/Cluster_Delete.json
@@ -110,44 +69,49 @@ namespace Azure.ResourceManager.StreamAnalytics.Samples
             // invoke the operation
             await streamAnalyticsCluster.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // List the clusters in a subscription
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetStreamAnalyticsClusters_ListTheClustersInASubscription()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Update_UpdateACluster()
         {
-            // Generated from example definition: specification/streamanalytics/resource-manager/Microsoft.StreamAnalytics/preview/2020-03-01-preview/examples/Cluster_ListBySubscription.json
-            // this example is just showing the usage of "Clusters_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/streamanalytics/resource-manager/Microsoft.StreamAnalytics/preview/2020-03-01-preview/examples/Cluster_Update.json
+            // this example is just showing the usage of "Clusters_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
+            // this example assumes you already have this StreamAnalyticsClusterResource created on azure
+            // for more information of creating StreamAnalyticsClusterResource, please refer to the document of StreamAnalyticsClusterResource
             string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
+            string resourceGroupName = "sjrg";
+            string clusterName = "testcluster";
+            ResourceIdentifier streamAnalyticsClusterResourceId = StreamAnalyticsClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName);
+            StreamAnalyticsClusterResource streamAnalyticsCluster = client.GetStreamAnalyticsClusterResource(streamAnalyticsClusterResourceId);
 
-            // invoke the operation and iterate over the result
-            await foreach (StreamAnalyticsClusterResource item in subscriptionResource.GetStreamAnalyticsClustersAsync())
+            // invoke the operation
+            StreamAnalyticsClusterData data = new StreamAnalyticsClusterData(new AzureLocation("Central US"))
             {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                StreamAnalyticsClusterData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
+                Sku = new StreamAnalyticsClusterSku
+                {
+                    Capacity = 96,
+                },
+            };
+            ArmOperation<StreamAnalyticsClusterResource> lro = await streamAnalyticsCluster.UpdateAsync(WaitUntil.Completed, data);
+            StreamAnalyticsClusterResource result = lro.Value;
 
-            Console.WriteLine($"Succeeded");
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            StreamAnalyticsClusterData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // List all streaming jobs in cluster
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetStreamingJobs_ListAllStreamingJobsInCluster()
         {
             // Generated from example definition: specification/streamanalytics/resource-manager/Microsoft.StreamAnalytics/preview/2020-03-01-preview/examples/Cluster_ListStreamingJobs.json
@@ -172,7 +136,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Samples
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

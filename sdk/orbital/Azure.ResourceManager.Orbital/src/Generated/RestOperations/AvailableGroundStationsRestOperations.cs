@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Orbital
                 case 200:
                     {
                         AvailableGroundStationListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AvailableGroundStationListResult.DeserializeAvailableGroundStationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Orbital
                 case 200:
                     {
                         AvailableGroundStationListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AvailableGroundStationListResult.DeserializeAvailableGroundStationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.Orbital
                 case 200:
                     {
                         AvailableGroundStationData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AvailableGroundStationData.DeserializeAvailableGroundStationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.Orbital
                 case 200:
                     {
                         AvailableGroundStationData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AvailableGroundStationData.DeserializeAvailableGroundStationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.Orbital
                 case 200:
                     {
                         AvailableGroundStationListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AvailableGroundStationListResult.DeserializeAvailableGroundStationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.Orbital
                 case 200:
                     {
                         AvailableGroundStationListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AvailableGroundStationListResult.DeserializeAvailableGroundStationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

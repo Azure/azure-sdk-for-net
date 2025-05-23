@@ -52,32 +52,32 @@ namespace Azure.AI.Translation.Document
         }
 
         /// <summary> Returns the status for a specific document. </summary>
-        /// <param name="id"> Format - uuid.  The batch id. </param>
+        /// <param name="translationId"> Format - uuid.  The batch id. </param>
         /// <param name="documentId"> Format - uuid.  The document id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <remarks>
         /// Returns the translation status for a specific document based on the request Id
         /// and document Id.
         /// </remarks>
-        public virtual async Task<Response<DocumentStatusResult>> GetDocumentStatusAsync(Guid id, Guid documentId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DocumentStatusResult>> GetDocumentStatusAsync(Guid translationId, Guid documentId, CancellationToken cancellationToken = default)
         {
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetDocumentStatusAsync(id, documentId, context).ConfigureAwait(false);
+            Response response = await GetDocumentStatusAsync(translationId, documentId, context).ConfigureAwait(false);
             return Response.FromValue(DocumentStatusResult.FromResponse(response), response);
         }
 
         /// <summary> Returns the status for a specific document. </summary>
-        /// <param name="id"> Format - uuid.  The batch id. </param>
+        /// <param name="translationId"> Format - uuid.  The batch id. </param>
         /// <param name="documentId"> Format - uuid.  The document id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <remarks>
         /// Returns the translation status for a specific document based on the request Id
         /// and document Id.
         /// </remarks>
-        public virtual Response<DocumentStatusResult> GetDocumentStatus(Guid id, Guid documentId, CancellationToken cancellationToken = default)
+        public virtual Response<DocumentStatusResult> GetDocumentStatus(Guid translationId, Guid documentId, CancellationToken cancellationToken = default)
         {
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetDocumentStatus(id, documentId, context);
+            Response response = GetDocumentStatus(translationId, documentId, context);
             return Response.FromValue(DocumentStatusResult.FromResponse(response), response);
         }
 
@@ -96,18 +96,18 @@ namespace Azure.AI.Translation.Document
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="id"> Format - uuid.  The batch id. </param>
+        /// <param name="translationId"> Format - uuid.  The batch id. </param>
         /// <param name="documentId"> Format - uuid.  The document id. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetDocumentStatusAsync(Guid id, Guid documentId, RequestContext context)
+        public virtual async Task<Response> GetDocumentStatusAsync(Guid translationId, Guid documentId, RequestContext context)
         {
             using var scope = ClientDiagnostics.CreateScope("DocumentTranslationClient.GetDocumentStatus");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetDocumentStatusRequest(id, documentId, context);
+                using HttpMessage message = CreateGetDocumentStatusRequest(translationId, documentId, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -132,18 +132,18 @@ namespace Azure.AI.Translation.Document
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="id"> Format - uuid.  The batch id. </param>
+        /// <param name="translationId"> Format - uuid.  The batch id. </param>
         /// <param name="documentId"> Format - uuid.  The document id. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response GetDocumentStatus(Guid id, Guid documentId, RequestContext context)
+        public virtual Response GetDocumentStatus(Guid translationId, Guid documentId, RequestContext context)
         {
             using var scope = ClientDiagnostics.CreateScope("DocumentTranslationClient.GetDocumentStatus");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetDocumentStatusRequest(id, documentId, context);
+                using HttpMessage message = CreateGetDocumentStatusRequest(translationId, documentId, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -154,7 +154,7 @@ namespace Azure.AI.Translation.Document
         }
 
         /// <summary> Returns the status for a document translation request. </summary>
-        /// <param name="id"> Format - uuid.  The operation id. </param>
+        /// <param name="translationId"> Format - uuid.  The operation id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <remarks>
         /// Returns the status for a document translation request.
@@ -162,15 +162,15 @@ namespace Azure.AI.Translation.Document
         /// overall request status, as well as the status for documents that are being
         /// translated as part of that request.
         /// </remarks>
-        public virtual async Task<Response<TranslationStatusResult>> GetTranslationStatusAsync(Guid id, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<TranslationStatusResult>> GetTranslationStatusAsync(Guid translationId, CancellationToken cancellationToken = default)
         {
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetTranslationStatusAsync(id, context).ConfigureAwait(false);
+            Response response = await GetTranslationStatusAsync(translationId, context).ConfigureAwait(false);
             return Response.FromValue(TranslationStatusResult.FromResponse(response), response);
         }
 
         /// <summary> Returns the status for a document translation request. </summary>
-        /// <param name="id"> Format - uuid.  The operation id. </param>
+        /// <param name="translationId"> Format - uuid.  The operation id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <remarks>
         /// Returns the status for a document translation request.
@@ -178,10 +178,10 @@ namespace Azure.AI.Translation.Document
         /// overall request status, as well as the status for documents that are being
         /// translated as part of that request.
         /// </remarks>
-        public virtual Response<TranslationStatusResult> GetTranslationStatus(Guid id, CancellationToken cancellationToken = default)
+        public virtual Response<TranslationStatusResult> GetTranslationStatus(Guid translationId, CancellationToken cancellationToken = default)
         {
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetTranslationStatus(id, context);
+            Response response = GetTranslationStatus(translationId, context);
             return Response.FromValue(TranslationStatusResult.FromResponse(response), response);
         }
 
@@ -200,17 +200,17 @@ namespace Azure.AI.Translation.Document
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="id"> Format - uuid.  The operation id. </param>
+        /// <param name="translationId"> Format - uuid.  The operation id. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetTranslationStatusAsync(Guid id, RequestContext context)
+        public virtual async Task<Response> GetTranslationStatusAsync(Guid translationId, RequestContext context)
         {
             using var scope = ClientDiagnostics.CreateScope("DocumentTranslationClient.GetTranslationStatus");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetTranslationStatusRequest(id, context);
+                using HttpMessage message = CreateGetTranslationStatusRequest(translationId, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -235,17 +235,17 @@ namespace Azure.AI.Translation.Document
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="id"> Format - uuid.  The operation id. </param>
+        /// <param name="translationId"> Format - uuid.  The operation id. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response GetTranslationStatus(Guid id, RequestContext context)
+        public virtual Response GetTranslationStatus(Guid translationId, RequestContext context)
         {
             using var scope = ClientDiagnostics.CreateScope("DocumentTranslationClient.GetTranslationStatus");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetTranslationStatusRequest(id, context);
+                using HttpMessage message = CreateGetTranslationStatusRequest(translationId, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -256,7 +256,7 @@ namespace Azure.AI.Translation.Document
         }
 
         /// <summary> Cancel a currently processing or queued translation. </summary>
-        /// <param name="id"> Format - uuid.  The operation-id. </param>
+        /// <param name="translationId"> Format - uuid.  The operation-id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <remarks>
         /// Cancel a currently processing or queued translation.
@@ -268,15 +268,15 @@ namespace Azure.AI.Translation.Document
         /// All pending documents will be cancelled if
         /// possible.
         /// </remarks>
-        public virtual async Task<Response<TranslationStatusResult>> CancelTranslationAsync(Guid id, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<TranslationStatusResult>> CancelTranslationAsync(Guid translationId, CancellationToken cancellationToken = default)
         {
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await CancelTranslationAsync(id, context).ConfigureAwait(false);
+            Response response = await CancelTranslationAsync(translationId, context).ConfigureAwait(false);
             return Response.FromValue(TranslationStatusResult.FromResponse(response), response);
         }
 
         /// <summary> Cancel a currently processing or queued translation. </summary>
-        /// <param name="id"> Format - uuid.  The operation-id. </param>
+        /// <param name="translationId"> Format - uuid.  The operation-id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <remarks>
         /// Cancel a currently processing or queued translation.
@@ -288,10 +288,10 @@ namespace Azure.AI.Translation.Document
         /// All pending documents will be cancelled if
         /// possible.
         /// </remarks>
-        public virtual Response<TranslationStatusResult> CancelTranslation(Guid id, CancellationToken cancellationToken = default)
+        public virtual Response<TranslationStatusResult> CancelTranslation(Guid translationId, CancellationToken cancellationToken = default)
         {
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = CancelTranslation(id, context);
+            Response response = CancelTranslation(translationId, context);
             return Response.FromValue(TranslationStatusResult.FromResponse(response), response);
         }
 
@@ -310,17 +310,17 @@ namespace Azure.AI.Translation.Document
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="id"> Format - uuid.  The operation-id. </param>
+        /// <param name="translationId"> Format - uuid.  The operation-id. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> CancelTranslationAsync(Guid id, RequestContext context)
+        public virtual async Task<Response> CancelTranslationAsync(Guid translationId, RequestContext context)
         {
             using var scope = ClientDiagnostics.CreateScope("DocumentTranslationClient.CancelTranslation");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCancelTranslationRequest(id, context);
+                using HttpMessage message = CreateCancelTranslationRequest(translationId, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -345,17 +345,17 @@ namespace Azure.AI.Translation.Document
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="id"> Format - uuid.  The operation-id. </param>
+        /// <param name="translationId"> Format - uuid.  The operation-id. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response CancelTranslation(Guid id, RequestContext context)
+        public virtual Response CancelTranslation(Guid translationId, RequestContext context)
         {
             using var scope = ClientDiagnostics.CreateScope("DocumentTranslationClient.CancelTranslation");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCancelTranslationRequest(id, context);
+                using HttpMessage message = CreateCancelTranslationRequest(translationId, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -468,7 +468,7 @@ namespace Azure.AI.Translation.Document
         }
 
         /// <summary> Returns the status for all documents in a batch document translation request. </summary>
-        /// <param name="id"> Format - uuid.  The operation id. </param>
+        /// <param name="translationId"> Format - uuid.  The operation id. </param>
         /// <param name="maxCount">
         /// top indicates the total number of records the user wants to be returned across
         /// all pages.
@@ -508,7 +508,7 @@ namespace Azure.AI.Translation.Document
         /// specifying a maxpagesize preference. The server SHOULD honor this preference
         /// if the specified page size is smaller than the server's default page size.
         /// </param>
-        /// <param name="ids"> Ids to use in filtering. </param>
+        /// <param name="documentIds"> Ids to use in filtering. </param>
         /// <param name="statuses"> Statuses to use in filtering. </param>
         /// <param name="createdDateTimeUtcStart"> the start datetime to get items after. </param>
         /// <param name="createdDateTimeUtcEnd"> the end datetime to get items before. </param>
@@ -562,16 +562,16 @@ namespace Azure.AI.Translation.Document
         /// This reduces the risk of the client making assumptions about
         /// the data returned.
         /// </remarks>
-        public virtual AsyncPageable<DocumentStatusResult> GetDocumentsStatusAsync(Guid id, int? maxCount = null, int? skip = null, int? maxpagesize = null, IEnumerable<Guid> ids = null, IEnumerable<string> statuses = null, DateTimeOffset? createdDateTimeUtcStart = null, DateTimeOffset? createdDateTimeUtcEnd = null, IEnumerable<string> orderby = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<DocumentStatusResult> GetDocumentsStatusAsync(Guid translationId, int? maxCount = null, int? skip = null, int? maxpagesize = null, IEnumerable<Guid> documentIds = null, IEnumerable<string> statuses = null, DateTimeOffset? createdDateTimeUtcStart = null, DateTimeOffset? createdDateTimeUtcEnd = null, IEnumerable<string> orderby = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDocumentsStatusRequest(id, maxCount, skip, maxpagesize, ids, statuses, createdDateTimeUtcStart, createdDateTimeUtcEnd, orderby, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDocumentsStatusNextPageRequest(nextLink, id, maxCount, skip, maxpagesize, ids, statuses, createdDateTimeUtcStart, createdDateTimeUtcEnd, orderby, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => DocumentStatusResult.DeserializeDocumentStatusResult(e), ClientDiagnostics, _pipeline, "DocumentTranslationClient.GetDocumentsStatus", "value", "nextLink", context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDocumentsStatusRequest(translationId, maxCount, skip, pageSizeHint, documentIds, statuses, createdDateTimeUtcStart, createdDateTimeUtcEnd, orderby, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDocumentsStatusNextPageRequest(nextLink, translationId, maxCount, skip, pageSizeHint, documentIds, statuses, createdDateTimeUtcStart, createdDateTimeUtcEnd, orderby, context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => DocumentStatusResult.DeserializeDocumentStatusResult(e), ClientDiagnostics, _pipeline, "DocumentTranslationClient.GetDocumentsStatus", "value", "nextLink", maxpagesize, context);
         }
 
         /// <summary> Returns the status for all documents in a batch document translation request. </summary>
-        /// <param name="id"> Format - uuid.  The operation id. </param>
+        /// <param name="translationId"> Format - uuid.  The operation id. </param>
         /// <param name="maxCount">
         /// top indicates the total number of records the user wants to be returned across
         /// all pages.
@@ -611,7 +611,7 @@ namespace Azure.AI.Translation.Document
         /// specifying a maxpagesize preference. The server SHOULD honor this preference
         /// if the specified page size is smaller than the server's default page size.
         /// </param>
-        /// <param name="ids"> Ids to use in filtering. </param>
+        /// <param name="documentIds"> Ids to use in filtering. </param>
         /// <param name="statuses"> Statuses to use in filtering. </param>
         /// <param name="createdDateTimeUtcStart"> the start datetime to get items after. </param>
         /// <param name="createdDateTimeUtcEnd"> the end datetime to get items before. </param>
@@ -665,12 +665,12 @@ namespace Azure.AI.Translation.Document
         /// This reduces the risk of the client making assumptions about
         /// the data returned.
         /// </remarks>
-        public virtual Pageable<DocumentStatusResult> GetDocumentsStatus(Guid id, int? maxCount = null, int? skip = null, int? maxpagesize = null, IEnumerable<Guid> ids = null, IEnumerable<string> statuses = null, DateTimeOffset? createdDateTimeUtcStart = null, DateTimeOffset? createdDateTimeUtcEnd = null, IEnumerable<string> orderby = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<DocumentStatusResult> GetDocumentsStatus(Guid translationId, int? maxCount = null, int? skip = null, int? maxpagesize = null, IEnumerable<Guid> documentIds = null, IEnumerable<string> statuses = null, DateTimeOffset? createdDateTimeUtcStart = null, DateTimeOffset? createdDateTimeUtcEnd = null, IEnumerable<string> orderby = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDocumentsStatusRequest(id, maxCount, skip, maxpagesize, ids, statuses, createdDateTimeUtcStart, createdDateTimeUtcEnd, orderby, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDocumentsStatusNextPageRequest(nextLink, id, maxCount, skip, maxpagesize, ids, statuses, createdDateTimeUtcStart, createdDateTimeUtcEnd, orderby, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => DocumentStatusResult.DeserializeDocumentStatusResult(e), ClientDiagnostics, _pipeline, "DocumentTranslationClient.GetDocumentsStatus", "value", "nextLink", context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDocumentsStatusRequest(translationId, maxCount, skip, pageSizeHint, documentIds, statuses, createdDateTimeUtcStart, createdDateTimeUtcEnd, orderby, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDocumentsStatusNextPageRequest(nextLink, translationId, maxCount, skip, pageSizeHint, documentIds, statuses, createdDateTimeUtcStart, createdDateTimeUtcEnd, orderby, context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => DocumentStatusResult.DeserializeDocumentStatusResult(e), ClientDiagnostics, _pipeline, "DocumentTranslationClient.GetDocumentsStatus", "value", "nextLink", maxpagesize, context);
         }
 
         /// <summary>
@@ -688,7 +688,7 @@ namespace Azure.AI.Translation.Document
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="id"> Format - uuid.  The operation id. </param>
+        /// <param name="translationId"> Format - uuid.  The operation id. </param>
         /// <param name="maxCount">
         /// top indicates the total number of records the user wants to be returned across
         /// all pages.
@@ -728,7 +728,7 @@ namespace Azure.AI.Translation.Document
         /// specifying a maxpagesize preference. The server SHOULD honor this preference
         /// if the specified page size is smaller than the server's default page size.
         /// </param>
-        /// <param name="ids"> Ids to use in filtering. </param>
+        /// <param name="documentIds"> Ids to use in filtering. </param>
         /// <param name="statuses"> Statuses to use in filtering. </param>
         /// <param name="createdDateTimeUtcStart"> the start datetime to get items after. </param>
         /// <param name="createdDateTimeUtcEnd"> the end datetime to get items before. </param>
@@ -736,11 +736,11 @@ namespace Azure.AI.Translation.Document
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        public virtual AsyncPageable<BinaryData> GetDocumentsStatusAsync(Guid id, int? maxCount, int? skip, int? maxpagesize, IEnumerable<Guid> ids, IEnumerable<string> statuses, DateTimeOffset? createdDateTimeUtcStart, DateTimeOffset? createdDateTimeUtcEnd, IEnumerable<string> orderby, RequestContext context)
+        public virtual AsyncPageable<BinaryData> GetDocumentsStatusAsync(Guid translationId, int? maxCount, int? skip, int? maxpagesize, IEnumerable<Guid> documentIds, IEnumerable<string> statuses, DateTimeOffset? createdDateTimeUtcStart, DateTimeOffset? createdDateTimeUtcEnd, IEnumerable<string> orderby, RequestContext context)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDocumentsStatusRequest(id, maxCount, skip, maxpagesize, ids, statuses, createdDateTimeUtcStart, createdDateTimeUtcEnd, orderby, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDocumentsStatusNextPageRequest(nextLink, id, maxCount, skip, maxpagesize, ids, statuses, createdDateTimeUtcStart, createdDateTimeUtcEnd, orderby, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DocumentTranslationClient.GetDocumentsStatus", "value", "nextLink", context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDocumentsStatusRequest(translationId, maxCount, skip, pageSizeHint, documentIds, statuses, createdDateTimeUtcStart, createdDateTimeUtcEnd, orderby, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDocumentsStatusNextPageRequest(nextLink, translationId, maxCount, skip, pageSizeHint, documentIds, statuses, createdDateTimeUtcStart, createdDateTimeUtcEnd, orderby, context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DocumentTranslationClient.GetDocumentsStatus", "value", "nextLink", maxpagesize, context);
         }
 
         /// <summary>
@@ -758,7 +758,7 @@ namespace Azure.AI.Translation.Document
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="id"> Format - uuid.  The operation id. </param>
+        /// <param name="translationId"> Format - uuid.  The operation id. </param>
         /// <param name="maxCount">
         /// top indicates the total number of records the user wants to be returned across
         /// all pages.
@@ -798,7 +798,7 @@ namespace Azure.AI.Translation.Document
         /// specifying a maxpagesize preference. The server SHOULD honor this preference
         /// if the specified page size is smaller than the server's default page size.
         /// </param>
-        /// <param name="ids"> Ids to use in filtering. </param>
+        /// <param name="documentIds"> Ids to use in filtering. </param>
         /// <param name="statuses"> Statuses to use in filtering. </param>
         /// <param name="createdDateTimeUtcStart"> the start datetime to get items after. </param>
         /// <param name="createdDateTimeUtcEnd"> the end datetime to get items before. </param>
@@ -806,18 +806,18 @@ namespace Azure.AI.Translation.Document
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        public virtual Pageable<BinaryData> GetDocumentsStatus(Guid id, int? maxCount, int? skip, int? maxpagesize, IEnumerable<Guid> ids, IEnumerable<string> statuses, DateTimeOffset? createdDateTimeUtcStart, DateTimeOffset? createdDateTimeUtcEnd, IEnumerable<string> orderby, RequestContext context)
+        public virtual Pageable<BinaryData> GetDocumentsStatus(Guid translationId, int? maxCount, int? skip, int? maxpagesize, IEnumerable<Guid> documentIds, IEnumerable<string> statuses, DateTimeOffset? createdDateTimeUtcStart, DateTimeOffset? createdDateTimeUtcEnd, IEnumerable<string> orderby, RequestContext context)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDocumentsStatusRequest(id, maxCount, skip, maxpagesize, ids, statuses, createdDateTimeUtcStart, createdDateTimeUtcEnd, orderby, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDocumentsStatusNextPageRequest(nextLink, id, maxCount, skip, maxpagesize, ids, statuses, createdDateTimeUtcStart, createdDateTimeUtcEnd, orderby, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DocumentTranslationClient.GetDocumentsStatus", "value", "nextLink", context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDocumentsStatusRequest(translationId, maxCount, skip, pageSizeHint, documentIds, statuses, createdDateTimeUtcStart, createdDateTimeUtcEnd, orderby, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDocumentsStatusNextPageRequest(nextLink, translationId, maxCount, skip, pageSizeHint, documentIds, statuses, createdDateTimeUtcStart, createdDateTimeUtcEnd, orderby, context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DocumentTranslationClient.GetDocumentsStatus", "value", "nextLink", maxpagesize, context);
         }
 
         /// <summary> Submit a document translation request to the Document Translation service. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="startTranslationDetails"> Translation job submission batch request. </param>
+        /// <param name="body"> Translation job submission batch request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="startTranslationDetails"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
         /// <remarks>
         /// Use this API to submit a bulk (batch) translation request to the Document
         /// Translation service.
@@ -839,11 +839,11 @@ namespace Azure.AI.Translation.Document
         /// destination, it will be overwritten. The targetUrl for each target language
         /// must be unique.
         /// </remarks>
-        public virtual async Task<Operation<TranslationStatusResult>> StartTranslationAsync(WaitUntil waitUntil, StartTranslationDetails startTranslationDetails, CancellationToken cancellationToken = default)
+        public virtual async Task<Operation<TranslationStatusResult>> StartTranslationAsync(WaitUntil waitUntil, TranslationBatch body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(startTranslationDetails, nameof(startTranslationDetails));
+            Argument.AssertNotNull(body, nameof(body));
 
-            using RequestContent content = startTranslationDetails.ToRequestContent();
+            using RequestContent content = body.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
             Operation<BinaryData> response = await StartTranslationAsync(waitUntil, content, context).ConfigureAwait(false);
             return ProtocolOperationHelpers.Convert(response, TranslationStatusResult.FromResponse, ClientDiagnostics, "DocumentTranslationClient.StartTranslation");
@@ -851,9 +851,9 @@ namespace Azure.AI.Translation.Document
 
         /// <summary> Submit a document translation request to the Document Translation service. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="startTranslationDetails"> Translation job submission batch request. </param>
+        /// <param name="body"> Translation job submission batch request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="startTranslationDetails"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
         /// <remarks>
         /// Use this API to submit a bulk (batch) translation request to the Document
         /// Translation service.
@@ -875,11 +875,11 @@ namespace Azure.AI.Translation.Document
         /// destination, it will be overwritten. The targetUrl for each target language
         /// must be unique.
         /// </remarks>
-        public virtual Operation<TranslationStatusResult> StartTranslation(WaitUntil waitUntil, StartTranslationDetails startTranslationDetails, CancellationToken cancellationToken = default)
+        public virtual Operation<TranslationStatusResult> StartTranslation(WaitUntil waitUntil, TranslationBatch body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(startTranslationDetails, nameof(startTranslationDetails));
+            Argument.AssertNotNull(body, nameof(body));
 
-            using RequestContent content = startTranslationDetails.ToRequestContent();
+            using RequestContent content = body.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
             Operation<BinaryData> response = StartTranslation(waitUntil, content, context);
             return ProtocolOperationHelpers.Convert(response, TranslationStatusResult.FromResponse, ClientDiagnostics, "DocumentTranslationClient.StartTranslation");
@@ -895,7 +895,7 @@ namespace Azure.AI.Translation.Document
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="StartTranslationAsync(WaitUntil,StartTranslationDetails,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="StartTranslationAsync(WaitUntil,TranslationBatch,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -934,7 +934,7 @@ namespace Azure.AI.Translation.Document
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="StartTranslation(WaitUntil,StartTranslationDetails,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="StartTranslation(WaitUntil,TranslationBatch,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -980,7 +980,7 @@ namespace Azure.AI.Translation.Document
             return message;
         }
 
-        internal HttpMessage CreateGetTranslationsStatusRequest(int? maxCount, int? skip, int? maxpagesize, IEnumerable<Guid> ids, IEnumerable<string> statuses, DateTimeOffset? createdDateTimeUtcStart, DateTimeOffset? createdDateTimeUtcEnd, IEnumerable<string> orderby, RequestContext context)
+        internal HttpMessage CreateGetTranslationsStatusRequest(int? maxCount, int? skip, int? maxpagesize, IEnumerable<Guid> translationIds, IEnumerable<string> statuses, DateTimeOffset? createdDateTimeUtcStart, DateTimeOffset? createdDateTimeUtcEnd, IEnumerable<string> orderby, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -1002,9 +1002,9 @@ namespace Azure.AI.Translation.Document
             {
                 uri.AppendQuery("maxpagesize", maxpagesize.Value, true);
             }
-            if (ids != null && !(ids is ChangeTrackingList<Guid> changeTrackingList && changeTrackingList.IsUndefined))
+            if (translationIds != null && !(translationIds is ChangeTrackingList<Guid> changeTrackingList && changeTrackingList.IsUndefined))
             {
-                uri.AppendQueryDelimited("ids", ids, ",", true);
+                uri.AppendQueryDelimited("ids", translationIds, ",", true);
             }
             if (statuses != null && !(statuses is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
             {
@@ -1027,7 +1027,7 @@ namespace Azure.AI.Translation.Document
             return message;
         }
 
-        internal HttpMessage CreateGetDocumentStatusRequest(Guid id, Guid documentId, RequestContext context)
+        internal HttpMessage CreateGetDocumentStatusRequest(Guid translationId, Guid documentId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -1036,7 +1036,7 @@ namespace Azure.AI.Translation.Document
             uri.Reset(_endpoint);
             uri.AppendRaw("/translator", false);
             uri.AppendPath("/document/batches/", false);
-            uri.AppendPath(id, true);
+            uri.AppendPath(translationId, true);
             uri.AppendPath("/documents/", false);
             uri.AppendPath(documentId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
@@ -1045,7 +1045,7 @@ namespace Azure.AI.Translation.Document
             return message;
         }
 
-        internal HttpMessage CreateGetTranslationStatusRequest(Guid id, RequestContext context)
+        internal HttpMessage CreateGetTranslationStatusRequest(Guid translationId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -1054,14 +1054,14 @@ namespace Azure.AI.Translation.Document
             uri.Reset(_endpoint);
             uri.AppendRaw("/translator", false);
             uri.AppendPath("/document/batches/", false);
-            uri.AppendPath(id, true);
+            uri.AppendPath(translationId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
         }
 
-        internal HttpMessage CreateCancelTranslationRequest(Guid id, RequestContext context)
+        internal HttpMessage CreateCancelTranslationRequest(Guid translationId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -1070,14 +1070,14 @@ namespace Azure.AI.Translation.Document
             uri.Reset(_endpoint);
             uri.AppendRaw("/translator", false);
             uri.AppendPath("/document/batches/", false);
-            uri.AppendPath(id, true);
+            uri.AppendPath(translationId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
         }
 
-        internal HttpMessage CreateGetDocumentsStatusRequest(Guid id, int? maxCount, int? skip, int? maxpagesize, IEnumerable<Guid> ids, IEnumerable<string> statuses, DateTimeOffset? createdDateTimeUtcStart, DateTimeOffset? createdDateTimeUtcEnd, IEnumerable<string> orderby, RequestContext context)
+        internal HttpMessage CreateGetDocumentsStatusRequest(Guid translationId, int? maxCount, int? skip, int? maxpagesize, IEnumerable<Guid> documentIds, IEnumerable<string> statuses, DateTimeOffset? createdDateTimeUtcStart, DateTimeOffset? createdDateTimeUtcEnd, IEnumerable<string> orderby, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -1086,7 +1086,7 @@ namespace Azure.AI.Translation.Document
             uri.Reset(_endpoint);
             uri.AppendRaw("/translator", false);
             uri.AppendPath("/document/batches/", false);
-            uri.AppendPath(id, true);
+            uri.AppendPath(translationId, true);
             uri.AppendPath("/documents", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             if (maxCount != null)
@@ -1101,9 +1101,9 @@ namespace Azure.AI.Translation.Document
             {
                 uri.AppendQuery("maxpagesize", maxpagesize.Value, true);
             }
-            if (ids != null && !(ids is ChangeTrackingList<Guid> changeTrackingList && changeTrackingList.IsUndefined))
+            if (documentIds != null && !(documentIds is ChangeTrackingList<Guid> changeTrackingList && changeTrackingList.IsUndefined))
             {
-                uri.AppendQueryDelimited("ids", ids, ",", true);
+                uri.AppendQueryDelimited("ids", documentIds, ",", true);
             }
             if (statuses != null && !(statuses is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
             {
@@ -1145,7 +1145,7 @@ namespace Azure.AI.Translation.Document
             return message;
         }
 
-        internal HttpMessage CreateGetTranslationsStatusNextPageRequest(string nextLink, int? maxCount, int? skip, int? maxpagesize, IEnumerable<Guid> ids, IEnumerable<string> statuses, DateTimeOffset? createdDateTimeUtcStart, DateTimeOffset? createdDateTimeUtcEnd, IEnumerable<string> orderby, RequestContext context)
+        internal HttpMessage CreateGetTranslationsStatusNextPageRequest(string nextLink, int? maxCount, int? skip, int? maxpagesize, IEnumerable<Guid> translationIds, IEnumerable<string> statuses, DateTimeOffset? createdDateTimeUtcStart, DateTimeOffset? createdDateTimeUtcEnd, IEnumerable<string> orderby, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -1159,7 +1159,7 @@ namespace Azure.AI.Translation.Document
             return message;
         }
 
-        internal HttpMessage CreateGetDocumentsStatusNextPageRequest(string nextLink, Guid id, int? maxCount, int? skip, int? maxpagesize, IEnumerable<Guid> ids, IEnumerable<string> statuses, DateTimeOffset? createdDateTimeUtcStart, DateTimeOffset? createdDateTimeUtcEnd, IEnumerable<string> orderby, RequestContext context)
+        internal HttpMessage CreateGetDocumentsStatusNextPageRequest(string nextLink, Guid translationId, int? maxCount, int? skip, int? maxpagesize, IEnumerable<Guid> documentIds, IEnumerable<string> statuses, DateTimeOffset? createdDateTimeUtcStart, DateTimeOffset? createdDateTimeUtcEnd, IEnumerable<string> orderby, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;

@@ -5,27 +5,20 @@
 
 #nullable disable
 
-using System;
-
 namespace Azure.Communication.PhoneNumbers
 {
     /// <summary> Represents metadata describing the operator of a phone number. </summary>
     public partial class OperatorDetails
     {
         /// <summary> Initializes a new instance of <see cref="OperatorDetails"/>. </summary>
-        /// <param name="name"> Name of the phone operator. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        internal OperatorDetails(string name)
+        internal OperatorDetails()
         {
-            Argument.AssertNotNull(name, nameof(name));
-
-            Name = name;
         }
 
         /// <summary> Initializes a new instance of <see cref="OperatorDetails"/>. </summary>
         /// <param name="name"> Name of the phone operator. </param>
-        /// <param name="mobileNetworkCode"> Mobile Network Code. </param>
-        /// <param name="mobileCountryCode"> Mobile Country Code. </param>
+        /// <param name="mobileNetworkCode"> Mobile Network Code, 2 or 3 decimal digits that identify mobile networks within a country/region. </param>
+        /// <param name="mobileCountryCode"> Mobile Country Code, 3 decimal digits that identify a country/region. </param>
         internal OperatorDetails(string name, string mobileNetworkCode, string mobileCountryCode)
         {
             Name = name;
@@ -35,9 +28,9 @@ namespace Azure.Communication.PhoneNumbers
 
         /// <summary> Name of the phone operator. </summary>
         public string Name { get; }
-        /// <summary> Mobile Network Code. </summary>
+        /// <summary> Mobile Network Code, 2 or 3 decimal digits that identify mobile networks within a country/region. </summary>
         public string MobileNetworkCode { get; }
-        /// <summary> Mobile Country Code. </summary>
+        /// <summary> Mobile Country Code, 3 decimal digits that identify a country/region. </summary>
         public string MobileCountryCode { get; }
     }
 }

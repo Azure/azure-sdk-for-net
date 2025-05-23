@@ -105,12 +105,17 @@ namespace Azure.Messaging.ServiceBus.Administration
             });
             _clientDiagnostics = new ClientDiagnostics(options);
 
+            // The Service Bus emulator does not support TLS.
+            var useTls = (!connectionStringProperties.UseDevelopmentEmulator);
+
             _httpRequestAndResponse = new HttpRequestAndResponse(
                 pipeline,
                 _clientDiagnostics,
                 tokenCredential,
                 _fullyQualifiedNamespace,
-                options.Version);
+                options.Version,
+                connectionStringProperties.Endpoint.Port,
+                useTls);
         }
 
         /// <summary>
@@ -186,9 +191,12 @@ namespace Azure.Messaging.ServiceBus.Administration
             Argument.AssertNotNull(credential, nameof(credential));
             Argument.AssertNotNullOrEmpty(fullyQualifiedNamespace, nameof(fullyQualifiedNamespace));
 
+            var port = -1;
+
             if (Uri.TryCreate(fullyQualifiedNamespace, UriKind.Absolute, out var uri))
             {
                 fullyQualifiedNamespace = uri.Host;
+                port = uri.Port;
             }
 
             Argument.AssertWellFormedServiceBusNamespace(fullyQualifiedNamespace, nameof(fullyQualifiedNamespace));
@@ -211,7 +219,9 @@ namespace Azure.Messaging.ServiceBus.Administration
                 _clientDiagnostics,
                 credential,
                 _fullyQualifiedNamespace,
-                options.Version);
+                options.Version,
+                port,
+                true);
         }
 
         /// <summary>

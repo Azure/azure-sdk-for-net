@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.DigitalTwins
                 case 200:
                     {
                         DigitalTwinsEndpointResourceListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DigitalTwinsEndpointResourceListResult.DeserializeDigitalTwinsEndpointResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.DigitalTwins
                 case 200:
                     {
                         DigitalTwinsEndpointResourceListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DigitalTwinsEndpointResourceListResult.DeserializeDigitalTwinsEndpointResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.DigitalTwins
                 case 200:
                     {
                         DigitalTwinsEndpointResourceData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DigitalTwinsEndpointResourceData.DeserializeDigitalTwinsEndpointResourceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.DigitalTwins
                 case 200:
                     {
                         DigitalTwinsEndpointResourceData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DigitalTwinsEndpointResourceData.DeserializeDigitalTwinsEndpointResourceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -472,7 +472,7 @@ namespace Azure.ResourceManager.DigitalTwins
                 case 200:
                     {
                         DigitalTwinsEndpointResourceListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DigitalTwinsEndpointResourceListResult.DeserializeDigitalTwinsEndpointResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -503,7 +503,7 @@ namespace Azure.ResourceManager.DigitalTwins
                 case 200:
                     {
                         DigitalTwinsEndpointResourceListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DigitalTwinsEndpointResourceListResult.DeserializeDigitalTwinsEndpointResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

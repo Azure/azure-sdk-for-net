@@ -128,4 +128,27 @@ internal static partial class CustomSerializationHelpers
             }
         }
     }
+
+    internal static void WriteOptionalProperty<T>(this Utf8JsonWriter writer, ReadOnlySpan<byte> name, T value, ModelReaderWriterOptions options)
+    {
+        if (Optional.IsDefined(value))
+        {
+            writer.WritePropertyName(name);
+            writer.WriteObjectValue(value, options);
+        }
+    }
+
+    internal static void WriteOptionalCollection<T>(this Utf8JsonWriter writer, ReadOnlySpan<byte> name, IEnumerable<T> values, ModelReaderWriterOptions options)
+    {
+        if (Optional.IsCollectionDefined(values))
+        {
+            writer.WritePropertyName(name);
+            writer.WriteStartArray();
+            foreach (T item in values)
+            {
+                writer.WriteObjectValue(item, options);
+            }
+            writer.WriteEndArray();
+        }
+    }
 }

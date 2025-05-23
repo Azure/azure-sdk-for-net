@@ -9,17 +9,17 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Nginx.Samples
 {
     public partial class Sample_NginxCertificateResource
     {
-        // Certificates_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_CertificatesGet()
         {
-            // Generated from example definition: specification/nginx/resource-manager/NGINX.NGINXPLUS/preview/2024-06-01-preview/examples/Certificates_Get.json
+            // Generated from example definition: specification/nginx/resource-manager/NGINX.NGINXPLUS/preview/2024-11-01-preview/examples/Certificates_Get.json
             // this example is just showing the usage of "Certificates_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -46,12 +46,38 @@ namespace Azure.ResourceManager.Nginx.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Certificates_CreateOrUpdate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Delete_CertificatesDelete()
+        {
+            // Generated from example definition: specification/nginx/resource-manager/NGINX.NGINXPLUS/preview/2024-11-01-preview/examples/Certificates_Delete.json
+            // this example is just showing the usage of "Certificates_Delete" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this NginxCertificateResource created on azure
+            // for more information of creating NginxCertificateResource, please refer to the document of NginxCertificateResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "myResourceGroup";
+            string deploymentName = "myDeployment";
+            string certificateName = "default";
+            ResourceIdentifier nginxCertificateResourceId = NginxCertificateResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, deploymentName, certificateName);
+            NginxCertificateResource nginxCertificate = client.GetNginxCertificateResource(nginxCertificateResourceId);
+
+            // invoke the operation
+            await nginxCertificate.DeleteAsync(WaitUntil.Completed);
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_CertificatesCreateOrUpdate()
         {
-            // Generated from example definition: specification/nginx/resource-manager/NGINX.NGINXPLUS/preview/2024-06-01-preview/examples/Certificates_CreateOrUpdate.json
+            // Generated from example definition: specification/nginx/resource-manager/NGINX.NGINXPLUS/preview/2024-11-01-preview/examples/Certificates_CreateOrUpdate.json
             // this example is just showing the usage of "Certificates_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -78,34 +104,6 @@ namespace Azure.ResourceManager.Nginx.Samples
             NginxCertificateData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // Certificates_Delete
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Delete_CertificatesDelete()
-        {
-            // Generated from example definition: specification/nginx/resource-manager/NGINX.NGINXPLUS/preview/2024-06-01-preview/examples/Certificates_Delete.json
-            // this example is just showing the usage of "Certificates_Delete" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this NginxCertificateResource created on azure
-            // for more information of creating NginxCertificateResource, please refer to the document of NginxCertificateResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "myResourceGroup";
-            string deploymentName = "myDeployment";
-            string certificateName = "default";
-            ResourceIdentifier nginxCertificateResourceId = NginxCertificateResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, deploymentName, certificateName);
-            NginxCertificateResource nginxCertificate = client.GetNginxCertificateResource(nginxCertificateResourceId);
-
-            // invoke the operation
-            await nginxCertificate.DeleteAsync(WaitUntil.Completed);
-
-            Console.WriteLine($"Succeeded");
         }
     }
 }

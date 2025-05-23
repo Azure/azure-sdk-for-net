@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Advisor
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Advisor
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item0.Value);
 #else
-                        using (JsonDocument document = JsonDocument.Parse(item0.Value))
+                        using (JsonDocument document = JsonDocument.Parse(item0.Value, ModelSerializationExtensions.JsonDocumentOptions))
                         {
                             JsonSerializer.Serialize(writer, document.RootElement);
                         }
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.Advisor
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.Advisor
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -566,7 +566,7 @@ namespace Azure.ResourceManager.Advisor
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAdvisorContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ResourceRecommendationBaseData)} does not support writing '{options.Format}' format.");
             }
@@ -580,7 +580,7 @@ namespace Azure.ResourceManager.Advisor
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeResourceRecommendationBaseData(document.RootElement, options);
                     }
                 default:

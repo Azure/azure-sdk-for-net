@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Logic
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerLogicContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(IntegrationServiceEnvironmentData)} does not support writing '{options.Format}' format.");
             }
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.Logic
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeIntegrationServiceEnvironmentData(document.RootElement, options);
                     }
                 default:

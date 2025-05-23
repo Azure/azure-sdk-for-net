@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
@@ -13,8 +14,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class AcsRouterJobWorkerSelectorsExpiredEventData : AcsRouterJobEventData
     {
         /// <summary> Initializes a new instance of <see cref="AcsRouterJobWorkerSelectorsExpiredEventData"/>. </summary>
-        internal AcsRouterJobWorkerSelectorsExpiredEventData()
+        /// <param name="labels"> Router Job events Labels. </param>
+        /// <param name="tags"> Router Jobs events Tags. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="labels"/> or <paramref name="tags"/> is null. </exception>
+        internal AcsRouterJobWorkerSelectorsExpiredEventData(IReadOnlyDictionary<string, string> labels, IReadOnlyDictionary<string, string> tags) : base(labels, tags)
         {
+            Argument.AssertNotNull(labels, nameof(labels));
+            Argument.AssertNotNull(tags, nameof(tags));
+
             ExpiredRequestedWorkerSelectors = new ChangeTrackingList<AcsRouterWorkerSelector>();
             ExpiredAttachedWorkerSelectors = new ChangeTrackingList<AcsRouterWorkerSelector>();
         }

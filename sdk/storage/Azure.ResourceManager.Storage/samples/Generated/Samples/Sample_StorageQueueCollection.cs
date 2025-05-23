@@ -9,17 +9,17 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Storage.Samples
 {
     public partial class Sample_StorageQueueCollection
     {
-        // QueueOperationPut
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_QueueOperationPut()
         {
-            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2023-05-01/examples/QueueOperationPut.json
+            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2024-01-01/examples/QueueOperationPut.json
             // this example is just showing the usage of "Queue_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -51,12 +51,11 @@ namespace Azure.ResourceManager.Storage.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // QueueOperationPutWithMetadata
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_QueueOperationPutWithMetadata()
         {
-            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2023-05-01/examples/QueueOperationPutWithMetadata.json
+            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2024-01-01/examples/QueueOperationPutWithMetadata.json
             // this example is just showing the usage of "Queue_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -77,12 +76,12 @@ namespace Azure.ResourceManager.Storage.Samples
 
             // invoke the operation
             string queueName = "queue6185";
-            StorageQueueData data = new StorageQueueData()
+            StorageQueueData data = new StorageQueueData
             {
                 Metadata =
 {
 ["sample1"] = "meta1",
-["sample2"] = "meta2",
+["sample2"] = "meta2"
 },
             };
             ArmOperation<StorageQueueResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, queueName, data);
@@ -95,12 +94,11 @@ namespace Azure.ResourceManager.Storage.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // QueueOperationGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_QueueOperationGet()
         {
-            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2023-05-01/examples/QueueOperationGet.json
+            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2024-01-01/examples/QueueOperationGet.json
             // this example is just showing the usage of "Queue_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -130,86 +128,11 @@ namespace Azure.ResourceManager.Storage.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // QueueOperationGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Exists_QueueOperationGet()
-        {
-            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2023-05-01/examples/QueueOperationGet.json
-            // this example is just showing the usage of "Queue_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this QueueServiceResource created on azure
-            // for more information of creating QueueServiceResource, please refer to the document of QueueServiceResource
-            string subscriptionId = "{subscription-id}";
-            string resourceGroupName = "res3376";
-            string accountName = "sto328";
-            ResourceIdentifier queueServiceResourceId = QueueServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
-            QueueServiceResource queueService = client.GetQueueServiceResource(queueServiceResourceId);
-
-            // get the collection of this StorageQueueResource
-            StorageQueueCollection collection = queueService.GetStorageQueues();
-
-            // invoke the operation
-            string queueName = "queue6185";
-            bool result = await collection.ExistsAsync(queueName);
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        // QueueOperationGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetIfExists_QueueOperationGet()
-        {
-            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2023-05-01/examples/QueueOperationGet.json
-            // this example is just showing the usage of "Queue_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this QueueServiceResource created on azure
-            // for more information of creating QueueServiceResource, please refer to the document of QueueServiceResource
-            string subscriptionId = "{subscription-id}";
-            string resourceGroupName = "res3376";
-            string accountName = "sto328";
-            ResourceIdentifier queueServiceResourceId = QueueServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
-            QueueServiceResource queueService = client.GetQueueServiceResource(queueServiceResourceId);
-
-            // get the collection of this StorageQueueResource
-            StorageQueueCollection collection = queueService.GetStorageQueues();
-
-            // invoke the operation
-            string queueName = "queue6185";
-            NullableResponse<StorageQueueResource> response = await collection.GetIfExistsAsync(queueName);
-            StorageQueueResource result = response.HasValue ? response.Value : null;
-
-            if (result == null)
-            {
-                Console.WriteLine($"Succeeded with null as result");
-            }
-            else
-            {
-                // the variable result is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                StorageQueueData resourceData = result.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-        }
-
-        // QueueOperationList
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_QueueOperationList()
         {
-            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2023-05-01/examples/QueueOperationList.json
+            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2024-01-01/examples/QueueOperationList.json
             // this example is just showing the usage of "Queue_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -238,7 +161,79 @@ namespace Azure.ResourceManager.Storage.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Exists_QueueOperationGet()
+        {
+            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2024-01-01/examples/QueueOperationGet.json
+            // this example is just showing the usage of "Queue_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this QueueServiceResource created on azure
+            // for more information of creating QueueServiceResource, please refer to the document of QueueServiceResource
+            string subscriptionId = "{subscription-id}";
+            string resourceGroupName = "res3376";
+            string accountName = "sto328";
+            ResourceIdentifier queueServiceResourceId = QueueServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
+            QueueServiceResource queueService = client.GetQueueServiceResource(queueServiceResourceId);
+
+            // get the collection of this StorageQueueResource
+            StorageQueueCollection collection = queueService.GetStorageQueues();
+
+            // invoke the operation
+            string queueName = "queue6185";
+            bool result = await collection.ExistsAsync(queueName);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetIfExists_QueueOperationGet()
+        {
+            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2024-01-01/examples/QueueOperationGet.json
+            // this example is just showing the usage of "Queue_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this QueueServiceResource created on azure
+            // for more information of creating QueueServiceResource, please refer to the document of QueueServiceResource
+            string subscriptionId = "{subscription-id}";
+            string resourceGroupName = "res3376";
+            string accountName = "sto328";
+            ResourceIdentifier queueServiceResourceId = QueueServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
+            QueueServiceResource queueService = client.GetQueueServiceResource(queueServiceResourceId);
+
+            // get the collection of this StorageQueueResource
+            StorageQueueCollection collection = queueService.GetStorageQueues();
+
+            // invoke the operation
+            string queueName = "queue6185";
+            NullableResponse<StorageQueueResource> response = await collection.GetIfExistsAsync(queueName);
+            StorageQueueResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine("Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                StorageQueueData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
         }
     }
 }

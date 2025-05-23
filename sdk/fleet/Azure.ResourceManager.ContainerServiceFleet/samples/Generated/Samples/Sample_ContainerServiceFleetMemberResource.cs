@@ -10,17 +10,17 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.ContainerServiceFleet.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.ContainerServiceFleet.Samples
 {
     public partial class Sample_ContainerServiceFleetMemberResource
     {
-        // Gets a FleetMember resource.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetsAFleetMemberResource()
         {
-            // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/fleet/preview/2024-05-02-preview/examples/FleetMembers_Get.json
+            // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/fleet/stable/2025-03-01/examples/FleetMembers_Get.json
             // this example is just showing the usage of "FleetMembers_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Samples
 
             // this example assumes you already have this ContainerServiceFleetMemberResource created on azure
             // for more information of creating ContainerServiceFleetMemberResource, please refer to the document of ContainerServiceFleetMemberResource
-            string subscriptionId = "subid1";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string fleetName = "fleet1";
             string fleetMemberName = "member-1";
@@ -47,12 +47,97 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Updates a FleetMember resource synchronously.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Get_GetsAFleetMemberResourceGeneratedByMaximumSetRule()
+        {
+            // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/fleet/stable/2025-03-01/examples/FleetMembers_Get_MaximumSet_Gen.json
+            // this example is just showing the usage of "FleetMembers_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ContainerServiceFleetMemberResource created on azure
+            // for more information of creating ContainerServiceFleetMemberResource, please refer to the document of ContainerServiceFleetMemberResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rgfleets";
+            string fleetName = "fleet1";
+            string fleetMemberName = "fleet1";
+            ResourceIdentifier containerServiceFleetMemberResourceId = ContainerServiceFleetMemberResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, fleetName, fleetMemberName);
+            ContainerServiceFleetMemberResource containerServiceFleetMember = client.GetContainerServiceFleetMemberResource(containerServiceFleetMemberResourceId);
+
+            // invoke the operation
+            ContainerServiceFleetMemberResource result = await containerServiceFleetMember.GetAsync();
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            ContainerServiceFleetMemberData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Delete_DeletesAFleetMemberResourceAsynchronouslyWithALongRunningOperation()
+        {
+            // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/fleet/stable/2025-03-01/examples/FleetMembers_Delete.json
+            // this example is just showing the usage of "FleetMembers_Delete" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ContainerServiceFleetMemberResource created on azure
+            // for more information of creating ContainerServiceFleetMemberResource, please refer to the document of ContainerServiceFleetMemberResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rg1";
+            string fleetName = "fleet1";
+            string fleetMemberName = "member-1";
+            ResourceIdentifier containerServiceFleetMemberResourceId = ContainerServiceFleetMemberResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, fleetName, fleetMemberName);
+            ContainerServiceFleetMemberResource containerServiceFleetMember = client.GetContainerServiceFleetMemberResource(containerServiceFleetMemberResourceId);
+
+            // invoke the operation
+            await containerServiceFleetMember.DeleteAsync(WaitUntil.Completed);
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Delete_DeletesAFleetMemberResourceAsynchronouslyWithALongRunningOperationGeneratedByMaximumSetRule()
+        {
+            // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/fleet/stable/2025-03-01/examples/FleetMembers_Delete_MaximumSet_Gen.json
+            // this example is just showing the usage of "FleetMembers_Delete" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ContainerServiceFleetMemberResource created on azure
+            // for more information of creating ContainerServiceFleetMemberResource, please refer to the document of ContainerServiceFleetMemberResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rgfleets";
+            string fleetName = "fleet1";
+            string fleetMemberName = "fleet1";
+            ResourceIdentifier containerServiceFleetMemberResourceId = ContainerServiceFleetMemberResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, fleetName, fleetMemberName);
+            ContainerServiceFleetMemberResource containerServiceFleetMember = client.GetContainerServiceFleetMemberResource(containerServiceFleetMemberResourceId);
+
+            // invoke the operation
+            string ifMatch = "klroqfozx";
+            await containerServiceFleetMember.DeleteAsync(WaitUntil.Completed, ifMatch: ifMatch);
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdatesAFleetMemberResourceSynchronously()
         {
-            // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/fleet/preview/2024-05-02-preview/examples/FleetMembers_Update.json
+            // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/fleet/stable/2025-03-01/examples/FleetMembers_Update.json
             // this example is just showing the usage of "FleetMembers_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -62,7 +147,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Samples
 
             // this example assumes you already have this ContainerServiceFleetMemberResource created on azure
             // for more information of creating ContainerServiceFleetMemberResource, please refer to the document of ContainerServiceFleetMemberResource
-            string subscriptionId = "subid1";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string fleetName = "fleet1";
             string fleetMemberName = "member-1";
@@ -70,7 +155,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Samples
             ContainerServiceFleetMemberResource containerServiceFleetMember = client.GetContainerServiceFleetMemberResource(containerServiceFleetMemberResourceId);
 
             // invoke the operation
-            ContainerServiceFleetMemberPatch patch = new ContainerServiceFleetMemberPatch()
+            ContainerServiceFleetMemberPatch patch = new ContainerServiceFleetMemberPatch
             {
                 Group = "staging",
             };
@@ -84,13 +169,12 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Deletes a FleetMember resource asynchronously with a long running operation.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Delete_DeletesAFleetMemberResourceAsynchronouslyWithALongRunningOperation()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Update_UpdatesAFleetMemberResourceSynchronouslyGeneratedByMaximumSetRule()
         {
-            // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/fleet/preview/2024-05-02-preview/examples/FleetMembers_Delete.json
-            // this example is just showing the usage of "FleetMembers_Delete" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/fleet/stable/2025-03-01/examples/FleetMembers_Update_MaximumSet_Gen.json
+            // this example is just showing the usage of "FleetMembers_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -99,17 +183,27 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Samples
 
             // this example assumes you already have this ContainerServiceFleetMemberResource created on azure
             // for more information of creating ContainerServiceFleetMemberResource, please refer to the document of ContainerServiceFleetMemberResource
-            string subscriptionId = "subid1";
-            string resourceGroupName = "rg1";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rgfleets";
             string fleetName = "fleet1";
-            string fleetMemberName = "member-1";
+            string fleetMemberName = "fleet1";
             ResourceIdentifier containerServiceFleetMemberResourceId = ContainerServiceFleetMemberResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, fleetName, fleetMemberName);
             ContainerServiceFleetMemberResource containerServiceFleetMember = client.GetContainerServiceFleetMemberResource(containerServiceFleetMemberResourceId);
 
             // invoke the operation
-            await containerServiceFleetMember.DeleteAsync(WaitUntil.Completed);
+            ContainerServiceFleetMemberPatch patch = new ContainerServiceFleetMemberPatch
+            {
+                Group = "staging",
+            };
+            string ifMatch = "bjyjzzxvbs";
+            ArmOperation<ContainerServiceFleetMemberResource> lro = await containerServiceFleetMember.UpdateAsync(WaitUntil.Completed, patch, ifMatch: ifMatch);
+            ContainerServiceFleetMemberResource result = lro.Value;
 
-            Console.WriteLine($"Succeeded");
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            ContainerServiceFleetMemberData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
     }
 }

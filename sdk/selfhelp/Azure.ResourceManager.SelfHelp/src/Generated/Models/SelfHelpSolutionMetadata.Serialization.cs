@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSelfHelpContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(SelfHelpSolutionMetadata)} does not support writing '{options.Format}' format.");
             }
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeSelfHelpSolutionMetadata(document.RootElement, options);
                     }
                 default:

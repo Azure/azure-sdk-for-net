@@ -27,8 +27,14 @@ namespace Azure.Storage.DataMovement.Blobs.Perf
 
         public override async Task GlobalCleanupAsync()
         {
-            Directory.Delete(_sourceDirectory, true);
-            await _destinationContainer.DeleteIfExistsAsync();
+            if (_sourceDirectory != null)
+            {
+                Directory.Delete(_sourceDirectory, true);
+            }
+            if (_destinationContainer != null)
+            {
+                await _destinationContainer.DeleteIfExistsAsync();
+            }
             await base.GlobalCleanupAsync();
         }
 
@@ -39,8 +45,8 @@ namespace Azure.Storage.DataMovement.Blobs.Perf
 
         public override async Task RunAsync(CancellationToken cancellationToken)
         {
-            StorageResource source = LocalFileResourceProvider.FromDirectory(_sourceDirectory);
-            StorageResource destination = BlobResourceProvider.FromContainer(_destinationContainer.Uri);
+            StorageResource source = LocalFilesStorageResourceProvider.FromDirectory(_sourceDirectory);
+            StorageResource destination = await BlobResourceProvider.FromContainerAsync(_destinationContainer.Uri);
 
             await RunAndVerifyTransferAsync(source, destination, cancellationToken);
         }

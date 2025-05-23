@@ -44,20 +44,17 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("vCPUsPerCore"u8);
                 writer.WriteNumberValue(VCpusPerCore.Value);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            foreach (var item in AdditionalProperties)
             {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
+                writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
+                using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
                 }
+#endif
             }
         }
 
@@ -83,8 +80,8 @@ namespace Azure.ResourceManager.Compute.Models
             }
             int? vCpusAvailable = default;
             int? vCpusPerCore = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            IDictionary<string, BinaryData> additionalProperties = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("vCPUsAvailable"u8))
@@ -105,13 +102,10 @@ namespace Azure.ResourceManager.Compute.Models
                     vCpusPerCore = property.Value.GetInt32();
                     continue;
                 }
-                if (options.Format != "W")
-                {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
-                }
+                additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new VirtualMachineSizeProperties(vCpusAvailable, vCpusPerCore, serializedAdditionalRawData);
+            additionalProperties = additionalPropertiesDictionary;
+            return new VirtualMachineSizeProperties(vCpusAvailable, vCpusPerCore, additionalProperties);
         }
 
         BinaryData IPersistableModel<VirtualMachineSizeProperties>.Write(ModelReaderWriterOptions options)
@@ -121,7 +115,7 @@ namespace Azure.ResourceManager.Compute.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(VirtualMachineSizeProperties)} does not support writing '{options.Format}' format.");
             }
@@ -135,7 +129,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeVirtualMachineSizeProperties(document.RootElement, options);
                     }
                 default:

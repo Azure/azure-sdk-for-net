@@ -9,19 +9,18 @@ azure-arm: true
 csharp: true
 library-name: CosmosDB
 namespace: Azure.ResourceManager.CosmosDB
-require: https://github.com/Azure/azure-rest-api-specs/blob/86b70ce378f0005c26b58ba0bcf96907bfa3a966/specification/cosmos-db/resource-manager/readme.md
-#tag: package-preview-2024-05
+#tag: package-preview-2024-12-01
+require: https://github.com/Azure/azure-rest-api-specs/blob/2afa5b356adf6cf51209d2cf28d38644c69d9832/specification/cosmos-db/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
-  output-folder: $(this-folder)/../samples/Generated
+  output-folder: $(this-folder)/../tests/Generated
   clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
   lenient-model-deduplication: true
 use-model-reader-writer: true
-use-write-core: true
 enable-bicep-serialization: true
 
 #mgmt-debug:
@@ -223,7 +222,6 @@ rename-mapping:
   CreateMode: CosmosDBAccountCreateMode
   KeyKind: CosmosDBAccountKeyKind
   NodeState: CassandraNodeState
-  Permission: CosmosDBSqlRolePermission
   RestoreMode: CosmosDBAccountRestoreMode
   RestoreParameters: CosmosDBAccountRestoreParameters
   RoleDefinitionType: CosmosDBSqlRoleDefinitionType
@@ -235,7 +233,7 @@ rename-mapping:
   ClusterResourceProperties.deallocated : IsDeallocated
   ClusterResourceProperties.repairEnabled: IsRepairEnabled
   ClusterResourceProperties.privateLinkResourceId: -|arm-id
-  CommandPostBody.readWrite: AllowWrite
+  CommandPostBody.readwrite: AllowWrite
   IndexingPolicy.automatic: IsAutomatic
   ManagedCassandraReaperStatus.healthy: IsHealthy
   MongoIndexOptions.unique: IsUnique
@@ -321,6 +319,19 @@ rename-mapping:
   AutoReplicate: CassandraAutoReplicateForm
   AzureConnectionType: ServiceConnectionType
   RestoreParametersBase.restoreWithTtlDisabled: IsRestoreWithTtlDisabled
+  TableRoleAssignmentResource: CosmosDBTableRoleAssignment
+  TableRoleAssignmentResource.properties.roleDefinitionId: -|arm-id
+  TableRoleAssignmentResource.properties.scope: -|arm-id
+  TableRoleDefinitionResource: CosmosDBTableRoleDefinition
+  TableRoleDefinitionResource.properties.id: PathId
+  TableRoleDefinitionResource.properties.type: RoleDefinitionType
+  DistanceFunction: VectorDistanceFunction
+  VectorEmbedding: CosmosDBVectorEmbedding
+  VectorDataType: CosmosDBVectorDataType
+  VectorIndex: CosmosDBVectorIndex
+  VectorIndexType: CosmosDBVectorIndexType
+  VectorIndexType.diskANN: DiskAnn
+  ThroughputBucketResource: CosmosDBThroughputBucket
 
 prepend-rp-prefix:
 - UniqueKey
@@ -358,6 +369,7 @@ prepend-rp-prefix:
 - ProvisioningState
 - Type
 - ConnectionString
+- ChaosFaultResource
 
 models-to-treat-empty-string-as-null:
   - CosmosDBAccountData
@@ -460,6 +472,20 @@ directive:
   transform: >
     $.CommandPublicResource.properties.cassandraStopStart["x-ms-client-name"] = "shouldStopCassandraBeforeStart";
     $.CommandPublicResource.properties.readWrite["x-ms-client-name"] = "isReadWrite";
+- from: chaosFault.json
+  where: $.definitions
+  transform: >
+    $.chaosFaultProperties.properties.action['x-ms-client-name'] = "CosmosDBChaosFaultSupportedActions";
+    $.chaosFaultProperties.properties.action['x-ms-enum']['name'] = "CosmosDBChaosFaultSupportedActions";
+- from: rbac.json
+  where: $.definitions
+  transform: >
+    $.Permission['x-ms-client-name'] = "CosmosDBSqlRolePermission";
+- from: tablerbac.json
+  where: $.definitions
+  transform: >
+    $.Permission['x-ms-client-name'] = "CosmosDBTableRolePermission";
+
 # Below is a workaround for ADO 6196
 - remove-operation:
   - DatabaseAccounts_GetReadOnlyKeys
@@ -660,5 +686,4 @@ directive:
 - rename-model:
     from: SqlRoleDefinitionCreateUpdateParameters
     to: CosmosDBSqlRoleDefinitionCreateUpdateData
-
 ```

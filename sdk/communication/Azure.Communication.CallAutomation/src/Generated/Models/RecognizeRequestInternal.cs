@@ -52,8 +52,6 @@ namespace Azure.Communication.CallAutomation
         public RecognizeInputType RecognizeInputType { get; }
         /// <summary> The source of the audio to be played for recognition. </summary>
         public PlaySourceInternal PlayPrompt { get; set; }
-        /// <summary> The source of the audio to be played for recognition. </summary>
-        public IList<PlaySourceInternal> PlayPrompts { get; }
         /// <summary> If set recognize can barge into other existing queued-up/currently-processing requests. </summary>
         public bool? InterruptCallMediaOperation { get; set; }
         /// <summary> Defines options for recognition. </summary>

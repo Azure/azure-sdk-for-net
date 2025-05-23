@@ -122,7 +122,7 @@ namespace Azure.Maps.Weather
                 case 200:
                     {
                         HourlyForecastResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = HourlyForecastResult.DeserializeHourlyForecastResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -175,7 +175,7 @@ namespace Azure.Maps.Weather
                 case 200:
                     {
                         HourlyForecastResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = HourlyForecastResult.DeserializeHourlyForecastResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -253,7 +253,7 @@ namespace Azure.Maps.Weather
                 case 200:
                     {
                         MinuteForecastResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MinuteForecastResult.DeserializeMinuteForecastResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -300,7 +300,7 @@ namespace Azure.Maps.Weather
                 case 200:
                     {
                         MinuteForecastResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MinuteForecastResult.DeserializeMinuteForecastResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -384,7 +384,7 @@ namespace Azure.Maps.Weather
                 case 200:
                     {
                         QuarterDayForecastResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = QuarterDayForecastResult.DeserializeQuarterDayForecastResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -433,7 +433,7 @@ namespace Azure.Maps.Weather
                 case 200:
                     {
                         QuarterDayForecastResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = QuarterDayForecastResult.DeserializeQuarterDayForecastResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -525,7 +525,7 @@ namespace Azure.Maps.Weather
                 case 200:
                     {
                         CurrentConditionsResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CurrentConditionsResult.DeserializeCurrentConditionsResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -578,7 +578,7 @@ namespace Azure.Maps.Weather
                 case 200:
                     {
                         CurrentConditionsResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CurrentConditionsResult.DeserializeCurrentConditionsResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -665,7 +665,7 @@ namespace Azure.Maps.Weather
                 case 200:
                     {
                         DailyForecastResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DailyForecastResult.DeserializeDailyForecastResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -717,7 +717,7 @@ namespace Azure.Maps.Weather
                 case 200:
                     {
                         DailyForecastResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DailyForecastResult.DeserializeDailyForecastResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -795,7 +795,7 @@ namespace Azure.Maps.Weather
                 case 200:
                     {
                         WeatherAlongRouteResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = WeatherAlongRouteResult.DeserializeWeatherAlongRouteResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -849,7 +849,7 @@ namespace Azure.Maps.Weather
                 case 200:
                     {
                         WeatherAlongRouteResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = WeatherAlongRouteResult.DeserializeWeatherAlongRouteResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -928,7 +928,7 @@ namespace Azure.Maps.Weather
                 case 200:
                     {
                         SevereWeatherAlertsResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SevereWeatherAlertsResult.DeserializeSevereWeatherAlertsResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -976,7 +976,7 @@ namespace Azure.Maps.Weather
                 case 200:
                     {
                         SevereWeatherAlertsResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SevereWeatherAlertsResult.DeserializeSevereWeatherAlertsResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1065,7 +1065,7 @@ namespace Azure.Maps.Weather
                 case 200:
                     {
                         DailyIndicesResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DailyIndicesResult.DeserializeDailyIndicesResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1115,7 +1115,7 @@ namespace Azure.Maps.Weather
                 case 200:
                     {
                         DailyIndicesResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DailyIndicesResult.DeserializeDailyIndicesResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1159,7 +1159,7 @@ namespace Azure.Maps.Weather
                 case 200:
                     {
                         ActiveStormResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ActiveStormResult.DeserializeActiveStormResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1184,7 +1184,7 @@ namespace Azure.Maps.Weather
                 case 200:
                     {
                         ActiveStormResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ActiveStormResult.DeserializeActiveStormResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1240,7 +1240,7 @@ namespace Azure.Maps.Weather
                 case 200:
                     {
                         StormSearchResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = StormSearchResult.DeserializeStormSearchResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1268,7 +1268,7 @@ namespace Azure.Maps.Weather
                 case 200:
                     {
                         StormSearchResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = StormSearchResult.DeserializeStormSearchResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1338,7 +1338,7 @@ namespace Azure.Maps.Weather
                 case 200:
                     {
                         StormForecastResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = StormForecastResult.DeserializeStormForecastResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1370,7 +1370,7 @@ namespace Azure.Maps.Weather
                 case 200:
                     {
                         StormForecastResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = StormForecastResult.DeserializeStormForecastResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1440,7 +1440,7 @@ namespace Azure.Maps.Weather
                 case 200:
                     {
                         StormLocationsResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = StormLocationsResult.DeserializeStormLocationsResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1472,7 +1472,7 @@ namespace Azure.Maps.Weather
                 case 200:
                     {
                         StormLocationsResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = StormLocationsResult.DeserializeStormLocationsResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1545,7 +1545,7 @@ namespace Azure.Maps.Weather
                 case 200:
                     {
                         AirQualityResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AirQualityResult.DeserializeAirQualityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1587,7 +1587,7 @@ namespace Azure.Maps.Weather
                 case 200:
                     {
                         AirQualityResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AirQualityResult.DeserializeAirQualityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1660,7 +1660,7 @@ namespace Azure.Maps.Weather
                 case 200:
                     {
                         DailyAirQualityForecastResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DailyAirQualityForecastResult.DeserializeDailyAirQualityForecastResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1702,7 +1702,7 @@ namespace Azure.Maps.Weather
                 case 200:
                     {
                         DailyAirQualityForecastResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DailyAirQualityForecastResult.DeserializeDailyAirQualityForecastResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1780,7 +1780,7 @@ namespace Azure.Maps.Weather
                 case 200:
                     {
                         AirQualityResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AirQualityResult.DeserializeAirQualityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1823,7 +1823,7 @@ namespace Azure.Maps.Weather
                 case 200:
                     {
                         AirQualityResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AirQualityResult.DeserializeAirQualityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1891,7 +1891,7 @@ namespace Azure.Maps.Weather
                 case 200:
                     {
                         DailyHistoricalActualsResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DailyHistoricalActualsResult.DeserializeDailyHistoricalActualsResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1930,7 +1930,7 @@ namespace Azure.Maps.Weather
                 case 200:
                     {
                         DailyHistoricalActualsResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DailyHistoricalActualsResult.DeserializeDailyHistoricalActualsResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1998,7 +1998,7 @@ namespace Azure.Maps.Weather
                 case 200:
                     {
                         DailyHistoricalRecordsResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DailyHistoricalRecordsResult.DeserializeDailyHistoricalRecordsResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2037,7 +2037,7 @@ namespace Azure.Maps.Weather
                 case 200:
                     {
                         DailyHistoricalRecordsResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DailyHistoricalRecordsResult.DeserializeDailyHistoricalRecordsResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2105,7 +2105,7 @@ namespace Azure.Maps.Weather
                 case 200:
                     {
                         DailyHistoricalNormalsResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DailyHistoricalNormalsResult.DeserializeDailyHistoricalNormalsResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2144,7 +2144,7 @@ namespace Azure.Maps.Weather
                 case 200:
                     {
                         DailyHistoricalNormalsResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DailyHistoricalNormalsResult.DeserializeDailyHistoricalNormalsResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

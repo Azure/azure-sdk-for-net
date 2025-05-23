@@ -12,7 +12,7 @@ require: https://github.com/emmeliaAra/azure-rest-api-specs/blob/898ccbc6e7b8372
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
-  output-folder: $(this-folder)/../samples/Generated
+  output-folder: $(this-folder)/../tests/Generated
   clear-output-folder: true
 skip-csproj: true
 modelerfour:
@@ -20,7 +20,6 @@ modelerfour:
   lenient-model-deduplication: true
 use-model-reader-writer: true
 enable-bicep-serialization: true
-use-write-core: true
 
 #mgmt-debug:
 #  show-serialized-names: true

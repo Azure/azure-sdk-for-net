@@ -9,18 +9,18 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Chaos.Samples
 {
     public partial class Sample_ChaosCapabilityResource
     {
-        // Get a Capability that extends a virtual machine Target resource.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetACapabilityThatExtendsAVirtualMachineTargetResource()
         {
-            // Generated from example definition: specification/chaos/resource-manager/Microsoft.Chaos/stable/2024-01-01/examples/GetCapability.json
-            // this example is just showing the usage of "Capabilities_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-01-01/Capabilities_Get.json
+            // this example is just showing the usage of "Capability_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -49,13 +49,12 @@ namespace Azure.ResourceManager.Chaos.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Delete a Capability that extends a virtual machine Target resource.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteACapabilityThatExtendsAVirtualMachineTargetResource()
         {
-            // Generated from example definition: specification/chaos/resource-manager/Microsoft.Chaos/stable/2024-01-01/examples/DeleteCapability.json
-            // this example is just showing the usage of "Capabilities_Delete" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-01-01/Capabilities_Delete.json
+            // this example is just showing the usage of "Capability_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -77,16 +76,15 @@ namespace Azure.ResourceManager.Chaos.Samples
             // invoke the operation
             await chaosCapability.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Create/update a Capability that extends a virtual machine Target resource.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_CreateUpdateACapabilityThatExtendsAVirtualMachineTargetResource()
         {
-            // Generated from example definition: specification/chaos/resource-manager/Microsoft.Chaos/stable/2024-01-01/examples/CreateUpdateCapability.json
-            // this example is just showing the usage of "Capabilities_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-01-01/Capabilities_CreateOrUpdate.json
+            // this example is just showing the usage of "Capability_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();

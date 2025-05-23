@@ -71,8 +71,8 @@ namespace Azure.ResourceManager.Chaos.Models
             TimeSpan duration = default;
             IList<ChaosKeyValuePair> parameters = default;
             string selectorId = default;
-            string type = default;
             string name = default;
+            ExperimentActionType type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -97,14 +97,14 @@ namespace Azure.ResourceManager.Chaos.Models
                     selectorId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"u8))
-                {
-                    type = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("type"u8))
+                {
+                    type = new ExperimentActionType(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -114,8 +114,8 @@ namespace Azure.ResourceManager.Chaos.Models
             }
             serializedAdditionalRawData = rawDataDictionary;
             return new ChaosContinuousAction(
-                type,
                 name,
+                type,
                 serializedAdditionalRawData,
                 duration,
                 parameters,
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Chaos.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerChaosContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ChaosContinuousAction)} does not support writing '{options.Format}' format.");
             }
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Chaos.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeChaosContinuousAction(document.RootElement, options);
                     }
                 default:

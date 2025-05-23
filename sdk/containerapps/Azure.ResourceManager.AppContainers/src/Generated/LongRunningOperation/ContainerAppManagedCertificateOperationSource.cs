@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +23,14 @@ namespace Azure.ResourceManager.AppContainers
 
         ContainerAppManagedCertificateResource IOperationSource<ContainerAppManagedCertificateResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = ContainerAppManagedCertificateData.DeserializeContainerAppManagedCertificateData(document.RootElement);
+            var data = ModelReaderWriter.Read<ContainerAppManagedCertificateData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerAppContainersContext.Default);
             return new ContainerAppManagedCertificateResource(_client, data);
         }
 
         async ValueTask<ContainerAppManagedCertificateResource> IOperationSource<ContainerAppManagedCertificateResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = ContainerAppManagedCertificateData.DeserializeContainerAppManagedCertificateData(document.RootElement);
-            return new ContainerAppManagedCertificateResource(_client, data);
+            var data = ModelReaderWriter.Read<ContainerAppManagedCertificateData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerAppContainersContext.Default);
+            return await Task.FromResult(new ContainerAppManagedCertificateResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

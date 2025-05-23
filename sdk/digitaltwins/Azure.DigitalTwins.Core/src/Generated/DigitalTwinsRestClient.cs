@@ -30,7 +30,7 @@ namespace Azure.DigitalTwins.Core
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/> or <paramref name="apiVersion"/> is null. </exception>
-        public DigitalTwinsRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint = null, string apiVersion = "2023-06-30")
+        public DigitalTwinsRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint = null, string apiVersion = "2023-10-31")
         {
             ClientDiagnostics = clientDiagnostics ?? throw new ArgumentNullException(nameof(clientDiagnostics));
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
@@ -412,7 +412,7 @@ namespace Azure.DigitalTwins.Core
                 case 200:
                     {
                         IncomingRelationshipCollection value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = IncomingRelationshipCollection.DeserializeIncomingRelationshipCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -448,7 +448,7 @@ namespace Azure.DigitalTwins.Core
                 case 200:
                     {
                         IncomingRelationshipCollection value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = IncomingRelationshipCollection.DeserializeIncomingRelationshipCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -619,7 +619,7 @@ namespace Azure.DigitalTwins.Core
                 case 200:
                     {
                         IncomingRelationshipCollection value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = IncomingRelationshipCollection.DeserializeIncomingRelationshipCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -660,7 +660,7 @@ namespace Azure.DigitalTwins.Core
                 case 200:
                     {
                         IncomingRelationshipCollection value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = IncomingRelationshipCollection.DeserializeIncomingRelationshipCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

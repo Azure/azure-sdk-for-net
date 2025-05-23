@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +23,14 @@ namespace Azure.ResourceManager.MySql
 
         MySqlServerSecurityAlertPolicyResource IOperationSource<MySqlServerSecurityAlertPolicyResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = MySqlServerSecurityAlertPolicyData.DeserializeMySqlServerSecurityAlertPolicyData(document.RootElement);
+            var data = ModelReaderWriter.Read<MySqlServerSecurityAlertPolicyData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerMySqlContext.Default);
             return new MySqlServerSecurityAlertPolicyResource(_client, data);
         }
 
         async ValueTask<MySqlServerSecurityAlertPolicyResource> IOperationSource<MySqlServerSecurityAlertPolicyResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = MySqlServerSecurityAlertPolicyData.DeserializeMySqlServerSecurityAlertPolicyData(document.RootElement);
-            return new MySqlServerSecurityAlertPolicyResource(_client, data);
+            var data = ModelReaderWriter.Read<MySqlServerSecurityAlertPolicyData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerMySqlContext.Default);
+            return await Task.FromResult(new MySqlServerSecurityAlertPolicyResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

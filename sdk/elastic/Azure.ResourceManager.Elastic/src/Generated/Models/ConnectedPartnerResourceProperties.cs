@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Elastic.Models
         /// <param name="azureResourceId"> The azure resource Id of the deployment. </param>
         /// <param name="location"> The location of the deployment. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConnectedPartnerResourceProperties(string partnerDeploymentName, Uri partnerDeploymentUri, string azureResourceId, AzureLocation? location, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ConnectedPartnerResourceProperties(string partnerDeploymentName, Uri partnerDeploymentUri, ResourceIdentifier azureResourceId, AzureLocation? location, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PartnerDeploymentName = partnerDeploymentName;
             PartnerDeploymentUri = partnerDeploymentUri;
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Elastic.Models
         /// <summary> Deployment URL of the elasticsearch in Elastic cloud deployment. </summary>
         public Uri PartnerDeploymentUri { get; }
         /// <summary> The azure resource Id of the deployment. </summary>
-        public string AzureResourceId { get; }
+        public ResourceIdentifier AzureResourceId { get; }
         /// <summary> The location of the deployment. </summary>
         public AzureLocation? Location { get; }
     }

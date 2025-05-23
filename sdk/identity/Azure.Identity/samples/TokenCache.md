@@ -20,7 +20,7 @@ The in-memory token cache provided by the Azure Identity library is thread-safe.
 
 #### Disable caching
 
-As there are many levels of cache, it's not possible to disable in-memory caching. However, the in-memory cache may be cleared by creating a new credential instance.
+As there are many levels of cache, it's not possible to disable in-memory caching. However, the in-memory cache may be cleared by creating a new credential instance. The exception is `ManagedIdentityCredential`, which uses a static instance of in-memory cache by default. This means that the cache can be reused by multiple instances of a credential within the same application instance.
 
 ## Persistent token caching
 
@@ -87,7 +87,7 @@ If `UnsafeAllowUnencryptedStorage` is `false` (the default), a `CredentialUnavai
 
 ### Silently authenticate a user with AuthenticationRecord and TokenCachePersistenceOptions
 
-When authenticating a user via `InteractiveBrowserCredential`, `DeviceCodeCredential`, or `UsernamePasswordCredential`, an [AuthenticationRecord](https://learn.microsoft.com/dotnet/api/azure.identity.authenticationrecord?view=azure-dotnet) can be persisted as well. The authentication record is:
+When authenticating a user via `InteractiveBrowserCredential`, or `DeviceCodeCredential`, an [AuthenticationRecord](https://learn.microsoft.com/dotnet/api/azure.identity.authenticationrecord?view=azure-dotnet) can be persisted as well. The authentication record is:
 
 - Returned from the `Authenticate` API and contains data identifying an authenticated account.
 - Needed to identify the appropriate entry in the persisted token cache to silently authenticate on subsequent executions.
@@ -151,6 +151,5 @@ The following table indicates the state of in-memory and persistent caching in e
 | `InteractiveBrowserCredential` | Supported                                                              | Supported                     |
 | `ManagedIdentityCredential`    | Supported                                                              | Not Supported                 |
 | `OnBehalfOfCredential`         | Supported                                                              | Supported                     |
-| `UsernamePasswordCredential`   | Supported                                                              | Supported                     |
 | `VisualStudioCredential`       | Supported                                                              | Not Supported                 |
 | `WorkloadIdentityCredential`   | Supported                                                              | Supported                     |

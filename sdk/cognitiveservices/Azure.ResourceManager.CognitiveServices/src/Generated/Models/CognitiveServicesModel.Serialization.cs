@@ -50,6 +50,11 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 writer.WritePropertyName("skuName"u8);
                 writer.WriteStringValue(SkuName);
             }
+            if (Optional.IsDefined(Description))
+            {
+                writer.WritePropertyName("description"u8);
+                writer.WriteStringValue(Description);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -58,7 +63,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -90,6 +95,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             CognitiveServicesAccountModel model = default;
             string kind = default;
             string skuName = default;
+            string description = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -113,13 +119,18 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     skuName = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("description"u8))
+                {
+                    description = property.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new CognitiveServicesModel(model, kind, skuName, serializedAdditionalRawData);
+            return new CognitiveServicesModel(model, kind, skuName, description, serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -194,6 +205,29 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
             }
 
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Description), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  description: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Description))
+                {
+                    builder.Append("  description: ");
+                    if (Description.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Description}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Description}'");
+                    }
+                }
+            }
+
             builder.AppendLine("}");
             return BinaryData.FromString(builder.ToString());
         }
@@ -205,7 +239,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCognitiveServicesContext.Default);
                 case "bicep":
                     return SerializeBicep(options);
                 default:
@@ -221,7 +255,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeCognitiveServicesModel(document.RootElement, options);
                     }
                 default:

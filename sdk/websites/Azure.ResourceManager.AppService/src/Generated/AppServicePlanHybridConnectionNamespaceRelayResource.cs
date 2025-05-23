@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-12-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-12-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-12-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-12-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-12-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-12-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -348,7 +348,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-12-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -357,12 +357,12 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="string"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<string> GetWebAppsByHybridConnectionAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="WebSiteData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<WebSiteData> GetAllWebAppsByHybridConnectionAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _appServicePlanHybridConnectionNamespaceRelayAppServicePlansRestClient.CreateListWebAppsByHybridConnectionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _appServicePlanHybridConnectionNamespaceRelayAppServicePlansRestClient.CreateListWebAppsByHybridConnectionNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => e.GetString(), _appServicePlanHybridConnectionNamespaceRelayAppServicePlansClientDiagnostics, Pipeline, "AppServicePlanHybridConnectionNamespaceRelayResource.GetWebAppsByHybridConnection", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => WebSiteData.DeserializeWebSiteData(e), _appServicePlanHybridConnectionNamespaceRelayAppServicePlansClientDiagnostics, Pipeline, "AppServicePlanHybridConnectionNamespaceRelayResource.GetAllWebAppsByHybridConnection", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -378,7 +378,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-12-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -387,12 +387,12 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="string"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<string> GetWebAppsByHybridConnection(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="WebSiteData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<WebSiteData> GetAllWebAppsByHybridConnection(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _appServicePlanHybridConnectionNamespaceRelayAppServicePlansRestClient.CreateListWebAppsByHybridConnectionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _appServicePlanHybridConnectionNamespaceRelayAppServicePlansRestClient.CreateListWebAppsByHybridConnectionNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => e.GetString(), _appServicePlanHybridConnectionNamespaceRelayAppServicePlansClientDiagnostics, Pipeline, "AppServicePlanHybridConnectionNamespaceRelayResource.GetWebAppsByHybridConnection", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => WebSiteData.DeserializeWebSiteData(e), _appServicePlanHybridConnectionNamespaceRelayAppServicePlansClientDiagnostics, Pipeline, "AppServicePlanHybridConnectionNamespaceRelayResource.GetAllWebAppsByHybridConnection", "value", "nextLink", cancellationToken);
         }
     }
 }

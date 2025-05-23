@@ -10,17 +10,17 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Sql.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Sql.Samples
 {
     public partial class Sample_SqlDatabaseAutomaticTuningResource
     {
-        // Get a database's automatic tuning settings
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetADatabaseSAutomaticTuningSettings()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2020-11-01-preview/examples/DatabaseAutomaticTuningGet.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-05-01-preview/examples/DatabaseAutomaticTuningGet.json
             // this example is just showing the usage of "DatabaseAutomaticTuning_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -47,12 +47,11 @@ namespace Azure.ResourceManager.Sql.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Updates database automatic tuning settings with all properties
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdatesDatabaseAutomaticTuningSettingsWithAllProperties()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2020-11-01-preview/examples/DatabaseAutomaticTuningUpdateMax.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-05-01-preview/examples/DatabaseAutomaticTuningUpdateMax.json
             // this example is just showing the usage of "DatabaseAutomaticTuning_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -70,23 +69,23 @@ namespace Azure.ResourceManager.Sql.Samples
             SqlDatabaseAutomaticTuningResource sqlDatabaseAutomaticTuning = client.GetSqlDatabaseAutomaticTuningResource(sqlDatabaseAutomaticTuningResourceId);
 
             // invoke the operation
-            SqlDatabaseAutomaticTuningData data = new SqlDatabaseAutomaticTuningData()
+            SqlDatabaseAutomaticTuningData data = new SqlDatabaseAutomaticTuningData
             {
                 DesiredState = AutomaticTuningMode.Auto,
                 Options =
 {
-["createIndex"] = new AutomaticTuningOptions()
+["createIndex"] = new AutomaticTuningOptions
 {
 DesiredState = AutomaticTuningOptionModeDesired.Off,
 },
-["dropIndex"] = new AutomaticTuningOptions()
+["dropIndex"] = new AutomaticTuningOptions
 {
 DesiredState = AutomaticTuningOptionModeDesired.On,
 },
-["forceLastGoodPlan"] = new AutomaticTuningOptions()
+["forceLastGoodPlan"] = new AutomaticTuningOptions
 {
 DesiredState = AutomaticTuningOptionModeDesired.Default,
-},
+}
 },
             };
             SqlDatabaseAutomaticTuningResource result = await sqlDatabaseAutomaticTuning.UpdateAsync(data);
@@ -98,12 +97,11 @@ DesiredState = AutomaticTuningOptionModeDesired.Default,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Updates database automatic tuning settings with minimal properties
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdatesDatabaseAutomaticTuningSettingsWithMinimalProperties()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2020-11-01-preview/examples/DatabaseAutomaticTuningUpdateMin.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-05-01-preview/examples/DatabaseAutomaticTuningUpdateMin.json
             // this example is just showing the usage of "DatabaseAutomaticTuning_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -121,7 +119,7 @@ DesiredState = AutomaticTuningOptionModeDesired.Default,
             SqlDatabaseAutomaticTuningResource sqlDatabaseAutomaticTuning = client.GetSqlDatabaseAutomaticTuningResource(sqlDatabaseAutomaticTuningResourceId);
 
             // invoke the operation
-            SqlDatabaseAutomaticTuningData data = new SqlDatabaseAutomaticTuningData()
+            SqlDatabaseAutomaticTuningData data = new SqlDatabaseAutomaticTuningData
             {
                 DesiredState = AutomaticTuningMode.Auto,
             };

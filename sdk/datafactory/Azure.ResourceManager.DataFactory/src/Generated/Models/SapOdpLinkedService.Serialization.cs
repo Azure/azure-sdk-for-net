@@ -83,10 +83,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("messageServerService"u8);
                 JsonSerializer.Serialize(writer, MessageServerService);
             }
-            if (Optional.IsDefined(SncMode))
+            if (Optional.IsDefined(SncFlag))
             {
                 writer.WritePropertyName("sncMode"u8);
-                JsonSerializer.Serialize(writer, SncMode);
+                JsonSerializer.Serialize(writer, SncFlag);
             }
             if (Optional.IsDefined(SncMyName))
             {
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                using (JsonDocument document = JsonDocument.Parse(item.Value))
+                using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                 {
                     JsonSerializer.Serialize(writer, document.RootElement);
                 }
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             DataFactorySecret password = default;
             DataFactoryElement<string> messageServer = default;
             DataFactoryElement<string> messageServerService = default;
-            DataFactoryElement<string> sncMode = default;
+            DataFactoryElement<bool> sncMode = default;
             DataFactoryElement<string> sncMyName = default;
             DataFactoryElement<string> sncPartnerName = default;
             DataFactoryElement<string> sncLibraryPath = default;
@@ -346,7 +346,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            sncMode = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
+                            sncMode = JsonSerializer.Deserialize<DataFactoryElement<bool>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("sncMyName"u8))
@@ -458,7 +458,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataFactoryContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(SapOdpLinkedService)} does not support writing '{options.Format}' format.");
             }
@@ -472,7 +472,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeSapOdpLinkedService(document.RootElement, options);
                     }
                 default:

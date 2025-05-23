@@ -5,24 +5,42 @@
 
 #nullable disable
 
-using System;
-
 namespace Azure.Communication.CallAutomation
 {
     /// <summary> The UpdateTranscriptionRequest. </summary>
     internal partial class UpdateTranscriptionRequestInternal
     {
         /// <summary> Initializes a new instance of <see cref="UpdateTranscriptionRequestInternal"/>. </summary>
-        /// <param name="locale"> Defines new locale for transcription. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="locale"/> is null. </exception>
-        public UpdateTranscriptionRequestInternal(string locale)
+        public UpdateTranscriptionRequestInternal()
         {
-            Argument.AssertNotNull(locale, nameof(locale));
+        }
 
+        /// <summary> Initializes a new instance of <see cref="UpdateTranscriptionRequestInternal"/>. </summary>
+        /// <param name="locale"> Defines new locale for transcription. </param>
+        /// <param name="speechModelEndpointId"> Sets Endpoint id where the custom model was deployed. </param>
+        /// <param name="operationContext"> The value to identify context of the operation. </param>
+        /// <param name="operationCallbackUri">
+        /// Set a callback URI that overrides the default callback URI set by CreateCall/AnswerCall for this operation.
+        /// This setup is per-action. If this is not set, the default callback URI set by CreateCall/AnswerCall will be used.
+        /// </param>
+        internal UpdateTranscriptionRequestInternal(string locale, string speechModelEndpointId, string operationContext, string operationCallbackUri)
+        {
             Locale = locale;
+            SpeechModelEndpointId = speechModelEndpointId;
+            OperationContext = operationContext;
+            OperationCallbackUri = operationCallbackUri;
         }
 
         /// <summary> Defines new locale for transcription. </summary>
-        public string Locale { get; }
+        public string Locale { get; set; }
+        /// <summary> Sets Endpoint id where the custom model was deployed. </summary>
+        public string SpeechModelEndpointId { get; set; }
+        /// <summary> The value to identify context of the operation. </summary>
+        public string OperationContext { get; set; }
+        /// <summary>
+        /// Set a callback URI that overrides the default callback URI set by CreateCall/AnswerCall for this operation.
+        /// This setup is per-action. If this is not set, the default callback URI set by CreateCall/AnswerCall will be used.
+        /// </summary>
+        public string OperationCallbackUri { get; set; }
     }
 }

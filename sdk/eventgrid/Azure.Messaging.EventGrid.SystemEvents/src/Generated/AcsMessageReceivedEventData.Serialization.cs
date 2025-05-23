@@ -19,58 +19,64 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 
         void IJsonModel<AcsMessageReceivedEventData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<AcsMessageReceivedEventData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AcsMessageReceivedEventData)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
+            base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Content))
             {
                 writer.WritePropertyName("content"u8);
                 writer.WriteStringValue(Content);
             }
-            writer.WritePropertyName("channelType"u8);
-            writer.WriteStringValue(ChannelKind.ToString());
-            writer.WritePropertyName("media"u8);
-            writer.WriteObjectValue(MediaContent, options);
-            writer.WritePropertyName("context"u8);
-            writer.WriteObjectValue(Context, options);
-            writer.WritePropertyName("button"u8);
-            writer.WriteObjectValue(Button, options);
-            writer.WritePropertyName("interactive"u8);
-            writer.WriteObjectValue(InteractiveContent, options);
-            if (Optional.IsDefined(From))
+            if (Optional.IsDefined(MessageId))
             {
-                writer.WritePropertyName("from"u8);
-                writer.WriteStringValue(From);
+                writer.WritePropertyName("messageId"u8);
+                writer.WriteStringValue(MessageId);
             }
-            if (Optional.IsDefined(To))
+            if (Optional.IsDefined(ChannelKind))
             {
-                writer.WritePropertyName("to"u8);
-                writer.WriteStringValue(To);
+                writer.WritePropertyName("channelType"u8);
+                writer.WriteStringValue(ChannelKind.Value.ToString());
             }
-            writer.WritePropertyName("receivedTimeStamp"u8);
-            writer.WriteStringValue(ReceivedTimestamp, "O");
-            writer.WritePropertyName("error"u8);
-            writer.WriteObjectValue(Error, options);
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            writer.WritePropertyName("messageType"u8);
+            writer.WriteStringValue(MessageType);
+            if (Optional.IsDefined(MediaContent))
             {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
+                writer.WritePropertyName("media"u8);
+                writer.WriteObjectValue(MediaContent, options);
             }
-            writer.WriteEndObject();
+            if (Optional.IsDefined(Reaction))
+            {
+                writer.WritePropertyName("reaction"u8);
+                writer.WriteObjectValue(Reaction, options);
+            }
+            if (Optional.IsDefined(Context))
+            {
+                writer.WritePropertyName("context"u8);
+                writer.WriteObjectValue(Context, options);
+            }
+            if (Optional.IsDefined(Button))
+            {
+                writer.WritePropertyName("button"u8);
+                writer.WriteObjectValue(Button, options);
+            }
+            if (Optional.IsDefined(InteractiveContent))
+            {
+                writer.WritePropertyName("interactive"u8);
+                writer.WriteObjectValue(InteractiveContent, options);
+            }
         }
 
         AcsMessageReceivedEventData IJsonModel<AcsMessageReceivedEventData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -94,14 +100,17 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 return null;
             }
             string content = default;
-            AcsMessageChannelKind channelType = default;
+            string messageId = default;
+            AcsMessageChannelKind? channelType = default;
+            string messageType = default;
             AcsMessageMediaContent media = default;
+            AcsMessageReactionContent reaction = default;
             AcsMessageContext context = default;
             AcsMessageButtonContent button = default;
             AcsMessageInteractiveContent interactive = default;
             string @from = default;
             string to = default;
-            DateTimeOffset receivedTimeStamp = default;
+            DateTimeOffset? receivedTimeStamp = default;
             AcsMessageChannelEventError error = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -112,28 +121,67 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     content = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("messageId"u8))
+                {
+                    messageId = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("channelType"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     channelType = new AcsMessageChannelKind(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("messageType"u8))
+                {
+                    messageType = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("media"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     media = AcsMessageMediaContent.DeserializeAcsMessageMediaContent(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("reaction"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    reaction = AcsMessageReactionContent.DeserializeAcsMessageReactionContent(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("context"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     context = AcsMessageContext.DeserializeAcsMessageContext(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("button"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     button = AcsMessageButtonContent.DeserializeAcsMessageButtonContent(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("interactive"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     interactive = AcsMessageInteractiveContent.DeserializeAcsMessageInteractiveContent(property.Value, options);
                     continue;
                 }
@@ -149,11 +197,19 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 if (property.NameEquals("receivedTimeStamp"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     receivedTimeStamp = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("error"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     error = AcsMessageChannelEventError.DeserializeAcsMessageChannelEventError(property.Value, options);
                     continue;
                 }
@@ -170,8 +226,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 error,
                 serializedAdditionalRawData,
                 content,
+                messageId,
                 channelType,
+                messageType,
                 media,
+                reaction,
                 context,
                 button,
                 interactive);
@@ -184,7 +243,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureMessagingEventGridSystemEventsContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(AcsMessageReceivedEventData)} does not support writing '{options.Format}' format.");
             }
@@ -198,7 +257,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeAcsMessageReceivedEventData(document.RootElement, options);
                     }
                 default:
@@ -212,7 +271,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static new AcsMessageReceivedEventData FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeAcsMessageReceivedEventData(document.RootElement);
         }
 

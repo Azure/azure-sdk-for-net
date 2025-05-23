@@ -9,17 +9,17 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Network.Samples
 {
     public partial class Sample_HubIPConfigurationResource
     {
-        // VirtualHubVirtualHubRouteTableV2Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_VirtualHubVirtualHubRouteTableV2Get()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/VirtualHubIpConfigurationGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-05-01/examples/VirtualHubIpConfigurationGet.json
             // this example is just showing the usage of "VirtualHubIpConfiguration_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -46,52 +46,11 @@ namespace Azure.ResourceManager.Network.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // VirtualHubIpConfigurationPut
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Update_VirtualHubIpConfigurationPut()
-        {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/VirtualHubIpConfigurationPut.json
-            // this example is just showing the usage of "VirtualHubIpConfiguration_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this HubIPConfigurationResource created on azure
-            // for more information of creating HubIPConfigurationResource, please refer to the document of HubIPConfigurationResource
-            string subscriptionId = "subid";
-            string resourceGroupName = "rg1";
-            string virtualHubName = "hub1";
-            string ipConfigName = "ipconfig1";
-            ResourceIdentifier hubIPConfigurationResourceId = HubIPConfigurationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualHubName, ipConfigName);
-            HubIPConfigurationResource hubIPConfiguration = client.GetHubIPConfigurationResource(hubIPConfigurationResourceId);
-
-            // invoke the operation
-            HubIPConfigurationData data = new HubIPConfigurationData()
-            {
-                Subnet = new SubnetData()
-                {
-                    Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworks/vnet1/subnets/subnet1"),
-                },
-            };
-            ArmOperation<HubIPConfigurationResource> lro = await hubIPConfiguration.UpdateAsync(WaitUntil.Completed, data);
-            HubIPConfigurationResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            HubIPConfigurationData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // VirtualHubIpConfigurationDelete
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_VirtualHubIpConfigurationDelete()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/VirtualHubIpConfigurationDelete.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-05-01/examples/VirtualHubIpConfigurationDelete.json
             // this example is just showing the usage of "VirtualHubIpConfiguration_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -111,7 +70,46 @@ namespace Azure.ResourceManager.Network.Samples
             // invoke the operation
             await hubIPConfiguration.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Update_VirtualHubIpConfigurationPut()
+        {
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-05-01/examples/VirtualHubIpConfigurationPut.json
+            // this example is just showing the usage of "VirtualHubIpConfiguration_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this HubIPConfigurationResource created on azure
+            // for more information of creating HubIPConfigurationResource, please refer to the document of HubIPConfigurationResource
+            string subscriptionId = "subid";
+            string resourceGroupName = "rg1";
+            string virtualHubName = "hub1";
+            string ipConfigName = "ipconfig1";
+            ResourceIdentifier hubIPConfigurationResourceId = HubIPConfigurationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualHubName, ipConfigName);
+            HubIPConfigurationResource hubIPConfiguration = client.GetHubIPConfigurationResource(hubIPConfigurationResourceId);
+
+            // invoke the operation
+            HubIPConfigurationData data = new HubIPConfigurationData
+            {
+                Subnet = new SubnetData
+                {
+                    Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworks/vnet1/subnets/subnet1"),
+                },
+            };
+            ArmOperation<HubIPConfigurationResource> lro = await hubIPConfiguration.UpdateAsync(WaitUntil.Completed, data);
+            HubIPConfigurationResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            HubIPConfigurationData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
     }
 }

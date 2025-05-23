@@ -19,13 +19,21 @@ namespace Azure.Health.Insights.RadiologyInsights
 
         void IJsonModel<RadiologyInsightsInferenceResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<RadiologyInsightsInferenceResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(RadiologyInsightsInferenceResult)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("patientResults"u8);
             writer.WriteStartArray();
             foreach (var item in PatientResults)
@@ -43,14 +51,13 @@ namespace Azure.Health.Insights.RadiologyInsights
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         RadiologyInsightsInferenceResult IJsonModel<RadiologyInsightsInferenceResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -110,7 +117,7 @@ namespace Azure.Health.Insights.RadiologyInsights
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureHealthInsightsRadiologyInsightsContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(RadiologyInsightsInferenceResult)} does not support writing '{options.Format}' format.");
             }
@@ -124,7 +131,7 @@ namespace Azure.Health.Insights.RadiologyInsights
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeRadiologyInsightsInferenceResult(document.RootElement, options);
                     }
                 default:
@@ -138,7 +145,7 @@ namespace Azure.Health.Insights.RadiologyInsights
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static RadiologyInsightsInferenceResult FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeRadiologyInsightsInferenceResult(document.RootElement);
         }
 

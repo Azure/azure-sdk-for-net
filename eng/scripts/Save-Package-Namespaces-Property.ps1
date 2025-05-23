@@ -46,7 +46,9 @@ if (-not (Test-Path -Path $repoRoot)) {
     exit 1
 }
 # Get all of the packageInfo files
-$packageInfoFiles = Get-ChildItem -Path $packageInfoDirectory -Filter *.json
+$packageInfoFiles = Get-ChildItem -Path $packageInfoDirectory -Filter *.json `
+    | Where-Object { (Get-Content -Raw $_ | ConvertFrom-Json).IncludedForValidation -eq $false }
+
 if ($packageInfoFiles.Length -eq 0) {
     LogWarning "packageInfoDirectory '$packageInfoDirectory' does not contain any json files. Please ensure that the packageInfo files were generated prior to running this."
     exit 0

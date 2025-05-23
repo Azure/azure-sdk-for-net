@@ -21,6 +21,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 return null;
             }
             string scheduleTime = default;
+            StorageLifecyclePolicyRunSummary policyRunSummary = default;
             StorageLifecyclePolicyActionSummaryDetail deleteSummary = default;
             StorageLifecyclePolicyActionSummaryDetail tierToCoolSummary = default;
             StorageLifecyclePolicyActionSummaryDetail tierToColdSummary = default;
@@ -30,6 +31,15 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 if (property.NameEquals("scheduleTime"u8))
                 {
                     scheduleTime = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("policyRunSummary"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    policyRunSummary = StorageLifecyclePolicyRunSummary.DeserializeStorageLifecyclePolicyRunSummary(property.Value);
                     continue;
                 }
                 if (property.NameEquals("deleteSummary"u8))
@@ -69,14 +79,20 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new StorageLifecyclePolicyCompletedEventData(scheduleTime, deleteSummary, tierToCoolSummary, tierToColdSummary, tierToArchiveSummary);
+            return new StorageLifecyclePolicyCompletedEventData(
+                scheduleTime,
+                policyRunSummary,
+                deleteSummary,
+                tierToCoolSummary,
+                tierToColdSummary,
+                tierToArchiveSummary);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static StorageLifecyclePolicyCompletedEventData FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeStorageLifecyclePolicyCompletedEventData(document.RootElement);
         }
 

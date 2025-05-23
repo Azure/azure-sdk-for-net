@@ -13,13 +13,12 @@ require: https://github.com/Azure/azure-rest-api-specs/blob/e19b5771846718774c04
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
-  output-folder: $(this-folder)/../samples/Generated
+  output-folder: $(this-folder)/../tests/Generated
   clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
 use-model-reader-writer: true
-use-write-core: true
 
 override-operation-name:
   Locations_CheckQuotaAvailability: CheckAvsQuotaAvailability
@@ -119,7 +118,7 @@ rename-mapping:
   ClusterZone: AvsClusterZone
   CloudLinkProvisioningState: AvsCloudLinkProvisioningState
   DnsZoneType : AvsDnsZoneType
-  VirtualMachineProvisioningState : AvsVirtualMachineProvisioningState 
+  VirtualMachineProvisioningState : AvsVirtualMachineProvisioningState
 
 prepend-rp-prefix:
 - CloudLink

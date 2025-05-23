@@ -7,6 +7,7 @@ using Azure.ResourceManager.NetworkCloud.Models;
 using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
@@ -30,7 +31,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
             var data = new NetworkCloudCloudServicesNetworkData(new AzureLocation(TestEnvironment.Location), new ExtendedLocation(TestEnvironment.ClusterExtendedLocation, "CustomLocation")) {
                 AdditionalEgressEndpoints = {
                     new EgressEndpoint("azure-resource-management", new EndpointDependency[]{
-                        new EndpointDependency("https://storageaccountex.blob.core.windows.net")
+                        new EndpointDependency("storageaccountex.blob.core.windows.net")
                         {
                             Port = 443
                         }
@@ -69,7 +70,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
             Assert.IsNotEmpty(cloudServicesNetworkListBySubscription);
 
             // Delete
-            var response = await cloudServicesNetwork.DeleteAsync(WaitUntil.Completed);
+            var response = await cloudServicesNetwork.DeleteAsync(WaitUntil.Completed, CancellationToken.None);
             Assert.IsTrue(response.HasCompleted);
         }
     }

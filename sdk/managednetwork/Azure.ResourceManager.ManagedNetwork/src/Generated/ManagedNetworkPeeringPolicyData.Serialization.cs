@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.ManagedNetwork
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerManagedNetworkContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ManagedNetworkPeeringPolicyData)} does not support writing '{options.Format}' format.");
             }
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.ManagedNetwork
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeManagedNetworkPeeringPolicyData(document.RootElement, options);
                     }
                 default:

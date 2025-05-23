@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.GuestConfiguration
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerGuestConfigurationContext.Default);
                 case "bicep":
                     return SerializeBicep(options);
                 default:
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.GuestConfiguration
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeGuestConfigurationAssignmentData(document.RootElement, options);
                     }
                 default:

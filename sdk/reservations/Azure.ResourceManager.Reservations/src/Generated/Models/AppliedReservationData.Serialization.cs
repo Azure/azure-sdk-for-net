@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Reservations.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerReservationsContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(AppliedReservationData)} does not support writing '{options.Format}' format.");
             }
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.Reservations.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeAppliedReservationData(document.RootElement, options);
                     }
                 default:

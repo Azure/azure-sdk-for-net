@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ServiceBus
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-10-01-preview";
+            _apiVersion = apiVersion ?? "2024-01-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.ServiceBus
 
         /// <summary> Gets all the topics in a namespace. </summary>
         /// <param name="subscriptionId"> Subscription credentials that uniquely identify a Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="namespaceName"> The namespace name. </param>
         /// <param name="skip"> Skip is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skip parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="top"> May be used to limit the number of results to the most recent N usageDetails. </param>
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.ServiceBus
                 case 200:
                     {
                         SBTopicListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SBTopicListResult.DeserializeSBTopicListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.ServiceBus
 
         /// <summary> Gets all the topics in a namespace. </summary>
         /// <param name="subscriptionId"> Subscription credentials that uniquely identify a Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="namespaceName"> The namespace name. </param>
         /// <param name="skip"> Skip is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skip parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="top"> May be used to limit the number of results to the most recent N usageDetails. </param>
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.ServiceBus
                 case 200:
                     {
                         SBTopicListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SBTopicListResult.DeserializeSBTopicListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.ServiceBus
 
         /// <summary> Creates a topic in the specified namespace. </summary>
         /// <param name="subscriptionId"> Subscription credentials that uniquely identify a Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="namespaceName"> The namespace name. </param>
         /// <param name="topicName"> The topic name. </param>
         /// <param name="data"> Parameters supplied to create a topic resource. </param>
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.ServiceBus
                 case 200:
                     {
                         ServiceBusTopicData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ServiceBusTopicData.DeserializeServiceBusTopicData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.ServiceBus
 
         /// <summary> Creates a topic in the specified namespace. </summary>
         /// <param name="subscriptionId"> Subscription credentials that uniquely identify a Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="namespaceName"> The namespace name. </param>
         /// <param name="topicName"> The topic name. </param>
         /// <param name="data"> Parameters supplied to create a topic resource. </param>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.ServiceBus
                 case 200:
                     {
                         ServiceBusTopicData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ServiceBusTopicData.DeserializeServiceBusTopicData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.ServiceBus
 
         /// <summary> Deletes a topic from the specified namespace and resource group. </summary>
         /// <param name="subscriptionId"> Subscription credentials that uniquely identify a Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="namespaceName"> The namespace name. </param>
         /// <param name="topicName"> The topic name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.ServiceBus
 
         /// <summary> Deletes a topic from the specified namespace and resource group. </summary>
         /// <param name="subscriptionId"> Subscription credentials that uniquely identify a Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="namespaceName"> The namespace name. </param>
         /// <param name="topicName"> The topic name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -390,7 +390,7 @@ namespace Azure.ResourceManager.ServiceBus
 
         /// <summary> Returns a description for the specified topic. </summary>
         /// <param name="subscriptionId"> Subscription credentials that uniquely identify a Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="namespaceName"> The namespace name. </param>
         /// <param name="topicName"> The topic name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -410,7 +410,7 @@ namespace Azure.ResourceManager.ServiceBus
                 case 200:
                     {
                         ServiceBusTopicData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ServiceBusTopicData.DeserializeServiceBusTopicData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -423,7 +423,7 @@ namespace Azure.ResourceManager.ServiceBus
 
         /// <summary> Returns a description for the specified topic. </summary>
         /// <param name="subscriptionId"> Subscription credentials that uniquely identify a Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="namespaceName"> The namespace name. </param>
         /// <param name="topicName"> The topic name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -443,7 +443,7 @@ namespace Azure.ResourceManager.ServiceBus
                 case 200:
                     {
                         ServiceBusTopicData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ServiceBusTopicData.DeserializeServiceBusTopicData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -479,7 +479,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <summary> Gets all the topics in a namespace. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Subscription credentials that uniquely identify a Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="namespaceName"> The namespace name. </param>
         /// <param name="skip"> Skip is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skip parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="top"> May be used to limit the number of results to the most recent N usageDetails. </param>
@@ -500,7 +500,7 @@ namespace Azure.ResourceManager.ServiceBus
                 case 200:
                     {
                         SBTopicListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SBTopicListResult.DeserializeSBTopicListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -512,7 +512,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <summary> Gets all the topics in a namespace. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Subscription credentials that uniquely identify a Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="namespaceName"> The namespace name. </param>
         /// <param name="skip"> Skip is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skip parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="top"> May be used to limit the number of results to the most recent N usageDetails. </param>
@@ -533,7 +533,7 @@ namespace Azure.ResourceManager.ServiceBus
                 case 200:
                     {
                         SBTopicListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SBTopicListResult.DeserializeSBTopicListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

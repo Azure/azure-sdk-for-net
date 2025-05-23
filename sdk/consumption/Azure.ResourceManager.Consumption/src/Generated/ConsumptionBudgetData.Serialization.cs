@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.Consumption
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerConsumptionContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ConsumptionBudgetData)} does not support writing '{options.Format}' format.");
             }
@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.Consumption
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeConsumptionBudgetData(document.RootElement, options);
                     }
                 default:

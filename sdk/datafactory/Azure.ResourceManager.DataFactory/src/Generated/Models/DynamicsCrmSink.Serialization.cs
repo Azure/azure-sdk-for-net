@@ -48,13 +48,23 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("alternateKeyName"u8);
                 JsonSerializer.Serialize(writer, AlternateKeyName);
             }
+            if (Optional.IsDefined(BypassBusinessLogicExecution))
+            {
+                writer.WritePropertyName("bypassBusinessLogicExecution"u8);
+                JsonSerializer.Serialize(writer, BypassBusinessLogicExecution);
+            }
+            if (Optional.IsDefined(BypassPowerAutomateFlows))
+            {
+                writer.WritePropertyName("bypassPowerAutomateFlows"u8);
+                JsonSerializer.Serialize(writer, BypassPowerAutomateFlows);
+            }
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                using (JsonDocument document = JsonDocument.Parse(item.Value))
+                using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                 {
                     JsonSerializer.Serialize(writer, document.RootElement);
                 }
@@ -85,6 +95,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             DynamicsSinkWriteBehavior writeBehavior = default;
             DataFactoryElement<bool> ignoreNullValues = default;
             DataFactoryElement<string> alternateKeyName = default;
+            DataFactoryElement<string> bypassBusinessLogicExecution = default;
+            DataFactoryElement<bool> bypassPowerAutomateFlows = default;
             string type = default;
             DataFactoryElement<int> writeBatchSize = default;
             DataFactoryElement<string> writeBatchTimeout = default;
@@ -117,6 +129,24 @@ namespace Azure.ResourceManager.DataFactory.Models
                         continue;
                     }
                     alternateKeyName = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
+                    continue;
+                }
+                if (property.NameEquals("bypassBusinessLogicExecution"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    bypassBusinessLogicExecution = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
+                    continue;
+                }
+                if (property.NameEquals("bypassPowerAutomateFlows"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    bypassPowerAutomateFlows = JsonSerializer.Deserialize<DataFactoryElement<bool>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("type"u8))
@@ -192,7 +222,9 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalProperties,
                 writeBehavior,
                 ignoreNullValues,
-                alternateKeyName);
+                alternateKeyName,
+                bypassBusinessLogicExecution,
+                bypassPowerAutomateFlows);
         }
 
         BinaryData IPersistableModel<DynamicsCrmSink>.Write(ModelReaderWriterOptions options)
@@ -202,7 +234,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataFactoryContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(DynamicsCrmSink)} does not support writing '{options.Format}' format.");
             }
@@ -216,7 +248,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeDynamicsCrmSink(document.RootElement, options);
                     }
                 default:

@@ -170,6 +170,11 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("clientAffinityEnabled"u8);
                 writer.WriteBooleanValue(IsClientAffinityEnabled.Value);
             }
+            if (Optional.IsDefined(IsClientAffinityProxyEnabled))
+            {
+                writer.WritePropertyName("clientAffinityProxyEnabled"u8);
+                writer.WriteBooleanValue(IsClientAffinityProxyEnabled.Value);
+            }
             if (Optional.IsDefined(IsClientCertEnabled))
             {
                 writer.WritePropertyName("clientCertEnabled"u8);
@@ -329,6 +334,7 @@ namespace Azure.ResourceManager.AppService.Models
             string targetSwapSlot = default;
             HostingEnvironmentProfile hostingEnvironmentProfile = default;
             bool? clientAffinityEnabled = default;
+            bool? clientAffinityProxyEnabled = default;
             bool? clientCertEnabled = default;
             ClientCertMode? clientCertMode = default;
             string clientCertExclusionPaths = default;
@@ -590,6 +596,15 @@ namespace Azure.ResourceManager.AppService.Models
                             clientAffinityEnabled = property0.Value.GetBoolean();
                             continue;
                         }
+                        if (property0.NameEquals("clientAffinityProxyEnabled"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            clientAffinityProxyEnabled = property0.Value.GetBoolean();
+                            continue;
+                        }
                         if (property0.NameEquals("clientCertEnabled"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -795,6 +810,7 @@ namespace Azure.ResourceManager.AppService.Models
                 targetSwapSlot,
                 hostingEnvironmentProfile,
                 clientAffinityEnabled,
+                clientAffinityProxyEnabled,
                 clientCertEnabled,
                 clientCertMode,
                 clientCertExclusionPaths,
@@ -1327,6 +1343,22 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
 
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsClientAffinityProxyEnabled), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    clientAffinityProxyEnabled: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsClientAffinityProxyEnabled))
+                {
+                    builder.Append("    clientAffinityProxyEnabled: ");
+                    var boolValue = IsClientAffinityProxyEnabled.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsClientCertEnabled), out propertyOverride);
             if (hasPropertyOverride)
             {
@@ -1731,7 +1763,7 @@ namespace Azure.ResourceManager.AppService.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAppServiceContext.Default);
                 case "bicep":
                     return SerializeBicep(options);
                 default:
@@ -1747,7 +1779,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeSitePatchInfo(document.RootElement, options);
                     }
                 default:

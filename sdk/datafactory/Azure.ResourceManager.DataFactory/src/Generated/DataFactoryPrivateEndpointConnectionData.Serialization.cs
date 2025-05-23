@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.DataFactory
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataFactoryContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(DataFactoryPrivateEndpointConnectionData)} does not support writing '{options.Format}' format.");
             }
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.DataFactory
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeDataFactoryPrivateEndpointConnectionData(document.RootElement, options);
                     }
                 default:

@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.Sphere
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSphereContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(SphereCatalogData)} does not support writing '{options.Format}' format.");
             }
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.Sphere
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeSphereCatalogData(document.RootElement, options);
                     }
                 default:

@@ -60,7 +60,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                 case 200:
                     {
                         DatasetListResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DatasetListResponse.DeserializeDatasetListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -80,7 +80,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                 case 200:
                     {
                         DatasetListResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DatasetListResponse.DeserializeDatasetListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -208,7 +208,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                 case 200:
                     {
                         DatasetResource value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DatasetResource.DeserializeDatasetResource(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -238,7 +238,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                 case 200:
                     {
                         DatasetResource value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DatasetResource.DeserializeDatasetResource(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -419,7 +419,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                 case 200:
                     {
                         DatasetListResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DatasetListResponse.DeserializeDatasetListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -446,7 +446,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                 case 200:
                     {
                         DatasetListResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DatasetListResponse.DeserializeDatasetListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

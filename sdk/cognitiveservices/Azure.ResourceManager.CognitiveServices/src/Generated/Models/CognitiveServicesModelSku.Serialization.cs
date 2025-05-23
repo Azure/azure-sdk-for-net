@@ -66,6 +66,16 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsCollectionDefined(Cost))
+            {
+                writer.WritePropertyName("cost"u8);
+                writer.WriteStartArray();
+                foreach (var item in Cost)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -74,7 +84,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -108,6 +118,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             DateTimeOffset? deprecationDate = default;
             CognitiveServicesCapacityConfig capacity = default;
             IReadOnlyList<ServiceAccountCallRateLimit> rateLimits = default;
+            IList<BillingMeterInfo> cost = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -154,6 +165,20 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     rateLimits = array;
                     continue;
                 }
+                if (property.NameEquals("cost"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<BillingMeterInfo> array = new List<BillingMeterInfo>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(BillingMeterInfo.DeserializeBillingMeterInfo(item, options));
+                    }
+                    cost = array;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -166,6 +191,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 deprecationDate,
                 capacity,
                 rateLimits ?? new ChangeTrackingList<ServiceAccountCallRateLimit>(),
+                cost ?? new ChangeTrackingList<BillingMeterInfo>(),
                 serializedAdditionalRawData);
         }
 
@@ -280,6 +306,29 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
             }
 
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Cost), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  cost: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Cost))
+                {
+                    if (Cost.Any())
+                    {
+                        builder.Append("  cost: ");
+                        builder.AppendLine("[");
+                        foreach (var item in Cost)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  cost: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
             builder.AppendLine("}");
             return BinaryData.FromString(builder.ToString());
         }
@@ -291,7 +340,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCognitiveServicesContext.Default);
                 case "bicep":
                     return SerializeBicep(options);
                 default:
@@ -307,7 +356,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeCognitiveServicesModelSku(document.RootElement, options);
                     }
                 default:

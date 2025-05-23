@@ -1,8 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
+
 using System;
 using System.Threading;
-using Azure.Core;
 using Azure.Storage.Common;
 
 namespace Azure.Storage.DataMovement
@@ -10,17 +10,17 @@ namespace Azure.Storage.DataMovement
     /// <summary>
     /// Event Argument for Failed Single Blob Upload Transfers
     /// </summary>
-    public class TransferItemFailedEventArgs : DataTransferEventArgs
+    public class TransferItemFailedEventArgs : TransferEventArgs
     {
         /// <summary>
-        /// Gets the <see cref="StorageResourceItem"/> that was the source resource for the transfer.
+        /// Gets the <see cref="StorageResource"/> that was the source resource for the transfer.
         /// </summary>
-        public StorageResourceItem SourceResource { get; }
+        public StorageResource Source { get; }
 
         /// <summary>
-        /// Gets the <see cref="StorageResourceItem"/> that was the destination resource for the transfer.
+        /// Gets the <see cref="StorageResource"/> that was the destination resource for the transfer.
         /// </summary>
-        public StorageResourceItem DestinationResource { get; }
+        public StorageResource Destination { get; }
 
         /// <summary>
         /// Gets the <see cref="Exception"/> that was thrown during the job.
@@ -47,14 +47,14 @@ namespace Azure.Storage.DataMovement
         /// default value is <see cref="CancellationToken.None"/>.
         /// </param>
         /// <exception cref="System.ArgumentNullException">
-        /// Trhown if <paramref name="transferId"/> is empty or null.
+        /// Thrown if <paramref name="transferId"/> is empty or null.
         /// Thrown if <paramref name="sourceResource"/> is empty or null.
         /// Thrown if <paramref name="destinationResource"/> is empty or null.
         /// </exception>
         public TransferItemFailedEventArgs(
             string transferId,
-            StorageResourceItem sourceResource,
-            StorageResourceItem destinationResource,
+            StorageResource sourceResource,
+            StorageResource destinationResource,
             Exception exception,
             bool isRunningSynchronously,
             CancellationToken cancellationToken)
@@ -63,8 +63,8 @@ namespace Azure.Storage.DataMovement
             Argument.AssertNotNull(sourceResource, nameof(sourceResource));
             Argument.AssertNotNull(destinationResource, nameof(destinationResource));
             Argument.AssertNotNull(exception, nameof(exception));
-            SourceResource = sourceResource;
-            DestinationResource = destinationResource;
+            Source = sourceResource;
+            Destination = destinationResource;
             Exception = exception;
         }
     }

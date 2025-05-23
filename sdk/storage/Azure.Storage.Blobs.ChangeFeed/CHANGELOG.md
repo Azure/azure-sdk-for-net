@@ -1,6 +1,6 @@
 # Release History
 
-## 12.0.0-preview.52 (Unreleased)
+## 12.0.0-preview.56 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,27 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 12.0.0-preview.55 (2025-05-06)
+
+### Features Added
+- Added support for service version 2025-07-05.
+- Added BlobChangeFeedClient.GetLastConsumable() and .GetLastConsumableAsync().
+
+## 12.0.0-preview.54 (2025-03-11)
+
+### Features Added
+- This release contains bug fixes to improve quality.
+
+## 12.0.0-preview.53 (2025-02-11)
+
+### Features Added
+- Added support for service version 2025-05-05.
+
+## 12.0.0-preview.52 (2024-11-12)
+
+### Features Added
+- This release contains bug fixes to improve quality.
 
 ## 12.0.0-preview.51 (2024-10-10)
 

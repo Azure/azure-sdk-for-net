@@ -37,41 +37,13 @@ namespace Azure.ResourceManager.DeviceRegistry
             }
 
             base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(Properties))
+            {
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
+            }
             writer.WritePropertyName("extendedLocation"u8);
             writer.WriteObjectValue(ExtendedLocation, options);
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Uuid))
-            {
-                writer.WritePropertyName("uuid"u8);
-                writer.WriteStringValue(Uuid);
-            }
-            if (Optional.IsDefined(TargetAddress))
-            {
-                writer.WritePropertyName("targetAddress"u8);
-                writer.WriteStringValue(TargetAddress.AbsoluteUri);
-            }
-            if (Optional.IsDefined(UserAuthentication))
-            {
-                writer.WritePropertyName("userAuthentication"u8);
-                writer.WriteObjectValue(UserAuthentication, options);
-            }
-            if (Optional.IsDefined(TransportAuthentication))
-            {
-                writer.WritePropertyName("transportAuthentication"u8);
-                writer.WriteObjectValue(TransportAuthentication, options);
-            }
-            if (Optional.IsDefined(AdditionalConfiguration))
-            {
-                writer.WritePropertyName("additionalConfiguration"u8);
-                writer.WriteStringValue(AdditionalConfiguration);
-            }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
-            {
-                writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
-            }
-            writer.WriteEndObject();
         }
 
         DeviceRegistryAssetEndpointProfileData IJsonModel<DeviceRegistryAssetEndpointProfileData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -94,6 +66,7 @@ namespace Azure.ResourceManager.DeviceRegistry
             {
                 return null;
             }
+            DeviceRegistryAssetEndpointProfileProperties properties = default;
             DeviceRegistryExtendedLocation extendedLocation = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
@@ -101,16 +74,19 @@ namespace Azure.ResourceManager.DeviceRegistry
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            string uuid = default;
-            Uri targetAddress = default;
-            UserAuthentication userAuthentication = default;
-            TransportAuthentication transportAuthentication = default;
-            string additionalConfiguration = default;
-            DeviceRegistryProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("properties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    properties = DeviceRegistryAssetEndpointProfileProperties.DeserializeDeviceRegistryAssetEndpointProfileProperties(property.Value, options);
+                    continue;
+                }
                 if (property.NameEquals("extendedLocation"u8))
                 {
                     extendedLocation = DeviceRegistryExtendedLocation.DeserializeDeviceRegistryExtendedLocation(property.Value, options);
@@ -159,64 +135,6 @@ namespace Azure.ResourceManager.DeviceRegistry
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("uuid"u8))
-                        {
-                            uuid = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("targetAddress"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            targetAddress = new Uri(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("userAuthentication"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            userAuthentication = UserAuthentication.DeserializeUserAuthentication(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("transportAuthentication"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            transportAuthentication = TransportAuthentication.DeserializeTransportAuthentication(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("additionalConfiguration"u8))
-                        {
-                            additionalConfiguration = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("provisioningState"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            provisioningState = new DeviceRegistryProvisioningState(property0.Value.GetString());
-                            continue;
-                        }
-                    }
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -230,13 +148,8 @@ namespace Azure.ResourceManager.DeviceRegistry
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
+                properties,
                 extendedLocation,
-                uuid,
-                targetAddress,
-                userAuthentication,
-                transportAuthentication,
-                additionalConfiguration,
-                provisioningState,
                 serializedAdditionalRawData);
         }
 
@@ -247,7 +160,7 @@ namespace Azure.ResourceManager.DeviceRegistry
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDeviceRegistryContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(DeviceRegistryAssetEndpointProfileData)} does not support writing '{options.Format}' format.");
             }
@@ -261,7 +174,7 @@ namespace Azure.ResourceManager.DeviceRegistry
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeDeviceRegistryAssetEndpointProfileData(document.RootElement, options);
                     }
                 default:

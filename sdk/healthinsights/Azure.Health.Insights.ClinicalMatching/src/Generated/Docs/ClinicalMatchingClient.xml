@@ -5,7 +5,7 @@
       <example>
 This sample shows how to call MatchTrialsAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ClinicalMatchingClient client = new ClinicalMatchingClient(endpoint, credential);
 
@@ -18,7 +18,7 @@ TrialMatcherResults responseData = operation.Value;
 ]]></code>
 This sample shows how to call MatchTrialsAsync with all parameters.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ClinicalMatchingClient client = new ClinicalMatchingClient(endpoint, credential);
 
@@ -109,7 +109,7 @@ TrialMatcherResults responseData = operation.Value;
       <example>
 This sample shows how to call MatchTrials.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ClinicalMatchingClient client = new ClinicalMatchingClient(endpoint, credential);
 
@@ -122,7 +122,7 @@ TrialMatcherResults responseData = operation.Value;
 ]]></code>
 This sample shows how to call MatchTrials with all parameters.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ClinicalMatchingClient client = new ClinicalMatchingClient(endpoint, credential);
 
@@ -213,7 +213,7 @@ TrialMatcherResults responseData = operation.Value;
       <example>
 This sample shows how to call MatchTrialsAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ClinicalMatchingClient client = new ClinicalMatchingClient(endpoint, credential);
 
@@ -238,7 +238,7 @@ Console.WriteLine(result.GetProperty("modelVersion").ToString());
 ]]></code>
 This sample shows how to call MatchTrialsAsync with all parameters and request content and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ClinicalMatchingClient client = new ClinicalMatchingClient(endpoint, credential);
 
@@ -465,7 +465,7 @@ Console.WriteLine(result.GetProperty("knowledgeGraphLastUpdateDate").ToString())
       <example>
 This sample shows how to call MatchTrials and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ClinicalMatchingClient client = new ClinicalMatchingClient(endpoint, credential);
 
@@ -490,7 +490,7 @@ Console.WriteLine(result.GetProperty("modelVersion").ToString());
 ]]></code>
 This sample shows how to call MatchTrials with all parameters and request content and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ClinicalMatchingClient client = new ClinicalMatchingClient(endpoint, credential);
 

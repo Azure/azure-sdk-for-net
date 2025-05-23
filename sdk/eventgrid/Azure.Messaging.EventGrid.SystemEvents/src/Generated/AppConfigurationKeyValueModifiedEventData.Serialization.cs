@@ -19,33 +19,36 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 
         void IJsonModel<AppConfigurationKeyValueModifiedEventData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<AppConfigurationKeyValueModifiedEventData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AppConfigurationKeyValueModifiedEventData)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
-            if (Optional.IsDefined(Key))
-            {
-                writer.WritePropertyName("key"u8);
-                writer.WriteStringValue(Key);
-            }
-            if (Optional.IsDefined(Label))
+            writer.WritePropertyName("key"u8);
+            writer.WriteStringValue(Key);
+            if (Label != null)
             {
                 writer.WritePropertyName("label"u8);
                 writer.WriteStringValue(Label);
             }
-            if (Optional.IsDefined(Etag))
+            else
             {
-                writer.WritePropertyName("etag"u8);
-                writer.WriteStringValue(Etag);
+                writer.WriteNull("label");
             }
-            if (Optional.IsDefined(SyncToken))
-            {
-                writer.WritePropertyName("syncToken"u8);
-                writer.WriteStringValue(SyncToken);
-            }
+            writer.WritePropertyName("etag"u8);
+            writer.WriteStringValue(Etag);
+            writer.WritePropertyName("syncToken"u8);
+            writer.WriteStringValue(SyncToken);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -54,14 +57,13 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         AppConfigurationKeyValueModifiedEventData IJsonModel<AppConfigurationKeyValueModifiedEventData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -99,6 +101,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 if (property.NameEquals("label"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        label = null;
+                        continue;
+                    }
                     label = property.Value.GetString();
                     continue;
                 }
@@ -128,7 +135,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureMessagingEventGridSystemEventsContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(AppConfigurationKeyValueModifiedEventData)} does not support writing '{options.Format}' format.");
             }
@@ -142,7 +149,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeAppConfigurationKeyValueModifiedEventData(document.RootElement, options);
                     }
                 default:
@@ -156,7 +163,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static AppConfigurationKeyValueModifiedEventData FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeAppConfigurationKeyValueModifiedEventData(document.RootElement);
         }
 

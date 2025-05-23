@@ -1,14 +1,11 @@
 # Release History
 
-## 1.4.0-beta.1 (Unreleased)
+## 1.4.0-beta.1 (2025-05-29)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Identity Management: Added support for creating identities with an associated customId.
+- Identity Operations: Introduced the get identity operation.
 
 ## 1.3.1 (2024-03-22)
 - Dependency versions updated.
@@ -71,4 +68,4 @@ Updated `Azure.Communication.Identity` version.
 
 <!-- LINKS -->
 [read_me]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/communication/Azure.Communication.Identity/README.md
-[documentation]: https://docs.microsoft.com/azure/communication-services/quickstarts/access-tokens?pivots=programming-language-csharp
+[documentation]: https://learn.microsoft.com/azure/communication-services/quickstarts/access-tokens?pivots=programming-language-csharp

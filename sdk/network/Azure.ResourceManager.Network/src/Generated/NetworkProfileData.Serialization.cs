@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.Network
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(NetworkProfileData)} does not support writing '{options.Format}' format.");
             }
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.Network
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeNetworkProfileData(document.RootElement, options);
                     }
                 default:

@@ -2790,6 +2790,27 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         }
 
         /// <summary>
+        ///   Indicates that an <see cref="EventProcessor{TPartition}" /> instance used an invalid offset format from a legacy checkpoint when initializing a partition for processing.
+        /// </summary>
+        ///
+        /// <param name="partitionId">The identifier of the Event Hub partition whose processing is taking place.</param>
+        /// <param name="identifier">A unique name used to identify the event processor.</param>
+        /// <param name="eventHubName">The name of the Event Hub that the processor is associated with.</param>
+        /// <param name="consumerGroup">The name of the consumer group that the processor is associated with.</param>
+        ///
+        [Event(131, Level = EventLevel.Error, Message = "The checkpoint data for partition '{0}' contains a legacy offset that is invalid after a geo-replication fail over has taken place.  This checkpoint will be automatically reset.  The processor instance with identifier '{1}' for Event Hub: {2} and Consumer Group: {3} will attempt to fall back to the default starting position for partition '{0}'.")]
+        public virtual void EventProcessorPartitionLegacyCheckpointFormat(string partitionId,
+                                                                          string identifier,
+                                                                          string eventHubName,
+                                                                          string consumerGroup)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(141, partitionId ?? string.Empty, identifier ?? string.Empty, eventHubName ?? string.Empty, consumerGroup ?? string.Empty);
+            }
+        }
+
+        /// <summary>
         ///   Gets the current value of <see cref="DateTimeOffset.UtcNow" /> formatted
         ///   for use in logs.
         /// </summary>

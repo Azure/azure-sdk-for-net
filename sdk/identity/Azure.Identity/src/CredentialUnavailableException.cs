@@ -59,6 +59,9 @@ namespace Azure.Identity
         /// <param name="info">The <see cref="SerializationInfo"/>.</param>
         /// <param name="context">The <see cref="StreamingContext"/>.</param>
         /// <returns></returns>
+#if NET8_0_OR_GREATER
+        [Obsolete(DiagnosticId = "SYSLIB0051")]
+#endif
         protected CredentialUnavailableException(SerializationInfo info, StreamingContext context) : base(info, context)
         {
         }

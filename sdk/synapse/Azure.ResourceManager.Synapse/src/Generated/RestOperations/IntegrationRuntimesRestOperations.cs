@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Synapse
                 case 200:
                     {
                         SynapseIntegrationRuntimeData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SynapseIntegrationRuntimeData.DeserializeSynapseIntegrationRuntimeData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Synapse
                 case 200:
                     {
                         SynapseIntegrationRuntimeData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SynapseIntegrationRuntimeData.DeserializeSynapseIntegrationRuntimeData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.Synapse
                 case 200:
                     {
                         SynapseIntegrationRuntimeData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SynapseIntegrationRuntimeData.DeserializeSynapseIntegrationRuntimeData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.Synapse
                 case 200:
                     {
                         SynapseIntegrationRuntimeData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SynapseIntegrationRuntimeData.DeserializeSynapseIntegrationRuntimeData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -604,7 +604,7 @@ namespace Azure.ResourceManager.Synapse
                 case 200:
                     {
                         SynapseIntegrationRuntimeListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SynapseIntegrationRuntimeListResult.DeserializeSynapseIntegrationRuntimeListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -633,7 +633,7 @@ namespace Azure.ResourceManager.Synapse
                 case 200:
                     {
                         SynapseIntegrationRuntimeListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SynapseIntegrationRuntimeListResult.DeserializeSynapseIntegrationRuntimeListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -892,7 +892,7 @@ namespace Azure.ResourceManager.Synapse
                 case 200:
                     {
                         SynapseIntegrationRuntimeOutboundNetworkDependenciesCategoryEndpointListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SynapseIntegrationRuntimeOutboundNetworkDependenciesCategoryEndpointListResult.DeserializeSynapseIntegrationRuntimeOutboundNetworkDependenciesCategoryEndpointListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -923,7 +923,7 @@ namespace Azure.ResourceManager.Synapse
                 case 200:
                     {
                         SynapseIntegrationRuntimeOutboundNetworkDependenciesCategoryEndpointListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SynapseIntegrationRuntimeOutboundNetworkDependenciesCategoryEndpointListResult.DeserializeSynapseIntegrationRuntimeOutboundNetworkDependenciesCategoryEndpointListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1164,7 +1164,7 @@ namespace Azure.ResourceManager.Synapse
                 case 200:
                     {
                         SynapseIntegrationRuntimeListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SynapseIntegrationRuntimeListResult.DeserializeSynapseIntegrationRuntimeListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1195,7 +1195,7 @@ namespace Azure.ResourceManager.Synapse
                 case 200:
                     {
                         SynapseIntegrationRuntimeListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SynapseIntegrationRuntimeListResult.DeserializeSynapseIntegrationRuntimeListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

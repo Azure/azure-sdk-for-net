@@ -1,12 +1,91 @@
 # Release History
 
-## 1.3.0-beta.1 (Unreleased)
+## 1.5.0-beta.1 (Unreleased)
 
 ### Features Added
 
 ### Breaking Changes
 
 ### Bugs Fixed
+
+### Other Changes
+
+## 1.4.1 (2025-05-09)
+
+### Bugs Fixed
+
+- Fixed an issue when a model builder was both IEnumerable and IPersistable.
+
+## 1.4.0 (2025-05-02)
+
+### Features Added
+
+- Added additional supported scenarios to System.ClientModel.SourceGeneration.
+
+### Other Changes
+
+- Upgraded versions of dependencies on System.Diagnostics.DiagnosticSource, System.Text.Json, and Microsoft.Extensions.Logging.Abstractions.
+- Renamed `ActivityExtensions.MarkFailed` to `ActivityExtensions.MarkClientActivityFailed`.
+- Made `int maxSize` parameter to `ClientCache` constructor required and removed default value.
+- Changed `IEquatable<object> clientId` parameter to `object clientId` in `ClientCache.GetClient`
+- Renamed `ConnectionCollection` to `ClientConnectionCollection`
+- Renamed `ConnectionProvider` to `ClientConnectionProvider`
+- Renamed `ToCollection` to `ConvertCollectionBuilder` in `ModelReadWriteTypeBuilder`
+- Renamed `AddKeyValuePair` to `AddItemWithKey` in `ModelReadWriteTypeBuilder`
+
+## 1.4.0-beta.6 (2025-04-28)
+
+### Features Added
+
+- Added additional supported scenarios to System.ClientModel.SourceGeneration.
+
+## 1.4.0-beta.5 (2025-04-23)
+
+### Features Added
+
+- Added additional supported scenarios to System.ClientModel.SourceGeneration.
+
+## 1.4.0-beta.4 (2025-04-21)
+
+### Features Added
+
+- Added additional supported scenarios to System.ClientModel.SourceGeneration.
+
+## 1.4.0-beta.3 (2025-04-16)
+
+### Bugs Fixed
+
+- System.ClientModel.SourceGeneration adds the Default property even when no type builders exist.
+
+## 1.4.0-beta.2 (2025-04-14)
+
+### Features Added
+
+- Added extensions to `System.Diagnostics.Activity` and `System.Diagnostics.ActivitySource` to simplify instrumentation of client libraries
+- Added new overloads to `System.ClientModel.ModelReaderWriter` which take in a new 
+[ModelReaderWriterContext](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md)
+which allows reading and writing of collections of `IPersistableModel<>`.  In addition any calls to the new overloads are AOT compatible.
+
+## 1.4.0-beta.1 (2025-03-06)
+
+### Features Added
+
+- Added new connection management types in the `System.ClientModel.Primitives` namespace:
+  - `ConnectionProvider`: Abstract base class for managing client connections, including retrieval of connection settings and subclient caching.
+  - `ClientConnection`: Readonly struct that encapsulates connection options with support for API key, token, or no authentication.
+  - `ConnectionCollection`: A keyed collection of client connections, supporting JSON serialization and providing an enhanced debugger view.
+  - `ClientCache`: Implements an LRU-based cache for efficient reuse of client instances and optimized retrieval.
+
+### Bugs Fixed
+
+- Removed debugging statement in pipeline creation when applying the `ClientLoggingOptions.AllowedHeaderNames` option.
+
+## 1.3.0 (2025-02-11)
+
+### Features Added
+
+- Added default logging with sanitization to Event Source.
+  - Added new logging options type to configure logging behavior, disable all logging, or opt to use ILogger instead.
 
 ### Other Changes
 

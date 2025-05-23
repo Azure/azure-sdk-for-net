@@ -52,24 +52,65 @@ namespace Azure.ResourceManager.Nginx.Tests.Scenario
         public async Task Data()
         {
             string nginxDeploymentName = Recording.GenerateAssetName("testDeployment-");
+            ResourceIdentifier nginxResourceIdentifier = NginxDeploymentResource.CreateResourceIdentifier(Subscription.Data.SubscriptionId, ResGroup.Data.Name, nginxDeploymentName);
             NginxDeploymentResource nginxDeployment = await CreateNginxDeployment(ResGroup, Location, nginxDeploymentName);
 
             Assert.IsTrue(nginxDeployment.HasData);
             Assert.NotNull(nginxDeployment.Data);
             Assert.IsTrue(nginxDeployment.Data.Name.Equals(nginxDeploymentName));
+            Assert.IsTrue(nginxDeployment.Data.Id.Equals(nginxResourceIdentifier));
+            Assert.IsTrue(nginxDeployment.Data.ResourceType.Equals(NginxDeploymentResource.ResourceType));
+            Assert.IsTrue(nginxDeployment.Data.Location.Equals(Location));
+            Assert.IsNotNull(nginxDeployment.Data.SystemData);
+            Assert.IsNotNull(nginxDeployment.Data.Tags);
             Assert.IsNotNull(nginxDeployment.Data.Identity);
+            Assert.IsNotNull(nginxDeployment.Data.Sku);
             Assert.IsNotNull(nginxDeployment.Data.SkuName);
             Assert.IsNotNull(nginxDeployment.Data.Properties.ProvisioningState);
             Assert.IsNotNull(nginxDeployment.Data.Properties.NginxVersion);
-            Assert.IsNotNull(nginxDeployment.Data.Properties.NetworkProfile.FrontEndIPConfiguration);
-            Assert.IsNotNull(nginxDeployment.Data.Properties.NetworkProfile.NetworkInterfaceConfiguration);
+            Assert.IsNotNull(nginxDeployment.Data.Properties.NetworkProfile.FrontEndIPConfiguration.PublicIPAddresses);
+            Assert.IsNotNull(nginxDeployment.Data.Properties.NetworkProfile.FrontEndIPConfiguration.PrivateIPAddresses);
+            Assert.IsNotNull(nginxDeployment.Data.Properties.NetworkProfile.NetworkInterfaceConfiguration.SubnetId);
             Assert.IsNotNull(nginxDeployment.Data.Properties.NetworkProfile.NetworkInterfaceSubnetId);
             Assert.IsNotNull(nginxDeployment.Data.Properties.IPAddress);
             Assert.IsNotNull(nginxDeployment.Data.Properties.EnableDiagnosticsSupport);
-            Assert.IsNotNull(nginxDeployment.Data.Properties.ScalingProperties);
-            Assert.IsNotNull(nginxDeployment.Data.Properties.AutoUpgradeProfile);
+            Assert.IsNull(nginxDeployment.Data.Properties.Logging);
+            Assert.IsNull(nginxDeployment.Data.Properties.LoggingStorageAccount);
+            Assert.IsNotNull(nginxDeployment.Data.Properties.ScalingProperties.Capacity);
+            Assert.IsNotNull(nginxDeployment.Data.Properties.ScalingProperties.Profiles);
+            Assert.IsNotNull(nginxDeployment.Data.Properties.AutoUpgradeProfile.UpgradeChannel);
+            Assert.IsNotNull(nginxDeployment.Data.Properties.UserProfile.PreferredEmail);
             Assert.IsNotNull(nginxDeployment.Data.Properties.UserPreferredEmail);
             Assert.IsNull(nginxDeployment.Data.Properties.NginxAppProtect);
+            Assert.IsNotNull(nginxDeployment.Data.Properties.DataplaneApiEndpoint);
+        }
+
+        [TestCase]
+        [RecordedTest]
+        public async Task GetNginxDeploymentApiKeys()
+        {
+            string nginxDeploymentName = Recording.GenerateAssetName("testDeployment-");
+            NginxDeploymentResource nginxDeployment = await CreateNginxDeployment(ResGroup, Location, nginxDeploymentName);
+
+            NginxDeploymentApiKeyCollection collection = nginxDeployment.GetNginxDeploymentApiKeys();
+            Assert.NotNull(collection);
+        }
+
+        [TestCase]
+        [RecordedTest]
+        public async Task GetNginxDeploymentApiKey()
+        {
+            string nginxDeploymentName = Recording.GenerateAssetName("testDeployment-");
+            NginxDeploymentResource nginxDeployment = await CreateNginxDeployment(ResGroup, Location, nginxDeploymentName);
+
+            string nginxDeploymentApiKeyName = Recording.GenerateAssetName("testApiKey-");
+            _ = await CreateNginxDeploymentApiKey(nginxDeployment, nginxDeploymentApiKeyName);
+            NginxDeploymentApiKeyResource nginxDeploymentApiKey = await nginxDeployment.GetNginxDeploymentApiKeyAsync(nginxDeploymentApiKeyName);
+
+            Assert.NotNull(nginxDeploymentApiKey);
+            Assert.IsTrue(nginxDeploymentApiKeyName.Equals(nginxDeploymentApiKey.Data.Name, StringComparison.InvariantCultureIgnoreCase));
+            Assert.ThrowsAsync<RequestFailedException>(async () => _ = await nginxDeployment.GetNginxDeploymentApiKeyAsync(nginxDeploymentApiKeyName + "1"));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await nginxDeployment.GetNginxDeploymentApiKeyAsync(null));
         }
 
         [TestCase]
@@ -122,7 +163,7 @@ namespace Azure.ResourceManager.Nginx.Tests.Scenario
 
             const string nginxConfigurationName = "default";
             const string virtualPath = "/etc/nginx/nginx.conf";
-            _ = await CreateNginxConfiguration(Location, nginxDeployment, nginxConfigurationName, virtualPath);
+            _ = await CreateNginxConfiguration(nginxDeployment, nginxConfigurationName, virtualPath);
             NginxConfigurationResource nginxConfiguration = await nginxDeployment.GetNginxConfigurationAsync(nginxConfigurationName);
 
             Assert.NotNull(nginxConfiguration);
@@ -259,18 +300,25 @@ namespace Azure.ResourceManager.Nginx.Tests.Scenario
             };
             NginxDeploymentUpdatePropertiesNginxAppProtect nginxAppProtect = new NginxDeploymentUpdatePropertiesNginxAppProtect
             {
-                WebApplicationFirewallActivationState = ActivationState.Enabled
+                WebApplicationFirewallActivationState = WebApplicationFirewallActivationState.Enabled
             };
             deploymentPatch.Properties.NginxAppProtect = nginxAppProtect;
-            NginxDeploymentResource nginxDeployment3 = (await nginxDeployment.UpdateAsync(WaitUntil.Completed, deploymentPatch)).Value;
+            NginxDeploymentResource updatedNginxDeployment = (await nginxDeployment.UpdateAsync(WaitUntil.Completed, deploymentPatch)).Value;
 
-            Assert.AreEqual(nginxDeployment3.Data.Properties.NginxAppProtect.WebApplicationFirewallActivationState, ActivationState.Enabled);
+            Assert.IsNotNull(updatedNginxDeployment.Data.Properties.NginxAppProtect.WebApplicationFirewallActivationState);
+            Assert.AreEqual(updatedNginxDeployment.Data.Properties.NginxAppProtect.WebApplicationFirewallActivationState, WebApplicationFirewallActivationState.Enabled);
+            Assert.IsNotNull(updatedNginxDeployment.Data.Properties.NginxAppProtect.WebApplicationFirewallSettings.ActivationState);
+            Assert.AreEqual(updatedNginxDeployment.Data.Properties.NginxAppProtect.WebApplicationFirewallSettings.ActivationState, WebApplicationFirewallActivationState.Enabled);
+            Assert.IsNotNull(updatedNginxDeployment.Data.Properties.NginxAppProtect.WebApplicationFirewallStatus.AttackSignaturesPackage);
+            Assert.IsNotNull(updatedNginxDeployment.Data.Properties.NginxAppProtect.WebApplicationFirewallStatus.BotSignaturesPackage);
+            Assert.IsNotNull(updatedNginxDeployment.Data.Properties.NginxAppProtect.WebApplicationFirewallStatus.ThreatCampaignsPackage);
+            Assert.IsNotNull(updatedNginxDeployment.Data.Properties.NginxAppProtect.WebApplicationFirewallStatus.ComponentVersions);
 
-            nginxAppProtect.WebApplicationFirewallActivationState = ActivationState.Disabled;
+            nginxAppProtect.WebApplicationFirewallActivationState = WebApplicationFirewallActivationState.Disabled;
             deploymentPatch.Properties.NginxAppProtect = nginxAppProtect;
             NginxDeploymentResource nginxDeployment2 = (await nginxDeployment.UpdateAsync(WaitUntil.Completed, deploymentPatch)).Value;
 
-            Assert.AreEqual(nginxDeployment2.Data.Properties.NginxAppProtect.WebApplicationFirewallActivationState, ActivationState.Disabled);
+            Assert.AreEqual(nginxDeployment2.Data.Properties.NginxAppProtect.WebApplicationFirewallActivationState, WebApplicationFirewallActivationState.Disabled);
         }
     }
 }

@@ -11,17 +11,17 @@ using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.NetApp.Models;
 using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.NetApp.Samples
 {
     public partial class Sample_SubscriptionResourceExtensions
     {
-        // CheckNameAvailability
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CheckNetAppNameAvailability_CheckNameAvailability()
         {
-            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2024-07-01/examples/CheckNameAvailability.json
+            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2025-01-01/examples/CheckNameAvailability.json
             // this example is just showing the usage of "NetAppResource_CheckNameAvailability" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.NetApp.Samples
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "D633CC2E-722B-4AE1-B636-BBD9E4C60ED9";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
@@ -43,12 +43,11 @@ namespace Azure.ResourceManager.NetApp.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // CheckFilePathAvailability
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CheckNetAppFilePathAvailability_CheckFilePathAvailability()
         {
-            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2024-07-01/examples/CheckFilePathAvailability.json
+            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2025-01-01/examples/CheckFilePathAvailability.json
             // this example is just showing the usage of "NetAppResource_CheckFilePathAvailability" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -58,7 +57,7 @@ namespace Azure.ResourceManager.NetApp.Samples
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "D633CC2E-722B-4AE1-B636-BBD9E4C60ED9";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
@@ -70,12 +69,11 @@ namespace Azure.ResourceManager.NetApp.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // CheckQuotaAvailability
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CheckNetAppQuotaAvailability_CheckQuotaAvailability()
         {
-            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2024-07-01/examples/CheckQuotaAvailability.json
+            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2025-01-01/examples/CheckQuotaAvailability.json
             // this example is just showing the usage of "NetAppResource_CheckQuotaAvailability" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -85,7 +83,7 @@ namespace Azure.ResourceManager.NetApp.Samples
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "D633CC2E-722B-4AE1-B636-BBD9E4C60ED9";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
@@ -97,12 +95,11 @@ namespace Azure.ResourceManager.NetApp.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // RegionInfo_Query
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task QueryRegionInfoNetAppResource_RegionInfoQuery()
         {
-            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2024-07-01/examples/RegionInfo.json
+            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2025-01-01/examples/RegionInfo.json
             // this example is just showing the usage of "NetAppResource_QueryRegionInfo" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -112,7 +109,7 @@ namespace Azure.ResourceManager.NetApp.Samples
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "D633CC2E-722B-4AE1-B636-BBD9E4C60ED9";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
@@ -123,12 +120,11 @@ namespace Azure.ResourceManager.NetApp.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // NetworkSiblingSet_Query
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task QueryNetworkSiblingSetNetAppResource_NetworkSiblingSetQuery()
         {
-            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2024-07-01/examples/NetworkSiblingSet_Query.json
+            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2025-01-01/examples/NetworkSiblingSet_Query.json
             // this example is just showing the usage of "NetAppResource_QueryNetworkSiblingSet" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -138,7 +134,7 @@ namespace Azure.ResourceManager.NetApp.Samples
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "D633CC2E-722B-4AE1-B636-BBD9E4C60ED9";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
@@ -150,12 +146,11 @@ namespace Azure.ResourceManager.NetApp.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // NetworkFeatures_Update
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task UpdateNetworkSiblingSetNetAppResource_NetworkFeaturesUpdate()
         {
-            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2024-07-01/examples/NetworkSiblingSet_Update.json
+            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2025-01-01/examples/NetworkSiblingSet_Update.json
             // this example is just showing the usage of "NetAppResource_UpdateNetworkSiblingSet" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -165,7 +160,7 @@ namespace Azure.ResourceManager.NetApp.Samples
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "D633CC2E-722B-4AE1-B636-BBD9E4C60ED9";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
@@ -178,12 +173,65 @@ namespace Azure.ResourceManager.NetApp.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // QuotaLimits
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetNetAppResourceUsages_UsagesList()
+        {
+            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2025-01-01/examples/Usages_List.json
+            // this example is just showing the usage of "NetAppResourceUsages_List" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this SubscriptionResource created on azure
+            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
+            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
+
+            // invoke the operation and iterate over the result
+            AzureLocation location = new AzureLocation("eastus");
+            await foreach (NetAppUsageResult item in subscriptionResource.GetNetAppResourceUsagesAsync(location))
+            {
+                Console.WriteLine($"Succeeded: {item}");
+            }
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetNetAppResourceUsage_UsagesGet()
+        {
+            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2025-01-01/examples/Usages_Get.json
+            // this example is just showing the usage of "NetAppResourceUsages_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this SubscriptionResource created on azure
+            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
+            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
+
+            // invoke the operation
+            AzureLocation location = new AzureLocation("eastus");
+            string usageType = "totalTibsPerSubscription";
+            NetAppUsageResult result = await subscriptionResource.GetNetAppResourceUsageAsync(location, usageType);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetNetAppQuotaLimits_QuotaLimits()
         {
-            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2024-07-01/examples/QuotaLimits_List.json
+            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2025-01-01/examples/QuotaLimits_List.json
             // this example is just showing the usage of "NetAppResourceQuotaLimits_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -193,7 +241,7 @@ namespace Azure.ResourceManager.NetApp.Samples
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "D633CC2E-722B-4AE1-B636-BBD9E4C60ED9";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
@@ -204,15 +252,14 @@ namespace Azure.ResourceManager.NetApp.Samples
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // QuotaLimits
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetNetAppQuotaLimit_QuotaLimits()
         {
-            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2024-07-01/examples/QuotaLimits_Get.json
+            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2025-01-01/examples/QuotaLimits_Get.json
             // this example is just showing the usage of "NetAppResourceQuotaLimits_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -222,7 +269,7 @@ namespace Azure.ResourceManager.NetApp.Samples
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "D633CC2E-722B-4AE1-B636-BBD9E4C60ED9";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
@@ -232,6 +279,37 @@ namespace Azure.ResourceManager.NetApp.Samples
             NetAppSubscriptionQuotaItem result = await subscriptionResource.GetNetAppQuotaLimitAsync(location, quotaLimitName);
 
             Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetNetAppAccounts_AccountsList()
+        {
+            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2025-01-01/examples/Accounts_List.json
+            // this example is just showing the usage of "Accounts_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this SubscriptionResource created on azure
+            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
+            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
+
+            // invoke the operation and iterate over the result
+            await foreach (NetAppAccountResource item in subscriptionResource.GetNetAppAccountsAsync())
+            {
+                // the variable item is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                NetAppAccountData resourceData = item.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+
+            Console.WriteLine("Succeeded");
         }
     }
 }

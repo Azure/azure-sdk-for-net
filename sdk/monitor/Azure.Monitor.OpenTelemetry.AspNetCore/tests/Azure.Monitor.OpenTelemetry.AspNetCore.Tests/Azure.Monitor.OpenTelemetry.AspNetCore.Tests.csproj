@@ -30,14 +30,14 @@
     <Compile Include="..\..\..\Azure.Monitor.OpenTelemetry.Exporter\tests\Azure.Monitor.OpenTelemetry.Exporter.Tests\CommonTestFramework\TelemetryItemOutputHelper.cs" LinkBase="CommonTestFramework" />
   </ItemGroup>
 
-  <ItemGroup Condition="'$(TargetFramework)' == 'net6.0'">
-    <FrameworkReference Include="Microsoft.AspNetCore.App" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" VersionOverride="6.0.21" />
-  </ItemGroup>
-
   <ItemGroup Condition="'$(TargetFramework)' == 'net8.0'">
     <FrameworkReference Include="Microsoft.AspNetCore.App" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" VersionOverride="8.0.7" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" VersionOverride="8.0.15" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)' == 'net9.0'">
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" VersionOverride="9.0.4" />
   </ItemGroup>
 
 </Project>

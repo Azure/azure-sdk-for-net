@@ -35,8 +35,9 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         BlobClientOptions,
         StorageTestEnvironment>
     {
-        private readonly AccessTier _defaultAccessTier = AccessTier.Cool;
-        private const string _defaultContentType = "application/octet-stream";
+        private readonly AccessTier _defaultAccessTier = AccessTier.P30;
+        private readonly PremiumPageBlobAccessTier _defaultPremiumAccessTier = PremiumPageBlobAccessTier.P30;
+        private const string _defaultContentType = "image/jpeg";
         private const string _defaultContentLanguage = "en-US";
         private const string _defaultContentDisposition = "inline";
         private const string _defaultCacheControl = "no-cache";
@@ -74,7 +75,8 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             bool createResource = false,
             string objectName = null,
             BlobClientOptions options = null,
-            Stream contents = null)
+            Stream contents = null,
+            bool premium = false)
         {
             objectName ??= GetNewObjectName();
             PageBlobClient blobClient = container.GetPageBlobClient(objectName);
@@ -88,24 +90,27 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
 
                 if (contents != default)
                 {
-                    await UploadPagesAsync(blobClient, contents);
+                    await UploadPagesAsync(blobClient, contents, premium: premium);
                 }
                 else
                 {
                     var data = GetRandomBuffer(objectLength.Value);
                     using Stream originalStream = await CreateLimitedMemoryStream(objectLength.Value);
-                    await UploadPagesAsync(blobClient, originalStream);
+                    await UploadPagesAsync(blobClient, originalStream, premium: premium);
                 }
             }
             Uri sourceUri = blobClient.GenerateSasUri(BaseBlobs::Azure.Storage.Sas.BlobSasPermissions.All, Recording.UtcNow.AddDays(1));
             return InstrumentClient(new PageBlobClient(sourceUri, GetOptions()));
         }
 
-        private async Task UploadPagesAsync(PageBlobClient blobClient, Stream contents)
+        private async Task UploadPagesAsync(
+            PageBlobClient blobClient,
+            Stream contents,
+            bool premium = false)
         {
             long size = contents.Length;
             Assert.IsTrue(size % (KB / 2) == 0, "Cannot create page blob that's not a multiple of 512");
-            await blobClient.CreateIfNotExistsAsync(size, new PageBlobCreateOptions()
+            PageBlobCreateOptions options = new()
             {
                 Metadata = _defaultMetadata,
                 HttpHeaders = new BlobHttpHeaders()
@@ -114,8 +119,13 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                     ContentLanguage = _defaultContentLanguage,
                     ContentDisposition = _defaultContentDisposition,
                     CacheControl = _defaultCacheControl,
-                }
-            });
+                },
+            };
+            if (premium)
+            {
+                options.PremiumPageBlobAccessTier = _defaultPremiumAccessTier;
+            }
+            await blobClient.CreateIfNotExistsAsync(size, options);
             long offset = 0;
             long blockSize = Math.Min(DefaultBufferSize, size);
             while (offset < size)
@@ -165,62 +175,63 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 options,
                 contents);
 
-        protected override StorageResourceItem GetDestinationStorageResourceItem(
+        private StorageResourceItem GetDestinationStorageResourceItemInternal(
             PageBlobClient objectClient,
-            TransferPropertiesTestType type = TransferPropertiesTestType.Default)
+            TransferPropertiesTestType type = TransferPropertiesTestType.Default,
+            bool premium = false)
         {
             PageBlobStorageResourceOptions options = default;
             if (type == TransferPropertiesTestType.NewProperties)
             {
                 options = new PageBlobStorageResourceOptions
                 {
-                    ContentDisposition = new(_defaultContentDisposition),
-                    ContentLanguage = new(_defaultContentLanguage),
-                    CacheControl = new(_defaultCacheControl),
-                    ContentType = new(_defaultContentType),
-                    Metadata = new(_defaultMetadata)
+                    ContentDisposition = _defaultContentDisposition,
+                    ContentLanguage = _defaultContentLanguage,
+                    CacheControl = _defaultCacheControl,
+                    ContentType = _defaultContentType,
+                    Metadata = _defaultMetadata
                 };
+                if (premium)
+                {
+                    options.AccessTier = _defaultAccessTier;
+                }
             }
             else if (type == TransferPropertiesTestType.NoPreserve)
             {
                 options = new PageBlobStorageResourceOptions
                 {
-                    ContentDisposition = new(false),
-                    ContentLanguage = new(false),
-                    CacheControl = new(false),
-                    ContentType = new(false),
-                    Metadata = new(false)
-                };
-            }
-            else if (type == TransferPropertiesTestType.Preserve)
-            {
-                options = new PageBlobStorageResourceOptions
-                {
-                    ContentDisposition = new(true),
-                    ContentLanguage = new(true),
-                    CacheControl = new(true),
-                    ContentType = new(true),
-                    Metadata = new(true)
+                    ContentDisposition = default,
+                    ContentLanguage = default,
+                    CacheControl = default,
+                    ContentType = default,
+                    Metadata = default,
+                    AccessTier = default
                 };
             }
             return new PageBlobStorageResource(objectClient, options);
         }
 
+        protected override StorageResourceItem GetDestinationStorageResourceItem(
+            PageBlobClient objectClient,
+            TransferPropertiesTestType type = TransferPropertiesTestType.Default)
+            => GetDestinationStorageResourceItemInternal(objectClient, type);
+
         protected override Task<Stream> DestinationOpenReadAsync(PageBlobClient objectClient)
             => objectClient.OpenReadAsync();
 
-        protected override async Task VerifyPropertiesCopyAsync(
-            DataTransfer transfer,
+        private async Task VerifyPropertiesCopyAsyncInternal(
+            TransferOperation transfer,
             TransferPropertiesTestType transferPropertiesTestType,
             TestEventsRaised testEventsRaised,
             PageBlobClient sourceClient,
             PageBlobClient destinationClient,
+            bool premium,
             CancellationToken cancellationToken)
         {
             // Verify completion
             Assert.NotNull(transfer);
             Assert.IsTrue(transfer.HasCompleted);
-            Assert.AreEqual(DataTransferState.Completed, transfer.TransferStatus.State);
+            Assert.AreEqual(TransferState.Completed, transfer.Status.State);
             // Verify Copy - using original source File and Copying the destination
             await testEventsRaised.AssertSingleCompletedCheck();
             using Stream sourceStream = await sourceClient.OpenReadAsync();
@@ -235,6 +246,11 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 Assert.IsNull(destinationProperties.ContentDisposition);
                 Assert.IsNull(destinationProperties.ContentLanguage);
                 Assert.IsNull(destinationProperties.CacheControl);
+                Assert.That(destinationProperties.ContentType, Is.Not.EqualTo(_defaultContentType));
+                if (premium)
+                {
+                    Assert.That(destinationProperties.AccessTier.ToString(), Is.Not.EqualTo(_defaultAccessTier.ToString()));
+                }
 
                 GetBlobTagResult destinationTags = await destinationClient.GetTagsAsync();
                 Assert.IsEmpty(destinationTags.Tags);
@@ -248,6 +264,10 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 Assert.AreEqual(_defaultContentLanguage, destinationProperties.ContentLanguage);
                 Assert.AreEqual(_defaultCacheControl, destinationProperties.CacheControl);
                 Assert.AreEqual(_defaultContentType, destinationProperties.ContentType);
+                if (premium)
+                {
+                    Assert.That(destinationProperties.AccessTier.ToString(), Is.EqualTo(_defaultAccessTier.ToString()));
+                }
             }
             else //(transferPropertiesTestType == TransferPropertiesTestType.Default ||
                  //transferPropertiesTestType == TransferPropertiesTestType.Preserve)
@@ -260,8 +280,28 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 Assert.AreEqual(sourceProperties.ContentLanguage, destinationProperties.ContentLanguage);
                 Assert.AreEqual(sourceProperties.CacheControl, destinationProperties.CacheControl);
                 Assert.AreEqual(sourceProperties.ContentType, destinationProperties.ContentType);
+                if (premium)
+                {
+                    Assert.AreEqual(sourceProperties.AccessTier, destinationProperties.AccessTier);
+                }
             }
         }
+
+        protected override async Task VerifyPropertiesCopyAsync(
+            TransferOperation transfer,
+            TransferPropertiesTestType transferPropertiesTestType,
+            TestEventsRaised testEventsRaised,
+            PageBlobClient sourceClient,
+            PageBlobClient destinationClient,
+            CancellationToken cancellationToken)
+            => await VerifyPropertiesCopyAsyncInternal(
+                transfer,
+                transferPropertiesTestType,
+                testEventsRaised,
+                sourceClient,
+                destinationClient,
+                false,
+                cancellationToken);
 
         public BlobClientOptions GetOptions()
         {
@@ -282,6 +322,59 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             }
 
             return InstrumentClientOptions(options);
+        }
+
+        [RecordedTest]
+        [TestCase(TransferPropertiesTestType.NoPreserve)]
+        [TestCase(TransferPropertiesTestType.NewProperties)]
+        [TestCase(TransferPropertiesTestType.Preserve)]
+        public async Task CopyPremiumPageBlob_AccessTier(TransferPropertiesTestType propertiesType)
+        {
+            // Arrange
+            await using IDisposingContainer<BlobContainerClient> source = await SourceClientBuilder.GetTestContainerAsync(premium: true);
+            await using IDisposingContainer<BlobContainerClient> destination = await DestinationClientBuilder.GetTestContainerAsync(premium: true);
+
+            // Create Source Blob with Premium Tier
+            PageBlobClient sourceClient = await GetPageBlobClientAsync(
+                container: source.Container,
+                createResource: true,
+                objectLength: Constants.KB,
+                premium: true);
+            StorageResourceItem sourceResource = GetSourceStorageResourceItem(sourceClient);
+
+            // Create Destination Client with option (properties to preserve)
+            PageBlobClient destinationClient = await GetDestinationObjectClientAsync(
+                container: destination.Container,
+                createResource: false);
+            StorageResourceItem destinationResource = GetDestinationStorageResourceItemInternal(
+                destinationClient,
+                type: propertiesType,
+                premium: true);
+
+            TransferOptions options = new TransferOptions();
+            TestEventsRaised testEventsRaised = new TestEventsRaised(options);
+            TransferManager transferManager = new TransferManager();
+
+            // Act - Start transfer and await for completion.
+            TransferOperation transfer = await transferManager.StartTransferAsync(
+                sourceResource,
+                destinationResource,
+                options);
+            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
+            await TestTransferWithTimeout.WaitForCompletionAsync(
+                transfer,
+                testEventsRaised,
+                cancellationTokenSource.Token);
+
+            // Assert
+            await VerifyPropertiesCopyAsyncInternal(
+                transfer,
+                propertiesType,
+                testEventsRaised,
+                sourceClient,
+                destinationClient,
+                true,
+                cancellationTokenSource.Token);
         }
     }
 }

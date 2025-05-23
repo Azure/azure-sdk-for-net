@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.ServiceBus.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-10-01-preview</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.ServiceBus.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-10-01-preview</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.ServiceBus.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-10-01-preview</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.ServiceBus.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-10-01-preview</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

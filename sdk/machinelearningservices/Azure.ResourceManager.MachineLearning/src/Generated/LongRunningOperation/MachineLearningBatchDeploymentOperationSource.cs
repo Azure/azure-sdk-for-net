@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +23,14 @@ namespace Azure.ResourceManager.MachineLearning
 
         MachineLearningBatchDeploymentResource IOperationSource<MachineLearningBatchDeploymentResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = MachineLearningBatchDeploymentData.DeserializeMachineLearningBatchDeploymentData(document.RootElement);
+            var data = ModelReaderWriter.Read<MachineLearningBatchDeploymentData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerMachineLearningContext.Default);
             return new MachineLearningBatchDeploymentResource(_client, data);
         }
 
         async ValueTask<MachineLearningBatchDeploymentResource> IOperationSource<MachineLearningBatchDeploymentResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = MachineLearningBatchDeploymentData.DeserializeMachineLearningBatchDeploymentData(document.RootElement);
-            return new MachineLearningBatchDeploymentResource(_client, data);
+            var data = ModelReaderWriter.Read<MachineLearningBatchDeploymentData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerMachineLearningContext.Default);
+            return await Task.FromResult(new MachineLearningBatchDeploymentResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

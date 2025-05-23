@@ -8,6 +8,8 @@ using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Implementation;
+using Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Interface;
 using Azure.Identity;
 using Microsoft.IdentityModel.JsonWebTokens;
 using Microsoft.IdentityModel.Tokens;
@@ -32,7 +34,18 @@ public class PlaywrightServiceTests
     [SetUp]
     public void Setup()
     {
+        // Temporary - Switch to IEnvironment
         Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceUri, "https://playwright.microsoft.com");
+        Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceAccessToken, null);
+        Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceOs, null);
+        Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceRunId, null);
+        Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceExposeNetwork, null);
+        Environment.SetEnvironmentVariable(Constants.s_playwright_service_disable_scalable_execution_environment_variable, null);
+        Environment.SetEnvironmentVariable(Constants.s_playwright_service_reporting_url_environment_variable, null);
+        Environment.SetEnvironmentVariable(Constants.s_playwright_service_workspace_id_environment_variable, null);
+        Environment.SetEnvironmentVariable(Constants.s_playwright_service_disable_scalable_execution_environment_variable, null);
+        Environment.SetEnvironmentVariable(Constants.s_playwright_service_auth_type_environment_variable, null);
+        Environment.SetEnvironmentVariable(Constants.s_playwright_service_one_time_operation_flag_environment_variable, null);
     }
     [TearDown]
     public void TearDown()
@@ -45,6 +58,9 @@ public class PlaywrightServiceTests
         Environment.SetEnvironmentVariable(Constants.s_playwright_service_disable_scalable_execution_environment_variable, null);
         Environment.SetEnvironmentVariable(Constants.s_playwright_service_reporting_url_environment_variable, null);
         Environment.SetEnvironmentVariable(Constants.s_playwright_service_workspace_id_environment_variable, null);
+        Environment.SetEnvironmentVariable(Constants.s_playwright_service_disable_scalable_execution_environment_variable, null);
+        Environment.SetEnvironmentVariable(Constants.s_playwright_service_auth_type_environment_variable, null);
+        Environment.SetEnvironmentVariable(Constants.s_playwright_service_one_time_operation_flag_environment_variable, null);
     }
 
     [Test]
@@ -65,28 +81,34 @@ public class PlaywrightServiceTests
             Assert.That(Environment.GetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceRunId), Is.Not.Null);
             Assert.That(playwrightService.ServiceAuth, Is.EqualTo(ServiceAuthType.EntraId));
             Assert.That(playwrightService.UseCloudHostedBrowsers, Is.True);
+            Assert.AreEqual(playwrightService.Os!, OSPlatform.Linux);
+            Assert.AreEqual(playwrightService.ExposeNetwork!, Constants.s_default_expose_network);
+            Assert.That(playwrightService.RunId, Is.Not.Null);
         });
     }
 
     [Test]
     public void Constructor_PassServiceOS_SetsServiceOS()
     {
-        _ = new PlaywrightService(os: OSPlatform.Windows, entraLifecycle: null);
+        var playwrightService = new PlaywrightService(os: OSPlatform.Windows, entraLifecycle: null);
         Assert.That(Environment.GetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceOs), Is.EqualTo(ServiceOs.Windows));
+        Assert.That(playwrightService.Os, Is.EqualTo(OSPlatform.Windows));
     }
 
     [Test]
     public void Constructor_PassExposeNetwork_SetsExposeNetwork()
     {
-        _ = new PlaywrightService(exposeNetwork: "new-expose", entraLifecycle: null);
+        var playwrightService = new PlaywrightService(exposeNetwork: "new-expose", entraLifecycle: null);
         Assert.That(Environment.GetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceExposeNetwork), Is.EqualTo("new-expose"));
+        Assert.That(playwrightService.ExposeNetwork, Is.EqualTo("new-expose"));
     }
 
     [Test]
     public void Constructor_PassRunId_SetsRunId()
     {
-        _ = new PlaywrightService(runId: "new-run-id", entraLifecycle: null);
+        var playwrightService = new PlaywrightService(runId: "new-run-id", entraLifecycle: null);
         Assert.That(Environment.GetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceRunId), Is.EqualTo("new-run-id"));
+        Assert.That(playwrightService.RunId, Is.EqualTo("new-run-id"));
     }
 
     [Test]
@@ -119,12 +141,68 @@ public class PlaywrightServiceTests
     }
 
     [Test]
+    public void Constructor_PlaywrightServiceOSEnvironmentVariableIsSet_DoesNotUpdateTheEnvironmentVariableWithDefault()
+    {
+        Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceOs, ServiceOs.Windows);
+        _ = new PlaywrightService(entraLifecycle: null);
+        Assert.That(Environment.GetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceOs), Is.EqualTo(ServiceOs.Windows));
+    }
+
+    [Test]
+    public void Constructor_PlaywrightServiceExposeNetworkEnvironmentVariableIsSet_DoesNotUpdateTheEnvironmentVariableWithDefault()
+    {
+        Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceExposeNetwork, "new-expose");
+        _ = new PlaywrightService(entraLifecycle: null);
+        Assert.That(Environment.GetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceExposeNetwork), Is.EqualTo("new-expose"));
+    }
+
+    [Test]
+    public void Constructor_MultipleInitialization_DoesNotUpdateTheEnvironmentVariablesOnceSet()
+    {
+        _ = new PlaywrightService(entraLifecycle: null, os: OSPlatform.Linux, exposeNetwork: "old-expose", runId: "old-run-id", useCloudHostedBrowsers: false, serviceAuth: ServiceAuthType.EntraId);
+        var newPlaywrightService = new PlaywrightService(entraLifecycle: null, os: OSPlatform.Windows, exposeNetwork: "new-expose", runId: "new-run-id", useCloudHostedBrowsers: true, serviceAuth: ServiceAuthType.AccessToken);
+        Assert.Multiple(() =>
+        {
+            Assert.That(Environment.GetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceOs), Is.EqualTo(ServiceOs.Linux));
+            Assert.That(Environment.GetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceExposeNetwork), Is.EqualTo("old-expose"));
+            Assert.That(Environment.GetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceRunId), Is.EqualTo("old-run-id"));
+            Assert.That(Environment.GetEnvironmentVariable(Constants.s_playwright_service_disable_scalable_execution_environment_variable), Is.EqualTo("true"));
+            Assert.That(Environment.GetEnvironmentVariable(Constants.s_playwright_service_auth_type_environment_variable), Is.EqualTo(ServiceAuthType.EntraId));
+            Assert.That(newPlaywrightService.Os, Is.EqualTo(OSPlatform.Windows));
+            Assert.That(newPlaywrightService.ExposeNetwork, Is.EqualTo("new-expose"));
+            Assert.That(newPlaywrightService.RunId, Is.EqualTo("new-run-id"));
+            Assert.That(newPlaywrightService.UseCloudHostedBrowsers, Is.True);
+            Assert.That(newPlaywrightService.ServiceAuth, Is.EqualTo(ServiceAuthType.AccessToken));
+        });
+    }
+
+    [Test]
+    public void Constructor_MultipleInitialization_ReadsOlderEnvironmentVariables()
+    {
+        _ = new PlaywrightService(entraLifecycle: null, os: OSPlatform.Linux, exposeNetwork: "old-expose", runId: "old-run-id", useCloudHostedBrowsers: false, serviceAuth: ServiceAuthType.EntraId);
+        var newPlaywrightService = new PlaywrightService(entraLifecycle: null);
+        Assert.Multiple(() =>
+        {
+            Assert.That(Environment.GetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceOs), Is.EqualTo(ServiceOs.Linux));
+            Assert.That(Environment.GetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceExposeNetwork), Is.EqualTo("old-expose"));
+            Assert.That(Environment.GetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceRunId), Is.EqualTo("old-run-id"));
+            Assert.That(Environment.GetEnvironmentVariable(Constants.s_playwright_service_disable_scalable_execution_environment_variable), Is.EqualTo("true"));
+            Assert.That(Environment.GetEnvironmentVariable(Constants.s_playwright_service_auth_type_environment_variable), Is.EqualTo(ServiceAuthType.EntraId));
+            Assert.That(newPlaywrightService.Os, Is.EqualTo(OSPlatform.Linux));
+            Assert.That(newPlaywrightService.ExposeNetwork, Is.EqualTo("old-expose"));
+            Assert.That(newPlaywrightService.RunId, Is.EqualTo("old-run-id"));
+            Assert.That(newPlaywrightService.UseCloudHostedBrowsers, Is.False);
+            Assert.That(newPlaywrightService.ServiceAuth, Is.EqualTo(ServiceAuthType.EntraId));
+        });
+    }
+
+    [Test]
     public void Initialize_WhenServiceEnpointIsNotSet_NoOP()
     {
         Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceUri, null);
         var defaultAzureCredentialMock = new Mock<DefaultAzureCredential>();
         var jsonWebTokenHandlerMock = new Mock<JsonWebTokenHandler>();
-        var entraLifecycleMock = new Mock<EntraLifecycle>(defaultAzureCredentialMock.Object, jsonWebTokenHandlerMock.Object);
+        var entraLifecycleMock = new Mock<EntraLifecycle>(defaultAzureCredentialMock.Object, jsonWebTokenHandlerMock.Object, null);
         PlaywrightService service = new(entraLifecycle: entraLifecycleMock.Object);
         service.InitializeAsync().Wait();
         defaultAzureCredentialMock.Verify(x => x.GetTokenAsync(It.IsAny<TokenRequestContext>(), It.IsAny<CancellationToken>()), Times.Never);
@@ -139,7 +217,7 @@ public class PlaywrightServiceTests
         defaultAzureCredentialMock
             .Setup(x => x.GetTokenAsync(It.IsAny<TokenRequestContext>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync(new AccessToken(token, DateTimeOffset.UtcNow.AddMinutes(10)));
-        var entraLifecycleMock = new Mock<EntraLifecycle>(defaultAzureCredentialMock.Object, jsonWebTokenHandlerMock.Object);
+        var entraLifecycleMock = new Mock<EntraLifecycle>(defaultAzureCredentialMock.Object, jsonWebTokenHandlerMock.Object, null);
         Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceAccessToken, "access_token");
         PlaywrightService service = new(entraLifecycle: entraLifecycleMock.Object);
         service.InitializeAsync().Wait();
@@ -178,16 +256,16 @@ public class PlaywrightServiceTests
         defaultAzureCredentialMock
             .Setup(x => x.GetTokenAsync(It.IsAny<TokenRequestContext>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync(new AccessToken(token, DateTimeOffset.UtcNow.AddMinutes(10)));
-        var entraLifecycleMock = new Mock<EntraLifecycle>(defaultAzureCredentialMock.Object, jsonWebTokenHandlerMock.Object);
+        var entraLifecycleMock = new Mock<EntraLifecycle>(defaultAzureCredentialMock.Object, jsonWebTokenHandlerMock.Object, null);
         Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceAccessToken, "access_token");
         PlaywrightService service = new(entraLifecycle: entraLifecycleMock.Object, useCloudHostedBrowsers: false);
 
         Assert.That(Environment.GetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceUri), Is.Not.Null);
 
         service.InitializeAsync().Wait();
-        defaultAzureCredentialMock.Verify(x => x.GetTokenAsync(It.IsAny<TokenRequestContext>(), It.IsAny<CancellationToken>()), Times.Once);
+        defaultAzureCredentialMock.Verify(x => x.GetTokenAsync(It.IsAny<TokenRequestContext>(), It.IsAny<CancellationToken>()), Times.Never);
 
-        service.RotationTimer!.Dispose();
+        Assert.That(service.RotationTimer, Is.Null);
 
         Assert.That(Environment.GetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceUri), Is.Null);
     }
@@ -201,7 +279,7 @@ public class PlaywrightServiceTests
         defaultAzureCredentialMock
             .Setup(x => x.GetTokenAsync(It.IsAny<TokenRequestContext>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync(new AccessToken(token, DateTimeOffset.UtcNow.AddMinutes(10)));
-        var entraLifecycleMock = new Mock<EntraLifecycle>(defaultAzureCredentialMock.Object, jsonWebTokenHandlerMock.Object);
+        var entraLifecycleMock = new Mock<EntraLifecycle>(defaultAzureCredentialMock.Object, jsonWebTokenHandlerMock.Object, null);
         PlaywrightService service = new(entraLifecycle: entraLifecycleMock.Object);
         service.InitializeAsync().Wait();
         defaultAzureCredentialMock.Verify(x => x.GetTokenAsync(It.IsAny<TokenRequestContext>(), It.IsAny<CancellationToken>()), Times.Once);
@@ -218,7 +296,7 @@ public class PlaywrightServiceTests
         defaultAzureCredentialMock
             .Setup(x => x.GetTokenAsync(It.IsAny<TokenRequestContext>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync(new AccessToken(token, DateTimeOffset.UtcNow.AddMinutes(10)));
-        var entraLifecycleMock = new Mock<EntraLifecycle>(defaultAzureCredentialMock.Object, jsonWebTokenHandlerMock.Object);
+        var entraLifecycleMock = new Mock<EntraLifecycle>(defaultAzureCredentialMock.Object, jsonWebTokenHandlerMock.Object, null);
         PlaywrightService service = new(entraLifecycle: entraLifecycleMock.Object);
         service.InitializeAsync().Wait();
         defaultAzureCredentialMock.Verify(x => x.GetTokenAsync(It.IsAny<TokenRequestContext>(), It.IsAny<CancellationToken>()), Times.Once);
@@ -235,7 +313,7 @@ public class PlaywrightServiceTests
         defaultAzureCredentialMock
             .Setup(x => x.GetTokenAsync(It.IsAny<TokenRequestContext>(), It.IsAny<CancellationToken>()))
             .ThrowsAsync(new Exception());
-        var entraLifecycleMock = new Mock<EntraLifecycle>(defaultAzureCredentialMock.Object, jsonWebTokenHandlerMock.Object);
+        var entraLifecycleMock = new Mock<EntraLifecycle>(defaultAzureCredentialMock.Object, jsonWebTokenHandlerMock.Object, null);
         PlaywrightService service = new(entraLifecycle: entraLifecycleMock.Object);
         Exception? ex = Assert.ThrowsAsync<Exception>(async () => await service.InitializeAsync());
         Assert.That(ex!.Message, Is.EqualTo(Constants.s_no_auth_error));
@@ -253,7 +331,7 @@ public class PlaywrightServiceTests
         defaultAzureCredentialMock
             .Setup(x => x.GetTokenAsync(It.IsAny<TokenRequestContext>(), It.IsAny<CancellationToken>()))
             .ThrowsAsync(new Exception());
-        var entraLifecycleMock = new Mock<EntraLifecycle>(defaultAzureCredentialMock.Object, new JsonWebTokenHandler());
+        var entraLifecycleMock = new Mock<EntraLifecycle>(defaultAzureCredentialMock.Object, new JsonWebTokenHandler(), null);
         PlaywrightService service = new(entraLifecycle: entraLifecycleMock.Object, jsonWebTokenHandler: new JsonWebTokenHandler());
         Exception? ex = Assert.ThrowsAsync<Exception>(async () => await service.InitializeAsync());
         Assert.That(ex!.Message, Is.EqualTo(Constants.s_no_auth_error));
@@ -270,7 +348,7 @@ public class PlaywrightServiceTests
         defaultAzureCredentialMock
             .Setup(x => x.GetTokenAsync(It.IsAny<TokenRequestContext>(), It.IsAny<CancellationToken>()))
             .ThrowsAsync(new Exception());
-        var entraLifecycleMock = new Mock<EntraLifecycle>(defaultAzureCredentialMock.Object, new JsonWebTokenHandler());
+        var entraLifecycleMock = new Mock<EntraLifecycle>(defaultAzureCredentialMock.Object, new JsonWebTokenHandler(), null);
         PlaywrightService service = new(entraLifecycle: entraLifecycleMock.Object, jsonWebTokenHandler: new JsonWebTokenHandler());
         Exception? ex = Assert.ThrowsAsync<Exception>(async () => await service.InitializeAsync());
         Assert.That(ex!.Message, Is.EqualTo(Constants.s_no_auth_error));
@@ -285,7 +363,7 @@ public class PlaywrightServiceTests
         defaultAzureCredentialMock
             .Setup(x => x.GetTokenAsync(It.IsAny<TokenRequestContext>(), It.IsAny<CancellationToken>()))
             .ThrowsAsync(new Exception());
-        var entraLifecycleMock = new Mock<EntraLifecycle>(defaultAzureCredentialMock.Object, new JsonWebTokenHandler());
+        var entraLifecycleMock = new Mock<EntraLifecycle>(defaultAzureCredentialMock.Object, new JsonWebTokenHandler(), null);
         PlaywrightService service = new(entraLifecycle: entraLifecycleMock.Object, jsonWebTokenHandler: new JsonWebTokenHandler());
         Assert.That(() => service.InitializeAsync().Wait(), Throws.Exception);
     }
@@ -305,7 +383,7 @@ public class PlaywrightServiceTests
         defaultAzureCredentialMock
             .Setup(x => x.GetTokenAsync(It.IsAny<TokenRequestContext>(), It.IsAny<CancellationToken>()))
             .ThrowsAsync(new Exception());
-        var entraLifecycleMock = new Mock<EntraLifecycle>(defaultAzureCredentialMock.Object, new JsonWebTokenHandler());
+        var entraLifecycleMock = new Mock<EntraLifecycle>(defaultAzureCredentialMock.Object, new JsonWebTokenHandler(), null);
         PlaywrightService service = new(entraLifecycle: entraLifecycleMock.Object, jsonWebTokenHandler: jsonWebTokenHandlerMock.Object);
         Assert.That(() => service.InitializeAsync().Wait(), Throws.Exception);
     }
@@ -322,7 +400,7 @@ public class PlaywrightServiceTests
         defaultAzureCredentialMock
             .Setup(x => x.GetTokenAsync(It.IsAny<TokenRequestContext>(), It.IsAny<CancellationToken>()))
             .ThrowsAsync(new Exception());
-        var entraLifecycleMock = new Mock<EntraLifecycle>(defaultAzureCredentialMock.Object, new JsonWebTokenHandler());
+        var entraLifecycleMock = new Mock<EntraLifecycle>(defaultAzureCredentialMock.Object, new JsonWebTokenHandler(), null);
         PlaywrightService service = new(entraLifecycle: entraLifecycleMock.Object, jsonWebTokenHandler: new JsonWebTokenHandler());
 
         Assert.That(() => service.InitializeAsync().Wait(), Throws.Exception);
@@ -345,7 +423,7 @@ public class PlaywrightServiceTests
         };
         Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceUri, $"{testRubric["url"]}");
         var defaultAzureCredentialMock = new Mock<DefaultAzureCredential>();
-        var entraLifecycleMock = new Mock<EntraLifecycle>(defaultAzureCredentialMock.Object, new JsonWebTokenHandler());
+        var entraLifecycleMock = new Mock<EntraLifecycle>(defaultAzureCredentialMock.Object, new JsonWebTokenHandler(), null);
         PlaywrightService service = new(entraLifecycle: entraLifecycleMock.Object, jsonWebTokenHandler: new JsonWebTokenHandler(), serviceAuth: ServiceAuthType.AccessToken);
         service.InitializeAsync().Wait();
         Assert.That(service.RotationTimer, Is.Null);
@@ -360,7 +438,7 @@ public class PlaywrightServiceTests
         defaultAzureCredentialMock
             .Setup(x => x.GetTokenAsync(It.IsAny<TokenRequestContext>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync(new AccessToken(token, DateTimeOffset.UtcNow.AddMinutes(5)));
-        var entraLifecycleMock = new Mock<EntraLifecycle>(defaultAzureCredentialMock.Object, jsonWebTokenHandlerMock.Object);
+        var entraLifecycleMock = new Mock<EntraLifecycle>(defaultAzureCredentialMock.Object, jsonWebTokenHandlerMock.Object, null);
         PlaywrightService service = new(entraLifecycle: entraLifecycleMock.Object);
 
         service.RotationHandlerAsync(null);
@@ -372,7 +450,7 @@ public class PlaywrightServiceTests
     {
         var defaultAzureCredentialMock = new Mock<DefaultAzureCredential>();
         var jsonWebTokenHandlerMock = new Mock<JsonWebTokenHandler>();
-        var entraLifecycleMock = new Mock<EntraLifecycle>(defaultAzureCredentialMock.Object, jsonWebTokenHandlerMock.Object);
+        var entraLifecycleMock = new Mock<EntraLifecycle>(defaultAzureCredentialMock.Object, jsonWebTokenHandlerMock.Object, null);
         entraLifecycleMock.Object._entraIdAccessToken = "valid_token";
         entraLifecycleMock.Object._entraIdAccessTokenExpiry = (int)DateTimeOffset.UtcNow.AddMinutes(22).ToUnixTimeSeconds();
         PlaywrightService service = new(entraLifecycle: entraLifecycleMock.Object);
@@ -408,7 +486,7 @@ public class PlaywrightServiceTests
         var defaultAzureCredentialMock = new Mock<DefaultAzureCredential>();
         var jsonWebTokenHandlerMock = new Mock<JsonWebTokenHandler>();
         Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceAccessToken, "valid_token");
-        var entraLifecycleMock = new Mock<EntraLifecycle>(defaultAzureCredentialMock.Object, jsonWebTokenHandlerMock.Object);
+        var entraLifecycleMock = new Mock<EntraLifecycle>(defaultAzureCredentialMock.Object, jsonWebTokenHandlerMock.Object, null);
         entraLifecycleMock.Object._entraIdAccessToken = "valid_token";
         entraLifecycleMock.Object._entraIdAccessTokenExpiry = (int)DateTimeOffset.UtcNow.AddMinutes(22).ToUnixTimeSeconds();
         var runId = "run-id";
@@ -433,7 +511,7 @@ public class PlaywrightServiceTests
             .Setup(x => x.GetTokenAsync(It.IsAny<TokenRequestContext>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync(new AccessToken("valid_token", DateTimeOffset.UtcNow.AddMinutes(5)));
         var jsonWebTokenHandlerMock = new Mock<JsonWebTokenHandler>();
-        var entraLifecycleMock = new Mock<EntraLifecycle>(defaultAzureCredentialMock.Object, jsonWebTokenHandlerMock.Object);
+        var entraLifecycleMock = new Mock<EntraLifecycle>(defaultAzureCredentialMock.Object, jsonWebTokenHandlerMock.Object, null);
         entraLifecycleMock.Object._entraIdAccessToken = "valid_token";
         entraLifecycleMock.Object._entraIdAccessTokenExpiry = (int)DateTimeOffset.UtcNow.AddMinutes(-1).ToUnixTimeSeconds();
 
@@ -451,7 +529,7 @@ public class PlaywrightServiceTests
             .Setup(x => x.GetTokenAsync(It.IsAny<TokenRequestContext>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync(new AccessToken("valid_token", DateTimeOffset.UtcNow.AddMinutes(5)));
         var jsonWebTokenHandlerMock = new Mock<JsonWebTokenHandler>();
-        var entraLifecycleMock = new Mock<EntraLifecycle>(defaultAzureCredentialMock.Object, jsonWebTokenHandlerMock.Object);
+        var entraLifecycleMock = new Mock<EntraLifecycle>(defaultAzureCredentialMock.Object, jsonWebTokenHandlerMock.Object, null);
         entraLifecycleMock.Object._entraIdAccessToken = "valid_token";
         entraLifecycleMock.Object._entraIdAccessTokenExpiry = (int)DateTimeOffset.UtcNow.AddMinutes(22).ToUnixTimeSeconds();
 
@@ -466,7 +544,7 @@ public class PlaywrightServiceTests
         var defaultAzureCredentialMock = new Mock<DefaultAzureCredential>();
         var jsonWebTokenHandlerMock = new Mock<JsonWebTokenHandler>();
         Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceAccessToken, "valid_token");
-        var entraLifecycleMock = new Mock<EntraLifecycle>(defaultAzureCredentialMock.Object, jsonWebTokenHandlerMock.Object);
+        var entraLifecycleMock = new Mock<EntraLifecycle>(defaultAzureCredentialMock.Object, jsonWebTokenHandlerMock.Object, null);
         entraLifecycleMock.Object
             ._entraIdAccessToken = "valid_token";
         entraLifecycleMock.Object
@@ -489,7 +567,7 @@ public class PlaywrightServiceTests
         var defaultAzureCredentialMock = new Mock<DefaultAzureCredential>();
         var jsonWebTokenHandlerMock = new Mock<JsonWebTokenHandler>();
         Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceAccessToken, "valid_token");
-        var entraLifecycleMock = new Mock<EntraLifecycle>(defaultAzureCredentialMock.Object, jsonWebTokenHandlerMock.Object);
+        var entraLifecycleMock = new Mock<EntraLifecycle>(defaultAzureCredentialMock.Object, jsonWebTokenHandlerMock.Object, null);
         entraLifecycleMock.Object
             ._entraIdAccessToken = "valid_token";
         entraLifecycleMock.Object
@@ -507,12 +585,87 @@ public class PlaywrightServiceTests
     }
 
     [Test]
+    public async Task GetConnectOptionsAsync_WhenParametersAreSetInTheObject_UsesObjectParameters()
+    {
+        var defaultAzureCredentialMock = new Mock<DefaultAzureCredential>();
+        var jsonWebTokenHandlerMock = new Mock<JsonWebTokenHandler>();
+        Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceAccessToken, "valid_token");
+        var entraLifecycleMock = new Mock<EntraLifecycle>(defaultAzureCredentialMock.Object, jsonWebTokenHandlerMock.Object, null);
+        entraLifecycleMock.Object
+            ._entraIdAccessToken = "valid_token";
+        entraLifecycleMock.Object
+            ._entraIdAccessTokenExpiry = (int)DateTimeOffset.UtcNow.AddMinutes(22).ToUnixTimeSeconds();
+        var runId = "run-id";
+
+        var service = new PlaywrightService(os: OSPlatform.Windows, runId: runId, exposeNetwork: "expose-network", entraLifecycle: entraLifecycleMock.Object);
+        Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceOs, ServiceOs.Linux);
+        Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceExposeNetwork, "expose");
+        Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceRunId, "invalid-run-id");
+        ConnectOptions<BrowserConnectOptions> connectOptions = await service.GetConnectOptionsAsync<BrowserConnectOptions>();
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(connectOptions.WsEndpoint, Is.EqualTo($"https://playwright.microsoft.com?os={ServiceOs.Windows}&runId={runId}&api-version={Constants.s_api_version}"));
+            Assert.That(connectOptions.Options!.ExposeNetwork, Is.EqualTo("expose-network"));
+        });
+    }
+
+    [Test]
+    public async Task GetConnectOptionsAsync_WhenParametersAreSetInTheObjectButAlsoPassedInMethod_UsesMethodParameters()
+    {
+        var defaultAzureCredentialMock = new Mock<DefaultAzureCredential>();
+        var jsonWebTokenHandlerMock = new Mock<JsonWebTokenHandler>();
+        Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceAccessToken, "valid_token");
+        var entraLifecycleMock = new Mock<EntraLifecycle>(defaultAzureCredentialMock.Object, jsonWebTokenHandlerMock.Object, null);
+        entraLifecycleMock.Object
+            ._entraIdAccessToken = "valid_token";
+        entraLifecycleMock.Object
+            ._entraIdAccessTokenExpiry = (int)DateTimeOffset.UtcNow.AddMinutes(22).ToUnixTimeSeconds();
+        var runId = "run-id";
+
+        var service = new PlaywrightService(os: OSPlatform.Linux, runId: "invalid-runid", exposeNetwork: "expose", entraLifecycle: entraLifecycleMock.Object);
+        ConnectOptions<BrowserConnectOptions> connectOptions = await service.GetConnectOptionsAsync<BrowserConnectOptions>(os: OSPlatform.Windows, runId: runId, exposeNetwork: "expose-network");
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(connectOptions.WsEndpoint, Is.EqualTo($"https://playwright.microsoft.com?os={ServiceOs.Windows}&runId={runId}&api-version={Constants.s_api_version}"));
+            Assert.That(connectOptions.Options!.ExposeNetwork, Is.EqualTo("expose-network"));
+        });
+    }
+
+    [Test]
+    public async Task GetConnectOptionsAsync_WhenParametersAreSetViaEnvironmentButAlsoPassedInMethod_UsesMethodParameters()
+    {
+        var defaultAzureCredentialMock = new Mock<DefaultAzureCredential>();
+        var jsonWebTokenHandlerMock = new Mock<JsonWebTokenHandler>();
+        Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceAccessToken, "valid_token");
+        var entraLifecycleMock = new Mock<EntraLifecycle>(defaultAzureCredentialMock.Object, jsonWebTokenHandlerMock.Object, null);
+        entraLifecycleMock.Object
+            ._entraIdAccessToken = "valid_token";
+        entraLifecycleMock.Object
+            ._entraIdAccessTokenExpiry = (int)DateTimeOffset.UtcNow.AddMinutes(22).ToUnixTimeSeconds();
+        var runId = "run-id";
+
+        var service = new PlaywrightService(entraLifecycle: entraLifecycleMock.Object);
+        Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceOs, ServiceOs.Linux);
+        Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceExposeNetwork, "expose");
+        Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceRunId, "invalid-run-id");
+        ConnectOptions<BrowserConnectOptions> connectOptions = await service.GetConnectOptionsAsync<BrowserConnectOptions>(os: OSPlatform.Windows, runId: runId, exposeNetwork: "expose-network");
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(connectOptions.WsEndpoint, Is.EqualTo($"https://playwright.microsoft.com?os={ServiceOs.Windows}&runId={runId}&api-version={Constants.s_api_version}"));
+            Assert.That(connectOptions.Options!.ExposeNetwork, Is.EqualTo("expose-network"));
+        });
+    }
+
+    [Test]
     public async Task GetConnectOptionsAsync_WhenServiceParametersAreSetViaEnvironment_SetsServiceParameters()
     {
         var defaultAzureCredentialMock = new Mock<DefaultAzureCredential>();
         var jsonWebTokenHandlerMock = new Mock<JsonWebTokenHandler>();
         Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceAccessToken, "valid_token");
-        var entraLifecycleMock = new Mock<EntraLifecycle>(defaultAzureCredentialMock.Object, jsonWebTokenHandlerMock.Object);
+        var entraLifecycleMock = new Mock<EntraLifecycle>(defaultAzureCredentialMock.Object, jsonWebTokenHandlerMock.Object, null);
         entraLifecycleMock.Object
             ._entraIdAccessToken = "valid_token";
         entraLifecycleMock.Object
@@ -537,7 +690,7 @@ public class PlaywrightServiceTests
     {
         var defaultAzureCredentialMock = new Mock<DefaultAzureCredential>();
         var jsonWebTokenHandlerMock = new Mock<JsonWebTokenHandler>();
-        var entraLifecycleMock = new Mock<EntraLifecycle>(defaultAzureCredentialMock.Object, jsonWebTokenHandlerMock.Object);
+        var entraLifecycleMock = new Mock<EntraLifecycle>(defaultAzureCredentialMock.Object, jsonWebTokenHandlerMock.Object, null);
         var service = new PlaywrightService(entraLifecycle: entraLifecycleMock.Object);
 
         Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceAccessToken, null);
@@ -664,5 +817,104 @@ public class PlaywrightServiceTests
             Assert.That(Environment.GetEnvironmentVariable(Constants.s_playwright_service_reporting_url_environment_variable), Is.EqualTo("https://playwright.microsoft.com"));
             Assert.That(Environment.GetEnvironmentVariable(Constants.s_playwright_service_workspace_id_environment_variable), Is.EqualTo("sample-id"));
         });
+    }
+
+    [Test]
+    public void ShouldNotCallWarnIfAccessTokenCloseToExpiry_WhenOneTimeOperationFlagIsSet_True()
+    {
+        Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceAccessToken, "access_token");
+        Environment.SetEnvironmentVariable(Constants.s_playwright_service_reporting_url_environment_variable, "https://playwright.microsoft.com");
+        Environment.SetEnvironmentVariable(Constants.s_playwright_service_one_time_operation_flag_environment_variable, "true");
+        var defaultAzureCredentialMock = new Mock<DefaultAzureCredential>();
+        defaultAzureCredentialMock
+            .Setup(x => x.GetTokenAsync(It.IsAny<TokenRequestContext>(), It.IsAny<CancellationToken>()))
+            .ThrowsAsync(new Exception());
+        var entraLifecycleMock = new Mock<EntraLifecycle>(defaultAzureCredentialMock.Object, new JsonWebTokenHandler(), null);
+        var service = new Mock<PlaywrightService>(new PlaywrightServiceOptions(), null,null);
+        service.Object.PerformOneTimeOperation();
+        service.Verify(x => x.WarnIfAccessTokenCloseToExpiry(), Times.Never);
+    }
+
+    [Test]
+    public void ShouldCallWarnIfAccessTokenCloseToExpiry_WhenOneTimeOperationFlagIsSet_True()
+    {
+        Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceAccessToken, "access_token");
+        Environment.SetEnvironmentVariable(Constants.s_playwright_service_reporting_url_environment_variable, "https://playwright.microsoft.com");
+        var defaultAzureCredentialMock = new Mock<DefaultAzureCredential>();
+        defaultAzureCredentialMock
+            .Setup(x => x.GetTokenAsync(It.IsAny<TokenRequestContext>(), It.IsAny<CancellationToken>()))
+            .ThrowsAsync(new Exception());
+        var entraLifecycleMock = new Mock<EntraLifecycle>(defaultAzureCredentialMock.Object, new JsonWebTokenHandler(), null);
+        var serviceMock = new Mock<PlaywrightService>(new PlaywrightServiceOptions(serviceAuth: ServiceAuthType.AccessToken), null, null);
+        serviceMock.Object.PerformOneTimeOperation();
+        serviceMock.Verify(x => x.WarnIfAccessTokenCloseToExpiry(), Times.Once);
+    }
+
+    [Test]
+    public void ShouldReturnTrue_IfAccessTokenIs_CloseToExpiry()
+    {
+        Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceAccessToken, "access_token");
+        Environment.SetEnvironmentVariable(Constants.s_playwright_service_reporting_url_environment_variable, "https://playwright.microsoft.com");
+        var defaultAzureCredentialMock = new Mock<DefaultAzureCredential>();
+        defaultAzureCredentialMock
+            .Setup(x => x.GetTokenAsync(It.IsAny<TokenRequestContext>(), It.IsAny<CancellationToken>()))
+            .ThrowsAsync(new Exception());
+        var entraLifecycleMock = new Mock<EntraLifecycle>(defaultAzureCredentialMock.Object, new JsonWebTokenHandler(), null);
+        var serviceMock = new Mock<PlaywrightService>(new PlaywrightServiceOptions(), null, null);
+        long currentTime = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
+        long expirationTime = DateTimeOffset.UtcNow.AddDays(4).ToUnixTimeMilliseconds();
+        bool isExpiringSoon = PlaywrightService.IsTokenExpiringSoon(expirationTime, currentTime);
+        Assert.IsTrue(isExpiringSoon);
+    }
+
+    [Test]
+    public void ShouldReturnFalse_IfAccessTokenIs_NotCloseToExpiry()
+    {
+        Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceAccessToken, "access_token");
+        Environment.SetEnvironmentVariable(Constants.s_playwright_service_reporting_url_environment_variable, "https://playwright.microsoft.com");
+        var defaultAzureCredentialMock = new Mock<DefaultAzureCredential>();
+        defaultAzureCredentialMock
+            .Setup(x => x.GetTokenAsync(It.IsAny<TokenRequestContext>(), It.IsAny<CancellationToken>()))
+            .ThrowsAsync(new Exception());
+        var entraLifecycleMock = new Mock<EntraLifecycle>(defaultAzureCredentialMock.Object, new JsonWebTokenHandler(), null);
+        var serviceMock = new Mock<PlaywrightService>(new PlaywrightServiceOptions(), null, null);
+        long currentTime = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
+        long expirationTime = DateTimeOffset.UtcNow.AddDays(20).ToUnixTimeMilliseconds();
+        bool isExpiringSoon = PlaywrightService.IsTokenExpiringSoon(expirationTime, currentTime);
+        Assert.IsFalse(isExpiringSoon);
+    }
+
+    [Test]
+    public void ShouldLogWarning_IfWarnAboutTokenExpiry_IsCalled()
+    {
+        Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceAccessToken, "access_token");
+        Environment.SetEnvironmentVariable(Constants.s_playwright_service_reporting_url_environment_variable, "https://playwright.microsoft.com");
+        var defaultAzureCredentialMock = new Mock<DefaultAzureCredential>();
+        defaultAzureCredentialMock
+            .Setup(x => x.GetTokenAsync(It.IsAny<TokenRequestContext>(), It.IsAny<CancellationToken>()))
+            .ThrowsAsync(new Exception());
+
+        var entraLifecycleMock = new Mock<EntraLifecycle>(defaultAzureCredentialMock.Object, new JsonWebTokenHandler(), null);
+        var consoleWriterMock = new Mock<IConsoleWriter>();
+        var serviceMock = new Mock<PlaywrightService>(
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            consoleWriterMock.Object
+        );
+        serviceMock.CallBase = true;
+        long currentTime = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
+        long expirationTime = DateTimeOffset.UtcNow.AddDays(4).ToUnixTimeMilliseconds();
+        int daysToExpiration = (int)Math.Ceiling((expirationTime - currentTime) / (double)Constants.s_oneDayInMs);
+        string expirationDate = DateTimeOffset.FromUnixTimeMilliseconds(expirationTime).UtcDateTime.ToString("d");
+        string expectedWarning = string.Format(Constants.s_token_expiry_warning_template, daysToExpiration, expirationDate);
+        serviceMock.Object.WarnAboutTokenExpiry(expirationTime, currentTime);
+        consoleWriterMock.Verify(c => c.WriteLine(expectedWarning), Times.Once);
     }
 }

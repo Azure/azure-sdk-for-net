@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.HealthcareApis.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.HealthcareApis.Samples
 {
     public partial class Sample_HealthcareApisServicePrivateEndpointConnectionResource
     {
-        // PrivateEndpointConnection_GetConnection
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_PrivateEndpointConnectionGetConnection()
         {
             // Generated from example definition: specification/healthcareapis/resource-manager/Microsoft.HealthcareApis/stable/2024-03-31/examples/legacy/ServiceGetPrivateEndpointConnection.json
@@ -47,50 +47,8 @@ namespace Azure.ResourceManager.HealthcareApis.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // PrivateEndpointConnection_CreateOrUpdate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Update_PrivateEndpointConnectionCreateOrUpdate()
-        {
-            // Generated from example definition: specification/healthcareapis/resource-manager/Microsoft.HealthcareApis/stable/2024-03-31/examples/legacy/ServiceCreatePrivateEndpointConnection.json
-            // this example is just showing the usage of "PrivateEndpointConnections_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this HealthcareApisServicePrivateEndpointConnectionResource created on azure
-            // for more information of creating HealthcareApisServicePrivateEndpointConnectionResource, please refer to the document of HealthcareApisServicePrivateEndpointConnectionResource
-            string subscriptionId = "subid";
-            string resourceGroupName = "rgname";
-            string resourceName = "service1";
-            string privateEndpointConnectionName = "myConnection";
-            ResourceIdentifier healthcareApisServicePrivateEndpointConnectionResourceId = HealthcareApisServicePrivateEndpointConnectionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName, privateEndpointConnectionName);
-            HealthcareApisServicePrivateEndpointConnectionResource healthcareApisServicePrivateEndpointConnection = client.GetHealthcareApisServicePrivateEndpointConnectionResource(healthcareApisServicePrivateEndpointConnectionResourceId);
-
-            // invoke the operation
-            HealthcareApisPrivateEndpointConnectionData data = new HealthcareApisPrivateEndpointConnectionData()
-            {
-                ConnectionState = new HealthcareApisPrivateLinkServiceConnectionState()
-                {
-                    Status = HealthcareApisPrivateEndpointServiceConnectionStatus.Approved,
-                    Description = "Auto-Approved",
-                },
-            };
-            ArmOperation<HealthcareApisServicePrivateEndpointConnectionResource> lro = await healthcareApisServicePrivateEndpointConnection.UpdateAsync(WaitUntil.Completed, data);
-            HealthcareApisServicePrivateEndpointConnectionResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            HealthcareApisPrivateEndpointConnectionData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // PrivateEndpointConnections_Delete
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_PrivateEndpointConnectionsDelete()
         {
             // Generated from example definition: specification/healthcareapis/resource-manager/Microsoft.HealthcareApis/stable/2024-03-31/examples/legacy/ServiceDeletePrivateEndpointConnection.json
@@ -113,7 +71,47 @@ namespace Azure.ResourceManager.HealthcareApis.Samples
             // invoke the operation
             await healthcareApisServicePrivateEndpointConnection.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Update_PrivateEndpointConnectionCreateOrUpdate()
+        {
+            // Generated from example definition: specification/healthcareapis/resource-manager/Microsoft.HealthcareApis/stable/2024-03-31/examples/legacy/ServiceCreatePrivateEndpointConnection.json
+            // this example is just showing the usage of "PrivateEndpointConnections_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this HealthcareApisServicePrivateEndpointConnectionResource created on azure
+            // for more information of creating HealthcareApisServicePrivateEndpointConnectionResource, please refer to the document of HealthcareApisServicePrivateEndpointConnectionResource
+            string subscriptionId = "subid";
+            string resourceGroupName = "rgname";
+            string resourceName = "service1";
+            string privateEndpointConnectionName = "myConnection";
+            ResourceIdentifier healthcareApisServicePrivateEndpointConnectionResourceId = HealthcareApisServicePrivateEndpointConnectionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName, privateEndpointConnectionName);
+            HealthcareApisServicePrivateEndpointConnectionResource healthcareApisServicePrivateEndpointConnection = client.GetHealthcareApisServicePrivateEndpointConnectionResource(healthcareApisServicePrivateEndpointConnectionResourceId);
+
+            // invoke the operation
+            HealthcareApisPrivateEndpointConnectionData data = new HealthcareApisPrivateEndpointConnectionData
+            {
+                ConnectionState = new HealthcareApisPrivateLinkServiceConnectionState
+                {
+                    Status = HealthcareApisPrivateEndpointServiceConnectionStatus.Approved,
+                    Description = "Auto-Approved",
+                },
+            };
+            ArmOperation<HealthcareApisServicePrivateEndpointConnectionResource> lro = await healthcareApisServicePrivateEndpointConnection.UpdateAsync(WaitUntil.Completed, data);
+            HealthcareApisServicePrivateEndpointConnectionResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            HealthcareApisPrivateEndpointConnectionData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
     }
 }

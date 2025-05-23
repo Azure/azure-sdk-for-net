@@ -27,7 +27,7 @@ Each of the event consumer client types are safe to cache and use for the lifeti
 
 ## Event lifetime
 
-When events are published, they will continue to exist in the Event Hub and be available for consuming until they reach an age where they are older than the [retention period](https://learn.microsoft.com//azure/event-hubs/event-hubs-faq#what-is-the-maximum-retention-period-for-events).  After that point in time, the Event Hubs service may chose to remove them from the partition.  Once removed, an event is no longer available to be read and cannot be recovered.  Though the Event Hubs service is free to remove events older than the retention period, it does not do so deterministically; there is no guarantee of when events will be removed.
+When events are published, they will continue to exist in the Event Hub and be available for consuming until they reach an age where they are older than the [retention period](https://learn.microsoft.com/azure/event-hubs/event-hubs-faq#what-is-the-maximum-retention-period-for-events).  After that point in time, the Event Hubs service may chose to remove them from the partition.  Once removed, an event is no longer available to be read and cannot be recovered.  Though the Event Hubs service is free to remove events older than the retention period, it does not do so deterministically; there is no guarantee of when events will be removed.
 
 ## Reading and consumer groups
 
@@ -386,7 +386,7 @@ try
 
     string firstPartition = (await consumer.GetPartitionIdsAsync(cancellationSource.Token)).First();
     PartitionProperties properties = await consumer.GetPartitionPropertiesAsync(firstPartition, cancellationSource.Token);
-    EventPosition startingPosition = EventPosition.FromOffset(properties.LastEnqueuedOffset);
+    EventPosition startingPosition = EventPosition.FromOffset(properties.LastEnqueuedOffsetString);
 
     await foreach (PartitionEvent partitionEvent in consumer.ReadEventsFromPartitionAsync(
         firstPartition,
@@ -503,7 +503,7 @@ try
 
         Debug.WriteLine($"Partition: { partitionEvent.Partition.PartitionId }");
         Debug.WriteLine($"\tThe last sequence number is: { properties.SequenceNumber }");
-        Debug.WriteLine($"\tThe last offset is: { properties.Offset }");
+        Debug.WriteLine($"\tThe last offset is: { properties.OffsetString }");
         Debug.WriteLine($"\tThe last enqueued time is: { properties.EnqueuedTime }, in UTC.");
         Debug.WriteLine($"\tThe information was updated at: { properties.LastReceivedTime }, in UTC.");
     }

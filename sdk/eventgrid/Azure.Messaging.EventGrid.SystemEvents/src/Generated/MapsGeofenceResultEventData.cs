@@ -14,11 +14,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class MapsGeofenceResultEventData : MapsGeofenceEventProperties
     {
         /// <summary> Initializes a new instance of <see cref="MapsGeofenceResultEventData"/>. </summary>
-        /// <param name="geometries"> Lists the fence geometries that either fully contain the coordinate position or have an overlap with the searchBuffer around the fence. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="geometries"/> is null. </exception>
-        internal MapsGeofenceResultEventData(IEnumerable<MapsGeofenceGeometry> geometries) : base(geometries)
+        internal MapsGeofenceResultEventData()
         {
-            Argument.AssertNotNull(geometries, nameof(geometries));
         }
 
         /// <summary> Initializes a new instance of <see cref="MapsGeofenceResultEventData"/>. </summary>
@@ -28,11 +25,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="isEventPublished"> True if at least one event is published to the Azure Maps event subscriber, false if no event is published to the Azure Maps event subscriber. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal MapsGeofenceResultEventData(IReadOnlyList<string> expiredGeofenceGeometryId, IReadOnlyList<MapsGeofenceGeometry> geometries, IReadOnlyList<string> invalidPeriodGeofenceGeometryId, bool? isEventPublished, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(expiredGeofenceGeometryId, geometries, invalidPeriodGeofenceGeometryId, isEventPublished, serializedAdditionalRawData)
-        {
-        }
-
-        /// <summary> Initializes a new instance of <see cref="MapsGeofenceResultEventData"/> for deserialization. </summary>
-        internal MapsGeofenceResultEventData()
         {
         }
     }

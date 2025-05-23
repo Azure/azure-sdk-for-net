@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.NetworkFunction
                 case 200:
                     {
                         AzureTrafficCollectorData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AzureTrafficCollectorData.DeserializeAzureTrafficCollectorData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.NetworkFunction
                 case 200:
                     {
                         AzureTrafficCollectorData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AzureTrafficCollectorData.DeserializeAzureTrafficCollectorData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -370,7 +370,7 @@ namespace Azure.ResourceManager.NetworkFunction
                 case 200:
                     {
                         AzureTrafficCollectorData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AzureTrafficCollectorData.DeserializeAzureTrafficCollectorData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -401,7 +401,7 @@ namespace Azure.ResourceManager.NetworkFunction
                 case 200:
                     {
                         AzureTrafficCollectorData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AzureTrafficCollectorData.DeserializeAzureTrafficCollectorData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

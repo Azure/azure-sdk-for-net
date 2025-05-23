@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerResourceHealthContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ResourceHealthEventImpactedServiceRegion)} does not support writing '{options.Format}' format.");
             }
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeResourceHealthEventImpactedServiceRegion(document.RootElement, options);
                     }
                 default:

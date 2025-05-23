@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.Cdn.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCdnContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ManagedRuleSetDefinition)} does not support writing '{options.Format}' format.");
             }
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeManagedRuleSetDefinition(document.RootElement, options);
                     }
                 default:

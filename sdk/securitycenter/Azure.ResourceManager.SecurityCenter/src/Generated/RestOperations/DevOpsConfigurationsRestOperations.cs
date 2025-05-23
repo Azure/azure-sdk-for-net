@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                     {
                         DevOpsConfigurationListResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DevOpsConfigurationListResponse.DeserializeDevOpsConfigurationListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                     {
                         DevOpsConfigurationListResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DevOpsConfigurationListResponse.DeserializeDevOpsConfigurationListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                     {
                         DevOpsConfigurationData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DevOpsConfigurationData.DeserializeDevOpsConfigurationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                     {
                         DevOpsConfigurationData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DevOpsConfigurationData.DeserializeDevOpsConfigurationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -550,7 +550,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                     {
                         DevOpsConfigurationListResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DevOpsConfigurationListResponse.DeserializeDevOpsConfigurationListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -581,7 +581,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                     {
                         DevOpsConfigurationListResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DevOpsConfigurationListResponse.DeserializeDevOpsConfigurationListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

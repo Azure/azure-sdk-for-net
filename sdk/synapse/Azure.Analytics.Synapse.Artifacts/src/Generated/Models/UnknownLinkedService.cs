@@ -14,12 +14,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     {
         /// <summary> Initializes a new instance of <see cref="UnknownLinkedService"/>. </summary>
         /// <param name="type"> Type of linked service. </param>
+        /// <param name="version"> Version of the linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>
         /// <param name="parameters"> Parameters for linked service. </param>
         /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal UnknownLinkedService(string type, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties) : base(type, connectVia, description, parameters, annotations, additionalProperties)
+        internal UnknownLinkedService(string type, string version, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties) : base(type, version, connectVia, description, parameters, annotations, additionalProperties)
         {
             Type = type ?? "Unknown";
         }

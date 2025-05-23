@@ -23,11 +23,14 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         }
 
         private const string ConnectedValue = "Connected";
+        private const string DisconnectedValue = "Disconnected";
         private const string TimeoutValue = "Timeout";
         private const string UndefinedValue = "Undefined";
 
         /// <summary> Connected. </summary>
         public static ClusterConnectionStatus Connected { get; } = new ClusterConnectionStatus(ConnectedValue);
+        /// <summary> Disconnected. </summary>
+        public static ClusterConnectionStatus Disconnected { get; } = new ClusterConnectionStatus(DisconnectedValue);
         /// <summary> Timeout. </summary>
         public static ClusterConnectionStatus Timeout { get; } = new ClusterConnectionStatus(TimeoutValue);
         /// <summary> Undefined. </summary>

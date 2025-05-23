@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.Batch
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerBatchContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(BatchAccountDetectorData)} does not support writing '{options.Format}' format.");
             }
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.Batch
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeBatchAccountDetectorData(document.RootElement, options);
                     }
                 default:

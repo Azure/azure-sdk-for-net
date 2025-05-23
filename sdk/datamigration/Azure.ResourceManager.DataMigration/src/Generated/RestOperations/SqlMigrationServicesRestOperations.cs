@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.DataMigration
                 case 200:
                     {
                         SqlMigrationServiceData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SqlMigrationServiceData.DeserializeSqlMigrationServiceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.DataMigration
                 case 200:
                     {
                         SqlMigrationServiceData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SqlMigrationServiceData.DeserializeSqlMigrationServiceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -451,7 +451,7 @@ namespace Azure.ResourceManager.DataMigration
                 case 200:
                     {
                         SqlMigrationListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SqlMigrationListResult.DeserializeSqlMigrationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -478,7 +478,7 @@ namespace Azure.ResourceManager.DataMigration
                 case 200:
                     {
                         SqlMigrationListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SqlMigrationListResult.DeserializeSqlMigrationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -543,7 +543,7 @@ namespace Azure.ResourceManager.DataMigration
                 case 200:
                     {
                         AuthenticationKeys value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AuthenticationKeys.DeserializeAuthenticationKeys(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -572,7 +572,7 @@ namespace Azure.ResourceManager.DataMigration
                 case 200:
                     {
                         AuthenticationKeys value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AuthenticationKeys.DeserializeAuthenticationKeys(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -643,7 +643,7 @@ namespace Azure.ResourceManager.DataMigration
                 case 200:
                     {
                         RegenAuthKeys value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = RegenAuthKeys.DeserializeRegenAuthKeys(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -674,7 +674,7 @@ namespace Azure.ResourceManager.DataMigration
                 case 200:
                     {
                         RegenAuthKeys value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = RegenAuthKeys.DeserializeRegenAuthKeys(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -745,7 +745,7 @@ namespace Azure.ResourceManager.DataMigration
                 case 200:
                     {
                         DeleteNode value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = Models.DeleteNode.DeserializeDeleteNode(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -776,7 +776,7 @@ namespace Azure.ResourceManager.DataMigration
                 case 200:
                     {
                         DeleteNode value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = Models.DeleteNode.DeserializeDeleteNode(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -841,7 +841,7 @@ namespace Azure.ResourceManager.DataMigration
                 case 200:
                     {
                         DatabaseMigrationListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DatabaseMigrationListResult.DeserializeDatabaseMigrationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -870,7 +870,7 @@ namespace Azure.ResourceManager.DataMigration
                 case 200:
                     {
                         DatabaseMigrationListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DatabaseMigrationListResult.DeserializeDatabaseMigrationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -935,7 +935,7 @@ namespace Azure.ResourceManager.DataMigration
                 case 200:
                     {
                         IntegrationRuntimeMonitoringData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = IntegrationRuntimeMonitoringData.DeserializeIntegrationRuntimeMonitoringData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -964,7 +964,7 @@ namespace Azure.ResourceManager.DataMigration
                 case 200:
                     {
                         IntegrationRuntimeMonitoringData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = IntegrationRuntimeMonitoringData.DeserializeIntegrationRuntimeMonitoringData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1017,7 +1017,7 @@ namespace Azure.ResourceManager.DataMigration
                 case 200:
                     {
                         SqlMigrationListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SqlMigrationListResult.DeserializeSqlMigrationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1042,7 +1042,7 @@ namespace Azure.ResourceManager.DataMigration
                 case 200:
                     {
                         SqlMigrationListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SqlMigrationListResult.DeserializeSqlMigrationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1093,7 +1093,7 @@ namespace Azure.ResourceManager.DataMigration
                 case 200:
                     {
                         SqlMigrationListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SqlMigrationListResult.DeserializeSqlMigrationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1122,7 +1122,7 @@ namespace Azure.ResourceManager.DataMigration
                 case 200:
                     {
                         SqlMigrationListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SqlMigrationListResult.DeserializeSqlMigrationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1175,7 +1175,7 @@ namespace Azure.ResourceManager.DataMigration
                 case 200:
                     {
                         DatabaseMigrationListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DatabaseMigrationListResult.DeserializeDatabaseMigrationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1206,7 +1206,7 @@ namespace Azure.ResourceManager.DataMigration
                 case 200:
                     {
                         DatabaseMigrationListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DatabaseMigrationListResult.DeserializeDatabaseMigrationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1255,7 +1255,7 @@ namespace Azure.ResourceManager.DataMigration
                 case 200:
                     {
                         SqlMigrationListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SqlMigrationListResult.DeserializeSqlMigrationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1282,7 +1282,7 @@ namespace Azure.ResourceManager.DataMigration
                 case 200:
                     {
                         SqlMigrationListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SqlMigrationListResult.DeserializeSqlMigrationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

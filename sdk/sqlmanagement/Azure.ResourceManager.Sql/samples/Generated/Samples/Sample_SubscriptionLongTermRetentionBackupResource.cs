@@ -10,17 +10,17 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Sql.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Sql.Samples
 {
     public partial class Sample_SubscriptionLongTermRetentionBackupResource
     {
-        // Get the long term retention backup.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetTheLongTermRetentionBackup()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2023-05-01-preview/examples/LongTermRetentionBackupGet.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-05-01-preview/examples/LongTermRetentionBackupGet.json
             // this example is just showing the usage of "LongTermRetentionBackups_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -48,12 +48,11 @@ namespace Azure.ResourceManager.Sql.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Delete the long term retention backup.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteTheLongTermRetentionBackup()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2023-05-01-preview/examples/LongTermRetentionBackupDelete.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-05-01-preview/examples/LongTermRetentionBackupDelete.json
             // this example is just showing the usage of "LongTermRetentionBackups_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -74,15 +73,14 @@ namespace Azure.ResourceManager.Sql.Samples
             // invoke the operation
             await subscriptionLongTermRetentionBackup.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Change the long term retention backup storage access tier.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task ChangeAccessTier_ChangeTheLongTermRetentionBackupStorageAccessTier()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2023-05-01-preview/examples/ChangeLongTermRetentionBackupAccessTier.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-05-01-preview/examples/ChangeLongTermRetentionBackupAccessTier.json
             // this example is just showing the usage of "LongTermRetentionBackups_ChangeAccessTier" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -112,12 +110,11 @@ namespace Azure.ResourceManager.Sql.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Copy the long term retention backup.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Copy_CopyTheLongTermRetentionBackup()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2023-05-01-preview/examples/LongTermRetentionBackupCopy.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-05-01-preview/examples/LongTermRetentionBackupCopy.json
             // this example is just showing the usage of "LongTermRetentionBackups_Copy" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -136,7 +133,7 @@ namespace Azure.ResourceManager.Sql.Samples
             SubscriptionLongTermRetentionBackupResource subscriptionLongTermRetentionBackup = client.GetSubscriptionLongTermRetentionBackupResource(subscriptionLongTermRetentionBackupResourceId);
 
             // invoke the operation
-            CopyLongTermRetentionBackupContent content = new CopyLongTermRetentionBackupContent()
+            CopyLongTermRetentionBackupContent content = new CopyLongTermRetentionBackupContent
             {
                 TargetServerResourceId = new ResourceIdentifier("/subscriptions/00000000-1111-2222-3333-444444444444/providers/Microsoft.Sql/resourceGroups/resourceGroup/servers/testserver2"),
                 TargetDatabaseName = "testDatabase2",
@@ -148,12 +145,11 @@ namespace Azure.ResourceManager.Sql.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Update the long term retention backup.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateTheLongTermRetentionBackup()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2023-05-01-preview/examples/LongTermRetentionBackupUpdate.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-05-01-preview/examples/LongTermRetentionBackupUpdate.json
             // this example is just showing the usage of "LongTermRetentionBackups_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -172,7 +168,7 @@ namespace Azure.ResourceManager.Sql.Samples
             SubscriptionLongTermRetentionBackupResource subscriptionLongTermRetentionBackup = client.GetSubscriptionLongTermRetentionBackupResource(subscriptionLongTermRetentionBackupResourceId);
 
             // invoke the operation
-            UpdateLongTermRetentionBackupContent content = new UpdateLongTermRetentionBackupContent()
+            UpdateLongTermRetentionBackupContent content = new UpdateLongTermRetentionBackupContent
             {
                 RequestedBackupStorageRedundancy = SqlBackupStorageRedundancy.Geo,
             };

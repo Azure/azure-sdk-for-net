@@ -9,15 +9,16 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
+using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Subscription.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Subscription.Samples
 {
     public partial class Sample_TenantResourceExtensions
     {
-        // AcceptOwnership
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task AcceptSubscriptionOwnership_AcceptOwnership()
         {
             // Generated from example definition: specification/subscription/resource-manager/Microsoft.Subscription/stable/2021-10-01/examples/acceptSubscriptionOwnership.json
@@ -28,13 +29,11 @@ namespace Azure.ResourceManager.Subscription.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this TenantResource created on azure
-            // for more information of creating TenantResource, please refer to the document of TenantResource
-            var tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
+            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
 
             // invoke the operation
             string subscriptionId = "291bba3f-e0a5-47bc-a099-3bdcb2a50a05";
-            AcceptOwnershipContent content = new AcceptOwnershipContent()
+            AcceptOwnershipContent content = new AcceptOwnershipContent
             {
                 Properties = new AcceptOwnershipRequestProperties("Test Subscription")
                 {
@@ -43,18 +42,17 @@ namespace Azure.ResourceManager.Subscription.Samples
 {
 ["tag1"] = "Messi",
 ["tag2"] = "Ronaldo",
-["tag3"] = "Lebron",
+["tag3"] = "Lebron"
 },
                 },
             };
             await tenantResource.AcceptSubscriptionOwnershipAsync(WaitUntil.Completed, subscriptionId, content);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // AcceptOwnershipStatus
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAcceptOwnershipStatus_AcceptOwnershipStatus()
         {
             // Generated from example definition: specification/subscription/resource-manager/Microsoft.Subscription/stable/2021-10-01/examples/acceptOwnershipStatus.json
@@ -65,9 +63,7 @@ namespace Azure.ResourceManager.Subscription.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this TenantResource created on azure
-            // for more information of creating TenantResource, please refer to the document of TenantResource
-            var tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
+            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
 
             // invoke the operation
             string subscriptionId = "291bba3f-e0a5-47bc-a099-3bdcb2a50a05";

@@ -40,10 +40,10 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(InstanceCount))
+            if (Optional.IsDefined(AlwaysReadyInstanceCount))
             {
                 writer.WritePropertyName("instanceCount"u8);
-                writer.WriteNumberValue(InstanceCount.Value);
+                writer.WriteNumberValue(AlwaysReadyInstanceCount.Value);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.AppService.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.AppService.Models
                 return null;
             }
             string name = default;
-            float? instanceCount = default;
+            int? instanceCount = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    instanceCount = property.Value.GetSingle();
+                    instanceCount = property.Value.GetInt32();
                     continue;
                 }
                 if (options.Format != "W")
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(InstanceCount), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AlwaysReadyInstanceCount), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("  instanceCount: ");
@@ -153,10 +153,10 @@ namespace Azure.ResourceManager.AppService.Models
             }
             else
             {
-                if (Optional.IsDefined(InstanceCount))
+                if (Optional.IsDefined(AlwaysReadyInstanceCount))
                 {
                     builder.Append("  instanceCount: ");
-                    builder.AppendLine($"'{InstanceCount.Value.ToString()}'");
+                    builder.AppendLine($"{AlwaysReadyInstanceCount.Value}");
                 }
             }
 
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.AppService.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAppServiceContext.Default);
                 case "bicep":
                     return SerializeBicep(options);
                 default:
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeFunctionAppAlwaysReadyConfig(document.RootElement, options);
                     }
                 default:

@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +23,14 @@ namespace Azure.ResourceManager.Billing
 
         BillingDepartmentRoleAssignmentResource IOperationSource<BillingDepartmentRoleAssignmentResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = BillingRoleAssignmentData.DeserializeBillingRoleAssignmentData(document.RootElement);
+            var data = ModelReaderWriter.Read<BillingRoleAssignmentData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerBillingContext.Default);
             return new BillingDepartmentRoleAssignmentResource(_client, data);
         }
 
         async ValueTask<BillingDepartmentRoleAssignmentResource> IOperationSource<BillingDepartmentRoleAssignmentResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = BillingRoleAssignmentData.DeserializeBillingRoleAssignmentData(document.RootElement);
-            return new BillingDepartmentRoleAssignmentResource(_client, data);
+            var data = ModelReaderWriter.Read<BillingRoleAssignmentData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerBillingContext.Default);
+            return await Task.FromResult(new BillingDepartmentRoleAssignmentResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

@@ -59,7 +59,7 @@ namespace Azure.AI.Language.Text
             {
                 return null;
             }
-            CustomEntitiesActionResult results = default;
+            CustomEntitiesResult results = default;
             DateTimeOffset lastUpdateDateTime = default;
             TextActionState status = default;
             string taskName = default;
@@ -70,7 +70,7 @@ namespace Azure.AI.Language.Text
             {
                 if (property.NameEquals("results"u8))
                 {
-                    results = CustomEntitiesActionResult.DeserializeCustomEntitiesActionResult(property.Value, options);
+                    results = CustomEntitiesResult.DeserializeCustomEntitiesResult(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("lastUpdateDateTime"u8))
@@ -115,7 +115,7 @@ namespace Azure.AI.Language.Text
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureAILanguageTextContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(CustomEntityRecognitionOperationResult)} does not support writing '{options.Format}' format.");
             }
@@ -129,7 +129,7 @@ namespace Azure.AI.Language.Text
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeCustomEntityRecognitionOperationResult(document.RootElement, options);
                     }
                 default:
@@ -143,7 +143,7 @@ namespace Azure.AI.Language.Text
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static new CustomEntityRecognitionOperationResult FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeCustomEntityRecognitionOperationResult(document.RootElement);
         }
 

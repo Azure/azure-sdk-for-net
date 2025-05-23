@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.HealthBot
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHealthBotContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(HealthBotData)} does not support writing '{options.Format}' format.");
             }
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.HealthBot
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeHealthBotData(document.RootElement, options);
                     }
                 default:

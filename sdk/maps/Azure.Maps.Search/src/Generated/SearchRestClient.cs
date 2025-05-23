@@ -40,7 +40,7 @@ namespace Azure.Maps.Search
         /// </param>
         /// <param name="clientId"> Specifies which account is intended for usage in conjunction with the Azure AD security model.  It represents a unique ID for the Azure Maps account and can be retrieved from the Azure Maps management  plane Account API. To use Azure AD security in Azure Maps see the following [articles](https://aka.ms/amauthdetails) for guidance. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/> or <paramref name="apiVersion"/> is null. </exception>
-        public SearchRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint = null, string apiVersion = "2023-06-01", string acceptLanguage = null, string clientId = null)
+        public SearchRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint = null, string apiVersion = "2025-01-01", string acceptLanguage = null, string clientId = null)
         {
             ClientDiagnostics = clientDiagnostics ?? throw new ArgumentNullException(nameof(clientDiagnostics));
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
@@ -120,13 +120,7 @@ namespace Azure.Maps.Search
             return message;
         }
 
-        /// <summary>
-        /// **Geocoding**
-        ///
-        /// **Applies to:** see [pricing tiers](https://aka.ms/AzureMapsPricingTier).
-        ///
-        /// In many cases, the complete search service might be too much, for instance if you are only interested in traditional geocoding. Search can also be accessed for address look up exclusively. The geocoding is performed by hitting the geocoding endpoint with just the address or partial address in question. The geocoding search index will be queried for everything above the street level data. No Point of Interest (POIs) will be returned. Note that the geocoder is very tolerant of typos and incomplete addresses. It will also handle everything from exact street addresses or street or intersections as well as higher level geographies such as city centers, counties, states etc.
-        /// </summary>
+        /// <summary> Use to get longitude and latitude coordinates of a street address or name of a place. </summary>
         /// <param name="top"> Maximum number of responses that will be returned. Default: 5, minimum: 1 and maximum: 20. </param>
         /// <param name="query"> A string that contains information about a location, such as an address or landmark name. </param>
         /// <param name="addressLine">
@@ -176,6 +170,12 @@ namespace Azure.Maps.Search
         /// **If query is given, should not use this parameter.**
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks>
+        ///
+        /// The `Get Geocoding` API is an HTTP `GET` request that returns the longitude and latitude coordinates of the location being searched.
+        ///
+        /// In many cases, the complete search service might be too much, for instance if you are only interested in traditional geocoding. Search can also be accessed for address look up exclusively. The geocoding is performed by hitting the geocoding endpoint with just the address or partial address in question. The geocoding search index will be queried for everything above the street level data. No Point of Interest (POIs) will be returned. Note that the geocoder is very tolerant of typos and incomplete addresses. It will also handle everything from exact street addresses or street or intersections as well as higher level geographies such as city centers, counties and states. The response also returns detailed address properties such as street, postal code, municipality, and country/region information.
+        /// </remarks>
         public async Task<Response<GeocodingResponse>> GetGeocodingAsync(int? top = null, string query = null, string addressLine = null, string countryRegion = null, IEnumerable<double> boundingBox = null, string view = null, IEnumerable<double> coordinates = null, string adminDistrict = null, string adminDistrict2 = null, string adminDistrict3 = null, string locality = null, string postalCode = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetGeocodingRequest(top, query, addressLine, countryRegion, boundingBox, view, coordinates, adminDistrict, adminDistrict2, adminDistrict3, locality, postalCode);
@@ -185,7 +185,7 @@ namespace Azure.Maps.Search
                 case 200:
                     {
                         GeocodingResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = GeocodingResponse.DeserializeGeocodingResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -194,13 +194,7 @@ namespace Azure.Maps.Search
             }
         }
 
-        /// <summary>
-        /// **Geocoding**
-        ///
-        /// **Applies to:** see [pricing tiers](https://aka.ms/AzureMapsPricingTier).
-        ///
-        /// In many cases, the complete search service might be too much, for instance if you are only interested in traditional geocoding. Search can also be accessed for address look up exclusively. The geocoding is performed by hitting the geocoding endpoint with just the address or partial address in question. The geocoding search index will be queried for everything above the street level data. No Point of Interest (POIs) will be returned. Note that the geocoder is very tolerant of typos and incomplete addresses. It will also handle everything from exact street addresses or street or intersections as well as higher level geographies such as city centers, counties, states etc.
-        /// </summary>
+        /// <summary> Use to get longitude and latitude coordinates of a street address or name of a place. </summary>
         /// <param name="top"> Maximum number of responses that will be returned. Default: 5, minimum: 1 and maximum: 20. </param>
         /// <param name="query"> A string that contains information about a location, such as an address or landmark name. </param>
         /// <param name="addressLine">
@@ -250,6 +244,12 @@ namespace Azure.Maps.Search
         /// **If query is given, should not use this parameter.**
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks>
+        ///
+        /// The `Get Geocoding` API is an HTTP `GET` request that returns the longitude and latitude coordinates of the location being searched.
+        ///
+        /// In many cases, the complete search service might be too much, for instance if you are only interested in traditional geocoding. Search can also be accessed for address look up exclusively. The geocoding is performed by hitting the geocoding endpoint with just the address or partial address in question. The geocoding search index will be queried for everything above the street level data. No Point of Interest (POIs) will be returned. Note that the geocoder is very tolerant of typos and incomplete addresses. It will also handle everything from exact street addresses or street or intersections as well as higher level geographies such as city centers, counties and states. The response also returns detailed address properties such as street, postal code, municipality, and country/region information.
+        /// </remarks>
         public Response<GeocodingResponse> GetGeocoding(int? top = null, string query = null, string addressLine = null, string countryRegion = null, IEnumerable<double> boundingBox = null, string view = null, IEnumerable<double> coordinates = null, string adminDistrict = null, string adminDistrict2 = null, string adminDistrict3 = null, string locality = null, string postalCode = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetGeocodingRequest(top, query, addressLine, countryRegion, boundingBox, view, coordinates, adminDistrict, adminDistrict2, adminDistrict3, locality, postalCode);
@@ -259,7 +259,7 @@ namespace Azure.Maps.Search
                 case 200:
                     {
                         GeocodingResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = GeocodingResponse.DeserializeGeocodingResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -294,15 +294,13 @@ namespace Azure.Maps.Search
             return message;
         }
 
-        /// <summary>
-        /// **Geocoding Batch API**
+        /// <summary> Use to send a batch of queries to the [Geocoding](/rest/api/maps/search/get-geocoding) API in a single request. </summary>
+        /// <param name="geocodingBatchRequestBody"> The list of address geocoding queries/requests to process. The list can contain a max of 100 queries and must contain at least 1 query. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="geocodingBatchRequestBody"/> is null. </exception>
+        /// <remarks>
         ///
-        ///
-        /// **Applies to:** see [pricing tiers](https://aka.ms/AzureMapsPricingTier).
-        ///
-        ///
-        ///
-        /// The Geocoding Batch API sends batches of queries to [Geocoding API](/rest/api/maps/search/get-geocoding) using just a single API call. The API allows caller to batch up to **100** queries.
+        /// The `Get Geocoding Batch` API is an HTTP `POST` request that sends batches of up to **100** queries to the [Geocoding](/rest/api/maps/search/get-geocoding) API in a single request.
         ///
         /// ### Submit Synchronous Batch Request
         /// The Synchronous API is recommended for lightweight batch requests. When the service receives a request, it will respond as soon as the batch items are calculated and there will be no possibility to retrieve the results later. The Synchronous API will return a timeout error (a 408 response) if the request takes longer than 60 seconds. The number of batch items is limited to **100** for this API.
@@ -345,10 +343,7 @@ namespace Azure.Maps.Search
         ///
         ///
         ///
-        /// </summary>
-        /// <param name="geocodingBatchRequestBody"> The list of address geocoding queries/requests to process. The list can contain a max of 100 queries and must contain at least 1 query. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="geocodingBatchRequestBody"/> is null. </exception>
+        /// </remarks>
         public async Task<Response<GeocodingBatchResponse>> GetGeocodingBatchAsync(GeocodingBatchRequestBody geocodingBatchRequestBody, CancellationToken cancellationToken = default)
         {
             if (geocodingBatchRequestBody == null)
@@ -363,7 +358,7 @@ namespace Azure.Maps.Search
                 case 200:
                     {
                         GeocodingBatchResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = GeocodingBatchResponse.DeserializeGeocodingBatchResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -372,15 +367,13 @@ namespace Azure.Maps.Search
             }
         }
 
-        /// <summary>
-        /// **Geocoding Batch API**
+        /// <summary> Use to send a batch of queries to the [Geocoding](/rest/api/maps/search/get-geocoding) API in a single request. </summary>
+        /// <param name="geocodingBatchRequestBody"> The list of address geocoding queries/requests to process. The list can contain a max of 100 queries and must contain at least 1 query. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="geocodingBatchRequestBody"/> is null. </exception>
+        /// <remarks>
         ///
-        ///
-        /// **Applies to:** see [pricing tiers](https://aka.ms/AzureMapsPricingTier).
-        ///
-        ///
-        ///
-        /// The Geocoding Batch API sends batches of queries to [Geocoding API](/rest/api/maps/search/get-geocoding) using just a single API call. The API allows caller to batch up to **100** queries.
+        /// The `Get Geocoding Batch` API is an HTTP `POST` request that sends batches of up to **100** queries to the [Geocoding](/rest/api/maps/search/get-geocoding) API in a single request.
         ///
         /// ### Submit Synchronous Batch Request
         /// The Synchronous API is recommended for lightweight batch requests. When the service receives a request, it will respond as soon as the batch items are calculated and there will be no possibility to retrieve the results later. The Synchronous API will return a timeout error (a 408 response) if the request takes longer than 60 seconds. The number of batch items is limited to **100** for this API.
@@ -423,10 +416,7 @@ namespace Azure.Maps.Search
         ///
         ///
         ///
-        /// </summary>
-        /// <param name="geocodingBatchRequestBody"> The list of address geocoding queries/requests to process. The list can contain a max of 100 queries and must contain at least 1 query. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="geocodingBatchRequestBody"/> is null. </exception>
+        /// </remarks>
         public Response<GeocodingBatchResponse> GetGeocodingBatch(GeocodingBatchRequestBody geocodingBatchRequestBody, CancellationToken cancellationToken = default)
         {
             if (geocodingBatchRequestBody == null)
@@ -441,7 +431,7 @@ namespace Azure.Maps.Search
                 case 200:
                     {
                         GeocodingBatchResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = GeocodingBatchResponse.DeserializeGeocodingBatchResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -488,23 +478,21 @@ namespace Azure.Maps.Search
             return message;
         }
 
-        /// <summary>
-        /// **Get Polygon**
-        ///
-        /// **Applies to:** see [pricing tiers](https://aka.ms/AzureMapsPricingTier).
-        ///
-        /// Supplies polygon data of a geographical area outline such as a city or a country region.
-        /// </summary>
+        /// <summary> Use to get polygon data of a geographical area shape such as a city or a country region. </summary>
         /// <param name="coordinates"> A point on the earth specified as a longitude and latitude. Example: &amp;coordinates=lon,lat. </param>
         /// <param name="view">
         /// A string that represents an [ISO 3166-1 Alpha-2 region/country code](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2). This will alter Geopolitical disputed borders and labels to align with the specified user region. By default, the View parameter is set to “Auto” even if you haven’t defined it in the request.
         ///
         /// Please refer to [Supported Views](https://aka.ms/AzureMapsLocalizationViews) for details and to see the available Views.
         /// </param>
-        /// <param name="resultType"> The geopolitical concept to return a boundary for. </param>
-        /// <param name="resolution"> Resolution determines the amount of points to send back. </param>
+        /// <param name="resultType"> The geopolitical concept to return a boundary for. If not specified, the default is `countryRegion` result type. </param>
+        /// <param name="resolution"> Resolution determines the amount of points to send back. If not specified, the default is medium resolution. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="coordinates"/> is null. </exception>
+        /// <remarks>
+        ///
+        /// The `Get Polygon` API is an HTTP `GET` request that supplies polygon data of a geographical area outline such as a city or a country region.
+        /// </remarks>
         public async Task<Response<BoundaryInternal>> GetPolygonAsync(IEnumerable<double> coordinates, string view = null, BoundaryResultTypeEnum? resultType = null, ResolutionEnum? resolution = null, CancellationToken cancellationToken = default)
         {
             if (coordinates == null)
@@ -519,7 +507,7 @@ namespace Azure.Maps.Search
                 case 200:
                     {
                         BoundaryInternal value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = BoundaryInternal.DeserializeBoundaryInternal(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -528,23 +516,21 @@ namespace Azure.Maps.Search
             }
         }
 
-        /// <summary>
-        /// **Get Polygon**
-        ///
-        /// **Applies to:** see [pricing tiers](https://aka.ms/AzureMapsPricingTier).
-        ///
-        /// Supplies polygon data of a geographical area outline such as a city or a country region.
-        /// </summary>
+        /// <summary> Use to get polygon data of a geographical area shape such as a city or a country region. </summary>
         /// <param name="coordinates"> A point on the earth specified as a longitude and latitude. Example: &amp;coordinates=lon,lat. </param>
         /// <param name="view">
         /// A string that represents an [ISO 3166-1 Alpha-2 region/country code](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2). This will alter Geopolitical disputed borders and labels to align with the specified user region. By default, the View parameter is set to “Auto” even if you haven’t defined it in the request.
         ///
         /// Please refer to [Supported Views](https://aka.ms/AzureMapsLocalizationViews) for details and to see the available Views.
         /// </param>
-        /// <param name="resultType"> The geopolitical concept to return a boundary for. </param>
-        /// <param name="resolution"> Resolution determines the amount of points to send back. </param>
+        /// <param name="resultType"> The geopolitical concept to return a boundary for. If not specified, the default is `countryRegion` result type. </param>
+        /// <param name="resolution"> Resolution determines the amount of points to send back. If not specified, the default is medium resolution. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="coordinates"/> is null. </exception>
+        /// <remarks>
+        ///
+        /// The `Get Polygon` API is an HTTP `GET` request that supplies polygon data of a geographical area outline such as a city or a country region.
+        /// </remarks>
         public Response<BoundaryInternal> GetPolygon(IEnumerable<double> coordinates, string view = null, BoundaryResultTypeEnum? resultType = null, ResolutionEnum? resolution = null, CancellationToken cancellationToken = default)
         {
             if (coordinates == null)
@@ -559,7 +545,7 @@ namespace Azure.Maps.Search
                 case 200:
                     {
                         BoundaryInternal value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = BoundaryInternal.DeserializeBoundaryInternal(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -602,13 +588,7 @@ namespace Azure.Maps.Search
             return message;
         }
 
-        /// <summary>
-        /// **Reverse Geocoding**
-        ///
-        /// **Applies to:** see [pricing tiers](https://aka.ms/AzureMapsPricingTier).
-        ///
-        /// Translate a coordinate (example: 37.786505, -122.3862) into a human understandable street address. Most often this is needed in tracking applications where you receive a GPS feed from the device or asset and wish to know what address where the coordinate is located. This endpoint will return address information for a given coordinate.
-        /// </summary>
+        /// <summary> Use to get a street address and location info from longitude and latitude coordinates. </summary>
         /// <param name="coordinates"> The coordinates of the location that you want to reverse geocode. Example: &amp;coordinates=lon,lat. </param>
         /// <param name="resultTypes">
         /// Specify entity types that you want in the response. Only the types you specify will be returned. If the point cannot be mapped to the entity types you specify, no location information is returned in the response.
@@ -632,6 +612,10 @@ namespace Azure.Maps.Search
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="coordinates"/> is null. </exception>
+        /// <remarks>
+        ///
+        /// The `Get Reverse Geocoding` API is an HTTP `GET` request used to translate a coordinate (example: 37.786505, -122.3862) into a human understandable street address. Useful in tracking applications where you receive a GPS feed from the device or asset and wish to know the address associated with the coordinates. This endpoint will return address information for a given coordinate.
+        /// </remarks>
         public async Task<Response<GeocodingResponse>> GetReverseGeocodingAsync(IEnumerable<double> coordinates, IEnumerable<ReverseGeocodingResultTypeEnum> resultTypes = null, string view = null, CancellationToken cancellationToken = default)
         {
             if (coordinates == null)
@@ -646,7 +630,7 @@ namespace Azure.Maps.Search
                 case 200:
                     {
                         GeocodingResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = GeocodingResponse.DeserializeGeocodingResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -655,13 +639,7 @@ namespace Azure.Maps.Search
             }
         }
 
-        /// <summary>
-        /// **Reverse Geocoding**
-        ///
-        /// **Applies to:** see [pricing tiers](https://aka.ms/AzureMapsPricingTier).
-        ///
-        /// Translate a coordinate (example: 37.786505, -122.3862) into a human understandable street address. Most often this is needed in tracking applications where you receive a GPS feed from the device or asset and wish to know what address where the coordinate is located. This endpoint will return address information for a given coordinate.
-        /// </summary>
+        /// <summary> Use to get a street address and location info from longitude and latitude coordinates. </summary>
         /// <param name="coordinates"> The coordinates of the location that you want to reverse geocode. Example: &amp;coordinates=lon,lat. </param>
         /// <param name="resultTypes">
         /// Specify entity types that you want in the response. Only the types you specify will be returned. If the point cannot be mapped to the entity types you specify, no location information is returned in the response.
@@ -685,6 +663,10 @@ namespace Azure.Maps.Search
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="coordinates"/> is null. </exception>
+        /// <remarks>
+        ///
+        /// The `Get Reverse Geocoding` API is an HTTP `GET` request used to translate a coordinate (example: 37.786505, -122.3862) into a human understandable street address. Useful in tracking applications where you receive a GPS feed from the device or asset and wish to know the address associated with the coordinates. This endpoint will return address information for a given coordinate.
+        /// </remarks>
         public Response<GeocodingResponse> GetReverseGeocoding(IEnumerable<double> coordinates, IEnumerable<ReverseGeocodingResultTypeEnum> resultTypes = null, string view = null, CancellationToken cancellationToken = default)
         {
             if (coordinates == null)
@@ -699,7 +681,7 @@ namespace Azure.Maps.Search
                 case 200:
                     {
                         GeocodingResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = GeocodingResponse.DeserializeGeocodingResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -734,15 +716,13 @@ namespace Azure.Maps.Search
             return message;
         }
 
-        /// <summary>
-        /// **Reverse Geocoding Batch API**
+        /// <summary> Use to send a batch of queries to the [Reverse Geocoding](/rest/api/maps/search/get-reverse-geocoding) API in a single request. </summary>
+        /// <param name="reverseGeocodingBatchRequestBody"> The list of reverse geocoding queries/requests to process. The list can contain a max of 100 queries and must contain at least 1 query. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="reverseGeocodingBatchRequestBody"/> is null. </exception>
+        /// <remarks>
         ///
-        ///
-        /// **Applies to:** see [pricing tiers](https://aka.ms/AzureMapsPricingTier).
-        ///
-        ///
-        ///
-        /// The Reverse Geocoding Batch API sends batches of queries to [Reverse Geocoding API](/rest/api/maps/search/get-reverse-geocoding) using just a single API call. The API allows caller to batch up to **100** queries.
+        /// The `Get Reverse Geocoding Batch` API is an HTTP `POST` request that sends batches of up to **100** queries to [Reverse Geocoding](/rest/api/maps/search/get-reverse-geocoding) API using a single request.
         ///
         /// ### Submit Synchronous Batch Request
         /// The Synchronous API is recommended for lightweight batch requests. When the service receives a request, it will respond as soon as the batch items are calculated and there will be no possibility to retrieve the results later. The Synchronous API will return a timeout error (a 408 response) if the request takes longer than 60 seconds. The number of batch items is limited to **100** for this API.
@@ -782,10 +762,7 @@ namespace Azure.Maps.Search
         ///
         ///
         ///
-        /// </summary>
-        /// <param name="reverseGeocodingBatchRequestBody"> The list of reverse geocoding queries/requests to process. The list can contain a max of 100 queries and must contain at least 1 query. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="reverseGeocodingBatchRequestBody"/> is null. </exception>
+        /// </remarks>
         public async Task<Response<GeocodingBatchResponse>> GetReverseGeocodingBatchAsync(ReverseGeocodingBatchRequestBody reverseGeocodingBatchRequestBody, CancellationToken cancellationToken = default)
         {
             if (reverseGeocodingBatchRequestBody == null)
@@ -800,7 +777,7 @@ namespace Azure.Maps.Search
                 case 200:
                     {
                         GeocodingBatchResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = GeocodingBatchResponse.DeserializeGeocodingBatchResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -809,15 +786,13 @@ namespace Azure.Maps.Search
             }
         }
 
-        /// <summary>
-        /// **Reverse Geocoding Batch API**
+        /// <summary> Use to send a batch of queries to the [Reverse Geocoding](/rest/api/maps/search/get-reverse-geocoding) API in a single request. </summary>
+        /// <param name="reverseGeocodingBatchRequestBody"> The list of reverse geocoding queries/requests to process. The list can contain a max of 100 queries and must contain at least 1 query. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="reverseGeocodingBatchRequestBody"/> is null. </exception>
+        /// <remarks>
         ///
-        ///
-        /// **Applies to:** see [pricing tiers](https://aka.ms/AzureMapsPricingTier).
-        ///
-        ///
-        ///
-        /// The Reverse Geocoding Batch API sends batches of queries to [Reverse Geocoding API](/rest/api/maps/search/get-reverse-geocoding) using just a single API call. The API allows caller to batch up to **100** queries.
+        /// The `Get Reverse Geocoding Batch` API is an HTTP `POST` request that sends batches of up to **100** queries to [Reverse Geocoding](/rest/api/maps/search/get-reverse-geocoding) API using a single request.
         ///
         /// ### Submit Synchronous Batch Request
         /// The Synchronous API is recommended for lightweight batch requests. When the service receives a request, it will respond as soon as the batch items are calculated and there will be no possibility to retrieve the results later. The Synchronous API will return a timeout error (a 408 response) if the request takes longer than 60 seconds. The number of batch items is limited to **100** for this API.
@@ -857,10 +832,7 @@ namespace Azure.Maps.Search
         ///
         ///
         ///
-        /// </summary>
-        /// <param name="reverseGeocodingBatchRequestBody"> The list of reverse geocoding queries/requests to process. The list can contain a max of 100 queries and must contain at least 1 query. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="reverseGeocodingBatchRequestBody"/> is null. </exception>
+        /// </remarks>
         public Response<GeocodingBatchResponse> GetReverseGeocodingBatch(ReverseGeocodingBatchRequestBody reverseGeocodingBatchRequestBody, CancellationToken cancellationToken = default)
         {
             if (reverseGeocodingBatchRequestBody == null)
@@ -875,7 +847,7 @@ namespace Azure.Maps.Search
                 case 200:
                     {
                         GeocodingBatchResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = GeocodingBatchResponse.DeserializeGeocodingBatchResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

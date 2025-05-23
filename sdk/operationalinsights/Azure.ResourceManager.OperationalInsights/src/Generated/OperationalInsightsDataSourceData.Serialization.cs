@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.OperationalInsights
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Properties);
 #else
-            using (JsonDocument document = JsonDocument.Parse(Properties))
+            using (JsonDocument document = JsonDocument.Parse(Properties, ModelSerializationExtensions.JsonDocumentOptions))
             {
                 JsonSerializer.Serialize(writer, document.RootElement);
             }
@@ -329,7 +329,7 @@ namespace Azure.ResourceManager.OperationalInsights
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerOperationalInsightsContext.Default);
                 case "bicep":
                     return SerializeBicep(options);
                 default:
@@ -345,7 +345,7 @@ namespace Azure.ResourceManager.OperationalInsights
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeOperationalInsightsDataSourceData(document.RootElement, options);
                     }
                 default:

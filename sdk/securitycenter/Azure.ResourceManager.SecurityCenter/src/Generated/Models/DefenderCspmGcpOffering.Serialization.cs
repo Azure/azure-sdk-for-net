@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSecurityCenterContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(DefenderCspmGcpOffering)} does not support writing '{options.Format}' format.");
             }
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeDefenderCspmGcpOffering(document.RootElement, options);
                     }
                 default:

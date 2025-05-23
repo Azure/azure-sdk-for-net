@@ -69,6 +69,16 @@ namespace Azure.ResourceManager.Compute
                 writer.WritePropertyName("securityProfile"u8);
                 writer.WriteObjectValue(SecurityProfile, options);
             }
+            if (Optional.IsDefined(IsRestoreEnabled))
+            {
+                writer.WritePropertyName("restore"u8);
+                writer.WriteBooleanValue(IsRestoreEnabled.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ValidationsProfile))
+            {
+                writer.WritePropertyName("validationsProfile"u8);
+                writer.WriteObjectValue(ValidationsProfile, options);
+            }
             writer.WriteEndObject();
         }
 
@@ -104,6 +114,8 @@ namespace Azure.ResourceManager.Compute
             GalleryImageVersionSafetyProfile safetyProfile = default;
             ReplicationStatus replicationStatus = default;
             ImageVersionSecurityProfile securityProfile = default;
+            bool? restore = default;
+            GalleryImageValidationsProfile validationsProfile = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -214,6 +226,24 @@ namespace Azure.ResourceManager.Compute
                             securityProfile = ImageVersionSecurityProfile.DeserializeImageVersionSecurityProfile(property0.Value, options);
                             continue;
                         }
+                        if (property0.NameEquals("restore"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            restore = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("validationsProfile"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            validationsProfile = GalleryImageValidationsProfile.DeserializeGalleryImageValidationsProfile(property0.Value, options);
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -236,6 +266,8 @@ namespace Azure.ResourceManager.Compute
                 safetyProfile,
                 replicationStatus,
                 securityProfile,
+                restore,
+                validationsProfile,
                 serializedAdditionalRawData);
         }
 
@@ -246,7 +278,7 @@ namespace Azure.ResourceManager.Compute
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(GalleryImageVersionData)} does not support writing '{options.Format}' format.");
             }
@@ -260,7 +292,7 @@ namespace Azure.ResourceManager.Compute
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeGalleryImageVersionData(document.RootElement, options);
                     }
                 default:

@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.MixedReality
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMixedRealityContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(SpatialAnchorsAccountData)} does not support writing '{options.Format}' format.");
             }
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.MixedReality
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeSpatialAnchorsAccountData(document.RootElement, options);
                     }
                 default:

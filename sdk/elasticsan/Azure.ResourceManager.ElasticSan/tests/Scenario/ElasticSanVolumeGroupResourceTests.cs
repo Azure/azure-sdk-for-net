@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -28,6 +29,13 @@ namespace Azure.ResourceManager.ElasticSan.Tests.Scenario
             ElasticSanCollection elasticSanCollection = (await GetResourceGroupAsync(ResourceGroupName)).GetElasticSans();
             ElasticSanVolumeGroupCollection collection = (await elasticSanCollection.GetAsync(ElasticSanName)).Value.GetElasticSanVolumeGroups();
             return collection;
+        }
+        private async Task<ElasticSanVolumeCollection> GetVolumeCollection(string volumeGroupName)
+        {
+            ElasticSanCollection elasticSanCollection = (await GetResourceGroupAsync(ResourceGroupName)).GetElasticSans();
+            ElasticSanVolumeGroupCollection volGroupCollection = (await elasticSanCollection.GetAsync(ElasticSanName)).Value.GetElasticSanVolumeGroups();
+            ElasticSanVolumeGroupResource volGroup = (await volGroupCollection.GetIfExistsAsync(volumeGroupName)).Value;
+            return volGroup.GetElasticSanVolumes();
         }
 
         [Test]
@@ -72,6 +80,55 @@ namespace Azure.ResourceManager.ElasticSan.Tests.Scenario
 
             await volumeGroup.DeleteAsync(WaitUntil.Completed);
             Assert.IsFalse(await _collection.ExistsAsync(volumeGroupName));
+
+            string volumeGroupSoftDeleteName = Recording.GenerateAssetName("testvolumegroupsd-");
+            ElasticSanVolumeGroupData volumeGroupSoftDeleteData = new ElasticSanVolumeGroupData()
+            {
+                DeleteRetentionPolicy = new ElasticSanDeleteRetentionPolicy()
+                {
+                    PolicyState = ElasticSanDeleteRetentionPolicyState.Enabled,
+                    RetentionPeriodDays = 1
+                }
+            };
+            ElasticSanVolumeGroupResource volumeGroupSoftDelete = (await _collection.CreateOrUpdateAsync(WaitUntil.Completed, volumeGroupSoftDeleteName, volumeGroupSoftDeleteData)).Value;
+            Assert.AreEqual(volumeGroupSoftDelete.Id.Name, volumeGroupSoftDeleteName);
+            Assert.AreEqual(volumeGroupSoftDelete.Data.DeleteRetentionPolicy.PolicyState, ElasticSanDeleteRetentionPolicyState.Enabled);
+            Assert.AreEqual(volumeGroupSoftDelete.Data.DeleteRetentionPolicy.RetentionPeriodDays, 1);
+            await volumeGroupSoftDelete.DeleteAsync(WaitUntil.Completed);
+            int count = 0;
+            await foreach (ElasticSanVolumeGroupResource _ in _collection.GetAllAsync())
+            {
+                count++;
+            }
+            Assert.GreaterOrEqual(count, 1);
+        }
+        [Test]
+        [RecordedTest]
+        public async Task PreBackupPreRestore()
+        {
+            _collection = await GetVolumeGroupCollection();
+
+            string volumeGroupName = Recording.GenerateAssetName("testvolgroup-");
+            ElasticSanVolumeGroupResource volumeGroup = (await _collection.CreateOrUpdateAsync(WaitUntil.Completed, volumeGroupName, new ElasticSanVolumeGroupData())).Value;
+
+            var _volumeCollection = await GetVolumeCollection(volumeGroupName);
+            string volumeName = Recording.GenerateAssetName("testvolume-");
+            ElasticSanVolumeData data = new ElasticSanVolumeData(100);
+            ElasticSanVolumeResource volume1 = (await _volumeCollection.CreateOrUpdateAsync(WaitUntil.Completed, volumeName, data)).Value;
+
+            var volumeNameList = new ElasticSanVolumeNameListContent(new string[] { volumeName });
+            var preBackup = (await volumeGroup.PreBackupVolumeAsync(WaitUntil.Completed, volumeNameList)).Value;
+            Assert.AreEqual(preBackup.ValidationStatus, "Success");
+
+            // Require a real disk snapshot id for live test
+            DiskSnapshotListContent diskSnapshotList = new DiskSnapshotListContent(
+                new ResourceIdentifier[] {
+                    new ResourceIdentifier(
+                        "/subscriptions/aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/resourceGroups/resourcegroup/providers/Microsoft.Compute/snapshots/disksnapshotid") });
+            var preRestore = (await volumeGroup.PreRestoreVolumeAsync(WaitUntil.Completed, diskSnapshotList)).Value;
+            Assert.AreEqual(preRestore.ValidationStatus, "Success");
+
+            await volumeGroup.DeleteAsync(WaitUntil.Completed);
         }
     }
 }

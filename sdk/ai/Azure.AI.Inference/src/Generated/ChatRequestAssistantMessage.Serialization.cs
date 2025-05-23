@@ -37,15 +37,8 @@ namespace Azure.AI.Inference
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Content))
             {
-                if (Content != null)
-                {
-                    writer.WritePropertyName("content"u8);
-                    writer.WriteStringValue(Content);
-                }
-                else
-                {
-                    writer.WriteNull("content");
-                }
+                writer.WritePropertyName("content"u8);
+                writer.WriteStringValue(Content);
             }
             if (Optional.IsCollectionDefined(ToolCalls))
             {
@@ -88,11 +81,6 @@ namespace Azure.AI.Inference
             {
                 if (property.NameEquals("content"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        content = null;
-                        continue;
-                    }
                     content = property.Value.GetString();
                     continue;
                 }
@@ -131,7 +119,7 @@ namespace Azure.AI.Inference
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureAIInferenceContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ChatRequestAssistantMessage)} does not support writing '{options.Format}' format.");
             }
@@ -145,7 +133,7 @@ namespace Azure.AI.Inference
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeChatRequestAssistantMessage(document.RootElement, options);
                     }
                 default:
@@ -159,7 +147,7 @@ namespace Azure.AI.Inference
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static new ChatRequestAssistantMessage FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeChatRequestAssistantMessage(document.RootElement);
         }
 

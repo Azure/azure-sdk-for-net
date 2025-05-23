@@ -11,18 +11,18 @@ using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Cdn.Models;
 using Azure.ResourceManager.Resources.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Cdn.Samples
 {
     public partial class Sample_FrontDoorRouteCollection
     {
-        // Routes_ListByEndpoint
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetAll_RoutesListByEndpoint()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task CreateOrUpdate_RoutesCreate()
         {
-            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2024-02-01/examples/Routes_ListByEndpoint.json
-            // this example is just showing the usage of "FrontDoorRoutes_ListByEndpoint" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2025-04-15/examples/Routes_Create.json
+            // this example is just showing the usage of "FrontDoorRoutes_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -41,25 +41,52 @@ namespace Azure.ResourceManager.Cdn.Samples
             // get the collection of this FrontDoorRouteResource
             FrontDoorRouteCollection collection = frontDoorEndpoint.GetFrontDoorRoutes();
 
-            // invoke the operation and iterate over the result
-            await foreach (FrontDoorRouteResource item in collection.GetAllAsync())
+            // invoke the operation
+            string routeName = "route1";
+            FrontDoorRouteData data = new FrontDoorRouteData
             {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                FrontDoorRouteData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
+                CustomDomains = {new FrontDoorActivatedResourceInfo
+{
+Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/RG/providers/Microsoft.Cdn/profiles/profile1/customDomains/domain1"),
+}},
+                OriginGroupId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/RG/providers/Microsoft.Cdn/profiles/profile1/originGroups/originGroup1"),
+                OriginPath = null,
+                RuleSets = {new WritableSubResource
+{
+Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/RG/providers/Microsoft.Cdn/profiles/profile1/ruleSets/ruleSet1"),
+}},
+                SupportedProtocols = { FrontDoorEndpointProtocol.Https, FrontDoorEndpointProtocol.Http },
+                PatternsToMatch = { "/*" },
+                CacheConfiguration = new FrontDoorRouteCacheConfiguration
+                {
+                    QueryStringCachingBehavior = FrontDoorQueryStringCachingBehavior.IgnoreSpecifiedQueryStrings,
+                    QueryParameters = "querystring=test",
+                    CompressionSettings = new RouteCacheCompressionSettings
+                    {
+                        ContentTypesToCompress = { "text/html", "application/octet-stream" },
+                        IsCompressionEnabled = true,
+                    },
+                },
+                ForwardingProtocol = ForwardingProtocol.MatchRequest,
+                LinkToDefaultDomain = LinkToDefaultDomain.Enabled,
+                HttpsRedirect = HttpsRedirect.Enabled,
+                EnabledState = EnabledState.Enabled,
+            };
+            ArmOperation<FrontDoorRouteResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, routeName, data);
+            FrontDoorRouteResource result = lro.Value;
 
-            Console.WriteLine($"Succeeded");
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            FrontDoorRouteData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Routes_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_RoutesGet()
         {
-            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2024-02-01/examples/Routes_Get.json
+            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2025-04-15/examples/Routes_Get.json
             // this example is just showing the usage of "FrontDoorRoutes_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -90,12 +117,48 @@ namespace Azure.ResourceManager.Cdn.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Routes_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetAll_RoutesListByEndpoint()
+        {
+            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2025-04-15/examples/Routes_ListByEndpoint.json
+            // this example is just showing the usage of "FrontDoorRoutes_ListByEndpoint" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this FrontDoorEndpointResource created on azure
+            // for more information of creating FrontDoorEndpointResource, please refer to the document of FrontDoorEndpointResource
+            string subscriptionId = "subid";
+            string resourceGroupName = "RG";
+            string profileName = "profile1";
+            string endpointName = "endpoint1";
+            ResourceIdentifier frontDoorEndpointResourceId = FrontDoorEndpointResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, profileName, endpointName);
+            FrontDoorEndpointResource frontDoorEndpoint = client.GetFrontDoorEndpointResource(frontDoorEndpointResourceId);
+
+            // get the collection of this FrontDoorRouteResource
+            FrontDoorRouteCollection collection = frontDoorEndpoint.GetFrontDoorRoutes();
+
+            // invoke the operation and iterate over the result
+            await foreach (FrontDoorRouteResource item in collection.GetAllAsync())
+            {
+                // the variable item is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                FrontDoorRouteData resourceData = item.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_RoutesGet()
         {
-            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2024-02-01/examples/Routes_Get.json
+            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2025-04-15/examples/Routes_Get.json
             // this example is just showing the usage of "FrontDoorRoutes_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -122,12 +185,11 @@ namespace Azure.ResourceManager.Cdn.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Routes_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_RoutesGet()
         {
-            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2024-02-01/examples/Routes_Get.json
+            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2025-04-15/examples/Routes_Get.json
             // this example is just showing the usage of "FrontDoorRoutes_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -154,7 +216,7 @@ namespace Azure.ResourceManager.Cdn.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -164,87 +226,6 @@ namespace Azure.ResourceManager.Cdn.Samples
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
-        }
-
-        // Routes_Create
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task CreateOrUpdate_RoutesCreate()
-        {
-            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2024-02-01/examples/Routes_Create.json
-            // this example is just showing the usage of "FrontDoorRoutes_Create" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this FrontDoorEndpointResource created on azure
-            // for more information of creating FrontDoorEndpointResource, please refer to the document of FrontDoorEndpointResource
-            string subscriptionId = "subid";
-            string resourceGroupName = "RG";
-            string profileName = "profile1";
-            string endpointName = "endpoint1";
-            ResourceIdentifier frontDoorEndpointResourceId = FrontDoorEndpointResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, profileName, endpointName);
-            FrontDoorEndpointResource frontDoorEndpoint = client.GetFrontDoorEndpointResource(frontDoorEndpointResourceId);
-
-            // get the collection of this FrontDoorRouteResource
-            FrontDoorRouteCollection collection = frontDoorEndpoint.GetFrontDoorRoutes();
-
-            // invoke the operation
-            string routeName = "route1";
-            FrontDoorRouteData data = new FrontDoorRouteData()
-            {
-                CustomDomains =
-{
-new FrontDoorActivatedResourceInfo()
-{
-Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/RG/providers/Microsoft.Cdn/profiles/profile1/customDomains/domain1"),
-}
-},
-                OriginGroupId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/RG/providers/Microsoft.Cdn/profiles/profile1/originGroups/originGroup1"),
-                OriginPath = null,
-                RuleSets =
-{
-new WritableSubResource()
-{
-Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/RG/providers/Microsoft.Cdn/profiles/profile1/ruleSets/ruleSet1"),
-}
-},
-                SupportedProtocols =
-{
-FrontDoorEndpointProtocol.Https,FrontDoorEndpointProtocol.Http
-},
-                PatternsToMatch =
-{
-"/*"
-},
-                CacheConfiguration = new FrontDoorRouteCacheConfiguration()
-                {
-                    QueryStringCachingBehavior = FrontDoorQueryStringCachingBehavior.IgnoreSpecifiedQueryStrings,
-                    QueryParameters = "querystring=test",
-                    CompressionSettings = new RouteCacheCompressionSettings()
-                    {
-                        ContentTypesToCompress =
-{
-"text/html","application/octet-stream"
-},
-                        IsCompressionEnabled = true,
-                    },
-                },
-                ForwardingProtocol = ForwardingProtocol.MatchRequest,
-                LinkToDefaultDomain = LinkToDefaultDomain.Enabled,
-                HttpsRedirect = HttpsRedirect.Enabled,
-                EnabledState = EnabledState.Enabled,
-            };
-            ArmOperation<FrontDoorRouteResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, routeName, data);
-            FrontDoorRouteResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            FrontDoorRouteData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
     }
 }

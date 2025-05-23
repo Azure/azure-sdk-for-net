@@ -329,7 +329,7 @@ namespace Azure.ResourceManager.Marketplace
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMarketplaceContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(PrivateStoreData)} does not support writing '{options.Format}' format.");
             }
@@ -343,7 +343,7 @@ namespace Azure.ResourceManager.Marketplace
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializePrivateStoreData(document.RootElement, options);
                     }
                 default:

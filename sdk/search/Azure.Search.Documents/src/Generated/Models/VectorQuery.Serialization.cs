@@ -52,6 +52,11 @@ namespace Azure.Search.Documents.Models
                 writer.WritePropertyName("filterOverride"u8);
                 writer.WriteStringValue(FilterOverride);
             }
+            if (Optional.IsDefined(PerDocumentVectorLimit))
+            {
+                writer.WritePropertyName("perDocumentVectorLimit"u8);
+                writer.WriteNumberValue(PerDocumentVectorLimit.Value);
+            }
             writer.WriteEndObject();
         }
 
@@ -78,7 +83,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static VectorQuery FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeVectorQuery(document.RootElement);
         }
 

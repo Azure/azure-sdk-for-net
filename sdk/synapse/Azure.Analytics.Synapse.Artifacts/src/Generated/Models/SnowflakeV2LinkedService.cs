@@ -32,6 +32,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         /// <summary> Initializes a new instance of <see cref="SnowflakeV2LinkedService"/>. </summary>
         /// <param name="type"> Type of linked service. </param>
+        /// <param name="version"> Version of the linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>
         /// <param name="parameters"> Parameters for linked service. </param>
@@ -55,6 +56,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// </param>
         /// <param name="tenantId"> The tenant ID of the application registered in Azure Active Directory for AADServicePrincipal authentication. </param>
         /// <param name="scope"> The scope of the application registered in Azure Active Directory for AADServicePrincipal authentication. </param>
+        /// <param name="host"> The host name of the Snowflake account. </param>
         /// <param name="privateKey">
         /// The Azure key vault secret reference of privateKey for KeyPair auth.
         /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -66,7 +68,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// The available derived classes include <see cref="AzureKeyVaultSecretReference"/> and <see cref="SecureString"/>.
         /// </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
-        internal SnowflakeV2LinkedService(string type, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, object accountIdentifier, object user, SecretBase password, object database, object warehouse, SnowflakeAuthenticationType? authenticationType, object clientId, SecretBase clientSecret, object tenantId, object scope, SecretBase privateKey, SecretBase privateKeyPassphrase, string encryptedCredential) : base(type, connectVia, description, parameters, annotations, additionalProperties)
+        internal SnowflakeV2LinkedService(string type, string version, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, object accountIdentifier, object user, SecretBase password, object database, object warehouse, SnowflakeAuthenticationType? authenticationType, object clientId, SecretBase clientSecret, object tenantId, object scope, object host, SecretBase privateKey, SecretBase privateKeyPassphrase, string encryptedCredential) : base(type, version, connectVia, description, parameters, annotations, additionalProperties)
         {
             AccountIdentifier = accountIdentifier;
             User = user;
@@ -78,6 +80,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             ClientSecret = clientSecret;
             TenantId = tenantId;
             Scope = scope;
+            Host = host;
             PrivateKey = privateKey;
             PrivateKeyPassphrase = privateKeyPassphrase;
             EncryptedCredential = encryptedCredential;
@@ -112,6 +115,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public object TenantId { get; set; }
         /// <summary> The scope of the application registered in Azure Active Directory for AADServicePrincipal authentication. </summary>
         public object Scope { get; set; }
+        /// <summary> The host name of the Snowflake account. </summary>
+        public object Host { get; set; }
         /// <summary>
         /// The Azure key vault secret reference of privateKey for KeyPair auth.
         /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.

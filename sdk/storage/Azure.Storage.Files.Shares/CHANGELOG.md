@@ -1,6 +1,6 @@
 # Release History
 
-## 12.21.0-beta.3 (Unreleased)
+## 12.23.0-beta.2 (Unreleased)
 
 ### Features Added
 
@@ -10,12 +10,49 @@
 
 ### Other Changes
 
-## 12.20.1 (2024-10-10)
+## 12.23.0-beta.1 (2025-05-06)
+
+### Features Added
+- Added support for service version 2025-07-05.
+- Added the `ShareFileClient.CreateSymbolicLink()`, `.CreateSymbolicLinkAsync()`, `.GetSymbolicLink()`, and `.GetSymbolicLinkAsync()` APIs.
+
+## 12.22.0 (2025-03-11)
+
+### Features Added
+- Includes all features from 12.22.0-beta.1
+- Added the following Client Builders: `AddShareServiceClient(Uri, Azure.SasCredential)`, `AddShareServiceClient(Uri, TokenCredential)`
+
+### Bugs Fixed
+- Fixed bug where a `ShareServiceClient`, `ShareClient`, `ShareDirectoryClient`, `ShareFileClient` created with a connection string with an account name specified (e.g. "AccountName=..;"), the account name was not populated on the Storage Clients if the account name was not also specified in the endpoint. (#42925)
+- Fixed bug where a `ShareServiceClient`, `ShareClient`, `ShareDirectoryClient`, `ShareFileClient` created with a `StorageSharedKeyCredential`, the account name was not populated on the Storage Clients if the account name was not also specified in the endpoint. (#42925)
+
+## 12.22.0-beta.1 (2025-02-11)
+
+### Features Added
+- Added support for service version 2025-05-05.
+- Added support for NFS over REST.
+
+### Breaking Changes
+- The following APIs no longer send the x-ms-file-permission-key, x-ms-file-attributes, x-ms-file-creation-time, and x-ms-file-last-write-time request headers by default.  These headers have been optional in the REST API since x-ms-version 2021-06-08:
+    - ShareFileClient.Create() and .CreateAsync()
+    - ShareFileClient.SetHttpHeaders() and .SetHttpHeadersAsync()
+    - ShareDirectoryClient.Create() and .CreateAsync()
+    - ShareDirectoryClient.SetHttpHeaders() and .SetHttpHeadersAsync()
+
+### Bugs Fixed
+- Fixed \[BUG\] Unable to create directory with only whiteSpaceChars #42891
+
+## 12.21.0 (2024-11-12)
+
+### Features Added
+- Includes all features from 12.21.0-beta.1 and 12.21.0-beta.
+
+## 12.21.0-beta.2 (2024-10-10)
 
 ### Other Changes
 - Upgraded `System.Text.Json` package dependency to 6.0.10 for security fix.
 
-## 12.21.0-beta.2 (2024-10-10)
+## 12.20.1 (2024-10-10)
 
 ### Other Changes
 - Upgraded `System.Text.Json` package dependency to 6.0.10 for security fix.

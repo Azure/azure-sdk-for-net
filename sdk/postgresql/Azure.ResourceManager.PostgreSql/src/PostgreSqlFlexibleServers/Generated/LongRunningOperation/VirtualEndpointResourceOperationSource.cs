@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +23,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
 
         VirtualEndpointResource IOperationSource<VirtualEndpointResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = VirtualEndpointResourceData.DeserializeVirtualEndpointResourceData(document.RootElement);
+            var data = ModelReaderWriter.Read<VirtualEndpointResourceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerPostgreSqlContext.Default);
             return new VirtualEndpointResource(_client, data);
         }
 
         async ValueTask<VirtualEndpointResource> IOperationSource<VirtualEndpointResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = VirtualEndpointResourceData.DeserializeVirtualEndpointResourceData(document.RootElement);
-            return new VirtualEndpointResource(_client, data);
+            var data = ModelReaderWriter.Read<VirtualEndpointResourceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerPostgreSqlContext.Default);
+            return await Task.FromResult(new VirtualEndpointResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

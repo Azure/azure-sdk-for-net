@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.SecurityDevOps
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSecurityDevOpsContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(AzureDevOpsConnectorData)} does not support writing '{options.Format}' format.");
             }
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.SecurityDevOps
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeAzureDevOpsConnectorData(document.RootElement, options);
                     }
                 default:

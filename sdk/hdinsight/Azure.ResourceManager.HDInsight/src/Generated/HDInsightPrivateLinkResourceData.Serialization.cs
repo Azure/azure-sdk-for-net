@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.HDInsight
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHDInsightContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(HDInsightPrivateLinkResourceData)} does not support writing '{options.Format}' format.");
             }
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.HDInsight
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeHDInsightPrivateLinkResourceData(document.RootElement, options);
                     }
                 default:

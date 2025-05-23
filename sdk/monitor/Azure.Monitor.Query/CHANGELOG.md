@@ -1,15 +1,21 @@
 # Release History
 
-## 1.6.0-beta.1 (Unreleased)
+## 1.7.0-beta.1 (Unreleased)
 
 ### Features Added
 
 ### Breaking Changes
 
 ### Bugs Fixed
-- Fix bug in 'MetricsClient' QueryResourceAsync method where the 'QueryTimeRange' parameter was incorrectly set
 
 ### Other Changes
+
+## 1.6.0 (2024-12-03)
+
+### Features Added
+- Add 'StartTime' and 'EndTime' parameters to 'MetricsQueryResourcesOptions' to allow for querying a specific time range
+### Bugs Fixed
+- Fix bug in 'MetricsClient' QueryResourceAsync method where the 'QueryTimeRange' parameter was incorrectly set
 
 ## 1.5.0 (2024-08-21)
 ### Bugs Fixed

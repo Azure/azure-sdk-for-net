@@ -38,22 +38,22 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="NetworkSecurityPerimeterConfigurationResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="NetworkSecurityPerimeterConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="NetworkSecurityPerimeterConfigurationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="CosmosDBChaosFaultResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="CosmosDBChaosFaultResource.CreateResourceIdentifier" /> to create a <see cref="CosmosDBChaosFaultResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableCosmosDBArmClient.GetNetworkSecurityPerimeterConfigurationResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCosmosDBArmClient.GetCosmosDBChaosFaultResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="NetworkSecurityPerimeterConfigurationResource"/> object. </returns>
-        public static NetworkSecurityPerimeterConfigurationResource GetNetworkSecurityPerimeterConfigurationResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="CosmosDBChaosFaultResource"/> object. </returns>
+        public static CosmosDBChaosFaultResource GetCosmosDBChaosFaultResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableCosmosDBArmClient(client).GetNetworkSecurityPerimeterConfigurationResource(id);
+            return GetMockableCosmosDBArmClient(client).GetCosmosDBChaosFaultResource(id);
         }
 
         /// <summary>
@@ -532,6 +532,44 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="CosmosDBTableRoleDefinitionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="CosmosDBTableRoleDefinitionResource.CreateResourceIdentifier" /> to create a <see cref="CosmosDBTableRoleDefinitionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableCosmosDBArmClient.GetCosmosDBTableRoleDefinitionResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="CosmosDBTableRoleDefinitionResource"/> object. </returns>
+        public static CosmosDBTableRoleDefinitionResource GetCosmosDBTableRoleDefinitionResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableCosmosDBArmClient(client).GetCosmosDBTableRoleDefinitionResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="CosmosDBTableRoleAssignmentResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="CosmosDBTableRoleAssignmentResource.CreateResourceIdentifier" /> to create a <see cref="CosmosDBTableRoleAssignmentResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableCosmosDBArmClient.GetCosmosDBTableRoleAssignmentResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="CosmosDBTableRoleAssignmentResource"/> object. </returns>
+        public static CosmosDBTableRoleAssignmentResource GetCosmosDBTableRoleAssignmentResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableCosmosDBArmClient(client).GetCosmosDBTableRoleAssignmentResource(id);
+        }
+
+        /// <summary>
         /// Gets an object representing a <see cref="CassandraKeyspaceResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="CassandraKeyspaceResource.CreateResourceIdentifier" /> to create a <see cref="CassandraKeyspaceResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
@@ -703,6 +741,25 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="NetworkSecurityPerimeterConfigurationResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NetworkSecurityPerimeterConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="NetworkSecurityPerimeterConfigurationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableCosmosDBArmClient.GetNetworkSecurityPerimeterConfigurationResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="NetworkSecurityPerimeterConfigurationResource"/> object. </returns>
+        public static NetworkSecurityPerimeterConfigurationResource GetNetworkSecurityPerimeterConfigurationResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableCosmosDBArmClient(client).GetNetworkSecurityPerimeterConfigurationResource(id);
+        }
+
+        /// <summary>
         /// Gets an object representing a <see cref="CosmosDBPrivateEndpointConnectionResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="CosmosDBPrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="CosmosDBPrivateEndpointConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
@@ -846,7 +903,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-15-preview</description>
+        /// <description>2024-12-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -884,7 +941,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-15-preview</description>
+        /// <description>2024-12-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -939,7 +996,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-15-preview</description>
+        /// <description>2024-12-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -977,7 +1034,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-15-preview</description>
+        /// <description>2024-12-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1032,7 +1089,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-15-preview</description>
+        /// <description>2024-12-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1070,7 +1127,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-15-preview</description>
+        /// <description>2024-12-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1125,7 +1182,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-15-preview</description>
+        /// <description>2024-12-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1162,7 +1219,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-15-preview</description>
+        /// <description>2024-12-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1199,7 +1256,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-15-preview</description>
+        /// <description>2024-12-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1235,7 +1292,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-15-preview</description>
+        /// <description>2024-12-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1271,7 +1328,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-15-preview</description>
+        /// <description>2024-12-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1307,7 +1364,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-15-preview</description>
+        /// <description>2024-12-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1343,7 +1400,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-15-preview</description>
+        /// <description>2024-12-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1379,7 +1436,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-15-preview</description>
+        /// <description>2024-12-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1415,7 +1472,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-15-preview</description>
+        /// <description>2024-12-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1451,7 +1508,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-15-preview</description>
+        /// <description>2024-12-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1487,7 +1544,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-15-preview</description>
+        /// <description>2024-12-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1524,7 +1581,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-15-preview</description>
+        /// <description>2024-12-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

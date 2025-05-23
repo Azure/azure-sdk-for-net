@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.DataFactory
                 case 200:
                     {
                         ChangeDataCaptureListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ChangeDataCaptureListResult.DeserializeChangeDataCaptureListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.DataFactory
                 case 200:
                     {
                         ChangeDataCaptureListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ChangeDataCaptureListResult.DeserializeChangeDataCaptureListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.DataFactory
                 case 200:
                     {
                         DataFactoryChangeDataCaptureData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DataFactoryChangeDataCaptureData.DeserializeDataFactoryChangeDataCaptureData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.DataFactory
                 case 200:
                     {
                         DataFactoryChangeDataCaptureData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DataFactoryChangeDataCaptureData.DeserializeDataFactoryChangeDataCaptureData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.DataFactory
                 case 200:
                     {
                         DataFactoryChangeDataCaptureData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DataFactoryChangeDataCaptureData.DeserializeDataFactoryChangeDataCaptureData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -343,7 +343,7 @@ namespace Azure.ResourceManager.DataFactory
                 case 200:
                     {
                         DataFactoryChangeDataCaptureData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DataFactoryChangeDataCaptureData.DeserializeDataFactoryChangeDataCaptureData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -692,7 +692,7 @@ namespace Azure.ResourceManager.DataFactory
                 case 200:
                     {
                         string value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = document.RootElement.GetString();
                         return Response.FromValue(value, message.Response);
                     }
@@ -723,7 +723,7 @@ namespace Azure.ResourceManager.DataFactory
                 case 200:
                     {
                         string value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = document.RootElement.GetString();
                         return Response.FromValue(value, message.Response);
                     }
@@ -776,7 +776,7 @@ namespace Azure.ResourceManager.DataFactory
                 case 200:
                     {
                         ChangeDataCaptureListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ChangeDataCaptureListResult.DeserializeChangeDataCaptureListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -807,7 +807,7 @@ namespace Azure.ResourceManager.DataFactory
                 case 200:
                     {
                         ChangeDataCaptureListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ChangeDataCaptureListResult.DeserializeChangeDataCaptureListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

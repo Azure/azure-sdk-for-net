@@ -13,7 +13,7 @@ tag: package-2022-09
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
-  output-folder: $(this-folder)/../samples/Generated
+  output-folder: $(this-folder)/../tests/Generated
   clear-output-folder: true
   skipped-operations:
   - PolicyEvents_ListQueryResultsForResourceGroupLevelPolicyAssignment
@@ -36,7 +36,6 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 use-model-reader-writer: true
-use-write-core: true
 
 request-path-to-parent:
   /providers/Microsoft.PolicyInsights/policyMetadata: /providers/Microsoft.PolicyInsights/policyMetadata/{resourceName}

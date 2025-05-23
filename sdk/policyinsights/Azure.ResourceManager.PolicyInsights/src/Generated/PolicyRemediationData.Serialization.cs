@@ -319,7 +319,7 @@ namespace Azure.ResourceManager.PolicyInsights
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerPolicyInsightsContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(PolicyRemediationData)} does not support writing '{options.Format}' format.");
             }
@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.PolicyInsights
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializePolicyRemediationData(document.RootElement, options);
                     }
                 default:

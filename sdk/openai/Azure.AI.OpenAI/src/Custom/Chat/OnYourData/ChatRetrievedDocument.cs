@@ -7,15 +7,11 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.OpenAI.Chat;
 
-[CodeGenModel("AzureChatMessageContextAllRetrievedDocuments")]
+[CodeGenType("AzureChatMessageContextAllRetrievedDocuments")]
 [Experimental("AOAI001")]
 public partial class ChatRetrievedDocument
 {
     /// <summary> The file path for the citation. </summary>
     [CodeGenMember("Filepath")]
     public string FilePath { get; }
-
-    /// <summary> The location of the citation. </summary>
-    [CodeGenMember("Url")]
-    public Uri Uri { get; }
 }

@@ -9,73 +9,18 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.StorageSync.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.StorageSync.Samples
 {
     public partial class Sample_StorageSyncServiceResource
     {
-        // StorageSyncServiceCheckNameAvailability_AlreadyExists
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task CheckStorageSyncNameAvailability_StorageSyncServiceCheckNameAvailabilityAlreadyExists()
-        {
-            // Generated from example definition: specification/storagesync/resource-manager/Microsoft.StorageSync/stable/2022-06-01/examples/StorageSyncServiceCheckNameAvailability_AlreadyExists.json
-            // this example is just showing the usage of "StorageSyncServices_CheckNameAvailability" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "5c6bc8e1-1eaf-4192-94d8-58ce463ac86c";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
-
-            // invoke the operation
-            string locationName = "westus";
-            StorageSyncNameAvailabilityContent content = new StorageSyncNameAvailabilityContent("newstoragesyncservicename");
-            StorageSyncNameAvailabilityResult result = await subscriptionResource.CheckStorageSyncNameAvailabilityAsync(locationName, content);
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        // StorageSyncServiceCheckNameAvailability_Available
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task CheckStorageSyncNameAvailability_StorageSyncServiceCheckNameAvailabilityAvailable()
-        {
-            // Generated from example definition: specification/storagesync/resource-manager/Microsoft.StorageSync/stable/2022-06-01/examples/StorageSyncServiceCheckNameAvailability_Available.json
-            // this example is just showing the usage of "StorageSyncServices_CheckNameAvailability" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "5c6bc8e1-1eaf-4192-94d8-58ce463ac86c";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
-
-            // invoke the operation
-            string locationName = "westus";
-            StorageSyncNameAvailabilityContent content = new StorageSyncNameAvailabilityContent("newstoragesyncservicename");
-            StorageSyncNameAvailabilityResult result = await subscriptionResource.CheckStorageSyncNameAvailabilityAsync(locationName, content);
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        // StorageSyncServices_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_StorageSyncServicesGet()
         {
-            // Generated from example definition: specification/storagesync/resource-manager/Microsoft.StorageSync/stable/2022-06-01/examples/StorageSyncServices_Get.json
+            // Generated from example definition: specification/storagesync/resource-manager/Microsoft.StorageSync/stable/2022-09-01/examples/StorageSyncServices_Get.json
             // this example is just showing the usage of "StorageSyncServices_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -101,53 +46,11 @@ namespace Azure.ResourceManager.StorageSync.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // StorageSyncServices_Update
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Update_StorageSyncServicesUpdate()
-        {
-            // Generated from example definition: specification/storagesync/resource-manager/Microsoft.StorageSync/stable/2022-06-01/examples/StorageSyncServices_Update.json
-            // this example is just showing the usage of "StorageSyncServices_Update" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this StorageSyncServiceResource created on azure
-            // for more information of creating StorageSyncServiceResource, please refer to the document of StorageSyncServiceResource
-            string subscriptionId = "52b8da2f-61e0-4a1f-8dde-336911f367fb";
-            string resourceGroupName = "SampleResourceGroup_1";
-            string storageSyncServiceName = "SampleStorageSyncService_1";
-            ResourceIdentifier storageSyncServiceResourceId = StorageSyncServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, storageSyncServiceName);
-            StorageSyncServiceResource storageSyncService = client.GetStorageSyncServiceResource(storageSyncServiceResourceId);
-
-            // invoke the operation
-            StorageSyncServicePatch patch = new StorageSyncServicePatch()
-            {
-                Tags =
-{
-["Dept"] = "IT",
-["Environment"] = "Test",
-},
-                IncomingTrafficPolicy = IncomingTrafficPolicy.AllowAllTraffic,
-            };
-            ArmOperation<StorageSyncServiceResource> lro = await storageSyncService.UpdateAsync(WaitUntil.Completed, patch);
-            StorageSyncServiceResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            StorageSyncServiceData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // StorageSyncServices_Delete
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_StorageSyncServicesDelete()
         {
-            // Generated from example definition: specification/storagesync/resource-manager/Microsoft.StorageSync/stable/2022-06-01/examples/StorageSyncServices_Delete.json
+            // Generated from example definition: specification/storagesync/resource-manager/Microsoft.StorageSync/stable/2022-09-01/examples/StorageSyncServices_Delete.json
             // this example is just showing the usage of "StorageSyncServices_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -166,47 +69,55 @@ namespace Azure.ResourceManager.StorageSync.Samples
             // invoke the operation
             await storageSyncService.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // StorageSyncServices_ListBySubscription
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetStorageSyncServices_StorageSyncServicesListBySubscription()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Update_StorageSyncServicesUpdate()
         {
-            // Generated from example definition: specification/storagesync/resource-manager/Microsoft.StorageSync/stable/2022-06-01/examples/StorageSyncServices_ListBySubscription.json
-            // this example is just showing the usage of "StorageSyncServices_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/storagesync/resource-manager/Microsoft.StorageSync/stable/2022-09-01/examples/StorageSyncServices_Update.json
+            // this example is just showing the usage of "StorageSyncServices_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
+            // this example assumes you already have this StorageSyncServiceResource created on azure
+            // for more information of creating StorageSyncServiceResource, please refer to the document of StorageSyncServiceResource
             string subscriptionId = "52b8da2f-61e0-4a1f-8dde-336911f367fb";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
+            string resourceGroupName = "SampleResourceGroup_1";
+            string storageSyncServiceName = "SampleStorageSyncService_1";
+            ResourceIdentifier storageSyncServiceResourceId = StorageSyncServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, storageSyncServiceName);
+            StorageSyncServiceResource storageSyncService = client.GetStorageSyncServiceResource(storageSyncServiceResourceId);
 
-            // invoke the operation and iterate over the result
-            await foreach (StorageSyncServiceResource item in subscriptionResource.GetStorageSyncServicesAsync())
+            // invoke the operation
+            StorageSyncServicePatch patch = new StorageSyncServicePatch
             {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                StorageSyncServiceData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
+                Tags =
+{
+["Dept"] = "IT",
+["Environment"] = "Test"
+},
+                IncomingTrafficPolicy = IncomingTrafficPolicy.AllowAllTraffic,
+                UseIdentity = true,
+            };
+            ArmOperation<StorageSyncServiceResource> lro = await storageSyncService.UpdateAsync(WaitUntil.Completed, patch);
+            StorageSyncServiceResource result = lro.Value;
 
-            Console.WriteLine($"Succeeded");
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            StorageSyncServiceData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // PrivateLinkResources_List
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetPrivateLinkResources_PrivateLinkResourcesList()
         {
-            // Generated from example definition: specification/storagesync/resource-manager/Microsoft.StorageSync/stable/2022-06-01/examples/PrivateLinkResources_List.json
+            // Generated from example definition: specification/storagesync/resource-manager/Microsoft.StorageSync/stable/2022-09-01/examples/PrivateLinkResources_List.json
             // this example is just showing the usage of "PrivateLinkResources_ListByStorageSyncService" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -216,7 +127,7 @@ namespace Azure.ResourceManager.StorageSync.Samples
 
             // this example assumes you already have this StorageSyncServiceResource created on azure
             // for more information of creating StorageSyncServiceResource, please refer to the document of StorageSyncServiceResource
-            string subscriptionId = "{subscription-id}";
+            string subscriptionId = "52b8da2f-61e0-4a1f-8dde-336911f367fb";
             string resourceGroupName = "res6977";
             string storageSyncServiceName = "sss2527";
             ResourceIdentifier storageSyncServiceResourceId = StorageSyncServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, storageSyncServiceName);
@@ -228,7 +139,7 @@ namespace Azure.ResourceManager.StorageSync.Samples
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

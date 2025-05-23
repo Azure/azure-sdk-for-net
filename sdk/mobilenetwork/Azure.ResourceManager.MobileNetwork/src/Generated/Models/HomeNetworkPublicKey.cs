@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
-    /// <summary>
-    /// A key used for SUPI concealment.
-    /// Serialized Name: HomeNetworkPublicKey
-    /// </summary>
+    /// <summary> A key used for SUPI concealment. </summary>
     public partial class HomeNetworkPublicKey
     {
         /// <summary>
@@ -49,24 +46,15 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="HomeNetworkPublicKey"/>. </summary>
-        /// <param name="id">
-        /// The Home Network Public Key Identifier determines which public key was used to generate the SUCI sent to the AMF. See TS 23.003 Section 2.2B Section 5.
-        /// Serialized Name: HomeNetworkPublicKey.id
-        /// </param>
+        /// <param name="id"> The Home Network Public Key Identifier determines which public key was used to generate the SUCI sent to the AMF. See TS 23.003 Section 2.2B Section 5. </param>
         public HomeNetworkPublicKey(int id)
         {
             Id = id;
         }
 
         /// <summary> Initializes a new instance of <see cref="HomeNetworkPublicKey"/>. </summary>
-        /// <param name="id">
-        /// The Home Network Public Key Identifier determines which public key was used to generate the SUCI sent to the AMF. See TS 23.003 Section 2.2B Section 5.
-        /// Serialized Name: HomeNetworkPublicKey.id
-        /// </param>
-        /// <param name="uri">
-        /// The URL of Azure Key Vault secret containing the private key, versioned or unversioned. For example: https://contosovault.vault.azure.net/secrets/mySuciPrivateKey/562a4bb76b524a1493a6afe8e536ee78.
-        /// Serialized Name: HomeNetworkPublicKey.url
-        /// </param>
+        /// <param name="id"> The Home Network Public Key Identifier determines which public key was used to generate the SUCI sent to the AMF. See TS 23.003 Section 2.2B Section 5. </param>
+        /// <param name="uri"> The URL of Azure Key Vault secret containing the private key, versioned or unversioned. For example: https://contosovault.vault.azure.net/secrets/mySuciPrivateKey/562a4bb76b524a1493a6afe8e536ee78. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal HomeNetworkPublicKey(int id, Uri uri, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -80,16 +68,10 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         {
         }
 
-        /// <summary>
-        /// The Home Network Public Key Identifier determines which public key was used to generate the SUCI sent to the AMF. See TS 23.003 Section 2.2B Section 5.
-        /// Serialized Name: HomeNetworkPublicKey.id
-        /// </summary>
+        /// <summary> The Home Network Public Key Identifier determines which public key was used to generate the SUCI sent to the AMF. See TS 23.003 Section 2.2B Section 5. </summary>
         [WirePath("id")]
         public int Id { get; set; }
-        /// <summary>
-        /// The URL of Azure Key Vault secret containing the private key, versioned or unversioned. For example: https://contosovault.vault.azure.net/secrets/mySuciPrivateKey/562a4bb76b524a1493a6afe8e536ee78.
-        /// Serialized Name: HomeNetworkPublicKey.url
-        /// </summary>
+        /// <summary> The URL of Azure Key Vault secret containing the private key, versioned or unversioned. For example: https://contosovault.vault.azure.net/secrets/mySuciPrivateKey/562a4bb76b524a1493a6afe8e536ee78. </summary>
         [WirePath("url")]
         public Uri Uri { get; set; }
     }

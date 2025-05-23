@@ -127,6 +127,11 @@ namespace Azure.ResourceManager.Redis.Models
                 writer.WritePropertyName("disableAccessKeyAuthentication"u8);
                 writer.WriteBooleanValue(IsAccessKeyAuthenticationDisabled.Value);
             }
+            if (Optional.IsDefined(ZonalAllocationPolicy))
+            {
+                writer.WritePropertyName("zonalAllocationPolicy"u8);
+                writer.WriteStringValue(ZonalAllocationPolicy.Value.ToString());
+            }
             writer.WritePropertyName("sku"u8);
             writer.WriteObjectValue(Sku, options);
             if (Optional.IsDefined(SubnetId))
@@ -148,7 +153,7 @@ namespace Azure.ResourceManager.Redis.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -192,6 +197,7 @@ namespace Azure.ResourceManager.Redis.Models
             RedisPublicNetworkAccess? publicNetworkAccess = default;
             UpdateChannel? updateChannel = default;
             bool? disableAccessKeyAuthentication = default;
+            ZonalAllocationPolicy? zonalAllocationPolicy = default;
             RedisSku sku = default;
             ResourceIdentifier subnetId = default;
             IPAddress staticIP = default;
@@ -350,6 +356,15 @@ namespace Azure.ResourceManager.Redis.Models
                             disableAccessKeyAuthentication = property0.Value.GetBoolean();
                             continue;
                         }
+                        if (property0.NameEquals("zonalAllocationPolicy"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            zonalAllocationPolicy = new ZonalAllocationPolicy(property0.Value.GetString());
+                            continue;
+                        }
                         if (property0.NameEquals("sku"u8))
                         {
                             sku = RedisSku.DeserializeRedisSku(property0.Value, options);
@@ -398,6 +413,7 @@ namespace Azure.ResourceManager.Redis.Models
                 publicNetworkAccess,
                 updateChannel,
                 disableAccessKeyAuthentication,
+                zonalAllocationPolicy,
                 sku,
                 subnetId,
                 staticIP,
@@ -411,7 +427,7 @@ namespace Azure.ResourceManager.Redis.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRedisContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(RedisCreateOrUpdateContent)} does not support writing '{options.Format}' format.");
             }
@@ -425,7 +441,7 @@ namespace Azure.ResourceManager.Redis.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeRedisCreateOrUpdateContent(document.RootElement, options);
                     }
                 default:

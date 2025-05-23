@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.StorageActions.Models
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToSerialString());
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
             if (options.Format != "W" && Optional.IsDefined(CreationTimeInUtc))
             {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.StorageActions.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.StorageActions.Models
                     {
                         continue;
                     }
-                    provisioningState = property.Value.GetString().ToStorageTaskProvisioningState();
+                    provisioningState = new StorageTaskProvisioningState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("creationTimeInUtc"u8))
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.StorageActions.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerStorageActionsContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(StorageTaskProperties)} does not support writing '{options.Format}' format.");
             }
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.StorageActions.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeStorageTaskProperties(document.RootElement, options);
                     }
                 default:

@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.Search.Documents.Models
 {
-    /// <summary> Enables a debugging tool that can be used to further explore your search results. </summary>
+    /// <summary> Enables a debugging tool that can be used to further explore your search results. You can enable multiple debug modes simultaneously by separating them with a | character, for example: semantic|queryRewrites. </summary>
     public readonly partial struct QueryDebugMode : IEquatable<QueryDebugMode>
     {
         private readonly string _value;
@@ -24,11 +24,23 @@ namespace Azure.Search.Documents.Models
 
         private const string DisabledValue = "disabled";
         private const string SemanticValue = "semantic";
+        private const string VectorValue = "vector";
+        private const string QueryRewritesValue = "queryRewrites";
+        private const string InnerHitsValue = "innerHits";
+        private const string AllValue = "all";
 
         /// <summary> No query debugging information will be returned. </summary>
         public static QueryDebugMode Disabled { get; } = new QueryDebugMode(DisabledValue);
         /// <summary> Allows the user to further explore their reranked results. </summary>
         public static QueryDebugMode Semantic { get; } = new QueryDebugMode(SemanticValue);
+        /// <summary> Allows the user to further explore their hybrid and vector query results. </summary>
+        public static QueryDebugMode Vector { get; } = new QueryDebugMode(VectorValue);
+        /// <summary> Allows the user to explore the list of query rewrites generated for their search request. </summary>
+        public static QueryDebugMode QueryRewrites { get; } = new QueryDebugMode(QueryRewritesValue);
+        /// <summary> Allows the user to retrieve scoring information regarding vectors matched within a collection of complex types. </summary>
+        public static QueryDebugMode InnerHits { get; } = new QueryDebugMode(InnerHitsValue);
+        /// <summary> Turn on all debug options. </summary>
+        public static QueryDebugMode All { get; } = new QueryDebugMode(AllValue);
         /// <summary> Determines if two <see cref="QueryDebugMode"/> values are the same. </summary>
         public static bool operator ==(QueryDebugMode left, QueryDebugMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="QueryDebugMode"/> values are not the same. </summary>

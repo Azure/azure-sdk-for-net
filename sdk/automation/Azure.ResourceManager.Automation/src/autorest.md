@@ -12,7 +12,7 @@ require: https://github.com/Azure/azure-rest-api-specs/blob/d1b0569d8adbd342a111
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
-  output-folder: $(this-folder)/../samples/Generated
+  output-folder: $(this-folder)/../tests/Generated
   clear-output-folder: true
 skip-csproj: true
 modelerfour:
@@ -20,7 +20,6 @@ modelerfour:
 use-model-reader-writer: true
 # mgmt-debug:
 #   show-serialized-names: true
-use-write-core: true
 
 rename-mapping:
   AutomationAccount.properties.publicNetworkAccess: IsPublicNetworkAccessAllowed

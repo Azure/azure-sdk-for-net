@@ -82,6 +82,11 @@ namespace Azure.ResourceManager.AppService
                 }
                 writer.WriteEndObject();
             }
+            if (Optional.IsDefined(PhysicalZone))
+            {
+                writer.WritePropertyName("physicalZone"u8);
+                writer.WriteStringValue(PhysicalZone);
+            }
             writer.WriteEndObject();
         }
 
@@ -116,6 +121,7 @@ namespace Azure.ResourceManager.AppService
             Uri consoleUrl = default;
             string healthCheckUrl = default;
             IDictionary<string, ContainerInfo> containers = default;
+            string physicalZone = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -213,6 +219,11 @@ namespace Azure.ResourceManager.AppService
                             containers = dictionary;
                             continue;
                         }
+                        if (property0.NameEquals("physicalZone"u8))
+                        {
+                            physicalZone = property0.Value.GetString();
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -233,6 +244,7 @@ namespace Azure.ResourceManager.AppService
                 consoleUrl,
                 healthCheckUrl,
                 containers ?? new ChangeTrackingDictionary<string, ContainerInfo>(),
+                physicalZone,
                 kind,
                 serializedAdditionalRawData);
         }
@@ -433,6 +445,29 @@ namespace Azure.ResourceManager.AppService
                 }
             }
 
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PhysicalZone), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    physicalZone: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PhysicalZone))
+                {
+                    builder.Append("    physicalZone: ");
+                    if (PhysicalZone.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{PhysicalZone}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{PhysicalZone}'");
+                    }
+                }
+            }
+
             builder.AppendLine("  }");
             builder.AppendLine("}");
             return BinaryData.FromString(builder.ToString());
@@ -445,7 +480,7 @@ namespace Azure.ResourceManager.AppService
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAppServiceContext.Default);
                 case "bicep":
                     return SerializeBicep(options);
                 default:
@@ -461,7 +496,7 @@ namespace Azure.ResourceManager.AppService
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeWebSiteInstanceStatusData(document.RootElement, options);
                     }
                 default:

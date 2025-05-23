@@ -20,7 +20,7 @@ namespace Azure.Storage.DataMovement.Tests
         {
             TransferManagerOptions managerOptions = new()
             {
-                CheckpointerOptions = TransferCheckpointStoreOptions.Disabled()
+                CheckpointStoreOptions = TransferCheckpointStoreOptions.DisableCheckpoint()
             };
             TransferManager transferManager = new(managerOptions);
 
@@ -36,7 +36,7 @@ namespace Azure.Storage.DataMovement.Tests
         {
             TransferManagerOptions managerOptions = new()
             {
-                CheckpointerOptions = TransferCheckpointStoreOptions.Disabled()
+                CheckpointStoreOptions = TransferCheckpointStoreOptions.DisableCheckpoint()
             };
             TransferManager transferManager = new(managerOptions);
 
@@ -53,13 +53,13 @@ namespace Azure.Storage.DataMovement.Tests
             (StorageResourceItem source, StorageResourceItem destination) = MockStorageResourceItem.GetMockTransferResources(transferDirection);
             TransferManagerOptions managerOptions = new()
             {
-                CheckpointerOptions = TransferCheckpointStoreOptions.Disabled()
+                CheckpointStoreOptions = TransferCheckpointStoreOptions.DisableCheckpoint()
             };
             TransferManager transferManager = new(managerOptions);
 
-            DataTransferOptions transferOptions = new();
+            TransferOptions transferOptions = new();
             TestEventsRaised events = new(transferOptions);
-            DataTransfer transfer = await transferManager.StartTransferAsync(source, destination, transferOptions);
+            TransferOperation transfer = await transferManager.StartTransferAsync(source, destination, transferOptions);
 
             CancellationTokenSource tokenSource = new(TimeSpan.FromSeconds(5));
             await transfer.WaitForCompletionAsync(tokenSource.Token);
@@ -97,13 +97,13 @@ namespace Azure.Storage.DataMovement.Tests
 
             TransferManagerOptions managerOptions = new()
             {
-                CheckpointerOptions = TransferCheckpointStoreOptions.Disabled()
+                CheckpointStoreOptions = TransferCheckpointStoreOptions.DisableCheckpoint()
             };
             TransferManager transferManager = new(managerOptions);
 
-            DataTransferOptions transferOptions = new();
+            TransferOptions transferOptions = new();
             TestEventsRaised events = new(transferOptions);
-            DataTransfer transfer = await transferManager.StartTransferAsync(source, destination, transferOptions);
+            TransferOperation transfer = await transferManager.StartTransferAsync(source, destination, transferOptions);
 
             CancellationTokenSource tokenSource = new(TimeSpan.FromSeconds(5));
             await transfer.WaitForCompletionAsync(tokenSource.Token);

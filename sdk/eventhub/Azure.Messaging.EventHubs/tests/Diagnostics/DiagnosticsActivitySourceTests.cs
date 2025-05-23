@@ -620,11 +620,11 @@ namespace Azure.Messaging.EventHubs.Tests
 
             if (useOldOverload)
             {
-                await mockProcessor.InvokeOldUpdateCheckpointAsync("65", 12345, 67890, cancellationSource.Token);
+                await mockProcessor.InvokeOldUpdateCheckpointAsync("65", "12345", 67890, cancellationSource.Token);
             }
             else
             {
-                await mockProcessor.InvokeUpdateCheckpointAsync("65", new CheckpointPosition(12345), cancellationSource.Token);
+                await mockProcessor.InvokeUpdateCheckpointAsync("65", new CheckpointPosition("12345"), cancellationSource.Token);
             }
 
             Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
@@ -783,7 +783,7 @@ namespace Azure.Messaging.EventHubs.Tests
             protected override Task OnProcessingErrorAsync(Exception exception, EventProcessorPartition partition, string operationDescription, CancellationToken cancellationToken) => throw new NotImplementedException();
 
             public Task<EventProcessorCheckpoint> InvokeGetCheckpointAsync(string partitionId, CancellationToken cancellationToken) => GetCheckpointAsync(partitionId, cancellationToken);
-            public Task InvokeOldUpdateCheckpointAsync(string partitionId, long offset, long? sequenceNumber, CancellationToken cancellationToken) => UpdateCheckpointAsync(partitionId, offset, sequenceNumber, cancellationToken);
+            public Task InvokeOldUpdateCheckpointAsync(string partitionId, string offset, long? sequenceNumber, CancellationToken cancellationToken) => UpdateCheckpointAsync(partitionId, new CheckpointPosition(offset, sequenceNumber ?? long.MinValue), cancellationToken);
             public Task InvokeUpdateCheckpointAsync(string partitionId, CheckpointPosition checkpointPosition, CancellationToken cancellationToken) => UpdateCheckpointAsync(partitionId, checkpointPosition, cancellationToken);
             public Task<IEnumerable<EventProcessorPartitionOwnership>> InvokeListOwnershipAsync(CancellationToken cancellationToken) => ListOwnershipAsync(cancellationToken);
             public Task<IEnumerable<EventProcessorPartitionOwnership>> InvokeClaimOwnershipAsync(IEnumerable<EventProcessorPartitionOwnership> desiredOwnership, CancellationToken cancellationToken) => ClaimOwnershipAsync(desiredOwnership, cancellationToken);

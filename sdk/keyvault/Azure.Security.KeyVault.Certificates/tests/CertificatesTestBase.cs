@@ -18,7 +18,8 @@ namespace Azure.Security.KeyVault.Certificates.Tests
         CertificateClientOptions.ServiceVersion.V7_3,
         CertificateClientOptions.ServiceVersion.V7_2,
         CertificateClientOptions.ServiceVersion.V7_1,
-        CertificateClientOptions.ServiceVersion.V7_0)]
+        CertificateClientOptions.ServiceVersion.V7_0,
+        CertificateClientOptions.ServiceVersion.V7_6_Preview_2)]
     public abstract class CertificatesTestBase : RecordedTestBase<KeyVaultTestEnvironment>
     {
         protected TimeSpan PollingInterval => Recording.Mode == RecordedTestMode.Playback

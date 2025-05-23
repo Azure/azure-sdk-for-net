@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.DevCenter
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDevCenterContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(DevCenterCatalogData)} does not support writing '{options.Format}' format.");
             }
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.DevCenter
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeDevCenterCatalogData(document.RootElement, options);
                     }
                 default:

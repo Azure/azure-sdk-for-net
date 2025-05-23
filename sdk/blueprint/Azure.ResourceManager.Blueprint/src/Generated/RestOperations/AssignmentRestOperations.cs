@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Blueprint
                 case 200:
                     {
                         AssignmentOperationList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AssignmentOperationList.DeserializeAssignmentOperationList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Blueprint
                 case 200:
                     {
                         AssignmentOperationList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AssignmentOperationList.DeserializeAssignmentOperationList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.Blueprint
                 case 200:
                     {
                         AssignmentOperationData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AssignmentOperationData.DeserializeAssignmentOperationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.Blueprint
                 case 200:
                     {
                         AssignmentOperationData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AssignmentOperationData.DeserializeAssignmentOperationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.Blueprint
                 case 200:
                     {
                         AssignmentOperationList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AssignmentOperationList.DeserializeAssignmentOperationList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.Blueprint
                 case 200:
                     {
                         AssignmentOperationList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AssignmentOperationList.DeserializeAssignmentOperationList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

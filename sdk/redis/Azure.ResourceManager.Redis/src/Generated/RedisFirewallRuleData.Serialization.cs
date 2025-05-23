@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.Redis
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRedisContext.Default);
                 case "bicep":
                     return SerializeBicep(options);
                 default:
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.Redis
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeRedisFirewallRuleData(document.RootElement, options);
                     }
                 default:

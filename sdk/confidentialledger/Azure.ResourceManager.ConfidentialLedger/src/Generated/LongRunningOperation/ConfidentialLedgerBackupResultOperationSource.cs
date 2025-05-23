@@ -17,13 +17,13 @@ namespace Azure.ResourceManager.ConfidentialLedger
     {
         ConfidentialLedgerBackupResult IOperationSource<ConfidentialLedgerBackupResult>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
+            using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
             return ConfidentialLedgerBackupResult.DeserializeConfidentialLedgerBackupResult(document.RootElement);
         }
 
         async ValueTask<ConfidentialLedgerBackupResult> IOperationSource<ConfidentialLedgerBackupResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
             return ConfidentialLedgerBackupResult.DeserializeConfidentialLedgerBackupResult(document.RootElement);
         }
     }

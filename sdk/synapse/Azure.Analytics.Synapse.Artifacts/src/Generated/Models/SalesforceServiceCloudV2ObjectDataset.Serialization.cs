@@ -238,7 +238,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static new SalesforceServiceCloudV2ObjectDataset FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeSalesforceServiceCloudV2ObjectDataset(document.RootElement);
         }
 

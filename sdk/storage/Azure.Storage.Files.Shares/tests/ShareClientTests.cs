@@ -119,6 +119,42 @@ namespace Azure.Storage.Files.Shares.Tests
             }
         }
 
+        [Test]
+        public void Ctor_ConnectionString_CustomUri()
+        {
+            var accountName = "accountName";
+            var accountKey = Convert.ToBase64String(new byte[] { 0, 1, 2, 3, 4, 5 });
+
+            var credentials = new StorageSharedKeyCredential(accountName, accountKey);
+            var blobEndpoint = new Uri("http://customdomain/" + accountName);
+            var blobSecondaryEndpoint = new Uri("http://customdomain/" + accountName + "-secondary");
+
+            var connectionString = new StorageConnectionString(credentials, blobStorageUri: (blobEndpoint, blobSecondaryEndpoint));
+
+            var shareName = "shareName";
+
+            ShareClient share = new ShareClient(connectionString.ToString(true), shareName);
+
+            Assert.AreEqual(shareName, share.Name);
+            Assert.AreEqual(accountName, share.AccountName);
+        }
+
+        [Test]
+        public void Ctor_SharedKey_AccountName()
+        {
+            // Arrange
+            var accountName = "accountName";
+            var shareName = "shareName";
+            var accountKey = Convert.ToBase64String(new byte[] { 0, 1, 2, 3, 4, 5 });
+            var credentials = new StorageSharedKeyCredential(accountName, accountKey);
+            var shareEndpoint = new Uri($"https://customdomain/{shareName}");
+
+            ShareClient shareClient = new ShareClient(shareEndpoint, credentials);
+
+            Assert.AreEqual(accountName, shareClient.AccountName);
+            Assert.AreEqual(shareName, shareClient.Name);
+        }
+
         [RecordedTest]
         public async Task Ctor_AzureSasCredential()
         {
@@ -265,6 +301,13 @@ namespace Azure.Storage.Files.Shares.Tests
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 aadShare.CreatePermissionAsync(filePermission),
                 e => Assert.AreEqual("InvalidAuthenticationInfo", e.ErrorCode));
+        }
+
+        [Test]
+        public void Ctor_DevelopmentThrows()
+        {
+            var ex = Assert.Throws<ArgumentException>(() => new ShareClient("UseDevelopmentStorage=true", "share"));
+            Assert.AreEqual("connectionString", ex.ParamName);
         }
 
         [RecordedTest]
@@ -2288,6 +2331,7 @@ namespace Azure.Storage.Files.Shares.Tests
         [TestCase("%21%27%28%29%3B%5B%5D%40%26%25%3D%2B%24%2C%23äÄöÖüÜß%3B")]
         [TestCase("my cool directory")]
         [TestCase("directory")]
+        [TestCase("  ")]
         public async Task GetDirectoryClient_SpecialCharacters(string directoryName)
         {
             // Arrange

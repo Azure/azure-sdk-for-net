@@ -1,15 +1,12 @@
-﻿using Azure.Generator.Tests.Common;
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using Azure.Generator.Tests.Common;
 using Azure.Generator.Tests.TestHelpers;
-using Microsoft.Generator.CSharp.ClientModel.Providers;
-using Microsoft.Generator.CSharp.ClientModel;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using NUnit.Framework;
-using System.ClientModel.Primitives;
 using Azure.Generator.Providers;
+using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 
 namespace Azure.Generator.Tests.Providers.Abstractions
 {
@@ -34,15 +31,27 @@ namespace Azure.Generator.Tests.Providers.Abstractions
             var method = clientProvider.Methods.FirstOrDefault(x => x.Signature.Parameters.Any(p => p.Type.Equals(typeof(RequestContext))) && !x.Signature.Name.EndsWith("Async"));
             Assert.NotNull(method);
             Assert.NotNull(method!.BodyStatements);
-            var test = method.BodyStatements!.ToDisplayString();
+            Assert.AreEqual(Helpers.GetExpectedFromFile(), method.BodyStatements!.ToDisplayString());
+        }
+
+        [Test]
+        public void ValidateClientResponseExceptionTypeIsOverridden()
+        {
+            MockHelpers.LoadMockPlugin();
+            var pipelineExtensions =
+                AzureClientGenerator.Instance.OutputLibrary.TypeProviders.FirstOrDefault(t => t.Name == "ClientPipelineExtensions");
+            Assert.NotNull(pipelineExtensions);
+            var method = pipelineExtensions!.Methods.FirstOrDefault(x => x.Signature.Name == "ProcessMessage");
+            Assert.NotNull(method);
+            Assert.NotNull(method!.BodyStatements);
             Assert.AreEqual(Helpers.GetExpectedFromFile(), method.BodyStatements!.ToDisplayString());
         }
 
         private static ClientProvider CreateMockClientProvider()
         {
-            var client = InputFactory.Client("TestClient", [InputFactory.Operation("foo")]);
+            var client = InputFactory.Client("TestClient", methods: [InputFactory.BasicServiceMethod("foo", InputFactory.Operation("foo"))]);
             MockHelpers.LoadMockPlugin(clientResponseApi: AzureClientResponseProvider.Instance);
-            var clientProvider = AzureClientPlugin.Instance.TypeFactory.CreateClient(client);
+            var clientProvider = AzureClientGenerator.Instance.TypeFactory.CreateClient(client)!;
             return clientProvider;
         }
     }

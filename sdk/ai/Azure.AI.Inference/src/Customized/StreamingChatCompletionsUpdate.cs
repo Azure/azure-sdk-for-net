@@ -2,6 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.AI.Inference
 {
@@ -95,6 +97,33 @@ namespace Azure.AI.Inference
         /// </para>
         /// </remarks>
         public CompletionsFinishReason? FinishReason { get; }
+
+        /// <summary> Initializes a new instance of <see cref="StreamingChatCompletionsUpdate"/>. </summary>
+        /// <param name="id"> A unique identifier associated with this chat completions response. </param>
+        /// <param name="created">
+        /// The first timestamp associated with generation activity for this completions response,
+        /// represented as seconds since the beginning of the Unix epoch of 00:00 on 1 Jan 1970.
+        /// </param>
+        /// <param name="model"> The model used for the chat completion. </param>
+        /// <param name="choices">
+        /// An update to the collection of completion choices associated with this completions response.
+        /// Generally, `n` choices are generated per provided prompt with a default value of 1.
+        /// Token limits and other settings may limit the number of choices generated.
+        /// </param>
+        /// <param name="usage"> Usage information for tokens processed and generated as part of this completions operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="model"/> or <paramref name="choices"/> is null. </exception>
+        internal StreamingChatCompletionsUpdate(string id, DateTimeOffset created, string model, IEnumerable<StreamingChatChoiceUpdate> choices, CompletionsUsage usage)
+        {
+            Argument.AssertNotNull(id, nameof(id));
+            Argument.AssertNotNull(model, nameof(model));
+            Argument.AssertNotNull(choices, nameof(choices));
+
+            Id = id;
+            Created = created;
+            Model = model;
+            Choices = choices.ToList();
+            Usage = usage;
+        }
 
         internal StreamingChatCompletionsUpdate(
             string id,

@@ -1,67 +1,79 @@
-trigger: none
+trigger:
+  branches:
+    include:
+      - main
+  paths:
+    include:
+      - eng/packages/http-client-csharp
+      - eng/scripts/typespec
 pr:
   branches:
     include:
-    - main
-    - feature/*
-    - hotfix/*
-    - release/*
+      - main
+      - feature/*
+      - hotfix/*
+      - release/*
   paths:
     include:
-    - eng/packages/http-client-csharp
+      - eng/packages/http-client-csharp
+      - eng/scripts/typespec
+
+parameters:
+  - name: UseTypeSpecNext
+    displayName: "Use TypeSpec Next"
+    type: boolean
+    default: false
+  - name: ShouldPublish
+    displayName: "Publish packages"
+    type: boolean
+    default: false
+  - name: PublishPublic
+    displayName: "Publish to npmjs.org"
+    type: boolean
+    default: false
+  - name: ShouldRegenerate
+    displayName: "Regenerate clients"
+    type: boolean
+    default: false
+  - name: PublishNugetPackages
+    displayName: "Publish NuGet package artifacts"
+    type: boolean
+    default: false
 
 variables:
   - template: /eng/pipelines/templates/variables/image.yml
 
 extends:
-  template: /eng/pipelines/templates/stages/1es-redirect.yml
+  template: /eng/common/pipelines/templates/archetype-typespec-emitter.yml
   parameters:
-    stages:
-      - stage: 'Build'
-        pool:
-          name: $(WINDOWSPOOL)
-          image: $(WINDOWSVMIMAGE)
-          os: windows
-        jobs:
-          - job: Build
-            timeoutInMinutes: 120
-            steps:
-              - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
-              - task: UseDotNet@2
-                displayName: 'Use .NET Core SDK'
-                retryCountOnTaskFailure: 3
-                inputs:
-                  useGlobalJson: true
-                  performMultiLevelLookup: true
-              - task: NodeTool@0
-                displayName: "Install Node 18.x"
-                inputs:
-                  versionSpec: '18.x'
-              - script: |
-                  npm ci
-                displayName: "Install packages"
-                workingDirectory: $(Build.SourcesDirectory)/eng/packages/http-client-csharp
-              - script: |
-                  npm ls -a
-                displayName: "List packages"
-                workingDirectory: $(Build.SourcesDirectory)/eng/packages/http-client-csharp
-              - script: |
-                  npm run prettier
-                displayName: "Emitter format check"
-                workingDirectory: $(Build.SourcesDirectory)/eng/packages/http-client-csharp/emitter
-              - script: |
-                  npm run lint
-                displayName: "Emitter linter check"
-                workingDirectory: $(Build.SourcesDirectory)/eng/packages/http-client-csharp/emitter
-              - script: |
-                  npm run build
-                displayName: 'Build Azure csharp client emitter and generator'
-                workingDirectory: $(Build.SourcesDirectory)/eng/packages/http-client-csharp/
-              - pwsh: ./eng/packages/http-client-csharp/eng/scripts/CodeGenerationCheck.ps1
-                displayName: "Check if generated code is up-to-date"
-                env:
-                  DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
-                  DOTNET_CLI_TELEMETRY_OPTOUT: 1
-                  DOTNET_MULTILEVEL_LOOKUP: 0
-              - pwsh: dotnet test $(Build.SourcesDirectory)/eng/packages/http-client-csharp/generator
-                displayName: "Run tests"
+    EmitterPackageJsonOutputPath: eng/http-client-csharp-emitter-package.json
+    EmitterPackagePath: eng/packages/http-client-csharp
+    SparseCheckoutPaths:
+      - /sdk/core/Azure.Core/src/Shared
+      - /sdk/core/Azure.Core.TestFramework/src
+    BuildPrereleaseVersion: true
+    UseTypeSpecNext: ${{ parameters.UseTypeSpecNext }}
+    ${{ if eq(variables['System.TeamProject'], 'internal') }}:
+      ${{ if eq(variables['Build.Reason'], 'Manual') }}:
+        ShouldPublish: ${{ parameters.ShouldPublish }}
+        ShouldRegenerate: ${{ parameters.ShouldRegenerate }}
+        HasNugetPackages: ${{ parameters.PublishNugetPackages }}
+        ${{ if startswith(variables['Build.SourceBranch'], 'refs/pull/') }}:  # PR ref's can't be published to public, even in a manual run
+          PublishPublic: false
+          PublishDependsOnTest: false
+        ${{ else }}: # Any other manual run can go to public
+           PublishPublic: ${{ parameters.PublishPublic }}
+           PublishDependsOnTest: ${{ parameters.PublishPublic }}
+      ${{ else }}: # All automatic runs publish, but only CI of main goes public
+        ShouldPublish: true
+        ShouldRegenerate: true
+        PublishDependsOnTest: false
+        PublishPublic: ${{ and(eq(variables['Build.Reason'], 'IndividualCI'), eq(variables['Build.SourceBranch'], 'refs/heads/main')) }}
+        HasNugetPackages: true
+      RegenerationJobCount: 5
+      MinimumPerJob: 10
+      OnlyGenerateTypespec: true
+    TestMatrix:
+      All:
+        TestArguments: -UnitTests -GenerationChecks -Filter .NET
+        SpectorName: "http-client-csharp"

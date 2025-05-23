@@ -50,7 +50,7 @@ namespace Azure.Storage.DataMovement.Blobs
         {
             BlobContainerClient = blobContainerClient;
             _options = options;
-            DirectoryPrefix = _options?.BlobDirectoryPrefix;
+            DirectoryPrefix = _options?.BlobPrefix;
 
             _uri = DirectoryPrefix != null
                 ? new BlobUriBuilder(BlobContainerClient.Uri)
@@ -68,14 +68,14 @@ namespace Azure.Storage.DataMovement.Blobs
         protected override StorageResourceItem GetStorageResourceReference(string path, string resourceId)
         {
             BlobType type = BlobType.Block;
-            if (_options?.BlobType?.Preserve ?? true)
+            if (_options == default || !_options._isBlobTypeSet)
             {
                 type = ToBlobType(resourceId);
             }
             else
             {
                 // If the user has set the blob type in the options, use that instead of the resourceId
-                type = _options?.BlobType?.Value ?? BlobType.Block;
+                type = _options?.BlobType ?? BlobType.Block;
             }
             return GetBlobAsStorageResource(ApplyOptionalPrefix(path), type: type);
         }
@@ -150,85 +150,74 @@ namespace Azure.Storage.DataMovement.Blobs
             }
         }
 
-        /// <summary>
-        /// Lists the blob resources in the storage blob container.
-        ///
-        /// Because blobs is a flat namespace, virtual directories will not be returned.
-        /// </summary>
-        /// <returns>List of the child resources in the storage container.</returns>
         protected override async IAsyncEnumerable<StorageResource> GetStorageResourcesAsync(
             StorageResourceContainer destinationContainer = default,
             [EnumeratorCancellation] CancellationToken cancellationToken = default)
         {
-            // Suffix the backwards slash when searching if there's a prefix specified,
+            // Suffix the slash when searching if there's a prefix specified,
             // to only list blobs in the specified virtual directory.
             string fullPrefix = string.IsNullOrEmpty(DirectoryPrefix) ?
                 "" :
                 string.Concat(DirectoryPrefix, Constants.PathBackSlashDelimiter);
 
-            AsyncPageable<BlobItem> pages = BlobContainerClient.GetBlobsAsync(
-                traits: BlobTraits.Metadata,
-                prefix: fullPrefix,
-                cancellationToken: cancellationToken);
+            Queue<string> prefixes = new();
+            prefixes.Enqueue(fullPrefix); // Start with the initial prefix
 
-            HashSet<string> subDirectories = new HashSet<string>();
-            await foreach (BlobItem blobItem in pages.ConfigureAwait(false))
+            while (prefixes.Count > 0)
             {
-                // List blob / GetBlobs will always return blob names with the source prefix with them
-                // Trim the blob name of the source prefix
-                string relativePath = blobItem.Name.Substring(fullPrefix.Length);
+                string currentPrefix = prefixes.Dequeue();
 
-                // Remove known prefix from blob name
-                // Parse subdirectories
-                string[] paths = relativePath.Split(DataMovementConstants.PathForwardSlashDelimiterChar);
-                string currentPath = "";
-
-                // Since the last path will always be the blob name, leave out the last one.
-                for (int i = 0; i < paths.Length - 1; i++)
+                int childCount = 0;
+                await foreach (BlobHierarchyItem blobHierarchyItem in BlobContainerClient.GetBlobsByHierarchyAsync(
+                    traits: BlobTraits.Metadata,
+                    prefix: currentPrefix,
+                    delimiter: Constants.PathBackSlashDelimiter,
+                    cancellationToken: cancellationToken).ConfigureAwait(false))
                 {
-                    // Combine the parent path with the next child path
-                    if (string.IsNullOrEmpty(currentPath))
+                    childCount++;
+                    if (blobHierarchyItem.IsBlob)
                     {
-                        currentPath = paths[i];
+                        // Return the blob as a StorageResourceItem
+                        yield return GetBlobAsStorageResource(
+                            blobHierarchyItem.Blob.Name,
+                            blobHierarchyItem.Blob.Properties.BlobType ?? BlobType.Block,
+                            blobHierarchyItem.Blob.ToResourceProperties());
                     }
-                    else
+                    else if (blobHierarchyItem.IsPrefix)
                     {
-                        currentPath = string.Join(Constants.PathBackSlashDelimiter, currentPath, paths[i]);
-                    }
-
-                    if (!subDirectories.Contains(currentPath))
-                    {
-                        subDirectories.Add(currentPath);
                         // Return the blob virtual directory as a StorageResourceContainer
-                        yield return GetChildStorageResourceContainer(currentPath);
+                        yield return GetChildStorageResourceContainer(blobHierarchyItem.Prefix.Substring(fullPrefix.Length));
+                        // Enqueue the prefix for further traversal
+                        prefixes.Enqueue(blobHierarchyItem.Prefix);
                     }
                 }
 
-                // Return the blob as a StorageResourceItem
-                yield return GetBlobAsStorageResource(
-                    blobItem.Name,
-                    blobItem.Properties.BlobType.HasValue ? blobItem.Properties.BlobType.Value : BlobType.Block,
-                    blobItem.ToResourceProperties());
+                // Empty directory - This can only happen on HNS accounts as empty directories do not exist on FNS
+                // accounts and will not show up as a prefix.
+                //
+                // If the destination is Blob, we need to manually create the empty directory here as the regular
+                // path for creating directories is a no-op for Blob. This will always create an empty Block Blob
+                // with the folder metadata set which represents a directory stub on HNS accounts. No other
+                // properties will be copied from the source. We only do this for empty directories because non-empty
+                // directories are created automatically.
+                if (childCount == 0 && destinationContainer is BlobStorageResourceContainer destBlobContainer)
+                {
+                    BlockBlobStorageResource destinationDirectoryResource = destBlobContainer.GetBlobAsStorageResource(
+                        currentPrefix,
+                        BlobType.Block) as BlockBlobStorageResource;
+                    await destinationDirectoryResource.CreateEmptyDirectoryStubAsync(cancellationToken).ConfigureAwait(false);
+                }
             }
         }
 
-        protected override StorageResourceCheckpointData GetSourceCheckpointData()
+        protected override StorageResourceCheckpointDetails GetSourceCheckpointDetails()
         {
             // Source blob type does not matter for container
-            return new BlobSourceCheckpointData();
+            return new BlobSourceCheckpointDetails();
         }
 
-        protected override StorageResourceCheckpointData GetDestinationCheckpointData()
-            => new BlobDestinationCheckpointData(
-                blobType: _options?.BlobType,
-                contentType: _options?.BlobOptions?.ContentType,
-                contentEncoding: _options?.BlobOptions?.ContentEncoding,
-                contentLanguage: _options?.BlobOptions?.ContentLanguage,
-                contentDisposition: _options?.BlobOptions?.ContentDisposition,
-                cacheControl: _options?.BlobOptions?.CacheControl,
-                accessTier: _options?.BlobOptions?.AccessTier,
-                metadata: _options?.BlobOptions?.Metadata,
-                tags: default);
+        protected override StorageResourceCheckpointDetails GetDestinationCheckpointDetails()
+            => new BlobDestinationCheckpointDetails(_options);
 
         private string ApplyOptionalPrefix(string path)
             => IsDirectory
@@ -243,10 +232,16 @@ namespace Azure.Storage.DataMovement.Blobs
         protected override StorageResourceContainer GetChildStorageResourceContainer(string path)
         {
             BlobStorageResourceContainerOptions options = _options.DeepCopy();
-            options.BlobDirectoryPrefix = string.Join("/", DirectoryPrefix, path);
+            options.BlobPrefix = string.Join("/", DirectoryPrefix, path);
             return new BlobStorageResourceContainer(
                 BlobContainerClient,
                 options);
+        }
+
+        protected override Task<StorageResourceContainerProperties> GetPropertiesAsync(CancellationToken cancellationToken = default)
+        {
+            // Not implemented for now
+            return Task.FromResult(new StorageResourceContainerProperties());
         }
     }
 }

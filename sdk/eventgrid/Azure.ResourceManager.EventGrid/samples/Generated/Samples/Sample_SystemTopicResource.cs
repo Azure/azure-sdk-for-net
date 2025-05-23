@@ -10,18 +10,17 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.EventGrid.Models;
-using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.EventGrid.Samples
 {
     public partial class Sample_SystemTopicResource
     {
-        // SystemTopics_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_SystemTopicsGet()
         {
-            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2024-06-01-preview/examples/SystemTopics_Get.json
+            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/stable/2025-02-15/examples/SystemTopics_Get.json
             // this example is just showing the usage of "SystemTopics_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -31,7 +30,7 @@ namespace Azure.ResourceManager.EventGrid.Samples
 
             // this example assumes you already have this SystemTopicResource created on azure
             // for more information of creating SystemTopicResource, please refer to the document of SystemTopicResource
-            string subscriptionId = "8f6b6269-84f2-4d09-9e31-1127efcd1e40";
+            string subscriptionId = "5b4b650e-28b9-4790-b3ab-ddbd88d727c4";
             string resourceGroupName = "examplerg";
             string systemTopicName = "exampleSystemTopic2";
             ResourceIdentifier systemTopicResourceId = SystemTopicResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, systemTopicName);
@@ -47,12 +46,11 @@ namespace Azure.ResourceManager.EventGrid.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // SystemTopics_Delete
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_SystemTopicsDelete()
         {
-            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2024-06-01-preview/examples/SystemTopics_Delete.json
+            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/stable/2025-02-15/examples/SystemTopics_Delete.json
             // this example is just showing the usage of "SystemTopics_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -62,7 +60,7 @@ namespace Azure.ResourceManager.EventGrid.Samples
 
             // this example assumes you already have this SystemTopicResource created on azure
             // for more information of creating SystemTopicResource, please refer to the document of SystemTopicResource
-            string subscriptionId = "8f6b6269-84f2-4d09-9e31-1127efcd1e40";
+            string subscriptionId = "5b4b650e-28b9-4790-b3ab-ddbd88d727c4";
             string resourceGroupName = "examplerg";
             string systemTopicName = "exampleSystemTopic1";
             ResourceIdentifier systemTopicResourceId = SystemTopicResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, systemTopicName);
@@ -71,15 +69,14 @@ namespace Azure.ResourceManager.EventGrid.Samples
             // invoke the operation
             await systemTopic.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // SystemTopics_Update
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_SystemTopicsUpdate()
         {
-            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2024-06-01-preview/examples/SystemTopics_Update.json
+            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/stable/2025-02-15/examples/SystemTopics_Update.json
             // this example is just showing the usage of "SystemTopics_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -89,19 +86,19 @@ namespace Azure.ResourceManager.EventGrid.Samples
 
             // this example assumes you already have this SystemTopicResource created on azure
             // for more information of creating SystemTopicResource, please refer to the document of SystemTopicResource
-            string subscriptionId = "8f6b6269-84f2-4d09-9e31-1127efcd1e40";
+            string subscriptionId = "5b4b650e-28b9-4790-b3ab-ddbd88d727c4";
             string resourceGroupName = "examplerg";
             string systemTopicName = "exampleSystemTopic1";
             ResourceIdentifier systemTopicResourceId = SystemTopicResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, systemTopicName);
             SystemTopicResource systemTopic = client.GetSystemTopicResource(systemTopicResourceId);
 
             // invoke the operation
-            SystemTopicPatch patch = new SystemTopicPatch()
+            SystemTopicPatch patch = new SystemTopicPatch
             {
                 Tags =
 {
 ["tag1"] = "value1",
-["tag2"] = "value2",
+["tag2"] = "value2"
 },
             };
             ArmOperation<SystemTopicResource> lro = await systemTopic.UpdateAsync(WaitUntil.Completed, patch);
@@ -112,38 +109,6 @@ namespace Azure.ResourceManager.EventGrid.Samples
             SystemTopicData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // SystemTopics_ListBySubscription
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetSystemTopics_SystemTopicsListBySubscription()
-        {
-            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2024-06-01-preview/examples/SystemTopics_ListBySubscription.json
-            // this example is just showing the usage of "SystemTopics_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "8f6b6269-84f2-4d09-9e31-1127efcd1e40";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
-
-            // invoke the operation and iterate over the result
-            await foreach (SystemTopicResource item in subscriptionResource.GetSystemTopicsAsync())
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                SystemTopicData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-
-            Console.WriteLine($"Succeeded");
         }
     }
 }

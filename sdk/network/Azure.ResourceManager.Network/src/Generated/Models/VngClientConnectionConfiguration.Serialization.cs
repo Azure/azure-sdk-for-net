@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Network.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType? type = default;
-            AddressSpace vpnClientAddressPool = default;
+            VirtualNetworkAddressSpace vpnClientAddressPool = default;
             IList<WritableSubResource> virtualNetworkGatewayPolicyGroups = default;
             NetworkProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Network.Models
                             {
                                 continue;
                             }
-                            vpnClientAddressPool = AddressSpace.DeserializeAddressSpace(property0.Value, options);
+                            vpnClientAddressPool = VirtualNetworkAddressSpace.DeserializeVirtualNetworkAddressSpace(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("virtualNetworkGatewayPolicyGroups"u8))
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.Network.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(VngClientConnectionConfiguration)} does not support writing '{options.Format}' format.");
             }
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeVngClientConnectionConfiguration(document.RootElement, options);
                     }
                 default:

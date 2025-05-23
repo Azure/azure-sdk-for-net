@@ -11,53 +11,17 @@ using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.OperationalInsights.Models;
 using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.OperationalInsights.Samples
 {
     public partial class Sample_OperationalInsightsClusterCollection
     {
-        // ClustersGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetAll_ClustersGet()
-        {
-            // Generated from example definition: specification/operationalinsights/resource-manager/Microsoft.OperationalInsights/stable/2021-06-01/examples/ClustersListByResourceGroup.json
-            // this example is just showing the usage of "Clusters_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ResourceGroupResource created on azure
-            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "00000000-0000-0000-0000-00000000000";
-            string resourceGroupName = "oiautorest6685";
-            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
-            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
-
-            // get the collection of this OperationalInsightsClusterResource
-            OperationalInsightsClusterCollection collection = resourceGroupResource.GetOperationalInsightsClusters();
-
-            // invoke the operation and iterate over the result
-            await foreach (OperationalInsightsClusterResource item in collection.GetAllAsync())
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                OperationalInsightsClusterData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // ClustersCreate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_ClustersCreate()
         {
-            // Generated from example definition: specification/operationalinsights/resource-manager/Microsoft.OperationalInsights/stable/2021-06-01/examples/ClustersCreate.json
+            // Generated from example definition: specification/operationalinsights/resource-manager/Microsoft.OperationalInsights/stable/2025-02-01/examples/ClustersCreate.json
             // this example is just showing the usage of "Clusters_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -67,7 +31,7 @@ namespace Azure.ResourceManager.OperationalInsights.Samples
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "00000000-0000-0000-0000-00000000000";
+            string subscriptionId = "53bc36c5-91e1-4d09-92c9-63b89e571926";
             string resourceGroupName = "oiautorest6685";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -77,16 +41,16 @@ namespace Azure.ResourceManager.OperationalInsights.Samples
 
             // invoke the operation
             string clusterName = "oiautorest6685";
-            OperationalInsightsClusterData data = new OperationalInsightsClusterData(new AzureLocation("australiasoutheast"))
+            OperationalInsightsClusterData data = new OperationalInsightsClusterData(new AzureLocation("eastus"))
             {
-                Sku = new OperationalInsightsClusterSku()
+                Sku = new OperationalInsightsClusterSku
                 {
                     Capacity = OperationalInsightsClusterCapacity.TenHundred,
                     Name = OperationalInsightsClusterSkuName.CapacityReservation,
                 },
                 Tags =
 {
-["tag1"] = "val1",
+["tag1"] = "val1"
 },
             };
             ArmOperation<OperationalInsightsClusterResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, clusterName, data);
@@ -99,12 +63,11 @@ namespace Azure.ResourceManager.OperationalInsights.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ClustersGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_ClustersGet()
         {
-            // Generated from example definition: specification/operationalinsights/resource-manager/Microsoft.OperationalInsights/stable/2021-06-01/examples/ClustersGet.json
+            // Generated from example definition: specification/operationalinsights/resource-manager/Microsoft.OperationalInsights/stable/2025-02-01/examples/ClustersGet.json
             // this example is just showing the usage of "Clusters_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -114,7 +77,7 @@ namespace Azure.ResourceManager.OperationalInsights.Samples
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "00000000-0000-0000-0000-00000000000";
+            string subscriptionId = "53bc36c5-91e1-4d09-92c9-63b89e571926";
             string resourceGroupName = "oiautorest6685";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -133,12 +96,46 @@ namespace Azure.ResourceManager.OperationalInsights.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ClustersGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetAll_ClustersGet()
+        {
+            // Generated from example definition: specification/operationalinsights/resource-manager/Microsoft.OperationalInsights/stable/2025-02-01/examples/ClustersListByResourceGroup.json
+            // this example is just showing the usage of "Clusters_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "53bc36c5-91e1-4d09-92c9-63b89e571926";
+            string resourceGroupName = "oiautorest6685";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // get the collection of this OperationalInsightsClusterResource
+            OperationalInsightsClusterCollection collection = resourceGroupResource.GetOperationalInsightsClusters();
+
+            // invoke the operation and iterate over the result
+            await foreach (OperationalInsightsClusterResource item in collection.GetAllAsync())
+            {
+                // the variable item is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                OperationalInsightsClusterData resourceData = item.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_ClustersGet()
         {
-            // Generated from example definition: specification/operationalinsights/resource-manager/Microsoft.OperationalInsights/stable/2021-06-01/examples/ClustersGet.json
+            // Generated from example definition: specification/operationalinsights/resource-manager/Microsoft.OperationalInsights/stable/2025-02-01/examples/ClustersGet.json
             // this example is just showing the usage of "Clusters_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -148,7 +145,7 @@ namespace Azure.ResourceManager.OperationalInsights.Samples
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "00000000-0000-0000-0000-00000000000";
+            string subscriptionId = "53bc36c5-91e1-4d09-92c9-63b89e571926";
             string resourceGroupName = "oiautorest6685";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -163,12 +160,11 @@ namespace Azure.ResourceManager.OperationalInsights.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // ClustersGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_ClustersGet()
         {
-            // Generated from example definition: specification/operationalinsights/resource-manager/Microsoft.OperationalInsights/stable/2021-06-01/examples/ClustersGet.json
+            // Generated from example definition: specification/operationalinsights/resource-manager/Microsoft.OperationalInsights/stable/2025-02-01/examples/ClustersGet.json
             // this example is just showing the usage of "Clusters_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -178,7 +174,7 @@ namespace Azure.ResourceManager.OperationalInsights.Samples
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "00000000-0000-0000-0000-00000000000";
+            string subscriptionId = "53bc36c5-91e1-4d09-92c9-63b89e571926";
             string resourceGroupName = "oiautorest6685";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -193,7 +189,7 @@ namespace Azure.ResourceManager.OperationalInsights.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {

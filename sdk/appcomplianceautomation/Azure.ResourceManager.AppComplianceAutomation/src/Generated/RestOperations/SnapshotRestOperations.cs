@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
                 case 200:
                     {
                         SnapshotResourceListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SnapshotResourceListResult.DeserializeSnapshotResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
                 case 200:
                     {
                         SnapshotResourceListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SnapshotResourceListResult.DeserializeSnapshotResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
                 case 200:
                     {
                         AppComplianceReportSnapshotData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AppComplianceReportSnapshotData.DeserializeAppComplianceReportSnapshotData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
                 case 200:
                     {
                         AppComplianceReportSnapshotData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AppComplianceReportSnapshotData.DeserializeAppComplianceReportSnapshotData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -405,7 +405,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
                 case 200:
                     {
                         SnapshotResourceListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SnapshotResourceListResult.DeserializeSnapshotResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -439,7 +439,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
                 case 200:
                     {
                         SnapshotResourceListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SnapshotResourceListResult.DeserializeSnapshotResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

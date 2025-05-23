@@ -7,11 +7,13 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> Information from validate template deployment response. </summary>
-    public partial class ArmDeploymentValidateResult
+    public partial class ArmDeploymentValidateResult : ResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -51,10 +53,14 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ArmDeploymentValidateResult"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="error"> The deployment validation error. </param>
         /// <param name="properties"> The template deployment properties. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ArmDeploymentValidateResult(ResponseError error, ArmDeploymentPropertiesExtended properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ArmDeploymentValidateResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResponseError error, ArmDeploymentPropertiesExtended properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Error = error;
             Properties = properties;

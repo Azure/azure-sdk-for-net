@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +23,14 @@ namespace Azure.ResourceManager.Avs
 
         PlacementPolicyResource IOperationSource<PlacementPolicyResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = PlacementPolicyData.DeserializePlacementPolicyData(document.RootElement);
+            var data = ModelReaderWriter.Read<PlacementPolicyData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerAvsContext.Default);
             return new PlacementPolicyResource(_client, data);
         }
 
         async ValueTask<PlacementPolicyResource> IOperationSource<PlacementPolicyResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = PlacementPolicyData.DeserializePlacementPolicyData(document.RootElement);
-            return new PlacementPolicyResource(_client, data);
+            var data = ModelReaderWriter.Read<PlacementPolicyData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerAvsContext.Default);
+            return await Task.FromResult(new PlacementPolicyResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

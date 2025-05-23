@@ -64,7 +64,7 @@ namespace Azure.AI.DocumentIntelligence
             }
             DocumentModelDetails result = default;
             string operationId = default;
-            OperationStatus status = default;
+            DocumentIntelligenceOperationStatus status = default;
             int? percentCompleted = default;
             DateTimeOffset createdDateTime = default;
             DateTimeOffset lastUpdatedDateTime = default;
@@ -93,7 +93,7 @@ namespace Azure.AI.DocumentIntelligence
                 }
                 if (property.NameEquals("status"u8))
                 {
-                    status = new OperationStatus(property.Value.GetString());
+                    status = new DocumentIntelligenceOperationStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("percentCompleted"u8))
@@ -181,7 +181,7 @@ namespace Azure.AI.DocumentIntelligence
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureAIDocumentIntelligenceContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(DocumentModelBuildOperationDetails)} does not support writing '{options.Format}' format.");
             }
@@ -195,7 +195,7 @@ namespace Azure.AI.DocumentIntelligence
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeDocumentModelBuildOperationDetails(document.RootElement, options);
                     }
                 default:
@@ -209,7 +209,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static new DocumentModelBuildOperationDetails FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeDocumentModelBuildOperationDetails(document.RootElement);
         }
 

@@ -36,6 +36,11 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(Identity))
+            {
+                writer.WritePropertyName("identity"u8);
+                JsonSerializer.Serialize(writer, Identity);
+            }
             if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
@@ -102,6 +107,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
+            ManagedServiceIdentity identity = default;
             IDictionary<string, string> tags = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -117,6 +123,15 @@ namespace Azure.ResourceManager.Compute.Models
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("identity"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
+                    continue;
+                }
                 if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -228,6 +243,7 @@ namespace Azure.ResourceManager.Compute.Models
                 name,
                 type,
                 systemData,
+                identity,
                 description,
                 identifier,
                 provisioningState,
@@ -245,7 +261,7 @@ namespace Azure.ResourceManager.Compute.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(GalleryPatch)} does not support writing '{options.Format}' format.");
             }
@@ -259,7 +275,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeGalleryPatch(document.RootElement, options);
                     }
                 default:

@@ -46,8 +46,24 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="SubscriptionValidationEventData"/>. </summary>
-        internal SubscriptionValidationEventData()
+        /// <param name="validationCode">
+        /// The validation code sent by Azure Event Grid to validate an event subscription.
+        /// To complete the validation handshake, the subscriber must either respond with this validation code as part of the validation response,
+        /// or perform a GET request on the validationUrl (available starting version 2018-05-01-preview).
+        /// </param>
+        /// <param name="validationUrl">
+        /// The validation URL sent by Azure Event Grid (available starting version 2018-05-01-preview).
+        /// To complete the validation handshake, the subscriber must either respond with the validationCode as part of the validation response,
+        /// or perform a GET request on the validationUrl (available starting version 2018-05-01-preview).
+        /// </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="validationCode"/> or <paramref name="validationUrl"/> is null. </exception>
+        internal SubscriptionValidationEventData(string validationCode, string validationUrl)
         {
+            Argument.AssertNotNull(validationCode, nameof(validationCode));
+            Argument.AssertNotNull(validationUrl, nameof(validationUrl));
+
+            ValidationCode = validationCode;
+            ValidationUrl = validationUrl;
         }
 
         /// <summary> Initializes a new instance of <see cref="SubscriptionValidationEventData"/>. </summary>
@@ -67,6 +83,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             ValidationCode = validationCode;
             ValidationUrl = validationUrl;
             _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SubscriptionValidationEventData"/> for deserialization. </summary>
+        internal SubscriptionValidationEventData()
+        {
         }
 
         /// <summary>

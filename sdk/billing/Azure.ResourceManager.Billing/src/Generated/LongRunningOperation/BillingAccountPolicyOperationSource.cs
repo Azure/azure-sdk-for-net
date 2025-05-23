@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +23,14 @@ namespace Azure.ResourceManager.Billing
 
         BillingAccountPolicyResource IOperationSource<BillingAccountPolicyResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = BillingAccountPolicyData.DeserializeBillingAccountPolicyData(document.RootElement);
+            var data = ModelReaderWriter.Read<BillingAccountPolicyData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerBillingContext.Default);
             return new BillingAccountPolicyResource(_client, data);
         }
 
         async ValueTask<BillingAccountPolicyResource> IOperationSource<BillingAccountPolicyResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = BillingAccountPolicyData.DeserializeBillingAccountPolicyData(document.RootElement);
-            return new BillingAccountPolicyResource(_client, data);
+            var data = ModelReaderWriter.Read<BillingAccountPolicyData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerBillingContext.Default);
+            return await Task.FromResult(new BillingAccountPolicyResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

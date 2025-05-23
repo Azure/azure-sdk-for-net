@@ -68,7 +68,7 @@ namespace Azure.Data.Tables.Models
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static TableEntityQueryResponse FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeTableEntityQueryResponse(document.RootElement);
         }
     }

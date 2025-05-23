@@ -10,17 +10,17 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Sql.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Sql.Samples
 {
     public partial class Sample_ManagedInstanceAdvancedThreatProtectionResource
     {
-        // Get a managed instance's Advanced Threat Protection settings
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAManagedInstanceSAdvancedThreatProtectionSettings()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2022-02-01-preview/examples/ManagedInstanceAdvancedThreatProtectionSettingsGet.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-05-01-preview/examples/ManagedInstanceAdvancedThreatProtectionSettingsGet.json
             // this example is just showing the usage of "ManagedInstanceAdvancedThreatProtectionSettings_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -47,12 +47,11 @@ namespace Azure.ResourceManager.Sql.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Update a managed instance's Advanced Threat Protection settings with all parameters.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateAManagedInstanceSAdvancedThreatProtectionSettingsWithAllParameters()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2022-02-01-preview/examples/ManagedInstanceAdvancedThreatProtectionSettingsCreateMax.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-05-01-preview/examples/ManagedInstanceAdvancedThreatProtectionSettingsCreateMax.json
             // this example is just showing the usage of "ManagedInstanceAdvancedThreatProtectionSettings_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -70,7 +69,7 @@ namespace Azure.ResourceManager.Sql.Samples
             ManagedInstanceAdvancedThreatProtectionResource managedInstanceAdvancedThreatProtection = client.GetManagedInstanceAdvancedThreatProtectionResource(managedInstanceAdvancedThreatProtectionResourceId);
 
             // invoke the operation
-            ManagedInstanceAdvancedThreatProtectionData data = new ManagedInstanceAdvancedThreatProtectionData()
+            ManagedInstanceAdvancedThreatProtectionData data = new ManagedInstanceAdvancedThreatProtectionData
             {
                 State = AdvancedThreatProtectionState.Enabled,
             };
@@ -84,12 +83,11 @@ namespace Azure.ResourceManager.Sql.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Update a managed instance's Advanced Threat Protection settings with minimal parameters.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateAManagedInstanceSAdvancedThreatProtectionSettingsWithMinimalParameters()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2022-02-01-preview/examples/ManagedInstanceAdvancedThreatProtectionSettingsCreateMin.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-05-01-preview/examples/ManagedInstanceAdvancedThreatProtectionSettingsCreateMin.json
             // this example is just showing the usage of "ManagedInstanceAdvancedThreatProtectionSettings_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -107,7 +105,7 @@ namespace Azure.ResourceManager.Sql.Samples
             ManagedInstanceAdvancedThreatProtectionResource managedInstanceAdvancedThreatProtection = client.GetManagedInstanceAdvancedThreatProtectionResource(managedInstanceAdvancedThreatProtectionResourceId);
 
             // invoke the operation
-            ManagedInstanceAdvancedThreatProtectionData data = new ManagedInstanceAdvancedThreatProtectionData()
+            ManagedInstanceAdvancedThreatProtectionData data = new ManagedInstanceAdvancedThreatProtectionData
             {
                 State = AdvancedThreatProtectionState.Disabled,
             };

@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCustomerInsightsContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(RoleResourceFormat)} does not support writing '{options.Format}' format.");
             }
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeRoleResourceFormat(document.RootElement, options);
                     }
                 default:

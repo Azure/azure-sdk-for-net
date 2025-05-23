@@ -23,22 +23,14 @@ namespace Azure.Storage.DataMovement
 
         public override string ProviderId => "local";
 
-        /// <summary>
-        /// Defines the recommended Transfer Type of the resource
-        /// </summary>
-        protected internal override DataTransferOrder TransferType => DataTransferOrder.Sequential;
+        protected internal override TransferOrder TransferType => TransferOrder.Sequential;
 
-        /// <summary>
-        /// Defines the maximum chunk size for the storage resource.
-        /// </summary>
-        /// TODO: consider changing this.
+        protected internal override long MaxSupportedSingleTransferSize => Constants.Blob.Block.MaxStageBytes;
+
         protected internal override long MaxSupportedChunkSize => Constants.Blob.Block.MaxStageBytes;
 
-        /// <summary>
-        /// Length of the storage resource. This information is can obtained during a GetStorageResources API call.
-        ///
-        /// Will return default if the length was not set by a GetStorageResources API call.
-        /// </summary>
+        protected internal override int MaxSupportedChunkCount => int.MaxValue;
+
         protected internal override long? Length => default;
 
         /// <summary>
@@ -136,7 +128,7 @@ namespace Azure.Storage.DataMovement
             CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
 
             long position = options?.Position != default ? options.Position.Value : 0;
-            if (position == 0)
+            if (options?.Initial == true)
             {
                 Create(overwrite);
             }
@@ -144,19 +136,17 @@ namespace Azure.Storage.DataMovement
             {
                 // Appends incoming stream to the local file resource
                 using (FileStream fileStream = new FileStream(
-                        _uri.LocalPath,
-                        FileMode.OpenOrCreate,
-                        FileAccess.Write))
+                    _uri.LocalPath,
+                    FileMode.Open,
+                    FileAccess.Write))
                 {
                     if (position > 0)
                     {
                         fileStream.Seek(position, SeekOrigin.Begin);
                     }
-                    await stream.CopyToAsync(
-                        fileStream,
-                        (int)streamLength,
-                        cancellationToken)
-                        .ConfigureAwait(false);
+
+                    int bufferSize = Math.Min((int)streamLength, DataMovementConstants.DefaultStreamCopyBufferSize);
+                    await stream.CopyToAsync(fileStream, bufferSize, cancellationToken).ConfigureAwait(false);
                 }
             }
         }
@@ -220,7 +210,8 @@ namespace Azure.Storage.DataMovement
             FileInfo fileInfo = new FileInfo(_uri.LocalPath);
             if (fileInfo.Exists)
             {
-                return Task.FromResult(fileInfo.ToStorageResourceProperties());
+                StorageResourceItemProperties properties = fileInfo.ToStorageResourceProperties();
+                return Task.FromResult(properties);
             }
             throw new FileNotFoundException();
         }
@@ -282,14 +273,14 @@ namespace Azure.Storage.DataMovement
             return Task.FromResult(false);
         }
 
-        protected internal override StorageResourceCheckpointData GetSourceCheckpointData()
+        protected internal override StorageResourceCheckpointDetails GetSourceCheckpointDetails()
         {
-            return new LocalSourceCheckpointData();
+            return new LocalSourceCheckpointDetails();
         }
 
-        protected internal override StorageResourceCheckpointData GetDestinationCheckpointData()
+        protected internal override StorageResourceCheckpointDetails GetDestinationCheckpointDetails()
         {
-            return new LocalDestinationCheckpointData();
+            return new LocalDestinationCheckpointDetails();
         }
 
         // no-op for get permissions

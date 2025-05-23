@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Compute
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-09-04";
+            _apiVersion = apiVersion ?? "2024-11-04";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Compute
                 case 200:
                     {
                         CloudServiceOSVersionData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CloudServiceOSVersionData.DeserializeCloudServiceOSVersionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Compute
                 case 200:
                     {
                         CloudServiceOSVersionData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CloudServiceOSVersionData.DeserializeCloudServiceOSVersionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.Compute
                 case 200:
                     {
                         OSVersionListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = OSVersionListResult.DeserializeOSVersionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.Compute
                 case 200:
                     {
                         OSVersionListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = OSVersionListResult.DeserializeOSVersionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.Compute
                 case 200:
                     {
                         CloudServiceOSFamilyData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CloudServiceOSFamilyData.DeserializeCloudServiceOSFamilyData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -297,7 +297,7 @@ namespace Azure.ResourceManager.Compute
                 case 200:
                     {
                         CloudServiceOSFamilyData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CloudServiceOSFamilyData.DeserializeCloudServiceOSFamilyData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.Compute
                 case 200:
                     {
                         OSFamilyListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = OSFamilyListResult.DeserializeOSFamilyListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -383,7 +383,7 @@ namespace Azure.ResourceManager.Compute
                 case 200:
                     {
                         OSFamilyListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = OSFamilyListResult.DeserializeOSFamilyListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -433,7 +433,7 @@ namespace Azure.ResourceManager.Compute
                 case 200:
                     {
                         OSVersionListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = OSVersionListResult.DeserializeOSVersionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -461,7 +461,7 @@ namespace Azure.ResourceManager.Compute
                 case 200:
                     {
                         OSVersionListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = OSVersionListResult.DeserializeOSVersionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -511,7 +511,7 @@ namespace Azure.ResourceManager.Compute
                 case 200:
                     {
                         OSFamilyListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = OSFamilyListResult.DeserializeOSFamilyListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -539,7 +539,7 @@ namespace Azure.ResourceManager.Compute
                 case 200:
                     {
                         OSFamilyListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = OSFamilyListResult.DeserializeOSFamilyListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

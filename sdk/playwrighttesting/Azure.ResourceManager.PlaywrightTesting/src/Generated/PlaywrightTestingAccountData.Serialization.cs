@@ -37,34 +37,11 @@ namespace Azure.ResourceManager.PlaywrightTesting
             }
 
             base.JsonModelWriteCore(writer, options);
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(DashboardUri))
+            if (Optional.IsDefined(Properties))
             {
-                writer.WritePropertyName("dashboardUri"u8);
-                writer.WriteStringValue(DashboardUri.AbsoluteUri);
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
             }
-            if (Optional.IsDefined(RegionalAffinity))
-            {
-                writer.WritePropertyName("regionalAffinity"u8);
-                writer.WriteStringValue(RegionalAffinity.Value.ToString());
-            }
-            if (Optional.IsDefined(ScalableExecution))
-            {
-                writer.WritePropertyName("scalableExecution"u8);
-                writer.WriteStringValue(ScalableExecution.Value.ToString());
-            }
-            if (Optional.IsDefined(Reporting))
-            {
-                writer.WritePropertyName("reporting"u8);
-                writer.WriteStringValue(Reporting.Value.ToString());
-            }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
-            {
-                writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
-            }
-            writer.WriteEndObject();
         }
 
         PlaywrightTestingAccountData IJsonModel<PlaywrightTestingAccountData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -87,21 +64,26 @@ namespace Azure.ResourceManager.PlaywrightTesting
             {
                 return null;
             }
+            PlaywrightTestingAccountProperties properties = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            Uri dashboardUri = default;
-            EnablementStatus? regionalAffinity = default;
-            EnablementStatus? scalableExecution = default;
-            EnablementStatus? reporting = default;
-            PlaywrightTestingProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("properties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    properties = PlaywrightTestingAccountProperties.DeserializePlaywrightTestingAccountProperties(property.Value, options);
+                    continue;
+                }
                 if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -145,63 +127,6 @@ namespace Azure.ResourceManager.PlaywrightTesting
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("dashboardUri"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            dashboardUri = new Uri(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("regionalAffinity"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            regionalAffinity = new EnablementStatus(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("scalableExecution"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            scalableExecution = new EnablementStatus(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("reporting"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            reporting = new EnablementStatus(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("provisioningState"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            provisioningState = new PlaywrightTestingProvisioningState(property0.Value.GetString());
-                            continue;
-                        }
-                    }
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -215,11 +140,7 @@ namespace Azure.ResourceManager.PlaywrightTesting
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                dashboardUri,
-                regionalAffinity,
-                scalableExecution,
-                reporting,
-                provisioningState,
+                properties,
                 serializedAdditionalRawData);
         }
 
@@ -230,7 +151,7 @@ namespace Azure.ResourceManager.PlaywrightTesting
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerPlaywrightTestingContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(PlaywrightTestingAccountData)} does not support writing '{options.Format}' format.");
             }
@@ -244,7 +165,7 @@ namespace Azure.ResourceManager.PlaywrightTesting
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializePlaywrightTestingAccountData(document.RootElement, options);
                     }
                 default:

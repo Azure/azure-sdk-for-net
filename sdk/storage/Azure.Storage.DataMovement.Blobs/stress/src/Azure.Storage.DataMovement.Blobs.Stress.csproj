@@ -21,7 +21,9 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\..\Azure.Storage.DataMovement\src\Azure.Storage.DataMovement.csproj" />
-    <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\..\Azure.Storage.Blobs\src\Azure.Storage.Blobs.csproj" />
+    <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\..\Azure.Storage.Blobs\src\Azure.Storage.Blobs.csproj" >
+      <Aliases>BaseBlobs</Aliases>
+    </ProjectReference>
     <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\src\Azure.Storage.DataMovement.Blobs.csproj" />
   </ItemGroup>
   <ItemGroup>
@@ -37,20 +39,24 @@
     <Compile Include="$(AzureStorageSharedSources)WindowStream.cs" LinkBase="Shared\Storage" />
   </ItemGroup>
   <ItemGroup>
+
+    <Compile Include="$(AzureStorageSharedTestSources)IDisposingContainer.cs" LinkBase="SharedSource\Storage" />
     <Compile Include="$(AzureStorageSharedTestSources)TemporaryFileStream.cs" LinkBase="SharedSource\Storage" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="$(AzureStorageDataMovementSharedSources)DataTransferStatusInternal.cs" LinkBase="Shared\DataMovement" />
+    <Compile Include="$(AzureStorageDataMovementSharedSources)TransferStatusInternal.cs" LinkBase="Shared\DataMovement" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="$(AzureStorageDataMovementTestSharedSources)DisposingLocalDirectory.cs" LinkBase="Shared\DataMovement" />
     <Compile Include="$(AzureStorageDataMovementTestSharedSources)TransferValidator.cs" LinkBase="Shared\DataMovement" />
     <Compile Include="$(AzureStorageDataMovementTestSharedSources)TransferValidator.Local.cs" LinkBase="Shared\DataMovement" />
-    <Compile Include="$(AzureStorageDataMovementTestSharedSources)../TransferValidator.Blobs.cs" LinkBase="Shared\DataMovement" />
+    <Compile Include="$(MSBuildThisFileDirectory)..\..\..\Azure.Storage.DataMovement.Blobs\tests\DisposingBlobContainer.cs" LinkBase="Shared\DataMovement" />
+    <Compile Include="$(MSBuildThisFileDirectory)..\..\..\Azure.Storage.DataMovement.Blobs\tests\TransferValidator.Blobs.cs" LinkBase="Shared\DataMovement" />
     <Compile Include="$(AzureStorageDataMovementTestSharedSources)TestEventsRaised.cs" LinkBase="Shared\DataMovement" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="$(AzureStorageStressTestSharedSources)*.cs" LinkBase="Shared\Stress" />
+    <Compile Include="$(AzureStorageDataMovementTestSharedSources)..\..\stress\*.cs" LinkBase="Shared\Stress" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Resources\**">
@@ -58,3 +64,4 @@
     </Content>
   </ItemGroup>
 </Project>
+

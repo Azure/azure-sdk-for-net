@@ -46,33 +46,43 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="StorageLifecyclePolicyCompletedEventData"/>. </summary>
+        /// <param name="policyRunSummary"> Policy execution summary which shows the completion status of a LCM run". </param>
         /// <param name="deleteSummary"> Execution statistics of a specific policy action in a Blob Management cycle. </param>
         /// <param name="tierToCoolSummary"> Execution statistics of a specific policy action in a Blob Management cycle. </param>
         /// <param name="tierToArchiveSummary"> Execution statistics of a specific policy action in a Blob Management cycle. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="deleteSummary"/>, <paramref name="tierToCoolSummary"/> or <paramref name="tierToArchiveSummary"/> is null. </exception>
-        internal StorageLifecyclePolicyCompletedEventData(StorageLifecyclePolicyActionSummaryDetail deleteSummary, StorageLifecyclePolicyActionSummaryDetail tierToCoolSummary, StorageLifecyclePolicyActionSummaryDetail tierToArchiveSummary)
+        /// <param name="tierToColdSummary"> Execution statistics of a specific policy action in a Blob Management cycle. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="policyRunSummary"/>, <paramref name="deleteSummary"/>, <paramref name="tierToCoolSummary"/>, <paramref name="tierToArchiveSummary"/> or <paramref name="tierToColdSummary"/> is null. </exception>
+        internal StorageLifecyclePolicyCompletedEventData(StorageLifecyclePolicyRunSummary policyRunSummary, StorageLifecyclePolicyActionSummaryDetail deleteSummary, StorageLifecyclePolicyActionSummaryDetail tierToCoolSummary, StorageLifecyclePolicyActionSummaryDetail tierToArchiveSummary, StorageLifecyclePolicyActionSummaryDetail tierToColdSummary)
         {
+            Argument.AssertNotNull(policyRunSummary, nameof(policyRunSummary));
             Argument.AssertNotNull(deleteSummary, nameof(deleteSummary));
             Argument.AssertNotNull(tierToCoolSummary, nameof(tierToCoolSummary));
             Argument.AssertNotNull(tierToArchiveSummary, nameof(tierToArchiveSummary));
+            Argument.AssertNotNull(tierToColdSummary, nameof(tierToColdSummary));
 
+            PolicyRunSummary = policyRunSummary;
             DeleteSummary = deleteSummary;
             TierToCoolSummary = tierToCoolSummary;
             TierToArchiveSummary = tierToArchiveSummary;
+            TierToColdSummary = tierToColdSummary;
         }
 
         /// <summary> Initializes a new instance of <see cref="StorageLifecyclePolicyCompletedEventData"/>. </summary>
         /// <param name="scheduleTime"> The time the policy task was scheduled. </param>
+        /// <param name="policyRunSummary"> Policy execution summary which shows the completion status of a LCM run". </param>
         /// <param name="deleteSummary"> Execution statistics of a specific policy action in a Blob Management cycle. </param>
         /// <param name="tierToCoolSummary"> Execution statistics of a specific policy action in a Blob Management cycle. </param>
         /// <param name="tierToArchiveSummary"> Execution statistics of a specific policy action in a Blob Management cycle. </param>
+        /// <param name="tierToColdSummary"> Execution statistics of a specific policy action in a Blob Management cycle. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StorageLifecyclePolicyCompletedEventData(string scheduleTime, StorageLifecyclePolicyActionSummaryDetail deleteSummary, StorageLifecyclePolicyActionSummaryDetail tierToCoolSummary, StorageLifecyclePolicyActionSummaryDetail tierToArchiveSummary, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal StorageLifecyclePolicyCompletedEventData(string scheduleTime, StorageLifecyclePolicyRunSummary policyRunSummary, StorageLifecyclePolicyActionSummaryDetail deleteSummary, StorageLifecyclePolicyActionSummaryDetail tierToCoolSummary, StorageLifecyclePolicyActionSummaryDetail tierToArchiveSummary, StorageLifecyclePolicyActionSummaryDetail tierToColdSummary, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ScheduleTime = scheduleTime;
+            PolicyRunSummary = policyRunSummary;
             DeleteSummary = deleteSummary;
             TierToCoolSummary = tierToCoolSummary;
             TierToArchiveSummary = tierToArchiveSummary;
+            TierToColdSummary = tierToColdSummary;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -83,11 +93,15 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 
         /// <summary> The time the policy task was scheduled. </summary>
         public string ScheduleTime { get; }
+        /// <summary> Policy execution summary which shows the completion status of a LCM run". </summary>
+        public StorageLifecyclePolicyRunSummary PolicyRunSummary { get; }
         /// <summary> Execution statistics of a specific policy action in a Blob Management cycle. </summary>
         public StorageLifecyclePolicyActionSummaryDetail DeleteSummary { get; }
         /// <summary> Execution statistics of a specific policy action in a Blob Management cycle. </summary>
         public StorageLifecyclePolicyActionSummaryDetail TierToCoolSummary { get; }
         /// <summary> Execution statistics of a specific policy action in a Blob Management cycle. </summary>
         public StorageLifecyclePolicyActionSummaryDetail TierToArchiveSummary { get; }
+        /// <summary> Execution statistics of a specific policy action in a Blob Management cycle. </summary>
+        public StorageLifecyclePolicyActionSummaryDetail TierToColdSummary { get; }
     }
 }

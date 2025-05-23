@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.Orbital
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerOrbitalContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(AvailableGroundStationData)} does not support writing '{options.Format}' format.");
             }
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.Orbital
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeAvailableGroundStationData(document.RootElement, options);
                     }
                 default:

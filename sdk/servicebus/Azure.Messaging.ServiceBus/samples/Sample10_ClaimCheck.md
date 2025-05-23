@@ -1,10 +1,10 @@
 # Claim check pattern
 
-This sample demonstrates the use of the [claim check pattern](https://docs.microsoft.com/azure/architecture/patterns/claim-check) which enables you to work with arbitrarily large message bodies. For standard namespaces, a message can be at most 256 KB. For Premium namespaces, the limit is 100 MB. If these limits don't work for your application you can leverage Azure Storage Blobs to implement this pattern.
+This sample demonstrates the use of the [claim check pattern](https://learn.microsoft.com/azure/architecture/patterns/claim-check) which enables you to work with arbitrarily large message bodies. For standard namespaces, a message can be at most 256 KB. For Premium namespaces, the limit is 100 MB. If these limits don't work for your application you can leverage Azure Storage Blobs to implement this pattern.
 
 ## Sending the message
 
-In our example, we will assume that the message body can fit in memory. This allows us to use the Storage Blob methods that let you work with `BinaryData`. If your message body cannot fit in memory, you can use the [stream-based](https://docs.microsoft.com/dotnet/api/azure.storage.blobs.blobcontainerclient.uploadblobasync?view=azure-dotnet#Azure_Storage_Blobs_BlobContainerClient_UploadBlobAsync_System_String_System_IO_Stream_System_Threading_CancellationToken_) Upload/Download methods instead.
+In our example, we will assume that the message body can fit in memory. This allows us to use the Storage Blob methods that let you work with `BinaryData`. If your message body cannot fit in memory, you can use the [stream-based](https://learn.microsoft.com/dotnet/api/azure.storage.blobs.blobcontainerclient.uploadblobasync?view=azure-dotnet#Azure_Storage_Blobs_BlobContainerClient_UploadBlobAsync_System_String_System_IO_Stream_System_Threading_CancellationToken_) Upload/Download methods instead.
 
 First, we will create a `BlobContainerClient` and use the container name "claim-checks". We will be storing our message bodies in blobs within this container.
 ```C# Snippet:CreateBlobContainer

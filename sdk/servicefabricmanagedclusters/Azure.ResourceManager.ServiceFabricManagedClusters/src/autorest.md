@@ -8,26 +8,17 @@ azure-arm: true
 csharp: true
 library-name: ServiceFabricManagedClusters
 namespace: Azure.ResourceManager.ServiceFabricManagedClusters
-
-require:  https://github.com/Azure/azure-rest-api-specs/blob/5539bbe1f023b10ffa3b61c9106cb8d34a27038e/specification/servicefabricmanagedclusters/resource-manager/readme.md
-
-input-file:
-- https://github.com/Azure/azure-rest-api-specs/blob/5539bbe1f023b10ffa3b61c9106cb8d34a27038e/specification/servicefabricmanagedclusters/resource-manager/Microsoft.ServiceFabric/stable/2024-04-01/managedcluster.json
-- https://github.com/Azure/azure-rest-api-specs/blob/5539bbe1f023b10ffa3b61c9106cb8d34a27038e/specification/servicefabricmanagedclusters/resource-manager/Microsoft.ServiceFabric/stable/2024-04-01/nodetype.json
-- https://github.com/Azure/azure-rest-api-specs/blob/5539bbe1f023b10ffa3b61c9106cb8d34a27038e/specification/servicefabricmanagedclusters/resource-manager/Microsoft.ServiceFabric/stable/2024-04-01/nodetype.json
-
-tag: package-2024-04
-
+require:  https://github.com/Azure/azure-rest-api-specs/blob/f17b769690a46d858134ee68ef0d89635083b560/specification/servicefabricmanagedclusters/resource-manager/readme.md
+#tag: package-2024-09-preview
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
-  output-folder: $(this-folder)/../samples/Generated
+  output-folder: $(this-folder)/../tests/Generated
   clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
 use-model-reader-writer: true
-use-write-core: true
 
 #mgmt-debug:
 #  show-serialized-names: true
@@ -78,12 +69,12 @@ acronym-mapping:
   SSD: Ssd
 
 override-operation-name:
-  managedAzResiliencyStatus_Get: GetManagedAzResiliencyStatus
+  managedAzResiliencyStatus_get: GetManagedAzResiliencyStatus
   NodeTypeSkus_List: GetAvailableSkus
   managedUnsupportedVMSizes_Get: GetManagedUnsupportedVmSize
   managedUnsupportedVMSizes_List: GetManagedUnsupportedVmSizes
   ManagedClusterVersion_GetByEnvironment: GetManagedClusterVersionByEnvironment
-  managedMaintenanceWindowStatus_Get: GetManagedMaintenanceWindowStatus
+  managedAzResiliencyStatus_Get: GetManagedAzResiliencyStatus
 
 rename-mapping:
   ApplicationResource: ServiceFabricManagedApplication
@@ -105,6 +96,7 @@ rename-mapping:
   ManagedCluster.properties.ipv6Address: -|ip-address
   ManagedCluster.properties.zonalResiliency: HasZoneResiliency
   ManagedCluster.properties.enableHttpGatewayExclusiveAuthMode: IsHttpGatewayExclusiveAuthModeEnabled
+
   Subnet: ManagedClusterSubnet
   Subnet.enableIpv6: IsIPv6Enabled
   Subnet.networkSecurityGroupId: -|arm-id
@@ -112,13 +104,9 @@ rename-mapping:
   ClientCertificate: ManagedClusterClientCertificate
   ClientCertificate.thumbprint: -|any
   ClientCertificate.issuerThumbprint: -|any
-  ClusterHealthPolicy: ManagedClusterHealthPolicy
-  ClusterMonitoringPolicy: ManagedClusterMonitoringPolicy
   ClusterState: ServiceFabricManagedClusterState
   ClusterUpgradeCadence: ManagedClusterUpgradeCadence
-  ClusterUpgradeDeltaHealthPolicy: ManagedClusterUpgradeDeltaHealthPolicy
   ClusterUpgradeMode: ManagedClusterUpgradeMode
-  ClusterUpgradePolicy: ManagedClusterUpgradePolicy
   SettingsSectionDescription: ClusterFabricSettingsSection
   SettingsParameterDescription: ClusterFabricSettingsParameterDescription
   IpTag: ManagedClusterIPTag
@@ -136,6 +124,7 @@ rename-mapping:
   NodeType.properties.enableOverProvisioning: IsOverProvisioningEnabled
   NodeType.properties.multiplePlacementGroups: HasMultiplePlacementGroups
   NodeType.properties.enableNodePublicIPv6: IsNodePublicIPv6Enabled
+  VmApplication : ServiceFabricManagedVmApplication
   VmssDataDisk: NodeTypeVmssDataDisk
   VmssDataDisk.diskSizeGB: DiskSizeInGB
   VmssExtension: NodeTypeVmssExtension
@@ -182,13 +171,17 @@ rename-mapping:
   ResourceAzStatus.resourceType: -|resource-type
   SecurityType: ServiceFabricManagedClusterSecurityType
   UpdateType: ServiceFabricManagedClusterUpdateType
+  ClusterHealthPolicy: ManagedClusterHealthPolicy
+  ClusterUpgradePolicy: ManagedClusterUpgradePolicy
+  ClusterUpgradeDeltaHealthPolicy: ManagedClusterUpgradeDeltaHealthPolicy
+  ClusterMonitoringPolicy: ManagedClusterMonitoringPolicy
+  PrivateIPAddressVersion: ServiceFabricManagedClusterPrivateIPAddressVersion
+  PublicIPAddressVersion: ServiceFabricManagedClusterPublicIPAddressVersion
   IpConfiguration: ServiceFabricManagedClusterIPConfiguration
   IpConfigurationPublicIPAddressConfiguration: ServiceFabricManagedClusterPublicIPAddressConfiguration
   ManagedMaintenanceWindowStatus.lastWindowStatusUpdateAtUTC: LastWindowStatusUpdatedOn
   ManagedMaintenanceWindowStatus.lastWindowStartTimeUTC: LastWindowStartOn
   ManagedMaintenanceWindowStatus.lastWindowEndTimeUTC: LastWindowEndOn
-  PrivateIPAddressVersion: ServiceFabricManagedClusterPrivateIPAddressVersion
-  PublicIPAddressVersion: ServiceFabricManagedClusterPublicIPAddressVersion
 
 suppress-abstract-base-class:
 - ManagedServiceProperties

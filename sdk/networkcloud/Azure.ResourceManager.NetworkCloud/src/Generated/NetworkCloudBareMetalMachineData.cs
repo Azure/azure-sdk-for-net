@@ -88,9 +88,11 @@ namespace Azure.ResourceManager.NetworkCloud
             HybridAksClustersAssociatedIds = new ChangeTrackingList<string>();
             MachineDetails = machineDetails;
             MachineName = machineName;
+            MachineRoles = new ChangeTrackingList<string>();
             MachineSkuId = machineSkuId;
             RackId = rackId;
             RackSlot = rackSlot;
+            SecretRotationStatus = new ChangeTrackingList<SecretRotationStatus>();
             SerialNumber = serialNumber;
             VirtualMachinesAssociatedIds = new ChangeTrackingList<string>();
         }
@@ -102,6 +104,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
+        /// <param name="etag"> Resource ETag. </param>
         /// <param name="extendedLocation"> The extended location of the cluster associated with the resource. </param>
         /// <param name="associatedResourceIds"> The list of resource IDs for the other Microsoft.NetworkCloud resources that have attached this network. </param>
         /// <param name="bmcConnectionString"> The connection string for the baseboard management controller including IP address and protocol. </param>
@@ -117,8 +120,10 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="hybridAksClustersAssociatedIds"> Field Deprecated. These fields will be empty/omitted. The list of the resource IDs for the HybridAksClusters that have nodes hosted on this bare metal machine. </param>
         /// <param name="kubernetesNodeName"> The name of this machine represented by the host object in the Cluster's Kubernetes control plane. </param>
         /// <param name="kubernetesVersion"> The version of Kubernetes running on this machine. </param>
+        /// <param name="machineClusterVersion"> The cluster version that has been applied to this machine during deployment or a version update. </param>
         /// <param name="machineDetails"> The custom details provided by the customer. </param>
         /// <param name="machineName"> The OS-level hostname assigned to this machine. </param>
+        /// <param name="machineRoles"> The list of roles that are assigned to the cluster node running on this machine. </param>
         /// <param name="machineSkuId"> The unique internal identifier of the bare metal machine SKU. </param>
         /// <param name="oamIPv4Address"> The IPv4 address that is assigned to the bare metal machine during the cluster deployment. </param>
         /// <param name="oamIPv6Address"> The IPv6 address that is assigned to the bare metal machine during the cluster deployment. </param>
@@ -128,12 +133,15 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="rackId"> The resource ID of the rack where this bare metal machine resides. </param>
         /// <param name="rackSlot"> The rack slot in which this bare metal machine is located, ordered from the bottom up i.e. the lowest slot is 1. </param>
         /// <param name="readyState"> The indicator of whether the bare metal machine is ready to receive workloads. </param>
+        /// <param name="runtimeProtectionStatus"> The runtime protection status of the bare metal machine. </param>
+        /// <param name="secretRotationStatus"> The list of statuses that represent secret rotation activity. </param>
         /// <param name="serialNumber"> The serial number of the bare metal machine. </param>
         /// <param name="serviceTag"> The discovered value of the machine's service tag. </param>
         /// <param name="virtualMachinesAssociatedIds"> Field Deprecated. These fields will be empty/omitted. The list of the resource IDs for the VirtualMachines that are hosted on this bare metal machine. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkCloudBareMetalMachineData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedLocation extendedLocation, IReadOnlyList<ResourceIdentifier> associatedResourceIds, string bmcConnectionString, AdministrativeCredentials bmcCredentials, string bmcMacAddress, string bootMacAddress, ResourceIdentifier clusterId, BareMetalMachineCordonStatus? cordonStatus, BareMetalMachineDetailedStatus? detailedStatus, string detailedStatusMessage, HardwareInventory hardwareInventory, HardwareValidationStatus hardwareValidationStatus, IReadOnlyList<string> hybridAksClustersAssociatedIds, string kubernetesNodeName, string kubernetesVersion, string machineDetails, string machineName, string machineSkuId, IPAddress oamIPv4Address, string oamIPv6Address, string osImage, BareMetalMachinePowerState? powerState, BareMetalMachineProvisioningState? provisioningState, ResourceIdentifier rackId, long rackSlot, BareMetalMachineReadyState? readyState, string serialNumber, string serviceTag, IReadOnlyList<string> virtualMachinesAssociatedIds, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal NetworkCloudBareMetalMachineData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, ExtendedLocation extendedLocation, IReadOnlyList<ResourceIdentifier> associatedResourceIds, string bmcConnectionString, AdministrativeCredentials bmcCredentials, string bmcMacAddress, string bootMacAddress, ResourceIdentifier clusterId, BareMetalMachineCordonStatus? cordonStatus, BareMetalMachineDetailedStatus? detailedStatus, string detailedStatusMessage, HardwareInventory hardwareInventory, HardwareValidationStatus hardwareValidationStatus, IReadOnlyList<string> hybridAksClustersAssociatedIds, string kubernetesNodeName, string kubernetesVersion, string machineClusterVersion, string machineDetails, string machineName, IReadOnlyList<string> machineRoles, string machineSkuId, IPAddress oamIPv4Address, string oamIPv6Address, string osImage, BareMetalMachinePowerState? powerState, BareMetalMachineProvisioningState? provisioningState, ResourceIdentifier rackId, long rackSlot, BareMetalMachineReadyState? readyState, RuntimeProtectionStatus runtimeProtectionStatus, IReadOnlyList<SecretRotationStatus> secretRotationStatus, string serialNumber, string serviceTag, IReadOnlyList<string> virtualMachinesAssociatedIds, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
+            ETag = etag;
             ExtendedLocation = extendedLocation;
             AssociatedResourceIds = associatedResourceIds;
             BmcConnectionString = bmcConnectionString;
@@ -149,8 +157,10 @@ namespace Azure.ResourceManager.NetworkCloud
             HybridAksClustersAssociatedIds = hybridAksClustersAssociatedIds;
             KubernetesNodeName = kubernetesNodeName;
             KubernetesVersion = kubernetesVersion;
+            MachineClusterVersion = machineClusterVersion;
             MachineDetails = machineDetails;
             MachineName = machineName;
+            MachineRoles = machineRoles;
             MachineSkuId = machineSkuId;
             OamIPv4Address = oamIPv4Address;
             OamIPv6Address = oamIPv6Address;
@@ -160,6 +170,8 @@ namespace Azure.ResourceManager.NetworkCloud
             RackId = rackId;
             RackSlot = rackSlot;
             ReadyState = readyState;
+            RuntimeProtectionStatus = runtimeProtectionStatus;
+            SecretRotationStatus = secretRotationStatus;
             SerialNumber = serialNumber;
             ServiceTag = serviceTag;
             VirtualMachinesAssociatedIds = virtualMachinesAssociatedIds;
@@ -171,6 +183,8 @@ namespace Azure.ResourceManager.NetworkCloud
         {
         }
 
+        /// <summary> Resource ETag. </summary>
+        public ETag? ETag { get; }
         /// <summary> The extended location of the cluster associated with the resource. </summary>
         public ExtendedLocation ExtendedLocation { get; set; }
         /// <summary> The list of resource IDs for the other Microsoft.NetworkCloud resources that have attached this network. </summary>
@@ -201,10 +215,14 @@ namespace Azure.ResourceManager.NetworkCloud
         public string KubernetesNodeName { get; }
         /// <summary> The version of Kubernetes running on this machine. </summary>
         public string KubernetesVersion { get; }
+        /// <summary> The cluster version that has been applied to this machine during deployment or a version update. </summary>
+        public string MachineClusterVersion { get; set; }
         /// <summary> The custom details provided by the customer. </summary>
         public string MachineDetails { get; set; }
         /// <summary> The OS-level hostname assigned to this machine. </summary>
         public string MachineName { get; set; }
+        /// <summary> The list of roles that are assigned to the cluster node running on this machine. </summary>
+        public IReadOnlyList<string> MachineRoles { get; }
         /// <summary> The unique internal identifier of the bare metal machine SKU. </summary>
         public string MachineSkuId { get; set; }
         /// <summary> The IPv4 address that is assigned to the bare metal machine during the cluster deployment. </summary>
@@ -223,6 +241,10 @@ namespace Azure.ResourceManager.NetworkCloud
         public long RackSlot { get; set; }
         /// <summary> The indicator of whether the bare metal machine is ready to receive workloads. </summary>
         public BareMetalMachineReadyState? ReadyState { get; }
+        /// <summary> The runtime protection status of the bare metal machine. </summary>
+        public RuntimeProtectionStatus RuntimeProtectionStatus { get; }
+        /// <summary> The list of statuses that represent secret rotation activity. </summary>
+        public IReadOnlyList<SecretRotationStatus> SecretRotationStatus { get; }
         /// <summary> The serial number of the bare metal machine. </summary>
         public string SerialNumber { get; set; }
         /// <summary> The discovered value of the machine's service tag. </summary>

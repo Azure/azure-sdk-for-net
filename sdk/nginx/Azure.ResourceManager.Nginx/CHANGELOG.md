@@ -1,6 +1,29 @@
 # Release History
 
-## 1.1.0 (2024-10-23)
+## 1.1.0-beta.4 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.1.0-beta.3 (2025-02-14)
+
+### Features Added
+
+- Upgraded api-version tag from 'package-2024-06-01-preview' to 'package-2024-11-01-preview'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/7a3f210cf6924c6139e2493f5fd0625919af1f32/specification/nginx/resource-manager/readme.md.
+    - Added Nginx Deployment API Key support.
+- Rename `AnalysisResultData` to `NginxAnalysisResultDetails`.
+- Removed location support from `NginxConfigurationData`.
+
+### Other Changes
+
+- Upgraded Azure.Core from 1.44.1 to 1.45.0
+
+## 1.1.0-beta.2 (2024-10-30)
 
 ### Features Added
 
@@ -65,4 +88,4 @@ This package follows the [new Azure SDK guidelines](https://azure.github.io/azur
 
 This package is a Public Preview version, so expect incompatible changes in subsequent releases as we improve the product. To provide feedback, submit an issue in our [Azure SDK for .NET GitHub repo](https://github.com/Azure/azure-sdk-for-net/issues).
 
-> NOTE: For more information about unified authentication, please refer to [Microsoft Azure Identity documentation for .NET](https://docs.microsoft.com//dotnet/api/overview/azure/identity-readme?view=azure-dotnet).
+> NOTE: For more information about unified authentication, please refer to [Microsoft Azure Identity documentation for .NET](https://learn.microsoft.com/dotnet/api/overview/azure/identity-readme?view=azure-dotnet).

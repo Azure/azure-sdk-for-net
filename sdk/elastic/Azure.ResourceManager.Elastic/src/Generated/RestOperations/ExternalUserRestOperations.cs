@@ -32,11 +32,11 @@ namespace Azure.ResourceManager.Elastic
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2024-06-15-preview";
+            _apiVersion = apiVersion ?? "2024-03-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string monitorName, ExternalUserContent content)
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string monitorName, ElasticExternalUserContent content)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Elastic
             return uri;
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string monitorName, ExternalUserContent content)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string monitorName, ElasticExternalUserContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Elastic
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="monitorName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ExternalUserCreationResponse>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string monitorName, ExternalUserContent content = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ElasticExternalUserCreationResult>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string monitorName, ElasticExternalUserContent content = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -99,9 +99,9 @@ namespace Azure.ResourceManager.Elastic
             {
                 case 200:
                     {
-                        ExternalUserCreationResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ExternalUserCreationResponse.DeserializeExternalUserCreationResponse(document.RootElement);
+                        ElasticExternalUserCreationResult value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
+                        value = ElasticExternalUserCreationResult.DeserializeElasticExternalUserCreationResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Elastic
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="monitorName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ExternalUserCreationResponse> CreateOrUpdate(string subscriptionId, string resourceGroupName, string monitorName, ExternalUserContent content = null, CancellationToken cancellationToken = default)
+        public Response<ElasticExternalUserCreationResult> CreateOrUpdate(string subscriptionId, string resourceGroupName, string monitorName, ElasticExternalUserContent content = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -129,9 +129,9 @@ namespace Azure.ResourceManager.Elastic
             {
                 case 200:
                     {
-                        ExternalUserCreationResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ExternalUserCreationResponse.DeserializeExternalUserCreationResponse(document.RootElement);
+                        ElasticExternalUserCreationResult value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
+                        value = ElasticExternalUserCreationResult.DeserializeElasticExternalUserCreationResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

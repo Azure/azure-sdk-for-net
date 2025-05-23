@@ -24,7 +24,6 @@ namespace Azure.Identity
     /// <item><description><see cref="ManagedIdentityCredential"/></description></item>
     /// <item><description><see cref="SharedTokenCacheCredential"/></description></item>
     /// <item><description><see cref="VisualStudioCredential"/></description></item>
-    /// <item><description><see cref="VisualStudioCodeCredential"/></description></item>
     /// <item><description><see cref="AzureCliCredential"/></description></item>
     /// <item><description><see cref="AzurePowerShellCredential"/></description></item>
     /// <item><description><see cref="AzureDeveloperCliCredential"/></description></item>
@@ -101,9 +100,9 @@ namespace Azure.Identity
         }
 
         /// <summary>
-        /// Sequentially calls <see cref="TokenCredential.GetToken"/> on all the included credentials, returning the first successfully
+        /// Sequentially calls <see cref="TokenCredential.GetToken(TokenRequestContext, CancellationToken)"/> on all the included credentials, returning the first successfully
         /// obtained <see cref="AccessToken"/>. Acquired tokens are <see href="https://aka.ms/azsdk/net/identity/token-cache">cached</see>
-        /// by the credential instance. Token lifetime and refreshing is handled automatically. Where possible, reuse credential instances
+        /// by the credential instance. Token lifetime and refreshing is handled automatically. Where possible, <see href="https://aka.ms/azsdk/net/identity/credential-reuse">reuse credential instances</see>
         /// to optimize cache effectiveness.
         /// </summary>
         /// <remarks>
@@ -119,9 +118,9 @@ namespace Azure.Identity
         }
 
         /// <summary>
-        /// Sequentially calls <see cref="TokenCredential.GetToken"/> on all the included credentials, returning the first successfully
+        /// Sequentially calls <see cref="TokenCredential.GetToken(TokenRequestContext, CancellationToken)"/> on all the included credentials, returning the first successfully
         /// obtained <see cref="AccessToken"/>. Acquired tokens are <see href="https://aka.ms/azsdk/net/identity/token-cache">cached</see>
-        /// by the credential instance. Token lifetime and refreshing is handled automatically. Where possible, reuse credential instances
+        /// by the credential instance. Token lifetime and refreshing is handled automatically. Where possible, <see href="https://aka.ms/azsdk/net/identity/credential-reuse">reuse credential instances</see>
         /// to optimize cache effectiveness.
         /// </summary>
         /// <remarks>

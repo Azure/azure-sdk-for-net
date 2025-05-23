@@ -19,27 +19,35 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 
         void IJsonModel<AcsMessageEventData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<AcsMessageEventData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AcsMessageEventData)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
-            if (Optional.IsDefined(From))
+            writer.WritePropertyName("from"u8);
+            writer.WriteStringValue(From);
+            writer.WritePropertyName("to"u8);
+            writer.WriteStringValue(To);
+            if (Optional.IsDefined(ReceivedTimestamp))
             {
-                writer.WritePropertyName("from"u8);
-                writer.WriteStringValue(From);
+                writer.WritePropertyName("receivedTimeStamp"u8);
+                writer.WriteStringValue(ReceivedTimestamp.Value, "O");
             }
-            if (Optional.IsDefined(To))
+            if (Optional.IsDefined(Error))
             {
-                writer.WritePropertyName("to"u8);
-                writer.WriteStringValue(To);
+                writer.WritePropertyName("error"u8);
+                writer.WriteObjectValue(Error, options);
             }
-            writer.WritePropertyName("receivedTimeStamp"u8);
-            writer.WriteStringValue(ReceivedTimestamp, "O");
-            writer.WritePropertyName("error"u8);
-            writer.WriteObjectValue(Error, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -48,14 +56,13 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         AcsMessageEventData IJsonModel<AcsMessageEventData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -80,7 +87,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
             string @from = default;
             string to = default;
-            DateTimeOffset receivedTimeStamp = default;
+            DateTimeOffset? receivedTimeStamp = default;
             AcsMessageChannelEventError error = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -98,11 +105,19 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 if (property.NameEquals("receivedTimeStamp"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     receivedTimeStamp = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("error"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     error = AcsMessageChannelEventError.DeserializeAcsMessageChannelEventError(property.Value, options);
                     continue;
                 }
@@ -122,7 +137,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureMessagingEventGridSystemEventsContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(AcsMessageEventData)} does not support writing '{options.Format}' format.");
             }
@@ -136,7 +151,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeAcsMessageEventData(document.RootElement, options);
                     }
                 default:
@@ -150,7 +165,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static AcsMessageEventData FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeAcsMessageEventData(document.RootElement);
         }
 

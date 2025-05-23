@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +23,14 @@ namespace Azure.ResourceManager.Nginx
 
         NginxCertificateResource IOperationSource<NginxCertificateResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = NginxCertificateData.DeserializeNginxCertificateData(document.RootElement);
+            var data = ModelReaderWriter.Read<NginxCertificateData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNginxContext.Default);
             return new NginxCertificateResource(_client, data);
         }
 
         async ValueTask<NginxCertificateResource> IOperationSource<NginxCertificateResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = NginxCertificateData.DeserializeNginxCertificateData(document.RootElement);
-            return new NginxCertificateResource(_client, data);
+            var data = ModelReaderWriter.Read<NginxCertificateData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNginxContext.Default);
+            return await Task.FromResult(new NginxCertificateResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

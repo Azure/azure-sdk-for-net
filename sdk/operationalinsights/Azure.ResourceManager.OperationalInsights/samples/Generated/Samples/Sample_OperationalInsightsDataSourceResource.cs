@@ -6,23 +6,22 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.OperationalInsights.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.OperationalInsights.Samples
 {
     public partial class Sample_OperationalInsightsDataSourceResource
     {
-        // DataSourcesCreate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Update_DataSourcesCreate()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Get_DataSourcesGet()
         {
-            // Generated from example definition: specification/operationalinsights/resource-manager/Microsoft.OperationalInsights/stable/2020-08-01/examples/DataSourcesCreate.json
-            // this example is just showing the usage of "DataSources_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/operationalinsights/resource-manager/Microsoft.OperationalInsights/stable/2025-02-01/examples/DataSourcesGet.json
+            // this example is just showing the usage of "DataSources_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -39,12 +38,7 @@ namespace Azure.ResourceManager.OperationalInsights.Samples
             OperationalInsightsDataSourceResource operationalInsightsDataSource = client.GetOperationalInsightsDataSourceResource(operationalInsightsDataSourceResourceId);
 
             // invoke the operation
-            OperationalInsightsDataSourceData data = new OperationalInsightsDataSourceData(BinaryData.FromObjectAsJson(new Dictionary<string, object>()
-            {
-                ["LinkedResourceId"] = "/subscriptions/00000000-0000-0000-0000-00000000000/providers/microsoft.insights/eventtypes/management"
-            }), OperationalInsightsDataSourceKind.AzureActivityLog);
-            ArmOperation<OperationalInsightsDataSourceResource> lro = await operationalInsightsDataSource.UpdateAsync(WaitUntil.Completed, data);
-            OperationalInsightsDataSourceResource result = lro.Value;
+            OperationalInsightsDataSourceResource result = await operationalInsightsDataSource.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -53,12 +47,11 @@ namespace Azure.ResourceManager.OperationalInsights.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // DataSourcesDelete
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_DataSourcesDelete()
         {
-            // Generated from example definition: specification/operationalinsights/resource-manager/Microsoft.OperationalInsights/stable/2020-08-01/examples/DataSourcesDelete.json
+            // Generated from example definition: specification/operationalinsights/resource-manager/Microsoft.OperationalInsights/stable/2025-02-01/examples/DataSourcesDelete.json
             // this example is just showing the usage of "DataSources_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -78,16 +71,15 @@ namespace Azure.ResourceManager.OperationalInsights.Samples
             // invoke the operation
             await operationalInsightsDataSource.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // DataSourcesGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Get_DataSourcesGet()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Update_DataSourcesCreate()
         {
-            // Generated from example definition: specification/operationalinsights/resource-manager/Microsoft.OperationalInsights/stable/2020-08-01/examples/DataSourcesGet.json
-            // this example is just showing the usage of "DataSources_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/operationalinsights/resource-manager/Microsoft.OperationalInsights/stable/2025-02-01/examples/DataSourcesCreate.json
+            // this example is just showing the usage of "DataSources_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -104,7 +96,12 @@ namespace Azure.ResourceManager.OperationalInsights.Samples
             OperationalInsightsDataSourceResource operationalInsightsDataSource = client.GetOperationalInsightsDataSourceResource(operationalInsightsDataSourceResourceId);
 
             // invoke the operation
-            OperationalInsightsDataSourceResource result = await operationalInsightsDataSource.GetAsync();
+            OperationalInsightsDataSourceData data = new OperationalInsightsDataSourceData(BinaryData.FromObjectAsJson(new
+            {
+                LinkedResourceId = "/subscriptions/00000000-0000-0000-0000-00000000000/providers/microsoft.insights/eventtypes/management",
+            }), OperationalInsightsDataSourceKind.AzureActivityLog);
+            ArmOperation<OperationalInsightsDataSourceResource> lro = await operationalInsightsDataSource.UpdateAsync(WaitUntil.Completed, data);
+            OperationalInsightsDataSourceResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance

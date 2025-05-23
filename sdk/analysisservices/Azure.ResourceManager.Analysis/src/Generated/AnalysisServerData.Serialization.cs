@@ -331,7 +331,7 @@ namespace Azure.ResourceManager.Analysis
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAnalysisContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(AnalysisServerData)} does not support writing '{options.Format}' format.");
             }
@@ -345,7 +345,7 @@ namespace Azure.ResourceManager.Analysis
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeAnalysisServerData(document.RootElement, options);
                     }
                 default:

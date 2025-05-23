@@ -10,17 +10,17 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Sql.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Sql.Samples
 {
     public partial class Sample_SqlServerBlobAuditingPolicyResource
     {
-        // Get a server's blob auditing policy
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAServerSBlobAuditingPolicy()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2021-11-01-preview/examples/ServerBlobAuditingGet.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-05-01-preview/examples/ServerBlobAuditingGet.json
             // this example is just showing the usage of "ServerBlobAuditingPolicies_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -47,12 +47,11 @@ namespace Azure.ResourceManager.Sql.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Update a server's blob auditing policy with all parameters
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateAServerSBlobAuditingPolicyWithAllParameters()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2021-11-01-preview/examples/ServerBlobAuditingCreateMax.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-05-01-preview/examples/ServerBlobAuditingCreateMax.json
             // this example is just showing the usage of "ServerBlobAuditingPolicies_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -70,13 +69,10 @@ namespace Azure.ResourceManager.Sql.Samples
             SqlServerBlobAuditingPolicyResource sqlServerBlobAuditingPolicy = client.GetSqlServerBlobAuditingPolicyResource(sqlServerBlobAuditingPolicyResourceId);
 
             // invoke the operation
-            SqlServerBlobAuditingPolicyData data = new SqlServerBlobAuditingPolicyData()
+            SqlServerBlobAuditingPolicyData data = new SqlServerBlobAuditingPolicyData
             {
                 RetentionDays = 6,
-                AuditActionsAndGroups =
-{
-"SUCCESSFUL_DATABASE_AUTHENTICATION_GROUP","FAILED_DATABASE_AUTHENTICATION_GROUP","BATCH_COMPLETED_GROUP"
-},
+                AuditActionsAndGroups = { "SUCCESSFUL_DATABASE_AUTHENTICATION_GROUP", "FAILED_DATABASE_AUTHENTICATION_GROUP", "BATCH_COMPLETED_GROUP" },
                 IsStorageSecondaryKeyInUse = false,
                 IsAzureMonitorTargetEnabled = true,
                 QueueDelayMs = 4000,
@@ -95,12 +91,11 @@ namespace Azure.ResourceManager.Sql.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Update a server's blob auditing policy with minimal parameters
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateAServerSBlobAuditingPolicyWithMinimalParameters()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2021-11-01-preview/examples/ServerBlobAuditingCreateMin.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-05-01-preview/examples/ServerBlobAuditingCreateMin.json
             // this example is just showing the usage of "ServerBlobAuditingPolicies_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -118,7 +113,7 @@ namespace Azure.ResourceManager.Sql.Samples
             SqlServerBlobAuditingPolicyResource sqlServerBlobAuditingPolicy = client.GetSqlServerBlobAuditingPolicyResource(sqlServerBlobAuditingPolicyResourceId);
 
             // invoke the operation
-            SqlServerBlobAuditingPolicyData data = new SqlServerBlobAuditingPolicyData()
+            SqlServerBlobAuditingPolicyData data = new SqlServerBlobAuditingPolicyData
             {
                 State = BlobAuditingPolicyState.Enabled,
                 StorageEndpoint = "https://mystorage.blob.core.windows.net",

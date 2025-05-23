@@ -26,13 +26,13 @@ namespace Azure.Health.Deidentification.Samples
             );
 
             #region Snippet:AzHealthDeidSample4Async_ListCompletedFiles
-            AsyncPageable<DocumentDetails> files = client.GetJobDocumentsAsync("job-name-1");
+            AsyncPageable<DeidentificationDocumentDetails> files = client.GetJobDocumentsAsync("job-name-1");
 
-            await foreach (DocumentDetails file in files)
+            await foreach (DeidentificationDocumentDetails file in files)
             {
-                Console.WriteLine($"File Name: {file.Input.Path}");
+                Console.WriteLine($"File Name: {file.InputLocation.Location}");
                 Console.WriteLine($"File Status: {file.Status}");
-                Console.WriteLine($"File Output Path: {file.Output.Path}");
+                Console.WriteLine($"File Output Path: {file.OutputLocation.Location}");
             }
             #endregion
         }

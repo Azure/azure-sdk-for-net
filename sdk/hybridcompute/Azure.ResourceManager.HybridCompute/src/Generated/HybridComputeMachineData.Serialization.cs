@@ -76,6 +76,21 @@ namespace Azure.ResourceManager.HybridCompute
                 writer.WritePropertyName("serviceStatuses"u8);
                 writer.WriteObjectValue(ServiceStatuses, options);
             }
+            if (options.Format != "W" && Optional.IsDefined(HardwareProfile))
+            {
+                writer.WritePropertyName("hardwareProfile"u8);
+                writer.WriteObjectValue(HardwareProfile, options);
+            }
+            if (options.Format != "W" && Optional.IsDefined(StorageProfile))
+            {
+                writer.WritePropertyName("storageProfile"u8);
+                writer.WriteObjectValue(StorageProfile, options);
+            }
+            if (options.Format != "W" && Optional.IsDefined(FirmwareProfile))
+            {
+                writer.WritePropertyName("firmwareProfile"u8);
+                writer.WriteObjectValue(FirmwareProfile, options);
+            }
             if (Optional.IsDefined(CloudMetadata))
             {
                 writer.WritePropertyName("cloudMetadata"u8);
@@ -267,6 +282,9 @@ namespace Azure.ResourceManager.HybridCompute
             HybridComputeLocation locationData = default;
             AgentConfiguration agentConfiguration = default;
             HybridComputeServiceStatuses serviceStatuses = default;
+            HybridComputeHardwareProfile hardwareProfile = default;
+            StorageProfile storageProfile = default;
+            HybridComputeFirmwareProfile firmwareProfile = default;
             HybridComputeCloudMetadata cloudMetadata = default;
             AgentUpgrade agentUpgrade = default;
             HybridComputeOSProfile osProfile = default;
@@ -408,6 +426,33 @@ namespace Azure.ResourceManager.HybridCompute
                                 continue;
                             }
                             serviceStatuses = HybridComputeServiceStatuses.DeserializeHybridComputeServiceStatuses(property0.Value, options);
+                            continue;
+                        }
+                        if (property0.NameEquals("hardwareProfile"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            hardwareProfile = HybridComputeHardwareProfile.DeserializeHybridComputeHardwareProfile(property0.Value, options);
+                            continue;
+                        }
+                        if (property0.NameEquals("storageProfile"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            storageProfile = StorageProfile.DeserializeStorageProfile(property0.Value, options);
+                            continue;
+                        }
+                        if (property0.NameEquals("firmwareProfile"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            firmwareProfile = HybridComputeFirmwareProfile.DeserializeHybridComputeFirmwareProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("cloudMetadata"u8))
@@ -643,6 +688,9 @@ namespace Azure.ResourceManager.HybridCompute
                 locationData,
                 agentConfiguration,
                 serviceStatuses,
+                hardwareProfile,
+                storageProfile,
+                firmwareProfile,
                 cloudMetadata,
                 agentUpgrade,
                 osProfile,
@@ -884,6 +932,56 @@ namespace Azure.ResourceManager.HybridCompute
                 {
                     builder.Append("    serviceStatuses: ");
                     BicepSerializationHelpers.AppendChildObject(builder, ServiceStatuses, options, 4, false, "    serviceStatuses: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(HardwareProfile), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    hardwareProfile: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(HardwareProfile))
+                {
+                    builder.Append("    hardwareProfile: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, HardwareProfile, options, 4, false, "    hardwareProfile: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("StorageDisks", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    storageProfile: ");
+                builder.AppendLine("{");
+                builder.AppendLine("      storageProfile: {");
+                builder.Append("        disks: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("      }");
+                builder.AppendLine("    }");
+            }
+            else
+            {
+                if (Optional.IsDefined(StorageProfile))
+                {
+                    builder.Append("    storageProfile: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, StorageProfile, options, 4, false, "    storageProfile: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FirmwareProfile), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    firmwareProfile: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(FirmwareProfile))
+                {
+                    builder.Append("    firmwareProfile: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, FirmwareProfile, options, 4, false, "    firmwareProfile: ");
                 }
             }
 
@@ -1480,7 +1578,7 @@ namespace Azure.ResourceManager.HybridCompute
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHybridComputeContext.Default);
                 case "bicep":
                     return SerializeBicep(options);
                 default:
@@ -1496,7 +1594,7 @@ namespace Azure.ResourceManager.HybridCompute
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeHybridComputeMachineData(document.RootElement, options);
                     }
                 default:

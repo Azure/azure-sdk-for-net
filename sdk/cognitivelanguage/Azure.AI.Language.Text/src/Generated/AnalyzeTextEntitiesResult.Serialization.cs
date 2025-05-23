@@ -59,7 +59,7 @@ namespace Azure.AI.Language.Text
             {
                 return null;
             }
-            EntitiesResult results = default;
+            EntitiesWithMetadataAutoResult results = default;
             AnalyzeTextResultsKind kind = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -67,7 +67,7 @@ namespace Azure.AI.Language.Text
             {
                 if (property.NameEquals("results"u8))
                 {
-                    results = EntitiesResult.DeserializeEntitiesResult(property.Value, options);
+                    results = EntitiesWithMetadataAutoResult.DeserializeEntitiesWithMetadataAutoResult(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("kind"u8))
@@ -91,7 +91,7 @@ namespace Azure.AI.Language.Text
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureAILanguageTextContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(AnalyzeTextEntitiesResult)} does not support writing '{options.Format}' format.");
             }
@@ -105,7 +105,7 @@ namespace Azure.AI.Language.Text
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeAnalyzeTextEntitiesResult(document.RootElement, options);
                     }
                 default:
@@ -119,7 +119,7 @@ namespace Azure.AI.Language.Text
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static new AnalyzeTextEntitiesResult FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeAnalyzeTextEntitiesResult(document.RootElement);
         }
 

@@ -132,6 +132,33 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
             verifyOperationContext(response);
         }
 
+        [TestCaseSource(nameof(TestData_TransferCallToParticipant_MicrosoftTeamsAppTarget))]
+        public async Task TransferCallToParticipantAsync_simpleMethod_MicrosoftTeamsAppAsTarget_202Accepted(CallInvite callInvite)
+        {
+            var callConnection = CreateMockCallConnection(202, OperationContextPayload);
+
+            var response = await callConnection.TransferCallToParticipantAsync(callInvite.Target).ConfigureAwait(false);
+            Assert.AreEqual((int)HttpStatusCode.Accepted, response.GetRawResponse().Status);
+            verifyOperationContext(response);
+        }
+
+        [TestCaseSource(nameof(TestData_TransferCallToParticipant_PhoneNumberIdentifier))]
+        public async Task TransferCallToParticipantAsync_simpleMethod_PhoneNumberIdentifier_202Accepted(CallInvite callInvite)
+        {
+            var callConnection = CreateMockCallConnection(202, OperationContextPayload);
+            var response = await callConnection.TransferCallToParticipantAsync(callInvite.Target).ConfigureAwait(false);
+            Assert.AreEqual((int)HttpStatusCode.Accepted, response.GetRawResponse().Status);
+            verifyOperationContext(response);
+        }
+
+        [TestCaseSource(nameof(TestData_TransferCallToParticipant_PhoneNumberIdentifier_MS))]
+        public async Task TransferCallToParticipantAsync_simpleMethod_PhoneNumberIdentifier_MSAsTarget_202Accepted(CallInvite callInvite)
+        {
+            var callConnection = CreateMockCallConnection(202, OperationContextPayload);
+            var response = await callConnection.TransferCallToParticipantAsync(callInvite.Target).ConfigureAwait(false);
+            Assert.AreEqual((int)HttpStatusCode.Accepted, response.GetRawResponse().Status);
+            verifyOperationContext(response);
+        }
         [TestCaseSource(nameof(TestData_TransferCallToParticipant))]
         public async Task TransferCallToParticipantAsync_202Accepted(CallInvite callInvite)
         {
@@ -186,6 +213,15 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
             verifyOperationContext(response);
         }
 
+        [TestCaseSource(nameof(TestData_TransferCallToParticipant_MicrosoftTeamsAppTarget_TeamsCallContext))]
+        public async Task TransferCallToParticipantAsync_simpleMethod_MicrosoftTeamsAppAsTarget_WithTeamsCallDetails_202Accepted(CallInvite callInvite)
+        {
+            var callConnection = CreateMockCallConnection(202, OperationContextPayload);
+
+            var response = await callConnection.TransferCallToParticipantAsync(callInvite.Target).ConfigureAwait(false);
+            Assert.AreEqual((int)HttpStatusCode.Accepted, response.GetRawResponse().Status);
+            verifyOperationContext(response);
+        }
         [TestCaseSource(nameof(TestData_TransferCallToParticipant))]
         public void TransferCallToParticipantAsync_404NotFound(CallInvite callInvite)
         {
@@ -546,6 +582,82 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
         {
             var callInvite = new CallInvite(new CommunicationUserIdentifier("userId"));
             callInvite.CustomCallingContext.AddVoip("key1", "value1");
+            return new[]
+            {
+                new object?[]
+                {
+                    callInvite
+                },
+            };
+        }
+
+        private static IEnumerable<object?[]> TestData_TransferCallToParticipant_MicrosoftTeamsAppTarget()
+        {
+            var callInvite = new CallInvite(new MicrosoftTeamsAppIdentifier("userId"));
+            callInvite.CustomCallingContext.AddVoip("key1", "value1");
+            return new[]
+            {
+                new object?[]
+                {
+                    callInvite
+                },
+            };
+        }
+
+        private static IEnumerable<object?[]> TestData_TransferCallToParticipant_MicrosoftTeamsAppTarget_TeamsCallContext()
+        {
+            var callInvite = new CallInvite(new MicrosoftTeamsAppIdentifier("teamsAppId123"));
+            callInvite.CustomCallingContext.AddVoip("teamsKey", "teamsValue");
+
+            // Create TeamsPhoneCallerDetails
+            var teamsPhoneCallerDetails = new TeamsPhoneCallerDetails((new MicrosoftTeamsAppIdentifier("teamsAppId123")), name: "John Doe", phoneNumber: "+14255551234");
+            teamsPhoneCallerDetails.AdditionalCallerInformation.Add("Department", "Sales");
+            teamsPhoneCallerDetails.AdditionalCallerInformation.Add("Priority", "High");
+
+            // Create TeamsPhoneSourceDetails
+            var teamsPhoneSourceDetails = new TeamsPhoneSourceDetails((new MicrosoftTeamsAppIdentifier("teamsAppId123")), language: "en-US", status: "Active");
+
+            // Create TeamsPhoneCallDetails
+            var teamsPhoneCallDetails = new TeamsPhoneCallDetails()
+            {
+                TeamsPhoneCallerDetails = teamsPhoneCallerDetails,
+                TeamsPhoneSourceDetails = teamsPhoneSourceDetails,
+                SessionId = "session-123-abc",
+                Intent = "Sales Inquiry",
+                CallTopic = "New Product Information",
+                CallContext = "Customer is interested in our latest product line",
+                TranscriptUrl = "https://transcripts.example.com/call/123",
+                CallSentiment = "Positive",
+                SuggestedActions = "Offer product demo, Schedule follow-up"
+            };
+
+            callInvite.CustomCallingContext.SetTeamsPhoneCallDetails(teamsPhoneCallDetails);
+
+            return new[]
+            {
+                new object?[]
+                {
+                    callInvite
+                },
+            };
+        }
+
+        private static IEnumerable<object?[]> TestData_TransferCallToParticipant_PhoneNumberIdentifier_MS()
+        {
+            var callInvite = new CallInvite(new PhoneNumberIdentifier(PhoneNumber), new PhoneNumberIdentifier("+17654321"));
+            callInvite.CustomCallingContext.AddSipX("key1", "value1", CustomCallingContext.SipHeaderPrefix.XMSCustom);
+            return new[]
+            {
+                new object?[]
+                {
+                    callInvite
+                },
+            };
+        }
+        private static IEnumerable<object?[]> TestData_TransferCallToParticipant_PhoneNumberIdentifier()
+        {
+            var callInvite = new CallInvite(new PhoneNumberIdentifier(PhoneNumber), new PhoneNumberIdentifier("+17654321"));
+            callInvite.CustomCallingContext.AddSipX("key1", "value1", CustomCallingContext.SipHeaderPrefix.X);
             return new[]
             {
                 new object?[]

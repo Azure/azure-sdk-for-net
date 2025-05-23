@@ -904,7 +904,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSecurityInsightsContext.Default);
                 case "bicep":
                     return SerializeBicep(options);
                 default:
@@ -920,7 +920,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeNrtAlertRuleTemplate(document.RootElement, options);
                     }
                 default:

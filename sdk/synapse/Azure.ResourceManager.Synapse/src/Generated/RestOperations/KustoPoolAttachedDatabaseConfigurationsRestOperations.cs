@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Synapse
                 case 200:
                     {
                         SynapseAttachedDatabaseConfigurationListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SynapseAttachedDatabaseConfigurationListResult.DeserializeSynapseAttachedDatabaseConfigurationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Synapse
                 case 200:
                     {
                         SynapseAttachedDatabaseConfigurationListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SynapseAttachedDatabaseConfigurationListResult.DeserializeSynapseAttachedDatabaseConfigurationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.Synapse
                 case 200:
                     {
                         SynapseAttachedDatabaseConfigurationData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SynapseAttachedDatabaseConfigurationData.DeserializeSynapseAttachedDatabaseConfigurationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.Synapse
                 case 200:
                     {
                         SynapseAttachedDatabaseConfigurationData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SynapseAttachedDatabaseConfigurationData.DeserializeSynapseAttachedDatabaseConfigurationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

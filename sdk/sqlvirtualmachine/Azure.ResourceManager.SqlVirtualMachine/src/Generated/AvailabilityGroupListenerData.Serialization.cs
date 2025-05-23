@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSqlVirtualMachineContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(AvailabilityGroupListenerData)} does not support writing '{options.Format}' format.");
             }
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeAvailabilityGroupListenerData(document.RootElement, options);
                     }
                 default:

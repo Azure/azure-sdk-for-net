@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.FrontDoor
                 case 200:
                     {
                         FrontendEndpointsListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = FrontendEndpointsListResult.DeserializeFrontendEndpointsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.FrontDoor
                 case 200:
                     {
                         FrontendEndpointsListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = FrontendEndpointsListResult.DeserializeFrontendEndpointsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.FrontDoor
                 case 200:
                     {
                         FrontendEndpointData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = FrontendEndpointData.DeserializeFrontendEndpointData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.FrontDoor
                 case 200:
                     {
                         FrontendEndpointData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = FrontendEndpointData.DeserializeFrontendEndpointData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -474,7 +474,7 @@ namespace Azure.ResourceManager.FrontDoor
                 case 200:
                     {
                         FrontendEndpointsListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = FrontendEndpointsListResult.DeserializeFrontendEndpointsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -505,7 +505,7 @@ namespace Azure.ResourceManager.FrontDoor
                 case 200:
                     {
                         FrontendEndpointsListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = FrontendEndpointsListResult.DeserializeFrontendEndpointsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Logic.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Swagger);
 #else
-                using (JsonDocument document = JsonDocument.Parse(Swagger))
+                using (JsonDocument document = JsonDocument.Parse(Swagger, ModelSerializationExtensions.JsonDocumentOptions))
                 {
                     JsonSerializer.Serialize(writer, document.RootElement);
                 }
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.Logic.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerLogicContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(LogicApiReference)} does not support writing '{options.Format}' format.");
             }
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeLogicApiReference(document.RootElement, options);
                     }
                 default:

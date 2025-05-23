@@ -19,78 +19,35 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 
         void IJsonModel<AcsChatMessageReceivedEventData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<AcsChatMessageReceivedEventData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AcsChatMessageReceivedEventData)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
-            if (Optional.IsDefined(MessageBody))
+            base.JsonModelWriteCore(writer, options);
+            writer.WritePropertyName("messageBody"u8);
+            writer.WriteStringValue(MessageBody);
+            if (Optional.IsCollectionDefined(Metadata))
             {
-                writer.WritePropertyName("messageBody"u8);
-                writer.WriteStringValue(MessageBody);
-            }
-            writer.WritePropertyName("metadata"u8);
-            writer.WriteStartObject();
-            foreach (var item in Metadata)
-            {
-                writer.WritePropertyName(item.Key);
-                writer.WriteStringValue(item.Value);
-            }
-            writer.WriteEndObject();
-            if (Optional.IsDefined(MessageId))
-            {
-                writer.WritePropertyName("messageId"u8);
-                writer.WriteStringValue(MessageId);
-            }
-            writer.WritePropertyName("senderCommunicationIdentifier"u8);
-            writer.WriteObjectValue(SenderCommunicationIdentifier, options);
-            if (Optional.IsDefined(SenderDisplayName))
-            {
-                writer.WritePropertyName("senderDisplayName"u8);
-                writer.WriteStringValue(SenderDisplayName);
-            }
-            writer.WritePropertyName("composeTime"u8);
-            writer.WriteStringValue(ComposeTime, "O");
-            if (Optional.IsDefined(Type))
-            {
-                writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type);
-            }
-            if (Optional.IsDefined(Version))
-            {
-                writer.WritePropertyName("version"u8);
-                writer.WriteNumberValue(Version.Value);
-            }
-            writer.WritePropertyName("recipientCommunicationIdentifier"u8);
-            writer.WriteObjectValue(RecipientCommunicationIdentifier, options);
-            if (Optional.IsDefined(TransactionId))
-            {
-                writer.WritePropertyName("transactionId"u8);
-                writer.WriteStringValue(TransactionId);
-            }
-            if (Optional.IsDefined(ThreadId))
-            {
-                writer.WritePropertyName("threadId"u8);
-                writer.WriteStringValue(ThreadId);
-            }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
+                writer.WritePropertyName("metadata"u8);
+                writer.WriteStartObject();
+                foreach (var item in Metadata)
                 {
                     writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
+                    writer.WriteStringValue(item.Value);
                 }
+                writer.WriteEndObject();
             }
-            writer.WriteEndObject();
         }
 
         AcsChatMessageReceivedEventData IJsonModel<AcsChatMessageReceivedEventData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -118,7 +75,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             string messageId = default;
             CommunicationIdentifierModel senderCommunicationIdentifier = default;
             string senderDisplayName = default;
-            DateTimeOffset composeTime = default;
+            DateTimeOffset? composeTime = default;
             string type = default;
             long? version = default;
             CommunicationIdentifierModel recipientCommunicationIdentifier = default;
@@ -135,6 +92,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 if (property.NameEquals("metadata"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
@@ -160,6 +121,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 if (property.NameEquals("composeTime"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     composeTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
@@ -210,7 +175,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 type,
                 version,
                 messageBody,
-                metadata);
+                metadata ?? new ChangeTrackingDictionary<string, string>());
         }
 
         BinaryData IPersistableModel<AcsChatMessageReceivedEventData>.Write(ModelReaderWriterOptions options)
@@ -220,7 +185,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureMessagingEventGridSystemEventsContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(AcsChatMessageReceivedEventData)} does not support writing '{options.Format}' format.");
             }
@@ -234,7 +199,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeAcsChatMessageReceivedEventData(document.RootElement, options);
                     }
                 default:
@@ -248,7 +213,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static new AcsChatMessageReceivedEventData FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeAcsChatMessageReceivedEventData(document.RootElement);
         }
 

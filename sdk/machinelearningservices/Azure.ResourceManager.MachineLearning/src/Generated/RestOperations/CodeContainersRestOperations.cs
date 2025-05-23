@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.MachineLearning
                 case 200:
                     {
                         CodeContainerResourceArmPaginatedResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CodeContainerResourceArmPaginatedResult.DeserializeCodeContainerResourceArmPaginatedResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.MachineLearning
                 case 200:
                     {
                         CodeContainerResourceArmPaginatedResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CodeContainerResourceArmPaginatedResult.DeserializeCodeContainerResourceArmPaginatedResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.MachineLearning
                 case 200:
                     {
                         MachineLearningCodeContainerData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MachineLearningCodeContainerData.DeserializeMachineLearningCodeContainerData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.MachineLearning
                 case 200:
                     {
                         MachineLearningCodeContainerData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MachineLearningCodeContainerData.DeserializeMachineLearningCodeContainerData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -403,7 +403,7 @@ namespace Azure.ResourceManager.MachineLearning
                 case 201:
                     {
                         MachineLearningCodeContainerData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MachineLearningCodeContainerData.DeserializeMachineLearningCodeContainerData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -437,7 +437,7 @@ namespace Azure.ResourceManager.MachineLearning
                 case 201:
                     {
                         MachineLearningCodeContainerData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MachineLearningCodeContainerData.DeserializeMachineLearningCodeContainerData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -491,7 +491,7 @@ namespace Azure.ResourceManager.MachineLearning
                 case 200:
                     {
                         CodeContainerResourceArmPaginatedResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CodeContainerResourceArmPaginatedResult.DeserializeCodeContainerResourceArmPaginatedResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -523,7 +523,7 @@ namespace Azure.ResourceManager.MachineLearning
                 case 200:
                     {
                         CodeContainerResourceArmPaginatedResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CodeContainerResourceArmPaginatedResult.DeserializeCodeContainerResourceArmPaginatedResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

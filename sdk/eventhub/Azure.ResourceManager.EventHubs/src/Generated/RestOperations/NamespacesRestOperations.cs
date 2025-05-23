@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.EventHubs
                 case 200:
                     {
                         EHNamespaceListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = EHNamespaceListResult.DeserializeEHNamespaceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.EventHubs
                 case 200:
                     {
                         EHNamespaceListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = EHNamespaceListResult.DeserializeEHNamespaceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.EventHubs
                 case 200:
                     {
                         EHNamespaceListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = EHNamespaceListResult.DeserializeEHNamespaceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.EventHubs
                 case 200:
                     {
                         EHNamespaceListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = EHNamespaceListResult.DeserializeEHNamespaceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -434,7 +434,7 @@ namespace Azure.ResourceManager.EventHubs
                 case 200:
                     {
                         EventHubsNamespaceData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = EventHubsNamespaceData.DeserializeEventHubsNamespaceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -465,7 +465,7 @@ namespace Azure.ResourceManager.EventHubs
                 case 200:
                     {
                         EventHubsNamespaceData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = EventHubsNamespaceData.DeserializeEventHubsNamespaceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -537,7 +537,7 @@ namespace Azure.ResourceManager.EventHubs
                 case 201:
                     {
                         EventHubsNamespaceData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = EventHubsNamespaceData.DeserializeEventHubsNamespaceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -571,7 +571,7 @@ namespace Azure.ResourceManager.EventHubs
                 case 201:
                     {
                         EventHubsNamespaceData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = EventHubsNamespaceData.DeserializeEventHubsNamespaceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -644,7 +644,7 @@ namespace Azure.ResourceManager.EventHubs
                 case 200:
                     {
                         EventHubsNetworkRuleSetData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = EventHubsNetworkRuleSetData.DeserializeEventHubsNetworkRuleSetData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -675,7 +675,7 @@ namespace Azure.ResourceManager.EventHubs
                 case 200:
                     {
                         EventHubsNetworkRuleSetData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = EventHubsNetworkRuleSetData.DeserializeEventHubsNetworkRuleSetData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -740,7 +740,7 @@ namespace Azure.ResourceManager.EventHubs
                 case 200:
                     {
                         EventHubsNetworkRuleSetData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = EventHubsNetworkRuleSetData.DeserializeEventHubsNetworkRuleSetData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -771,7 +771,7 @@ namespace Azure.ResourceManager.EventHubs
                 case 200:
                     {
                         EventHubsNetworkRuleSetData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = EventHubsNetworkRuleSetData.DeserializeEventHubsNetworkRuleSetData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -838,7 +838,7 @@ namespace Azure.ResourceManager.EventHubs
                 case 200:
                     {
                         NetworkRuleSetListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = NetworkRuleSetListResult.DeserializeNetworkRuleSetListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -867,7 +867,7 @@ namespace Azure.ResourceManager.EventHubs
                 case 200:
                     {
                         NetworkRuleSetListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = NetworkRuleSetListResult.DeserializeNetworkRuleSetListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -932,7 +932,7 @@ namespace Azure.ResourceManager.EventHubs
                 case 200:
                     {
                         AuthorizationRuleListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AuthorizationRuleListResult.DeserializeAuthorizationRuleListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -961,7 +961,7 @@ namespace Azure.ResourceManager.EventHubs
                 case 200:
                     {
                         AuthorizationRuleListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AuthorizationRuleListResult.DeserializeAuthorizationRuleListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1036,7 +1036,7 @@ namespace Azure.ResourceManager.EventHubs
                 case 200:
                     {
                         EventHubsAuthorizationRuleData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = EventHubsAuthorizationRuleData.DeserializeEventHubsAuthorizationRuleData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1069,7 +1069,7 @@ namespace Azure.ResourceManager.EventHubs
                 case 200:
                     {
                         EventHubsAuthorizationRuleData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = EventHubsAuthorizationRuleData.DeserializeEventHubsAuthorizationRuleData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1230,7 +1230,7 @@ namespace Azure.ResourceManager.EventHubs
                 case 200:
                     {
                         EventHubsAuthorizationRuleData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = EventHubsAuthorizationRuleData.DeserializeEventHubsAuthorizationRuleData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1263,7 +1263,7 @@ namespace Azure.ResourceManager.EventHubs
                 case 200:
                     {
                         EventHubsAuthorizationRuleData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = EventHubsAuthorizationRuleData.DeserializeEventHubsAuthorizationRuleData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1336,7 +1336,7 @@ namespace Azure.ResourceManager.EventHubs
                 case 200:
                     {
                         EventHubsAccessKeys value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = EventHubsAccessKeys.DeserializeEventHubsAccessKeys(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1367,7 +1367,7 @@ namespace Azure.ResourceManager.EventHubs
                 case 200:
                     {
                         EventHubsAccessKeys value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = EventHubsAccessKeys.DeserializeEventHubsAccessKeys(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1444,7 +1444,7 @@ namespace Azure.ResourceManager.EventHubs
                 case 200:
                     {
                         EventHubsAccessKeys value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = EventHubsAccessKeys.DeserializeEventHubsAccessKeys(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1477,7 +1477,7 @@ namespace Azure.ResourceManager.EventHubs
                 case 200:
                     {
                         EventHubsAccessKeys value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = EventHubsAccessKeys.DeserializeEventHubsAccessKeys(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1536,7 +1536,7 @@ namespace Azure.ResourceManager.EventHubs
                 case 200:
                     {
                         EventHubsNameAvailabilityResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = EventHubsNameAvailabilityResult.DeserializeEventHubsNameAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1563,7 +1563,7 @@ namespace Azure.ResourceManager.EventHubs
                 case 200:
                     {
                         EventHubsNameAvailabilityResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = EventHubsNameAvailabilityResult.DeserializeEventHubsNameAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1612,7 +1612,7 @@ namespace Azure.ResourceManager.EventHubs
                 case 200:
                     {
                         EHNamespaceListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = EHNamespaceListResult.DeserializeEHNamespaceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1639,7 +1639,7 @@ namespace Azure.ResourceManager.EventHubs
                 case 200:
                     {
                         EHNamespaceListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = EHNamespaceListResult.DeserializeEHNamespaceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1690,7 +1690,7 @@ namespace Azure.ResourceManager.EventHubs
                 case 200:
                     {
                         EHNamespaceListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = EHNamespaceListResult.DeserializeEHNamespaceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1719,7 +1719,7 @@ namespace Azure.ResourceManager.EventHubs
                 case 200:
                     {
                         EHNamespaceListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = EHNamespaceListResult.DeserializeEHNamespaceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1772,7 +1772,7 @@ namespace Azure.ResourceManager.EventHubs
                 case 200:
                     {
                         AuthorizationRuleListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AuthorizationRuleListResult.DeserializeAuthorizationRuleListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1803,7 +1803,7 @@ namespace Azure.ResourceManager.EventHubs
                 case 200:
                     {
                         AuthorizationRuleListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AuthorizationRuleListResult.DeserializeAuthorizationRuleListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

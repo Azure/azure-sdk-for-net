@@ -8,8 +8,8 @@ azure-arm: true
 csharp: true
 library-name: EventGrid
 namespace: Azure.ResourceManager.EventGrid
-require: https://github.com/Azure/azure-rest-api-specs/blob/82f2cbc667318659fff331022f47b616c01cd2e2/specification/eventgrid/resource-manager/readme.md
-#tag: package-2024-06-preview
+require: https://github.com/Azure/azure-rest-api-specs/blob/8a059231d92b10d87ffc3f18515516e84dae87cc/specification/eventgrid/resource-manager/readme.md
+#tag: package-2025-02
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -27,7 +27,6 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 use-model-reader-writer: true
-use-write-core: true
 enable-bicep-serialization: true
 
 #mgmt-debug: 

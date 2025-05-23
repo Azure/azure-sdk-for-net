@@ -9,14 +9,14 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.ContainerService.Samples
 {
     public partial class Sample_MeshUpgradeProfileResource
     {
-        // Gets version compatibility and upgrade profile for a service mesh in a cluster
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetsVersionCompatibilityAndUpgradeProfileForAServiceMeshInACluster()
         {
             // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2023-10-01/examples/ManagedClustersGet_MeshUpgradeProfile.json

@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +23,14 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
 
         MySqlFlexibleServerDatabaseResource IOperationSource<MySqlFlexibleServerDatabaseResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = MySqlFlexibleServerDatabaseData.DeserializeMySqlFlexibleServerDatabaseData(document.RootElement);
+            var data = ModelReaderWriter.Read<MySqlFlexibleServerDatabaseData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerMySqlContext.Default);
             return new MySqlFlexibleServerDatabaseResource(_client, data);
         }
 
         async ValueTask<MySqlFlexibleServerDatabaseResource> IOperationSource<MySqlFlexibleServerDatabaseResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = MySqlFlexibleServerDatabaseData.DeserializeMySqlFlexibleServerDatabaseData(document.RootElement);
-            return new MySqlFlexibleServerDatabaseResource(_client, data);
+            var data = ModelReaderWriter.Read<MySqlFlexibleServerDatabaseData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerMySqlContext.Default);
+            return await Task.FromResult(new MySqlFlexibleServerDatabaseResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

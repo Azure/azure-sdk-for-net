@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Text.Json;
+using Azure.Maps.Common;
 
 namespace Azure.Maps.Geolocation
 {
@@ -33,7 +34,7 @@ namespace Azure.Maps.Geolocation
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static CountryRegion FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeCountryRegion(document.RootElement);
         }
     }
