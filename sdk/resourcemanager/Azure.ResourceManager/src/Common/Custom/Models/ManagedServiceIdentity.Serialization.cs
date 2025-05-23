@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Models
             }
 
             writer.WriteStartObject();
-            ((IJsonModel<ManagedServiceIdentityType>)ManagedServiceIdentityType).Write(writer, options);
+            writer.WriteStringValue(ManagedServiceIdentityType.ToString());
             if (options.Format != "W" && Optional.IsDefined(PrincipalId))
             {
                 writer.WritePropertyName("principalId"u8);
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.Models
                 }
                 if (property.NameEquals("type"u8))
                 {
-                    type = JsonSerializer.Deserialize<ManagedServiceIdentityType>($"{{{property}}}", jsonContext.ManagedServiceIdentityType);
+                    type = new ManagedServiceIdentityType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("userAssignedIdentities"u8))
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.Models
                     Dictionary<ResourceIdentifier, UserAssignedIdentity> dictionary = new Dictionary<ResourceIdentifier, UserAssignedIdentity>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(new ResourceIdentifier(property0.Name), JsonSerializer.Deserialize<UserAssignedIdentity>(property0.Value.GetRawText(), ManagedServiceIdentityJsonContext.Default.UserAssignedIdentity));
+                        dictionary.Add(new ResourceIdentifier(property0.Name), UserAssignedIdentity.DeserializeUserAssignedIdentity(property0.Value, options));
                     }
                     userAssignedIdentities = dictionary;
                     continue;
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.Models
         {
             public override void Write(Utf8JsonWriter writer, ManagedServiceIdentity model, JsonSerializerOptions options)
             {
-                model.Write(writer, new ModelReaderWriterOptions("W"), options);
+                model.Write(writer, new ModelReaderWriterOptions("W"));
             }
             public override ManagedServiceIdentity Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
