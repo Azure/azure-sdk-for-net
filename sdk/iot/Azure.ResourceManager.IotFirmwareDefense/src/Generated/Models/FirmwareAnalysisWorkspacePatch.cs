@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.IotFirmwareDefense.Models
 {
-    /// <summary>
-    /// The type used for update operations of the Workspace.
-    /// Serialized Name: WorkspaceUpdate
-    /// </summary>
+    /// <summary> The type used for update operations of the Workspace. </summary>
     public partial class FirmwareAnalysisWorkspacePatch
     {
         /// <summary>
@@ -55,14 +52,8 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="FirmwareAnalysisWorkspacePatch"/>. </summary>
-        /// <param name="sku">
-        /// The SKU (Stock Keeping Unit) assigned to this resource.
-        /// Serialized Name: WorkspaceUpdate.sku
-        /// </param>
-        /// <param name="tags">
-        /// Resource tags.
-        /// Serialized Name: WorkspaceUpdate.tags
-        /// </param>
+        /// <param name="sku"> The SKU (Stock Keeping Unit) assigned to this resource. </param>
+        /// <param name="tags"> Resource tags. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal FirmwareAnalysisWorkspacePatch(IotFirmwareDefenseSkuUpdate sku, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -71,15 +62,9 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The SKU (Stock Keeping Unit) assigned to this resource.
-        /// Serialized Name: WorkspaceUpdate.sku
-        /// </summary>
+        /// <summary> The SKU (Stock Keeping Unit) assigned to this resource. </summary>
         public IotFirmwareDefenseSkuUpdate Sku { get; set; }
-        /// <summary>
-        /// Resource tags.
-        /// Serialized Name: WorkspaceUpdate.tags
-        /// </summary>
+        /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
     }
 }

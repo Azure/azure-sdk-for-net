@@ -11,10 +11,7 @@ using System.Linq;
 
 namespace Azure.ResourceManager.IotFirmwareDefense.Models
 {
-    /// <summary>
-    /// The response of a CveResource list operation.
-    /// Serialized Name: CveResourceListResult
-    /// </summary>
+    /// <summary> The response of a CveResource list operation. </summary>
     internal partial class CveResourceListResult
     {
         /// <summary>
@@ -50,10 +47,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="CveResourceListResult"/>. </summary>
-        /// <param name="value">
-        /// The CveResource items on this page
-        /// Serialized Name: CveResourceListResult.value
-        /// </param>
+        /// <param name="value"> The CveResource items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal CveResourceListResult(IEnumerable<CveResult> value)
         {
@@ -63,14 +57,8 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="CveResourceListResult"/>. </summary>
-        /// <param name="value">
-        /// The CveResource items on this page
-        /// Serialized Name: CveResourceListResult.value
-        /// </param>
-        /// <param name="nextLink">
-        /// The link to the next page of items
-        /// Serialized Name: CveResourceListResult.nextLink
-        /// </param>
+        /// <param name="value"> The CveResource items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal CveResourceListResult(IReadOnlyList<CveResult> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -84,15 +72,9 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         {
         }
 
-        /// <summary>
-        /// The CveResource items on this page
-        /// Serialized Name: CveResourceListResult.value
-        /// </summary>
+        /// <summary> The CveResource items on this page. </summary>
         public IReadOnlyList<CveResult> Value { get; }
-        /// <summary>
-        /// The link to the next page of items
-        /// Serialized Name: CveResourceListResult.nextLink
-        /// </summary>
+        /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }
     }
 }

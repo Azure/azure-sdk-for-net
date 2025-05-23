@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.IotFirmwareDefense.Models
 {
-    /// <summary>
-    /// Firmware definition
-    /// Serialized Name: FirmwareUpdateDefinition
-    /// </summary>
+    /// <summary> Firmware definition. </summary>
     public partial class IotFirmwarePatch
     {
         /// <summary>
@@ -55,42 +52,15 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="IotFirmwarePatch"/>. </summary>
-        /// <param name="fileName">
-        /// File name for a firmware that user uploaded.
-        /// Serialized Name: FirmwareUpdateDefinition.properties.fileName
-        /// </param>
-        /// <param name="vendor">
-        /// Firmware vendor.
-        /// Serialized Name: FirmwareUpdateDefinition.properties.vendor
-        /// </param>
-        /// <param name="model">
-        /// Firmware model.
-        /// Serialized Name: FirmwareUpdateDefinition.properties.model
-        /// </param>
-        /// <param name="version">
-        /// Firmware version.
-        /// Serialized Name: FirmwareUpdateDefinition.properties.version
-        /// </param>
-        /// <param name="description">
-        /// User-specified description of the firmware.
-        /// Serialized Name: FirmwareUpdateDefinition.properties.description
-        /// </param>
-        /// <param name="fileSize">
-        /// File size of the uploaded firmware image.
-        /// Serialized Name: FirmwareUpdateDefinition.properties.fileSize
-        /// </param>
-        /// <param name="status">
-        /// The status of firmware scan.
-        /// Serialized Name: FirmwareUpdateDefinition.properties.status
-        /// </param>
-        /// <param name="statusMessages">
-        /// A list of errors or other messages generated during firmware analysis
-        /// Serialized Name: FirmwareUpdateDefinition.properties.statusMessages
-        /// </param>
-        /// <param name="provisioningState">
-        /// Provisioning state of the resource.
-        /// Serialized Name: FirmwareUpdateDefinition.properties.provisioningState
-        /// </param>
+        /// <param name="fileName"> File name for a firmware that user uploaded. </param>
+        /// <param name="vendor"> Firmware vendor. </param>
+        /// <param name="model"> Firmware model. </param>
+        /// <param name="version"> Firmware version. </param>
+        /// <param name="description"> User-specified description of the firmware. </param>
+        /// <param name="fileSize"> File size of the uploaded firmware image. </param>
+        /// <param name="status"> The status of firmware scan. </param>
+        /// <param name="statusMessages"> A list of errors or other messages generated during firmware analysis. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal IotFirmwarePatch(string fileName, string vendor, string model, string version, string description, long? fileSize, FirmwareAnalysisStatus? status, IList<FirmwareAnalysisStatusMessage> statusMessages, FirmwareProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -106,50 +76,23 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// File name for a firmware that user uploaded.
-        /// Serialized Name: FirmwareUpdateDefinition.properties.fileName
-        /// </summary>
+        /// <summary> File name for a firmware that user uploaded. </summary>
         public string FileName { get; set; }
-        /// <summary>
-        /// Firmware vendor.
-        /// Serialized Name: FirmwareUpdateDefinition.properties.vendor
-        /// </summary>
+        /// <summary> Firmware vendor. </summary>
         public string Vendor { get; set; }
-        /// <summary>
-        /// Firmware model.
-        /// Serialized Name: FirmwareUpdateDefinition.properties.model
-        /// </summary>
+        /// <summary> Firmware model. </summary>
         public string Model { get; set; }
-        /// <summary>
-        /// Firmware version.
-        /// Serialized Name: FirmwareUpdateDefinition.properties.version
-        /// </summary>
+        /// <summary> Firmware version. </summary>
         public string Version { get; set; }
-        /// <summary>
-        /// User-specified description of the firmware.
-        /// Serialized Name: FirmwareUpdateDefinition.properties.description
-        /// </summary>
+        /// <summary> User-specified description of the firmware. </summary>
         public string Description { get; set; }
-        /// <summary>
-        /// File size of the uploaded firmware image.
-        /// Serialized Name: FirmwareUpdateDefinition.properties.fileSize
-        /// </summary>
+        /// <summary> File size of the uploaded firmware image. </summary>
         public long? FileSize { get; set; }
-        /// <summary>
-        /// The status of firmware scan.
-        /// Serialized Name: FirmwareUpdateDefinition.properties.status
-        /// </summary>
+        /// <summary> The status of firmware scan. </summary>
         public FirmwareAnalysisStatus? Status { get; set; }
-        /// <summary>
-        /// A list of errors or other messages generated during firmware analysis
-        /// Serialized Name: FirmwareUpdateDefinition.properties.statusMessages
-        /// </summary>
+        /// <summary> A list of errors or other messages generated during firmware analysis. </summary>
         public IList<FirmwareAnalysisStatusMessage> StatusMessages { get; }
-        /// <summary>
-        /// Provisioning state of the resource.
-        /// Serialized Name: FirmwareUpdateDefinition.properties.provisioningState
-        /// </summary>
+        /// <summary> Provisioning state of the resource. </summary>
         public FirmwareProvisioningState? ProvisioningState { get; }
     }
 }

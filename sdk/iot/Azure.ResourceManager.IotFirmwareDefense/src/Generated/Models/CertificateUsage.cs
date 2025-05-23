@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.IotFirmwareDefense.Models
 {
-    /// <summary>
-    /// Activities for which the cryptographic certificate can be used.
-    /// Serialized Name: CertificateUsage
-    /// </summary>
+    /// <summary> Activities for which the cryptographic certificate can be used. </summary>
     public readonly partial struct CertificateUsage : IEquatable<CertificateUsage>
     {
         private readonly string _value;
@@ -42,85 +39,37 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         private const string TimeStampingValue = "timeStamping";
         private const string OcspSigningValue = "ocspSigning";
 
-        /// <summary>
-        /// This certificate can be used to add a signature to a message
-        /// Serialized Name: CertificateUsage.digitalSignature
-        /// </summary>
+        /// <summary> This certificate can be used to add a signature to a message. </summary>
         public static CertificateUsage DigitalSignature { get; } = new CertificateUsage(DigitalSignatureValue);
-        /// <summary>
-        /// This certificates provides a non-repudiation service that protects against false denial of a message
-        /// Serialized Name: CertificateUsage.nonRepudiation
-        /// </summary>
+        /// <summary> This certificates provides a non-repudiation service that protects against false denial of a message. </summary>
         public static CertificateUsage NonRepudiation { get; } = new CertificateUsage(NonRepudiationValue);
-        /// <summary>
-        /// A synonym for NonRepudiation used in newer x509 certificates
-        /// Serialized Name: CertificateUsage.contentCommitment
-        /// </summary>
+        /// <summary> A synonym for NonRepudiation used in newer x509 certificates. </summary>
         public static CertificateUsage ContentCommitment { get; } = new CertificateUsage(ContentCommitmentValue);
-        /// <summary>
-        /// This certificate can be used to encrypt a private or secret key
-        /// Serialized Name: CertificateUsage.keyEncipherment
-        /// </summary>
+        /// <summary> This certificate can be used to encrypt a private or secret key. </summary>
         public static CertificateUsage KeyEncipherment { get; } = new CertificateUsage(KeyEnciphermentValue);
-        /// <summary>
-        /// This certificate can be used to decrypt a private or secret key
-        /// Serialized Name: CertificateUsage.dataEncipherment
-        /// </summary>
+        /// <summary> This certificate can be used to decrypt a private or secret key. </summary>
         public static CertificateUsage DataEncipherment { get; } = new CertificateUsage(DataEnciphermentValue);
-        /// <summary>
-        /// This certificate can be used to perform a key agreement, such as with a Diffie-Hellman key exchange
-        /// Serialized Name: CertificateUsage.keyAgreement
-        /// </summary>
+        /// <summary> This certificate can be used to perform a key agreement, such as with a Diffie-Hellman key exchange. </summary>
         public static CertificateUsage KeyAgreement { get; } = new CertificateUsage(KeyAgreementValue);
-        /// <summary>
-        /// This certificate can be used to verify a other public keys
-        /// Serialized Name: CertificateUsage.keyCertSign
-        /// </summary>
+        /// <summary> This certificate can be used to verify a other public keys. </summary>
         public static CertificateUsage KeyCertSign { get; } = new CertificateUsage(KeyCertSignValue);
-        /// <summary>
-        /// This certificate can be used to verify a certificate revocation list
-        /// Serialized Name: CertificateUsage.crlSign
-        /// </summary>
+        /// <summary> This certificate can be used to verify a certificate revocation list. </summary>
         public static CertificateUsage CRLSign { get; } = new CertificateUsage(CRLSignValue);
-        /// <summary>
-        /// This certificate can be only be used to encrypt data
-        /// Serialized Name: CertificateUsage.encipherOnly
-        /// </summary>
+        /// <summary> This certificate can be only be used to encrypt data. </summary>
         public static CertificateUsage EncipherOnly { get; } = new CertificateUsage(EncipherOnlyValue);
-        /// <summary>
-        /// This certificate can only be used to decrypt data
-        /// Serialized Name: CertificateUsage.decipherOnly
-        /// </summary>
+        /// <summary> This certificate can only be used to decrypt data. </summary>
         public static CertificateUsage DecipherOnly { get; } = new CertificateUsage(DecipherOnlyValue);
-        /// <summary>
-        /// This certificate can be used to authenticate a server in a TLS/SSL connection
-        /// Serialized Name: CertificateUsage.serverAuth
-        /// </summary>
+        /// <summary> This certificate can be used to authenticate a server in a TLS/SSL connection. </summary>
         public static CertificateUsage ServerAuthentication { get; } = new CertificateUsage(ServerAuthenticationValue);
-        /// <summary>
-        /// This certificate can be used to authenticate a client in a TLS/SSL connection
-        /// Serialized Name: CertificateUsage.clientAuth
-        /// </summary>
+        /// <summary> This certificate can be used to authenticate a client in a TLS/SSL connection. </summary>
         public static CertificateUsage ClientAuthentication { get; } = new CertificateUsage(ClientAuthenticationValue);
-        /// <summary>
-        /// This certificate can be used to authenticate a code object
-        /// Serialized Name: CertificateUsage.codeSigning
-        /// </summary>
+        /// <summary> This certificate can be used to authenticate a code object. </summary>
         public static CertificateUsage CodeSigning { get; } = new CertificateUsage(CodeSigningValue);
-        /// <summary>
-        /// This certificate can be used to authenticate an email address
-        /// Serialized Name: CertificateUsage.emailProtection
-        /// </summary>
+        /// <summary> This certificate can be used to authenticate an email address. </summary>
         public static CertificateUsage EmailProtection { get; } = new CertificateUsage(EmailProtectionValue);
-        /// <summary>
-        /// This certificate binds the hash of an object to a time
-        /// Serialized Name: CertificateUsage.timeStamping
-        /// </summary>
+        /// <summary> This certificate binds the hash of an object to a time. </summary>
         public static CertificateUsage TimeStamping { get; } = new CertificateUsage(TimeStampingValue);
-        /// <summary>
-        /// This certificate can be used to sign OCSP responses
-        /// Serialized Name: CertificateUsage.ocspSigning
-        /// </summary>
+        /// <summary> This certificate can be used to sign OCSP responses. </summary>
         public static CertificateUsage OcspSigning { get; } = new CertificateUsage(OcspSigningValue);
         /// <summary> Determines if two <see cref="CertificateUsage"/> values are the same. </summary>
         public static bool operator ==(CertificateUsage left, CertificateUsage right) => left.Equals(right);
