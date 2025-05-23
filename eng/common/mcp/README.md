@@ -22,7 +22,7 @@ The script will install the latest version of the azsdk cli executable from [too
 
 ## Authoring an MCP server
 
-Azure SDK MCP server code is in [azure-sdk-tools/tools/Azure.Sdk.Tools.Cli](https://github.com/Azure/azure-sdk-tools/tree/main/tools/azsdk-cli/Azure.Sdk.Tools.Cli).
+Azure SDK MCP server code is in [azure-sdk-tools/tools/azsdk-cli/Azure.Sdk.Tools.Cli](https://github.com/Azure/azure-sdk-tools/tree/main/tools/azsdk-cli/Azure.Sdk.Tools.Cli).
 
 Azure SDK MCP servers should support [stdio and sse transports](https://modelcontextprotocol.io/docs/concepts/transports#server-sent-events-sse).
 
