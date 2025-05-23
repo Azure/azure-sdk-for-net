@@ -7,7 +7,6 @@ using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using System;
 using System.ClientModel.Primitives;
-using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
@@ -53,7 +52,7 @@ namespace Azure.Generator.Management.Providers
             // void IJsonModel<T>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
             var writer = new ParameterProvider("writer", $"", typeof(Utf8JsonWriter));
             var jsonModelWriteMethod = new MethodProvider(
-                new MethodSignature(nameof(IJsonModel<object>.Write), null, MethodSignatureModifiers.None, null, null, new[] { writer, options }, ExplicitInterface: jsonModelInterface),
+                new MethodSignature(nameof(IJsonModel<object>.Write), null, MethodSignatureModifiers.None, null, null, [writer, options], ExplicitInterface: jsonModelInterface),
                 // => ((IJsonModel<T>)Data).Write(writer, options);
                 new MemberExpression(null, "Data").CastTo(jsonModelInterface).Invoke(nameof(IJsonModel<object>.Write), writer, options),
                 this);
@@ -61,28 +60,28 @@ namespace Azure.Generator.Management.Providers
             // T IJsonModel<T>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
             var reader = new ParameterProvider("reader", $"", typeof(Utf8JsonReader), isRef: true);
             var jsonModelCreatemethod = new MethodProvider(
-                new MethodSignature(nameof(IJsonModel<object>.Create), null, MethodSignatureModifiers.None, _resourceDataType, null, new[] { reader, options }, ExplicitInterface: jsonModelInterface),
+                new MethodSignature(nameof(IJsonModel<object>.Create), null, MethodSignatureModifiers.None, _resourceDataType, null, [reader, options], ExplicitInterface: jsonModelInterface),
                 // => ((IJsonModel<T>)DataDeserializationInstance).Create(reader, options);
                 new MemberExpression(null, "DataDeserializationInstance").CastTo(jsonModelInterface).Invoke(nameof(IJsonModel<object>.Create), reader, options),
                 this);
 
             // BinaryData IPersistableModel<T>.Write(ModelReaderWriterOptions options)
             var persistableWriteMethod = new MethodProvider(
-                new MethodSignature(nameof(IPersistableModel<object>.Write), null, MethodSignatureModifiers.None, typeof(BinaryData), null, new[] { options }, ExplicitInterface: iModelTInterface),
+                new MethodSignature(nameof(IPersistableModel<object>.Write), null, MethodSignatureModifiers.None, typeof(BinaryData), null, [options], ExplicitInterface: iModelTInterface),
                 // => ModelReaderWriter.Write<ResourceData>(Data, options);
-                Static(typeof(ModelReaderWriter)).Invoke("Write", [new MemberExpression(null, "Data"), options, ModelReaderWriterContextSnippets.Default], new List<CSharpType> { _resourceDataType }, false),
+                Static(typeof(ModelReaderWriter)).Invoke("Write", [new MemberExpression(null, "Data"), options, ModelReaderWriterContextSnippets.Default], [_resourceDataType], false),
                 this);
 
             // T IPersistableModel<T>.Create(BinaryData data, ModelReaderWriterOptions options)
             var persistableCreateMethod = new MethodProvider(
-                new MethodSignature(nameof(IPersistableModel<object>.Create), null, MethodSignatureModifiers.None, _resourceDataType, null, new[] { data, options }, ExplicitInterface: iModelTInterface),
+                new MethodSignature(nameof(IPersistableModel<object>.Create), null, MethodSignatureModifiers.None, _resourceDataType, null, [data, options], ExplicitInterface: iModelTInterface),
                 // => ModelReaderWriter.Read<ResourceData>(new BinaryData(reader.ValueSequence));
-                Static(typeof(ModelReaderWriter)).Invoke("Read", [data, options, ModelReaderWriterContextSnippets.Default], new List<CSharpType> { _resourceDataType }, false),
+                Static(typeof(ModelReaderWriter)).Invoke("Read", [data, options, ModelReaderWriterContextSnippets.Default], [_resourceDataType], false),
                 this);
 
             // ModelReaderWriterFormat IPersistableModel<T>.GetFormatFromOptions(ModelReaderWriterOptions options)
             var persistableGetFormatMethod = new MethodProvider(
-                new MethodSignature(nameof(IPersistableModel<object>.GetFormatFromOptions), null, MethodSignatureModifiers.None, typeof(string), null, new[] { options }, ExplicitInterface: iModelTInterface),
+                new MethodSignature(nameof(IPersistableModel<object>.GetFormatFromOptions), null, MethodSignatureModifiers.None, typeof(string), null, [options], ExplicitInterface: iModelTInterface),
                 // => DataDeserializationInstance.GetFormatFromOptions(options);
                 new MemberExpression(null, "DataDeserializationInstance").CastTo(iModelTInterface).Invoke(nameof(IPersistableModel<object>.GetFormatFromOptions), options),
                 this);
