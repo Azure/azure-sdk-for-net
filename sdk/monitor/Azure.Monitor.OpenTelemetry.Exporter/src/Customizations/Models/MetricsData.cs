@@ -24,6 +24,21 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             metricDataPoints.Add(metricDataPoint);
             Metrics = metricDataPoints;
             Properties = new ChangeTrackingDictionary<string, string>();
+            
+            // Add histogram bucket information to properties if available
+            if (metric.MetricType == MetricType.Histogram && 
+                metricDataPoint.BucketBoundaries != null && 
+                metricDataPoint.BucketCounts != null)
+            {
+                // Convert bucket boundaries and counts to comma-separated strings
+                string boundariesString = string.Join(",", metricDataPoint.BucketBoundaries);
+                string countsString = string.Join(",", metricDataPoint.BucketCounts);
+                
+                // Add to properties with special keys for Azure Monitor to recognize
+                Properties.Add("_MS.MetricId.BucketBoundaries", boundariesString);
+                Properties.Add("_MS.MetricId.BucketCounts", countsString);
+            }
+
             foreach (var tag in metricPoint.Tags)
             {
                 if (tag.Key.Length <= SchemaConstants.MetricsData_Properties_MaxKeyLength && tag.Value != null)

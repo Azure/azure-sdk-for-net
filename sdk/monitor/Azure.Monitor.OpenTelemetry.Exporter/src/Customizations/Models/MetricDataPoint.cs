@@ -9,6 +9,16 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
 {
     internal partial class MetricDataPoint
     {
+        /// <summary>
+        /// Array of histogram bucket boundaries used for aggregation
+        /// </summary>
+        public double[]? BucketBoundaries { get; set; }
+
+        /// <summary>
+        /// Array of histogram bucket counts used for aggregation
+        /// </summary>
+        public long[]? BucketCounts { get; set; }
+
         public MetricDataPoint(Metric metric, MetricPoint metricPoint)
         {
             if (StandardMetricsExtractionProcessor.s_standardMetricNameMapping.TryGetValue(metric.Name, out var metricName))
@@ -55,6 +65,17 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                     {
                         Min = min;
                         Max = max;
+                    }
+
+                    // Capture histogram bucket information for aggregation
+                    var bucketBoundaries = new List<double>();
+                    var bucketCounts = new List<long>();
+                    
+                    if (metricPoint.TryGetHistogramBuckets(out ReadOnlySpan<double> boundaries, out ReadOnlySpan<long> counts))
+                    {
+                        // Store bucket information in custom properties for proper aggregation
+                        BucketBoundaries = boundaries.ToArray();
+                        BucketCounts = counts.ToArray();
                     }
 
                     break;
