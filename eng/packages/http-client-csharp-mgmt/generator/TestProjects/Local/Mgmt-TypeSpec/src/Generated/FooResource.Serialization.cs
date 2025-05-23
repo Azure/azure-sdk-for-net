@@ -15,9 +15,9 @@ namespace MgmtTypeSpec
     /// <summary></summary>
     public partial class FooResource : IJsonModel<FooData>
     {
-        private static FooData s_dataDeserializationInstance;
+        private static IJsonModel<FooData> s_dataDeserializationInstance;
 
-        private static FooData DataDeserializationInstance => s_dataDeserializationInstance = new FooData();
+        private static IJsonModel<FooData> DataDeserializationInstance => s_dataDeserializationInstance ??= new FooData();
 
         /// <param name="writer"> The writer to serialize the model to. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -25,7 +25,7 @@ namespace MgmtTypeSpec
 
         /// <param name="reader"> The reader for deserializing the model. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        FooData IJsonModel<FooData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<FooData>)DataDeserializationInstance).Create(ref reader, options);
+        FooData IJsonModel<FooData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<FooData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<FooData>(Data, options, MgmtTypeSpecContext.Default);
@@ -35,6 +35,6 @@ namespace MgmtTypeSpec
         FooData IPersistableModel<FooData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<FooData>(data, options, MgmtTypeSpecContext.Default);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<FooData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<FooData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<FooData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }
