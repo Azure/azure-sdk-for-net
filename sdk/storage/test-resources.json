@@ -419,7 +419,7 @@
         },
         {
           "type": "Microsoft.Network/virtualNetworks",
-          "apiVersion": "2020-05-01",
+          "apiVersion": "2023-11-01",
           "name": "[concat(variables('vmName'), '-vnet')]",
           "location": "[variables('location')]",
           "properties": {
@@ -432,7 +432,8 @@
               {
                 "name": "default",
                 "properties": {
-                  "addressPrefix": "10.0.0.0/24"
+                  "addressPrefix": "10.0.0.0/24",
+                  "defaultoutboundaccess": false
                 }
               }
             ]
