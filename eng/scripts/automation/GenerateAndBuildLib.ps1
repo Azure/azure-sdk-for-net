@@ -720,10 +720,6 @@ function GeneratePackage()
     }
 
     if ($isGenerateSuccess) {
-        # update resourcemanager ci.mgmt.yml for mgmt sdk
-        if ($serviceType -eq "resource-manager") {
-            & $sdkRootPath/eng/scripts/Update-Mgmt-CI.ps1
-        }
         # Build project when successfully generated the code
         Write-Host "Start to build sdk project: $srcPath"
         dotnet build $srcPath /p:RunApiCompat=$false
