@@ -173,7 +173,7 @@ public partial class PartnerTopic : ProvisionableResource
     /// </param>
     /// <param name="resourceVersion">Version of the PartnerTopic.</param>
     public PartnerTopic(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.EventGrid/partnerTopics", resourceVersion ?? "2022-06-15")
+        : base(bicepIdentifier, "Microsoft.EventGrid/partnerTopics", resourceVersion ?? "2025-02-15")
     {
     }
 
@@ -203,6 +203,11 @@ public partial class PartnerTopic : ProvisionableResource
     /// </summary>
     public static class ResourceVersions
     {
+        /// <summary>
+        /// 2025-02-15.
+        /// </summary>
+        public static readonly string V2025_02_15 = "2025-02-15";
+
         /// <summary>
         /// 2022-06-15.
         /// </summary>

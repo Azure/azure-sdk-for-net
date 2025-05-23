@@ -108,7 +108,7 @@ public partial class NamespaceTopic : ProvisionableResource
     /// </param>
     /// <param name="resourceVersion">Version of the NamespaceTopic.</param>
     public NamespaceTopic(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.EventGrid/namespaces/topics", resourceVersion)
+        : base(bicepIdentifier, "Microsoft.EventGrid/namespaces/topics", resourceVersion ?? "2025-02-15")
     {
     }
 
@@ -125,6 +125,17 @@ public partial class NamespaceTopic : ProvisionableResource
         _provisioningState = DefineProperty<NamespaceTopicProvisioningState>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
         _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
         _parent = DefineResource<EventGridNamespace>("Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Supported NamespaceTopic resource versions.
+    /// </summary>
+    public static class ResourceVersions
+    {
+        /// <summary>
+        /// 2025-02-15.
+        /// </summary>
+        public static readonly string V2025_02_15 = "2025-02-15";
     }
 
     /// <summary>
