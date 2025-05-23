@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Agents.Persistent
 {
     /// <summary> A statically configured chunking strategy. </summary>
-    public partial class VectorStoreStaticChunkingStrategyRequest : VectorStoreChunkingStrategyRequest
+    public partial class VectorStoreStaticChunkingStrategyRequest : VectorStoreChunkingStrategy
     {
         /// <summary> Initializes a new instance of <see cref="VectorStoreStaticChunkingStrategyRequest"/>. </summary>
         /// <param name="static"> The options for the static chunking strategy. </param>

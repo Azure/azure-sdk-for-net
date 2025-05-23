@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.DesktopVirtualization
 {
     public partial class ScalingPlanPooledScheduleResource : IJsonModel<ScalingPlanPooledScheduleData>
     {
+        private static ScalingPlanPooledScheduleData s_dataDeserializationInstance;
+        private static ScalingPlanPooledScheduleData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<ScalingPlanPooledScheduleData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ScalingPlanPooledScheduleData>)Data).Write(writer, options);
 
-        ScalingPlanPooledScheduleData IJsonModel<ScalingPlanPooledScheduleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ScalingPlanPooledScheduleData>)Data).Create(ref reader, options);
+        ScalingPlanPooledScheduleData IJsonModel<ScalingPlanPooledScheduleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ScalingPlanPooledScheduleData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<ScalingPlanPooledScheduleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ScalingPlanPooledScheduleData>(Data, options, AzureResourceManagerDesktopVirtualizationContext.Default);
 
         ScalingPlanPooledScheduleData IPersistableModel<ScalingPlanPooledScheduleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ScalingPlanPooledScheduleData>(data, options, AzureResourceManagerDesktopVirtualizationContext.Default);
 
-        string IPersistableModel<ScalingPlanPooledScheduleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ScalingPlanPooledScheduleData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<ScalingPlanPooledScheduleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ScalingPlanPooledScheduleData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

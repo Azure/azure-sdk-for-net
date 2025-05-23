@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Reservations
 {
     public partial class ReservationDetailResource : IJsonModel<ReservationDetailData>
     {
+        private static ReservationDetailData s_dataDeserializationInstance;
+        private static ReservationDetailData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<ReservationDetailData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ReservationDetailData>)Data).Write(writer, options);
 
-        ReservationDetailData IJsonModel<ReservationDetailData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ReservationDetailData>)Data).Create(ref reader, options);
+        ReservationDetailData IJsonModel<ReservationDetailData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ReservationDetailData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<ReservationDetailData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ReservationDetailData>(Data, options, AzureResourceManagerReservationsContext.Default);
 
         ReservationDetailData IPersistableModel<ReservationDetailData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ReservationDetailData>(data, options, AzureResourceManagerReservationsContext.Default);
 
-        string IPersistableModel<ReservationDetailData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ReservationDetailData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<ReservationDetailData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ReservationDetailData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

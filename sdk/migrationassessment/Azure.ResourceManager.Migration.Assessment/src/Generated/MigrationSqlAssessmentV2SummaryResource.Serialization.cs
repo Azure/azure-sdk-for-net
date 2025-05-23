@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Migration.Assessment
 {
     public partial class MigrationSqlAssessmentV2SummaryResource : IJsonModel<MigrationSqlAssessmentV2SummaryData>
     {
+        private static MigrationSqlAssessmentV2SummaryData s_dataDeserializationInstance;
+        private static MigrationSqlAssessmentV2SummaryData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<MigrationSqlAssessmentV2SummaryData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<MigrationSqlAssessmentV2SummaryData>)Data).Write(writer, options);
 
-        MigrationSqlAssessmentV2SummaryData IJsonModel<MigrationSqlAssessmentV2SummaryData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MigrationSqlAssessmentV2SummaryData>)Data).Create(ref reader, options);
+        MigrationSqlAssessmentV2SummaryData IJsonModel<MigrationSqlAssessmentV2SummaryData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MigrationSqlAssessmentV2SummaryData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<MigrationSqlAssessmentV2SummaryData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<MigrationSqlAssessmentV2SummaryData>(Data, options, AzureResourceManagerMigrationAssessmentContext.Default);
 
         MigrationSqlAssessmentV2SummaryData IPersistableModel<MigrationSqlAssessmentV2SummaryData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MigrationSqlAssessmentV2SummaryData>(data, options, AzureResourceManagerMigrationAssessmentContext.Default);
 
-        string IPersistableModel<MigrationSqlAssessmentV2SummaryData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MigrationSqlAssessmentV2SummaryData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<MigrationSqlAssessmentV2SummaryData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MigrationSqlAssessmentV2SummaryData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

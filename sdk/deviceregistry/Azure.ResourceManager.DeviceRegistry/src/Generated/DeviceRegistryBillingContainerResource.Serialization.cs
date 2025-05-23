@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.DeviceRegistry
 {
     public partial class DeviceRegistryBillingContainerResource : IJsonModel<DeviceRegistryBillingContainerData>
     {
+        private static DeviceRegistryBillingContainerData s_dataDeserializationInstance;
+        private static DeviceRegistryBillingContainerData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<DeviceRegistryBillingContainerData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DeviceRegistryBillingContainerData>)Data).Write(writer, options);
 
-        DeviceRegistryBillingContainerData IJsonModel<DeviceRegistryBillingContainerData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DeviceRegistryBillingContainerData>)Data).Create(ref reader, options);
+        DeviceRegistryBillingContainerData IJsonModel<DeviceRegistryBillingContainerData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DeviceRegistryBillingContainerData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<DeviceRegistryBillingContainerData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DeviceRegistryBillingContainerData>(Data, options, AzureResourceManagerDeviceRegistryContext.Default);
 
         DeviceRegistryBillingContainerData IPersistableModel<DeviceRegistryBillingContainerData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DeviceRegistryBillingContainerData>(data, options, AzureResourceManagerDeviceRegistryContext.Default);
 
-        string IPersistableModel<DeviceRegistryBillingContainerData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DeviceRegistryBillingContainerData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<DeviceRegistryBillingContainerData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DeviceRegistryBillingContainerData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

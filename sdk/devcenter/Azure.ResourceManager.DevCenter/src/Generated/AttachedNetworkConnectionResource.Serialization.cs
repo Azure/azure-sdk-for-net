@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.DevCenter
 {
     public partial class AttachedNetworkConnectionResource : IJsonModel<AttachedNetworkConnectionData>
     {
+        private static AttachedNetworkConnectionData s_dataDeserializationInstance;
+        private static AttachedNetworkConnectionData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<AttachedNetworkConnectionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<AttachedNetworkConnectionData>)Data).Write(writer, options);
 
-        AttachedNetworkConnectionData IJsonModel<AttachedNetworkConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AttachedNetworkConnectionData>)Data).Create(ref reader, options);
+        AttachedNetworkConnectionData IJsonModel<AttachedNetworkConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AttachedNetworkConnectionData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<AttachedNetworkConnectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AttachedNetworkConnectionData>(Data, options, AzureResourceManagerDevCenterContext.Default);
 
         AttachedNetworkConnectionData IPersistableModel<AttachedNetworkConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AttachedNetworkConnectionData>(data, options, AzureResourceManagerDevCenterContext.Default);
 
-        string IPersistableModel<AttachedNetworkConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AttachedNetworkConnectionData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<AttachedNetworkConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AttachedNetworkConnectionData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

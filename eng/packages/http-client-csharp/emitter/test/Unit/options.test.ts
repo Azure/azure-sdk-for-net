@@ -1,5 +1,5 @@
 import { Program } from "@typespec/compiler";
-import { beforeEach, describe, it } from "vitest";
+import { beforeEach, describe, it, vi } from "vitest";
 import {
   createEmitterContext,
   createEmitterTestHost,
@@ -19,6 +19,15 @@ describe("Configuration tests", async () => {
           `,
       runner
     );
+    vi.mock("@typespec/http-client-csharp", async (importOriginal) => {
+      const actual = await importOriginal<typeof import("@typespec/http-client-csharp")>();
+      return {
+        ...actual,
+        $onEmit: async () => {
+          // do nothing
+        }
+      };
+    })
   });
 
   it("Diagnostic is logged when model-namespace is set without namespace", async () => {
@@ -47,4 +56,32 @@ describe("Configuration tests", async () => {
     $onEmit(context);
     strictEqual(program.diagnostics.length, 0);
   });
+  it("package-name defaults to namespace", async () => {
+    const options: AzureEmitterOptions = {
+      "namespace": "Test.Namespace"
+    };
+    const context = createEmitterContext(program, options);
+    $onEmit(context);
+    strictEqual(program.diagnostics.length, 0);
+    strictEqual(context.options.namespace, "Test.Namespace");
+    strictEqual(context.options["package-name"], "Test.Namespace");
+  });
+  it("package-name undefined if namespace and package-name not set", async () => {
+    const context = createEmitterContext(program);
+    $onEmit(context);
+    strictEqual(program.diagnostics.length, 0);
+    strictEqual(context.options["package-name"], undefined);
+  });
+  it("package-name value used if set", async () => {
+    const options: AzureEmitterOptions = {
+      "namespace": "Test.Namespace",
+      "package-name": "Test.Package"
+    };
+    const context = createEmitterContext(program, options);
+    $onEmit(context);
+    strictEqual(program.diagnostics.length, 0);
+    strictEqual(context.options.namespace, "Test.Namespace");
+    strictEqual(context.options["package-name"], "Test.Package");
+  });
 });
+

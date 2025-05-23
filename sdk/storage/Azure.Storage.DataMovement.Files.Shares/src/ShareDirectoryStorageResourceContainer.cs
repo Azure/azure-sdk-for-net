@@ -25,6 +25,8 @@ namespace Azure.Storage.DataMovement.Files.Shares
 
         public override string ProviderId => "share";
 
+        internal bool _isResourcePropertiesFullySet = false;
+
         internal ShareDirectoryStorageResourceContainer(ShareDirectoryClient shareDirectoryClient, ShareFileStorageResourceOptions options)
         {
             ShareDirectoryClient = shareDirectoryClient;
@@ -65,8 +67,9 @@ namespace Azure.Storage.DataMovement.Files.Shares
                 ShareDirectoryStorageResourceContainer destinationStorageResourceContainer
                     = destinationContainer as ShareDirectoryStorageResourceContainer;
                 ShareFileStorageResourceOptions destinationOptions = destinationStorageResourceContainer.ResourceOptions;
-                // destination must be SMB
-                if ((!destinationOptions?.IsNfs ?? true))
+                // both source and destination must be SMB
+                if (((ResourceOptions?.ShareProtocol ?? ShareProtocols.Smb) == ShareProtocols.Smb)
+                    && ((destinationOptions?.ShareProtocol ?? ShareProtocols.Smb) == ShareProtocols.Smb))
                 {
                     traits = ShareFileTraits.Attributes;
                     if (destinationOptions?.FilePermissions ?? false)
@@ -141,6 +144,11 @@ namespace Azure.Storage.DataMovement.Files.Shares
         protected override async Task<StorageResourceContainerProperties> GetPropertiesAsync(CancellationToken cancellationToken = default)
         {
             CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
+
+            if (_isResourcePropertiesFullySet)
+            {
+                return ResourceProperties;
+            }
             Response<ShareDirectoryProperties> response = await ShareDirectoryClient.GetPropertiesAsync(
                 cancellationToken: cancellationToken).ConfigureAwait(false);
             if (ResourceProperties != default)
@@ -151,7 +159,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
             {
                 ResourceProperties = response.Value.ToStorageResourceContainerProperties();
             }
-            ResourceProperties.Uri = Uri;
+            _isResourcePropertiesFullySet = true;
             return ResourceProperties;
         }
 
@@ -175,6 +183,43 @@ namespace Azure.Storage.DataMovement.Files.Shares
             await ShareDirectoryClient.CreateIfNotExistsAsync(
                 options: options,
                 cancellationToken: cancellationToken).ConfigureAwait(false);
+        }
+
+        protected override async Task ValidateTransferAsync(
+            string transferId,
+            StorageResource sourceResource,
+            CancellationToken cancellationToken = default)
+        {
+            CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
+
+            // ShareDirectory to ShareDirectory Copy transfer
+            if (sourceResource is ShareDirectoryStorageResourceContainer sourceShareDirectoryResource)
+            {
+                // Ensure the transfer is supported (NFS -> NFS and SMB -> SMB)
+                if ((ResourceOptions?.ShareProtocol ?? ShareProtocols.Smb)
+                    != (sourceShareDirectoryResource.ResourceOptions?.ShareProtocol ?? ShareProtocols.Smb))
+                {
+                    throw Errors.ShareTransferNotSupported();
+                }
+
+                // Validate the source protocol
+                await DataMovementSharesExtensions.ValidateProtocolAsync(
+                    sourceShareDirectoryResource.ShareDirectoryClient.GetParentShareClient(),
+                    sourceShareDirectoryResource.ResourceOptions,
+                    transferId,
+                    "source",
+                    sourceResource.Uri.AbsoluteUri,
+                    cancellationToken).ConfigureAwait(false);
+
+                // Validate the destination protocol
+                await DataMovementSharesExtensions.ValidateProtocolAsync(
+                    ShareDirectoryClient.GetParentShareClient(),
+                    ResourceOptions,
+                    transferId,
+                    "destination",
+                    Uri.AbsoluteUri,
+                    cancellationToken).ConfigureAwait(false);
+            }
         }
     }
 }

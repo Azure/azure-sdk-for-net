@@ -12,7 +12,7 @@ namespace System.ClientModel.Primitives;
 /// to set a value on a <see cref="PipelineRequest"/> to authenticate with the
 /// cloud service.
 /// </summary>
-public class ApiKeyAuthenticationPolicy : PipelinePolicy
+public class ApiKeyAuthenticationPolicy : AuthenticationPolicy
 {
     private readonly string _name;
     private readonly string? _keyPrefix;

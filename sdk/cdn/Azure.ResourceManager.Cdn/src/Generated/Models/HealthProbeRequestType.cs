@@ -7,14 +7,26 @@
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> The type of health probe request that is made. </summary>
+    /// <summary>
+    /// The type of health probe request that is made.
+    /// Serialized Name: HealthProbeRequestType
+    /// </summary>
     public enum HealthProbeRequestType
     {
-        /// <summary> NotSet. </summary>
+        /// <summary>
+        /// NotSet
+        /// Serialized Name: HealthProbeRequestType.NotSet
+        /// </summary>
         NotSet,
-        /// <summary> GET. </summary>
+        /// <summary>
+        /// GET
+        /// Serialized Name: HealthProbeRequestType.GET
+        /// </summary>
         Get,
-        /// <summary> HEAD. </summary>
+        /// <summary>
+        /// HEAD
+        /// Serialized Name: HealthProbeRequestType.HEAD
+        /// </summary>
         Head
     }
 }

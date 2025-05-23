@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Automation
 {
     public partial class DscNodeConfigurationResource : IJsonModel<DscNodeConfigurationData>
     {
+        private static DscNodeConfigurationData s_dataDeserializationInstance;
+        private static DscNodeConfigurationData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<DscNodeConfigurationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DscNodeConfigurationData>)Data).Write(writer, options);
 
-        DscNodeConfigurationData IJsonModel<DscNodeConfigurationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DscNodeConfigurationData>)Data).Create(ref reader, options);
+        DscNodeConfigurationData IJsonModel<DscNodeConfigurationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DscNodeConfigurationData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<DscNodeConfigurationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DscNodeConfigurationData>(Data, options, AzureResourceManagerAutomationContext.Default);
 
         DscNodeConfigurationData IPersistableModel<DscNodeConfigurationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DscNodeConfigurationData>(data, options, AzureResourceManagerAutomationContext.Default);
 
-        string IPersistableModel<DscNodeConfigurationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DscNodeConfigurationData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<DscNodeConfigurationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DscNodeConfigurationData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

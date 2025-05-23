@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Kusto
 {
     public partial class KustoDatabasePrincipalAssignmentResource : IJsonModel<KustoDatabasePrincipalAssignmentData>
     {
+        private static KustoDatabasePrincipalAssignmentData s_dataDeserializationInstance;
+        private static KustoDatabasePrincipalAssignmentData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<KustoDatabasePrincipalAssignmentData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<KustoDatabasePrincipalAssignmentData>)Data).Write(writer, options);
 
-        KustoDatabasePrincipalAssignmentData IJsonModel<KustoDatabasePrincipalAssignmentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<KustoDatabasePrincipalAssignmentData>)Data).Create(ref reader, options);
+        KustoDatabasePrincipalAssignmentData IJsonModel<KustoDatabasePrincipalAssignmentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<KustoDatabasePrincipalAssignmentData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<KustoDatabasePrincipalAssignmentData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<KustoDatabasePrincipalAssignmentData>(Data, options, AzureResourceManagerKustoContext.Default);
 
         KustoDatabasePrincipalAssignmentData IPersistableModel<KustoDatabasePrincipalAssignmentData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<KustoDatabasePrincipalAssignmentData>(data, options, AzureResourceManagerKustoContext.Default);
 
-        string IPersistableModel<KustoDatabasePrincipalAssignmentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<KustoDatabasePrincipalAssignmentData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<KustoDatabasePrincipalAssignmentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<KustoDatabasePrincipalAssignmentData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

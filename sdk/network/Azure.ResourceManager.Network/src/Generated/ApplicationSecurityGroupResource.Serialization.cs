@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Network
 {
     public partial class ApplicationSecurityGroupResource : IJsonModel<ApplicationSecurityGroupData>
     {
+        private static ApplicationSecurityGroupData s_dataDeserializationInstance;
+        private static ApplicationSecurityGroupData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<ApplicationSecurityGroupData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ApplicationSecurityGroupData>)Data).Write(writer, options);
 
-        ApplicationSecurityGroupData IJsonModel<ApplicationSecurityGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ApplicationSecurityGroupData>)Data).Create(ref reader, options);
+        ApplicationSecurityGroupData IJsonModel<ApplicationSecurityGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ApplicationSecurityGroupData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<ApplicationSecurityGroupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ApplicationSecurityGroupData>(Data, options, AzureResourceManagerNetworkContext.Default);
 
         ApplicationSecurityGroupData IPersistableModel<ApplicationSecurityGroupData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ApplicationSecurityGroupData>(data, options, AzureResourceManagerNetworkContext.Default);
 
-        string IPersistableModel<ApplicationSecurityGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ApplicationSecurityGroupData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<ApplicationSecurityGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ApplicationSecurityGroupData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }
