@@ -439,7 +439,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallRecordings
                     Assert.IsNotEmpty(response.CallConnectionProperties.CallConnectionId);
 
                     // wait for incomingcall context
-                    string? incomingCallContext = await WaitForIncomingCallContext(uniqueId, TimeSpan.FromSeconds(12));
+                    string? incomingCallContext = await WaitForIncomingCallContext(uniqueId, TimeSpan.FromSeconds(20));
                     Assert.IsNotNull(incomingCallContext);
 
                     // answer the call
@@ -448,7 +448,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallRecordings
                     Assert.AreEqual(answerResponse.GetRawResponse().Status, StatusCodes.Status200OK);
 
                     // wait for callConnected
-                    var connectedEvent = await WaitForEvent<CallConnected>(callConnectionId, TimeSpan.FromSeconds(12));
+                    var connectedEvent = await WaitForEvent<CallConnected>(callConnectionId, TimeSpan.FromSeconds(20));
                     Assert.IsNotNull(connectedEvent);
                     Assert.IsTrue(connectedEvent is CallConnected);
                     Assert.IsTrue(((CallConnected)connectedEvent!).CallConnectionId == callConnectionId);
@@ -477,13 +477,13 @@ namespace Azure.Communication.CallAutomation.Tests.CallRecordings
                     Assert.NotNull(playResponse);
                     Assert.AreEqual(202, playResponse.GetRawResponse().Status);
 
-                    await Task.Delay(TimeSpan.FromSeconds(4)).ConfigureAwait(false);
+                    await Task.Delay(TimeSpan.FromSeconds(5)).ConfigureAwait(false);
 
                     // try stop recording
                     var stopRecordingResponse = await client.GetCallRecording().StopAsync(startRecordingResponse.Value.RecordingId);
                     Assert.AreEqual(StatusCodes.Status204NoContent, stopRecordingResponse.Status);
 
-                    await Task.Delay(TimeSpan.FromSeconds(4)).ConfigureAwait(false);
+                    await Task.Delay(TimeSpan.FromSeconds(5)).ConfigureAwait(false);
 
                     // get call recording result
                     var recordingResult = await client.GetCallRecording().GetRecordingAsync(startRecordingResponse.Value.RecordingId).ConfigureAwait(false);
