@@ -54,7 +54,6 @@ namespace MgmtTypeSpec.Models
         /// <returns> A new <see cref="Models.FooProperties"/> instance for mocking. </returns>
         public static FooProperties FooProperties(Uri serviceUrl = default, string something = default, bool? boolValue = default, float? floatValue = default, double? doubleValue = default)
         {
-
             return new FooProperties(
                 serviceUrl,
                 something,
