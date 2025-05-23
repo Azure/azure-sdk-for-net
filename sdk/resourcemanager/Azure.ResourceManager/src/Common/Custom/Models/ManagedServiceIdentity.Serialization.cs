@@ -11,6 +11,7 @@ using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 
 [assembly: CodeGenSuppressType("ManagedServiceIdentity")]
 namespace Azure.ResourceManager.Models
@@ -18,7 +19,7 @@ namespace Azure.ResourceManager.Models
     [JsonConverter(typeof(ManagedServiceIdentityConverter))]
     public partial class ManagedServiceIdentity : IJsonModel<ManagedServiceIdentity>
     {
-        internal void Write(Utf8JsonWriter writer, ModelReaderWriterOptions options, JsonSerializerOptions jOptions = default)
+        internal void Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ManagedServiceIdentity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -27,7 +28,7 @@ namespace Azure.ResourceManager.Models
             }
 
             writer.WriteStartObject();
-            JsonSerializer.Serialize(writer, ManagedServiceIdentityType, jOptions);
+            writer.WriteStringValue(ManagedServiceIdentityType.ToString());
             if (options.Format != "W" && Optional.IsDefined(PrincipalId))
             {
                 writer.WritePropertyName("principalId"u8);
@@ -45,7 +46,7 @@ namespace Azure.ResourceManager.Models
                 foreach (var item in UserAssignedIdentities)
                 {
                     writer.WritePropertyName(item.Key);
-                    JsonSerializer.Serialize(writer, item.Value);
+                    ((IJsonModel<UserAssignedIdentity>)item.Value).Write(writer, options);
                 }
                 writer.WriteEndObject();
             }
@@ -54,7 +55,7 @@ namespace Azure.ResourceManager.Models
 
         void IJsonModel<ManagedServiceIdentity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            Write(writer, options, null);
+            Write(writer, options);
         }
 
         ManagedServiceIdentity IJsonModel<ManagedServiceIdentity>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -176,6 +177,7 @@ namespace Azure.ResourceManager.Models
             {
                 return null;
             }
+
             Guid? principalId = default;
             Guid? tenantId = default;
             ManagedServiceIdentityType type = default;
@@ -202,7 +204,7 @@ namespace Azure.ResourceManager.Models
                 }
                 if (property.NameEquals("type"u8))
                 {
-                    type = JsonSerializer.Deserialize<ManagedServiceIdentityType>($"{{{property}}}", jOptions);
+                    type = new ManagedServiceIdentityType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("userAssignedIdentities"u8))
@@ -214,7 +216,7 @@ namespace Azure.ResourceManager.Models
                     Dictionary<ResourceIdentifier, UserAssignedIdentity> dictionary = new Dictionary<ResourceIdentifier, UserAssignedIdentity>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(new ResourceIdentifier(property0.Name), JsonSerializer.Deserialize<UserAssignedIdentity>(property0.Value.GetRawText()));
+                        dictionary.Add(new ResourceIdentifier(property0.Name), UserAssignedIdentity.DeserializeUserAssignedIdentity(property0.Value, options));
                     }
                     userAssignedIdentities = dictionary;
                     continue;
@@ -250,7 +252,7 @@ namespace Azure.ResourceManager.Models
         {
             public override void Write(Utf8JsonWriter writer, ManagedServiceIdentity model, JsonSerializerOptions options)
             {
-                model.Write(writer, new ModelReaderWriterOptions("W"), options);
+                model.Write(writer, new ModelReaderWriterOptions("W"));
             }
             public override ManagedServiceIdentity Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using System.Text.Json.Serialization;
 
 namespace Azure.ResourceManager
 {
