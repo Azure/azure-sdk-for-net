@@ -2,14 +2,13 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Linq;
 using System.Threading.Tasks;
 using _Specs_.Azure.Core.Model;
 using NUnit.Framework;
 
 namespace TestProjects.Spector.Tests.Http.Azure.Core.Model
 {
-    public class AzureCoreModelTests : SpectorTestBase
+    public class CoreModelTests : SpectorTestBase
     {
         [SpectorTest]
         public Task Azure_Core_Model_AzureCoreEmbeddingVector_get() => Test(async (host) =>
