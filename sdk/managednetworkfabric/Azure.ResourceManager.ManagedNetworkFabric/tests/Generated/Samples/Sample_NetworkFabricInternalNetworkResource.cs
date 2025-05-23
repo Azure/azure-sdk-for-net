@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_InternalNetworksGetMaximumSetGen()
         {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/InternalNetworks_Get_MaximumSet_Gen.json
+            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/preview/2024-06-15-preview/examples/InternalNetworks_Get.json
             // this example is just showing the usage of "InternalNetworks_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -30,9 +30,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
             // this example assumes you already have this NetworkFabricInternalNetworkResource created on azure
             // for more information of creating NetworkFabricInternalNetworkResource, please refer to the document of NetworkFabricInternalNetworkResource
-            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string subscriptionId = "0000ABCD-0A0B-0000-0000-000000ABCDEF";
             string resourceGroupName = "example-rg";
-            string l3IsolationDomainName = "example-l3domain";
+            string l3IsolationDomainName = "example-l3isd";
             string internalNetworkName = "example-internalnetwork";
             ResourceIdentifier networkFabricInternalNetworkResourceId = NetworkFabricInternalNetworkResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, l3IsolationDomainName, internalNetworkName);
             NetworkFabricInternalNetworkResource networkFabricInternalNetwork = client.GetNetworkFabricInternalNetworkResource(networkFabricInternalNetworkResourceId);
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_InternalNetworksDeleteMaximumSetGen()
         {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/InternalNetworks_Delete_MaximumSet_Gen.json
+            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/preview/2024-06-15-preview/examples/InternalNetworks_Delete.json
             // this example is just showing the usage of "InternalNetworks_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -61,9 +61,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
             // this example assumes you already have this NetworkFabricInternalNetworkResource created on azure
             // for more information of creating NetworkFabricInternalNetworkResource, please refer to the document of NetworkFabricInternalNetworkResource
-            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string subscriptionId = "0000ABCD-0A0B-0000-0000-000000ABCDEF";
             string resourceGroupName = "example-rg";
-            string l3IsolationDomainName = "example-l3domain";
+            string l3IsolationDomainName = "example-l3isd";
             string internalNetworkName = "example-internalnetwork";
             ResourceIdentifier networkFabricInternalNetworkResourceId = NetworkFabricInternalNetworkResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, l3IsolationDomainName, internalNetworkName);
             NetworkFabricInternalNetworkResource networkFabricInternalNetwork = client.GetNetworkFabricInternalNetworkResource(networkFabricInternalNetworkResourceId);
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_InternalNetworksUpdateMaximumSetGen()
         {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/InternalNetworks_Update_MaximumSet_Gen.json
+            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/preview/2024-06-15-preview/examples/InternalNetworks_Update.json
             // this example is just showing the usage of "InternalNetworks_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -88,9 +88,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
             // this example assumes you already have this NetworkFabricInternalNetworkResource created on azure
             // for more information of creating NetworkFabricInternalNetworkResource, please refer to the document of NetworkFabricInternalNetworkResource
-            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string subscriptionId = "0000ABCD-0A0B-0000-0000-000000ABCDEF";
             string resourceGroupName = "example-rg";
-            string l3IsolationDomainName = "example-l3domain";
+            string l3IsolationDomainName = "example-l3isd";
             string internalNetworkName = "example-internalnetwork";
             ResourceIdentifier networkFabricInternalNetworkResourceId = NetworkFabricInternalNetworkResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, l3IsolationDomainName, internalNetworkName);
             NetworkFabricInternalNetworkResource networkFabricInternalNetwork = client.GetNetworkFabricInternalNetworkResource(networkFabricInternalNetworkResourceId);
@@ -98,63 +98,83 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
             // invoke the operation
             NetworkFabricInternalNetworkPatch patch = new NetworkFabricInternalNetworkPatch
             {
-                Annotation = "annotation",
-                Mtu = 1500,
-                ConnectedIPv4Subnets = {new ConnectedSubnet("10.0.0.0/24")
+                Properties = new InternalNetworkPatchProperties
+                {
+                    Annotation = "annotation",
+                    Mtu = 1500,
+                    ConnectedIPv4Subnets = {new ConnectedSubnetPatch("10.0.0.0/24")
 {
 Annotation = "annotation",
 }},
-                ConnectedIPv6Subnets = {new ConnectedSubnet("3FFE:FFFF:0:CD30::a0/29")
+                    ConnectedIPv6Subnets = {new ConnectedSubnetPatch("10.0.0.0/24")
 {
 Annotation = "annotation",
 }},
-                ImportRoutePolicyId = new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/routePolicies/routePolicyName"),
-                ExportRoutePolicyId = new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/routePolicies/routePolicyName"),
-                ImportRoutePolicy = new ImportRoutePolicy
-                {
-                    ImportIPv4RoutePolicyId = new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/routePolicies/routePolicyName"),
-                    ImportIPv6RoutePolicyId = new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/routePolicies/routePolicyName"),
-                },
-                ExportRoutePolicy = new ExportRoutePolicy
-                {
-                    ExportIPv4RoutePolicyId = new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/routePolicies/routePolicyName"),
-                    ExportIPv6RoutePolicyId = new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/routePolicies/routePolicyName"),
-                },
-                IngressAclId = new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/accessControlLists/example-acl"),
-                EgressAclId = new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/accessControlLists/example-acl"),
-                IsMonitoringEnabled = IsMonitoringEnabled.True,
-                BgpConfiguration = new BgpConfiguration
-                {
-                    BfdConfiguration = new BfdConfiguration
+                    ImportRoutePolicy = new ImportRoutePolicy
                     {
-                        IntervalInMilliSeconds = 300,
-                        Multiplier = 5,
+                        ImportIPv4RoutePolicyId = new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/routePolicies/routePolicyName"),
+                        ImportIPv6RoutePolicyId = new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/routePolicies/routePolicyName"),
                     },
-                    DefaultRouteOriginate = NetworkFabricBooleanValue.True,
-                    AllowAS = 10,
-                    AllowASOverride = AllowASOverride.Enable,
-                    PeerAsn = 61234L,
-                    IPv4ListenRangePrefixes = { "10.1.0.0/25" },
-                    IPv6ListenRangePrefixes = { "2fff::/66" },
-                    IPv4NeighborAddress = {new NeighborAddress
+                    ExportRoutePolicy = new ExportRoutePolicy
+                    {
+                        ExportIPv4RoutePolicyId = new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/routePolicies/routePolicyName"),
+                        ExportIPv6RoutePolicyId = new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/routePolicies/routePolicyName"),
+                    },
+                    IngressAclId = new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/accessControlLists/example-acl"),
+                    EgressAclId = new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/accessControlLists/example-acl"),
+                    IsMonitoringEnabled = IsMonitoringEnabled.True,
+                    BgpConfiguration = new BgpPatchConfiguration
+                    {
+                        Annotation = "annotation",
+                        BfdConfiguration = new BfdPatchConfiguration
+                        {
+                            IntervalInMilliSeconds = 300,
+                            Multiplier = 10,
+                        },
+                        DefaultRouteOriginate = NetworkFabricBooleanValue.True,
+                        AllowAS = 10,
+                        AllowASOverride = AllowASOverride.Enable,
+                        PeerAsn = 61234L,
+                        IPv4ListenRangePrefixes = { "10.1.0.0/25" },
+                        IPv6ListenRangePrefixes = { "2fff::/66" },
+                        IPv4NeighborAddress = {new NeighborAddressPatch
 {
 Address = "10.1.0.0",
 }},
-                    IPv6NeighborAddress = {new NeighborAddress
+                        IPv6NeighborAddress = {new NeighborAddressPatch
 {
-Address = "2fff::",
+Address = "10.1.0.0",
 }},
-                    Annotation = "annotation",
-                },
-                StaticRouteConfiguration = new StaticRouteConfiguration
-                {
-                    BfdConfiguration = new BfdConfiguration
-                    {
-                        IntervalInMilliSeconds = 300,
-                        Multiplier = 15,
+                        BmpConfiguration = new InternalNetworkBmpPatchProperties
+                        {
+                            NeighborIPExclusions = { "10.0.0.10" },
+                            BmpConfigurationState = BmpConfigurationState.Enabled,
+                        },
+                        V4OverV6BgpSession = V4OverV6BgpSessionState.Enabled,
+                        V6OverV4BgpSession = V6OverV4BgpSessionState.Enabled,
                     },
-                    IPv4Routes = { new StaticRouteProperties("20.20.20.20/25", new string[] { "10.0.0.1" }) },
-                    IPv6Routes = { new StaticRouteProperties("2fff::/64", new string[] { "3ffe::1" }) },
+                    StaticRouteConfiguration = new StaticRoutePatchConfiguration
+                    {
+                        BfdConfiguration = new BfdPatchConfiguration
+                        {
+                            IntervalInMilliSeconds = 300,
+                            Multiplier = 10,
+                        },
+                        IPv4Routes = { new StaticRoutePatchProperties("jffgck", new string[] { "10.0.0.1" }) },
+                        IPv6Routes = { new StaticRoutePatchProperties("jffgck", new string[] { "10.0.0.1" }) },
+                    },
+                    NativeIPv4PrefixLimits = {new PrefixLimitPatchProperties
+{
+MaximumRoutes = 24,
+Threshold = 6,
+IdleTimeExpiry = 20,
+}},
+                    NativeIPv6PrefixLimits = {new PrefixLimitPatchProperties
+{
+MaximumRoutes = 24,
+Threshold = 6,
+IdleTimeExpiry = 20,
+}},
                 },
             };
             ArmOperation<NetworkFabricInternalNetworkResource> lro = await networkFabricInternalNetwork.UpdateAsync(WaitUntil.Completed, patch);
@@ -171,7 +191,7 @@ Address = "2fff::",
         [Ignore("Only validating compilation of examples")]
         public async Task UpdateAdministrativeState_InternalNetworksUpdateAdministrativeStateMaximumSetGen()
         {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/InternalNetworks_UpdateAdministrativeState_MaximumSet_Gen.json
+            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/preview/2024-06-15-preview/examples/InternalNetworks_UpdateAdministrativeState.json
             // this example is just showing the usage of "InternalNetworks_UpdateAdministrativeState" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -181,9 +201,9 @@ Address = "2fff::",
 
             // this example assumes you already have this NetworkFabricInternalNetworkResource created on azure
             // for more information of creating NetworkFabricInternalNetworkResource, please refer to the document of NetworkFabricInternalNetworkResource
-            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string subscriptionId = "0000ABCD-0A0B-0000-0000-000000ABCDEF";
             string resourceGroupName = "example-rg";
-            string l3IsolationDomainName = "example-l3domain";
+            string l3IsolationDomainName = "example-l3isd";
             string internalNetworkName = "example-internalnetwork";
             ResourceIdentifier networkFabricInternalNetworkResourceId = NetworkFabricInternalNetworkResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, l3IsolationDomainName, internalNetworkName);
             NetworkFabricInternalNetworkResource networkFabricInternalNetwork = client.GetNetworkFabricInternalNetworkResource(networkFabricInternalNetworkResourceId);
@@ -191,8 +211,8 @@ Address = "2fff::",
             // invoke the operation
             UpdateAdministrativeStateContent content = new UpdateAdministrativeStateContent
             {
+                ResourceIds = { "" },
                 State = AdministrativeEnableState.Enable,
-                ResourceIds = { new ResourceIdentifier("") },
             };
             ArmOperation<StateUpdateCommonPostActionResult> lro = await networkFabricInternalNetwork.UpdateAdministrativeStateAsync(WaitUntil.Completed, content);
             StateUpdateCommonPostActionResult result = lro.Value;
@@ -202,9 +222,43 @@ Address = "2fff::",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task UpdateBfdAdministrativeState_InternalNetworksUpdateBfdAdministrativeState()
+        {
+            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/preview/2024-06-15-preview/examples/InternalNetworks_UpdateBfdAdministrativeState.json
+            // this example is just showing the usage of "InternalNetworks_UpdateBfdAdministrativeState" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this NetworkFabricInternalNetworkResource created on azure
+            // for more information of creating NetworkFabricInternalNetworkResource, please refer to the document of NetworkFabricInternalNetworkResource
+            string subscriptionId = "0000ABCD-0A0B-0000-0000-000000ABCDEF";
+            string resourceGroupName = "example-rg";
+            string l3IsolationDomainName = "example-l3isd";
+            string internalNetworkName = "example-internalnetwork";
+            ResourceIdentifier networkFabricInternalNetworkResourceId = NetworkFabricInternalNetworkResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, l3IsolationDomainName, internalNetworkName);
+            NetworkFabricInternalNetworkResource networkFabricInternalNetwork = client.GetNetworkFabricInternalNetworkResource(networkFabricInternalNetworkResourceId);
+
+            // invoke the operation
+            InternalNetworkBfdAdministrativeStateContent content = new InternalNetworkBfdAdministrativeStateContent
+            {
+                RouteType = InternalNetworkRouteType.Static,
+                NeighborAddress = "10.10.1.10",
+                AdministrativeState = new BfdAdministrativeState("Enable"),
+            };
+            ArmOperation<InternalNetworkBfdAdministrativeStateResult> lro = await networkFabricInternalNetwork.UpdateBfdAdministrativeStateAsync(WaitUntil.Completed, content);
+            InternalNetworkBfdAdministrativeStateResult result = lro.Value;
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task UpdateBgpAdministrativeState_InternalNetworksUpdateBgpAdministrativeStateMaximumSetGen()
         {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/InternalNetworks_UpdateBgpAdministrativeState_MaximumSet_Gen.json
+            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/preview/2024-06-15-preview/examples/InternalNetworks_UpdateBgpAdministrativeState.json
             // this example is just showing the usage of "InternalNetworks_UpdateBgpAdministrativeState" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -214,54 +268,21 @@ Address = "2fff::",
 
             // this example assumes you already have this NetworkFabricInternalNetworkResource created on azure
             // for more information of creating NetworkFabricInternalNetworkResource, please refer to the document of NetworkFabricInternalNetworkResource
-            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string subscriptionId = "0000ABCD-0A0B-0000-0000-000000ABCDEF";
             string resourceGroupName = "example-rg";
-            string l3IsolationDomainName = "example-l3domain";
-            string internalNetworkName = "example-internalNetwork";
+            string l3IsolationDomainName = "example-l3isd";
+            string internalNetworkName = "example-internalnetwork";
             ResourceIdentifier networkFabricInternalNetworkResourceId = NetworkFabricInternalNetworkResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, l3IsolationDomainName, internalNetworkName);
             NetworkFabricInternalNetworkResource networkFabricInternalNetwork = client.GetNetworkFabricInternalNetworkResource(networkFabricInternalNetworkResourceId);
 
             // invoke the operation
-            UpdateAdministrativeStateContent content = new UpdateAdministrativeStateContent
+            InternalNetworkBgpAdministrativeStateContent content = new InternalNetworkBgpAdministrativeStateContent
             {
-                State = AdministrativeEnableState.Enable,
-                ResourceIds = { new ResourceIdentifier("") },
+                NeighborAddress = "10.10.10.10",
+                AdministrativeState = new BgpAdministrativeState("Enable"),
             };
-            ArmOperation<StateUpdateCommonPostActionResult> lro = await networkFabricInternalNetwork.UpdateBgpAdministrativeStateAsync(WaitUntil.Completed, content);
-            StateUpdateCommonPostActionResult result = lro.Value;
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task UpdateStaticRouteBfdAdministrativeState_InternalNetworksUpdateStaticRouteBfdAdministrativeStateMaximumSetGen()
-        {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/InternalNetworks_UpdateStaticRouteBfdAdministrativeState_MaximumSet_Gen.json
-            // this example is just showing the usage of "InternalNetworks_UpdateStaticRouteBfdAdministrativeState" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this NetworkFabricInternalNetworkResource created on azure
-            // for more information of creating NetworkFabricInternalNetworkResource, please refer to the document of NetworkFabricInternalNetworkResource
-            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
-            string resourceGroupName = "example-rg";
-            string l3IsolationDomainName = "example-l3domain";
-            string internalNetworkName = "example-internalNetwork";
-            ResourceIdentifier networkFabricInternalNetworkResourceId = NetworkFabricInternalNetworkResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, l3IsolationDomainName, internalNetworkName);
-            NetworkFabricInternalNetworkResource networkFabricInternalNetwork = client.GetNetworkFabricInternalNetworkResource(networkFabricInternalNetworkResourceId);
-
-            // invoke the operation
-            UpdateAdministrativeStateContent content = new UpdateAdministrativeStateContent
-            {
-                State = AdministrativeEnableState.Enable,
-                ResourceIds = { new ResourceIdentifier("") },
-            };
-            ArmOperation<StateUpdateCommonPostActionResult> lro = await networkFabricInternalNetwork.UpdateStaticRouteBfdAdministrativeStateAsync(WaitUntil.Completed, content);
-            StateUpdateCommonPostActionResult result = lro.Value;
+            ArmOperation<InternalNetworkBgpAdministrativeStateResult> lro = await networkFabricInternalNetwork.UpdateBgpAdministrativeStateAsync(WaitUntil.Completed, content);
+            InternalNetworkBgpAdministrativeStateResult result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
         }
