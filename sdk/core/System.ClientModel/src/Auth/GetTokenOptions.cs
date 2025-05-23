@@ -45,8 +45,8 @@ public class GetTokenOptions
     /// <summary>
     /// Creates a new instance of <see cref="GetTokenOptions"/> with the specified scopes.
     /// </summary>
-    /// <param name="scopes">The scopes to be used in a call to <see cref="AuthenticationTokenProvider.GetToken(GetTokenOptions, Threading.CancellationToken)"/> or <see cref="AuthenticationTokenProvider.GetTokenAsync(GetTokenOptions, Threading.CancellationToken)"/></param>
-    /// <param name="properties">The properties to be used for token requests.</param>
+    /// <param name="scopes">The scopes to be used in a call to <see cref="AuthenticationTokenProvider.GetToken(GetTokenOptions, CancellationToken)"/> or <see cref="AuthenticationTokenProvider.GetTokenAsync(GetTokenOptions, CancellationToken)"/></param>
+    /// <param name="properties">The additional properties to be used for token requests.</param>
     public GetTokenOptions(ReadOnlyMemory<string> scopes, IReadOnlyDictionary<string, object> properties)
     {
         Scopes = scopes;
