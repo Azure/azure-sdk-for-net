@@ -45,30 +45,23 @@ namespace Azure.ResourceManager.HDInsight.Samples
             {
                 Properties = new HDInsightApplicationProperties
                 {
-                    ComputeRoles = {
-                            new HDInsightClusterRole {
-                                Name = "edgenode",
-                                    TargetInstanceCount = 1,
-                                    HardwareVmSize = "Standard_D12_v2",
-                            }
-                        },
-                    InstallScriptActions = {
-                            new RuntimeScriptAction("app-install-app1", new Uri("https://.../install.sh"), new string[] {
-                                "edgenode"
-                            }) {
-                                Parameters = "-version latest -port 20000",
-                            }
-                        },
+                    ComputeRoles = {new HDInsightClusterRole
+{
+Name = "edgenode",
+TargetInstanceCount = 1,
+HardwareVmSize = "Standard_D12_v2",
+}},
+                    InstallScriptActions = {new RuntimeScriptAction("app-install-app1", new Uri("https://.../install.sh"), new string[]{"edgenode"})
+{
+Parameters = "-version latest -port 20000",
+}},
                     UninstallScriptActions = { },
-                    HttpsEndpoints = {
-                            new HDInsightApplicationHttpsEndpoint {
-                                AccessModes = {
-                                        "WebPage"
-                                    },
-                                    DestinationPort = 20000,
-                                    SubDomainSuffix = "dss",
-                            }
-                        },
+                    HttpsEndpoints = {new HDInsightApplicationHttpsEndpoint
+{
+AccessModes = {"WebPage"},
+DestinationPort = 20000,
+SubDomainSuffix = "dss",
+}},
                     ApplicationType = "CustomApplication",
                     Errors = { },
                 },
