@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="displayName"> The user-friendly name for the Autonomous Database. </param>
         /// <param name="isAutoScalingEnabled"> Indicates if auto scaling is enabled for the Autonomous Database CPU core count. </param>
         /// <param name="isAutoScalingForStorageEnabled"> Indicates if auto scaling is enabled for the Autonomous Database storage. </param>
-        /// <param name="peerDBId"> The database OCID of the Disaster Recovery peer database, which is located in a different region from the current peer database. </param>
+        /// <param name="peerDBId"> The Azure resource ID of the Disaster Recovery peer database, which is located in a different region from the current peer database. </param>
         /// <param name="isLocalDataGuardEnabled"> Indicates whether the Autonomous Database has local or called in-region Data Guard enabled. </param>
         /// <param name="isMtlsConnectionRequired"> Specifies if the Autonomous Database requires mTLS connections. </param>
         /// <param name="licenseModel"> The Oracle license model that applies to the Oracle Autonomous Database. The default is LICENSE_INCLUDED. </param>
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         public bool? IsAutoScalingEnabled { get; set; }
         /// <summary> Indicates if auto scaling is enabled for the Autonomous Database storage. </summary>
         public bool? IsAutoScalingForStorageEnabled { get; set; }
-        /// <summary> The database OCID of the Disaster Recovery peer database, which is located in a different region from the current peer database. </summary>
+        /// <summary> The Azure resource ID of the Disaster Recovery peer database, which is located in a different region from the current peer database. </summary>
         public string PeerDBId { get; set; }
         /// <summary> Indicates whether the Autonomous Database has local or called in-region Data Guard enabled. </summary>
         public bool? IsLocalDataGuardEnabled { get; set; }

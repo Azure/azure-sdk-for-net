@@ -77,6 +77,8 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             bool? isLocalDataGuardEnabled = default;
             bool? isRemoteDataGuardEnabled = default;
             DisasterRecoveryType? localDisasterRecoveryType = default;
+            DateTimeOffset? timeDisasterRecoveryRoleChanged = default;
+            DisasterRecoveryConfigurationDetails remoteDisasterRecoveryConfiguration = default;
             AutonomousDatabaseStandbySummary localStandbyDB = default;
             int? failedDataRecoveryInSeconds = default;
             bool? isMtlsConnectionRequired = default;
@@ -300,6 +302,24 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                         continue;
                     }
                     localDisasterRecoveryType = new DisasterRecoveryType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("timeDisasterRecoveryRoleChanged"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    timeDisasterRecoveryRoleChanged = property.Value.GetDateTimeOffset("O");
+                    continue;
+                }
+                if (property.NameEquals("remoteDisasterRecoveryConfiguration"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    remoteDisasterRecoveryConfiguration = DisasterRecoveryConfigurationDetails.DeserializeDisasterRecoveryConfigurationDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("localStandbyDb"u8))
@@ -820,6 +840,8 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 isLocalDataGuardEnabled,
                 isRemoteDataGuardEnabled,
                 localDisasterRecoveryType,
+                timeDisasterRecoveryRoleChanged,
+                remoteDisasterRecoveryConfiguration,
                 localStandbyDB,
                 failedDataRecoveryInSeconds,
                 isMtlsConnectionRequired,

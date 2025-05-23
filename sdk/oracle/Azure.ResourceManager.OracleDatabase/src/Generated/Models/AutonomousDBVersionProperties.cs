@@ -47,8 +47,11 @@ namespace Azure.ResourceManager.OracleDatabase.Models
 
         /// <summary> Initializes a new instance of <see cref="AutonomousDBVersionProperties"/>. </summary>
         /// <param name="version"> Supported Autonomous Db versions. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="version"/> is null. </exception>
         public AutonomousDBVersionProperties(string version)
         {
+            Argument.AssertNotNull(version, nameof(version));
+
             Version = version;
         }
 
@@ -77,16 +80,16 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         }
 
         /// <summary> Supported Autonomous Db versions. </summary>
-        public string Version { get; }
+        public string Version { get; set; }
         /// <summary> The Autonomous Database workload type. </summary>
-        public AutonomousDatabaseWorkloadType? DBWorkload { get; }
+        public AutonomousDatabaseWorkloadType? DBWorkload { get; set; }
         /// <summary> True if this version of the Oracle Database software's default is free. </summary>
-        public bool? IsDefaultForFree { get; }
+        public bool? IsDefaultForFree { get; set; }
         /// <summary> True if this version of the Oracle Database software's default is paid. </summary>
-        public bool? IsDefaultForPaid { get; }
+        public bool? IsDefaultForPaid { get; set; }
         /// <summary> True if this version of the Oracle Database software can be used for Always-Free Autonomous Databases. </summary>
-        public bool? IsFreeTierEnabled { get; }
+        public bool? IsFreeTierEnabled { get; set; }
         /// <summary> True if this version of the Oracle Database software has payments enabled. </summary>
-        public bool? IsPaidEnabled { get; }
+        public bool? IsPaidEnabled { get; set; }
     }
 }

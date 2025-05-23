@@ -7,11 +7,13 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
-    /// <summary> The type used for update operations of the AutonomousDatabaseBackup. </summary>
-    public partial class AutonomousDatabaseBackupPatch
+    /// <summary> AutonomousDatabaseBackup resource definition. </summary>
+    public partial class AutonomousDatabaseBackupPatch : ResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -51,26 +53,19 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AutonomousDatabaseBackupPatch"/>. </summary>
-        /// <param name="properties"> The updatable properties of the AutonomousDatabaseBackup. </param>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AutonomousDatabaseBackupPatch(AutonomousDatabaseBackupUpdateProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AutonomousDatabaseBackupPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AutonomousDatabaseBackupProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The updatable properties of the AutonomousDatabaseBackup. </summary>
-        internal AutonomousDatabaseBackupUpdateProperties Properties { get; set; }
-        /// <summary> Retention period, in days, for long-term backups. </summary>
-        public int? AutonomousDatabaseBackupUpdateRetentionPeriodInDays
-        {
-            get => Properties is null ? default : Properties.RetentionPeriodInDays;
-            set
-            {
-                if (Properties is null)
-                    Properties = new AutonomousDatabaseBackupUpdateProperties();
-                Properties.RetentionPeriodInDays = value;
-            }
-        }
+        /// <summary> The resource-specific properties for this resource. </summary>
+        public AutonomousDatabaseBackupProperties Properties { get; set; }
     }
 }
