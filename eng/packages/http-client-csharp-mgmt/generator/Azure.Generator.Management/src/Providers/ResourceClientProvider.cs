@@ -370,23 +370,23 @@ namespace Azure.Generator.Management.Providers
             var statements = new List<MethodBodyStatement>();
 
             var finalStateVia = method.GetOperationFinalStateVia();
-            var isGeneric = method.GetResponseBodyType == null;
+            bool isGeneric = method.GetResponseBodyType() != null;
 
             var armOperationType = isGeneric
-                ? ManagementClientGenerator.Instance.OutputLibrary.ArmOperation.Type
-                : ManagementClientGenerator.Instance.OutputLibrary.GenericArmOperation.Type.MakeGenericType([resourceClientType]);
+                ? ManagementClientGenerator.Instance.OutputLibrary.GenericArmOperation.Type.MakeGenericType([resourceClientType])
+                : ManagementClientGenerator.Instance.OutputLibrary.ArmOperation.Type;
 
             ValueExpression[] armOperationArguments = [
                 _clientDiagnosticsField,
                 This.Property("Pipeline"),
                 messageVariable.Property("Request"),
-                isGeneric ? responseVariable : responseVariable.Invoke("GetRawResponse"),
+                isGeneric ? responseVariable.Invoke("GetRawResponse") : responseVariable,
                 Static(typeof(OperationFinalStateVia)).Property(finalStateVia.ToString())
             ];
 
             var operationInstanceArguments = isGeneric
-                ? armOperationArguments
-                : [New.Instance(operationSourceType, armClientProperty), .. armOperationArguments];
+                ? [New.Instance(operationSourceType, armClientProperty), .. armOperationArguments]
+                : armOperationArguments;
 
             var operationDeclaration = Declare("operation", armOperationType, New.Instance(armOperationType, operationInstanceArguments), out var operationVariable);
             statements.Add(operationDeclaration);
@@ -394,8 +394,8 @@ namespace Azure.Generator.Management.Providers
             var waitIfCompletedStatement = new IfStatement(KnownAzureParameters.WaitUntil.Equal(Static(typeof(WaitUntil)).Property(nameof(WaitUntil.Completed))))
             {
                 isAsync
-                ? operationVariable.Invoke(isGeneric ? "WaitForCompletionResponseAsync" : "WaitForCompletionAsync", [cancellationTokenParameter], null, isAsync).Terminate()
-                : operationVariable.Invoke(isGeneric ? "WaitForCompletionResponse" : "WaitForCompletion", cancellationTokenParameter).Terminate()
+                ? operationVariable.Invoke(isGeneric ? "WaitForCompletionAsync" : "WaitForCompletionResponseAsync", [cancellationTokenParameter], null, isAsync).Terminate()
+                : operationVariable.Invoke(isGeneric ? "WaitForCompletion" : "WaitForCompletionResponse", cancellationTokenParameter).Terminate()
             };
             statements.Add(waitIfCompletedStatement);
 
