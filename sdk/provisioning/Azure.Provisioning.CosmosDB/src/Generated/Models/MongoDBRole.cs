@@ -18,7 +18,7 @@ public partial class MongoDBRole : ProvisionableConstruct
     /// <summary>
     /// The database name the role is applied.
     /// </summary>
-    public BicepValue<string> DBName 
+    public BicepValue<string> DBName
     {
         get { Initialize(); return _dBName!; }
         set { Initialize(); _dBName!.Assign(value); }
@@ -28,7 +28,7 @@ public partial class MongoDBRole : ProvisionableConstruct
     /// <summary>
     /// The role name.
     /// </summary>
-    public BicepValue<string> Role 
+    public BicepValue<string> Role
     {
         get { Initialize(); return _role!; }
         set { Initialize(); _role!.Assign(value); }
