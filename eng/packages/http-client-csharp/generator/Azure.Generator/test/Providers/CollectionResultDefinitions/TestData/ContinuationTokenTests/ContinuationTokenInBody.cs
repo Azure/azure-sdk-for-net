@@ -70,24 +70,17 @@ namespace Samples
             try
             {
                 _client.Pipeline.Send(message, _context.CancellationToken);
-                return this.GetResponse(message);
+                if ((message.Response.IsError && (_context.ErrorOptions != global::Azure.ErrorOptions.NoThrow)))
+                {
+                    throw new global::Azure.RequestFailedException(message.Response);
+                }
+                return message.Response;
             }
             catch (global::System.Exception e)
             {
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        /// <summary> Get response from message. </summary>
-        /// <param name="message"> Http message. </param>
-        private global::Azure.Response GetResponse(global::Azure.Core.HttpMessage message)
-        {
-            if ((message.Response.IsError && (_context.ErrorOptions != global::Azure.ErrorOptions.NoThrow)))
-            {
-                throw new global::Azure.RequestFailedException(message.Response);
-            }
-            return message.Response;
         }
     }
 }

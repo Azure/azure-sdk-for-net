@@ -66,24 +66,17 @@ namespace BasicTypeSpec
             try
             {
                 _client.Pipeline.Send(message, _context.CancellationToken);
-                return GetResponse(message);
+                if (message.Response.IsError && _context.ErrorOptions != ErrorOptions.NoThrow)
+                {
+                    throw new RequestFailedException(message.Response);
+                }
+                return message.Response;
             }
             catch (Exception e)
             {
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        /// <summary> Get response from message. </summary>
-        /// <param name="message"> Http message. </param>
-        private Response GetResponse(HttpMessage message)
-        {
-            if (message.Response.IsError && _context.ErrorOptions != ErrorOptions.NoThrow)
-            {
-                throw new RequestFailedException(message.Response);
-            }
-            return message.Response;
         }
     }
 }

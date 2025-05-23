@@ -139,7 +139,7 @@ namespace Azure.Generator.Providers
                 ? [new CSharpType(typeof(AsyncPageable<>), _itemModelType)]
                 : [new CSharpType(typeof(Pageable<>), _itemModelType)];
 
-        protected override MethodProvider[] BuildMethods() => [BuildAsPagesMethod(), BuildGetNextResponseMethod(), BuildGetResponseMethod()];
+        protected override MethodProvider[] BuildMethods() => [BuildAsPagesMethod(), BuildGetNextResponseMethod()];
 
         private MethodProvider BuildAsPagesMethod()
         {
@@ -267,30 +267,21 @@ namespace Azure.Generator.Providers
             }
 
             TryExpression BuildTryExpression(ValueExpression messageVariable)
-                => new TryExpression(_clientField.Property("Pipeline").Invoke(_isAsync ? "SendAsync" : "Send", [messageVariable, _contextField!.Property(nameof(RequestContext.CancellationToken))], _isAsync).Terminate(), Return(This.Invoke(GetResponseMethodName, [messageVariable])));
+                => new TryExpression(_clientField.Property("Pipeline").Invoke(_isAsync ? "SendAsync" : "Send", [messageVariable, _contextField!.Property(nameof(RequestContext.CancellationToken))], _isAsync).Terminate(), BuildGetResponse(messageVariable));
 
             return new MethodProvider(signature, body, this);
         }
 
-        private MethodProvider BuildGetResponseMethod()
+        private MethodBodyStatement[] BuildGetResponse(ValueExpression messageVariable)
         {
-            var messageParameter = new ParameterProvider("message", $"Http message", typeof(HttpMessage));
-            var signature = new MethodSignature(
-                GetResponseMethodName,
-                $"Get response from message",
-                MethodSignatureModifiers.Private,
-                typeof(Response),
-                null,
-                [messageParameter]);
-            var body = new MethodBodyStatement[]
+            return new MethodBodyStatement[]
             {
-                new IfStatement(messageParameter.Property("Response").Property("IsError").As<bool>().And(_contextField!.Property("ErrorOptions").NotEqual(Static<ErrorOptions>().Property(nameof(ErrorOptions.NoThrow)))))
+                new IfStatement(messageVariable.Property("Response").Property("IsError").As<bool>().And(_contextField!.Property("ErrorOptions").NotEqual(Static<ErrorOptions>().Property(nameof(ErrorOptions.NoThrow)))))
                 {
-                    Throw(New.Instance<RequestFailedException>(messageParameter.Property("Response")))
+                    Throw(New.Instance<RequestFailedException>(messageVariable.Property("Response")))
                 },
-                Return(messageParameter.Property("Response"))
+                Return(messageVariable.Property("Response"))
             };
-            return new MethodProvider(signature, body, this);
         }
 
         private ScopedApi<HttpMessage> InvokeCreateRequestForNextLink(ValueExpression nextPageUri) => _clientField.Invoke(
