@@ -204,8 +204,7 @@
      "readOnly": false,
      "decorators": [],
      "crossLanguageDefinitionId": "Type.Model.Visibility.VisibilityModel.queryProp",
-     "discriminator": false,
-     "flatten": false
+     "correspondingMethodParams": []
     },
     {
      "$id": "27",

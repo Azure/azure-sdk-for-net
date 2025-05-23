@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
+using MgmtTypeSpec;
 
 namespace MgmtTypeSpec.Models
 {
@@ -21,8 +22,11 @@ namespace MgmtTypeSpec.Models
 
         /// <summary> Initializes a new instance of <see cref="FooData"/>. </summary>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        internal FooData(string location) : base(location)
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
+        public FooData(string location) : base(location)
         {
+            Argument.AssertNotNull(location, nameof(location));
+
         }
 
         /// <summary> Initializes a new instance of <see cref="FooData"/>. </summary>
@@ -43,9 +47,9 @@ namespace MgmtTypeSpec.Models
         }
 
         /// <summary> The resource-specific properties for this resource. </summary>
-        public FooProperties Properties { get; }
+        public FooProperties Properties { get; set; }
 
-        /// <summary> Gets the ExtendedLocation. </summary>
-        public ExtendedLocation ExtendedLocation { get; }
+        /// <summary> Gets or sets the ExtendedLocation. </summary>
+        public ExtendedLocation ExtendedLocation { get; set; }
     }
 }

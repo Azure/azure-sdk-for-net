@@ -21,7 +21,7 @@ $storageAccountName = $DeploymentOutputs['HEALTHDATAAISERVICES_STORAGE_ACCOUNT_N
 $containerName = $DeploymentOutputs['HEALTHDATAAISERVICES_STORAGE_CONTAINER_NAME']
 
 # Set the local folder path to upload
-$localFolderPath = "Azure.Health.Deidentification\tests\data\example_patient_1"
+$localFolderPath = "$PSScriptRoot\Azure.Health.Deidentification\tests\data\example_patient_1"
 
 # Check if the connection string is present
 if ([string]::IsNullOrWhiteSpace($storageAccountName)) {

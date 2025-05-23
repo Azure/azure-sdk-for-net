@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -59,6 +60,7 @@ namespace Azure.AI.Agents.Persistent
             Argument.AssertNotNull(data, nameof(data));
             Argument.AssertNotNullOrEmpty(filename, nameof(filename));
 
+            filename = ReplaceNonAscii(filename);
             UploadFileRequest uploadFileRequest = new UploadFileRequest(data, purpose, filename, null);
             using MultipartFormDataRequestContent content = uploadFileRequest.ToMultipartRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
@@ -77,11 +79,23 @@ namespace Azure.AI.Agents.Persistent
             Argument.AssertNotNull(data, nameof(data));
             Argument.AssertNotNullOrEmpty(filename, nameof(filename));
 
+            filename = ReplaceNonAscii(filename);
             UploadFileRequest uploadFileRequest = new UploadFileRequest(data, purpose, filename, null);
             using MultipartFormDataRequestContent content = uploadFileRequest.ToMultipartRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = UploadFile(content, content.ContentType, context);
             return Response.FromValue(PersistentAgentFileInfo.FromResponse(response), response);
+        }
+
+        /// <summary>
+        /// Remove non ASCII symbols from the file name.
+        /// Temporary workaround of an issue when the file contains non ASCII characters.
+        /// </summary>
+        /// <param name="filename">The file name.</param>
+        /// <returns>The file name with all non ASCII letters replaced.</returns>
+        private static string ReplaceNonAscii(string filename)
+        {
+            return Regex.Replace(filename, @"[^\u0000-\u007F]", "~");
         }
 
         /// <summary> Uploads a file for use by other operations. </summary>
