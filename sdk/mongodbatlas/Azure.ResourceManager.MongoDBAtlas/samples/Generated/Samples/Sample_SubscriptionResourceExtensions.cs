@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.MongoDBAtlas.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetOrganizationResources_OrganizationsListBySubscriptionMaximumSet()
+        public async Task GetMongoDBAtlasOrganizations_OrganizationsListBySubscriptionMaximumSet()
         {
             // Generated from example definition: 2024-11-18-preview/Organizations_ListBySubscription_MaximumSet_Gen.json
             // this example is just showing the usage of "OrganizationResource_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
@@ -35,11 +35,11 @@ namespace Azure.ResourceManager.MongoDBAtlas.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (OrganizationResource item in subscriptionResource.GetOrganizationResourcesAsync())
+            await foreach (MongoDBAtlasOrganizationResource item in subscriptionResource.GetMongoDBAtlasOrganizationsAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                OrganizationResourceData resourceData = item.Data;
+                MongoDBAtlasOrganizationData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.MongoDBAtlas.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetOrganizationResources_OrganizationsListBySubscriptionMaximumSetGeneratedByMinimumSetRule()
+        public async Task GetMongoDBAtlasOrganizations_OrganizationsListBySubscriptionMaximumSetGeneratedByMinimumSetRule()
         {
             // Generated from example definition: 2024-11-18-preview/Organizations_ListBySubscription_MinimumSet_Gen.json
             // this example is just showing the usage of "OrganizationResource_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
@@ -66,11 +66,11 @@ namespace Azure.ResourceManager.MongoDBAtlas.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (OrganizationResource item in subscriptionResource.GetOrganizationResourcesAsync())
+            await foreach (MongoDBAtlasOrganizationResource item in subscriptionResource.GetMongoDBAtlasOrganizationsAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                OrganizationResourceData resourceData = item.Data;
+                MongoDBAtlasOrganizationData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }

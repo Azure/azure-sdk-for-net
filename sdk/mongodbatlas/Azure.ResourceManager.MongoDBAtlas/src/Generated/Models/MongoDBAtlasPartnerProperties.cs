@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.MongoDBAtlas.Models
 {
     /// <summary> MongoDB specific Properties. </summary>
-    public partial class PartnerProperties
+    public partial class MongoDBAtlasPartnerProperties
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,22 +45,22 @@ namespace Azure.ResourceManager.MongoDBAtlas.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="PartnerProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MongoDBAtlasPartnerProperties"/>. </summary>
         /// <param name="organizationName"> Organization name in MongoDB system. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="organizationName"/> is null. </exception>
-        public PartnerProperties(string organizationName)
+        public MongoDBAtlasPartnerProperties(string organizationName)
         {
             Argument.AssertNotNull(organizationName, nameof(organizationName));
 
             OrganizationName = organizationName;
         }
 
-        /// <summary> Initializes a new instance of <see cref="PartnerProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MongoDBAtlasPartnerProperties"/>. </summary>
         /// <param name="organizationId"> Organization Id in MongoDB system. </param>
         /// <param name="redirectUri"> Redirect URL for the MongoDB. </param>
         /// <param name="organizationName"> Organization name in MongoDB system. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PartnerProperties(string organizationId, string redirectUri, string organizationName, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MongoDBAtlasPartnerProperties(string organizationId, string redirectUri, string organizationName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             OrganizationId = organizationId;
             RedirectUri = redirectUri;
@@ -68,8 +68,8 @@ namespace Azure.ResourceManager.MongoDBAtlas.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="PartnerProperties"/> for deserialization. </summary>
-        internal PartnerProperties()
+        /// <summary> Initializes a new instance of <see cref="MongoDBAtlasPartnerProperties"/> for deserialization. </summary>
+        internal MongoDBAtlasPartnerProperties()
         {
         }
 

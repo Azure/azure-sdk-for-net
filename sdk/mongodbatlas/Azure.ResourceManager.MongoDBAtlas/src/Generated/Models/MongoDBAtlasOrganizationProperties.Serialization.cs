@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MongoDBAtlas.Models
 {
-    public partial class OrganizationProperties : IUtf8JsonSerializable, IJsonModel<OrganizationProperties>
+    public partial class MongoDBAtlasOrganizationProperties : IUtf8JsonSerializable, IJsonModel<MongoDBAtlasOrganizationProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OrganizationProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MongoDBAtlasOrganizationProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<OrganizationProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<MongoDBAtlasOrganizationProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.MongoDBAtlas.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<OrganizationProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MongoDBAtlasOrganizationProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OrganizationProperties)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(MongoDBAtlasOrganizationProperties)} does not support writing '{format}' format.");
             }
 
             writer.WritePropertyName("marketplace"u8);
@@ -65,19 +65,19 @@ namespace Azure.ResourceManager.MongoDBAtlas.Models
             }
         }
 
-        OrganizationProperties IJsonModel<OrganizationProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        MongoDBAtlasOrganizationProperties IJsonModel<MongoDBAtlasOrganizationProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<OrganizationProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MongoDBAtlasOrganizationProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OrganizationProperties)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(MongoDBAtlasOrganizationProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeOrganizationProperties(document.RootElement, options);
+            return DeserializeMongoDBAtlasOrganizationProperties(document.RootElement, options);
         }
 
-        internal static OrganizationProperties DeserializeOrganizationProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static MongoDBAtlasOrganizationProperties DeserializeMongoDBAtlasOrganizationProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -85,22 +85,22 @@ namespace Azure.ResourceManager.MongoDBAtlas.Models
             {
                 return null;
             }
-            MarketplaceDetails marketplace = default;
-            UserDetails user = default;
-            ResourceProvisioningState? provisioningState = default;
-            PartnerProperties partnerProperties = default;
+            MongoDBAtlasMarketplaceDetails marketplace = default;
+            MongoDBAtlasUserDetails user = default;
+            MongoDBAtlasResourceProvisioningState? provisioningState = default;
+            MongoDBAtlasPartnerProperties partnerProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("marketplace"u8))
                 {
-                    marketplace = MarketplaceDetails.DeserializeMarketplaceDetails(property.Value, options);
+                    marketplace = MongoDBAtlasMarketplaceDetails.DeserializeMongoDBAtlasMarketplaceDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("user"u8))
                 {
-                    user = UserDetails.DeserializeUserDetails(property.Value, options);
+                    user = MongoDBAtlasUserDetails.DeserializeMongoDBAtlasUserDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("provisioningState"u8))
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.MongoDBAtlas.Models
                     {
                         continue;
                     }
-                    provisioningState = new ResourceProvisioningState(property.Value.GetString());
+                    provisioningState = new MongoDBAtlasResourceProvisioningState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("partnerProperties"u8))
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.MongoDBAtlas.Models
                     {
                         continue;
                     }
-                    partnerProperties = PartnerProperties.DeserializePartnerProperties(property.Value, options);
+                    partnerProperties = MongoDBAtlasPartnerProperties.DeserializeMongoDBAtlasPartnerProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -127,38 +127,38 @@ namespace Azure.ResourceManager.MongoDBAtlas.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new OrganizationProperties(marketplace, user, provisioningState, partnerProperties, serializedAdditionalRawData);
+            return new MongoDBAtlasOrganizationProperties(marketplace, user, provisioningState, partnerProperties, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<OrganizationProperties>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<MongoDBAtlasOrganizationProperties>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<OrganizationProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MongoDBAtlasOrganizationProperties>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerMongoDBAtlasContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(OrganizationProperties)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MongoDBAtlasOrganizationProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
-        OrganizationProperties IPersistableModel<OrganizationProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        MongoDBAtlasOrganizationProperties IPersistableModel<MongoDBAtlasOrganizationProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<OrganizationProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MongoDBAtlasOrganizationProperties>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeOrganizationProperties(document.RootElement, options);
+                        return DeserializeMongoDBAtlasOrganizationProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(OrganizationProperties)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MongoDBAtlasOrganizationProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<OrganizationProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<MongoDBAtlasOrganizationProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

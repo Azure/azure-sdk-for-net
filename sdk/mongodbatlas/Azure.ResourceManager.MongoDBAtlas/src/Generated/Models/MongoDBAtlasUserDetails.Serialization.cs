@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MongoDBAtlas.Models
 {
-    public partial class UserDetails : IUtf8JsonSerializable, IJsonModel<UserDetails>
+    public partial class MongoDBAtlasUserDetails : IUtf8JsonSerializable, IJsonModel<MongoDBAtlasUserDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<UserDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MongoDBAtlasUserDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<UserDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<MongoDBAtlasUserDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.MongoDBAtlas.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<UserDetails>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MongoDBAtlasUserDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UserDetails)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(MongoDBAtlasUserDetails)} does not support writing '{format}' format.");
             }
 
             writer.WritePropertyName("firstName"u8);
@@ -72,19 +72,19 @@ namespace Azure.ResourceManager.MongoDBAtlas.Models
             }
         }
 
-        UserDetails IJsonModel<UserDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        MongoDBAtlasUserDetails IJsonModel<MongoDBAtlasUserDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<UserDetails>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MongoDBAtlasUserDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UserDetails)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(MongoDBAtlasUserDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUserDetails(document.RootElement, options);
+            return DeserializeMongoDBAtlasUserDetails(document.RootElement, options);
         }
 
-        internal static UserDetails DeserializeUserDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static MongoDBAtlasUserDetails DeserializeMongoDBAtlasUserDetails(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.MongoDBAtlas.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new UserDetails(
+            return new MongoDBAtlasUserDetails(
                 firstName,
                 lastName,
                 emailAddress,
@@ -148,35 +148,35 @@ namespace Azure.ResourceManager.MongoDBAtlas.Models
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<UserDetails>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<MongoDBAtlasUserDetails>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<UserDetails>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MongoDBAtlasUserDetails>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerMongoDBAtlasContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(UserDetails)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MongoDBAtlasUserDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
-        UserDetails IPersistableModel<UserDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
+        MongoDBAtlasUserDetails IPersistableModel<MongoDBAtlasUserDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<UserDetails>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MongoDBAtlasUserDetails>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeUserDetails(document.RootElement, options);
+                        return DeserializeMongoDBAtlasUserDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(UserDetails)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MongoDBAtlasUserDetails)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<UserDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<MongoDBAtlasUserDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

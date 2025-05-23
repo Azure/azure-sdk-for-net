@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.MongoDBAtlas.Models
 {
     /// <summary> User details for an organization. </summary>
-    public partial class UserDetails
+    public partial class MongoDBAtlasUserDetails
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,12 +45,12 @@ namespace Azure.ResourceManager.MongoDBAtlas.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="UserDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MongoDBAtlasUserDetails"/>. </summary>
         /// <param name="firstName"> First name of the user. </param>
         /// <param name="lastName"> Last name of the user. </param>
         /// <param name="emailAddress"> Email address of the user. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="firstName"/>, <paramref name="lastName"/> or <paramref name="emailAddress"/> is null. </exception>
-        public UserDetails(string firstName, string lastName, string emailAddress)
+        public MongoDBAtlasUserDetails(string firstName, string lastName, string emailAddress)
         {
             Argument.AssertNotNull(firstName, nameof(firstName));
             Argument.AssertNotNull(lastName, nameof(lastName));
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.MongoDBAtlas.Models
             EmailAddress = emailAddress;
         }
 
-        /// <summary> Initializes a new instance of <see cref="UserDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MongoDBAtlasUserDetails"/>. </summary>
         /// <param name="firstName"> First name of the user. </param>
         /// <param name="lastName"> Last name of the user. </param>
         /// <param name="emailAddress"> Email address of the user. </param>
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.MongoDBAtlas.Models
         /// <param name="phoneNumber"> User's phone number. </param>
         /// <param name="companyName"> Company Name. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UserDetails(string firstName, string lastName, string emailAddress, string upn, string phoneNumber, string companyName, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MongoDBAtlasUserDetails(string firstName, string lastName, string emailAddress, string upn, string phoneNumber, string companyName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             FirstName = firstName;
             LastName = lastName;
@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.MongoDBAtlas.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="UserDetails"/> for deserialization. </summary>
-        internal UserDetails()
+        /// <summary> Initializes a new instance of <see cref="MongoDBAtlasUserDetails"/> for deserialization. </summary>
+        internal MongoDBAtlasUserDetails()
         {
         }
 

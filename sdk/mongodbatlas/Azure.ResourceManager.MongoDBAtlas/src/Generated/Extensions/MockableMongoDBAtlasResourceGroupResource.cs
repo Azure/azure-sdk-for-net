@@ -33,11 +33,11 @@ namespace Azure.ResourceManager.MongoDBAtlas.Mocking
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of OrganizationResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of OrganizationResources and their operations over a OrganizationResource. </returns>
-        public virtual OrganizationResourceCollection GetOrganizationResources()
+        /// <summary> Gets a collection of MongoDBAtlasOrganizationResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of MongoDBAtlasOrganizationResources and their operations over a MongoDBAtlasOrganizationResource. </returns>
+        public virtual MongoDBAtlasOrganizationCollection GetMongoDBAtlasOrganizations()
         {
-            return GetCachedClient(client => new OrganizationResourceCollection(client, Id));
+            return GetCachedClient(client => new MongoDBAtlasOrganizationCollection(client, Id));
         }
 
         /// <summary>
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.MongoDBAtlas.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="OrganizationResource"/></description>
+        /// <description><see cref="MongoDBAtlasOrganizationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -66,9 +66,9 @@ namespace Azure.ResourceManager.MongoDBAtlas.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="organizationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="organizationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<OrganizationResource>> GetOrganizationResourceAsync(string organizationName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MongoDBAtlasOrganizationResource>> GetMongoDBAtlasOrganizationAsync(string organizationName, CancellationToken cancellationToken = default)
         {
-            return await GetOrganizationResources().GetAsync(organizationName, cancellationToken).ConfigureAwait(false);
+            return await GetMongoDBAtlasOrganizations().GetAsync(organizationName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.MongoDBAtlas.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="OrganizationResource"/></description>
+        /// <description><see cref="MongoDBAtlasOrganizationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -97,9 +97,9 @@ namespace Azure.ResourceManager.MongoDBAtlas.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="organizationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="organizationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<OrganizationResource> GetOrganizationResource(string organizationName, CancellationToken cancellationToken = default)
+        public virtual Response<MongoDBAtlasOrganizationResource> GetMongoDBAtlasOrganization(string organizationName, CancellationToken cancellationToken = default)
         {
-            return GetOrganizationResources().Get(organizationName, cancellationToken);
+            return GetMongoDBAtlasOrganizations().Get(organizationName, cancellationToken);
         }
     }
 }

@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.MongoDBAtlas.Models
 {
     /// <summary> Properties specific to Organization. </summary>
-    public partial class OrganizationProperties
+    public partial class MongoDBAtlasOrganizationProperties
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,11 +45,11 @@ namespace Azure.ResourceManager.MongoDBAtlas.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="OrganizationProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MongoDBAtlasOrganizationProperties"/>. </summary>
         /// <param name="marketplace"> Marketplace details of the resource. </param>
         /// <param name="user"> Details of the user. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="marketplace"/> or <paramref name="user"/> is null. </exception>
-        public OrganizationProperties(MarketplaceDetails marketplace, UserDetails user)
+        public MongoDBAtlasOrganizationProperties(MongoDBAtlasMarketplaceDetails marketplace, MongoDBAtlasUserDetails user)
         {
             Argument.AssertNotNull(marketplace, nameof(marketplace));
             Argument.AssertNotNull(user, nameof(user));
@@ -58,13 +58,13 @@ namespace Azure.ResourceManager.MongoDBAtlas.Models
             User = user;
         }
 
-        /// <summary> Initializes a new instance of <see cref="OrganizationProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MongoDBAtlasOrganizationProperties"/>. </summary>
         /// <param name="marketplace"> Marketplace details of the resource. </param>
         /// <param name="user"> Details of the user. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="partnerProperties"> MongoDB properties. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal OrganizationProperties(MarketplaceDetails marketplace, UserDetails user, ResourceProvisioningState? provisioningState, PartnerProperties partnerProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MongoDBAtlasOrganizationProperties(MongoDBAtlasMarketplaceDetails marketplace, MongoDBAtlasUserDetails user, MongoDBAtlasResourceProvisioningState? provisioningState, MongoDBAtlasPartnerProperties partnerProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Marketplace = marketplace;
             User = user;
@@ -73,18 +73,18 @@ namespace Azure.ResourceManager.MongoDBAtlas.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="OrganizationProperties"/> for deserialization. </summary>
-        internal OrganizationProperties()
+        /// <summary> Initializes a new instance of <see cref="MongoDBAtlasOrganizationProperties"/> for deserialization. </summary>
+        internal MongoDBAtlasOrganizationProperties()
         {
         }
 
         /// <summary> Marketplace details of the resource. </summary>
-        public MarketplaceDetails Marketplace { get; set; }
+        public MongoDBAtlasMarketplaceDetails Marketplace { get; set; }
         /// <summary> Details of the user. </summary>
-        public UserDetails User { get; set; }
+        public MongoDBAtlasUserDetails User { get; set; }
         /// <summary> Provisioning state of the resource. </summary>
-        public ResourceProvisioningState? ProvisioningState { get; }
+        public MongoDBAtlasResourceProvisioningState? ProvisioningState { get; }
         /// <summary> MongoDB properties. </summary>
-        public PartnerProperties PartnerProperties { get; set; }
+        public MongoDBAtlasPartnerProperties PartnerProperties { get; set; }
     }
 }

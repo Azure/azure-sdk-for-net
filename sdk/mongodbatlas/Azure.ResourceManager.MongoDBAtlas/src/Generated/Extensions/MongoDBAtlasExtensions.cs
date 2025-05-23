@@ -33,39 +33,39 @@ namespace Azure.ResourceManager.MongoDBAtlas
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="OrganizationResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="OrganizationResource.CreateResourceIdentifier" /> to create an <see cref="OrganizationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="MongoDBAtlasOrganizationResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MongoDBAtlasOrganizationResource.CreateResourceIdentifier" /> to create a <see cref="MongoDBAtlasOrganizationResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableMongoDBAtlasArmClient.GetOrganizationResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMongoDBAtlasArmClient.GetMongoDBAtlasOrganizationResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="OrganizationResource"/> object. </returns>
-        public static OrganizationResource GetOrganizationResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MongoDBAtlasOrganizationResource"/> object. </returns>
+        public static MongoDBAtlasOrganizationResource GetMongoDBAtlasOrganizationResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableMongoDBAtlasArmClient(client).GetOrganizationResource(id);
+            return GetMockableMongoDBAtlasArmClient(client).GetMongoDBAtlasOrganizationResource(id);
         }
 
         /// <summary>
-        /// Gets a collection of OrganizationResources in the ResourceGroupResource.
+        /// Gets a collection of MongoDBAtlasOrganizationResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableMongoDBAtlasResourceGroupResource.GetOrganizationResources()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMongoDBAtlasResourceGroupResource.GetMongoDBAtlasOrganizations()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of OrganizationResources and their operations over a OrganizationResource. </returns>
-        public static OrganizationResourceCollection GetOrganizationResources(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of MongoDBAtlasOrganizationResources and their operations over a MongoDBAtlasOrganizationResource. </returns>
+        public static MongoDBAtlasOrganizationCollection GetMongoDBAtlasOrganizations(this ResourceGroupResource resourceGroupResource)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableMongoDBAtlasResourceGroupResource(resourceGroupResource).GetOrganizationResources();
+            return GetMockableMongoDBAtlasResourceGroupResource(resourceGroupResource).GetMongoDBAtlasOrganizations();
         }
 
         /// <summary>
@@ -85,12 +85,12 @@ namespace Azure.ResourceManager.MongoDBAtlas
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="OrganizationResource"/></description>
+        /// <description><see cref="MongoDBAtlasOrganizationResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableMongoDBAtlasResourceGroupResource.GetOrganizationResourceAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMongoDBAtlasResourceGroupResource.GetMongoDBAtlasOrganizationAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -99,11 +99,11 @@ namespace Azure.ResourceManager.MongoDBAtlas
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="organizationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="organizationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<OrganizationResource>> GetOrganizationResourceAsync(this ResourceGroupResource resourceGroupResource, string organizationName, CancellationToken cancellationToken = default)
+        public static async Task<Response<MongoDBAtlasOrganizationResource>> GetMongoDBAtlasOrganizationAsync(this ResourceGroupResource resourceGroupResource, string organizationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockableMongoDBAtlasResourceGroupResource(resourceGroupResource).GetOrganizationResourceAsync(organizationName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableMongoDBAtlasResourceGroupResource(resourceGroupResource).GetMongoDBAtlasOrganizationAsync(organizationName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -123,12 +123,12 @@ namespace Azure.ResourceManager.MongoDBAtlas
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="OrganizationResource"/></description>
+        /// <description><see cref="MongoDBAtlasOrganizationResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableMongoDBAtlasResourceGroupResource.GetOrganizationResource(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMongoDBAtlasResourceGroupResource.GetMongoDBAtlasOrganization(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -137,11 +137,11 @@ namespace Azure.ResourceManager.MongoDBAtlas
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="organizationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="organizationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public static Response<OrganizationResource> GetOrganizationResource(this ResourceGroupResource resourceGroupResource, string organizationName, CancellationToken cancellationToken = default)
+        public static Response<MongoDBAtlasOrganizationResource> GetMongoDBAtlasOrganization(this ResourceGroupResource resourceGroupResource, string organizationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableMongoDBAtlasResourceGroupResource(resourceGroupResource).GetOrganizationResource(organizationName, cancellationToken);
+            return GetMockableMongoDBAtlasResourceGroupResource(resourceGroupResource).GetMongoDBAtlasOrganization(organizationName, cancellationToken);
         }
 
         /// <summary>
@@ -161,23 +161,23 @@ namespace Azure.ResourceManager.MongoDBAtlas
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="OrganizationResource"/></description>
+        /// <description><see cref="MongoDBAtlasOrganizationResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableMongoDBAtlasSubscriptionResource.GetOrganizationResources(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMongoDBAtlasSubscriptionResource.GetMongoDBAtlasOrganizations(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="OrganizationResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<OrganizationResource> GetOrganizationResourcesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="MongoDBAtlasOrganizationResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<MongoDBAtlasOrganizationResource> GetMongoDBAtlasOrganizationsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableMongoDBAtlasSubscriptionResource(subscriptionResource).GetOrganizationResourcesAsync(cancellationToken);
+            return GetMockableMongoDBAtlasSubscriptionResource(subscriptionResource).GetMongoDBAtlasOrganizationsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -197,23 +197,23 @@ namespace Azure.ResourceManager.MongoDBAtlas
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="OrganizationResource"/></description>
+        /// <description><see cref="MongoDBAtlasOrganizationResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableMongoDBAtlasSubscriptionResource.GetOrganizationResources(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMongoDBAtlasSubscriptionResource.GetMongoDBAtlasOrganizations(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="OrganizationResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<OrganizationResource> GetOrganizationResources(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="MongoDBAtlasOrganizationResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<MongoDBAtlasOrganizationResource> GetMongoDBAtlasOrganizations(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableMongoDBAtlasSubscriptionResource(subscriptionResource).GetOrganizationResources(cancellationToken);
+            return GetMockableMongoDBAtlasSubscriptionResource(subscriptionResource).GetMongoDBAtlasOrganizations(cancellationToken);
         }
     }
 }

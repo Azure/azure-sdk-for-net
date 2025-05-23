@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.MongoDBAtlas.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmMongoDBAtlasModelFactory
     {
-        /// <summary> Initializes a new instance of <see cref="MongoDBAtlas.OrganizationResourceData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MongoDBAtlas.MongoDBAtlasOrganizationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -25,12 +25,12 @@ namespace Azure.ResourceManager.MongoDBAtlas.Models
         /// <param name="location"> The location. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
-        /// <returns> A new <see cref="MongoDBAtlas.OrganizationResourceData"/> instance for mocking. </returns>
-        public static OrganizationResourceData OrganizationResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, OrganizationProperties properties = null, ManagedServiceIdentity identity = null)
+        /// <returns> A new <see cref="MongoDBAtlas.MongoDBAtlasOrganizationData"/> instance for mocking. </returns>
+        public static MongoDBAtlasOrganizationData MongoDBAtlasOrganizationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, MongoDBAtlasOrganizationProperties properties = null, ManagedServiceIdentity identity = null)
         {
             tags ??= new Dictionary<string, string>();
 
-            return new OrganizationResourceData(
+            return new MongoDBAtlasOrganizationData(
                 id,
                 name,
                 resourceType,
@@ -42,25 +42,25 @@ namespace Azure.ResourceManager.MongoDBAtlas.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.OrganizationProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MongoDBAtlasOrganizationProperties"/>. </summary>
         /// <param name="marketplace"> Marketplace details of the resource. </param>
         /// <param name="user"> Details of the user. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="partnerProperties"> MongoDB properties. </param>
-        /// <returns> A new <see cref="Models.OrganizationProperties"/> instance for mocking. </returns>
-        public static OrganizationProperties OrganizationProperties(MarketplaceDetails marketplace = null, UserDetails user = null, ResourceProvisioningState? provisioningState = null, PartnerProperties partnerProperties = null)
+        /// <returns> A new <see cref="Models.MongoDBAtlasOrganizationProperties"/> instance for mocking. </returns>
+        public static MongoDBAtlasOrganizationProperties MongoDBAtlasOrganizationProperties(MongoDBAtlasMarketplaceDetails marketplace = null, MongoDBAtlasUserDetails user = null, MongoDBAtlasResourceProvisioningState? provisioningState = null, MongoDBAtlasPartnerProperties partnerProperties = null)
         {
-            return new OrganizationProperties(marketplace, user, provisioningState, partnerProperties, serializedAdditionalRawData: null);
+            return new MongoDBAtlasOrganizationProperties(marketplace, user, provisioningState, partnerProperties, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.MarketplaceDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MongoDBAtlasMarketplaceDetails"/>. </summary>
         /// <param name="subscriptionId"> Azure subscription id for the the marketplace offer is purchased from. </param>
         /// <param name="subscriptionStatus"> Marketplace subscription status. </param>
         /// <param name="offerDetails"> Offer details for the marketplace that is selected by the user. </param>
-        /// <returns> A new <see cref="Models.MarketplaceDetails"/> instance for mocking. </returns>
-        public static MarketplaceDetails MarketplaceDetails(string subscriptionId = null, MarketplaceSubscriptionStatus? subscriptionStatus = null, OfferDetails offerDetails = null)
+        /// <returns> A new <see cref="Models.MongoDBAtlasMarketplaceDetails"/> instance for mocking. </returns>
+        public static MongoDBAtlasMarketplaceDetails MongoDBAtlasMarketplaceDetails(string subscriptionId = null, MarketplaceSubscriptionStatus? subscriptionStatus = null, MongoDBAtlasOfferDetails offerDetails = null)
         {
-            return new MarketplaceDetails(subscriptionId, subscriptionStatus, offerDetails, serializedAdditionalRawData: null);
+            return new MongoDBAtlasMarketplaceDetails(subscriptionId, subscriptionStatus, offerDetails, serializedAdditionalRawData: null);
         }
     }
 }
